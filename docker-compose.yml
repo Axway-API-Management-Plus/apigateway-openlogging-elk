@@ -1,0 +1,110 @@
+version: '3.7'
+services:
+  elasticsearch1:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.4.0
+    container_name: elasticsearch1
+    environment:
+      - "ES_JAVA_OPTS=-Xms750M -Xmx750M"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    cap_add:
+      - ALL
+    volumes:
+      - type: volume
+        source: logs
+        target: /var/log
+      - type: volume
+        source: esdata1
+        target: /usr/share/elasticsearch/data
+      - ${PWD}/configs/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+    networks:
+      - elastic
+      - ingress
+    ports:
+      - 9200:9200
+      - 9300:9300
+
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.4.0
+    container_name: kibana
+    environment:
+      SERVER_NAME: localhost
+      ELASTICSEARCH_HOSTS: http://elasticsearch1:9200/
+    ports:
+      - 5601:5601
+    volumes:
+      - type: volume
+        source: logs
+        target: /var/log
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    cap_add:
+      - ALL
+    networks:
+      - elastic
+      - ingress
+
+
+  filebeat:
+    image: docker.elastic.co/beats/filebeat:7.4.0
+    command: --strict.perms=false
+    environment:
+      - setup.kibana.host=kibana:5601
+      - output.elasticsearch.hosts=["elasticsearch1:9200"]
+    ports:
+      - 9000:9000
+    volumes:
+      - ${PWD}/configs/filebeat.docker.yml:/usr/share/filebeat/filebeat.yml
+      - ${APIGATEWAY_LOGS_FOLDER}:/var/log/work
+      - ${APIGATEWAY_TRACES_FOLDER}:/var/log/trace
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - elastic
+
+
+  logstash:
+    image: docker.elastic.co/logstash/logstash:7.4.0
+    links:
+      - elasticsearch1
+    environment:
+      - PIPELINE_WORKERS=1
+      - XPACK_MONITORING_ELASTICSEARCH_HOSTS=["elasticsearch1:9200"]
+    ports:
+      - 5044:5044
+    volumes:
+      - ${PWD}/configs/logstash.conf:/usr/share/logstash/pipeline/default.conf
+    command: logstash --path.config /usr/share/logstash/pipeline/default.conf --pipeline.batch.size 20 --pipeline.workers 1 --log.level info
+    depends_on:
+      - elasticsearch1
+    networks:
+      - elastic
+
+
+  nginx:
+    image: nginx:1.17.6
+    ports:
+      - 8888:90
+    volumes:
+      - ${PWD}/nginx/www:/usr/share/nginx/html
+      - ${PWD}/nginx/conf:/etc/nginx
+    depends_on:
+      - elasticsearch1
+    networks:
+      - elastic
+      - ingress
+
+
+volumes:
+  esdata1:
+  esdata2:
+  logs:
+
+networks:
+  elastic:
+  ingress:

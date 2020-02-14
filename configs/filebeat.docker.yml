@@ -1,0 +1,26 @@
+filebeat.inputs:
+- input_type: log
+  paths: ["/var/log/work/*.log"]
+  json.keys_under_root: true
+  json.overwrite_keys: false
+  json.add_error_key: true
+  fields:
+    logtype: openlog 
+- input_type: log
+  paths: ["/var/log/trace/*.trc"]
+  multiline.pattern: '^\[ALERT|TRACE|DEBUG|NOTICE|INFO|WARNING|ERROR|CRITICAL|FATAL|SEVERE]'
+  multiline.negate: true
+  # any line that does not match the above pattern belongs to the previous line
+  multiline.match: after
+  fields:
+    logtype: trace
+
+output.logstash:
+  hosts: ["logstash:5044"]
+
+processors:
+  - timestamp:
+      field: "timestamp"
+      layouts: ["UNIX_MS"]
+
+setup.template.enabled: true

@@ -1,0 +1,130 @@
+.ui-layout-center ,	/* has content-div */
+.ui-layout-west {
+    overflow: hidden !important;
+}
+
+.ui-layout-content { /* content-div has Accordion */
+    padding: 0;
+    overflow: auto;
+    font-size: 13px;
+}
+.ui-layout-center P.ui-layout-content {
+    line-height:	1.4em;
+    margin:			0; /* remove top/bottom margins from <P> used as content-div */
+    overflow: auto !important;
+}
+h3, h4 { /* Headers & Footer in Center & East panes */
+    font-size:		1.1em;
+    background:		#EEF;
+    border:			1px solid #BBB;
+    border-width:	0 0 1px;
+    padding:		7px 10px;
+    margin:			0;
+}
+
+.dataTables_wrapper {
+    font-size: 12px;
+    border-bottom: 1px solid #dddddd;
+}
+
+td.details-control {
+    background: url('../images/toggle_plus.png') no-repeat center center;
+    cursor: pointer;
+}
+
+tr.details td.details-control {
+    background: url('../images/toggle_minus.png') no-repeat center center;
+}
+
+#accordion1 {
+    margin: 0;
+    padding: 0px;
+}
+
+#accordion1 .ui-accordion-content {
+    margin: 0;
+    padding: 0px;
+    overflow: hidden;
+    font-size: 13px;
+}
+
+.ui-datepicker {
+    z-index: 99 !important
+}
+
+#ajaxSpinner {
+    visibility: visible;
+}
+
+#overlay {
+    background: #ffffff;
+    color: #666666;
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    z-index: 5000;
+    top: 0;
+    left: 0;
+    float: left;
+    text-align: center;
+    padding-top: 15%;
+    opacity: .80;
+}
+
+.spinner {
+    margin: 0 auto;
+    height: 64px;
+    width: 64px;
+    animation: rotate 0.8s infinite linear;
+    border: 5px solid rgb(96, 151, 218);
+    border-right-color: transparent;
+    border-radius: 50%;
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.requestResponseDetailsTableWrapper {
+    background-color: transparent;
+    font-family: Geneva, Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    border: none;
+    border-bottom: 1px solid #dddddd;
+    margin-bottom: 20px;
+    width:100%;
+}
+
+.requestResponseDetailsTable {
+    font-size: 12px;
+    margin-top: 0px;
+    margin-bottom: 20px;
+    border: none;
+    table-layout: fixed;
+    word-wrap :break-word;
+    border-bottom: 1px solid #dddddd;
+}
+
+.requestResponseDetailsToolbar {
+    border: 1px solid #dddddd;
+    padding-bottom: 15px;
+    padding-left: 5px;
+    font-size: 12px;
+}
+
+table.dataTable.no-footer {
+    border-bottom: 1px solid #dddddd;
+}
+
+#logItemsTable_wrapper {
+    border-bottom: 1px solid #dddddd;
+}
+
+#logItemsTable {
+    border-bottom: 1px solid #dddddd;
+}
