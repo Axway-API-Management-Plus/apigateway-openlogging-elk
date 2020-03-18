@@ -42,4 +42,5 @@ jobs:
       working-directory: ${{env.workingDirectory}}
       env:
         ELASTIC_NODE: 'http://localhost:9200'
+        LOG_LEVEL: DEBUG
         CI: true
