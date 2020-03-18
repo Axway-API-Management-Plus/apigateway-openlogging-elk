@@ -67,7 +67,7 @@ function requestAsync(uri, options, cb) {
 
 async function sendToElasticsearch(index, dataset) {
 	const client = new Client({
-		node: 'http://api-env:9200'
+		node: 'http://localhost:9200'
 	});
 
 	await client.indices.create({
