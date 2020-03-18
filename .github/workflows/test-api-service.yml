@@ -40,6 +40,6 @@ jobs:
       working-directory: ${{env.workingDirectory}}
     - run: npm test
       working-directory: ${{env.workingDirectory}}
-      ELASTIC_NODE: http://localhost:9200
       env:
+        ELASTIC_NODE: 'http://localhost:9200'
         CI: true
