@@ -60,9 +60,10 @@ After this configuration has been done, Open-Traffic log-files will created by d
 This step is required if you would like to use the existing Traffic-Monitor in combination Elasticsearch. The Admin-Node-Manager (listing by default on port 8090) is responsible to drive the API-Manager Traffic-Monitor and needs to configured to use the API-Builder API instead.  
 For that, please open Admin-Node-Manager in Policy-Studio. The Admin-Node-Manager config is located here. `apigateway/conf/fed` and can be opended by creating a new project from a existing configuration.  
 - Create a new policy for instance called: `Use Elasticsearch API`
-- Create a policy like so:  
+- Configure this policy like so:  
   ![use ES API][img3]  
-  The `Compare Attribute filter` is checking if the requested API is already handling by the API-Builder project
+  The `Compare Attribute` filter checks if the requested API is already handled by the API-Builder project.  
+  _As of today, only the Traffic-Overview is handled by the API-Builder. This will be changed soon._
   ![Is API Managed][img6] 
   Add the following: `http.request.path` is `/api/router/service/instance-1/ops/search`  
   ![Connect to ES API][img7]  
