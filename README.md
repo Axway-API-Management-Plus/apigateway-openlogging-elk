@@ -1,6 +1,6 @@
 # API-Management Traffic-Monitor based ELK stack
 
-When having many API-Gateway instances with a millions of requests the API-Gateway Traffic Monitor can become slow. The purpose of this project is to solve that performance issue and get other benefits by using a standard external datastore: Elasticsearch.  
+When having many API-Gateway instances with millions of requests the API-Gateway Traffic Monitor can become slow. The purpose of this project is to solve that performance issue and get other benefits by using a standard external datastore: Elasticsearch.  
 
 The overall architecture this project provides looks like this:  
 ![Architecture][img1]   
