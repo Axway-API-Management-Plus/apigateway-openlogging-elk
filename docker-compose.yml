@@ -86,19 +86,31 @@ services:
     networks:
       - elastic
 
-
-  nginx:
-    image: nginx:1.17.6
+  elk-traffic-monitor-api:
+    image: cwiechmann/elk-traffic-monitor-api:latest
+    links:
+      - elasticsearch1
+    environment:
+      - ELASTIC_NODE=http://elasticsearch1:9200
     ports:
-      - 8888:90
-    volumes:
-      - ${PWD}/nginx/www:/usr/share/nginx/html
-      - ${PWD}/nginx/conf:/etc/nginx
+      - 8889:8080
     depends_on:
       - elasticsearch1
     networks:
       - elastic
-      - ingress
+
+#  nginx:
+#    image: nginx:1.17.6
+#    ports:
+#      - 8888:90
+#    volumes:
+#      - ${PWD}/nginx/www:/usr/share/nginx/html
+#      - ${PWD}/nginx/conf:/etc/nginx
+#    depends_on:
+#      - elasticsearch1
+#    networks:
+#      - elastic
+#      - ingress
 
 
 volumes:
