@@ -33,10 +33,10 @@ jobs:
       uses: nyaruka/elasticsearch-action@v1
       with:
         elastic version: '7.6.1' 
-    - name: Sleep 10 seconds to make sure ES is ready
+    - name: Sleep 30 seconds to make sure ES is ready
       uses: jakejarvis/wait-action@master
       with:
-        time: '20s'
+        time: '30s'
     - name: Run npm ci, npm test
       working-directory: ${{env.workingDirectory}}
       env:
@@ -61,7 +61,7 @@ jobs:
       uses: elgohr/Publish-Docker-Github-Action@2.13
       with:
         name: cwiechmann/elk-traffic-monitor-api
-        working-directory: ${{env.workingDirectory}}
+        workdir: ${{env.workingDirectory}}
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
         snapshot: true
