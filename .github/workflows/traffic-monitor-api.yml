@@ -45,14 +45,22 @@ jobs:
         CI: true
       run: | 
         npm ci
+        npm run build --if-present
         npm test
   publish:
-    # if: github.event.action == 'published'
+    if: github.event.action == 'published'
     env:
       workingDirectory: 'elk-traffic-monitor-api'
 
     runs-on: ubuntu-latest
 
     steps:
-    - name: Debug Action
-      uses: hmarr/debug-action@v1.0.0
+    - uses: actions/checkout@v2
+    - name: Publish Docker image
+      uses: elgohr/Publish-Docker-Github-Action@2.13
+      with:
+        name: cwiechmann/elk-traffic-monitor-api
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        snapshot: true
+
