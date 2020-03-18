@@ -56,6 +56,21 @@ This creates a local copy of the repository and you can start from there.
 Obviously you have to enable Open-Traffic-Event log for your API-Gateway instances. [Read here][1] how to enable the Open-Traffic Event-Log.  
 After this configuration has been done, Open-Traffic log-files will created by default in this location: `apigateway/logs/opentraffic`. This location becomes relevant in the next step, when configuring Filebeat.
 
+### Configure the Admin-Node-Manager
+This step is required if you would like to use the existing Traffic-Monitor in combination Elasticsearch. The Admin-Node-Manager (listing by default on port 8090) is responsible to drive the API-Manager Traffic-Monitor and needs to configured to use the API-Builder API instead.  
+For that, please open Admin-Node-Manager in Policy-Studio. The Admin-Node-Manager config is located here. `apigateway/conf/fed` and can be opended by creating a new project from a existing configuration.  
+- Create a new policy for instance called: `Use Elasticsearch API`
+- Create a policy like so:  
+  ![use ES API][img3]  
+  The `Compare Attribute filter` is checking if the requested API is already handling by the API-Builder project
+  ![Is API Managed][img6] 
+  Add the following: `http.request.path` is `/api/router/service/instance-1/ops/search`  
+  ![Connect to ES API][img7]  
+  Adjust the URL of the Connect to URL filter to your running API-Builder docker container and port.  
+- Insert the created policy as a callback policy into the main policy: `Protect Management Interfaces` like so:  
+  ![Use Callback][img4]  
+  With that, the Admin-Node-Manager will use the API-Builder API (Elasticsearch) to serve the request from the client.  
+
 ### Setup filebeat
 In the cloned project open the file .env file and setup the paths to your running API-Gateway instance. 
 ```
@@ -92,5 +107,7 @@ docker-compose down
 [img3]: imgs/node-manager-use-es-api.png
 [img4]: imgs/node-manager-policies-use-elasticsearch-api.png
 [img5]: imgs/Logspector.png
+[img6]: imgs/IsmanagedbyElasticsearchAPI.png
+[img7]: imgs/connect-to-elasticsearch-api.png
 
 [1]: https://docs.axway.com/bundle/axway-open-docs/page/docs/apim_administration/apigtw_admin/admin_open_logging/index.html#configure-open-traffic-event-logging
