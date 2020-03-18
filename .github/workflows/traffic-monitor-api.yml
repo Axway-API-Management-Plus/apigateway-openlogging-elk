@@ -1,13 +1,16 @@
-# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+# This workflow is validating the API-Builder exposed Traffic-Monitor API. 
+# For that an Elasticsearch instance is started, test-data inserted and the 
+# API-Builder Traffic-Monitor API is executed with all possible parameters.
 
-name: Node.js CI
+name: Test Traffic-Monitor API
 
 on:
   push:
     branches: [ master ]
   pull_request:
     branches: [ master ]
+  release: 
+    types: [ published ]
 
 jobs:
   build:
@@ -30,10 +33,10 @@ jobs:
       uses: nyaruka/elasticsearch-action@v1
       with:
         elastic version: '7.6.1' 
-    - name: Sleep 30 seconds to make sure ES is ready
+    - name: Sleep 10 seconds to make sure ES is ready
       uses: jakejarvis/wait-action@master
       with:
-        time: '30s'
+        time: '10s'
     - run: npm ci
       working-directory: ${{env.workingDirectory}}
     - run: npm run build --if-present
@@ -44,3 +47,13 @@ jobs:
         ELASTIC_NODE: 'http://localhost:9200'
         LOG_LEVEL: DEBUG
         CI: true
+  publish:
+    if: github.event.action == 'published'
+    env:
+      workingDirectory: 'elk-traffic-monitor-api'
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Debug Action
+      uses: hmarr/debug-action@v1.0.0
