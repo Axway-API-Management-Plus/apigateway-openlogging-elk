@@ -38,6 +38,7 @@ jobs:
       with:
         time: '20s'
     - name: Run npm ci, npm test
+      working-directory: ${{env.workingDirectory}}
       env:
         ELASTIC_NODE: 'http://localhost:9200'
         LOG_LEVEL: INFO
