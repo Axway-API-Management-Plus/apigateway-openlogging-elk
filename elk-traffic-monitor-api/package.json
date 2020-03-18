@@ -28,7 +28,7 @@
 	},
 	"homepage": "https://github.com/cwiechmann/apigateway-openlogging-elk",
 	"dependencies": {
-		"@axway-api-builder-ext/api-builder-plugin-fn-elasticsearch": "^1.0.1",
+		"@axway-api-builder-ext/api-builder-plugin-fn-elasticsearch": "^1.0.2",
 		"@axway/api-builder-plugin-fn-base64": "^2.0.0",
 		"@axway/api-builder-plugin-fn-javascript": "^1.0.0",
 		"@axway/api-builder-plugin-fn-json": "^2.0.0",
