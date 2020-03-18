@@ -33,7 +33,7 @@ jobs:
     - name: Sleep 30 seconds to make sure ES is ready
       uses: jakejarvis/wait-action@master
       with:
-        time: '60s'
+        time: '30s'
     - run: npm ci
       working-directory: ${{env.workingDirectory}}
     - run: npm run build --if-present
