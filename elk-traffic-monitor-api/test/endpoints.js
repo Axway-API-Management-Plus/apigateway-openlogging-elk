@@ -37,6 +37,7 @@ describe('Endpoints', function () {
 	after(() => stopApiBuilder(server));
 
 	describe('Search', () => {
+		debugger;
 		it('[Search-0001] Execute a search without a limit including all requests from instance-1', () => {
 			return requestAsync({
 				method: 'GET',
@@ -86,7 +87,7 @@ describe('Endpoints', function () {
 				expect(body).to.be.an('Object');
 				expect(body).to.have.property('data');
 				expect(body.data).to.have.lengthOf(1);
-				expect(body.data[0].uri).to.equals('/v2/pet/findByStatus');
+				expect(body.data[0].uri).to.equals('/v2/pet/123');
 				expect(body.data[0].method).to.equals('GET');
 				checkFields(body.data, true);
 			});
@@ -292,7 +293,7 @@ describe('Endpoints', function () {
 				expect(body).to.have.property('data');
 				expect(body.data).to.have.lengthOf(1);
 				expect(body.data[0].status).to.equals(200);
-				expect(body.data[0].uri).to.equals('/v2/pet/findByStatus');
+				expect(body.data[0].uri).to.equals('/v2/pet/123');
 			});
 		});
 		it('[Endpoint-0015] should return one entry with service name Petstore HTTP', () => {
@@ -351,7 +352,7 @@ describe('Endpoints', function () {
 				expect(body.data[0].uri).to.equals('/healthcheck');
 			});
 		});
-		it.only('[Endpoint-0018] should return results with a wirldcard path.', () => {
+		it('[Endpoint-0018] should return results with a wirldcard path.', () => {
 			const auth = {
 				user: server.apibuilder.config.apikey || 'test',
 				password: ''
