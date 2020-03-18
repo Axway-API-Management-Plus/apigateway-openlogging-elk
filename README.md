@@ -5,7 +5,7 @@ When having many API-Gateway instances with a millions of requests the API-Gatew
 The overall architecture this project provides looks like this:  
 ![Architecture][img1]   
 
-#### How it works  
+### How it works  
 Each API-Gateway instance is writing, if configured, Open-Traffic Log-Files, which are streamed by Beats into a Logstash-Instance. Logstash is performing data pre-processing, combining different events and finally forwards the document into an Elasticsearch cluster.  
 
 Once the data is indexed in Elasticsearch it can be used by different clients. 
@@ -30,8 +30,9 @@ This a new separated user-interface with very basic set of functionilties. The L
       - elastic
       - ingress
 ```
-Once, you activate those lines in the docker-compose.yaml and run `docker-compose up -d` you can access the Log-Inspector with: `http://localhot:8888/logspector.html`
+Once, you activate those lines in the docker-compose.yaml and run `docker-compose up -d` you can access the Log-Inspector with: `http://localhot:8888/logspector.html`  
 
+![Log-Spector][img5]  
 
 
 ## Prerequisites
@@ -64,3 +65,4 @@ docker-compose down
 [img2]: imgs/node-manager-policies.png
 [img3]: imgs/node-manager-use-es-api.png
 [img4]: imgs/node-manager-policies-use-elasticsearch-api.png
+[img5]: imgs/Logspector.png
