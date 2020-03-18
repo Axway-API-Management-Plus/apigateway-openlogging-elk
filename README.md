@@ -6,7 +6,7 @@ The overall architecture this project provides looks like this:
 ![Architecture][img1]   
 
 ### How it works  
-Each API-Gateway instance is writing, if configured, Open-Traffic Log-Files, which are streamed by Beats into a Logstash-Instance. Logstash is performing data pre-processing, combining different events and finally forwards the document into an Elasticsearch cluster.  
+Each API-Gateway instance is writing, if configured, Open-Traffic Event-Log-Files, which are streamed by Beats into a Logstash-Instance. Logstash is performing data pre-processing, combining different events and finally forwards the document into an Elasticsearch cluster.  
 
 Once the data is indexed in Elasticsearch it can be used by different clients. 
 
