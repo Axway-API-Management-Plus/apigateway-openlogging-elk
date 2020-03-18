@@ -1,0 +1,18 @@
+{
+    "index_patterns": [
+        "*openlog*"
+    ],
+    "settings": {
+        "number_of_shards": 5
+    },
+    "mappings": {
+        "properties": {
+            "processInfo.serviceId": {
+                "type": "keyword"
+            },
+            "transactionElements.leg0.protocolInfo.http.remoteName": {
+                "type": "keyword"
+            }
+        }
+    }
+}
