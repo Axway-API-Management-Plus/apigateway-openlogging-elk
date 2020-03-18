@@ -11,6 +11,8 @@ on:
 
 jobs:
   build:
+    env:
+      workingDirectory: 'elk-traffic-monitor-api'
 
     runs-on: ubuntu-latest
 

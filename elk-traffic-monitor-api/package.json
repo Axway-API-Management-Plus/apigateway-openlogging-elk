@@ -1,0 +1,49 @@
+{
+	"name": "elk-traffic-monitor-api",
+	"description": "This API-Builder project provides an ELK-Based Traffic-Monitor API.",
+	"main": "app.js",
+	"version": "1.0.0",
+	"author": {
+		"email": "cwiechmann@axway.com",
+		"name": "Chris Wiechmann",
+		"url": "https://axway.com"
+	},
+	"license": "Apache-2.0",
+	"keywords": [
+		"api-builder",
+		"axway",
+		"api-gateway",
+		"monitoring",
+		"elasticsearch"
+	],
+	"engines": {
+		"node": ">=8.9"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/cwiechmann/apigateway-openlogging-elk.git"
+	},
+	"bugs": {
+		"url": "https://github.com/cwiechmann/apigateway-openlogging-elk/issues"
+	},
+	"homepage": "https://github.com/cwiechmann/apigateway-openlogging-elk",
+	"dependencies": {
+		"@axway-api-builder-ext/api-builder-plugin-fn-elasticsearch": "^1.0.0",
+		"@axway/api-builder-plugin-fn-base64": "^2.0.0",
+		"@axway/api-builder-plugin-fn-javascript": "^1.0.0",
+		"@axway/api-builder-plugin-fn-json": "^2.0.0",
+		"@axway/api-builder-plugin-fn-mustache": "^1.0.1",
+		"@axway/api-builder-plugin-fn-restclient": "^2.0.0",
+		"@axway/api-builder-plugin-fn-swagger": "^2.0.0",
+		"@axway/api-builder-runtime": "^4.22.0"
+	},
+	"devDependencies": {
+		"@axway/api-builder-admin": "^1.10.10",
+		"chai": "^4.1.2",
+		"mocha": "^5.2.0"
+	},
+	"scripts": {
+		"start": "node .",
+		"test": "mocha --colors ./test --recursive -R spec"
+	}
+}

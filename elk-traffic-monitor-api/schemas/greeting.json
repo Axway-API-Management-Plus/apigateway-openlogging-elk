@@ -1,0 +1,4 @@
+{
+	"type": "string",
+	"description": "A greeting message for the user"
+}
