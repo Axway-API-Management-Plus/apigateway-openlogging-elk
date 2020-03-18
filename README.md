@@ -37,11 +37,13 @@ Once, you activate those lines in the docker-compose.yaml and run `docker-compos
 
 
 ## Prerequisites
-For a simple deployment the prerequisites are very simple as all services can be started as a Docker-Container. To be able to start all components in PoC-Mode you need:
+For a simple deployment the prerequisites are very simple as all services can be started as a Docker-Container. In order to start all required components in PoC-Mode you just need:
 
 1. A Docker engine
 2. docker-compose installed
 3. An API-Management Version >7.7-20200130 (this is required due to Open-Traffic-Format)
+
+This approach is not recommended for production environments. Depending the load a dedicated machine (node) for Elasticsearch is recommended. With the default configuration it is prepared to scale up to five Elasticsearch nodes. To run Logstash and the API-Builder service a Docker-Orchestration framework is recommended.
 
 ## Installation / Configuration
 To run the components in a PoC-Like mode, the recommended way is to clone this project onto a machine having docker and docker-compose installed plus access to a running API-Gateway instance.  
