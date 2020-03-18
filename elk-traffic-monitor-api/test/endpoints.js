@@ -19,10 +19,11 @@ describe('Endpoints', function () {
 				password: ''
 			};
 			server.apibuilder.config.testElasticIndex = indexName;
+			elasticConfig = server.apibuilder.config.pluginConfig['@axway-api-builder-ext/api-builder-plugin-fn-elasticsearch'].elastic;
 			server.started
 			.then(() => {
 				const entryset = require('./documents/basic/search_test_documents');
-				sendToElasticsearch(indexName, entryset)
+				sendToElasticsearch(elasticConfig, indexName, entryset)
 				.then(() => {
 					resolve();
 				});

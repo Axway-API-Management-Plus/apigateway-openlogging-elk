@@ -65,9 +65,9 @@ function requestAsync(uri, options, cb) {
 	});
 }
 
-async function sendToElasticsearch(index, dataset) {
+async function sendToElasticsearch(elasticConfig, index, dataset) {
 	const client = new Client({
-		node: 'http://localhost:9200'
+		node: elasticConfig.node
 	});
 
 	await client.indices.create({
