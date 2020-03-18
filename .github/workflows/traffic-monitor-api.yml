@@ -37,6 +37,8 @@ jobs:
       uses: jakejarvis/wait-action@master
       with:
         time: '10s'
+    - name: Debug Action
+      uses: hmarr/debug-action@v1.0.0
     - run: npm ci
       working-directory: ${{env.workingDirectory}}
     - run: npm run build --if-present
@@ -45,7 +47,7 @@ jobs:
       working-directory: ${{env.workingDirectory}}
       env:
         ELASTIC_NODE: 'http://localhost:9200'
-        LOG_LEVEL: DEBUG
+        LOG_LEVEL: INFO
         CI: true
   publish:
     if: github.event.action == 'published'
