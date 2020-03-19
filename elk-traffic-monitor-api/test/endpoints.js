@@ -413,7 +413,7 @@ describe('Endpoints', function () {
 			};
 			return requestAsync({
 				method: 'GET',
-				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?ago=120h`,
+				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?ago=2h`,
 				auth: auth,
 				json: true
 			}).then(({ response, body }) => {
