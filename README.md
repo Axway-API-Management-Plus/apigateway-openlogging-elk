@@ -67,16 +67,17 @@ For the following steps, please open the Admin-Node-Manager configuration in Pol
 - Create a new policy called: `Use Elasticsearch API`
 - Configure this policy like so:  
   ![use ES API][img3]  
-  The `Compare Attribute` filter checks if the requested API is already handled by the API-Builder project.  
-  _As of today, only the Traffic-Overview is handled by the API-Builder. This will be changed soon._
-  ![Is API Managed][img6] 
-  Add the following: `http.request.path` is `/api/router/service/instance-1/ops/search`  
-  The list of requests will be extended once the API-Builder project can serve more (e.g. the Request-Detail view)
-  ![Connect to ES API][img7]  
-  Adjust the URL of the Connect to URL filter to your running API-Builder docker container and port (default is 8889).  
+    - The `Compare Attribute` filter checks if the requested API is already handled by the API-Builder project.  
+    _As of today, only the Traffic-Overview is handled by the API-Builder. This will be changed soon._
+    - Add the following: `http.request.path` is `/api/router/service/instance-1/ops/search`  
+    _The list of requests will be extended once the API-Builder project can serve more (e.g. the Request-Detail view)_
+    ![Is API Managed][img6] 
+    - Adjust the URL of the Connect to URL filter to your running API-Builder docker container and port (default is 8889).  
+    ![Connect to ES API][img7]  
 - Insert the created policy as a callback policy into the main policy: `Protect Management Interfaces` like so:  
   ![Use Callback][img4]  
-  With that, the Admin-Node-Manager will use the API-Builder API (Elasticsearch) to serve requests from the client.  
+  
+After you have saved back the configuration to the Admin-Node-Manager and restarted it, the Admin-Node-Manager will use the API-Builder API (Elasticsearch) to serve the specified request-types.  
 
 ### Setup filebeat
 :exclamation: __This is an important step, as otherwise Filebeat will not see and send any Open-Traffic Event data!__  
