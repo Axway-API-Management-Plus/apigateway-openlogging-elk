@@ -136,7 +136,7 @@ describe('Endpoints', function () {
 			};
 			return requestAsync({
 				method: 'GET',
-				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?ago=120h`,
+				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?ago=5m`, // The first entry is generated with 8 minutes in the past
 				auth: auth,
 				json: true
 			}).then(({ response, body }) => {
@@ -367,6 +367,60 @@ describe('Endpoints', function () {
 				expect(body).to.be.an('Object');
 				expect(body).to.have.property('data');
 				expect(body.data).to.have.lengthOf(1);
+				expect(body.data[0].uri).to.equals('/v2/pet/123');
+			});
+		});
+		it('[Endpoint-0019] Should return 1 entry in the last 10 minutes (ago=10m)', () => {
+			const auth = {
+				user: server.apibuilder.config.apikey || 'test',
+				password: ''
+			};
+			return requestAsync({
+				method: 'GET',
+				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?ago=10m`,
+				auth: auth,
+				json: true
+			}).then(({ response, body }) => {
+				expect(response.statusCode).to.equal(200);
+				expect(body).to.be.an('Object');
+				expect(body).to.have.property('data');
+				expect(body.data).to.have.lengthOf(1);
+				expect(body.data[0].uri).to.equals('/v2/pet/123');
+			});
+		});
+		it('[Endpoint-0020] Should return 2 entries in the last 30 minutes (ago=30m)', () => {
+			const auth = {
+				user: server.apibuilder.config.apikey || 'test',
+				password: ''
+			};
+			return requestAsync({
+				method: 'GET',
+				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?ago=30m`,
+				auth: auth,
+				json: true
+			}).then(({ response, body }) => {
+				expect(response.statusCode).to.equal(200);
+				expect(body).to.be.an('Object');
+				expect(body).to.have.property('data');
+				expect(body.data).to.have.lengthOf(2);
+				expect(body.data[0].uri).to.equals('/v2/pet/123');
+			});
+		});
+		it('[Endpoint-0020] Should only 2 entries in the last 2 hours (ago=120h)', () => {
+			const auth = {
+				user: server.apibuilder.config.apikey || 'test',
+				password: ''
+			};
+			return requestAsync({
+				method: 'GET',
+				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?ago=120h`,
+				auth: auth,
+				json: true
+			}).then(({ response, body }) => {
+				expect(response.statusCode).to.equal(200);
+				expect(body).to.be.an('Object');
+				expect(body).to.have.property('data');
+				expect(body.data).to.have.lengthOf(3);
 				expect(body.data[0].uri).to.equals('/v2/pet/123');
 			});
 		});
