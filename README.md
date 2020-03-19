@@ -81,7 +81,7 @@ After you have saved back the configuration to the Admin-Node-Manager and restar
 
 ### Setup filebeat
 :exclamation: __This is an important step, as otherwise Filebeat will not see and send any Open-Traffic Event data!__  
-In the cloned project open the file .env file and setup the paths to your running API-Gateway instance. 
+Before starting the container using docker-compose, make sure to setup the paths in the .env file to your running API-Gateway instance. This configuration is used to mount the Open-Traffic-Folder into Filebeat container.
 ```
 APIGATEWAY_LOGS_FOLDER=/home/localuser/Axway-x.y.z/apigateway/logs/opentraffic
 APIGATEWAY_TRACES_FOLDER=/home/localuser/Axway-x.y.z/apigateway/groups/group-1/instance-1/trace
