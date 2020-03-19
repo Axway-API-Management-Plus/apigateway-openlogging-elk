@@ -1,3 +1,5 @@
+const getDate = require('../util');
+
 module.exports = [
     {
         "processInfo": {
@@ -150,7 +152,7 @@ module.exports = [
             }
         },
         "correlationId": "c8705e5ecc00adca32be7472",
-        "timestampOriginal": "2020-03-03T14:59:20.467Z",
+        "timestampOriginal": getDate('8m'),
         "transactionSummary": {
             "serviceContexts": [
                 {
@@ -234,7 +236,7 @@ module.exports = [
             }
         },
         "correlationId": "c9705e5ecd000322778d2ec4",
-        "timestampOriginal": "2020-03-03T14:59:21.273Z",
+        "timestampOriginal": getDate('15m'),
         "transactionSummary": {
             "serviceContexts": [],
             "path": "/favicon.ico",
@@ -301,7 +303,7 @@ module.exports = [
             }
         },
         "correlationId": "fc705e5ede00654de6d15daf",
-        "timestampOriginal": "2020-03-03T15:00:12.175Z",
+        "timestampOriginal": getDate('120h'),
         "transactionSummary": {
             "serviceContexts": [],
             "path": "/v2/pet/findByStatus",
@@ -375,7 +377,7 @@ module.exports = [
                 "leg": 0
             }
         },
-        "timestampOriginal": "2020-03-03T14:06:06.351Z",
+        "timestampOriginal": getDate('65m'),
         "processInfo": {
             "groupName": "QuickStart Group",
             "hostname": "api-env",

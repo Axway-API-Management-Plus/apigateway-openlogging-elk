@@ -248,7 +248,7 @@
 				{
 					"name": "code",
 					"type": "string",
-					"value": "\"var queryFilters = data.queryFilters;\\n  if(data.params.ago) {\\n    var ago = data.params.ago;\\n    var now = Date.now()\\n    var diff = convertAgo(ago);\\n    var filter = {\\n      range: {\\n        \\\"timestampOriginal\\\": {\\n          gt: now\\n        }\\n      }\\n    };\\n    queryFilters.push(filter);\\n    return queryFilters;\\n  }\\n  \\n  function convertAgo(ago) {\\n    if(ago.endsWith('m')) {\\n      return ago.substring(0, ago.length-1) * 60000;\\n    } else if(ago.endsWith('h')) {\\n      return ago.substring(0, ago.length-1) * 3600 * 1000;\\n    }\\n    console.log(`ERRRRO ${ago}`);\\n  }\"",
+					"value": "\"var queryFilters = data.queryFilters;\\n  if(data.params.ago) {\\n    var ago = data.params.ago;\\n    var diff = convertAgo(ago);\\n    var filter = {\\n      range: {\\n        \\\"timestampOriginal\\\": {\\n          gt: diff\\n        }\\n      }\\n    };\\n    queryFilters.push(filter);\\n    return queryFilters;\\n  }\\n  \\n  function convertAgo(ago) {\\n    var diff = ago.substring(0, ago.length-1);\\n    var now = new Date();\\n    if(ago.endsWith('m')) {\\n      return now.setMinutes(now.getMinutes() - diff);\\n    } else if(ago.endsWith('h')) {\\n      return now.setMinutes(now.getHours() - diff);\\n    }\\n    console.log(`ERRRRO ${ago}`);\\n  }\"",
 					"metaName": "code",
 					"metaDescription": "A JavaScript function body. Supports `await` and returning promises"
 				}
