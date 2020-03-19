@@ -1,0 +1,98 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Monitoring API API",
+    "version": "1.0"
+  },
+  "host": "example.com",
+  "paths": {
+    "/router/service/{serviceID}/ops/search": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          }
+        },
+        "parameters": [
+          {
+            "in": "query",
+            "name": "format",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "field",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "value",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "count",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "ago",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "protocol",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "op",
+            "type": "string"
+          }
+        ],
+        "x-flow": "monitoringApiApi-getRouterServiceOpsSearchByServiceID"
+      },
+      "x-flow": "monitoringApiApi-getRouterServiceOpsSearchByServiceID",
+      "parameters": [
+        {
+          "name": "serviceID",
+          "in": "path",
+          "type": "string",
+          "required": true
+        }
+      ]
+    },
+    "/router/service/{serviceID}/ops/stream/{correlationId}/*circuitpath": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "serviceID",
+          "in": "path",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "correlationId",
+          "in": "path",
+          "type": "string",
+          "required": true
+        }
+      ]
+    }
+  },
+  "basePath": "/elk/v1/api"
+}

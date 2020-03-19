@@ -1,0 +1,68 @@
+# This workflow is validating the API-Builder exposed Traffic-Monitor API. 
+# For that an Elasticsearch instance is started, test-data inserted and the 
+# API-Builder Traffic-Monitor API is executed with all possible parameters.
+
+name: Test Traffic-Monitor API
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  release: 
+    types: [ published ]
+
+jobs:
+  build:
+    env:
+      workingDirectory: 'elk-traffic-monitor-api'
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [10.x, 12.x]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: Starting Elasticsearch instance
+      uses: nyaruka/elasticsearch-action@v1
+      with:
+        elastic version: '7.6.1' 
+    - name: Sleep 30 seconds to make sure ES is ready
+      uses: jakejarvis/wait-action@master
+      with:
+        time: '30s'
+    - name: Run npm ci, npm test
+      working-directory: ${{env.workingDirectory}}
+      env:
+        ELASTIC_NODE: 'http://localhost:9200'
+        LOG_LEVEL: INFO
+        CI: true
+      run: | 
+        npm ci
+        npm run build --if-present
+        npm test
+  publish:
+    if: github.event.action == 'published'
+    env:
+      workingDirectory: 'elk-traffic-monitor-api'
+    needs: build
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Publish Docker image
+      uses: elgohr/Publish-Docker-Github-Action@2.13
+      with:
+        name: cwiechmann/elk-traffic-monitor-api
+        workdir: ${{env.workingDirectory}}
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        snapshot: true
+

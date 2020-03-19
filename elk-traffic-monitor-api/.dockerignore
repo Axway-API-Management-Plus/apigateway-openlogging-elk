@@ -1,0 +1,7 @@
+conf/local.js
+conf/*.local.js
+coverage
+.git
+node_modules
+.nyc_output
+conf/.env

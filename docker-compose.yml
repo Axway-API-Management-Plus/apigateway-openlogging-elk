@@ -1,5 +1,6 @@
 version: '3.7'
 services:
+  # The core component
   elasticsearch1:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.4.0
     container_name: elasticsearch1
@@ -26,7 +27,7 @@ services:
       - 9200:9200
       - 9300:9300
 
-
+  # This is optional, but good to have to perform manual queries and create custom dashboards
   kibana:
     image: docker.elastic.co/kibana/kibana:7.4.0
     container_name: kibana
@@ -49,7 +50,7 @@ services:
       - elastic
       - ingress
 
-
+  # Supposed to run side-by-side with the API-Gateway to watch the Open-Traffic Event files and send event to Logstash
   filebeat:
     image: docker.elastic.co/beats/filebeat:7.4.0
     command: --strict.perms=false
@@ -67,7 +68,7 @@ services:
     networks:
       - elastic
 
-
+  # Is receiving events from Filebeat and does pre-processing
   logstash:
     image: docker.elastic.co/logstash/logstash:7.4.0
     links:
@@ -78,14 +79,29 @@ services:
     ports:
       - 5044:5044
     volumes:
-      - ${PWD}/configs/logstash.conf:/usr/share/logstash/pipeline/default.conf
-    command: logstash --path.config /usr/share/logstash/pipeline/default.conf --pipeline.batch.size 20 --pipeline.workers 1 --log.level info
+      - ${PWD}/configs/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+      - ${PWD}/configs/openlog_index_template.json:/usr/share/logstash/pipeline/openlog_index_template.json
+    command: logstash --path.config /usr/share/logstash/pipeline/logstash.conf --pipeline.batch.size 20 --pipeline.workers 1 --log.level info
     depends_on:
       - elasticsearch1
     networks:
       - elastic
 
+  # This is the API-Builder project exposing the API-Gateway Manager REST-API
+  elk-traffic-monitor-api:
+    image: cwiechmann/elk-traffic-monitor-api:latest
+    links:
+      - elasticsearch1
+    environment:
+      - ELASTIC_NODE=http://elasticsearch1:9200
+    ports:
+      - 8889:8080
+    depends_on:
+      - elasticsearch1
+    networks:
+      - elastic
 
+  # This is the Logspector Web-Application
   nginx:
     image: nginx:1.17.6
     ports:
