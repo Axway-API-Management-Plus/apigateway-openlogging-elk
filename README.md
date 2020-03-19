@@ -18,8 +18,8 @@ Finally, the Admin-Node-Manager has to be configured to use the API-Builder API 
 API-Builder status:  
 ![Test Traffic-Monitor API](https://github.com/cwiechmann/apigateway-openlogging-elk/workflows/Test%20Traffic-Monitor%20API/badge.svg)
 
-## Option 2 - Logspector
-The Logspecotr is a new separated user-interface with very basic set of functionilties. As part of the project the Logspector is activated by default when using `docker-compose up -d`. If you don't wanna use it, it can be disabled by commenting out the following lines in the docker-compose.yml file:
+## Option 2 - Loginspector
+The Loginspector is a new separated user-interface with very basic set of functionilties. As part of the project the Loginspector is activated by default when using `docker-compose up -d`. If you don't wanna use it, it can be disabled by commenting out the following lines in the docker-compose.yml file:
 ```yaml
   nginx:
     image: nginx:1.17.6
