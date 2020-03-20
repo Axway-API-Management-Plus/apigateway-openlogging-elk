@@ -115,7 +115,7 @@ docker-compose down
 
 ## Troubleshooting
 #### Check processes/containers are running
-From with the folder where the docker-compose.yml file is located run 
+From within the folder where the docker-compose.yml file is located execute: 
 ```
 docker-compose inspect
                               Name                                             Command                  State                           Ports                     
@@ -125,7 +125,7 @@ apigateway-openlogging-elk_filebeat_1_3ad3117a1312                  /usr/local/b
 apigateway-openlogging-elk_logstash_1_c6227859a9a4                  /usr/local/bin/docker-entr ...   Up             0.0.0.0:5044->5044/tcp, 9600/tcp              
 elasticsearch1                                                      /usr/local/bin/docker-entr ...   Up             0.0.0.0:9200->9200/tcp, 0.0.0.0:9300->9300/tcp
 ```
-Depending on the services you enabled/disbaled you see the status.
+Depending on the services you enabled/disbaled you see the status of each container.
 
 #### Check Filebeat is picking up data
 You need to check the filebeat Log-File within the running docker container.   
@@ -147,7 +147,7 @@ Logstash write to Stdout, hence you can view information just with:
 ```
 docker logs apigateway-openlogging-elk_logstash_1_c6227859a9a4 --follow
 ```
-When Logstash is successfully started you shoudl see the following:
+When Logstash is successfully started you should see the following:
 ```
 [INFO ][logstash.javapipeline    ] Starting pipeline {:pipeline_id=>"main", "pipeline.workers"=>1, "pipeline.batch.size"=>20, "pipeline.batch.delay"=>50, "pipeline.max_inflight"=>20, :thread=>"#<Thread:0x7d34e839 run>"}
 [INFO ][logstash.inputs.beats    ] Beats inputs: Starting input listener {:address=>"0.0.0.0:5044"}
@@ -165,7 +165,7 @@ When Logstash is successfully started you shoudl see the following:
 [INFO ][logstash.agent           ] Pipelines running {:count=>2, :running_pipelines=>[:main, :".monitoring-logstash"], :non_running_pipelines=>[]}
 [INFO ][logstash.agent           ] Successfully started Logstash API endpoint {:port=>9600}
 ```
-Once, Logstash is successfully processing data you see them flying by in the log output.
+Once, Logstash is successfully processing data, you see them flying by as JSON-Payload in the log output.
 
 #### Check Elasticsearch processing
 It takes a while until Elasticsearch is finally started and reports it with the following line: 
@@ -176,7 +176,7 @@ When Elasticsearch is finally started:
 ```
 "level": "INFO", "component": "o.e.c.r.a.AllocationService", "cluster.name": "elasticsearch", "node.name": "elasticsearch1", "message": "Cluster health status changed from [RED] to [YELLOW] (reason: [shards started [[.kibana_1][0]]]).", "cluster.uuid": "k22kMiq4R12I7BSTD87n5Q", "node.id": "6TVkdA-YR7epgV39dZNG2g"  }
 ```
-Status Yellow is expected when running Elasticsearch on a single node, as it can achieve the desired replicas. You may use Kibana Development tools or curl to get additional information.
+Status YELLOW is expected when running Elasticsearch on a single node, as it can achieve the desired replicas. You may use Kibana Development tools or curl to get additional information.
 
 #### Check API-Builder processing
 The API-Builder docker container is running 
