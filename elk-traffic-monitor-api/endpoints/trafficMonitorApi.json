@@ -1,8 +1,16 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "Monitoring API API",
-    "version": "1.0"
+    "title": "Traffic Monitor API",
+    "version": "1.0",
+    "description": "This API is defining a subset of the Axway API-Gateway Admin-Node-Manager API ([Official Docs](http://apidocs.axway.com/swagger-ui/index.html?productname=apigateway&productversion=7.7.0&filename=api-gateway-swagger.json)) with the purpose to replace the implementation with an Elasticsearch datasource instead of the API-Gateway internal OPSDB.",
+    "license": {
+      "name": "Apache 2.0"
+    },
+    "contact": {
+      "name": "Chris Wiechmann",
+      "email": "cwiechmann@axway.com"
+    }
   },
   "host": "example.com",
   "paths": {
@@ -54,39 +62,14 @@
             "type": "string"
           }
         ],
-        "x-flow": "monitoringApiApi-getRouterServiceOpsSearchByServiceID"
-      },
-      "x-flow": "monitoringApiApi-getRouterServiceOpsSearchByServiceID",
-      "parameters": [
-        {
-          "name": "serviceID",
-          "in": "path",
-          "type": "string",
-          "required": true
-        }
-      ]
-    },
-    "/router/service/{serviceID}/ops/stream/{correlationId}/*circuitpath": {
-      "get": {
-        "responses": {
-          "200": {
-            "description": "",
-            "schema": {
-              "type": "object",
-              "properties": {}
-            }
-          }
-        }
+        "summary": "Seach requests to build Traffic-Overview table",
+        "description": "This endpoint is used by the API-Gateway Traffic-Monitor to search for processed requests and create the Requests-Table.",
+        "operationId": "search",
+        "x-flow": "trafficMonitorApi-search"
       },
       "parameters": [
         {
           "name": "serviceID",
-          "in": "path",
-          "type": "string",
-          "required": true
-        },
-        {
-          "name": "correlationId",
           "in": "path",
           "type": "string",
           "required": true
