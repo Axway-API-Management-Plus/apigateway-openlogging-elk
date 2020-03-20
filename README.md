@@ -1,12 +1,15 @@
 # API-Management Traffic-Monitor based ELK stack
 
-When having many API-Gateway instances with millions of requests the API-Gateway Traffic Monitor can become slow. The purpose of this project is to solve that performance issue and get other benefits by using a standard external datastore: Elasticsearch.  
+When having many API-Gateway instances with millions of requests the API-Gateway Traffic Monitor can become slow and the observation period quite short. The purpose of this project is to solve that performance issue, make it possible to observe a long time-frame and get other benefits by using a standard external datastore: [Elasticsearch](https://www.elastic.co/elasticsearch).  
 
 The overall architecture this project provides looks like this:  
 ![Architecture][img1]   
 
+This also makes it possible to collect data from API-Gateways running all over the world into a centralized Elasticsearch instance to have it available with the best possible performance independing from the network performance.  
+It also helps, when running the Axway API-Gateway in Docker-Orchestration-Environment where containers are started and stopped as it avoids to loose data, when an API-Gateway container is stopped.  
+
 ### How it works  
-Each API-Gateway instance is writing, [if configured](#enable-open-traffic-event-log), Open-Traffic Event-Log-Files, which are streamed by [Filebeat](https://www.elastic.co/beats/filebeat) into a Logstash-Instance. [Logstash](https://www.elastic.co/logstash) performs data pre-processing, combines different events and finally forwards the document into an [Elasticsearch](https://www.elastic.co/elasticsearch) cluster.  
+Each API-Gateway instance is writing, [if configured](#enable-open-traffic-event-log), Open-Traffic Event-Log-Files, which are streamed by [Filebeat](https://www.elastic.co/beats/filebeat) into a Logstash-Instance. [Logstash](https://www.elastic.co/logstash) performs data pre-processing, combines different events and finally forwards these so called documents into an Elasticsearch cluster.  
 
 Once the data is indexed by Elasticsearch it can be used by different clients. This process allows almost realtime monitoring of incoming requests. It takes around 5 seconds until a request is available in Elasticsearch.
 
@@ -19,7 +22,7 @@ API-Builder exposing Traffic-Monitor API:
 ![Traffic-Monitor API](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/workflows/Test%20Traffic-Monitor%20API/badge.svg)
 
 ## Option 2 - Loginspector
-The Loginspector is a new separated user-interface with very basic set of functionilties. As part of the project the Loginspector is activated by default when using `docker-compose up -d`. If you don't wanna use it, it can be disabled by commenting out the following lines in the docker-compose.yml file:
+The Loginspector is a new separated user-interface with very basic set of functionalities. As part of the project the Loginspector is activated by default when using `docker-compose up -d`. If you don't wanna use it, it can be disabled by commenting out the following lines in the docker-compose.yml file:
 ```yaml
   nginx:
     image: nginx:1.17.6
@@ -36,21 +39,21 @@ The Loginspector is a new separated user-interface with very basic set of functi
 ```
 The Log-Inspector is accessible on the following URL: `http://hostname-to-your-docker-machine:8888/logspector.html`
 
-![Log-Spector][img5]  
+![Log-Inspector][img5]  
 
 
 ## Prerequisites
 For a simple deployment the prerequisites are very simple as all services can be started as a Docker-Container. In order to start all components in PoC-Like-Mode you just need:
 
 1. A Docker engine
-2. docker-compose installed
+2. Docker-compose
 3. An API-Management Version >7.7-20200130  
-   - Versin 7.7-20200130 is required due to some Dateform changes in the Open-Traffic-Format. With older versions of the API-Gateway you will get an error in Logstash processing.
+   - Versin 7.7-20200130 is required due to some Dateformat changes in the Open-Traffic-Format. With older versions of the API-Gateway you will get an error in Logstash processing.
 
-Using the provided docker-compose is good to play with, however this approach is not recommended for production environments. Depending the load a dedicated machine (node) for Elasticsearch is recommended. The default configuration is prepared to scale up to five Elasticsearch nodes, which can handle millions of requests. To run Logstash and the API-Builder service a Docker-Orchestration framework is recommended as you get monitoring, self-healing, elasticity.
+Using the provided docker-compose is good to play with, however this approach is not recommended for production environments. Depending on the load, a dedicated machine (node) for Elasticsearch is recommended. The default configuration is prepared to scale up to five Elasticsearch nodes, which can handle millions of requests. To run Logstash and the API-Builder service a Docker-Orchestration framework is recommended as you get monitoring, self-healing, elasticity and more.
 
 ## Installation / Configuration
-To run the components in a PoC-Like mode, the recommended way is to clone this project onto a machine having docker and docker-compose installed. Also this machine must have file-based access to the running API-Gateway instance, as the Filebeat docker container will mount the open-traffic folder into the docker-container.
+To run the components in a PoC-Like mode, the recommended way is to clone this project onto a machine having docker and docker-compose installed. Also this machine must have file-based access to the running API-Gateway instance, as the Filebeat docker container will mount the open-traffic folder into the container.
 
 `git clone https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk.git`  
 
@@ -58,12 +61,12 @@ This creates a local copy of the repository and you can start from there.
 
 ### Enable Open-Traffic Event Log
 Obviously you have to enable Open-Traffic-Event log for your API-Gateway instances. [Read here][1] how to enable the Open-Traffic Event-Log.  
-After this configuration has been done, Open-Traffic log-files will created by default in this location: `apigateway/logs/opentraffic`. This location becomes relevant in the next step, when configuring Filebeat.
+After this configuration has been done, Open-Traffic log-files will created by default in this location: `apigateway/logs/opentraffic`. This location becomes relevant when configuring Filebeat.
 
 ### Configure the Admin-Node-Manager
-This step is required if you would like to use the existing Traffic-Monitor in combination Elasticsearch.  
-The Admin-Node-Manager (listening by default on port 8090) is responsible to server the API-Manager Traffic-Monitor and needs to be configured to use the API-Builder API instead.  
-For the following steps, please open the Admin-Node-Manager configuration in Policy-Studio. You can [here](https://docs.axway.com/bundle/axway-open-docs/page/docs/apim_administration/apigtw_admin/general_rbac_ad_ldap/index.html#use-the-ldap-policy-to-protect-management-services) how to do that.  
+This step is required if you would like to use the existing API-Gateway Manager Traffic-Monitor in combination Elasticsearch.  
+The Admin-Node-Manager (listening by default on port 8090) is responsible to serve the Traffic-Monitor and needs to be configured to use the API-Builder REST-API instead.  
+For the following steps, please open the Admin-Node-Manager configuration in Policy-Studio. You can read [here](https://docs.axway.com/bundle/axway-open-docs/page/docs/apim_administration/apigtw_admin/general_rbac_ad_ldap/index.html#use-the-ldap-policy-to-protect-management-services) how to do that.  
 - Create a new policy called: `Use Elasticsearch API`
 - Configure this policy like so:  
   ![use ES API][img3]  
@@ -109,6 +112,85 @@ Of course, the components can also run on different machines or on a Docker-Orch
 ````
 docker-compose down
 ````
+
+## Troubleshooting
+#### Check processes/containers are running
+From with the folder where the docker-compose.yml file is located run 
+```
+docker-compose inspect
+                              Name                                             Command                  State                           Ports                     
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+apigateway-openlogging-elk_elk-traffic-monitor-api_1_3fbba4deea37   docker-entrypoint.sh node .      Up (healthy)   0.0.0.0:8889->8080/tcp                        
+apigateway-openlogging-elk_filebeat_1_3ad3117a1312                  /usr/local/bin/docker-entr ...   Up             0.0.0.0:9000->9000/tcp                        
+apigateway-openlogging-elk_logstash_1_c6227859a9a4                  /usr/local/bin/docker-entr ...   Up             0.0.0.0:5044->5044/tcp, 9600/tcp              
+elasticsearch1                                                      /usr/local/bin/docker-entr ...   Up             0.0.0.0:9200->9200/tcp, 0.0.0.0:9300->9300/tcp
+```
+Depending on the services you enabled/disbaled you see the status.
+
+#### Check Filebeat is picking up data
+You need to check the filebeat Log-File within the running docker container.   
+`docker exec -it apigateway-openlogging-elk_filebeat_1_3ad3117a1312 bash`  
+`cd logs`  
+`tail -f filebeat`  
+Make sure, the Filebeat Harvester is started on the Open-Traffic-Files:
+```
+INFO	log/harvester.go:251	Harvester started for file: /var/log/work/group-2_instance-1_traffic.log
+```
+The following error means, Logstash is not running or reachable:
+```
+ERROR	pipeline/output.go:100	Failed to connect to backoff(async(tcp://logstash:5044)): lookup logstash on 127.0.0.11:53: no such host
+```
+General note: You don't see Filebeat telling you, when it is successfully processing your log-files. When the Harvester process is started and you don't see any errors, you can assume your files are processed.
+
+#### Check Logstash processing
+Logstash write to Stdout, hence you can view information just with:
+```
+docker logs apigateway-openlogging-elk_logstash_1_c6227859a9a4 --follow
+```
+When Logstash is successfully started you shoudl see the following:
+```
+[INFO ][logstash.javapipeline    ] Starting pipeline {:pipeline_id=>"main", "pipeline.workers"=>1, "pipeline.batch.size"=>20, "pipeline.batch.delay"=>50, "pipeline.max_inflight"=>20, :thread=>"#<Thread:0x7d34e839 run>"}
+[INFO ][logstash.inputs.beats    ] Beats inputs: Starting input listener {:address=>"0.0.0.0:5044"}
+[INFO ][logstash.javapipeline    ] Pipeline started {"pipeline.id"=>"main"}
+[INFO ][org.logstash.beats.Server] Starting server on port: 5044
+[INFO ][logstash.agent           ] Pipelines running {:count=>1, :running_pipelines=>[:main], :non_running_pipelines=>[]}
+...
+......
+...
+[INFO ][logstash.outputs.elasticsearch] Elasticsearch pool URLs updated {:changes=>{:removed=>[], :added=>[http://elasticsearch1:9200/]}}
+[INFO ][logstash.outputs.elasticsearch] ES Output version determined {:es_version=>7}
+[INFO ][logstash.outputs.elasticsearch] New Elasticsearch output {:class=>"LogStash::Outputs::ElasticSearch", :hosts=>["//elasticsearch1:9200"]}
+[INFO ][logstash.javapipeline    ] Starting pipeline {:pipeline_id=>".monitoring-logstash", "pipeline.workers"=>1, "pipeline.batch.size"=>2, "pipeline.batch.delay"=>50, "pipeline.max_inflight"=>2, :thread=>"#<Thread:0x147f9919 run>"}
+[INFO ][logstash.javapipeline    ] Pipeline started {"pipeline.id"=>".monitoring-logstash"}
+[INFO ][logstash.agent           ] Pipelines running {:count=>2, :running_pipelines=>[:main, :".monitoring-logstash"], :non_running_pipelines=>[]}
+[INFO ][logstash.agent           ] Successfully started Logstash API endpoint {:port=>9600}
+```
+Once, Logstash is successfully processing data you see them flying by in the log output.
+
+#### Check Elasticsearch processing
+It takes a while until Elasticsearch is finally started and reports it with the following line: 
+```
+docker logs elasticsearch1 --follow
+```
+When Elasticsearch is finally started:
+```
+"level": "INFO", "component": "o.e.c.r.a.AllocationService", "cluster.name": "elasticsearch", "node.name": "elasticsearch1", "message": "Cluster health status changed from [RED] to [YELLOW] (reason: [shards started [[.kibana_1][0]]]).", "cluster.uuid": "k22kMiq4R12I7BSTD87n5Q", "node.id": "6TVkdA-YR7epgV39dZNG2g"  }
+```
+Status Yellow is expected when running Elasticsearch on a single node, as it can achieve the desired replicas. You may use Kibana Development tools or curl to get additional information.
+
+#### Check API-Builder processing
+The API-Builder docker container is running 
+```
+docker logs apigateway-openlogging-elk_elk-traffic-monitor-api_1_3fbba4deea37 --follow
+```
+```
+server started on port 8080
+```
+When using the API-Gateway Traffic-Monitor and having the Admin-Node-Manager re-configured you see how API-Builder is processing the requests:
+```
+Request {"method":"GET","url":"/api/elk/v1/api/router/service/instance-1/ops/search?format=json&field=leg&value=0&count=1000&ago=10m&protocol=http","headers":{"host":"localhost:8889","max-forwards":"20","via":"1.0 api-env (Gateway)","accept":"application/json","accept-language":"en-US,en;q=0.5","cookie":"cookie_pressed_153=false; t3-admin-tour-firstshow=1; VIDUSR=1584691147-TE1M3vI9BFWgkA%3d%3d; layout_type=table; portal.logintypesso=false; portal.demo=off; portal.isgridSortIgnoreCase=on; 6e7e1bb1dd446d4cd36889414ccb4cb7=8g9p3kh27t1se22lu6avkmu0a1; joomla_user_state=logged_in; 220b750abfbc8d2f2f878161bab0ab65=62gr71dkre858nc0gjldri18gt","csrf-token":"8E96374767C47BFADC9C606FF969D7CF56FB3F9523E41B34F3B3B269F7302646","referer":"https://api-env:8090/","user-agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:74.0) Gecko/20100101 Firefox/74.0","x-requested-with":"XMLHttpRequest","connection":"close","x-correlationid":"Id-fd7c745ebfaed039b2155481 1"},"remoteAddress":"::ffff:172.25.0.1","remotePort":55916}
+Response {"statusCode":200,"headers":{"server":"API Builder/4.25.0","request-id":"35fb859d-00b0-404b-97e6-b549db17f84c","x-xss-protection":"1; mode=block","x-frame-options":"DENY","surrogate-control":"no-store","cache-control":"no-store, no-cache, must-revalidate, proxy-revalidate","pragma":"no-cache","expires":"0","x-content-type-options":"nosniff","start-time":"1584692477587","content-type":"application/json; charset=utf-8","response-time":"408","content-md5":"e306ea2d930a3b80f0e91a29131d520b","content-length":"267","etag":"W/\"10b-2N+JsHuxDxMVKhJR1A8GuNGnKDQ\"","vary":"Accept-Encoding"}}
+```
 
 [img1]: imgs/component-overview.png
 [img2]: imgs/node-manager-policies.png
