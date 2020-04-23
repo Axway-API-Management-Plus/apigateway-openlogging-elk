@@ -203,7 +203,8 @@ In oder to see the queries that are send to ElasticSearch by API-Builder you nee
 ```
 Using elastic search query body: {"index":"logstash-openlog","body":{"query":{"bool":{"must":[{"range":{"timestampOriginal":{"gt":1587541496568}}},{"term":{"processInfo.serviceId":"instance-1"}}]}}},"size":"1000","sort":""}
 ```
-This helps you to further analyze if ElasticSearch is returning the correct information for instance using the Kibana development console. 
+This helps you to further analyze if ElasticSearch is returning the correct information for instance using the Kibana development console. Example sending the same request using the Kibana Development console:  
+![Kibana Dev-Console][img8]
 
 
 [img1]: imgs/component-overview.png
@@ -213,5 +214,6 @@ This helps you to further analyze if ElasticSearch is returning the correct info
 [img5]: imgs/Logspector.png
 [img6]: imgs/IsmanagedbyElasticsearchAPI.png
 [img7]: imgs/connect-to-elasticsearch-api.png
+[img8]: imgs/kibana-dev-tool-sample-query.png
 
 [1]: https://docs.axway.com/bundle/axway-open-docs/page/docs/apim_administration/apigtw_admin/admin_open_logging/index.html#configure-open-traffic-event-logging
