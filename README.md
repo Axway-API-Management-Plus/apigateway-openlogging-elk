@@ -120,7 +120,7 @@ To secure access to your Elasticsearch instance you can import the API Builder R
 http://docker-host:8889/apidoc/swagger.json?endpoints/trafficMonitorApi
 
 ## Troubleshooting
-#### Check processes/containers are running
+### Check processes/containers are running
 From within the folder where the docker-compose.yml file is located execute: 
 ```
 docker-compose inspect
@@ -133,7 +133,7 @@ elasticsearch1                                                      /usr/local/b
 ```
 Depending on the services you enabled/disbaled you see the status of each container.
 
-#### Check Filebeat is picking up data
+### Check Filebeat is picking up data
 You need to check the filebeat Log-File within the running docker container.   
 `docker exec -it apigateway-openlogging-elk_filebeat_1_3ad3117a1312 bash`  
 `cd logs`  
@@ -148,7 +148,7 @@ ERROR	pipeline/output.go:100	Failed to connect to backoff(async(tcp://logstash:5
 ```
 General note: You don't see Filebeat telling you, when it is successfully processing your log-files. When the Harvester process is started and you don't see any errors, you can assume your files are processed.
 
-#### Check Logstash processing
+### Check Logstash processing
 Logstash write to Stdout, hence you can view information just with:
 ```
 docker logs apigateway-openlogging-elk_logstash_1_c6227859a9a4 --follow
@@ -173,7 +173,7 @@ When Logstash is successfully started you should see the following:
 ```
 Once, Logstash is successfully processing data, you see them flying by as JSON-Payload in the log output.
 
-#### Check Elasticsearch processing
+### Check Elasticsearch processing
 It takes a while until Elasticsearch is finally started and reports it with the following line: 
 ```
 docker logs elasticsearch1 --follow
@@ -184,7 +184,7 @@ When Elasticsearch is finally started:
 ```
 Status YELLOW is expected when running Elasticsearch on a single node, as it can achieve the desired replicas. You may use Kibana Development tools or curl to get additional information.
 
-#### Check API-Builder processing
+### Check API-Builder processing
 The API-Builder docker container is running 
 ```
 docker logs apigateway-openlogging-elk_elk-traffic-monitor-api_1_3fbba4deea37 --follow
@@ -192,11 +192,19 @@ docker logs apigateway-openlogging-elk_elk-traffic-monitor-api_1_3fbba4deea37 --
 ```
 server started on port 8080
 ```
+#### Check requests from Admin-Node-Manager
 When using the API-Gateway Traffic-Monitor and having the Admin-Node-Manager re-configured you see how API-Builder is processing the requests:
 ```
 Request {"method":"GET","url":"/api/elk/v1/api/router/service/instance-1/ops/search?format=json&field=leg&value=0&count=1000&ago=10m&protocol=http","headers":{"host":"localhost:8889","max-forwards":"20","via":"1.0 api-env (Gateway)","accept":"application/json","accept-language":"en-US,en;q=0.5","cookie":"cookie_pressed_153=false; t3-admin-tour-firstshow=1; VIDUSR=1584691147-TE1M3vI9BFWgkA%3d%3d; layout_type=table; portal.logintypesso=false; portal.demo=off; portal.isgridSortIgnoreCase=on; 6e7e1bb1dd446d4cd36889414ccb4cb7=8g9p3kh27t1se22lu6avkmu0a1; joomla_user_state=logged_in; 220b750abfbc8d2f2f878161bab0ab65=62gr71dkre858nc0gjldri18gt","csrf-token":"8E96374767C47BFADC9C606FF969D7CF56FB3F9523E41B34F3B3B269F7302646","referer":"https://api-env:8090/","user-agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:74.0) Gecko/20100101 Firefox/74.0","x-requested-with":"XMLHttpRequest","connection":"close","x-correlationid":"Id-fd7c745ebfaed039b2155481 1"},"remoteAddress":"::ffff:172.25.0.1","remotePort":55916}
 Response {"statusCode":200,"headers":{"server":"API Builder/4.25.0","request-id":"35fb859d-00b0-404b-97e6-b549db17f84c","x-xss-protection":"1; mode=block","x-frame-options":"DENY","surrogate-control":"no-store","cache-control":"no-store, no-cache, must-revalidate, proxy-revalidate","pragma":"no-cache","expires":"0","x-content-type-options":"nosniff","start-time":"1584692477587","content-type":"application/json; charset=utf-8","response-time":"408","content-md5":"e306ea2d930a3b80f0e91a29131d520b","content-length":"267","etag":"W/\"10b-2N+JsHuxDxMVKhJR1A8GuNGnKDQ\"","vary":"Accept-Encoding"}}
 ```
+#### Check queries send to ElasticSearch
+In oder to see the queries that are send to ElasticSearch by API-Builder you need to run the Docker-Container with `LOG_LEVEL=debug`. This gives you in the console of the API-Builder the following output:  
+```
+Using elastic search query body: {"index":"logstash-openlog","body":{"query":{"bool":{"must":[{"range":{"timestampOriginal":{"gt":1587541496568}}},{"term":{"processInfo.serviceId":"instance-1"}}]}}},"size":"1000","sort":""}
+```
+This helps you to further analyze if ElasticSearch is returning the correct information for instance using the Kibana development console. 
+
 
 [img1]: imgs/component-overview.png
 [img2]: imgs/node-manager-policies.png
