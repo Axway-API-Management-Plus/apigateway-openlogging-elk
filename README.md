@@ -18,7 +18,7 @@ One option is to use the existing API-Gateway Traffic-Monitor. That means, you u
 The glue between Elasticsearch and the API-Gateway Traffic-Monitor is an [API-Builder project](./elk-traffic-monitor-api), that is exposing the same Traffic-Monitor API, but it is implemented using Elasticsearch instead of the OPSDB. The API-Builder is available as a ready to use Docker-Image and preconfigured in the docker-compose file.  
 Optionally you can import the API-Builder API into your API-Management system to apply additional security and by that secure access to your Elasticsearch instance.  
 
-Finally, the Admin-Node-Manager has to be configured to use the API-Builder API instead of the internal implementation.
+Finally, the Admin-Node-Manager has to be [configured](#configure-the-admin-node-manager) to use the API-Builder API instead of the internal implementation.
 
 API-Builder exposing Traffic-Monitor API:  
 ![Traffic-Monitor API](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/workflows/Test%20Traffic-Monitor%20API/badge.svg)
