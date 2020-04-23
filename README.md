@@ -66,7 +66,7 @@ Obviously you have to enable Open-Traffic-Event log for your API-Gateway instanc
 After this configuration has been done, Open-Traffic log-files will created by default in this location: `apigateway/logs/opentraffic`. This location becomes relevant when configuring Filebeat.
 
 ### Configure the Admin-Node-Manager
-This step is required if you would like to use the existing API-Gateway Manager Traffic-Monitor in combination Elasticsearch.  
+This step is required if you would like to use the existing API-Gateway Manager Traffic-Monitor in combination with Elasticsearch.  
 The Admin-Node-Manager (listening by default on port 8090) is responsible to serve the Traffic-Monitor and needs to be configured to use the API-Builder REST-API instead.  
 For the following steps, please open the Admin-Node-Manager configuration in Policy-Studio. You can read [here](https://docs.axway.com/bundle/axway-open-docs/page/docs/apim_administration/apigtw_admin/general_rbac_ad_ldap/index.html#use-the-ldap-policy-to-protect-management-services) how to do that.  
 - Create a new policy called: `Use Elasticsearch API`
