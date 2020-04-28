@@ -62,7 +62,7 @@ To run the components in a PoC-Like mode, the recommended way is to clone this p
 This creates a local copy of the repository and you can start from there.
 
 ### Enable Open-Traffic Event Log
-Obviously, you have to enable Open-Traffic-Event log for your API-Gateway instance(s). [Read here][1] how to enable the Open-Traffic Event-Log.
+Obviously, you have to enable Open-Traffic-Event log for your API-Gateway instance(s). [Read here][1] how to enable the Open-Traffic Event-Log.  
 After this configuration has been done, Open-Traffic log-files will be created by default in this location: `apigateway/logs/opentraffic`. This location becomes relevant when configuring Filebeat.
 
 ### Configure the Admin-Node-Manager
@@ -72,30 +72,30 @@ For the following steps, please open the ANM configuration in Policy-Studio. You
 - Create a new policy and name it `Use Elasticsearch API` - *This Policy will decide on what API calls can be routed to Elasticsearch*
 - The configured Policy should look like this:
 
-  <br/>![use ES API][img3]<br/>
+  ![use ES API][img3]  
 
     - The `Compare Attribute` filter checks if the requested API can be handled by the API-Builder project.
     _Right now, only the Traffic-Overview is implemented and can be handled by the API-Builder glue project. This will be extended soon!_
     - Add a criterion: `http.request.path` is `/api/router/service/instance-1/ops/search` 
     _The list of requests will be extended once the API-Builder project can serve more (e.g. the Request-Detail view). Right now, this is just hard coded for the topology we used for testing!_
-    ![Is API Managed][img6] 
-    - Adjust the URL of the Connect to URL filter to your running API-Builder docker container and port - **default is 8889**. Sample: `http://api-env:8889/api/elk/v1${http.request.rawURI}`
-    <br/><br/>![Connect to ES API][img7]
+    ![Is API Managed][img6]  
+    - Adjust the URL of the Connect to URL filter to your running API-Builder docker container and port - **default is 8889**. Sample: `http://api-env:8889/api/elk/v1${http.request.rawURI}`  
+    ![Connect to ES API][img7]
 - Insert the created policy as a callback policy (filter: Shortcut filter) into the main policy: `Protect Management Interfaces` and wire it like shown here:  
-  <br/>![Use Callback][img4]  
+  ![Use Callback][img4]  
   
-After you have saved, copy the configuration files from your local *Policy Studio* project (path on Linux: /home/<user>/apiprojects/\<project-name\>) back the configuration to the Admin-Node-Manager configuration (\<install-dir\>/apigateway/conf/fed) and restarted it. The Admin-Node-Manager will use the API provided by API-Builder to query the Elasticsearch API to serve the specified request-types.  
+After you have saved, copy the configuration files from your local *Policy Studio* project (path on Linux: `/home/<user>/apiprojects/\<project-name\>`) back the configuration to the Admin-Node-Manager configuration (`\<install-dir\>/apigateway/conf/fed`) and restarted it. The Admin-Node-Manager will use the API provided by API-Builder to query the Elasticsearch API to serve the specified request-types.  
 
 ### Setup filebeat
 :exclamation: __This is an important step, as otherwise Filebeat will not see and send any Open-Traffic Event data!__  
-Before starting the container using docker-compose, make sure to setup the paths in the project *.env* file. The variables must point to your running API-Gateway instance. These parameters are used to mount the Open-Traffic-Folder into the Filebeat container. For a typical Linux installation it looks like this (APIM beeing a symlink to current software version):
+Before starting the container using docker-compose, make sure to setup the paths in the project `*.env` file. The variables must point to your running API-Gateway instance. These parameters are used to mount the Open-Traffic-Folder into the Filebeat container. For a typical Linux installation it looks like this (APIM beeing a symlink to current software version):
 ```
 APIGATEWAY_LOGS_FOLDER=/opt/Axway/APIM/apigateway/logs/opentraffic
 APIGATEWAY_TRACES_FOLDER=/opt/Axway/APIM/apigateway/groups/group-2/instance-1/trace
 ```
 
 ### Setup API-Builder
-As the API-Builder container needs to communicate with Elasticsearch it needs to know where Elasticsearch is running. Again, this environment variable must be configured within *.env*:
+As the API-Builder container needs to communicate with Elasticsearch it needs to know where Elasticsearch is running. Again, this environment variable must be configured within `.env`:
 ```
 ELASTIC_NODE=http://elasticsearch1:9200
 ```
