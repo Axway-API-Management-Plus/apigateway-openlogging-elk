@@ -75,6 +75,36 @@
           "required": true
         }
       ]
+    },
+    "/router/service/{serviceID}/ops/stream/{correlationID}/{legID}/circuitpath": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {},
+        "operationId": "get-circuitpath",
+        "description": "Retrieve transaction API gateway circuit execution path."
+      },
+      "parameters": [
+        {
+          "type": "string",
+          "name": "serviceID",
+          "in": "path",
+          "required": true
+        },
+        {
+          "type": "string",
+          "name": "correlationID",
+          "in": "path",
+          "required": true
+        },
+        {
+          "type": "string",
+          "name": "legID",
+          "in": "path",
+          "required": true,
+          "description": "transaction can have multiple legs. '*' here stands fo r any leg."
+        }
+      ]
     }
   },
   "basePath": "/elk/v1/api"
