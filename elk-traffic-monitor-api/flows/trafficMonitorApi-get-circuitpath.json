@@ -1,0 +1,88 @@
+{
+	"schemaVersion": "4",
+	"info": {
+		"name": "trafficMonitorApi - get /router/service/{serviceID}/ops/stream/{correlationID}/{legID}/circuitpath"
+	},
+	"parameter": {
+		"properties": {
+			"params": {
+				"type": "object",
+				"description": "The parameters from the endpoint."
+			},
+			"request": {
+				"type": "object",
+				"description": "The HTTP request."
+			},
+			"config": {
+				"type": "object",
+				"description": "The service's configuration"
+			},
+			"env": {
+				"type": "object",
+				"description": "The host OS environment"
+			}
+		},
+		"additionalProperties": false,
+		"required": [
+			"params",
+			"request",
+			"config",
+			"env"
+		]
+	},
+	"start": "setcontext.1",
+	"nodes": {
+		"setcontext.1": {
+			"type": "nodehandler://axway-flow/setcontext",
+			"name": "Set Context",
+			"method": "setcontext",
+			"parameters": [
+				{
+					"name": "value",
+					"type": "array",
+					"value": "[{\n        \"policy\": \"Put HTTP Message to Queue\",\n        \"execTime\": 113,\n        \"filters\": [{\n                \"espk\": \"DEFAULT_PRIMARY_VordelGateway_7.6.2:-7897440004494025921\",\n                \"name\": \"Set Test Message Text\",\n                \"type\": \"SetAttributeFilter\",\n                \"class\": \"com.vordel.circuit.attribute.SetAttributeFilter\",\n                \"status\": \"Pass\",\n                \"filterTime\": 1588236541145,\n                \"execTime\": 0\n            }, {\n                \"espk\": \"DEFAULT_PRIMARY_VordelGateway_7.6.2:-1135073561351111307\",\n                \"name\": \"Trace Before PUT\",\n                \"type\": \"TraceFilter\",\n                \"class\": \"com.vordel.circuit.basic.TraceFilter\",\n                \"status\": \"Pass\",\n                \"filterTime\": 1588236541147,\n                \"execTime\": 2\n            }, {\n                \"espk\": \"DEFAULT_PRIMARY_VordelGateway_7.6.2:3616535984594960941\",\n                \"name\": \"Put Message into JMS Queue\",\n                \"type\": \"JMSFilter\",\n                \"class\": \"com.vordel.circuit.jms.JMSFilter\",\n                \"status\": \"Pass\",\n                \"filterTime\": 1588236541254,\n                \"execTime\": 107\n            }, {\n                \"espk\": \"DEFAULT_PRIMARY_VordelGateway_7.6.2:-1105062071377203072\",\n                \"name\": \"Trace After PUT\",\n                \"type\": \"TraceFilter\",\n                \"class\": \"com.vordel.circuit.basic.TraceFilter\",\n                \"status\": \"Pass\",\n                \"filterTime\": 1588236541256,\n                \"execTime\": 2\n            }, {\n                \"espk\": \"DEFAULT_PRIMARY_VordelGateway_7.6.2:-8101525208034331783\",\n                \"name\": \"Set Reply Message\",\n                \"type\": \"ChangeMessageFilter\",\n                \"class\": \"com.vordel.circuit.conversion.ChangeMessageFilter\",\n                \"status\": \"Pass\",\n                \"filterTime\": 1588236541257,\n                \"execTime\": 1\n            }, {\n                \"espk\": \"DEFAULT_PRIMARY_VordelGateway_7.6.2:1563792121378715646\",\n                \"name\": \"Reflect Message\",\n                \"type\": \"ReflectFilter\",\n                \"class\": \"com.vordel.circuit.net.ReflectFilter\",\n                \"status\": \"Pass\",\n                \"filterTime\": 1588236541258,\n                \"execTime\": 1\n            }\n        ]\n    }\n]",
+					"metaName": "value"
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.myresult",
+					"routes": [
+						"http.1"
+					],
+					"metaName": "Next"
+				}
+			},
+			"metaMethod": "Set Context"
+		},
+		"http.1": {
+			"type": "nodehandler://axway-flow/http",
+			"name": "Set HTTP Response",
+			"method": "setresponse",
+			"parameters": [
+				{
+					"name": "status",
+					"type": "number",
+					"value": "200",
+					"metaName": "status",
+					"metaDescription": "The HTTP status code"
+				},
+				{
+					"name": "body",
+					"type": "jsonpath",
+					"value": "$.myresult",
+					"metaName": "body",
+					"metaDescription": "The response payload"
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.response",
+					"routes": [],
+					"metaName": "Next"
+				}
+			},
+			"metaMethod": "Set HTTP Response"
+		}
+	}
+}

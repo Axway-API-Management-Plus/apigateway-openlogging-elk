@@ -90,7 +90,8 @@
           }
         },
         "operationId": "get-circuitpath",
-        "description": "Retrieve transaction API gateway circuit execution path."
+        "description": "Retrieve transaction API gateway circuit execution path.",
+        "x-flow": "trafficMonitorApi-get-circuitpath"
       },
       "parameters": [
         {
