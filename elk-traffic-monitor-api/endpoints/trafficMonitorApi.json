@@ -80,7 +80,15 @@
       "get": {
         "summary": "Your GET endpoint",
         "tags": [],
-        "responses": {},
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          }
+        },
         "operationId": "get-circuitpath",
         "description": "Retrieve transaction API gateway circuit execution path."
       },
