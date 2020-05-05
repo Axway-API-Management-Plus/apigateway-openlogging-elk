@@ -56,7 +56,6 @@ describe('Endpoints', function () {
 				expect(body[0].filters[0].status).to.equal('Pass');
 			});
 		});
-
 	});
 });
 	
