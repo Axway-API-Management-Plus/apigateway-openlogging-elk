@@ -75,6 +75,37 @@
           "required": true
         }
       ]
+    },
+    "/router/service/{serviceID}/ops/stream/{correlationID}/*/circuitpath": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          }
+        },
+        "operationId": "Get circuit path",
+        "x-flow": "trafficMonitorApi-Get circuit path"
+      },
+      "parameters": [
+        {
+          "type": "string",
+          "name": "serviceID",
+          "in": "path",
+          "required": true
+        },
+        {
+          "type": "string",
+          "name": "correlationID",
+          "in": "path",
+          "required": true
+        }
+      ]
     }
   },
   "basePath": "/elk/v1/api"
