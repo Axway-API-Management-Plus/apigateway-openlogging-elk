@@ -44,6 +44,6 @@
 	},
 	"scripts": {
 		"start": "node .",
-		"test": "mocha --colors ./test --recursive -R spec"
+		"test": "mocha --exit --colors ./test --recursive -R spec"
 	}
 }

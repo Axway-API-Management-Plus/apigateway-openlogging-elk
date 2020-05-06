@@ -66,6 +66,7 @@ function requestAsync(uri, options, cb) {
 }
 
 async function sendToElasticsearch(elasticConfig, index, dataset) {
+	console.log(`Creating connection to ElasticSearch cluster: ${elasticConfig.node}`)
 	const client = new Client({
 		node: elasticConfig.node
 	});
@@ -88,7 +89,7 @@ async function sendToElasticsearch(elasticConfig, index, dataset) {
 	if (bulkResponse.errors) {
 		console.log(JSON.stringify(bulkResponse.errors));
 	}
-	console.log(`Inserted tes data into index: ${index}`)
+	console.log(`Inserted test data into index: ${index}`);
 }
 
 function getRandomInt(max) {
