@@ -31,7 +31,6 @@ describe('Traffic Monitor API', function () {
 		});
 	});
 
-	
 	/**
 	 * Stop API Builder after the tests.
 	 */
