@@ -1,0 +1,149 @@
+{
+	"schemaVersion": "4",
+	"info": {
+		"name": "trafficMonitorApi - get /router/service/{serviceID}/ops/stream/{correlationID}/*/circuitpath"
+	},
+	"parameter": {
+		"properties": {
+			"params": {
+				"type": "object",
+				"description": "The parameters from the endpoint."
+			},
+			"request": {
+				"type": "object",
+				"description": "The HTTP request."
+			},
+			"config": {
+				"type": "object",
+				"description": "The service's configuration"
+			},
+			"env": {
+				"type": "object",
+				"description": "The host OS environment"
+			}
+		},
+		"additionalProperties": false,
+		"required": [
+			"params",
+			"request",
+			"config",
+			"env"
+		]
+	},
+	"start": "condition.1",
+	"nodes": {
+		"setcontext.1": {
+			"type": "nodehandler://axway-flow/setcontext",
+			"name": "Healthcheck API",
+			"method": "setcontext",
+			"parameters": [
+				{
+					"name": "value",
+					"type": "array",
+					"value": "[\n\t{\n\t\t\"policy\": \"Health Check\",\n\t\t\"execTime\": 3,\n\t\t\"filters\": [\n\t\t\t{\n\t\t\t\t\"espk\": \"DEFAULT_PRIMARY_VordelGateway_7.7.0:-1095086795812854131\",\n\t\t\t\t\"name\": \"Set Message\",\n\t\t\t\t\"type\": \"ChangeMessageFilter\",\n\t\t\t\t\"class\": \"com.vordel.circuit.conversion.ChangeMessageFilter\",\n\t\t\t\t\"status\": \"Pass\",\n\t\t\t\t\"filterTime\": 1588666217698,\n\t\t\t\t\"execTime\": 3\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"espk\": \"DEFAULT_PRIMARY_VordelGateway_7.7.0:-4282446533257395104\",\n\t\t\t\t\"name\": \"Reflect\",\n\t\t\t\t\"type\": \"ReflectFilter\",\n\t\t\t\t\"class\": \"com.vordel.circuit.net.ReflectFilter\",\n\t\t\t\t\"status\": \"Pass\",\n\t\t\t\t\"filterTime\": 1588666217698,\n\t\t\t\t\"execTime\": 0\n\t\t\t}\n\t\t]\n\t}\n]",
+					"metaName": "value"
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.circuit_payload",
+					"routes": [
+						"http.1"
+					],
+					"metaName": "Next"
+				}
+			},
+			"metaMethod": "Set Context"
+		},
+		"http.1": {
+			"type": "nodehandler://axway-flow/http",
+			"name": "Set HTTP Response",
+			"method": "setresponse",
+			"parameters": [
+				{
+					"name": "status",
+					"type": "number",
+					"value": "200",
+					"metaName": "status",
+					"metaDescription": "The HTTP status code"
+				},
+				{
+					"name": "body",
+					"type": "jsonpath",
+					"value": "$.circuit_payload",
+					"metaName": "body",
+					"metaDescription": "The response payload"
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.response",
+					"routes": [],
+					"metaName": "Next"
+				}
+			},
+			"metaMethod": "Set HTTP Response"
+		},
+		"condition.1": {
+			"type": "nodehandler://axway-flow/condition",
+			"name": "Equals",
+			"method": "equals",
+			"parameters": [
+				{
+					"name": "source",
+					"type": "jsonpath",
+					"value": "$.params.transactionID",
+					"metaName": "source",
+					"metaDescription": "The input to test."
+				},
+				{
+					"name": "value",
+					"type": "string",
+					"value": "\"c8705e5ecc00adca32be7472\"",
+					"metaName": "value",
+					"metaDescription": "The value to test input against."
+				}
+			],
+			"outputs": {
+				"true": {
+					"routes": [
+						"setcontext.1"
+					],
+					"context": "$.equals",
+					"metaName": "True"
+				},
+				"false": {
+					"routes": [
+						"setcontext.2"
+					],
+					"context": "$.equals",
+					"metaName": "False"
+				}
+			},
+			"metaMethod": "Equals"
+		},
+		"setcontext.2": {
+			"type": "nodehandler://axway-flow/setcontext",
+			"name": "ToDo API",
+			"method": "setcontext",
+			"parameters": [
+				{
+					"name": "value",
+					"type": "array",
+					"value": "[\n\t{\n\t\t\"policy\": \"API Broker\",\n\t\t\"execTime\": 721,\n\t\t\"filters\": [\n\t\t\t{\n\t\t\t\t\"name\": \"Set service context\",\n\t\t\t\t\"type\": \"VApiServiceContextFilter\",\n\t\t\t\t\"class\": \"com.vordel.circuit.vapi.VApiServiceContextFilter\",\n\t\t\t\t\"status\": \"Pass\",\n\t\t\t\t\"filterTime\": 1588798042453,\n\t\t\t\t\"execTime\": 5\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"name\": \"Global Request Policy\",\n\t\t\t\t\"type\": \"CircuitDelegateFilter\",\n\t\t\t\t\"class\": \"com.vordel.circuit.CircuitDelegateFilter\",\n\t\t\t\t\"status\": \"Pass\",\n\t\t\t\t\"filterTime\": 1588798042464,\n\t\t\t\t\"execTime\": 9,\n\t\t\t\t\"subPaths\": [\n\t\t\t\t\t{\n\t\t\t\t\t\t\"policy\": \"Trace\",\n\t\t\t\t\t\t\"execTime\": 9,\n\t\t\t\t\t\t\"filters\": [\n\t\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\t\"espk\": \"DEFAULT_PRIMARY_VordelGateway_7.7.0:-2330724604838128298\",\n\t\t\t\t\t\t\t\t\"name\": \"Trace Filter\",\n\t\t\t\t\t\t\t\t\"type\": \"TraceFilter\",\n\t\t\t\t\t\t\t\t\"class\": \"com.vordel.circuit.basic.TraceFilter\",\n\t\t\t\t\t\t\t\t\"status\": \"Pass\",\n\t\t\t\t\t\t\t\t\"filterTime\": 1588798042464,\n\t\t\t\t\t\t\t\t\"execTime\": 9\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t]\n\t\t\t\t\t}\n\t\t\t\t]\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"name\": \"Custom Routing\",\n\t\t\t\t\"type\": \"VApiCircuitDelegateFilter\",\n\t\t\t\t\"class\": \"com.vordel.apiportal.runtime.virtualized.VApiCircuitDelegateFilter\",\n\t\t\t\t\"status\": \"Pass\",\n\t\t\t\t\"filterTime\": 1588798043171,\n\t\t\t\t\"execTime\": 707,\n\t\t\t\t\"subPaths\": [\n\t\t\t\t\t{\n\t\t\t\t\t\t\"policy\": \"Default API Proxy Routing\",\n\t\t\t\t\t\t\"execTime\": 707,\n\t\t\t\t\t\t\"filters\": [\n\t\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\t\"espk\": \"DEFAULT_PRIMARY_VordelGateway_7.7.0:4323849261363416160\",\n\t\t\t\t\t\t\t\t\"name\": \"Default Routing\",\n\t\t\t\t\t\t\t\t\"type\": \"SwitchFilter\",\n\t\t\t\t\t\t\t\t\"class\": \"com.vordel.circuit.switchcase.SwitchFilter\",\n\t\t\t\t\t\t\t\t\"status\": \"Pass\",\n\t\t\t\t\t\t\t\t\"filterTime\": 1588798043171,\n\t\t\t\t\t\t\t\t\"execTime\": 707,\n\t\t\t\t\t\t\t\t\"subPaths\": [\n\t\t\t\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\t\t\t\"policy\": \"Default API Proxy Routing\",\n\t\t\t\t\t\t\t\t\t\t\"execTime\": 674,\n\t\t\t\t\t\t\t\t\t\t\"filters\": [\n\t\t\t\t\t\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\t\t\t\t\t\"name\": \"not-required-here\",\n\t\t\t\t\t\t\t\t\t\t\t\t\"type\": \"CircuitDelegateFilter\",\n\t\t\t\t\t\t\t\t\t\t\t\t\"class\": \"com.vordel.circuit.CircuitDelegateFilter\",\n\t\t\t\t\t\t\t\t\t\t\t\t\"status\": \"Pass\",\n\t\t\t\t\t\t\t\t\t\t\t\t\"filterTime\": 1588798043171,\n\t\t\t\t\t\t\t\t\t\t\t\t\"execTime\": 674,\n\t\t\t\t\t\t\t\t\t\t\t\t\"subPaths\": [\n\t\t\t\t\t\t\t\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\"policy\": \"Default Profile-based Routing\",\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\"execTime\": 674,\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\"filters\": [\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\"espk\": \"DEFAULT_PRIMARY_VordelGateway_7.7.0:5735607394361826155\",\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\"name\": \"Connect to URL\",\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\"type\": \"ConnectToURLFilter\",\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\"class\": \"com.vordel.circuit.net.ConnectToURLFilter\",\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\"status\": \"Pass\",\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\"filterTime\": 1588798043171,\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\"execTime\": 674\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t]\n\t\t\t\t\t\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\t\t\t\t\t]\n\t\t\t\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\t\t\t]\n\t\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\t]\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t]\n\t\t\t\t\t}\n\t\t\t\t]\n\t\t\t}\n\t\t]\n\t}\n]",
+					"metaName": "value"
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.circuit_payload",
+					"routes": [
+						"http.1"
+					],
+					"metaName": "Next"
+				}
+			},
+			"metaMethod": "Set Context"
+		}
+	}
+}
