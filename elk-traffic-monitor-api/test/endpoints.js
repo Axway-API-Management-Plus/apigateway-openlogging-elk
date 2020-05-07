@@ -1,6 +1,7 @@
 const { expect } = require('chai');
 const { startApiBuilder, stopApiBuilder, requestAsync, sendToElasticsearch, getRandomInt } = require('./_base');
 const fs = require('fs');
+const getDate = require('./util');
 
 describe('Endpoints', function () {
 	this.timeout(30000);
@@ -37,7 +38,6 @@ describe('Endpoints', function () {
 	after(() => stopApiBuilder(server));
 
 	describe('Search', () => {
-		debugger;
 		it('[Search-0001] Execute a search without a limit including all requests from instance-1', () => {
 			return requestAsync({
 				method: 'GET',
@@ -151,19 +151,65 @@ describe('Endpoints', function () {
 				user: server.apibuilder.config.apikey || 'test',
 				password: ''
 			};
+			// 
+			/**
+			 * The dates given here must be aligned with dates in search_test_documents.js. Currently configured like so:
+			 * 8m		--> "c8705e5ecc00adca32be7472"
+			 * 15m		--> "c9705e5ecd000322778d2ec4"   --> This is expected to be found
+			 * 120h		--> "fc705e5ede00654de6d15daf"
+			 * 65m		--> "4e645e5e4600bb590c881179"   --> This is expected to be found
+			 * 30000h	--> "bb30715e5300e189d1da43fc"
+			 */
+			const greaterThenThisDate = getDate('10h', true);
+			const lowerThanThisDate = getDate('10m', true);
+			console.log(`Query with greaterThenThisDate: ${greaterThenThisDate} and lowerThanThisDate: ${lowerThanThisDate}`);
 			return requestAsync({
 				method: 'GET',
-				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?field=timestamp&op=gt&value=1577833200000&field=timestamp&op=lt&value=1585691940000`,
+				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?field=timestamp&op=gt&value=${greaterThenThisDate}&field=timestamp&op=lt&value=${lowerThanThisDate}`,
 				auth: auth,
 				json: true
 			}).then(({ response, body }) => {
 				expect(response.statusCode).to.equal(200);
 				expect(body).to.be.an('Object');
 				expect(body).to.have.property('data');
-				expect(body.data).to.have.lengthOf(4);
+				expect(body.data).to.have.lengthOf(2);
+				expect(body.data[0].correlationId).to.equal("c9705e5ecd000322778d2ec4");
+				expect(body.data[1].correlationId).to.equal("4e645e5e4600bb590c881179");
 			});
 		});
-		it('[Endpoint-0008] should return two entries with localport 8080', () => {
+		it('[Endpoint-0008] should return 3 when using a wider custom time-range', () => {
+			const auth = {
+				user: server.apibuilder.config.apikey || 'test',
+				password: ''
+			};
+			// 
+			/**
+			 * The dates given here must be aligned with dates in search_test_documents.js. Currently configured like so:
+			 * 8m		--> "c8705e5ecc00adca32be7472"   --> This is expected to be found
+			 * 15m		--> "c9705e5ecd000322778d2ec4"   --> This is expected to be found
+			 * 120h		--> "fc705e5ede00654de6d15daf"
+			 * 65m		--> "4e645e5e4600bb590c881179"   --> This is expected to be found
+			 * 30000h	--> "bb30715e5300e189d1da43fc"
+			 */
+			const greaterThenThisDate = getDate('110h', true);
+			const lowerThanThisDate = getDate('5m', true);
+			console.log(`Query with greaterThenThisDate: ${greaterThenThisDate} and lowerThanThisDate: ${lowerThanThisDate}`);
+			return requestAsync({
+				method: 'GET',
+				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?field=timestamp&op=gt&value=${greaterThenThisDate}&field=timestamp&op=lt&value=${lowerThanThisDate}`,
+				auth: auth,
+				json: true
+			}).then(({ response, body }) => {
+				expect(response.statusCode).to.equal(200);
+				expect(body).to.be.an('Object');
+				expect(body).to.have.property('data');
+				expect(body.data).to.have.lengthOf(3);
+				expect(body.data[0].correlationId).to.equal("c8705e5ecc00adca32be7472");
+				expect(body.data[1].correlationId).to.equal("c9705e5ecd000322778d2ec4");
+				expect(body.data[2].correlationId).to.equal("4e645e5e4600bb590c881179");
+			});
+		});
+		it('[Endpoint-0009] should return two entries with localport 8080', () => {
 			const auth = {
 				user: server.apibuilder.config.apikey || 'test',
 				password: ''
@@ -182,7 +228,7 @@ describe('Endpoints', function () {
 			});
 		});
 
-		it('[Endpoint-0009] should return one entry with localport 8080 and given subject-id', () => {
+		it('[Endpoint-0010] should return one entry with localport 8080 and given subject-id', () => {
 			const auth = {
 				user: server.apibuilder.config.apikey || 'test',
 				password: ''
@@ -201,7 +247,7 @@ describe('Endpoints', function () {
 				expect(body.data[0].subject).to.equals('Chris-Test');
 			});
 		});
-		it('[Endpoint-0010] should return one entry with localport 8080 and given subject-id', () => {
+		it('[Endpoint-0011] should return one entry with localport 8080 and given subject-id', () => {
 			const auth = {
 				user: server.apibuilder.config.apikey || 'test',
 				password: ''
@@ -220,7 +266,7 @@ describe('Endpoints', function () {
 				expect(body.data[0].uri).to.equals('/favicon.ico');
 			});
 		});
-		it('[Endpoint-0011] should return one entry with localadr 1.1.1.1', () => {
+		it('[Endpoint-0012] should return one entry with localadr 1.1.1.1', () => {
 			const auth = {
 				user: server.apibuilder.config.apikey || 'test',
 				password: ''
@@ -239,7 +285,7 @@ describe('Endpoints', function () {
 				expect(body.data[0].uri).to.equals('/healthcheck');
 			});
 		});
-		it('[Endpoint-0012] should return one entry with remoteName (remoteHost) TestHost', () => {
+		it('[Endpoint-0013] should return one entry with remoteName (remoteHost) TestHost', () => {
 			const auth = {
 				user: server.apibuilder.config.apikey || 'test',
 				password: ''
@@ -258,7 +304,7 @@ describe('Endpoints', function () {
 				expect(body.data[0].uri).to.equals('/healthcheck');
 			});
 		});
-		it('[Endpoint-0013] should return one entry with remotePort 59641', () => {
+		it('[Endpoint-0014] should return one entry with remotePort 59641', () => {
 			const auth = {
 				user: server.apibuilder.config.apikey || 'test',
 				password: ''
@@ -277,7 +323,7 @@ describe('Endpoints', function () {
 				expect(body.data[0].uri).to.equals('/favicon.ico');
 			});
 		});
-		it('[Endpoint-0014] should return one entry with service name Petstore HTTP', () => {
+		it('[Endpoint-0015] should return one entry with service name Petstore HTTP', () => {
 			const auth = {
 				user: server.apibuilder.config.apikey || 'test',
 				password: ''
@@ -296,7 +342,7 @@ describe('Endpoints', function () {
 				expect(body.data[0].uri).to.equals('/v2/pet/123');
 			});
 		});
-		it('[Endpoint-0015] should return one entry with service name Petstore HTTP', () => {
+		it('[Endpoint-0016] should return one entry with service name Petstore HTTP', () => {
 			const auth = {
 				user: server.apibuilder.config.apikey || 'test',
 				password: ''
@@ -315,7 +361,7 @@ describe('Endpoints', function () {
 				expect(body.data[0].uri).to.equals('/favicon.ico');
 			});
 		});
-		it('[Endpoint-0016] should return one entry with the given correlation id', () => {
+		it('[Endpoint-0017] should return one entry with the given correlation id', () => {
 			const auth = {
 				user: server.apibuilder.config.apikey || 'test',
 				password: ''
@@ -334,7 +380,7 @@ describe('Endpoints', function () {
 				expect(body.data[0].serviceName).to.equals('Petstore HTTP');
 			});
 		});
-		it('[Endpoint-0017] should return one entry with final status Error', () => {
+		it('[Endpoint-0018] should return one entry with final status Error', () => {
 			const auth = {
 				user: server.apibuilder.config.apikey || 'test',
 				password: ''
@@ -352,7 +398,7 @@ describe('Endpoints', function () {
 				expect(body.data[0].uri).to.equals('/healthcheck');
 			});
 		});
-		it('[Endpoint-0018] should return results with a wirldcard path.', () => {
+		it('[Endpoint-0019] should return results with a wirldcard path.', () => {
 			const auth = {
 				user: server.apibuilder.config.apikey || 'test',
 				password: ''
@@ -370,7 +416,7 @@ describe('Endpoints', function () {
 				expect(body.data[0].uri).to.equals('/v2/pet/123');
 			});
 		});
-		it('[Endpoint-0019] Should return 1 entry in the last 10 minutes (ago=10m)', () => {
+		it('[Endpoint-0020] Should return 1 entry in the last 10 minutes (ago=10m)', () => {
 			const auth = {
 				user: server.apibuilder.config.apikey || 'test',
 				password: ''
@@ -388,7 +434,7 @@ describe('Endpoints', function () {
 				expect(body.data[0].uri).to.equals('/v2/pet/123');
 			});
 		});
-		it('[Endpoint-0020] Should return 2 entries in the last 30 minutes (ago=30m)', () => {
+		it('[Endpoint-0021] Should return 2 entries in the last 30 minutes (ago=30m)', () => {
 			const auth = {
 				user: server.apibuilder.config.apikey || 'test',
 				password: ''
@@ -406,7 +452,7 @@ describe('Endpoints', function () {
 				expect(body.data[0].uri).to.equals('/v2/pet/123');
 			});
 		});
-		it('[Endpoint-0020] Should only 2 entries in the last 2 hours (ago=120h)', () => {
+		it('[Endpoint-0022] Should only 2 entries in the last 2 hours (ago=120h)', () => {
 			const auth = {
 				user: server.apibuilder.config.apikey || 'test',
 				password: ''

@@ -1,4 +1,4 @@
-const getDate = require('../util');
+const getDate = require('../../util');
 
 module.exports = [
     {
@@ -419,7 +419,7 @@ module.exports = [
         "@version": "1",
         "transactionSummaryContext": null,
         "correlationId": "bb30715e5300e189d1da43fc",
-        "timestampOriginal": "2020-03-17T20:19:07.812Z",
+        "timestampOriginal": getDate('30000h'),
         "circuitPath": [
             {
                 "execTime": 1,
