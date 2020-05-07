@@ -1,4 +1,4 @@
-function getDate(ago) {
+function getDate(ago, asEpoche) {
     var now = new Date();
     var diff = ago.substring(0, ago.length-1);
     if(ago.endsWith('m')) {
@@ -6,7 +6,11 @@ function getDate(ago) {
     } else if(ago.endsWith('h')) {
         now.setHours(now.getHours() - diff);
     }
-    return now.toISOString();
+    if(asEpoche) {
+        return now.getTime();
+    } else {
+        return now.toISOString();
+    }
 }
 
 module.exports = getDate;

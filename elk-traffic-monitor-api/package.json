@@ -44,6 +44,7 @@
 	},
 	"scripts": {
 		"start": "node .",
-		"test": "mocha --exit --colors ./test --recursive -R spec"
+		"test": "mocha --exit --colors ./test --recursive -R spec",
+		"test:debug": "mocha --inspect-brk ./test --recursive -R spec --timeout 10000"
 	}
 }
