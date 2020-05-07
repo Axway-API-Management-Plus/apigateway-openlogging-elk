@@ -75,6 +75,106 @@
           "required": true
         }
       ]
+    },
+    "/router/service/{serviceID}/ops/stream/{transactionID}/*/circuitpath": {
+      "get": {
+        "summary": "Retrieves circuitpath information",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          }
+        },
+        "operationId": "circuitpath",
+        "description": "Retrieves information about the policy filters associated with the specified transactionID and serviceID",
+        "x-flow": "trafficMonitorApi-circuitpath"
+      },
+      "parameters": [
+        {
+          "type": "string",
+          "name": "serviceID",
+          "in": "path",
+          "required": true,
+          "description": "instance of the API Gateway e.g.instance-1"
+        },
+        {
+          "type": "string",
+          "name": "transactionID",
+          "in": "path",
+          "required": true,
+          "description": "identifies the transaction"
+        }
+      ]
+    },
+    "/router/service/{serviceID}/ops/{protocol}/{correlationID}/{legID}/getinfo": {
+      "get": {
+        "summary": "Retrieves event information",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          }
+        },
+        "operationId": "getinfo",
+        "x-flow": "trafficMonitorApi-getinfo",
+        "parameters": [
+          {
+            "type": "string",
+            "in": "query",
+            "name": "format"
+          },
+          {
+            "type": "string",
+            "in": "query",
+            "name": "details"
+          },
+          {
+            "type": "string",
+            "in": "query",
+            "name": "rheaders"
+          },
+          {
+            "type": "string",
+            "in": "query",
+            "name": "sheaders"
+          }
+        ],
+        "description": "Retrieves information about events associated with the specified correlationID and legID"
+      },
+      "parameters": [
+        {
+          "type": "string",
+          "name": "serviceID",
+          "in": "path",
+          "required": true
+        },
+        {
+          "type": "string",
+          "name": "protocol",
+          "in": "path",
+          "required": true
+        },
+        {
+          "type": "string",
+          "name": "correlationID",
+          "in": "path",
+          "required": true
+        },
+        {
+          "type": "string",
+          "name": "legID",
+          "in": "path",
+          "required": true
+        }
+      ]
     }
   },
   "basePath": "/elk/v1/api"
