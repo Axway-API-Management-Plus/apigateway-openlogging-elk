@@ -62,38 +62,40 @@ To run the components in a PoC-Like mode, the recommended way is to clone this p
 This creates a local copy of the repository and you can start from there.
 
 ### Enable Open-Traffic Event Log
-Obviously you have to enable Open-Traffic-Event log for your API-Gateway instances. [Read here][1] how to enable the Open-Traffic Event-Log.  
-After this configuration has been done, Open-Traffic log-files will created by default in this location: `apigateway/logs/opentraffic`. This location becomes relevant when configuring Filebeat.
+Obviously, you have to enable Open-Traffic-Event log for your API-Gateway instance(s). [Read here][1] how to enable the Open-Traffic Event-Log.  
+After this configuration has been done, Open-Traffic log-files will be created by default in this location: `apigateway/logs/opentraffic`. This location becomes relevant when configuring Filebeat.
 
 ### Configure the Admin-Node-Manager
-This step is required if you would like to use the existing API-Gateway Manager Traffic-Monitor in combination with Elasticsearch.  
-The Admin-Node-Manager (listening by default on port 8090) is responsible to serve the Traffic-Monitor and needs to be configured to use the API-Builder REST-API instead.  
-For the following steps, please open the Admin-Node-Manager configuration in Policy-Studio. You can read [here](https://docs.axway.com/bundle/axway-open-docs/page/docs/apim_administration/apigtw_admin/general_rbac_ad_ldap/index.html#use-the-ldap-policy-to-protect-management-services) how to do that.  
-- Create a new policy called: `Use Elasticsearch API`
-- Configure this policy like so:  
+As the idea of this project is to use the existing API-Gateway Manager UI (short: ANM) to render log data now provided by Elasticsearch instead of the individual API-Gateway instances before (the build in behavior), it is required to patch the ANM configuration to make use of Elasticsearch instead of the API-Gateway instances (default setup). By default, ANM is listening on port 8090 for administrative traffic. This API is responsible to serve the Traffic-Monitor and needs to be configured to use the API-Builder REST-API instead.
+
+For the following steps, please open the ANM configuration in Policy-Studio. You can read [here](https://docs.axway.com/bundle/axway-open-docs/page/docs/apim_administration/apigtw_admin/general_rbac_ad_ldap/index.html#use-the-ldap-policy-to-protect-management-services) how to do that.  
+- Create a new policy and name it `Use Elasticsearch API` - *This Policy will decide on what API calls can be routed to Elasticsearch*
+- The configured Policy should look like this:
+
   ![use ES API][img3]  
-    - The `Compare Attribute` filter checks if the requested API is already handled by the API-Builder project.  
-    _As of today, only the Traffic-Overview is handled by the API-Builder. This will be changed soon._
-    - Add the following: `http.request.path` is `/api/router/service/instance-1/ops/search`  
-    _The list of requests will be extended once the API-Builder project can serve more (e.g. the Request-Detail view)_
-    ![Is API Managed][img6] 
-    - Adjust the URL of the Connect to URL filter to your running API-Builder docker container and port (default is 8889).  
-    ![Connect to ES API][img7]  
-- Insert the created policy as a callback policy into the main policy: `Protect Management Interfaces` like so:  
+
+    - The `Compare Attribute` filter checks if the requested API can be handled by the API-Builder project.
+    _Right now, only the Traffic-Overview is implemented and can be handled by the API-Builder glue project. This will be extended soon!_
+    - Add a criterion: `http.request.path` is `/api/router/service/instance-1/ops/search` 
+    _The list of requests will be extended once the API-Builder project can serve more (e.g. the Request-Detail view). Right now, this is just hard coded for the topology we used for testing!_
+    ![Is API Managed][img6]  
+    - Adjust the URL of the Connect to URL filter to your running API-Builder docker container and port - **default is 8889**. Sample: `http://api-env:8889/api/elk/v1${http.request.rawURI}`  
+    ![Connect to ES API][img7]
+- Insert the created policy as a callback policy (filter: Shortcut filter) into the main policy: `Protect Management Interfaces` and wire it like shown here:  
   ![Use Callback][img4]  
   
-After you have saved back the configuration to the Admin-Node-Manager and restarted it, the Admin-Node-Manager will use the API-Builder API (Elasticsearch) to serve the specified request-types.  
+After you have saved, copy the configuration files from your local *Policy Studio* project (path on Linux: `/home/<user>/apiprojects/\<project-name\>`) back the configuration to the Admin-Node-Manager configuration (`\<install-dir\>/apigateway/conf/fed`) and restarted it. The Admin-Node-Manager will use the API provided by API-Builder to query the Elasticsearch API to serve the specified request-types.  
 
 ### Setup filebeat
 :exclamation: __This is an important step, as otherwise Filebeat will not see and send any Open-Traffic Event data!__  
-Before starting the container using docker-compose, make sure to setup the paths in the .env file to your running API-Gateway instance. This configuration is used to mount the Open-Traffic-Folder into Filebeat container.
+Before starting the container using docker-compose, make sure to setup the paths in the project `*.env` file. The variables must point to your running API-Gateway instance. These parameters are used to mount the Open-Traffic-Folder into the Filebeat container. For a typical Linux installation it looks like this (APIM beeing a symlink to current software version):
 ```
-APIGATEWAY_LOGS_FOLDER=/home/localuser/Axway-x.y.z/apigateway/logs/opentraffic
-APIGATEWAY_TRACES_FOLDER=/home/localuser/Axway-x.y.z/apigateway/groups/group-1/instance-1/trace
+APIGATEWAY_LOGS_FOLDER=/opt/Axway/APIM/apigateway/logs/opentraffic
+APIGATEWAY_TRACES_FOLDER=/opt/Axway/APIM/apigateway/groups/group-2/instance-1/trace
 ```
 
 ### Setup API-Builder
-As the API-Builder container needs to communicate with Elasticsearch it needs to know where Elasticsearch is running. Use this environment variable to configure it:
+As the API-Builder container needs to communicate with Elasticsearch it needs to know where Elasticsearch is running. Again, this environment variable must be configured within `.env`:
 ```
 ELASTIC_NODE=http://elasticsearch1:9200
 ```
@@ -103,25 +105,27 @@ Please note, when using the default docker-compose.yaml the default setting is s
 
 See https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html#docker-prod-prerequisites
 
-###  Start local elasticsearch cluster
+###  Start local Elasticsearch cluster
 Bring the cluster up using docker-compose:
 ````
 docker-compose up -d
 ````
 Of course, the components can also run on different machines or on a Docker-Orchestration framework such as Kubernetes.
 
-### Stop cluster
+### Stop local Elasticsearch cluster
 ````
 docker-compose down
 ````
 
-### Import API-Builder Traffic-Monitor API
-To secure access to your Elasticsearch instance you can import the API Builder REST-API into your API-Manager. You can access the Swagger/OpenAPI definition here:  
+### Securing API-Builder Traffic-Monitor API
+The API-Builder project for providing access to Elasticsearch data has no access restrictions right now. To ensure only API-Gateway Manager users (topology administrators with proper RBAC role) or other users with appropriate access rights can query the log data, one can expose this API via API-Manager and add security here.
+
+To import the API Builder project REST-API into your API-Manager, you can access the Swagger/OpenAPI definition here (replace docker-host and port appropriately for the container that is hosting the API-Builder project):  
 http://docker-host:8889/apidoc/swagger.json?endpoints/trafficMonitorApi
 
 ## Troubleshooting
 ### Check processes/containers are running
-From within the folder where the docker-compose.yml file is located execute: 
+From within the folder where the docker-compose.yml file is located (git project folder) execute: 
 ```
 docker-compose inspect
                               Name                                             Command                  State                           Ports                     

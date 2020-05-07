@@ -39,14 +39,12 @@
 	},
 	"devDependencies": {
 		"@axway/api-builder-admin": "^1.16.2",
-		"chai": "^4.1.2",
-		"mocha": "^5.2.0"
+		"chai": "^4.2.0",
+		"mocha": "^7.1.2"
 	},
 	"scripts": {
 		"start": "node .",
-		"test": "mocha --colors ./test --recursive -R spec",
-		"test-circuitpath": "mocha --colors ./test/test_circuitpath.js",
-		"test-getinfo": "mocha --colors ./test/test_getinfo.js",
-		"test-search_endpoint": "mocha --colors ./test/test_search_endpoint.js"
+		"test": "mocha --exit --colors ./test --recursive -R spec",
+		"test:debug": "mocha --inspect-brk ./test --recursive -R spec --timeout 10000"
 	}
 }

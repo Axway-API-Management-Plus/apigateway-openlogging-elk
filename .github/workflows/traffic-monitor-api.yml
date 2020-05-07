@@ -33,10 +33,10 @@ jobs:
       uses: nyaruka/elasticsearch-action@v1
       with:
         elastic version: '7.6.1' 
-    - name: Sleep 30 seconds to make sure ES is ready
+    - name: Sleep 15 seconds to make sure ES is ready
       uses: jakejarvis/wait-action@master
       with:
-        time: '30s'
+        time: '15s'
     - name: Run npm ci, npm test
       working-directory: ${{env.workingDirectory}}
       env:
