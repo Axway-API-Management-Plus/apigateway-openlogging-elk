@@ -46,7 +46,7 @@ describe('Endpoints', function () {
 				json: true
 			}).then(({ response, body }) => {
 				expect(response.statusCode).to.equal(200);
-				expect(body).to.be.an('Object');
+				expect(body).to.be.an('Array');
 				/*
 				expect(body).to.have.lengthOf(1);
 				expect(body[0]).to.be.an('Object');
