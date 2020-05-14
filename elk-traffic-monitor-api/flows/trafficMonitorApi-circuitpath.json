@@ -30,34 +30,49 @@
 			"env"
 		]
 	},
-	"start": "condition.1",
+	"start": "javascript.2",
 	"nodes": {
-		"setcontext.1": {
-			"type": "nodehandler://axway-flow/setcontext",
-			"name": "Healthcheck API",
-			"method": "setcontext",
+		"elasticsearch.1": {
+			"type": "nodehandler://@axway-api-builder-ext/api-builder-plugin-fn-elasticsearch/elasticsearch",
+			"name": "Search",
+			"method": "search",
 			"parameters": [
 				{
-					"name": "value",
-					"type": "array",
-					"value": "[\n\t{\n\t\t\"policy\": \"Health Check\",\n\t\t\"execTime\": 3,\n\t\t\"filters\": [\n\t\t\t{\n\t\t\t\t\"espk\": \"DEFAULT_PRIMARY_VordelGateway_7.7.0:-1095086795812854131\",\n\t\t\t\t\"name\": \"Set Message\",\n\t\t\t\t\"type\": \"ChangeMessageFilter\",\n\t\t\t\t\"class\": \"com.vordel.circuit.conversion.ChangeMessageFilter\",\n\t\t\t\t\"status\": \"Pass\",\n\t\t\t\t\"filterTime\": 1588666217698,\n\t\t\t\t\"execTime\": 3\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"espk\": \"DEFAULT_PRIMARY_VordelGateway_7.7.0:-4282446533257395104\",\n\t\t\t\t\"name\": \"Reflect\",\n\t\t\t\t\"type\": \"ReflectFilter\",\n\t\t\t\t\"class\": \"com.vordel.circuit.net.ReflectFilter\",\n\t\t\t\t\"status\": \"Pass\",\n\t\t\t\t\"filterTime\": 1588666217698,\n\t\t\t\t\"execTime\": 0\n\t\t\t}\n\t\t]\n\t}\n]",
-					"metaName": "value"
+					"name": "query",
+					"type": "jsonpath",
+					"value": "$.elasticQuery",
+					"metaName": "query",
+					"metaDescription": "Defines the search definition using the Query DSL. Learn more: https://www.elastic.co/guide/en/elasticsearch/reference/7.x/query-dsl.html"
+				},
+				{
+					"name": "index",
+					"type": "jsonpath",
+					"value": "$.index",
+					"metaName": "index",
+					"metaDescription": "Comma-separated list or wildcard expression of index names used to limit the request."
 				}
 			],
 			"outputs": {
 				"next": {
-					"context": "$.circuit_payload",
+					"context": "$.elasticsearch.result",
+					"routes": [
+						"javascript.1"
+					],
+					"metaName": "Next"
+				},
+				"error": {
+					"context": "$.error",
 					"routes": [
 						"http.1"
 					],
-					"metaName": "Next"
+					"metaName": "Error"
 				}
 			},
-			"metaMethod": "Set Context"
+			"metaMethod": "Search"
 		},
-		"http.1": {
+		"http.2": {
 			"type": "nodehandler://axway-flow/http",
-			"name": "Set HTTP Response",
+			"name": "HTTP Query Response",
 			"method": "setresponse",
 			"parameters": [
 				{
@@ -70,7 +85,7 @@
 				{
 					"name": "body",
 					"type": "jsonpath",
-					"value": "$.circuit_payload",
+					"value": "$.result",
 					"metaName": "body",
 					"metaDescription": "The response payload"
 				}
@@ -84,66 +99,148 @@
 			},
 			"metaMethod": "Set HTTP Response"
 		},
-		"condition.1": {
-			"type": "nodehandler://axway-flow/condition",
-			"name": "Equals",
-			"method": "equals",
+		"javascript.1": {
+			"type": "nodehandler://@axway/api-builder-plugin-fn-javascript/javascript",
+			"name": "Format result",
+			"method": "Execute",
 			"parameters": [
 				{
-					"name": "source",
+					"name": "data",
 					"type": "jsonpath",
-					"value": "$.params.transactionID",
-					"metaName": "source",
-					"metaDescription": "The input to test."
+					"value": "$.elasticsearch.result.body.hits",
+					"metaName": "data",
+					"metaDescription": "The value to apply as the `data` argument to the JavaScript code. For objects and arrays, `data` is passed by reference."
 				},
 				{
-					"name": "value",
+					"name": "code",
 					"type": "string",
-					"value": "\"c8705e5ecc00adca32be7472\"",
-					"metaName": "value",
-					"metaDescription": "The value to test input against."
-				}
-			],
-			"outputs": {
-				"true": {
-					"routes": [
-						"setcontext.1"
-					],
-					"context": "$.equals",
-					"metaName": "True"
-				},
-				"false": {
-					"routes": [
-						"setcontext.2"
-					],
-					"context": "$.equals",
-					"metaName": "False"
-				}
-			},
-			"metaMethod": "Equals"
-		},
-		"setcontext.2": {
-			"type": "nodehandler://axway-flow/setcontext",
-			"name": "ToDo API",
-			"method": "setcontext",
-			"parameters": [
-				{
-					"name": "value",
-					"type": "array",
-					"value": "[\n\t{\n\t\t\"policy\": \"API Broker\",\n\t\t\"execTime\": 721,\n\t\t\"filters\": [\n\t\t\t{\n\t\t\t\t\"name\": \"Set service context\",\n\t\t\t\t\"type\": \"VApiServiceContextFilter\",\n\t\t\t\t\"class\": \"com.vordel.circuit.vapi.VApiServiceContextFilter\",\n\t\t\t\t\"status\": \"Pass\",\n\t\t\t\t\"filterTime\": 1588798042453,\n\t\t\t\t\"execTime\": 5\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"name\": \"Global Request Policy\",\n\t\t\t\t\"type\": \"CircuitDelegateFilter\",\n\t\t\t\t\"class\": \"com.vordel.circuit.CircuitDelegateFilter\",\n\t\t\t\t\"status\": \"Pass\",\n\t\t\t\t\"filterTime\": 1588798042464,\n\t\t\t\t\"execTime\": 9,\n\t\t\t\t\"subPaths\": [\n\t\t\t\t\t{\n\t\t\t\t\t\t\"policy\": \"Trace\",\n\t\t\t\t\t\t\"execTime\": 9,\n\t\t\t\t\t\t\"filters\": [\n\t\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\t\"espk\": \"DEFAULT_PRIMARY_VordelGateway_7.7.0:-2330724604838128298\",\n\t\t\t\t\t\t\t\t\"name\": \"Trace Filter\",\n\t\t\t\t\t\t\t\t\"type\": \"TraceFilter\",\n\t\t\t\t\t\t\t\t\"class\": \"com.vordel.circuit.basic.TraceFilter\",\n\t\t\t\t\t\t\t\t\"status\": \"Pass\",\n\t\t\t\t\t\t\t\t\"filterTime\": 1588798042464,\n\t\t\t\t\t\t\t\t\"execTime\": 9\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t]\n\t\t\t\t\t}\n\t\t\t\t]\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"name\": \"Custom Routing\",\n\t\t\t\t\"type\": \"VApiCircuitDelegateFilter\",\n\t\t\t\t\"class\": \"com.vordel.apiportal.runtime.virtualized.VApiCircuitDelegateFilter\",\n\t\t\t\t\"status\": \"Pass\",\n\t\t\t\t\"filterTime\": 1588798043171,\n\t\t\t\t\"execTime\": 707,\n\t\t\t\t\"subPaths\": [\n\t\t\t\t\t{\n\t\t\t\t\t\t\"policy\": \"Default API Proxy Routing\",\n\t\t\t\t\t\t\"execTime\": 707,\n\t\t\t\t\t\t\"filters\": [\n\t\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\t\"espk\": \"DEFAULT_PRIMARY_VordelGateway_7.7.0:4323849261363416160\",\n\t\t\t\t\t\t\t\t\"name\": \"Default Routing\",\n\t\t\t\t\t\t\t\t\"type\": \"SwitchFilter\",\n\t\t\t\t\t\t\t\t\"class\": \"com.vordel.circuit.switchcase.SwitchFilter\",\n\t\t\t\t\t\t\t\t\"status\": \"Pass\",\n\t\t\t\t\t\t\t\t\"filterTime\": 1588798043171,\n\t\t\t\t\t\t\t\t\"execTime\": 707,\n\t\t\t\t\t\t\t\t\"subPaths\": [\n\t\t\t\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\t\t\t\"policy\": \"Default API Proxy Routing\",\n\t\t\t\t\t\t\t\t\t\t\"execTime\": 674,\n\t\t\t\t\t\t\t\t\t\t\"filters\": [\n\t\t\t\t\t\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\t\t\t\t\t\"name\": \"not-required-here\",\n\t\t\t\t\t\t\t\t\t\t\t\t\"type\": \"CircuitDelegateFilter\",\n\t\t\t\t\t\t\t\t\t\t\t\t\"class\": \"com.vordel.circuit.CircuitDelegateFilter\",\n\t\t\t\t\t\t\t\t\t\t\t\t\"status\": \"Pass\",\n\t\t\t\t\t\t\t\t\t\t\t\t\"filterTime\": 1588798043171,\n\t\t\t\t\t\t\t\t\t\t\t\t\"execTime\": 674,\n\t\t\t\t\t\t\t\t\t\t\t\t\"subPaths\": [\n\t\t\t\t\t\t\t\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\"policy\": \"Default Profile-based Routing\",\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\"execTime\": 674,\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\"filters\": [\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\"espk\": \"DEFAULT_PRIMARY_VordelGateway_7.7.0:5735607394361826155\",\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\"name\": \"Connect to URL\",\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\"type\": \"ConnectToURLFilter\",\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\"class\": \"com.vordel.circuit.net.ConnectToURLFilter\",\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\"status\": \"Pass\",\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\"filterTime\": 1588798043171,\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\"execTime\": 674\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t]\n\t\t\t\t\t\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\t\t\t\t\t]\n\t\t\t\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\t\t\t]\n\t\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\t]\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t]\n\t\t\t\t\t}\n\t\t\t\t]\n\t\t\t}\n\t\t]\n\t}\n]",
-					"metaName": "value"
+					"value": "\"let result = [];\\n  //console.log(data);\\n  \\n  if(typeof data.hits[0] != \\\"undefined\\\"){\\n  \\tresult = data.hits[0]._source.circuitPath;\\n  }\\n  \\n  return result;\"",
+					"metaName": "code",
+					"metaDescription": "A JavaScript function body. Supports `await` and returning promises"
 				}
 			],
 			"outputs": {
 				"next": {
-					"context": "$.circuit_payload",
+					"context": "$.result",
+					"routes": [
+						"http.2"
+					],
+					"metaName": "Next"
+				},
+				"error": {
+					"context": "$.error",
 					"routes": [
 						"http.1"
 					],
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Execute"
+		},
+		"javascript.2": {
+			"type": "nodehandler://@axway/api-builder-plugin-fn-javascript/javascript",
+			"name": "Define Index",
+			"method": "Execute",
+			"parameters": [
+				{
+					"name": "code",
+					"type": "string",
+					"value": "\"let index = 'logstash-openlog';\\n  if(data.config.testElasticIndex) {\\n    index = data.config.testElasticIndex;\\n  }\\n  return index;\"",
+					"metaName": "code",
+					"metaDescription": "A JavaScript function body. Supports `await` and returning promises"
+				},
+				{
+					"name": "data",
+					"type": "jsonpath",
+					"value": "$",
+					"metaName": "data",
+					"metaDescription": "The value to apply as the `data` argument to the JavaScript code. For objects and arrays, `data` is passed by reference."
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.index",
+					"routes": [
+						"javascript.3"
+					],
+					"metaName": "Next"
+				},
+				"error": {
+					"context": "$.error",
+					"routes": [
+						"http.1"
+					],
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Execute"
+		},
+		"javascript.3": {
+			"type": "nodehandler://@axway/api-builder-plugin-fn-javascript/javascript",
+			"name": "Build Query",
+			"method": "Execute",
+			"parameters": [
+				{
+					"name": "data",
+					"type": "jsonpath",
+					"value": "$",
+					"metaName": "data",
+					"metaDescription": "The value to apply as the `data` argument to the JavaScript code. For objects and arrays, `data` is passed by reference."
+				},
+				{
+					"name": "code",
+					"type": "string",
+					"value": "\"let elasticQuery = ({\\n    \\\"bool\\\": {\\n      \\\"must\\\": {\\n        \\\"term\\\": {\\n          \\\"correlationId\\\": data.params.correlationID\\n        }\\n      },\\n      \\\"filter\\\": {\\n        \\t\\\"term\\\": {\\n          \\t\\t\\\"processInfo.serviceId\\\": data.params.serviceID\\n        \\t}\\n      \\t}\\n    }\\n});\\n\\n  return elasticQuery;\"",
+					"metaName": "code",
+					"metaDescription": "A JavaScript function body. Supports `await` and returning promises"
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.elasticQuery",
+					"routes": [
+						"elasticsearch.1"
+					],
+					"metaName": "Next"
+				},
+				"error": {
+					"context": "$.error",
+					"routes": [
+						"http.1"
+					],
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Execute"
+		},
+		"http.1": {
+			"type": "nodehandler://axway-flow/http",
+			"name": "HTTP Error Response",
+			"method": "setresponse",
+			"parameters": [
+				{
+					"name": "status",
+					"type": "number",
+					"value": "500",
+					"metaName": "status",
+					"metaDescription": "The HTTP status code"
+				},
+				{
+					"name": "body",
+					"type": "object",
+					"value": "{\n  \"errors\": [\n    {\n      \"code\": \"n.a\",\n      \"message\": \"error occurred\" \n    }\n  ]\n}",
+					"metaName": "body",
+					"metaDescription": "The response payload"
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.response",
+					"routes": [],
 					"metaName": "Next"
 				}
 			},
-			"metaMethod": "Set Context"
+			"metaMethod": "Set HTTP Response"
 		}
 	}
 }
