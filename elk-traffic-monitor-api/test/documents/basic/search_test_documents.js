@@ -475,5 +475,232 @@ module.exports = [
             "version": "7.7.20200130",
             "domainId": "8064faa2-54d2-42aa-b549-af5a0b289284"
         }
+    },
+    {
+        "transactionElements": {
+            "leg0": {
+                "leg": 0,
+                "protocolInfo": {
+                    "recvHeader": "GET /api/portal/v1.3/appinfo HTTP/1.1\r\nHost: 127.0.0.1:8075\r\nAccept: */*\r\nIsApiPortalRequest: true\r\nConnection: close\r\n\r\n",
+                    "sentHeader": "HTTP/1.1 200 OK\r\nDate: Tue, 17 Mar 2020 11:18:05 GMT\r\nContent-Type: application/json\r\nCache-Control: no-cache, no-store, must-revalidate\r\nPragma: no-cache\r\nExpires: 0\r\nX-Frame-Options: DENY\r\nX-Content-Type-Options: nosniff\r\nX-XSS-Protection: 0\r\nServer: Gateway\r\nConnection: close\r\nX-CorrelationID: Id-edb1705e7d0168a34d74bfba 0\r\n\r\n",
+                    "http": {
+                        "localPort": "8075",
+                        "method": "GET",
+                        "status": 200,
+                        "wafStatus": 0,
+                        "remoteAddr": "127.0.0.1",
+                        "bytesSent": 735,
+                        "remotePort": "53514",
+                        "uri": "/api/portal/v1.3/appinfo",
+                        "localAddr": "127.0.0.1",
+                        "statusText": "OK",
+                        "bytesReceived": 121,
+                        "remoteName": "127.0.0.1"
+                    }
+                },
+                "duration": 12
+            }
+        },
+        "correlationId": "edb1705e7d0168a34d74bfba",
+        "@version": "1",
+        "circuitPath": [],
+        "tags": [
+            "openlog"
+        ],
+        "timestampOriginal": "2020-03-17T11:18:05.378Z",
+        "processInfo": {
+            "groupName": "QuickStart Group",
+            "serviceName": "QuickStart Server",
+            "domainId": "ed992442-c363-4d36-963a-9e6314b0f421",
+            "groupId": "group-2",
+            "version": "7.7.20200130",
+            "serviceId": "instance-1",
+            "hostname": "api-env"
+        }
+    },
+    {
+        "transactionElements": {
+            "leg0": {
+                "leg": 0,
+                "finalStatus": "Pass",
+                "protocolInfo": {
+                    "recvHeader": "GET / HTTP/1.1\r\nHost: api-env.demo.axway.com:8075\r\nUser-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101 Firefox/68.0\r\nAccept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\r\nAccept-Language: en-US,en;q=0.5\r\nAccept-Encoding: gzip, deflate, br\r\nReferer: https://api-env.demo.axway.com:8075/home\r\nConnection: keep-alive\r\nCookie: 6e7e1bb1dd446d4cd36889414ccb4cb7=cakooto11btta81joumss3hnka; portal.logintypesso=false; portal.demo=off; portal.isgridSortIgnoreCase=on; roundcube_sessid=3qqh3mp9qnrqq0hfrmdvac73sc\r\nUpgrade-Insecure-Requests: 1\r\n\r\n",
+                    "sentHeader": "HTTP/1.1 200 OK\r\nDate: Tue, 17 Mar 2020 11:23:06 GMT\r\nServer: Gateway\r\nConnection: close\r\nX-CorrelationID: Id-1ab3705e920284217e6aae73 0\r\nAccept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\r\nAccept-Language: en-US,en;q=0.5\r\nCache-Control: no-cache, no-store, must-revalidate\r\nContent-Security-Policy: frame-ancestors 'none'\r\nCookie: 6e7e1bb1dd446d4cd36889414ccb4cb7=cakooto11btta81joumss3hnka; portal.logintypesso=false; portal.demo=off; portal.isgridSortIgnoreCase=on; roundcube_sessid=3qqh3mp9qnrqq0hfrmdvac73sc\r\nExpires: 0\r\nHost: api-env.demo.axway.com:8075\r\nPragma: no-cache\r\nReferer: https://api-env.demo.axway.com:8075/home\r\nUpgrade-Insecure-Requests: 1\r\nUser-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101 Firefox/68.0\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\nX-XSS-Protection: 0\r\nContent-Type: text/html\r\n\r\n",
+                    "http": {
+                        "localPort": "8075",
+                        "method": "GET",
+                        "status": 200,
+                        "wafStatus": 0,
+                        "remoteAddr": "10.128.58.136",
+                        "bytesSent": 2855,
+                        "bytesReceived": 572,
+                        "remotePort": "45412",
+                        "localAddr": "10.128.58.136",
+                        "statusText": "OK",
+                        "uri": "/",
+                        "remoteName": "10.128.58.136"
+                    }
+                },
+                "duration": 2
+            }
+        },
+        "correlationId": "1ab3705e920284217e6aae73",
+        "@version": "1",
+        "circuitPath": [
+            {
+                "execTime": 1,
+                "policy": "API Manager Protection Policy",
+                "filters": [
+                    {
+                        "class": "com.vordel.circuit.attribute.SetAttributeFilter",
+                        "status": "Pass",
+                        "filterTime": 1584444186836,
+                        "execTime": 0,
+                        "espk": "DEFAULT_PRIMARY_VordelGateway_7.7.0:3563372240640736537",
+                        "name": "Disable Monitoring",
+                        "type": "SetAttributeFilter"
+                    },
+                    {
+                        "class": "com.vordel.circuit.CircuitDelegateFilter",
+                        "status": "Pass",
+                        "filterTime": 1584444186837,
+                        "execTime": 1,
+                        "subPaths": [
+                            {
+                                "execTime": 0,
+                                "policy": "Secure Headers",
+                                "filters": [
+                                    {
+                                        "class": "com.vordel.circuit.conversion.AddHTTPHeaderFilter",
+                                        "status": "Pass",
+                                        "filterTime": 1584444186836,
+                                        "execTime": 0,
+                                        "type": "AddHTTPHeaderFilter",
+                                        "espk": "DEFAULT_PRIMARY_VordelGateway_7.7.0:1018430481999133398",
+                                        "name": "Add X-Frame-Options"
+                                    },
+                                    {
+                                        "status": "Pass",
+                                        "class": "com.vordel.circuit.conversion.AddHTTPHeaderFilter",
+                                        "filterTime": 1584444186836,
+                                        "execTime": 0,
+                                        "espk": "DEFAULT_PRIMARY_VordelGateway_7.7.0:2425540468063109194",
+                                        "name": "Add X-Content-Type-Options",
+                                        "type": "AddHTTPHeaderFilter"
+                                    },
+                                    {
+                                        "class": "com.vordel.circuit.conversion.AddHTTPHeaderFilter",
+                                        "status": "Pass",
+                                        "filterTime": 1584444186836,
+                                        "execTime": 0,
+                                        "espk": "DEFAULT_PRIMARY_VordelGateway_7.7.0:-5444113616489599230",
+                                        "name": "Add X-XSS-Protection",
+                                        "type": "AddHTTPHeaderFilter"
+                                    },
+                                    {
+                                        "class": "com.vordel.circuit.conversion.AddHTTPHeaderFilter",
+                                        "status": "Pass",
+                                        "filterTime": 1584444186836,
+                                        "execTime": 0,
+                                        "espk": "DEFAULT_PRIMARY_VordelGateway_7.7.0:7081893704511792953",
+                                        "name": "Add Content-Security-Policy",
+                                        "type": "AddHTTPHeaderFilter"
+                                    },
+                                    {
+                                        "class": "com.vordel.circuit.conversion.AddHTTPHeaderFilter",
+                                        "status": "Pass",
+                                        "filterTime": 1584444186837,
+                                        "execTime": 0,
+                                        "espk": "DEFAULT_PRIMARY_VordelGateway_7.7.0:-2212651968248743366",
+                                        "name": "Add Expires",
+                                        "type": "AddHTTPHeaderFilter"
+                                    },
+                                    {
+                                        "class": "com.vordel.circuit.conversion.AddHTTPHeaderFilter",
+                                        "status": "Pass",
+                                        "filterTime": 1584444186837,
+                                        "execTime": 0,
+                                        "espk": "DEFAULT_PRIMARY_VordelGateway_7.7.0:1947547883410725837",
+                                        "name": "Add Pragma",
+                                        "type": "AddHTTPHeaderFilter"
+                                    },
+                                    {
+                                        "class": "com.vordel.circuit.conversion.AddHTTPHeaderFilter",
+                                        "status": "Pass",
+                                        "filterTime": 1584444186837,
+                                        "execTime": 0,
+                                        "espk": "DEFAULT_PRIMARY_VordelGateway_7.7.0:1213862525432630139",
+                                        "name": "Add Cache-Control",
+                                        "type": "AddHTTPHeaderFilter"
+                                    }
+                                ]
+                            }
+                        ],
+                        "espk": "DEFAULT_PRIMARY_VordelGateway_7.7.0:-7310008129630418788",
+                        "name": "Add Secure Headers",
+                        "type": "CircuitDelegateFilter"
+                    },
+                    {
+                        "status": "Fail",
+                        "class": "com.vordel.circuit.authn.CheckSessionFilter",
+                        "filterTime": 1584444186837,
+                        "execTime": 0,
+                        "espk": "DEFAULT_PRIMARY_VordelGateway_7.7.0:1617103538881458172",
+                        "name": "Check Session",
+                        "type": "CheckSessionFilter"
+                    },
+                    {
+                        "class": "com.vordel.circuit.attribute.CompareAttributeFilter",
+                        "status": "Pass",
+                        "filterTime": 1584444186837,
+                        "execTime": 0,
+                        "espk": "DEFAULT_PRIMARY_VordelGateway_7.7.0:1444681803898426806",
+                        "name": "Is This Root or Home?",
+                        "type": "CompareAttributeFilter"
+                    },
+                    {
+                        "class": "com.vordel.circuit.attribute.CompareAttributeFilter",
+                        "status": "Fail",
+                        "filterMessage": "Filter failed",
+                        "filterTime": 1584444186837,
+                        "execTime": 0,
+                        "type": "CompareAttributeFilter",
+                        "name": "Query String Exists?",
+                        "espk": "DEFAULT_PRIMARY_VordelGateway_7.7.0:-3576911551036060428"
+                    },
+                    {
+                        "status": "Pass",
+                        "class": "com.vordel.circuit.file.LoadFileFilter",
+                        "filterTime": 1584444186837,
+                        "execTime": 0,
+                        "espk": "DEFAULT_PRIMARY_VordelGateway_7.7.0:644437044284765021",
+                        "name": "Load API Manager Login Page",
+                        "type": "LoadFileFilter"
+                    },
+                    {
+                        "status": "Pass",
+                        "class": "com.vordel.circuit.net.ReflectFilter",
+                        "filterTime": 1584444186837,
+                        "execTime": 0,
+                        "espk": "DEFAULT_PRIMARY_VordelGateway_7.7.0:-3977244110355365495",
+                        "name": "Send Login Page",
+                        "type": "ReflectFilter"
+                    }
+                ]
+            }
+        ],
+        "tags": [
+            "openlog"
+        ],
+        "timestampOriginal": "2020-03-17T11:23:06.838Z",
+        "processInfo": {
+            "groupName": "QuickStart Group",
+            "serviceName": "QuickStart Server",
+            "domainId": "ed992442-c363-4d36-963a-9e6314b0f421",
+            "groupId": "group-2",
+            "version": "7.7.20200130",
+            "serviceId": "instance-1",
+            "hostname": "api-env"
+        }
     }
 ];
