@@ -76,7 +76,7 @@
         }
       ]
     },
-    "/router/service/{serviceID}/ops/stream/{transactionID}/*/circuitpath": {
+    "/router/service/{serviceID}/ops/stream/{correlationID}/*/circuitpath": {
       "get": {
         "summary": "Retrieves circuitpath information",
         "tags": [],
@@ -87,10 +87,17 @@
               "type": "object",
               "properties": {}
             }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
           }
         },
         "operationId": "circuitpath",
-        "description": "Retrieves information about the policy filters associated with the specified transactionID and serviceID",
+        "description": "Retrieves information about the executed policies and filters associated to a transaction identified by its correlationID and serviceID",
         "x-flow": "trafficMonitorApi-circuitpath"
       },
       "parameters": [
@@ -103,7 +110,7 @@
         },
         {
           "type": "string",
-          "name": "transactionID",
+          "name": "correlationID",
           "in": "path",
           "required": true,
           "description": "identifies the transaction"
