@@ -21,7 +21,7 @@ Optionally you can import the API-Builder API into your API-Management system to
 Finally, the Admin-Node-Manager has to be [configured](#configure-the-admin-node-manager) to use the API-Builder API instead of the internal implementation.
 
 API-Builder exposing Traffic-Monitor API:  
-![Traffic-Monitor API](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/workflows/Test%20Traffic-Monitor%20API/badge.svg)
+[![Traffic-Monitor API](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/workflows/Traffic-Monitor%20API/badge.svg)](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/actions)
 
 ## Option 2 - Loginspector
 The Loginspector is a new separated user-interface with very basic set of functionalities. As part of the project the Loginspector is activated by default when using `docker-compose up -d`. If you don't wanna use it, it can be disabled by commenting out the following lines in the docker-compose.yml file:
