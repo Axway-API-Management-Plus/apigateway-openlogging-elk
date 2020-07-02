@@ -171,148 +171,6 @@ module.exports = [
         }
     },
     {
-        "processInfo": {
-            "groupName": "QuickStart Group",
-            "hostname": "api-env",
-            "version": "7.7.20200130",
-            "domainId": "8064faa2-54d2-42aa-b549-af5a0b289284",
-            "serviceId": "instance-1",
-            "groupId": "group-2",
-            "serviceName": "QuickStart Server"
-        },
-        "transactionSummaryContext": null,
-        "@version": "1",
-        "@timestamp": "2020-03-03T14:59:31.540Z",
-        "tags": [
-            "openlog"
-        ],
-        "circuitPath": [
-            {
-                "policy": "API Broker",
-                "execTime": 1,
-                "filters": [
-                    {
-                        "execTime": 0,
-                        "type": "ApiShuntFilter",
-                        "filterTime": 1583247561271,
-                        "status": "Fail",
-                        "name": "Not Found",
-                        "class": "com.vordel.coreapireg.runtime.broker.ApiShuntFilter"
-                    },
-                    {
-                        "execTime": 1,
-                        "type": "ApiShuntFailureFilter",
-                        "filterTime": 1583247561273,
-                        "name": "Not Found",
-                        "status": "Pass",
-                        "class": "com.vordel.coreapireg.runtime.broker.ApiShuntFailureFilter"
-                    }
-                ]
-            }
-        ],
-        "transactionElements": {
-            "leg0": {
-                "protocolInfo": {
-                    "http": {
-                        "bytesSent": 593,
-                        "method": "GET",
-                        "remoteAddr": "192.168.65.1",
-                        "statusText": "Not Found",
-                        "wafStatus": 1,
-                        "localAddr": "192.168.65.145",
-                        "status": 404,
-                        "bytesReceived": 511,
-                        "remotePort": "59641",
-                        "remoteName": "192.168.65.1",
-                        "localPort": "8065",
-                        "uri": "/favicon.ico"
-                    },
-                    "recvHeader": "GET /favicon.ico HTTP/1.1\r\nHost: api-env:8065\r\nUser-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:73.0) Gecko/20100101 Firefox/73.0\r\nAccept: image/webp,*/*\r\nAccept-Language: en-US,en;q=0.5\r\nAccept-Encoding: gzip, deflate, br\r\nConnection: keep-alive\r\nCookie: cookie_pressed_153=false; t3-admin-tour-firstshow=1; APIMANAGERSTATIC=6e3ac7af-54dd-44f9-a28b-969180e45914; portal.logintypesso=false; portal.demo=off; portal.isgridSortIgnoreCase=on; 6e7e1bb1dd446d4cd36889414ccb4cb7=ssrtpsa3ncgqso4peoscloc79t\r\n\r\n",
-                    "sentHeader": "HTTP/1.1 404 Not Found\r\nDate: Tue, 03 Mar 2020 14:59:21 GMT\r\nServer: Gateway\r\nContent-Length: 0\r\nConnection: keep-alive\r\nX-CorrelationID: Id-c9705e5ecd000322778d2ec4 0\r\nAccept: image/webp,*/*\r\nAccept-Language: en-US,en;q=0.5\r\nCookie: cookie_pressed_153=false; t3-admin-tour-firstshow=1; APIMANAGERSTATIC=6e3ac7af-54dd-44f9-a28b-969180e45914; portal.logintypesso=false; portal.demo=off; portal.isgridSortIgnoreCase=on; 6e7e1bb1dd446d4cd36889414ccb4cb7=ssrtpsa3ncgqso4peoscloc79t\r\nHost: api-env:8065\r\nUser-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:73.0) Gecko/20100101 Firefox/73.0\r\n\r\n"
-                },
-                "finalStatus": "Fail",
-                "duration": 6,
-                "leg": 0
-            }
-        },
-        "correlationId": "c9705e5ecd000322778d2ec4",
-        "timestampOriginal": getDate('15m'),
-        "transactionSummary": {
-            "serviceContexts": [],
-            "path": "/favicon.ico",
-            "protocolSrc": "8065",
-            "status": "failure",
-            "protocol": "https"
-        }
-    },
-    {
-        "processInfo": {
-            "groupName": "QuickStart Group",
-            "hostname": "api-env",
-            "version": "7.7.20200130",
-            "serviceId": "instance-2",
-            "domainId": "8064faa2-54d2-42aa-b549-af5a0b289284",
-            "groupId": "group-2",
-            "serviceName": "QuickStart Server"
-        },
-        "transactionSummaryContext": null,
-        "@version": "1",
-        "@timestamp": "2020-03-03T15:00:21.583Z",
-        "tags": [
-            "openlog"
-        ],
-        "circuitPath": [
-            {
-                "filters": [
-                    {
-                        "type": "ApiShuntFilter",
-                        "execTime": 0,
-                        "filterTime": 1583247612175,
-                        "name": "Options Request",
-                        "status": "Pass",
-                        "class": "com.vordel.coreapireg.runtime.broker.ApiShuntFilter"
-                    }
-                ],
-                "execTime": 0,
-                "policy": "API Broker"
-            }
-        ],
-        "transactionElements": {
-            "leg0": {
-                "protocolInfo": {
-                    "http": {
-                        "localAddr": "192.168.65.145",
-                        "method": "OPTIONS",
-                        "remoteAddr": "192.168.65.1",
-                        "statusText": "OK",
-                        "wafStatus": 0,
-                        "bytesSent": 350,
-                        "status": 200,
-                        "bytesReceived": 426,
-                        "remotePort": "59668",
-                        "remoteName": "192.168.65.1",
-                        "localPort": "8065",
-                        "uri": "/v2/pet/findByStatus"
-                    },
-                    "recvHeader": "OPTIONS /v2/pet/findByStatus?status=pending HTTP/1.1\r\nHost: api-env:8065\r\nUser-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:73.0) Gecko/20100101 Firefox/73.0\r\nAccept: */*\r\nAccept-Language: en-US,en;q=0.5\r\nAccept-Encoding: gzip, deflate, br\r\nAccess-Control-Request-Method: GET\r\nAccess-Control-Request-Headers: x-requested-with\r\nReferer: https://api-env:8075/home\r\nOrigin: https://api-env:8075\r\nConnection: keep-alive\r\n\r\n",
-                    "sentHeader": "HTTP/1.1 200 OK\r\nDate: Tue, 03 Mar 2020 15:00:12 GMT\r\nAllow: DELETE, GET, HEAD, OPTIONS, POST\r\nAccess-Control-Allow-Headers: x-requested-with\r\nAccess-Control-Allow-Methods: OPTIONS, GET\r\nAccess-Control-Allow-Origin: https://api-env:8075\r\nServer: Gateway\r\nConnection: close\r\nX-CorrelationID: Id-fc705e5ede00654de6d15daf 0\r\nContent-Type: text/plain\r\n\r\n"
-                },
-                "finalStatus": "Pass",
-                "duration": 2,
-                "leg": 0
-            }
-        },
-        "correlationId": "fc705e5ede00654de6d15daf",
-        "timestampOriginal": getDate('120h'),
-        "transactionSummary": {
-            "serviceContexts": [],
-            "path": "/v2/pet/findByStatus",
-            "protocolSrc": "8065",
-            "status": "success",
-            "protocol": "https"
-        }
-    },
-    {
         "transactionSummaryContext": null,
         "correlationId": "4e645e5e4600bb590c881179",
         "circuitPath": [
@@ -474,6 +332,233 @@ module.exports = [
             "serviceName": "QuickStart Server",
             "version": "7.7.20200130",
             "domainId": "8064faa2-54d2-42aa-b549-af5a0b289284"
+        }
+    },
+    {
+        "transactionElements": {
+            "leg0": {
+                "leg": 0,
+                "protocolInfo": {
+                    "recvHeader": "GET /api/portal/v1.3/appinfo HTTP/1.1\r\nHost: 127.0.0.1:8075\r\nAccept: */*\r\nIsApiPortalRequest: true\r\nConnection: close\r\n\r\n",
+                    "sentHeader": "HTTP/1.1 200 OK\r\nDate: Tue, 17 Mar 2020 11:18:05 GMT\r\nContent-Type: application/json\r\nCache-Control: no-cache, no-store, must-revalidate\r\nPragma: no-cache\r\nExpires: 0\r\nX-Frame-Options: DENY\r\nX-Content-Type-Options: nosniff\r\nX-XSS-Protection: 0\r\nServer: Gateway\r\nConnection: close\r\nX-CorrelationID: Id-edb1705e7d0168a34d74bfba 0\r\n\r\n",
+                    "http": {
+                        "localPort": "8075",
+                        "method": "GET",
+                        "status": 200,
+                        "wafStatus": 0,
+                        "remoteAddr": "127.0.0.1",
+                        "bytesSent": 735,
+                        "remotePort": "53514",
+                        "uri": "/api/portal/v1.3/appinfo",
+                        "localAddr": "127.0.0.1",
+                        "statusText": "OK",
+                        "bytesReceived": 121,
+                        "remoteName": "127.0.0.1"
+                    }
+                },
+                "duration": 12
+            }
+        },
+        "correlationId": "edb1705e7d0168a34d74bfba",
+        "@version": "1",
+        "circuitPath": [],
+        "tags": [
+            "openlog"
+        ],
+        "timestampOriginal": "2020-03-17T11:18:05.378Z",
+        "processInfo": {
+            "groupName": "QuickStart Group",
+            "serviceName": "QuickStart Server",
+            "domainId": "ed992442-c363-4d36-963a-9e6314b0f421",
+            "groupId": "group-2",
+            "version": "7.7.20200130",
+            "serviceId": "instance-1",
+            "hostname": "api-env"
+        }
+    },
+    {
+        "transactionElements": {
+            "leg0": {
+                "leg": 0,
+                "finalStatus": "Pass",
+                "protocolInfo": {
+                    "recvHeader": "GET / HTTP/1.1\r\nHost: api-env.demo.axway.com:8075\r\nUser-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101 Firefox/68.0\r\nAccept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\r\nAccept-Language: en-US,en;q=0.5\r\nAccept-Encoding: gzip, deflate, br\r\nReferer: https://api-env.demo.axway.com:8075/home\r\nConnection: keep-alive\r\nCookie: 6e7e1bb1dd446d4cd36889414ccb4cb7=cakooto11btta81joumss3hnka; portal.logintypesso=false; portal.demo=off; portal.isgridSortIgnoreCase=on; roundcube_sessid=3qqh3mp9qnrqq0hfrmdvac73sc\r\nUpgrade-Insecure-Requests: 1\r\n\r\n",
+                    "sentHeader": "HTTP/1.1 200 OK\r\nDate: Tue, 17 Mar 2020 11:23:06 GMT\r\nServer: Gateway\r\nConnection: close\r\nX-CorrelationID: Id-1ab3705e920284217e6aae73 0\r\nAccept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\r\nAccept-Language: en-US,en;q=0.5\r\nCache-Control: no-cache, no-store, must-revalidate\r\nContent-Security-Policy: frame-ancestors 'none'\r\nCookie: 6e7e1bb1dd446d4cd36889414ccb4cb7=cakooto11btta81joumss3hnka; portal.logintypesso=false; portal.demo=off; portal.isgridSortIgnoreCase=on; roundcube_sessid=3qqh3mp9qnrqq0hfrmdvac73sc\r\nExpires: 0\r\nHost: api-env.demo.axway.com:8075\r\nPragma: no-cache\r\nReferer: https://api-env.demo.axway.com:8075/home\r\nUpgrade-Insecure-Requests: 1\r\nUser-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101 Firefox/68.0\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\nX-XSS-Protection: 0\r\nContent-Type: text/html\r\n\r\n",
+                    "http": {
+                        "localPort": "8075",
+                        "method": "GET",
+                        "status": 200,
+                        "wafStatus": 0,
+                        "remoteAddr": "10.128.58.136",
+                        "bytesSent": 2855,
+                        "bytesReceived": 572,
+                        "remotePort": "45412",
+                        "localAddr": "10.128.58.136",
+                        "statusText": "OK",
+                        "uri": "/",
+                        "remoteName": "10.128.58.136"
+                    }
+                },
+                "duration": 2
+            }
+        },
+        "correlationId": "1ab3705e920284217e6aae73",
+        "@version": "1",
+        "circuitPath": [
+            {
+                "execTime": 1,
+                "policy": "API Manager Protection Policy",
+                "filters": [
+                    {
+                        "class": "com.vordel.circuit.attribute.SetAttributeFilter",
+                        "status": "Pass",
+                        "filterTime": 1584444186836,
+                        "execTime": 0,
+                        "espk": "DEFAULT_PRIMARY_VordelGateway_7.7.0:3563372240640736537",
+                        "name": "Disable Monitoring",
+                        "type": "SetAttributeFilter"
+                    },
+                    {
+                        "class": "com.vordel.circuit.CircuitDelegateFilter",
+                        "status": "Pass",
+                        "filterTime": 1584444186837,
+                        "execTime": 1,
+                        "subPaths": [
+                            {
+                                "execTime": 0,
+                                "policy": "Secure Headers",
+                                "filters": [
+                                    {
+                                        "class": "com.vordel.circuit.conversion.AddHTTPHeaderFilter",
+                                        "status": "Pass",
+                                        "filterTime": 1584444186836,
+                                        "execTime": 0,
+                                        "type": "AddHTTPHeaderFilter",
+                                        "espk": "DEFAULT_PRIMARY_VordelGateway_7.7.0:1018430481999133398",
+                                        "name": "Add X-Frame-Options"
+                                    },
+                                    {
+                                        "status": "Pass",
+                                        "class": "com.vordel.circuit.conversion.AddHTTPHeaderFilter",
+                                        "filterTime": 1584444186836,
+                                        "execTime": 0,
+                                        "espk": "DEFAULT_PRIMARY_VordelGateway_7.7.0:2425540468063109194",
+                                        "name": "Add X-Content-Type-Options",
+                                        "type": "AddHTTPHeaderFilter"
+                                    },
+                                    {
+                                        "class": "com.vordel.circuit.conversion.AddHTTPHeaderFilter",
+                                        "status": "Pass",
+                                        "filterTime": 1584444186836,
+                                        "execTime": 0,
+                                        "espk": "DEFAULT_PRIMARY_VordelGateway_7.7.0:-5444113616489599230",
+                                        "name": "Add X-XSS-Protection",
+                                        "type": "AddHTTPHeaderFilter"
+                                    },
+                                    {
+                                        "class": "com.vordel.circuit.conversion.AddHTTPHeaderFilter",
+                                        "status": "Pass",
+                                        "filterTime": 1584444186836,
+                                        "execTime": 0,
+                                        "espk": "DEFAULT_PRIMARY_VordelGateway_7.7.0:7081893704511792953",
+                                        "name": "Add Content-Security-Policy",
+                                        "type": "AddHTTPHeaderFilter"
+                                    },
+                                    {
+                                        "class": "com.vordel.circuit.conversion.AddHTTPHeaderFilter",
+                                        "status": "Pass",
+                                        "filterTime": 1584444186837,
+                                        "execTime": 0,
+                                        "espk": "DEFAULT_PRIMARY_VordelGateway_7.7.0:-2212651968248743366",
+                                        "name": "Add Expires",
+                                        "type": "AddHTTPHeaderFilter"
+                                    },
+                                    {
+                                        "class": "com.vordel.circuit.conversion.AddHTTPHeaderFilter",
+                                        "status": "Pass",
+                                        "filterTime": 1584444186837,
+                                        "execTime": 0,
+                                        "espk": "DEFAULT_PRIMARY_VordelGateway_7.7.0:1947547883410725837",
+                                        "name": "Add Pragma",
+                                        "type": "AddHTTPHeaderFilter"
+                                    },
+                                    {
+                                        "class": "com.vordel.circuit.conversion.AddHTTPHeaderFilter",
+                                        "status": "Pass",
+                                        "filterTime": 1584444186837,
+                                        "execTime": 0,
+                                        "espk": "DEFAULT_PRIMARY_VordelGateway_7.7.0:1213862525432630139",
+                                        "name": "Add Cache-Control",
+                                        "type": "AddHTTPHeaderFilter"
+                                    }
+                                ]
+                            }
+                        ],
+                        "espk": "DEFAULT_PRIMARY_VordelGateway_7.7.0:-7310008129630418788",
+                        "name": "Add Secure Headers",
+                        "type": "CircuitDelegateFilter"
+                    },
+                    {
+                        "status": "Fail",
+                        "class": "com.vordel.circuit.authn.CheckSessionFilter",
+                        "filterTime": 1584444186837,
+                        "execTime": 0,
+                        "espk": "DEFAULT_PRIMARY_VordelGateway_7.7.0:1617103538881458172",
+                        "name": "Check Session",
+                        "type": "CheckSessionFilter"
+                    },
+                    {
+                        "class": "com.vordel.circuit.attribute.CompareAttributeFilter",
+                        "status": "Pass",
+                        "filterTime": 1584444186837,
+                        "execTime": 0,
+                        "espk": "DEFAULT_PRIMARY_VordelGateway_7.7.0:1444681803898426806",
+                        "name": "Is This Root or Home?",
+                        "type": "CompareAttributeFilter"
+                    },
+                    {
+                        "class": "com.vordel.circuit.attribute.CompareAttributeFilter",
+                        "status": "Fail",
+                        "filterMessage": "Filter failed",
+                        "filterTime": 1584444186837,
+                        "execTime": 0,
+                        "type": "CompareAttributeFilter",
+                        "name": "Query String Exists?",
+                        "espk": "DEFAULT_PRIMARY_VordelGateway_7.7.0:-3576911551036060428"
+                    },
+                    {
+                        "status": "Pass",
+                        "class": "com.vordel.circuit.file.LoadFileFilter",
+                        "filterTime": 1584444186837,
+                        "execTime": 0,
+                        "espk": "DEFAULT_PRIMARY_VordelGateway_7.7.0:644437044284765021",
+                        "name": "Load API Manager Login Page",
+                        "type": "LoadFileFilter"
+                    },
+                    {
+                        "status": "Pass",
+                        "class": "com.vordel.circuit.net.ReflectFilter",
+                        "filterTime": 1584444186837,
+                        "execTime": 0,
+                        "espk": "DEFAULT_PRIMARY_VordelGateway_7.7.0:-3977244110355365495",
+                        "name": "Send Login Page",
+                        "type": "ReflectFilter"
+                    }
+                ]
+            }
+        ],
+        "tags": [
+            "openlog"
+        ],
+        "timestampOriginal": "2020-03-17T11:23:06.838Z",
+        "processInfo": {
+            "groupName": "QuickStart Group",
+            "serviceName": "QuickStart Server",
+            "domainId": "ed992442-c363-4d36-963a-9e6314b0f421",
+            "groupId": "group-2",
+            "version": "7.7.20200130",
+            "serviceId": "instance-1",
+            "hostname": "api-env"
         }
     }
 ];

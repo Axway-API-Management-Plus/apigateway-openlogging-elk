@@ -76,10 +76,11 @@ For the following steps, please open the ANM configuration in Policy-Studio. You
 
     - The `Compare Attribute` filter checks if the requested API can be handled by the API-Builder project.    
     As a basis for decision-making a criteria for each endpoint needs to be added to the filter configuration.  
-    _At this point in time only two endpoints are supported by the API Builder based Traffic-Monitor API.  
-    The **search** endpoint which provides the data for the HTTP Traffic overview and the **circuitpath** endpoint which provides the data for the Filter Execution Path as part of the detailed view of a transaction. Currently the API Builder Project does not cover all endpoints to completely replace the existing Traffic Monitor API yet, but more endpoints will be added soon!_    
+    _At this point in time three endpoints are supported by the API Builder based Traffic-Monitor API.  
+    The **search** endpoint which provides the data for the HTTP Traffic overview,  the **circuitpath** endpoint which provides the data for the Filter Execution Path as part of the detailed view of a transaction and the **trace** endpoint which returns the trace information. Currently the API Builder Project does not cover all endpoints to completely replace the existing Traffic Monitor API yet, but more endpoints will be added soon!_    
     For search endpoint add: `http.request.path` matches regular expression `^\/api\/router\/service\/[A-Za-z0-9-.]+\/ops\/search$`  
     For circuitpath endpoint add: `http.request.path` matches regular expression `^\/api\/router\/service\/[A-Za-z0-9-.]+\/ops\/stream\/[A-Za-z0-9]+\/[^\/]+\/circuitpath$`  
+    For trace endpoint add: `http.request.path` matches regular expression `^\/api\/router\/service\/[A-Za-z0-9-.]+\/ops\/trace\/[A-Za-z0-9]+[\?]?.*$`  
     _The list of requests will be extended once the API-Builder project can serve more (e.g. the Request-Detail view)._  
     ![Is API Managed][img6]  
     - Adjust the URL of the Connect to URL filter to your running API-Builder docker container and port - **default is 8889**. Sample: `http://api-env:8889/api/elk/v1${http.request.rawURI}`  

@@ -6,7 +6,7 @@ describe('Traffic Monitor API', function () {
 	this.timeout(30000);
 	let server;
 	let auth;
-	const indexName = `test_index_${getRandomInt(9999)}`;
+	const indexName = `circuitpath_test_${getRandomInt(9999)}`;
 
 	/**
 	 * Start API Builder.
@@ -22,7 +22,7 @@ describe('Traffic Monitor API', function () {
 			elasticConfig = server.apibuilder.config.pluginConfig['@axway-api-builder-ext/api-builder-plugin-fn-elasticsearch'].elastic;
 			server.started
 			.then(() => {
-				const entryset = require('./documents/basic/search_test_documents');
+				const entryset = require('./documents/basic/circuitpath_test_documents');
 				sendToElasticsearch(elasticConfig, indexName, entryset)
 				.then(() => {
 					resolve();
