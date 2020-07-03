@@ -7,7 +7,7 @@ describe('Endpoints', function () {
 	this.timeout(30000);
 	let server;
 	let auth;
-	const indexName = `test_index_${getRandomInt(9999)}`;
+	const indexName = `search_test_${getRandomInt(9999)}`;
 
 	/**
 	 * Start API Builder.
@@ -48,7 +48,7 @@ describe('Endpoints', function () {
 				expect(response.statusCode).to.equal(200);
 				expect(body).to.be.an('Object');
 				expect(body).to.have.property('data');
-				expect(body.data).to.have.lengthOf(6);
+				expect(body.data).to.have.lengthOf(4);
 				checkFields(body.data, false);
 			});
 		});
@@ -484,7 +484,7 @@ function checkFields(data, hasServiceContext) {
 		expect(entry).to.have.property('uri');
 		expect(entry).to.have.property('duration');
 		expect(entry).to.have.property('type');
-		//expect(entry).to.have.property('finalStatus');
+		expect(entry).to.have.property('finalStatus');
 		if(hasServiceContext) {
 			expect(entry).to.have.property('subject');
 			expect(entry).to.have.property('correlationId');

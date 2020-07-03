@@ -6,7 +6,7 @@ describe('Endpoints', function () {
 	this.timeout(30000);
 	let server;
 	let auth;
-	const indexName = `test_index_${getRandomInt(9999)}`;
+	const indexName = `getinfo_test_${getRandomInt(9999)}`;
 
 	/**
 	 * Start API Builder.

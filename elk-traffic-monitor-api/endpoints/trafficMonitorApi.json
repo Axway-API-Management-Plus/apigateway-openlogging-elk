@@ -182,6 +182,65 @@
           "required": true
         }
       ]
+    },
+    "/router/service/{serviceID}/ops/trace/{correlationID}": {
+      "parameters": [
+        {
+          "type": "string",
+          "name": "serviceID",
+          "in": "path",
+          "required": true,
+          "description": "instance of the API Gateway e.g.instance-1"
+        },
+        {
+          "type": "string",
+          "name": "correlationID",
+          "in": "path",
+          "required": true,
+          "description": "identifies the transaction"
+        }
+      ],
+      "get": {
+        "summary": "Retrieves trace information",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          }
+        },
+        "operationId": "trace",
+        "description": "Retrieves trace information associated to a transaction identified by its correlationID and serviceID",
+        "parameters": [
+          {
+            "type": "string",
+            "in": "query",
+            "name": "format",
+            "description": "describes the result format (only json is supported; if not applied it is defaulted to json anyway) "
+          },
+          {
+            "type": "string",
+            "in": "query",
+            "name": "sentData"
+          },
+          {
+            "type": "string",
+            "in": "query",
+            "name": "receivedData"
+          }
+        ],
+        "x-flow": "trafficMonitorApi-trace"
+      }
     }
   },
   "basePath": "/elk/v1/api"
