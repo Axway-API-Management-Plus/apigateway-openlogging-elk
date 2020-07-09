@@ -30,34 +30,164 @@
 			"env"
 		]
 	},
-	"start": "setcontext.1",
+	"start": "javascript.1",
 	"nodes": {
-		"setcontext.1": {
-			"type": "nodehandler://axway-flow/setcontext",
-			"name": "Set Context",
-			"method": "setcontext",
+		"javascript.1": {
+			"type": "nodehandler://@axway/api-builder-plugin-fn-javascript/javascript",
+			"name": "Define Index",
+			"method": "Execute",
 			"parameters": [
 				{
-					"name": "value",
-					"type": "array",
-					"value": "[\n\n{\n\t\"details\": {\"uri\":\"/healthcheck\",\"status\":200,\"statustext\":\"OK\",\"method\":\"GET\",\"vhost\":null,\"wafStatus\":0,\"bytesSent\":1331,\"bytesReceived\":1233,\"remoteName\":\"192.168.233.1\",\"remoteAddr\":\"192.168.233.1\",\"localAddr\":\"192.168.233.137\",\"remotePort\":\"57400\",\"localPort\":\"8080\",\"sslsubject\":null,\"leg\":0,\"timestamp\":1588666217689,\"duration\":49,\"correlationId\":\"691fb15ed40003055c0ea6f0\",\"serviceName\":null,\"subject\":null,\"operation\":null,\"type\":\"http\",\"finalStatus\":\"Pass\"\n\t},\n\t\"rheaders\": [\n{ \"Host\":\"api-env.demo.axway.com:8080\"},\n{ \"Connection\":\"keep-alive\"},\n{ \"Upgrade-Insecure-Requests\":\"1\"},\n{ \"User-Agent\":\"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.129 Safari/537.36\"},\n{ \"Accept\":\"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9\"},\n{ \"Accept-Encoding\":\"gzip, deflate\"},\n{ \"Accept-Language\":\"de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7\"},\n{ \"Cookie\":\"_ga=GA1.2.2089149224.1588233255; _hjid=45582ae7-17d6-4d5b-be7d-891a307d4109; _gcl_au=1.1.169451176.1588238948; _mkto_trk=id:727-TDV-465&token:_mch-axway.com-1588238948318-18018; _fbp=fb.1.1588238949560.1566065746; mousestats_vi=2f25c2ce7a7dc21cdb83; _gaexp=GAX1.2.8iCZUhMtRFiOOhBG7oZNyg.18455.1; wisepops_visits=%5B%222020-04-30T09%3A31%3A36.972Z%22%2C%222020-04-30T09%3A31%3A24.285Z%22%5D; wisepops=%7B%22csd%22%3A1%2C%22popups%22%3A%7B%22201026%22%3A%7B%22dc%22%3A1%2C%22d%22%3A%222020-04-30T09%3A31%3A24.876Z%22%7D%2C%22202147%22%3A%7B%22dc%22%3A1%2C%22d%22%3A%222020-04-30T09%3A31%3A37.237Z%22%7D%7D%2C%22sub%22%3A0%2C%22ucrn%22%3A90%2C%22cid%22%3A%2248348%22%2C%22v%22%3A4%7D; portal.logintypesso=false; portal.demo=off; portal.isgridSortIgnoreCase=on\"}\n\t],\n\t\"sheaders\": [\n{ \"Date\":\"Tue, 05 May 2020 08:10:17 GMT\"},\n{ \"Server\":\"Gateway\"},\n{ \"Connection\":\"close\"},\n{ \"X-CorrelationID\":\"Id-691fb15ed40003055c0ea6f0 0\"},\n{ \"Accept\":\"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9\"},\n{ \"Accept-Language\":\"de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7\"},\n{ \"Cookie\":\"_ga=GA1.2.2089149224.1588233255; _hjid=45582ae7-17d6-4d5b-be7d-891a307d4109; _gcl_au=1.1.169451176.1588238948; _mkto_trk=id:727-TDV-465&token:_mch-axway.com-1588238948318-18018; _fbp=fb.1.1588238949560.1566065746; mousestats_vi=2f25c2ce7a7dc21cdb83; _gaexp=GAX1.2.8iCZUhMtRFiOOhBG7oZNyg.18455.1; wisepops_visits=%5B%222020-04-30T09%3A31%3A36.972Z%22%2C%222020-04-30T09%3A31%3A24.285Z%22%5D; wisepops=%7B%22csd%22%3A1%2C%22popups%22%3A%7B%22201026%22%3A%7B%22dc%22%3A1%2C%22d%22%3A%222020-04-30T09%3A31%3A24.876Z%22%7D%2C%22202147%22%3A%7B%22dc%22%3A1%2C%22d%22%3A%222020-04-30T09%3A31%3A37.237Z%22%7D%7D%2C%22sub%22%3A0%2C%22ucrn%22%3A90%2C%22cid%22%3A%2248348%22%2C%22v%22%3A4%7D; portal.logintypesso=false; portal.demo=off; portal.isgridSortIgnoreCase=on\"},\n{ \"Host\":\"api-env.demo.axway.com:8080\"},\n{ \"Upgrade-Insecure-Requests\":\"1\"},\n{ \"User-Agent\":\"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.129 Safari/537.36\"},\n{ \"Content-Type\":\"text/xml\"}\n\t]\n}]",
-					"metaName": "value"
+					"name": "data",
+					"type": "jsonpath",
+					"value": "$",
+					"metaName": "data",
+					"metaDescription": "The value to apply as the `data` argument to the JavaScript code. For objects and arrays, `data` is passed by reference."
+				},
+				{
+					"name": "code",
+					"type": "string",
+					"value": "\"let index = 'logstash-openlog';\\n  //let index = 'getinfo_test_1688';\\n  \\n  if(data.config.testElasticIndex) {\\n    index = data.config.testElasticIndex;\\n  }\\n  \\n  return index;\"",
+					"metaName": "code",
+					"metaDescription": "A JavaScript function body. Supports `await` and returning promises"
 				}
 			],
 			"outputs": {
 				"next": {
-					"context": "$.GetInfoPayload",
+					"context": "$.index",
+					"routes": [
+						"javascript.2"
+					],
+					"metaName": "Next"
+				},
+				"error": {
+					"context": "$.error",
 					"routes": [
 						"http.1"
 					],
-					"metaName": "Next"
+					"metaName": "Error"
 				}
 			},
-			"metaMethod": "Set Context"
+			"metaMethod": "Execute"
 		},
-		"http.1": {
+		"javascript.2": {
+			"type": "nodehandler://@axway/api-builder-plugin-fn-javascript/javascript",
+			"name": "Check Params",
+			"method": "Execute",
+			"parameters": [
+				{
+					"name": "data",
+					"type": "jsonpath",
+					"value": "$",
+					"metaName": "data",
+					"metaDescription": "The value to apply as the `data` argument to the JavaScript code. For objects and arrays, `data` is passed by reference."
+				},
+				{
+					"name": "code",
+					"type": "string",
+					"value": "\"//only json is supported. \\n  //If param format is skipped automatically json is returned\\n\\n  if(data.params.format != undefined && data.params.format != 'json') {\\n    throw {\\n      name: \\\"unknown format exception\\\",\\n      message: \\\"unknown format\\\"\\n    };\\n  }\\n\\n  return data.params;\"",
+					"metaName": "code",
+					"metaDescription": "A JavaScript function body. Supports `await` and returning promises"
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.params",
+					"routes": [
+						"javascript.3"
+					],
+					"metaName": "Next"
+				},
+				"error": {
+					"context": "$.error",
+					"routes": [
+						"http.3"
+					],
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Execute"
+		},
+		"javascript.3": {
+			"type": "nodehandler://@axway/api-builder-plugin-fn-javascript/javascript",
+			"name": "Build ES query",
+			"method": "Execute",
+			"parameters": [
+				{
+					"name": "data",
+					"type": "jsonpath",
+					"value": "$",
+					"metaName": "data",
+					"metaDescription": "The value to apply as the `data` argument to the JavaScript code. For objects and arrays, `data` is passed by reference."
+				},
+				{
+					"name": "code",
+					"type": "string",
+					"value": "\"let elasticQuery = ({\\n    \\\"bool\\\": {\\n      \\\"must\\\": [\\n        {\\\"term\\\": {\\\"correlationId\\\": data.params.correlationID}},\\n          {\\\"term\\\": {\\\"processInfo.serviceId\\\": data.params.serviceID}}\\n      ]\\n    }\\n  });\\n  \\n  \\n  return elasticQuery;\"",
+					"metaName": "code",
+					"metaDescription": "A JavaScript function body. Supports `await` and returning promises"
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.elasticsearch.query",
+					"routes": [
+						"elasticsearch.1",
+						"javascript.4"
+					],
+					"metaName": "Next"
+				},
+				"error": {
+					"context": "$.error",
+					"routes": [
+						"http.1"
+					],
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Execute"
+		},
+		"elasticsearch.1": {
+			"type": "nodehandler://@axway-api-builder-ext/api-builder-plugin-fn-elasticsearch/elasticsearch",
+			"name": "Search Info",
+			"method": "search",
+			"parameters": [
+				{
+					"name": "index",
+					"type": "jsonpath",
+					"value": "$.index",
+					"metaName": "index",
+					"metaDescription": "Comma-separated list or wildcard expression of index names used to limit the request."
+				},
+				{
+					"name": "query",
+					"type": "jsonpath",
+					"value": "$.elasticsearch.query",
+					"metaName": "query",
+					"metaDescription": "Defines the search definition using the Query DSL. Learn more: https://www.elastic.co/guide/en/elasticsearch/reference/7.x/query-dsl.html"
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.elasticsearch.result",
+					"routes": [
+						"javascript.4"
+					],
+					"metaName": "Next"
+				},
+				"error": {
+					"context": "$.error",
+					"routes": [
+						"http.1"
+					],
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Search"
+		},
+		"http.2": {
 			"type": "nodehandler://axway-flow/http",
-			"name": "Set HTTP Response",
+			"name": "Set HTTP 200 Response",
 			"method": "setresponse",
 			"parameters": [
 				{
@@ -70,7 +200,96 @@
 				{
 					"name": "body",
 					"type": "jsonpath",
-					"value": "$.GetInfoPayload",
+					"value": "$.result",
+					"metaName": "body",
+					"metaDescription": "The response payload"
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.response",
+					"routes": [],
+					"metaName": "Next"
+				}
+			},
+			"metaMethod": "Set HTTP Response"
+		},
+		"javascript.4": {
+			"type": "nodehandler://@axway/api-builder-plugin-fn-javascript/javascript",
+			"name": "Format Response",
+			"method": "Execute",
+			"parameters": [
+				{
+					"name": "data",
+					"type": "jsonpath",
+					"value": "$",
+					"metaName": "data",
+					"metaDescription": "The value to apply as the `data` argument to the JavaScript code. For objects and arrays, `data` is passed by reference."
+				},
+				{
+					"name": "code",
+					"type": "string",
+					"value": "\"//init variables\\n  \\n  let transactionInfo = {};\\n  let sourceLegs = [];\\n  let resultLegs = [];\\n  let legParam = data.params.legID;\\n  let detailsParam = data.params.details;\\n  let sheadersParam = data.params.sheaders;\\n  let rheadersParam = data.params.rheaders;\\n  let elasticData = data.elasticsearch.result.body.hits;\\n  \\n  \\n  transactionInfo = elasticData.hits[0]._source;\\n  sourceLegs = transactionInfo.transactionElements;\\n  \\n  // Loop over legs\\n  for (var item in sourceLegs) {\\n    let sourceLeg = sourceLegs[item];\\n    let resultLeg = {};\\n    let details = {};\\n\\n\\tlet rheaders = [];\\n    let sheaders = [];\\n    \\n    if (legParam == '*' || legParam == sourceLeg.leg)\\n    {\\n    \\n      if (detailsParam == '1'){\\n        details.uri = sourceLeg.protocolInfo.http.uri;\\n        details.status = sourceLeg.protocolInfo.http.status;\\n        details.statustext = sourceLeg.protocolInfo.http.statusText;\\n        details.method = sourceLeg.protocolInfo.http.method;\\n        details.vhost = (typeof sourceLeg.protocolInfo.http.vhost === 'undefined') ? null : sourceLeg.protocolInfo.http.vhost; // needs to be checked - not avail in test data\\n        details.wafStatus = sourceLeg.protocolInfo.http.wafStatus;\\n        details.bytesSent = sourceLeg.protocolInfo.http.bytesSent;\\n        details.bytesReceived = sourceLeg.protocolInfo.http.bytesReceived;\\n        details.remoteName = sourceLeg.protocolInfo.http.remoteName;\\n        details.remoteAddr = sourceLeg.protocolInfo.http.remoteAddr;\\n        details.localAddr = sourceLeg.protocolInfo.http.localAddr;\\n        details.remotePort = sourceLeg.protocolInfo.http.remotePort;\\n        details.localPort = sourceLeg.protocolInfo.http.localPort; \\n        details.sslsubject = (typeof sourceLeg.protocolInfo.http.sslSubject === 'undefined') ? null : sourceLeg.protocolInfo.http.sslSubject; //need to be checked - not avail in test data \\n        details.leg = sourceLeg.leg;\\n        details.timestamp = Date.parse(transactionInfo.timestampOriginal); //Needs to be formatted\\n        details.duration = sourceLeg.duration;\\n        details.correlationId = transactionInfo.correlationId;\\n        details.serviceName = sourceLeg.serviceName;\\n        details.subject = sourceLeg.protocolInfo.http.authSubjectId;\\n        details.operation = sourceLeg.operation;\\n        details.type = 'http'; //ToDo - currently hardcoded. Get it from path param in future\\n        details.finalStatus  = (typeof sourceLeg.finalStatus === 'undefined') ? null : sourceLeg.finalStatus; //need to be checked - not always avail in test data \\n        resultLeg.details = details;\\n      } else if (detailsParam == '0'){ \\n        resultLeg.details = null;\\n      } else{\\n        // No details element at all\\n      }\\n\\n                 \\n      // Formatting the rHeaders    \\n      if (rheadersParam == '1'){\\n        let rawRecvHeader = [];\\n        rawRecvHeader = sourceLeg.protocolInfo.recvHeader.split(\\\"\\\\r\\\\n\\\")\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t;\\n        let recvAttributes = [];   \\n\\n        rawRecvHeader.forEach(function (item,index){\\n        if (index !=0){\\n            let attribObj = {};        \\n            let n = item.indexOf(\\\":\\\");\\n            let attribName = item.substr(0,n).toString();\\n            let atrribValue = (item.substr(n+1).trim());\\n            if (attribName.length != 0) {\\n                attribObj[attribName]= atrribValue; \\n                recvAttributes.push(attribObj);\\n                }\\n            }\\n        });\\n        resultLeg.rheaders = recvAttributes;\\n      } else if (rheadersParam == '0'){   \\n        resultLeg.rheaders = null;\\n      } else {\\n        // No rheaders elemenmt at all\\n      }\\n\\n\\n      // Formatting the sHeaders\\n      \\n\\t  if (sheadersParam == '1') {\\n        let rawSendHeader = [];\\n        rawSendHeader = sourceLeg.protocolInfo.sentHeader.split(\\\"\\\\r\\\\n\\\")\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t;\\n        let sendAttributes = [];   \\n\\n        rawSendHeader.forEach(function (item,index){\\n        if (index !=0){\\n            let attribObj = {};        \\n            let n = item.indexOf(\\\":\\\");\\n            let attribName = item.substr(0,n).toString();\\n            let atrribValue = (item.substr(n+1).trim());\\n            if (attribName.length != 0) {\\n                attribObj[attribName]= atrribValue; \\n                sendAttributes.push(attribObj);\\n                }\\n            }\\n        });\\n\\n        resultLeg.sheaders = sendAttributes;\\n      } else if (sheadersParam == '0') {\\n        resultLeg.sheaders = null;\\n      } else {\\n        // No sheaders element at all\\n      }\\n\\n\\t  // Only when all legs are requested create an Array with leg objects.\\n      // Otherwise just return the leg object.\\n\\t  if (legParam == '*') {\\n      \\tresultLegs.push(resultLeg);\\n      } else {\\n        return resultLeg;\\n      }\\n\\n    }\\n  }\\n\\n  \\n  return resultLegs;\"",
+					"metaName": "code",
+					"metaDescription": "A JavaScript function body. Supports `await` and returning promises"
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.result",
+					"routes": [
+						"http.2"
+					],
+					"metaName": "Next"
+				},
+				"error": {
+					"context": "$.error",
+					"routes": [
+						"http.1"
+					],
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Execute"
+		},
+		"http.1": {
+			"type": "nodehandler://axway-flow/http",
+			"name": "Set HTTP 500 Response",
+			"method": "setresponse",
+			"parameters": [
+				{
+					"name": "status",
+					"type": "number",
+					"value": "500",
+					"metaName": "status",
+					"metaDescription": "The HTTP status code"
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.response",
+					"routes": [],
+					"metaName": "Next"
+				}
+			},
+			"metaMethod": "Set HTTP Response"
+		},
+		"http.3": {
+			"type": "nodehandler://axway-flow/http",
+			"name": "Set HTTP 400 Response",
+			"method": "setresponse",
+			"parameters": [
+				{
+					"name": "status",
+					"type": "number",
+					"value": "400",
+					"metaName": "status",
+					"metaDescription": "The HTTP status code"
+				},
+				{
+					"name": "body",
+					"type": "jsonpath",
+					"value": "$.error.message",
 					"metaName": "body",
 					"metaDescription": "The response payload"
 				}

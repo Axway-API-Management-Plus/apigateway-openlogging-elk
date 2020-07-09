@@ -112,8 +112,6 @@ describe('Traffic Monitor API', function () {
 				expect(body).to.have.lengthOf(2);
 			});
 		});
-
-
 	});
 });
 	

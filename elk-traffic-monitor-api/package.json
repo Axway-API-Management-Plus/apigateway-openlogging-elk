@@ -47,7 +47,8 @@
 		"test": "mocha --exit --colors ./test --recursive -R spec",
 		"test:search": "mocha --exit --colors ./test/test_search_endpoint.js -R spec",
 		"test:circuitpath": "mocha --exit --colors ./test/test_circuitpath.js -R spec",
-		"test:trace": "mocha --exit --colors ./test/test_trace_endpoint.js -R spec",
+		"test:trace": "mocha --inspect-brk --exit --colors ./test/test_trace_endpoint.js -R spec",
+		"test:getinfo": "mocha --inspect-brk --exit --colors ./test/test_getinfo_endpoint.js -R spec",
 		"test:debug": "mocha --inspect-brk --exit --colors ./test --recursive -R spec --timeout 10000"
 	}
 }

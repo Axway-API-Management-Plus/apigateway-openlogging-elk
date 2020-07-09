@@ -1,0 +1,200 @@
+const getDate = require('../../util');
+
+module.exports = [
+{
+		"timestampOriginal": "2020-07-03T15:55:48.333Z",
+		"transactionSummaryContext": {
+			"monitor": true,
+			"service": "ARS ToDo API",
+			"client": "Pass Through",
+			"status": "success",
+			"duration": 383,
+			"method": "Get-all-todo-items"
+		},
+		"@version": "1",
+		"@timestamp": "2020-07-03T15:56:11.597Z",
+		"transactionElements": {
+			"leg1": {
+				"duration": 176,
+				"operation": "Get-all-todo-items",
+				"protocolInfo": {
+					"recvHeader": "HTTP/1.1 200 OK\r\nserver: API Builder/4.27.29\r\nrequest-id: e923342a-cf72-4c93-a774-78d1fa80c002\r\nx-xss-protection: 1; mode=block\r\nx-frame-options: DENY\r\nsurrogate-control: no-store\r\ncache-control: no-store, no-cache, must-revalidate, proxy-revalidate\r\npragma: no-cache\r\nexpires: 0\r\nx-content-type-options: nosniff\r\nstart-time: 1593791748423\r\ncontent-type: application/json; charset=utf-8\r\nresponse-time: 1\r\ncontent-md5: 0c682d056c69de8e90bbdf0a677891d8\r\ncontent-length: 281\r\netag: W/\"119-iMSR0WMPy7z6deRjls2eUuMCX5I\"\r\nVary: Accept-Encoding\r\nDate: Fri, 03 Jul 2020 15:55:48 GMT\r\nConnection: close\r\n\r\n",
+					"sentHeader": "GET /api/todos HTTP/1.1\r\nHost: 79f6a7dbf03ba9dc3fcdda2486d26adfab68584e.cloudapp-enterprise.appcelerator.com\r\nMax-Forwards: 20\r\nVia: 1.0 api-env (Gateway)\r\naccept: */*\r\nuser-agent: loadtest/5.0.3\r\nConnection: close\r\nX-CorrelationID: Id-0455ff5e82267be8182a553d 1\r\n\r\n",
+					"http": {
+						"bytesReceived": 879,
+						"uri": "/api/todos",
+						"remoteAddr": "52.43.33.149",
+						"authSubjectId": "Pass Through",
+						"localAddr": "192.168.233.137",
+						"remotePort": "80",
+						"bytesSent": 266,
+						"wafStatus": 0,
+						"status": 200,
+						"localPort": "43580",
+						"statusText": "OK",
+						"method": "GET",
+						"remoteName": "79f6a7dbf03ba9dc3fcdda2486d26adfab68584e.cloudapp-enterprise.appcelerator.com"
+					},
+					"recvPayload": "file:///opt/Axway/APIM/apigateway/logs/payloads/2020-07-03/08.55/0455ff5e82267be8182a553d-1-received"
+				},
+				"leg": 1,
+				"serviceName": "ARS ToDo API"
+			},
+			"leg0": {
+				"finalStatus": "Pass",
+				"operation": "Get-all-todo-items",
+				"protocolInfo": {
+					"recvHeader": "GET /ars/api/todos HTTP/1.1\r\nhost: api-env.demo.axway.com:8065\r\nuser-agent: loadtest/5.0.3\r\naccept: */*\r\nConnection: keep-alive\r\n\r\n",
+					"sentHeader": "HTTP/1.1 200 OK\r\nMax-Forwards: 20\r\nVia: 1.0 api-env (Gateway)\r\nConnection: close\r\nX-CorrelationID: Id-0455ff5e82267be8182a553d 0\r\ncache-control: no-store, no-cache, must-revalidate, proxy-revalidate\r\nDate: Fri, 03 Jul 2020 15:55:48 GMT\r\netag: W/\"119-iMSR0WMPy7z6deRjls2eUuMCX5I\"\r\nexpires: 0\r\npragma: no-cache\r\nrequest-id: e923342a-cf72-4c93-a774-78d1fa80c002\r\nresponse-time: 1\r\nserver: API Builder/4.27.29\r\nstart-time: 1593791748423\r\nsurrogate-control: no-store\r\nVary: Accept-Encoding\r\nx-content-type-options: nosniff\r\nx-frame-options: DENY\r\nx-xss-protection: 1; mode=block\r\ncontent-md5: 0c682d056c69de8e90bbdf0a677891d8\r\ncontent-type: application/json; charset=utf-8\r\n\r\n",
+					"http": {
+						"bytesReceived": 131,
+						"uri": "/ars/api/todos",
+						"remoteAddr": "192.168.233.1",
+						"authSubjectId": "Pass Through",
+						"localAddr": "192.168.233.137",
+						"remotePort": "55783",
+						"bytesSent": 952,
+						"wafStatus": 0,
+						"status": 200,
+						"localPort": "8065",
+						"statusText": "OK",
+						"method": "GET",
+						"remoteName": "192.168.233.1"
+					},
+					"sentPayload": "file:///opt/Axway/APIM/apigateway/logs/payloads/2020-07-03/08.55/0455ff5e82267be8182a553d-0-sent"
+				},
+				"serviceName": "ARS ToDo API",
+				"duration": 384,
+				"leg": 0
+			}
+		},
+		"circuitPath": [
+			{
+				"filters": [
+					{
+						"class": "com.vordel.circuit.vapi.VApiServiceContextFilter",
+						"type": "VApiServiceContextFilter",
+						"name": "Set service context",
+						"filterTime": 1593791748127,
+						"status": "Pass",
+						"execTime": 0
+					},
+					{
+						"class": "com.vordel.circuit.CircuitDelegateFilter",
+						"status": "Pass",
+						"name": "Global Request Policy",
+						"filterTime": 1593791748141,
+						"type": "CircuitDelegateFilter",
+						"subPaths": [
+							{
+								"filters": [
+									{
+										"class": "com.vordel.circuit.basic.TraceFilter",
+										"type": "TraceFilter",
+										"name": "Trace Filter",
+										"filterTime": 1593791748141,
+										"status": "Pass",
+										"espk": "DEFAULT_PRIMARY_VordelGateway_7.7.0:-2330724604838128298",
+										"execTime": 14
+									}
+								],
+								"policy": "Trace",
+								"execTime": 14
+							}
+						],
+						"execTime": 14
+					},
+					{
+						"class": "com.vordel.apiportal.runtime.virtualized.VApiCircuitDelegateFilter",
+						"type": "VApiCircuitDelegateFilter",
+						"status": "Pass",
+						"filterTime": 1593791748510,
+						"name": "Custom Routing",
+						"subPaths": [
+							{
+								"filters": [
+									{
+										"execTime": 369,
+										"class": "com.vordel.circuit.switchcase.SwitchFilter",
+										"type": "SwitchFilter",
+										"name": "Default Routing",
+										"filterTime": 1593791748510,
+										"status": "Pass",
+										"espk": "DEFAULT_PRIMARY_VordelGateway_7.7.0:4323849261363416160",
+										"subPaths": [
+											{
+												"filters": [
+													{
+														"class": "com.vordel.circuit.CircuitDelegateFilter",
+														"type": "CircuitDelegateFilter",
+														"name": "not-required-here",
+														"status": "Pass",
+														"filterTime": 1593791748510,
+														"subPaths": [
+															{
+																"filters": [
+																	{
+																		"class": "com.vordel.circuit.net.ConnectToURLFilter",
+																		"type": "ConnectToURLFilter",
+																		"name": "Connect to URL",
+																		"status": "Pass",
+																		"filterTime": 1593791748510,
+																		"espk": "DEFAULT_PRIMARY_VordelGateway_7.7.0:5735607394361826155",
+																		"execTime": 369
+																	}
+																],
+																"policy": "Default Profile-based Routing",
+																"execTime": 369
+															}
+														],
+														"execTime": 369
+													}
+												],
+												"policy": "Default API Proxy Routing",
+												"execTime": 369
+											}
+										]
+									}
+								],
+								"policy": "Default API Proxy Routing",
+								"execTime": 369
+							}
+						],
+						"execTime": 369
+					}
+				],
+				"policy": "API Broker",
+				"execTime": 383
+			}
+		],
+		"transactionSummary": {
+			"status": "success",
+			"protocol": "https",
+			"serviceContexts": [
+				{
+					"monitor": true,
+					"service": "ARS ToDo API",
+					"client": "Pass Through",
+					"status": "success",
+					"duration": 383,
+					"method": "Get-all-todo-items"
+				}
+			],
+			"protocolSrc": "8065",
+			"path": "/ars/api/todos"
+		},
+		"correlationId": "0455ff5e82267be8182a553d",
+		"tags": [
+			"openlog"
+		],
+		"processInfo": {
+			"hostname": "api-env",
+			"serviceId": "instance-1",
+			"groupId": "group-2",
+			"serviceName": "QuickStart Server",
+			"version": "7.7.20200130",
+			"domainId": "ed992442-c363-4d36-963a-9e6314b0f421",
+			"groupName": "QuickStart Group"
+		}
+    }
+]
