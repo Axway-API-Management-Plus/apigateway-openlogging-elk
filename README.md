@@ -74,7 +74,7 @@ For the following steps, please open the ANM configuration in Policy-Studio. You
 
   ![use ES API][img3]  
 
-    - The `Compare Attribute` filter checks if the requested API can be handled by the API-Builder project.    
+    - The `Compare Attribute` filter named `Is managed by Elasticsearch API?` checks if the requested API can be handled by the API-Builder project.    
     As a basis for decision-making a criteria for each endpoint needs to be added to the filter configuration.  
     _The following endpoints are supported by the API Builder based Traffic-Monitor API.  
 | Endpoint       | Expression               | Comment | 
@@ -84,7 +84,7 @@ For the following steps, please open the ANM configuration in Policy-Studio. You
 | **Trace**     | `^\/api\/router\/service\/[A-Za-z0-9-.]+\/ops\/trace\/[A-Za-z0-9]+[\?]?.*$` | Endpoint which returns the trace information and the **getinfo** endpoint which returns the request detail information including the http header of each leg|
 | **GetInfo**     | `^\/api\/router\/service\/[A-Za-z0-9-.]+\/ops\/[A-Za-z0-9]+\/[A-Za-z0-9]+\/[\*0-9]{1}\/getinfo[\?]?.*$` |Endpoint provides information for the Requesr- Response-Details|
 
-The compare attribute filter should look like this.
+The compare attribute filter should look like this:   
 ![Is API Managed][img6]  
 - Adjust the URL of the Connect to URL filter to your running API-Builder docker container and port - **default is 8889**. Sample: `http://api-env:8889/api/elk/v1${http.request.rawURI}`  
 ![Connect to ES API][img7]
