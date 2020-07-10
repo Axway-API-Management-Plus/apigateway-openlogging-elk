@@ -77,6 +77,7 @@ For the following steps, please open the ANM configuration in Policy-Studio. You
     - The `Compare Attribute` filter named `Is managed by Elasticsearch API?` checks if the requested API can be handled by the API-Builder project.    
     As a basis for decision-making a criteria for each endpoint needs to be added to the filter configuration.  
     _The following endpoints are supported by the API Builder based Traffic-Monitor API.  
+
 | Endpoint       | Expression               | Comment | 
 | :---          | :---                 | :---  |
 | **Search**     | `^\/api\/router\/service\/[A-Za-z0-9-.]+\/ops\/search$` | This endpoint which provides the data for the HTTP Traffic overview and all filtering capabilities|
