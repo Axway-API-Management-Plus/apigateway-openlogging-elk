@@ -77,14 +77,21 @@ For the following steps, please open the ANM configuration in Policy-Studio. You
     - The `Compare Attribute` filter checks if the requested API can be handled by the API-Builder project.    
     As a basis for decision-making a criteria for each endpoint needs to be added to the filter configuration.  
     _The following endpoints are supported by the API Builder based Traffic-Monitor API.  
-    The **search** endpoint which provides the data for the HTTP Traffic overview,  the **circuitpath** endpoint which provides the data for the Filter Execution Path as part of the detailed view of a transaction,  the **trace** endpoint which returns the trace information and the **getinfo** endpoint which returns the request detail information including the http header of each leg._    
-    For search endpoint add: `http.request.path` matches regular expression `^\/api\/router\/service\/[A-Za-z0-9-.]+\/ops\/search$`  
-    For circuitpath endpoint add: `http.request.path` matches regular expression `^\/api\/router\/service\/[A-Za-z0-9-.]+\/ops\/stream\/[A-Za-z0-9]+\/[^\/]+\/circuitpath$`  
-    For trace endpoint add: `http.request.path` matches regular expression `^\/api\/router\/service\/[A-Za-z0-9-.]+\/ops\/trace\/[A-Za-z0-9]+[\?]?.*$`  
-    For getinfo endpoint add: `http.request.path` matches regular expression `^\/api\/router\/service\/[A-Za-z0-9-.]+\/ops\/[A-Za-z0-9]+\/[A-Za-z0-9]+\/[\*0-9]{1}\/getinfo[\?]?.*$`
-    ![Is API Managed][img6]  
-    - Adjust the URL of the Connect to URL filter to your running API-Builder docker container and port - **default is 8889**. Sample: `http://api-env:8889/api/elk/v1${http.request.rawURI}`  
-    ![Connect to ES API][img7]
+    The **search** endpoint which provides the data for the HTTP Traffic overview,  
+    The **circuitpath** endpoint which provides the data for the Filter Execution Path as part of the detailed view of a transaction,  
+    The **trace** endpoint which returns the trace information and the **getinfo** endpoint which returns the request detail information including the http header of each leg.    
+    
+| Endpoint       | Expression               | Comment | 
+| :---          | :---                 | :---  |
+| **Search**     | `^\/api\/router\/service\/[A-Za-z0-9-.]+\/ops\/search$` | This endpoint which provides the data for the HTTP Traffic overview and all filtering capabilities|
+| **Circuitpath**     | `^\/api\/router\/service\/[A-Za-z0-9-.]+\/ops\/stream\/[A-Za-z0-9]+\/[^\/]+\/circuitpath$` | Endpoint which provides the data for the Filter Execution Path as part of the detailed view of a transaction|
+| **Trace**     | `^\/api\/router\/service\/[A-Za-z0-9-.]+\/ops\/trace\/[A-Za-z0-9]+[\?]?.*$` | Endpoint which returns the trace information and the **getinfo** endpoint which returns the request detail information including the http header of each leg|
+| **GetInfo**     | `^\/api\/router\/service\/[A-Za-z0-9-.]+\/ops\/[A-Za-z0-9]+\/[A-Za-z0-9]+\/[\*0-9]{1}\/getinfo[\?]?.*$` |Endpoint provides information for the Requesr- Response-Details|
+    
+
+![Is API Managed][img6]  
+- Adjust the URL of the Connect to URL filter to your running API-Builder docker container and port - **default is 8889**. Sample: `http://api-env:8889/api/elk/v1${http.request.rawURI}`  
+![Connect to ES API][img7]
 - Insert the created policy as a callback policy (filter: Shortcut filter) into the main policy: `Protect Management Interfaces` and wire it like shown here:  
   ![Use Callback][img4]  
   
