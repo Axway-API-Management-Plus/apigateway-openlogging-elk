@@ -49,6 +49,10 @@ describe('Endpoints', function () {
 				expect(body).to.be.an('Object');
 				expect(body).to.have.property('data');
 				expect(body.data).to.have.lengthOf(4);
+				// Validate the default ordering is working
+				expect(body.data[0].timestamp).gt(body.data[1].timestamp);
+				expect(body.data[1].timestamp).gt(body.data[2].timestamp);
+				expect(body.data[2].timestamp).gt(body.data[3].timestamp);
 				checkFields(body.data, false);
 			});
 		});

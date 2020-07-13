@@ -74,25 +74,18 @@
 					"metaDescription": "Defines the search definition using the Query DSL. Learn more: https://www.elastic.co/guide/en/elasticsearch/reference/7.x/query-dsl.html"
 				},
 				{
-					"name": "size",
-					"type": "jsonpath",
-					"value": "$.params.count",
-					"metaName": "size",
-					"metaDescription": "Defines the number of hits to return. Defaults to 10."
-				},
-				{
-					"name": "sort",
-					"type": "string",
-					"value": "\"\"",
-					"metaName": "sort",
-					"metaDescription": "A comma-separated list of <field>:<direction> pairs."
-				},
-				{
 					"name": "index",
 					"type": "jsonpath",
 					"value": "$.index",
 					"metaName": "index",
 					"metaDescription": "Comma-separated list or wildcard expression of index names used to limit the request."
+				},
+				{
+					"name": "sort",
+					"type": "string",
+					"value": "\"timestampOriginal:desc\"",
+					"metaName": "sort",
+					"metaDescription": "A comma-separated list of <field>:<direction> pairs."
 				}
 			],
 			"outputs": {
