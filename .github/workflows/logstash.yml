@@ -26,4 +26,4 @@ jobs:
     - name: Run Logstash config tests
       run: |
         dir
-        ./logstash-filter-verifier
+        ./logstash-filter-verifier ./logstash/test ./logstash/config

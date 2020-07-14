@@ -1,0 +1,22 @@
+{
+    "fields": {
+      "type": "syslog"
+    },
+    "testcases": [
+      {
+        "input": [
+          "Oct  6 20:55:29 myhost myprogram[31993]: This is a test message"
+        ],
+        "expected": [
+          {
+            "@timestamp": "2015-10-06T20:55:29.000Z",
+            "host": "myhost",
+            "message": "This is a test message",
+            "pid": 31993,
+            "program": "myprogram",
+            "type": "syslog"
+          }
+        ]
+      }
+    ]
+  }
