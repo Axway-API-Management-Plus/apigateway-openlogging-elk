@@ -103,6 +103,40 @@
         ]
       },
       {
+        "description": "Test transactionSummary without ServiceConext event",
+        "input": [
+          "{\"timestamp\":1594665615973,\"correlationId\":\"8faa0c5f4da87df2ad8c394a\",\"processInfo\":{\"hostname\":\"ip-172-31-48-17.ec2.internal\",\"domainId\":\"e1ff3aab-3b11-4820-a1be-3763da2beda4\",\"groupId\":\"group-2\",\"groupName\":\"group-a\",\"serviceId\":\"instance-1\",\"serviceName\":\"instance-1\",\"version\":\"7.7.20200530\"},\"transactionSummary\":{\"path\":\"/healthcheck\", \"protocol\":\"http\", \"protocolSrc\":\"8080\", \"status\":\"success\", \"serviceContexts\":[]}}"
+        ],
+        "expected": [
+          {
+            "@timestamp": "2020-07-13T18:40:15.973Z",
+            "correlationId": "8faa0c5f4da87df2ad8c394a",
+            "logtype": "openlog",
+            "processInfo": {
+              "hostname": "ip-172-31-48-17.ec2.internal",
+              "domainId": "e1ff3aab-3b11-4820-a1be-3763da2beda4",
+              "groupId": "group-2",
+              "groupName": "group-a",
+              "serviceId": "instance-1",
+              "serviceName": "instance-1",
+              "version": "7.7.20200530"
+            },
+            "tags": [
+              "transactionSummary"
+            ],
+            "transactionSummary": {
+              "path": "/healthcheck",
+              "protocol": "http",
+              "protocolSrc": "8080",
+              "status": "success",
+              "serviceContexts": [
+                
+              ]
+            }
+          }
+        ]
+      },
+      {
         "description": "Test ciruitPath event",
         "input": [
           "{\"timestamp\":1594673939577,\"correlationId\":\"13cb0c5f2d58b335499405fa\",\"processInfo\":{\"hostname\":\"ip-172-31-56-150.ec2.internal\",\"domainId\":\"e1ff3aab-3b11-4820-a1be-3763da2beda4\",\"groupId\":\"group-2\",\"groupName\":\"group-a\",\"serviceId\":\"instance-2\",\"serviceName\":\"instance-2\",\"version\":\"7.7.20200530\"},\"circuitPath\":[ { \"policy\": \"API Broker\", \"execTime\": 46, \"filters\": [  { \"name\": \"Set service context\", \"type\": \"VApiServiceContextFilter\", \"class\": \"com.vordel.circuit.vapi.VApiServiceContextFilter\", \"status\": \"Pass\", \"filterTime\": 1594673939531, \"execTime\": 0 } , { \"name\": \"Custom Routing\", \"type\": \"VApiCircuitDelegateFilter\", \"class\": \"com.vordel.apiportal.runtime.virtualized.VApiCircuitDelegateFilter\", \"status\": \"Pass\", \"filterTime\": 1594673939577, \"execTime\": 46, \"subPaths\": [  { \"policy\": \"Default API Proxy Routing\", \"execTime\": 46, \"filters\": [  { \"espk\": \"DEFAULT_PRIMARY_VordelGateway_7.7.0:-2948634492645772937\", \"name\": \"Default Routing\", \"type\": \"SwitchFilter\", \"class\": \"com.vordel.circuit.switchcase.SwitchFilter\", \"status\": \"Pass\", \"filterTime\": 1594673939577, \"execTime\": 46, \"subPaths\": [  { \"policy\": \"Default API Proxy Routing\", \"execTime\": 46, \"filters\": [  { \"name\": \"not-required-here\", \"type\": \"CircuitDelegateFilter\", \"class\": \"com.vordel.circuit.CircuitDelegateFilter\", \"status\": \"Pass\", \"filterTime\": 1594673939577, \"execTime\": 46, \"subPaths\": [  { \"policy\": \"Default Profile-based Routing\", \"execTime\": 46, \"filters\": [  { \"espk\": \"DEFAULT_PRIMARY_VordelGateway_7.7.0:-3718249635933793053\", \"name\": \"Connect to URL\", \"type\": \"ConnectToURLFilter\", \"class\": \"com.vordel.circuit.net.ConnectToURLFilter\", \"status\": \"Pass\", \"filterTime\": 1594673939577, \"execTime\": 46 }  ] }  ]  }  ] }  ]  }  ] }  ]  }  ] } ]}"
