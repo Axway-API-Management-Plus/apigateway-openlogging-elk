@@ -1,25 +1,16 @@
-# This is a basic workflow to help you get started with Actions
-
 name: Logstash config test
 
-# Controls when the action will run. Triggers the workflow on push or pull request
-# events but only for the master branch
 on:
   push:
     branches: [ master ]
   pull_request:
     branches: [ master ]
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
+  test-logstash:
     runs-on: ubuntu-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
 
     # Runs a set of commands using the runners shell
@@ -29,3 +20,6 @@ jobs:
         sudo apt-get install apt-transport-https
         echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-7.x.list
         sudo apt-get update && sudo apt-get install logstash
+    - name: Install Logstash-Verifier
+      run: |
+        wget -c https://github.com/magnusbaeck/logstash-filter-verifier/releases/download/1.6.1/logstash-filter-verifier_1.6.1_linux_amd64.tar.gz -O - | tar -xvz
