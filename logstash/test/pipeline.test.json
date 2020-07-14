@@ -2,6 +2,7 @@
     "fields": {
       "type": "openlog"
     },
+    "codec": "json_lines",
     "testcases": [
       {
         "description": "Test transactionElement",
