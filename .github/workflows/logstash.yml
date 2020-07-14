@@ -23,3 +23,7 @@ jobs:
     - name: Install Logstash-Verifier
       run: |
         wget -c https://github.com/magnusbaeck/logstash-filter-verifier/releases/download/1.6.1/logstash-filter-verifier_1.6.1_linux_amd64.tar.gz -O - | tar -xvz
+    - name: Run Logstash config tests
+      run: |
+        dir
+        ./logstash-filter-verifier
