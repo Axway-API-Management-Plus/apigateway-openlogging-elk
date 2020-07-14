@@ -79,7 +79,7 @@ services:
     ports:
       - 5044:5044
     volumes:
-      - ${PWD}/configs/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+      - ${PWD}/configs/logstash.conf:/usr/share/logstash/pipeline/pipeline.conf
       - ${PWD}/configs/openlog_index_template.json:/usr/share/logstash/pipeline/openlog_index_template.json
     command: logstash --path.config /usr/share/logstash/pipeline/logstash.conf --pipeline.batch.size 20 --pipeline.workers 1 --log.level info
     depends_on:
