@@ -22,4 +22,4 @@ jobs:
     - name: Run Logstash config tests
       run: |
         dir
-        ./logstash-filter-verifier --diff-command="diff -y" --sockets ./logstash/test ./logstash/config
+        ./logstash-filter-verifier --diff-command="diff -y" --sockets ./logstash/test ./logstash/pipeline
