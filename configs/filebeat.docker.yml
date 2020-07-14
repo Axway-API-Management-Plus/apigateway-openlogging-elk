@@ -1,3 +1,4 @@
+name: ${NAME:"Filebeat Gateway"}
 filebeat.inputs:
 - input_type: log
   paths: ["/var/log/work/*.log"]
@@ -24,3 +25,9 @@ processors:
       layouts: ["UNIX_MS"]
 
 setup.template.enabled: true
+
+monitoring:
+  enabled: true
+  cluster_uuid: cJc3pAi1R6e32wAvklnM0A
+  elasticsearch:
+    hosts: ["elasticsearch1:9200"]
