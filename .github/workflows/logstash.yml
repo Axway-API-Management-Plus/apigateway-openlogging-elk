@@ -1,8 +1,7 @@
 name: Logstash config test
 
 on:
-  push:
-    branches: [ master ]
+  push
   pull_request:
     branches: [ master ]
 
