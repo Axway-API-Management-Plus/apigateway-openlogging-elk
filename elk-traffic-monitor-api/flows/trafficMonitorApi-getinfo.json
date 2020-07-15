@@ -47,7 +47,7 @@
 				{
 					"name": "code",
 					"type": "string",
-					"value": "\"let index = 'apigw-traffic-*';\\n  //let index = 'getinfo_test_1688';\\n  \\n  if(data.config.testElasticIndex) {\\n    index = data.config.testElasticIndex;\\n  }\\n  \\n  return index;\"",
+					"value": "\"let index = 'apigw-traffic-details*';\\n  //let index = 'getinfo_test_1688';\\n  \\n  if(data.config.testElasticIndex) {\\n    index = data.config.testElasticIndex;\\n  }\\n  \\n  return index;\"",
 					"metaName": "code",
 					"metaDescription": "A JavaScript function body. Supports `await` and returning promises"
 				}
