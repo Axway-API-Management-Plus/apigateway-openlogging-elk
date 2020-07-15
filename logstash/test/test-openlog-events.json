@@ -13,6 +13,7 @@
           {
             "@timestamp": "2020-07-13T20:58:38.042Z",
             "correlationId": "feca0c5f7f550c81357fdfee",
+            "entrytype": "transactionelement",
             "logtype": "openlog",
             "processInfo": {
               "hostname": "ip-172-31-56-150.ec2.internal",
@@ -23,9 +24,6 @@
               "serviceName": "instance-2",
               "version": "7.7.20200530"
             },
-            "tags": [
-              "transactionElement"
-            ],
             "transactionElement": {
               "leg": 0,
               "duration": 20,
@@ -68,6 +66,7 @@
           {
             "@timestamp": "2020-07-13T20:07:27.467Z",
             "correlationId": "ffbe0c5f95da03f602a6e587",
+            "entrytype": "transactionsummary",
             "logtype": "openlog",
             "processInfo": {
               "hostname": "ip-172-31-62-146.ec2.internal",
@@ -78,9 +77,6 @@
               "serviceName": "instance-3",
               "version": "7.7.20200530"
             },
-            "tags": [
-              "transactionSummary"
-            ],
             "transactionSummary": {
               "path": "/petstore/v2/user/Chris",
               "protocol": "https",
@@ -111,6 +107,7 @@
           {
             "@timestamp": "2020-07-13T18:40:15.973Z",
             "correlationId": "8faa0c5f4da87df2ad8c394a",
+            "entrytype": "transactionsummary",
             "logtype": "openlog",
             "processInfo": {
               "hostname": "ip-172-31-48-17.ec2.internal",
@@ -121,9 +118,6 @@
               "serviceName": "instance-1",
               "version": "7.7.20200530"
             },
-            "tags": [
-              "transactionSummary"
-            ],
             "transactionSummary": {
               "path": "/healthcheck",
               "protocol": "http",
@@ -145,6 +139,7 @@
           {
             "@timestamp": "2020-07-13T20:58:59.577Z",
             "correlationId": "13cb0c5f2d58b335499405fa",
+            "entrytype": "circuitpath",
             "logtype": "openlog",
             "processInfo": {
               "hostname": "ip-172-31-56-150.ec2.internal",
@@ -155,9 +150,6 @@
               "serviceName": "instance-2",
               "version": "7.7.20200530"
             },
-            "tags": [
-              "circuitPath"
-            ],
             "circuitPath": [
               {
                 "policy": "API Broker",
