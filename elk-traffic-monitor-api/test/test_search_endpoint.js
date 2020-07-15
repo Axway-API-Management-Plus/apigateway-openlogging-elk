@@ -91,7 +91,7 @@ describe('Endpoints', function () {
 				expect(body).to.be.an('Object');
 				expect(body).to.have.property('data');
 				expect(body.data).to.have.lengthOf(1);
-				expect(body.data[0].uri).to.equals('/v2/pet/123');
+				expect(body.data[0].uri).to.equals('/petstore/v2/pet/findByStatus');
 				expect(body.data[0].method).to.equals('GET');
 				checkFields(body.data, true);
 			});
@@ -158,11 +158,11 @@ describe('Endpoints', function () {
 			// 
 			/**
 			 * The dates given here must be aligned with dates in search_test_documents.js. Currently configured like so:
-			 * 8m		--> "c8705e5ecc00adca32be7472"
-			 * 15m		--> "c9705e5ecd000322778d2ec4"   --> This is expected to be found
-			 * 120h		--> "fc705e5ede00654de6d15daf"
-			 * 65m		--> "4e645e5e4600bb590c881179"   --> This is expected to be found
-			 * 30000h	--> "bb30715e5300e189d1da43fc"
+			 * 8m		--> "682c0f5fbe23dc8e1d80efe2"
+			 * 15m		--> "7a240f5f0e21555d2d343482"   --> This is expected to be found
+			 * 120h		--> "4e270f5f05224d71a5f24b78"
+			 * 65m		--> "19250f5f4321b5ba2a4de364"   --> This is expected to be found
+			 * 30000h	--> "b8250f5f7a2195dc1581d52c"
 			 */
 			const greaterThenThisDate = getDate('10h', true);
 			const lowerThanThisDate = getDate('10m', true);
@@ -177,8 +177,8 @@ describe('Endpoints', function () {
 				expect(body).to.be.an('Object');
 				expect(body).to.have.property('data');
 				expect(body.data).to.have.lengthOf(2);
-				expect(body.data[0].correlationId).to.equal("c9705e5ecd000322778d2ec4");
-				expect(body.data[1].correlationId).to.equal("4e645e5e4600bb590c881179");
+				expect(body.data[0].correlationId).to.equal("7a240f5f0e21555d2d343482");
+				expect(body.data[1].correlationId).to.equal("19250f5f4321b5ba2a4de364");
 			});
 		});
 		it('[Endpoint-0008] should return 3 when using a wider custom time-range', () => {
@@ -189,11 +189,12 @@ describe('Endpoints', function () {
 			// 
 			/**
 			 * The dates given here must be aligned with dates in search_test_documents.js. Currently configured like so:
-			 * 8m		--> "c8705e5ecc00adca32be7472"   --> This is expected to be found
-			 * 15m		--> "c9705e5ecd000322778d2ec4"   --> This is expected to be found
-			 * 120h		--> "fc705e5ede00654de6d15daf"
-			 * 65m		--> "4e645e5e4600bb590c881179"   --> This is expected to be found
-			 * 30000h	--> "bb30715e5300e189d1da43fc"
+			 * 
+			 * 8m		--> "682c0f5fbe23dc8e1d80efe2"   --> This is expected to be found
+			 * 15m		--> "7a240f5f0e21555d2d343482"   --> This is expected to be found
+			 * 120h		--> "4e270f5f05224d71a5f24b78"
+			 * 65m		--> "19250f5f4321b5ba2a4de364"   --> This is expected to be found
+			 * 30000h	--> "b8250f5f7a2195dc1581d52c"
 			 */
 			const greaterThenThisDate = getDate('110h', true);
 			const lowerThanThisDate = getDate('5m', true);
@@ -208,9 +209,9 @@ describe('Endpoints', function () {
 				expect(body).to.be.an('Object');
 				expect(body).to.have.property('data');
 				expect(body.data).to.have.lengthOf(3);
-				expect(body.data[0].correlationId).to.equal("c8705e5ecc00adca32be7472");
-				expect(body.data[1].correlationId).to.equal("c9705e5ecd000322778d2ec4");
-				expect(body.data[2].correlationId).to.equal("4e645e5e4600bb590c881179");
+				expect(body.data[0].correlationId).to.equal("682c0f5fbe23dc8e1d80efe2");
+				expect(body.data[1].correlationId).to.equal("7a240f5f0e21555d2d343482");
+				expect(body.data[2].correlationId).to.equal("19250f5f4321b5ba2a4de364");
 			});
 		});
 		it('[Endpoint-0009] should return two entries with localport 8080', () => {
@@ -343,7 +344,7 @@ describe('Endpoints', function () {
 				expect(body).to.have.property('data');
 				expect(body.data).to.have.lengthOf(1);
 				expect(body.data[0].status).to.equals(200);
-				expect(body.data[0].uri).to.equals('/v2/pet/123');
+				expect(body.data[0].uri).to.equals('/petstore/v2/pet/findByStatus');
 			});
 		});
 		it('[Endpoint-0016] should return one entry with service name Petstore HTTP', () => {
@@ -372,7 +373,7 @@ describe('Endpoints', function () {
 			};
 			return requestAsync({
 				method: 'GET',
-				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?field=correlationId&value=c8705e5ecc00adca32be7472`,
+				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?field=correlationId&value=682c0f5fbe23dc8e1d80efe2`,
 				auth: auth,
 				json: true
 			}).then(({ response, body }) => {
@@ -381,7 +382,7 @@ describe('Endpoints', function () {
 				expect(body).to.have.property('data');
 				expect(body.data).to.have.lengthOf(1);
 				expect(body.data[0].status).to.equals(200);
-				expect(body.data[0].serviceName).to.equals('Petstore HTTP');
+				expect(body.data[0].serviceName).to.equals('Petstore');
 			});
 		});
 		it('[Endpoint-0018] should return one entry with final status Error', () => {
@@ -417,7 +418,7 @@ describe('Endpoints', function () {
 				expect(body).to.be.an('Object');
 				expect(body).to.have.property('data');
 				expect(body.data).to.have.lengthOf(1);
-				expect(body.data[0].uri).to.equals('/v2/pet/123');
+				expect(body.data[0].uri).to.equals('/petstore/v2/pet/findByStatus');
 			});
 		});
 		it('[Endpoint-0020] Should return 1 entry in the last 10 minutes (ago=10m)', () => {
@@ -435,7 +436,7 @@ describe('Endpoints', function () {
 				expect(body).to.be.an('Object');
 				expect(body).to.have.property('data');
 				expect(body.data).to.have.lengthOf(1);
-				expect(body.data[0].uri).to.equals('/v2/pet/123');
+				expect(body.data[0].uri).to.equals('/petstore/v2/pet/findByStatus');
 			});
 		});
 		it('[Endpoint-0021] Should return 2 entries in the last 30 minutes (ago=30m)', () => {
@@ -453,7 +454,7 @@ describe('Endpoints', function () {
 				expect(body).to.be.an('Object');
 				expect(body).to.have.property('data');
 				expect(body.data).to.have.lengthOf(2);
-				expect(body.data[0].uri).to.equals('/v2/pet/123');
+				expect(body.data[0].uri).to.equals('/petstore/v2/pet/findByStatus');
 			});
 		});
 		it('[Endpoint-0022] Should only 2 entries in the last 2 hours (ago=120h)', () => {
@@ -471,7 +472,7 @@ describe('Endpoints', function () {
 				expect(body).to.be.an('Object');
 				expect(body).to.have.property('data');
 				expect(body.data).to.have.lengthOf(3);
-				expect(body.data[0].uri).to.equals('/v2/pet/123');
+				expect(body.data[0].uri).to.equals('/petstore/v2/pet/findByStatus');
 			});
 		});
 	});

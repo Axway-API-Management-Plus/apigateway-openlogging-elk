@@ -83,7 +83,7 @@
 				{
 					"name": "sort",
 					"type": "string",
-					"value": "\"timestampOriginal:desc\"",
+					"value": "\"@timestamp:desc\"",
 					"metaName": "sort",
 					"metaDescription": "A comma-separated list of <field>:<direction> pairs."
 				}
@@ -117,18 +117,18 @@
 					"metaDescription": "The value to apply as the `data` argument to the JavaScript code. For objects and arrays, `data` is passed by reference."
 				},
 				{
-					"name": "code",
-					"type": "string",
-					"value": "\"var result = {};\\n  result.processId = \\\"\\\";\\n  result.data = [];\\n  data.hits.map(function(entry) {\\n    var dataObject = {};\\n    var _source = entry._source;\\n    dataObject.correlationId = _source.correlationId;\\n    dataObject.timestamp = Date.parse(_source.timestampOriginal);\\n    if(_source.transactionSummary && _source.transactionSummary.serviceContexts[0]) {\\n      dataObject.serviceName = _source.transactionSummary.serviceContexts[0].service;\\n      dataObject.operation = _source.transactionSummary.serviceContexts[0].method;\\n    }\\n    processInitialTransactionElement(dataObject, _source);\\n    result.data.push(dataObject);\\n  });\\n  \\n  function processInitialTransactionElement(dataObject, _source) {\\n    if(_source.transactionElements && _source.transactionElements.leg0) {\\n      dataObject.statustext = _source.transactionElements.leg0.protocolInfo.http.statusText;\\n      dataObject.method = _source.transactionElements.leg0.protocolInfo.http.method;\\n      dataObject.status = _source.transactionElements.leg0.protocolInfo.http.status;\\n      dataObject.wafStatus = _source.transactionElements.leg0.protocolInfo.http.wafStatus;\\n      dataObject.subject = _source.transactionElements.leg0.protocolInfo.http.authSubjectId;\\n      dataObject.localPort = _source.transactionElements.leg0.protocolInfo.http.localPort;\\n      dataObject.uri = _source.transactionElements.leg0.protocolInfo.http.uri;\\n      dataObject.duration = _source.transactionElements.leg0.duration;\\n      dataObject.type = getProtocolType(_source.transactionElements.leg0.protocolInfo);\\n      dataObject.finalStatus = _source.transactionElements.leg0.finalStatus;\\n    }\\n  }\\n  \\n  function getProtocolType(protocolInfo) {\\n    if(protocolInfo.hasOwnProperty('http')) {\\n       return 'http';\\n    }\\n  }\\n  \\n  return result;\"",
-					"metaName": "code",
-					"metaDescription": "A JavaScript function body. Supports `await` and returning promises"
-				},
-				{
 					"name": "unsafe",
 					"type": "boolean",
 					"value": "false",
 					"metaName": "Unsafe mode",
 					"metaDescription": "USE WITH CAUTION. When enabled, JavaScript is not executed in a sandboxed environment and all globals are available."
+				},
+				{
+					"name": "code",
+					"type": "string",
+					"value": "\"var result = {};\\n  result.processId = \\\"\\\";\\n  result.data = [];\\n  data.hits.map(function(entry) {\\n    var dataObject = {};\\n    var _source = entry._source;\\n    dataObject.correlationId = _source.correlationId;\\n    dataObject.timestamp = Date.parse(_source['@timestamp']);\\n    if(_source.transactionSummary && _source.transactionSummary.serviceContext) {\\n      dataObject.serviceName = _source.transactionSummary.serviceContext.service;\\n      dataObject.operation = _source.transactionSummary.serviceContext.method;\\n    }\\n    processInitialTransactionElement(dataObject, _source);\\n    result.data.push(dataObject);\\n  });\\n  \\n  function processInitialTransactionElement(dataObject, _source) {\\n    if(_source.transactionElements && _source.transactionElements.leg0) {\\n      dataObject.statustext = _source.transactionElements.leg0.protocolInfo.http.statusText;\\n      dataObject.method = _source.transactionElements.leg0.protocolInfo.http.method;\\n      dataObject.status = _source.transactionElements.leg0.protocolInfo.http.status;\\n      dataObject.wafStatus = _source.transactionElements.leg0.protocolInfo.http.wafStatus;\\n      dataObject.subject = _source.transactionElements.leg0.protocolInfo.http.authSubjectId;\\n      dataObject.localPort = _source.transactionElements.leg0.protocolInfo.http.localPort;\\n      dataObject.uri = _source.transactionElements.leg0.protocolInfo.http.uri;\\n      dataObject.duration = _source.transactionElements.leg0.duration;\\n      dataObject.type = getProtocolType(_source.transactionElements.leg0.protocolInfo);\\n      dataObject.finalStatus = _source.transactionElements.leg0.finalStatus;\\n    }\\n  }\\n  \\n  function getProtocolType(protocolInfo) {\\n    if(protocolInfo.hasOwnProperty('http')) {\\n       return 'http';\\n    }\\n  }\\n  \\n  return result;\"",
+					"metaName": "code",
+					"metaDescription": "A JavaScript function body. Supports `await` and returning promises"
 				}
 			],
 			"outputs": {
@@ -169,7 +169,7 @@
 				{
 					"name": "code",
 					"type": "string",
-					"value": "\"var queryFilters = data.queryFilters;\\n  var elasticQuery = {};\\n  queryFilters.push( {\\n    \\\"term\\\": {\\n          \\\"processInfo.serviceId\\\": data.params.serviceID\\n    }\\n  });\\n  elasticQuery = { \\n    bool: {\\n      must: queryFilters\\n    }\\n  };\\n  return elasticQuery;\"",
+					"value": "\"var queryFilters = data.queryFilters;\\n  var elasticQuery = {};\\n  queryFilters.push( {\\n    \\\"term\\\": {\\n      \\\"processInfo.serviceId\\\": data.params.serviceID\\n    }\\n  });\\n  elasticQuery = { \\n    bool: {\\n      must: queryFilters\\n    }\\n  };\\n  return elasticQuery;\"",
 					"metaName": "code",
 					"metaDescription": "A JavaScript function body. Supports `await` and returning promises"
 				}
@@ -241,7 +241,7 @@
 				{
 					"name": "code",
 					"type": "string",
-					"value": "\"var queryFilters = data.queryFilters;\\n  if(data.params.ago) {\\n    var ago = data.params.ago;\\n    var diff = convertAgo(ago);\\n    var filter = {\\n      range: {\\n        \\\"timestampOriginal\\\": {\\n          gt: diff\\n        }\\n      }\\n    };\\n    queryFilters.push(filter);\\n    return queryFilters;\\n  }\\n  \\n  function convertAgo(ago) {\\n    var diff = ago.substring(0, ago.length-1);\\n    var now = new Date();\\n    if(ago.endsWith('m')) {\\n      return now.setMinutes(now.getMinutes() - diff);\\n    } else if(ago.endsWith('h')) {\\n      return now.setHours(now.getHours() - diff);\\n    }\\n    console.log(`ERRRRO ${ago}`);\\n  }\"",
+					"value": "\"var queryFilters = data.queryFilters;\\n  if(data.params.ago) {\\n    var ago = data.params.ago;\\n    var diff = convertAgo(ago);\\n    var filter = {\\n      range: {\\n        \\\"@timestamp\\\": {\\n          gt: diff\\n        }\\n      }\\n    };\\n    queryFilters.push(filter);\\n    return queryFilters;\\n  }\\n  \\n  function convertAgo(ago) {\\n    var diff = ago.substring(0, ago.length-1);\\n    var now = new Date();\\n    if(ago.endsWith('m')) {\\n      return now.setMinutes(now.getMinutes() - diff);\\n    } else if(ago.endsWith('h')) {\\n      return now.setHours(now.getHours() - diff);\\n    }\\n    console.log(`ERRRRO ${ago}`);\\n  }\"",
 					"metaName": "code",
 					"metaDescription": "A JavaScript function body. Supports `await` and returning promises"
 				}
@@ -277,7 +277,7 @@
 				{
 					"name": "code",
 					"type": "string",
-					"value": "\"var queryFilters = data.queryFilters;\\n  data.params.field.map(function(entry, index, field) {\\n    var op = data.params.op;\\n    if(entry === 'timestamp') {\\n      // If timestamp is given, we expect to get a start and end\\n      var begin = data.params.value[index];\\n      var end = 0;\\n      if(field[index+1] === 'timestamp') {\\n        end = data.params.value[index+1];\\n      } else {\\n        return queryFilters;\\n      }\\n      console.log(`begin: ${begin}`);\\n      console.log(`end: ${end}`);\\n      var filter = {\\n        range: {\\n          \\\"timestampOriginal\\\": {\\n            \\\"gte\\\": begin, \\n            \\\"lte\\\": end\\n          }\\n        }\\n      };\\n      queryFilters.push(filter);\\n      return queryFilters;\\n \\t}\\n  });\"",
+					"value": "\"var queryFilters = data.queryFilters;\\n  data.params.field.map(function(entry, index, field) {\\n    var op = data.params.op;\\n    if(entry === 'timestamp') {\\n      // If timestamp is given, we expect to get a start and end\\n      var begin = data.params.value[index];\\n      var end = 0;\\n      if(field[index+1] === 'timestamp') {\\n        end = data.params.value[index+1];\\n      } else {\\n        return queryFilters;\\n      }\\n      console.log(`begin: ${begin}`);\\n      console.log(`end: ${end}`);\\n      var filter = {\\n        range: {\\n          \\\"@timestamp\\\": {\\n            \\\"gte\\\": begin, \\n            \\\"lte\\\": end\\n          }\\n        }\\n      };\\n      queryFilters.push(filter);\\n      return queryFilters;\\n \\t}\\n  });\"",
 					"metaName": "code",
 					"metaDescription": "A JavaScript function body. Supports `await` and returning promises"
 				}
@@ -349,7 +349,7 @@
 				{
 					"name": "code",
 					"type": "string",
-					"value": "\"var queryFilters = [];\\n  \\n  data.fields = [\\n    { fieldName: 'uri', queryType: 'match', queryLocation: 'transactionElements.leg0.protocolInfo.http.uri' }, \\n    { fieldName: 'wafStatus', queryType: 'match', queryLocation: 'transactionElements.leg0.protocolInfo.http.wafStatus' }, \\n    { fieldName: 'finalStatus', queryType: 'match', queryLocation: 'transactionElements.leg0.finalStatus' }, \\n    { fieldName: 'remotePort', queryType: 'match', queryLocation: 'transactionElements.leg0.protocolInfo.http.remotePort' }, \\n    { fieldName: 'remoteName', queryType: 'match', queryLocation: 'transactionElements.leg0.protocolInfo.http.remoteName' }, \\n    { fieldName: 'localAddr', queryType: 'match', queryLocation: 'transactionElements.leg0.protocolInfo.http.localAddr' },\\n    { fieldName: 'status', queryType: 'match', queryLocation: 'transactionElements.leg0.protocolInfo.http.status' },\\n    { fieldName: 'subject', queryType: 'match', queryLocation: 'transactionElements.leg0.protocolInfo.http.authSubjectId' },\\n    { fieldName: 'operation', queryType: 'match', queryLocation: 'transactionSummaryContext.method' },\\n    { fieldName: 'localPort', queryType: 'match', queryLocation: 'transactionElements.leg0.protocolInfo.http.localPort' },\\n    { fieldName: 'method', queryType: 'match', queryLocation: 'transactionElements.leg0.protocolInfo.http.method' },\\n    { fieldName: 'correlationId', queryType: 'match', queryLocation: 'correlationId' },\\n    { fieldName: 'serviceName', queryType: 'match', queryLocation: 'transactionSummaryContext.service' },\\n    \\n  ];\\n  \\n  if(typeof data.params.field == 'undefined') {\\n    data.params.field = [];\\n  }\\n  if(typeof data.params.field == 'string') {\\n    data.params.field = [data.params.field];\\n  }\\n  if(typeof data.params.value === 'undefined') {\\n    data.params.value = [];\\n  }\\n  if(typeof data.params.value == 'string') {\\n    data.params.value = [data.params.value];\\n  }\\n  return queryFilters;\"",
+					"value": "\"var queryFilters = [];\\n  \\n  data.fields = [\\n    // This Object-Array declares for each field how to query it in ES\\n    { fieldName: 'uri', queryType: 'match', queryLocation: 'transactionElements.leg0.protocolInfo.http.uri' }, \\n    { fieldName: 'wafStatus', queryType: 'match', queryLocation: 'transactionElements.leg0.protocolInfo.http.wafStatus' }, \\n    { fieldName: 'finalStatus', queryType: 'match', queryLocation: 'transactionElements.leg0.finalStatus' }, \\n    { fieldName: 'remotePort', queryType: 'match', queryLocation: 'transactionElements.leg0.protocolInfo.http.remotePort' }, \\n    { fieldName: 'remoteName', queryType: 'match', queryLocation: 'transactionElements.leg0.protocolInfo.http.remoteName' }, \\n    { fieldName: 'localAddr', queryType: 'match', queryLocation: 'transactionElements.leg0.protocolInfo.http.localAddr' },\\n    { fieldName: 'status', queryType: 'match', queryLocation: 'transactionElements.leg0.protocolInfo.http.status' },\\n    { fieldName: 'subject', queryType: 'match', queryLocation: 'transactionElements.leg0.protocolInfo.http.authSubjectId' },\\n    { fieldName: 'operation', queryType: 'match', queryLocation: 'transactionSummary.serviceContext.method' },\\n    { fieldName: 'localPort', queryType: 'match', queryLocation: 'transactionElements.leg0.protocolInfo.http.localPort' },\\n    { fieldName: 'method', queryType: 'match', queryLocation: 'transactionElements.leg0.protocolInfo.http.method' },\\n    { fieldName: 'correlationId', queryType: 'match', queryLocation: 'correlationId' },\\n    { fieldName: 'serviceName', queryType: 'match', queryLocation: 'transactionSummary.serviceContext.service' },\\n    \\n  ];\\n  \\n  if(typeof data.params.field == 'undefined') {\\n    data.params.field = [];\\n  }\\n  if(typeof data.params.field == 'string') {\\n    data.params.field = [data.params.field];\\n  }\\n  if(typeof data.params.value === 'undefined') {\\n    data.params.value = [];\\n  }\\n  if(typeof data.params.value == 'string') {\\n    data.params.value = [data.params.value];\\n  }\\n  return queryFilters;\"",
 					"metaName": "code",
 					"metaDescription": "A JavaScript function body. Supports `await` and returning promises"
 				}
