@@ -34,7 +34,7 @@
 	"nodes": {
 		"elasticsearch.1": {
 			"type": "nodehandler://@axway-api-builder-ext/api-builder-plugin-fn-elasticsearch/elasticsearch",
-			"name": "Search",
+			"name": "Search Circuitpath",
 			"method": "search",
 			"parameters": [
 				{
@@ -72,7 +72,7 @@
 		},
 		"http.2": {
 			"type": "nodehandler://axway-flow/http",
-			"name": "HTTP Query Response",
+			"name": "Return Circuitpath response",
 			"method": "setresponse",
 			"parameters": [
 				{
@@ -101,7 +101,7 @@
 		},
 		"javascript.1": {
 			"type": "nodehandler://@axway/api-builder-plugin-fn-javascript/javascript",
-			"name": "Format result",
+			"name": "Format Circuitpath result",
 			"method": "Execute",
 			"parameters": [
 				{
@@ -139,22 +139,22 @@
 		},
 		"javascript.2": {
 			"type": "nodehandler://@axway/api-builder-plugin-fn-javascript/javascript",
-			"name": "Define Index",
+			"name": "Define circuitpath Index",
 			"method": "Execute",
 			"parameters": [
-				{
-					"name": "code",
-					"type": "string",
-					"value": "\"let index = 'logstash-openlog';\\n  if(data.config.testElasticIndex) {\\n    index = data.config.testElasticIndex;\\n  }\\n  return index;\"",
-					"metaName": "code",
-					"metaDescription": "A JavaScript function body. Supports `await` and returning promises"
-				},
 				{
 					"name": "data",
 					"type": "jsonpath",
 					"value": "$",
 					"metaName": "data",
 					"metaDescription": "The value to apply as the `data` argument to the JavaScript code. For objects and arrays, `data` is passed by reference."
+				},
+				{
+					"name": "code",
+					"type": "string",
+					"value": "\"let index = 'apigw-traffic-details*';\\n  if(data.config.testElasticIndex) {\\n    index = data.config.testElasticIndex;\\n  }\\n  return index;\"",
+					"metaName": "code",
+					"metaDescription": "A JavaScript function body. Supports `await` and returning promises"
 				}
 			],
 			"outputs": {
@@ -177,7 +177,7 @@
 		},
 		"javascript.3": {
 			"type": "nodehandler://@axway/api-builder-plugin-fn-javascript/javascript",
-			"name": "Build Query",
+			"name": "Build Circuitpath Query",
 			"method": "Execute",
 			"parameters": [
 				{

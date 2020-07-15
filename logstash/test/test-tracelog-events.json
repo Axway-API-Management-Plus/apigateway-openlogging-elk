@@ -1,0 +1,37 @@
+{
+  "fields": {
+    "logtype": "trace"
+  },
+  "testcases": [
+    {
+      "description": "Test unrelated ERROR event is forwarded to general trace index",
+      "input": [
+        "ERROR   13/Jul/2020:09:41:03.205 [0ffc:000000000000000000000000] failed to flush dirty page to ops DB: No such file or directory. open 'conf/opsdb.d/000001b7.idx' failed: cannot open index file 439: cannot flush page {\"file\":439,\"page\":5}"
+      ],
+      "expected": [
+        {
+          "@timestamp": "2020-07-13T09:41:03.205Z",
+          "correlationId": "000000000000000000000000",
+          "level": "ERROR",
+          "logtype": "trace",
+          "message": "failed to flush dirty page to ops DB: No such file or directory. open 'conf/opsdb.d/000001b7.idx' failed: cannot open index file 439: cannot flush page {\"file\":439,\"page\":5}"
+        }
+      ]
+    },
+    {
+      "description": "Test general info message is forwarded into general trace index",
+      "input": [
+        "INFO    13/Jul/2020:15:11:52.189 [04b2:000000000000000000000000] Management Service - Pipe client disconnected"
+      ],
+      "expected": [
+        {
+          "@timestamp": "2020-07-13T15:11:52.189Z",
+          "correlationId": "000000000000000000000000",
+          "level": "INFO",
+          "logtype": "trace",
+          "message": "Management Service - Pipe client disconnected"
+        }
+      ]
+    }
+  ]
+}

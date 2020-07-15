@@ -1,10 +1,6 @@
 name: Logstash config test
 
-on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+on: [push, pull_request]
 
 jobs:
   test-logstash:
@@ -26,4 +22,4 @@ jobs:
     - name: Run Logstash config tests
       run: |
         dir
-        ./logstash-filter-verifier
+        ./logstash-filter-verifier --diff-command="diff -y" --sockets ./logstash/test ./logstash/pipeline

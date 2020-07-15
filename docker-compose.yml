@@ -2,7 +2,7 @@ version: '3.7'
 services:
   # The core component
   elasticsearch1:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.4.0
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.8.0
     container_name: elasticsearch1
     environment:
       - "ES_JAVA_OPTS=-Xms750M -Xmx750M"
@@ -19,7 +19,7 @@ services:
       - type: volume
         source: esdata1
         target: /usr/share/elasticsearch/data
-      - ${PWD}/configs/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+      - ${PWD}/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
     networks:
       - elastic
       - ingress
@@ -29,7 +29,7 @@ services:
 
   # This is optional, but good to have to perform manual queries and create custom dashboards
   kibana:
-    image: docker.elastic.co/kibana/kibana:7.4.0
+    image: docker.elastic.co/kibana/kibana:7.8.0
     container_name: kibana
     environment:
       SERVER_NAME: localhost
@@ -52,7 +52,7 @@ services:
 
   # Supposed to run side-by-side with the API-Gateway to watch the Open-Traffic Event files and send event to Logstash
   filebeat:
-    image: docker.elastic.co/beats/filebeat:7.4.0
+    image: docker.elastic.co/beats/filebeat:7.8.0
     command: --strict.perms=false
     environment:
       - setup.kibana.host=kibana:5601
@@ -60,7 +60,7 @@ services:
     ports:
       - 9000:9000
     volumes:
-      - ${PWD}/configs/filebeat.docker.yml:/usr/share/filebeat/filebeat.yml
+      - ${PWD}/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml
       - ${APIGATEWAY_LOGS_FOLDER}:/var/log/work
       - ${APIGATEWAY_TRACES_FOLDER}:/var/log/trace
       - /var/lib/docker/containers:/var/lib/docker/containers:ro
@@ -70,7 +70,7 @@ services:
 
   # Is receiving events from Filebeat and does pre-processing
   logstash:
-    image: docker.elastic.co/logstash/logstash:7.4.0
+    image: docker.elastic.co/logstash/logstash:7.8.0
     links:
       - elasticsearch1
     environment:
@@ -79,9 +79,9 @@ services:
     ports:
       - 5044:5044
     volumes:
-      - ${PWD}/configs/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
-      - ${PWD}/configs/openlog_index_template.json:/usr/share/logstash/pipeline/openlog_index_template.json
-    command: logstash --path.config /usr/share/logstash/pipeline/logstash.conf --pipeline.batch.size 20 --pipeline.workers 1 --log.level info
+      - ${PWD}/logstash/pipeline/pipeline.conf:/usr/share/logstash/pipeline/pipeline.conf
+      - ${PWD}/logstash/config/traffic_details_index_template.json:/usr/share/logstash/config/traffic_details_index_template.json
+    command: logstash --path.config /usr/share/logstash/pipeline/pipeline.conf --pipeline.batch.size 20 --pipeline.workers 1 --log.level info
     depends_on:
       - elasticsearch1
     networks:
@@ -100,21 +100,6 @@ services:
       - elasticsearch1
     networks:
       - elastic
-
-  # This is the Logspector Web-Application
-  nginx:
-    image: nginx:1.17.6
-    ports:
-      - 8888:90
-    volumes:
-      - ${PWD}/nginx/www:/usr/share/nginx/html
-      - ${PWD}/nginx/conf:/etc/nginx
-    depends_on:
-      - elasticsearch1
-    networks:
-      - elastic
-      - ingress
-
 
 volumes:
   esdata1:

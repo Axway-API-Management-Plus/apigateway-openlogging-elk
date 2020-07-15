@@ -34,7 +34,7 @@
 	"nodes": {
 		"javascript.1": {
 			"type": "nodehandler://@axway/api-builder-plugin-fn-javascript/javascript",
-			"name": "Define Index",
+			"name": "Define GetInfo Index",
 			"method": "Execute",
 			"parameters": [
 				{
@@ -47,7 +47,7 @@
 				{
 					"name": "code",
 					"type": "string",
-					"value": "\"let index = 'logstash-openlog';\\n  //let index = 'getinfo_test_1688';\\n  \\n  if(data.config.testElasticIndex) {\\n    index = data.config.testElasticIndex;\\n  }\\n  \\n  return index;\"",
+					"value": "\"let index = 'apigw-traffic-details*';\\n  //let index = 'getinfo_test_1688';\\n  \\n  if(data.config.testElasticIndex) {\\n    index = data.config.testElasticIndex;\\n  }\\n  \\n  return index;\"",
 					"metaName": "code",
 					"metaDescription": "A JavaScript function body. Supports `await` and returning promises"
 				}
@@ -72,7 +72,7 @@
 		},
 		"javascript.2": {
 			"type": "nodehandler://@axway/api-builder-plugin-fn-javascript/javascript",
-			"name": "Check Params",
+			"name": "Check GetInfo Params",
 			"method": "Execute",
 			"parameters": [
 				{
@@ -110,7 +110,7 @@
 		},
 		"javascript.3": {
 			"type": "nodehandler://@axway/api-builder-plugin-fn-javascript/javascript",
-			"name": "Build ES query",
+			"name": "Build GetInfo ES query",
 			"method": "Execute",
 			"parameters": [
 				{
@@ -149,7 +149,7 @@
 		},
 		"elasticsearch.1": {
 			"type": "nodehandler://@axway-api-builder-ext/api-builder-plugin-fn-elasticsearch/elasticsearch",
-			"name": "Search Info",
+			"name": "Search GetInfo",
 			"method": "search",
 			"parameters": [
 				{
@@ -187,7 +187,7 @@
 		},
 		"http.2": {
 			"type": "nodehandler://axway-flow/http",
-			"name": "Set HTTP 200 Response",
+			"name": "Response GetInfo",
 			"method": "setresponse",
 			"parameters": [
 				{
@@ -216,7 +216,7 @@
 		},
 		"javascript.4": {
 			"type": "nodehandler://@axway/api-builder-plugin-fn-javascript/javascript",
-			"name": "Format Response",
+			"name": "Format GetInfo Response",
 			"method": "Execute",
 			"parameters": [
 				{
@@ -229,7 +229,7 @@
 				{
 					"name": "code",
 					"type": "string",
-					"value": "\"//init variables\\n  \\n  let transactionInfo = {};\\n  let sourceLegs = [];\\n  let resultLegs = [];\\n  let legParam = data.params.legID;\\n  let detailsParam = data.params.details;\\n  let sheadersParam = data.params.sheaders;\\n  let rheadersParam = data.params.rheaders;\\n  let elasticData = data.elasticsearch.result.body.hits;\\n  \\n  \\n  transactionInfo = elasticData.hits[0]._source;\\n  sourceLegs = transactionInfo.transactionElements;\\n  \\n  // Loop over legs\\n  for (var item in sourceLegs) {\\n    let sourceLeg = sourceLegs[item];\\n    let resultLeg = {};\\n    let details = {};\\n\\n\\tlet rheaders = [];\\n    let sheaders = [];\\n    \\n    if (legParam == '*' || legParam == sourceLeg.leg)\\n    {\\n    \\n      if (detailsParam == '1'){\\n        details.uri = sourceLeg.protocolInfo.http.uri;\\n        details.status = sourceLeg.protocolInfo.http.status;\\n        details.statustext = sourceLeg.protocolInfo.http.statusText;\\n        details.method = sourceLeg.protocolInfo.http.method;\\n        details.vhost = (typeof sourceLeg.protocolInfo.http.vhost === 'undefined') ? null : sourceLeg.protocolInfo.http.vhost; // needs to be checked - not avail in test data\\n        details.wafStatus = sourceLeg.protocolInfo.http.wafStatus;\\n        details.bytesSent = sourceLeg.protocolInfo.http.bytesSent;\\n        details.bytesReceived = sourceLeg.protocolInfo.http.bytesReceived;\\n        details.remoteName = sourceLeg.protocolInfo.http.remoteName;\\n        details.remoteAddr = sourceLeg.protocolInfo.http.remoteAddr;\\n        details.localAddr = sourceLeg.protocolInfo.http.localAddr;\\n        details.remotePort = sourceLeg.protocolInfo.http.remotePort;\\n        details.localPort = sourceLeg.protocolInfo.http.localPort; \\n        details.sslsubject = (typeof sourceLeg.protocolInfo.http.sslSubject === 'undefined') ? null : sourceLeg.protocolInfo.http.sslSubject; //need to be checked - not avail in test data \\n        details.leg = sourceLeg.leg;\\n        details.timestamp = Date.parse(transactionInfo.timestampOriginal); //Needs to be formatted\\n        details.duration = sourceLeg.duration;\\n        details.correlationId = transactionInfo.correlationId;\\n        details.serviceName = sourceLeg.serviceName;\\n        details.subject = sourceLeg.protocolInfo.http.authSubjectId;\\n        details.operation = sourceLeg.operation;\\n        details.type = 'http'; //ToDo - currently hardcoded. Get it from path param in future\\n        details.finalStatus  = (typeof sourceLeg.finalStatus === 'undefined') ? null : sourceLeg.finalStatus; //need to be checked - not always avail in test data \\n        resultLeg.details = details;\\n      } else if (detailsParam == '0'){ \\n        resultLeg.details = null;\\n      } else{\\n        // No details element at all\\n      }\\n\\n                 \\n      // Formatting the rHeaders    \\n      if (rheadersParam == '1'){\\n        let rawRecvHeader = [];\\n        rawRecvHeader = sourceLeg.protocolInfo.recvHeader.split(\\\"\\\\r\\\\n\\\")\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t;\\n        let recvAttributes = [];   \\n\\n        rawRecvHeader.forEach(function (item,index){\\n        if (index !=0){\\n            let attribObj = {};        \\n            let n = item.indexOf(\\\":\\\");\\n            let attribName = item.substr(0,n).toString();\\n            let atrribValue = (item.substr(n+1).trim());\\n            if (attribName.length != 0) {\\n                attribObj[attribName]= atrribValue; \\n                recvAttributes.push(attribObj);\\n                }\\n            }\\n        });\\n        resultLeg.rheaders = recvAttributes;\\n      } else if (rheadersParam == '0'){   \\n        resultLeg.rheaders = null;\\n      } else {\\n        // No rheaders elemenmt at all\\n      }\\n\\n\\n      // Formatting the sHeaders\\n      \\n\\t  if (sheadersParam == '1') {\\n        let rawSendHeader = [];\\n        rawSendHeader = sourceLeg.protocolInfo.sentHeader.split(\\\"\\\\r\\\\n\\\")\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t;\\n        let sendAttributes = [];   \\n\\n        rawSendHeader.forEach(function (item,index){\\n        if (index !=0){\\n            let attribObj = {};        \\n            let n = item.indexOf(\\\":\\\");\\n            let attribName = item.substr(0,n).toString();\\n            let atrribValue = (item.substr(n+1).trim());\\n            if (attribName.length != 0) {\\n                attribObj[attribName]= atrribValue; \\n                sendAttributes.push(attribObj);\\n                }\\n            }\\n        });\\n\\n        resultLeg.sheaders = sendAttributes;\\n      } else if (sheadersParam == '0') {\\n        resultLeg.sheaders = null;\\n      } else {\\n        // No sheaders element at all\\n      }\\n\\n\\t  // Only when all legs are requested create an Array with leg objects.\\n      // Otherwise just return the leg object.\\n\\t  if (legParam == '*') {\\n      \\tresultLegs.push(resultLeg);\\n      } else {\\n        return resultLeg;\\n      }\\n\\n    }\\n  }\\n\\n  \\n  return resultLegs;\"",
+					"value": "\"//init variables\\n  \\n  let transactionInfo = {};\\n  let sourceLegs = [];\\n  let resultLegs = [];\\n  let legParam = data.params.legID;\\n  let detailsParam = data.params.details;\\n  let sheadersParam = data.params.sheaders;\\n  let rheadersParam = data.params.rheaders;\\n  let elasticData = data.elasticsearch.result.body.hits;\\n  \\n  \\n  transactionInfo = elasticData.hits[0]._source;\\n  sourceLegs = transactionInfo.transactionElements;\\n  \\n  // Loop over legs\\n  for (var item in sourceLegs) {\\n    let sourceLeg = sourceLegs[item];\\n    let resultLeg = {};\\n    let details = {};\\n\\n\\tlet rheaders = [];\\n    let sheaders = [];\\n    \\n    if (legParam == '*' || legParam == sourceLeg.leg)\\n    {\\n    \\n      if (detailsParam == '1'){\\n        details.uri = sourceLeg.protocolInfo.http.uri;\\n        details.status = sourceLeg.protocolInfo.http.status;\\n        details.statustext = sourceLeg.protocolInfo.http.statusText;\\n        details.method = sourceLeg.protocolInfo.http.method;\\n        details.vhost = (typeof sourceLeg.protocolInfo.http.vhost === 'undefined') ? null : sourceLeg.protocolInfo.http.vhost; // needs to be checked - not avail in test data\\n        details.wafStatus = sourceLeg.protocolInfo.http.wafStatus;\\n        details.bytesSent = sourceLeg.protocolInfo.http.bytesSent;\\n        details.bytesReceived = sourceLeg.protocolInfo.http.bytesReceived;\\n        details.remoteName = sourceLeg.protocolInfo.http.remoteName;\\n        details.remoteAddr = sourceLeg.protocolInfo.http.remoteAddr;\\n        details.localAddr = sourceLeg.protocolInfo.http.localAddr;\\n        details.remotePort = sourceLeg.protocolInfo.http.remotePort;\\n        details.localPort = sourceLeg.protocolInfo.http.localPort; \\n        details.sslsubject = (typeof sourceLeg.protocolInfo.http.sslSubject === 'undefined') ? null : sourceLeg.protocolInfo.http.sslSubject; //need to be checked - not avail in test data \\n        details.leg = sourceLeg.leg;\\n        details.timestamp = Date.parse(transactionInfo['@timestamp']); //Needs to be formatted\\n        details.duration = sourceLeg.duration;\\n        details.correlationId = transactionInfo.correlationId;\\n        details.serviceName = sourceLeg.serviceName;\\n        details.subject = sourceLeg.protocolInfo.http.authSubjectId;\\n        details.operation = sourceLeg.operation;\\n        details.type = 'http'; //ToDo - currently hardcoded. Get it from path param in future\\n        details.finalStatus  = (typeof sourceLeg.finalStatus === 'undefined') ? null : sourceLeg.finalStatus; //need to be checked - not always avail in test data \\n        resultLeg.details = details;\\n      } else if (detailsParam == '0'){ \\n        resultLeg.details = null;\\n      } else{\\n        // No details element at all\\n      }\\n\\n                 \\n      // Formatting the rHeaders    \\n      if (rheadersParam == '1'){\\n        let rawRecvHeader = [];\\n        rawRecvHeader = sourceLeg.protocolInfo.recvHeader.split(\\\"\\\\r\\\\n\\\")\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t;\\n        let recvAttributes = [];   \\n\\n        rawRecvHeader.forEach(function (item,index){\\n        if (index !=0){\\n            let attribObj = {};        \\n            let n = item.indexOf(\\\":\\\");\\n            let attribName = item.substr(0,n).toString();\\n            let atrribValue = (item.substr(n+1).trim());\\n            if (attribName.length != 0) {\\n                attribObj[attribName]= atrribValue; \\n                recvAttributes.push(attribObj);\\n                }\\n            }\\n        });\\n        resultLeg.rheaders = recvAttributes;\\n      } else if (rheadersParam == '0'){   \\n        resultLeg.rheaders = null;\\n      } else {\\n        // No rheaders elemenmt at all\\n      }\\n\\n\\n      // Formatting the sHeaders\\n      \\n\\t  if (sheadersParam == '1') {\\n        let rawSendHeader = [];\\n        rawSendHeader = sourceLeg.protocolInfo.sentHeader.split(\\\"\\\\r\\\\n\\\")\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t;\\n        let sendAttributes = [];   \\n\\n        rawSendHeader.forEach(function (item,index){\\n        if (index !=0){\\n            let attribObj = {};        \\n            let n = item.indexOf(\\\":\\\");\\n            let attribName = item.substr(0,n).toString();\\n            let atrribValue = (item.substr(n+1).trim());\\n            if (attribName.length != 0) {\\n                attribObj[attribName]= atrribValue; \\n                sendAttributes.push(attribObj);\\n                }\\n            }\\n        });\\n\\n        resultLeg.sheaders = sendAttributes;\\n      } else if (sheadersParam == '0') {\\n        resultLeg.sheaders = null;\\n      } else {\\n        // No sheaders element at all\\n      }\\n\\n\\t  // Only when all legs are requested create an Array with leg objects.\\n      // Otherwise just return the leg object.\\n\\t  if (legParam == '*') {\\n      \\tresultLegs.push(resultLeg);\\n      } else {\\n        return resultLeg;\\n      }\\n\\n    }\\n  }\\n\\n  \\n  return resultLegs;\"",
 					"metaName": "code",
 					"metaDescription": "A JavaScript function body. Supports `await` and returning promises"
 				}

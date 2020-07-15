@@ -1,0 +1,21 @@
+{
+    "index_patterns": [
+        "apigw-traffic-details-*"
+    ],
+    "settings": {
+        "number_of_shards": 5
+    },
+    "mappings": {
+        "properties": {
+            "correlationId": {
+                "type": "keyword"
+            },
+            "processInfo.serviceId": {
+                "type": "keyword"
+            },
+            "transactionElements.leg0.protocolInfo.http.remoteName": {
+                "type": "keyword"
+            }
+        }
+    }
+}
