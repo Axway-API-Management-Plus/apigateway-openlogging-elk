@@ -28,6 +28,7 @@ setup.template.enabled: true
 
 monitoring:
   enabled: true
-  cluster_uuid: cJc3pAi1R6e32wAvklnM0A
+  # Get the Cluster-ID with this query: GET /
+  cluster_uuid: <YOUR_ELASTICSEARCH-CLUSTER-UUID>
   elasticsearch:
     hosts: ["elasticsearch1:9200"]

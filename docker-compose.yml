@@ -101,21 +101,6 @@ services:
     networks:
       - elastic
 
-  # This is the Logspector Web-Application
-  nginx:
-    image: nginx:1.17.6
-    ports:
-      - 8888:90
-    volumes:
-      - ${PWD}/nginx/www:/usr/share/nginx/html
-      - ${PWD}/nginx/conf:/etc/nginx
-    depends_on:
-      - elasticsearch1
-    networks:
-      - elastic
-      - ingress
-
-
 volumes:
   esdata1:
   esdata2:
