@@ -24,10 +24,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.923 [6569:f1aefd5e3501dd00a16eebc0]             Trace Filter {",
+		"message": "             Trace Filter {",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:49.790Z",
-		"timestampOriginal": "2020-7-02T02:54:57.923Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -59,10 +59,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 api.application.quota.warn.percent {",
+		"message": "                 api.application.quota.warn.percent {",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:49.790Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -94,10 +94,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Value:     80",
+		"message": "                     Value:     80",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:49.790Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -129,10 +129,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Type:      java.lang.String",
+		"message": "                     Type:      java.lang.String",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:49.790Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -164,10 +164,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 }",
+		"message": "                 }",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:49.790Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -199,10 +199,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 api.custom.properties {",
+		"message": "                 api.custom.properties {",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:49.794Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -234,10 +234,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Value:     (not set)",
+		"message": "                     Value:     (not set)",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:49.794Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -269,10 +269,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Type:      (unknown)",
+		"message": "                     Type:      (unknown)",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:49.794Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -304,10 +304,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 }",
+		"message": "                 }",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:49.798Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -339,10 +339,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 api.id {",
+		"message": "                 api.id {",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:49.814Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -374,10 +374,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Value:     3cdd611b-b433-49b9-b65a-f21bd3c3ddbb",
+		"message": "                     Value:     3cdd611b-b433-49b9-b65a-f21bd3c3ddbb",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:49.814Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -409,10 +409,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Type:      java.lang.String",
+		"message": "                     Type:      java.lang.String",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:49.814Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -444,10 +444,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 }",
+		"message": "                 }",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.413Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -479,10 +479,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 api.method.id {",
+		"message": "                 api.method.id {",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.413Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -514,10 +514,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Value:     a49c8c50-a70c-44af-b63a-3bef6a5d6325",
+		"message": "                     Value:     a49c8c50-a70c-44af-b63a-3bef6a5d6325",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.413Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -549,10 +549,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Type:      java.lang.String",
+		"message": "                     Type:      java.lang.String",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.413Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -584,10 +584,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 }",
+		"message": "                 }",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.413Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -619,10 +619,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 api.method.name {",
+		"message": "                 api.method.name {",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.413Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -654,10 +654,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Value:     Get-all-todo-items",
+		"message": "                     Value:     Get-all-todo-items",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.413Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -689,10 +689,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Type:      java.lang.String",
+		"message": "                     Type:      java.lang.String",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.413Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -724,10 +724,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 }",
+		"message": "                 }",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.413Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -759,10 +759,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 api.method.path {",
+		"message": "                 api.method.path {",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.413Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -794,10 +794,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Value:     /todos",
+		"message": "                     Value:     /todos",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.413Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -829,10 +829,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Type:      java.lang.String",
+		"message": "                     Type:      java.lang.String",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.413Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -864,10 +864,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 }",
+		"message": "                 }",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.413Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -899,10 +899,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 api.name {",
+		"message": "                 api.name {",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.414Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -934,10 +934,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Value:     ARS ToDo API",
+		"message": "                     Value:     ARS ToDo API",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.414Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -969,10 +969,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Type:      java.lang.String",
+		"message": "                     Type:      java.lang.String",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.414Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -1004,10 +1004,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 }",
+		"message": "                 }",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.414Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -1039,10 +1039,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 api.path {",
+		"message": "                 api.path {",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.414Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -1074,10 +1074,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Value:     /ars/pups",
+		"message": "                     Value:     /ars/pups",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.414Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -1109,10 +1109,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Type:      java.lang.String",
+		"message": "                     Type:      java.lang.String",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.414Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -1144,10 +1144,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 }",
+		"message": "                 }",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.414Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -1179,10 +1179,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 api.system.quota.warn.percent {",
+		"message": "                 api.system.quota.warn.percent {",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.414Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -1214,10 +1214,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Value:     80",
+		"message": "                     Value:     80",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.415Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -1249,10 +1249,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Type:      java.lang.String",
+		"message": "                     Type:      java.lang.String",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.415Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -1284,10 +1284,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 }",
+		"message": "                 }",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.415Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -1319,10 +1319,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 apigw.maintenance.ongoing {",
+		"message": "                 apigw.maintenance.ongoing {",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.428Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -1354,10 +1354,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Value:     false",
+		"message": "                     Value:     false",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.428Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -1389,10 +1389,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Type:      java.lang.String",
+		"message": "                     Type:      java.lang.String",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.428Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -1424,10 +1424,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 }",
+		"message": "                 }",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.429Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -1459,10 +1459,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 apiruntime.apiproxy {",
+		"message": "                 apiruntime.apiproxy {",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.429Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -1494,10 +1494,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Value:     {id: \"3cdd611b-b433-49b9-b65a-f21bd3c3ddbb\", ref: \"null\", title: \"null\", description: \"An API Builder service\", defaultValue: \"null\", type: \"null\", format: \"null\", required: \"null\", properties: \"null\", additionalProperties: \"null\", items: \"null\", example: \"null\", xml: \"null\", exclusiveMinimum: \"null\", exclusiveMaximum: \"null\", minimum: \"null\", maximum: \"null\", maxLength: \"null\", minLength: \"null\", pattern: \"null\", maxItems: \"null\", minItems: \"null\", uniqueItems: \"null\", allowEmptyValue: \"null\", maxProperties: \"null\", minProperties: \"null\", not: \"null\", nullable: \"null\", readOnly: \"null\", writeOnly: \"null\", deprecated: \"null\", externalDocs: \"null\", discriminator: \"null\", multipleOf: \"null\", collectionFormat: \"null\", enumList: \"[]\", discriminator: \"null\", oneOf: \"null\", allOf: \"null\", anyOf: \"null\"}",
+		"message": "\", discriminator: \"null\", oneOf: \"null\", allOf: \"null\", anyOf: \"null\"}",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.429Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -1529,10 +1529,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Type:      com.vordel.apiportal.api.portal.model.swagger.v11ex.Swagger",
+		"message": "                     Type:      com.vordel.apiportal.api.portal.model.swagger.v11ex.Swagger",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.429Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -1564,10 +1564,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 }",
+		"message": "                 }",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.429Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -1599,10 +1599,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 apiruntime.apiproxy.method {",
+		"message": "                 apiruntime.apiproxy.method {",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.429Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -1634,10 +1634,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Value:     com.vordel.apiportal.api.portal.model.proxy.VirtualizedAPIMethod@28d7f311",
+		"message": "                     Value:     com.vordel.apiportal.api.portal.model.proxy.VirtualizedAPIMethod@28d7f311",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.429Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -1669,10 +1669,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Type:      com.vordel.apiportal.api.portal.model.proxy.VirtualizedAPIMethod",
+		"message": "                     Type:      com.vordel.apiportal.api.portal.model.proxy.VirtualizedAPIMethod",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.429Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -1704,10 +1704,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 }",
+		"message": "                 }",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.429Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -1739,10 +1739,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 apiruntime.authN {",
+		"message": "                 apiruntime.authN {",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.430Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -1774,10 +1774,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Value:     AuthResult [application=null, organization=null, apiKey=null, passThruSubject=Pass Through, corsOrigins=[]]",
+		"message": "",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.430Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -1809,10 +1809,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Type:      com.vordel.coreapireg.runtime.AuthResult",
+		"message": "                     Type:      com.vordel.coreapireg.runtime.AuthResult",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.430Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -1844,10 +1844,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 }",
+		"message": "                 }",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.430Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -1879,10 +1879,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 authentication.subject.id {",
+		"message": "                 authentication.subject.id {",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.430Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -1914,10 +1914,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Value:     Pass Through",
+		"message": "                     Value:     Pass Through",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.430Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -1949,10 +1949,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Type:      java.lang.String",
+		"message": "                     Type:      java.lang.String",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.432Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -1984,10 +1984,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 }",
+		"message": "                 }",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.432Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -2019,10 +2019,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 content.body {",
+		"message": "                 content.body {",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.432Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -2054,10 +2054,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Value:     (not set)",
+		"message": "                     Value:     (not set)",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.433Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -2089,10 +2089,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Type:      (unknown)",
+		"message": "                     Type:      (unknown)",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.433Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -2124,10 +2124,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 }",
+		"message": "                 }",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.433Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -2159,10 +2159,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 destinationURL {",
+		"message": "                 destinationURL {",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.433Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -2194,10 +2194,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Value:     http://79f6a7dbf03ba9dc3fcdda2486d26adfab68584e.cloudapp-enterprise.appcelerator.com/api/todos",
+		"message": "                     Value:     http://79f6a7dbf03ba9dc3fcdda2486d26adfab68584e.cloudapp-enterprise.appcelerator.com/api/todos",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.433Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -2229,10 +2229,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Type:      java.lang.String",
+		"message": "                     Type:      java.lang.String",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.433Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -2264,10 +2264,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 }",
+		"message": "                 }",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.434Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -2299,10 +2299,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 dwe.protocol {",
+		"message": "                 dwe.protocol {",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.434Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -2334,10 +2334,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Value:     com.vordel.dwe.http.HTTPProtocol@63708e4",
+		"message": "                     Value:     com.vordel.dwe.http.HTTPProtocol@63708e4",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.434Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -2369,10 +2369,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Type:      com.vordel.dwe.http.HTTPProtocol",
+		"message": "                     Type:      com.vordel.dwe.http.HTTPProtocol",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.434Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -2404,10 +2404,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 }",
+		"message": "                 }",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.434Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -2439,10 +2439,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 http.client {",
+		"message": "                 http.client {",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.434Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -2474,10 +2474,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Value:     com.vordel.dwe.http.ServerTransaction@7e8df70f",
+		"message": "                     Value:     com.vordel.dwe.http.ServerTransaction@7e8df70f",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.434Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -2509,10 +2509,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Type:      com.vordel.dwe.http.ServerTransaction",
+		"message": "                     Type:      com.vordel.dwe.http.ServerTransaction",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.434Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -2544,10 +2544,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 }",
+		"message": "                 }",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.434Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -2579,10 +2579,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 http.content.headers {",
+		"message": "                 http.content.headers {",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.436Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -2614,10 +2614,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Value:     {}",
+		"message": "                     Value:     {}",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.436Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -2649,10 +2649,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Type:      com.vordel.mime.HeaderSet",
+		"message": "                     Type:      com.vordel.mime.HeaderSet",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.436Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -2684,10 +2684,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 }",
+		"message": "                 }",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.448Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -2719,10 +2719,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 http.headers {",
+		"message": "                 http.headers {",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.448Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -2754,10 +2754,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Value:     com.vordel.common.util.BinaryEscapeFilter@5ffbb220",
+		"message": "                     Value:     com.vordel.common.util.BinaryEscapeFilter@5ffbb220",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.448Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -2789,10 +2789,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Type:      com.vordel.mime.HeaderSet",
+		"message": "                     Type:      com.vordel.mime.HeaderSet",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.448Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -2824,10 +2824,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 }",
+		"message": "                 }",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.448Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -2859,10 +2859,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 http.querystring {",
+		"message": "                 http.querystring {",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.448Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -2894,10 +2894,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Value:     com.vordel.mime.QueryStringHeaderSet@48238db5",
+		"message": "                     Value:     com.vordel.mime.QueryStringHeaderSet@48238db5",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.448Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -2929,10 +2929,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Type:      com.vordel.mime.QueryStringHeaderSet",
+		"message": "                     Type:      com.vordel.mime.QueryStringHeaderSet",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.448Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -2964,10 +2964,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 }",
+		"message": "                 }",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.448Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -2999,10 +2999,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 http.raw.querystring {",
+		"message": "                 http.raw.querystring {",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.449Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -3034,10 +3034,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Value:     (not set)",
+		"message": "                     Value:     (not set)",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.449Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -3069,10 +3069,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Type:      (unknown)",
+		"message": "                     Type:      (unknown)",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.449Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -3104,10 +3104,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 }",
+		"message": "                 }",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.449Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -3139,10 +3139,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 http.request.cipher {",
+		"message": "                 http.request.cipher {",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.449Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -3174,10 +3174,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Value:     ECDHE-RSA-AES128-GCM-SHA256",
+		"message": "                     Value:     ECDHE-RSA-AES128-GCM-SHA256",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.449Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -3209,10 +3209,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Type:      java.lang.String",
+		"message": "                     Type:      java.lang.String",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.449Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -3244,10 +3244,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 }",
+		"message": "                 }",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.449Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -3279,10 +3279,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 http.request.clientaddr {",
+		"message": "                 http.request.clientaddr {",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.449Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -3314,10 +3314,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Value:     192.168.233.1",
+		"message": "                     Value:     192.168.233.1",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.450Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -3349,10 +3349,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Type:      java.net.InetSocketAddress",
+		"message": "                     Type:      java.net.InetSocketAddress",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.450Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -3384,10 +3384,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 }",
+		"message": "                 }",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.450Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -3419,10 +3419,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 http.request.clientcert {",
+		"message": "                 http.request.clientcert {",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.450Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -3454,10 +3454,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Value:     (not set)",
+		"message": "                     Value:     (not set)",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.450Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -3489,10 +3489,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Type:      (unknown)",
+		"message": "                     Type:      (unknown)",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.450Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -3524,10 +3524,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 }",
+		"message": "                 }",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.450Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -3559,10 +3559,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 http.request.hostname {",
+		"message": "                 http.request.hostname {",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.450Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -3594,10 +3594,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Value:     192.168.233.1",
+		"message": "                     Value:     192.168.233.1",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.450Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -3629,10 +3629,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Type:      java.lang.String",
+		"message": "                     Type:      java.lang.String",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.450Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -3664,10 +3664,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 }",
+		"message": "                 }",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.450Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -3699,10 +3699,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 http.request.incoming.path {",
+		"message": "                 http.request.incoming.path {",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.450Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -3734,10 +3734,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Value:     /ars/pups/todos",
+		"message": "                     Value:     /ars/pups/todos",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.451Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -3769,10 +3769,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Type:      java.lang.String",
+		"message": "                     Type:      java.lang.String",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.451Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -3804,10 +3804,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 }",
+		"message": "                 }",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.451Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -3839,10 +3839,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 http.request.ip {",
+		"message": "                 http.request.ip {",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.451Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -3874,10 +3874,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Value:     192.168.233.137",
+		"message": "                     Value:     192.168.233.137",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.451Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -3909,10 +3909,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Type:      java.lang.String",
+		"message": "                     Type:      java.lang.String",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.451Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -3944,10 +3944,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 }",
+		"message": "                 }",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.451Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -3979,10 +3979,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 http.request.localaddr {",
+		"message": "                 http.request.localaddr {",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.451Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -4014,10 +4014,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Value:     /192.168.233.137:8065",
+		"message": "                     Value:     /192.168.233.137:8065",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.451Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -4049,10 +4049,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Type:      java.net.InetSocketAddress",
+		"message": "                     Type:      java.net.InetSocketAddress",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.452Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -4084,10 +4084,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 }",
+		"message": "                 }",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.452Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -4119,10 +4119,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 http.request.method {",
+		"message": "                 http.request.method {",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.452Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -4154,10 +4154,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Value:     GET",
+		"message": "                     Value:     GET",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.464Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -4189,10 +4189,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Type:      java.lang.String",
+		"message": "                     Type:      java.lang.String",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.464Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -4224,10 +4224,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 }",
+		"message": "                 }",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.464Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -4259,10 +4259,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 http.request.path {",
+		"message": "                 http.request.path {",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.464Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -4294,10 +4294,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Value:     /ars/pups/todos",
+		"message": "                     Value:     /ars/pups/todos",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.465Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -4329,10 +4329,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Type:      java.lang.String",
+		"message": "                     Type:      java.lang.String",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.465Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -4364,10 +4364,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 }",
+		"message": "                 }",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.465Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -4399,10 +4399,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 http.request.protocol {",
+		"message": "                 http.request.protocol {",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.465Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -4434,10 +4434,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Value:     https",
+		"message": "                     Value:     https",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.465Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -4469,10 +4469,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Type:      java.lang.String",
+		"message": "                     Type:      java.lang.String",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.465Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -4504,10 +4504,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 }",
+		"message": "                 }",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.465Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -4539,10 +4539,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 http.request.rawURI {",
+		"message": "                 http.request.rawURI {",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.465Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -4574,10 +4574,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Value:     /ars/pups/todos",
+		"message": "                     Value:     /ars/pups/todos",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.465Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -4609,10 +4609,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Type:      java.lang.String",
+		"message": "                     Type:      java.lang.String",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.465Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -4644,10 +4644,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 }",
+		"message": "                 }",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.465Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -4679,10 +4679,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 http.request.rawURI.fragment {",
+		"message": "                 http.request.rawURI.fragment {",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.465Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -4714,10 +4714,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Value:     (not set)",
+		"message": "                     Value:     (not set)",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.466Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -4749,10 +4749,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Type:      (unknown)",
+		"message": "                     Type:      (unknown)",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.466Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -4784,10 +4784,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 }",
+		"message": "                 }",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.466Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -4819,10 +4819,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 http.request.rawURI.path {",
+		"message": "                 http.request.rawURI.path {",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.466Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -4854,10 +4854,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Value:     /ars/pups/todos",
+		"message": "                     Value:     /ars/pups/todos",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.466Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -4889,10 +4889,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Type:      java.lang.String",
+		"message": "                     Type:      java.lang.String",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.466Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -4924,10 +4924,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 }",
+		"message": "                 }",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.467Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -4959,10 +4959,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 http.request.rawURI.query {",
+		"message": "                 http.request.rawURI.query {",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.467Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -4994,10 +4994,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Value:     (not set)",
+		"message": "                     Value:     (not set)",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.467Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -5029,10 +5029,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Type:      (unknown)",
+		"message": "                     Type:      (unknown)",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.468Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -5064,10 +5064,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 }",
+		"message": "                 }",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.468Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -5099,10 +5099,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 http.request.sni {",
+		"message": "                 http.request.sni {",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.468Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -5134,10 +5134,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Value:     api-env.demo.axway.com",
+		"message": "                     Value:     api-env.demo.axway.com",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:55.485Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -5169,10 +5169,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Type:      java.lang.String",
+		"message": "                     Type:      java.lang.String",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.335Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -5204,10 +5204,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 }",
+		"message": "                 }",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.335Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -5239,10 +5239,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 http.request.uri {",
+		"message": "                 http.request.uri {",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.335Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -5274,10 +5274,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Value:     /ars/pups/todos",
+		"message": "                     Value:     /ars/pups/todos",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.335Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -5309,10 +5309,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Type:      java.net.URI",
+		"message": "                     Type:      java.net.URI",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.336Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -5344,10 +5344,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 }",
+		"message": "                 }",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.336Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -5379,10 +5379,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 http.request.url {",
+		"message": "                 http.request.url {",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.336Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -5414,10 +5414,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Value:     https://api-env.demo.axway.com:8065/ars/pups/todos",
+		"message": "                     Value:     https://api-env.demo.axway.com:8065/ars/pups/todos",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.336Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -5449,10 +5449,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Type:      java.net.URL",
+		"message": "                     Type:      java.net.URL",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.336Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -5484,10 +5484,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 }",
+		"message": "                 }",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.336Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -5519,10 +5519,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 http.request.verb {",
+		"message": "                 http.request.verb {",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.336Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -5554,10 +5554,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Value:     GET",
+		"message": "                     Value:     GET",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.336Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -5589,10 +5589,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Type:      java.lang.String",
+		"message": "                     Type:      java.lang.String",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.336Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -5624,10 +5624,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 }",
+		"message": "                 }",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.336Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -5659,10 +5659,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 http.request.version {",
+		"message": "                 http.request.version {",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.336Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -5694,10 +5694,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Value:     1.0",
+		"message": "                     Value:     1.0",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.336Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -5729,10 +5729,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Type:      java.lang.String",
+		"message": "                     Type:      java.lang.String",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.336Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -5764,10 +5764,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 }",
+		"message": "                 }",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.336Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -5799,10 +5799,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 id {",
+		"message": "                 id {",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.336Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -5834,10 +5834,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Value:     Id-f1aefd5e3501dd00a16eebc0",
+		"message": "                     Value:     Id-f1aefd5e3501dd00a16eebc0",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.338Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -5869,10 +5869,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Type:      java.lang.String",
+		"message": "                     Type:      java.lang.String",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.338Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -5904,10 +5904,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 }",
+		"message": "                 }",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.338Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -5939,10 +5939,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 leg0 {",
+		"message": "                 leg0 {",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.341Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -5974,10 +5974,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Value:     [ \"http\", [0,1593683697921,0,\"f1aefd5e3501dd00a16eebc0\",null,null,null,\"http\",null,0,0,\"192.168.233.1\",\"192.168.233.1\",\"192.168.233.137\",\"57134\",\"8065\",null,\"/ars/pups/todos\",0,null,null,null,0]]",
+		"message": "",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.341Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -6009,10 +6009,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Type:      com.vordel.vary.VariantObject",
+		"message": "                     Type:      com.vordel.vary.VariantObject",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.341Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -6044,10 +6044,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 }",
+		"message": "                 }",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.342Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -6079,10 +6079,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 message.client.name {",
+		"message": "                 message.client.name {",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.342Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -6114,10 +6114,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Value:     192.168.233.1",
+		"message": "                     Value:     192.168.233.1",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.342Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -6149,10 +6149,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Type:      java.lang.String",
+		"message": "                     Type:      java.lang.String",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.343Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -6184,10 +6184,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 }",
+		"message": "                 }",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.343Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -6219,10 +6219,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 message.local.address {",
+		"message": "                 message.local.address {",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.343Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -6254,10 +6254,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Value:     /192.168.233.137:8065",
+		"message": "                     Value:     /192.168.233.137:8065",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.362Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -6289,10 +6289,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Type:      java.net.InetSocketAddress",
+		"message": "                     Type:      java.net.InetSocketAddress",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.362Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -6324,10 +6324,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 }",
+		"message": "                 }",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.362Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -6359,10 +6359,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 message.metrics.transaction {",
+		"message": "                 message.metrics.transaction {",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.362Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -6394,10 +6394,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Value:     com.vordel.dwe.http.ServerTransaction@7e8df70f",
+		"message": "                     Value:     com.vordel.dwe.http.ServerTransaction@7e8df70f",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.362Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -6429,10 +6429,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Type:      com.vordel.dwe.http.ServerTransaction",
+		"message": "                     Type:      com.vordel.dwe.http.ServerTransaction",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.362Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -6464,10 +6464,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 }",
+		"message": "                 }",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.373Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -6499,10 +6499,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 message.protocol.type {",
+		"message": "                 message.protocol.type {",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.373Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -6534,10 +6534,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Value:     http",
+		"message": "                     Value:     http",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.373Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -6569,10 +6569,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Type:      java.lang.String",
+		"message": "                     Type:      java.lang.String",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.373Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -6604,10 +6604,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 }",
+		"message": "                 }",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.373Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -6639,10 +6639,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 message.reception_date {",
+		"message": "                 message.reception_date {",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.373Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -6674,10 +6674,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Value:     Thu Jul 02 02:54:57 MST 2020",
+		"message": "                     Value:     Thu Jul 02 02:54:57 MST 2020",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.374Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -6709,10 +6709,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Type:      java.util.Date",
+		"message": "                     Type:      java.util.Date",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.374Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -6744,10 +6744,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 }",
+		"message": "                 }",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.374Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -6779,10 +6779,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 message.reception_time {",
+		"message": "                 message.reception_time {",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.374Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -6814,10 +6814,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Value:     1593683697922",
+		"message": "                     Value:     1593683697922",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.374Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -6849,10 +6849,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Type:      java.lang.Long",
+		"message": "                     Type:      java.lang.Long",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.374Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -6884,10 +6884,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 }",
+		"message": "                 }",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.374Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -6919,10 +6919,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 message.source {",
+		"message": "                 message.source {",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.374Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -6954,10 +6954,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Value:     8065",
+		"message": "                     Value:     8065",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.374Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -6989,10 +6989,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Type:      java.lang.String",
+		"message": "                     Type:      java.lang.String",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.375Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -7024,10 +7024,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 }",
+		"message": "                 }",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.375Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -7059,10 +7059,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 message.uri {",
+		"message": "                 message.uri {",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.375Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -7094,10 +7094,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Value:     /ars/pups/todos",
+		"message": "                     Value:     /ars/pups/todos",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.378Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -7129,10 +7129,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Type:      java.net.URI",
+		"message": "                     Type:      java.net.URI",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.378Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -7164,10 +7164,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 }",
+		"message": "                 }",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.378Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -7199,10 +7199,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 monitoring.enabled {",
+		"message": "                 monitoring.enabled {",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.378Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -7234,10 +7234,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Value:     true",
+		"message": "                     Value:     true",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.378Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -7269,10 +7269,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Type:      java.lang.Boolean",
+		"message": "                     Type:      java.lang.Boolean",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.378Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -7304,10 +7304,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 }",
+		"message": "                 }",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.379Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -7339,10 +7339,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 params.form {",
+		"message": "                 params.form {",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.379Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -7374,10 +7374,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Value:     com.vordel.mime.QueryStringHeaderSet@76edcc7d",
+		"message": "                     Value:     com.vordel.mime.QueryStringHeaderSet@76edcc7d",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.379Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -7409,10 +7409,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Type:      com.vordel.mime.QueryStringHeaderSet",
+		"message": "                     Type:      com.vordel.mime.QueryStringHeaderSet",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.379Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -7444,10 +7444,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 }",
+		"message": "                 }",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.379Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -7479,10 +7479,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 params.header {",
+		"message": "                 params.header {",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.379Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -7514,10 +7514,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Value:     {}",
+		"message": "                     Value:     {}",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.379Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -7549,10 +7549,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Type:      com.vordel.mime.HeaderSet",
+		"message": "                     Type:      com.vordel.mime.HeaderSet",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.379Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -7584,10 +7584,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 }",
+		"message": "                 }",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.379Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -7619,10 +7619,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 params.in.header {",
+		"message": "                 params.in.header {",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.379Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -7654,10 +7654,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Value:     {Accept=[application/json], Accept-Language=[de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7], Host=[api-env.demo.axway.com:8065], Origin=[https://api-env.demo.axway.com:8075], Referer=[https://api-env.demo.axway.com:8075/home], Sec-Fetch-Dest=[empty], Sec-Fetch-Mode=[cors], Sec-Fetch-Site=[same-site], User-Agent=[Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36], X-Requested-With=[XMLHttpRequest]}",
+		"message": "}",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.379Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -7689,10 +7689,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Type:      com.vordel.mime.HeaderSet",
+		"message": "                     Type:      com.vordel.mime.HeaderSet",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.379Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -7724,10 +7724,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 }",
+		"message": "                 }",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.380Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -7759,10 +7759,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 params.path {",
+		"message": "                 params.path {",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.380Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -7794,10 +7794,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Value:     {}",
+		"message": "                     Value:     {}",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.380Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -7829,10 +7829,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Type:      java.util.HashMap",
+		"message": "                     Type:      java.util.HashMap",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.380Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -7864,10 +7864,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 }",
+		"message": "                 }",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.380Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -7899,10 +7899,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 params.query {",
+		"message": "                 params.query {",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.380Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -7934,10 +7934,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Value:     com.vordel.mime.QueryStringHeaderSet@67497820",
+		"message": "                     Value:     com.vordel.mime.QueryStringHeaderSet@67497820",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.381Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -7969,10 +7969,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Type:      com.vordel.mime.QueryStringHeaderSet",
+		"message": "                     Type:      com.vordel.mime.QueryStringHeaderSet",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.381Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -8004,10 +8004,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 }",
+		"message": "                 }",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.381Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -8039,10 +8039,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 resolved.to.path {",
+		"message": "                 resolved.to.path {",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.431Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -8074,10 +8074,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Value:     /",
+		"message": "                     Value:     /",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.431Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -8109,10 +8109,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Type:      java.lang.String",
+		"message": "                     Type:      java.lang.String",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:00.431Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -8144,10 +8144,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 }",
+		"message": "                 }",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:09.569Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -8179,10 +8179,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 rest {",
+		"message": "                 rest {",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:09.590Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -8214,10 +8214,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Value:     AuthResult [application=null, organization=null, apiKey=null, passThruSubject=Pass Through, corsOrigins=[]]",
+		"message": "",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:09.590Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -8249,10 +8249,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Type:      com.vordel.coreapireg.runtime.AuthResult",
+		"message": "                     Type:      com.vordel.coreapireg.runtime.AuthResult",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:09.590Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -8284,10 +8284,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 }",
+		"message": "                 }",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:09.591Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -8319,10 +8319,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 service.name {",
+		"message": "                 service.name {",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:09.591Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -8354,10 +8354,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Value:     ARS ToDo API",
+		"message": "                     Value:     ARS ToDo API",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:09.591Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -8389,10 +8389,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Type:      java.lang.String",
+		"message": "                     Type:      java.lang.String",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:09.591Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -8424,10 +8424,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 }",
+		"message": "                 }",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:09.591Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -8459,10 +8459,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 soap.request.method {",
+		"message": "                 soap.request.method {",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:09.591Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -8494,10 +8494,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Value:     Get-all-todo-items",
+		"message": "                     Value:     Get-all-todo-items",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:09.591Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -8529,10 +8529,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Type:      java.lang.String",
+		"message": "                     Type:      java.lang.String",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:09.591Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -8564,10 +8564,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 }",
+		"message": "                 }",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:09.591Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -8599,10 +8599,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 statistics {",
+		"message": "                 statistics {",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:09.591Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -8634,10 +8634,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Value:     com.vordel.statistics.MessageMetrics@65a1bc5b",
+		"message": "                     Value:     com.vordel.statistics.MessageMetrics@65a1bc5b",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:09.591Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -8669,10 +8669,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                     Type:      com.vordel.statistics.MessageMetrics",
+		"message": "                     Type:      com.vordel.statistics.MessageMetrics",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:09.591Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -8704,10 +8704,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]                 }",
+		"message": "                 }",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:09.592Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -8739,10 +8739,10 @@ module.exports = [
 		},
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
-		"message": "INFO    02/Jul/2020:02:54:57.959 [6569:f1aefd5e3501dd00a16eebc0]             }",
+		"message": "             }",
 		"@version": "1",
 		"@timestamp": "2020-07-02T10:38:09.592Z",
-		"timestampOriginal": "2020-7-02T02:54:57.959Z",
+
 		"tags": [
 			"beats_input_codec_plain_applied",
 			"trace"
@@ -8752,7 +8752,7 @@ module.exports = [
 		}
 	},
 	{
-		"timestampOriginal": "2020-6-16T05:13:15.414Z",
+
 		"month_field": "6",
 		"level": "ERROR",
 		"@timestamp": "2020-06-29T13:26:43.687Z",
@@ -8787,7 +8787,7 @@ module.exports = [
 		}
 	},
 	{
-		"timestampOriginal": "2020-6-16T05:13:15.414Z",
+
 		"month_field": "6",
 		"level": "ERROR",
 		"@timestamp": "2020-06-29T13:26:43.687Z",

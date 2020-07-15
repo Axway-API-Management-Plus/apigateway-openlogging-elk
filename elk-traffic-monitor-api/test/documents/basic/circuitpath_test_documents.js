@@ -1,6 +1,7 @@
 const getDate = require('../../util');
 
 module.exports = [
+    // Default API Proxy Routing policy with id: c8705e5ecc00adca32be7472
     {
         "processInfo": {
             "groupName": "QuickStart Group",
@@ -11,19 +12,8 @@ module.exports = [
             "groupId": "group-2",
             "serviceName": "QuickStart Server"
         },
-        "transactionSummaryContext": {
-            "monitor": true,
-            "service": "Petstore HTTP",
-            "method": "findPetsByStatus",
-            "status": "success",
-            "duration": 775,
-            "client": "Pass Through"
-        },
         "@version": "1",
-        "@timestamp": "2020-03-03T14:59:31.540Z",
-        "tags": [
-            "openlog"
-        ],
+        "@timestamp": getDate('8m'),
         "circuitPath": [
             {
                 "filters": [
@@ -152,100 +142,115 @@ module.exports = [
             }
         },
         "correlationId": "c8705e5ecc00adca32be7472",
-        "timestampOriginal": getDate('8m'),
         "transactionSummary": {
-            "serviceContexts": [
-                {
-                    "monitor": true,
-                    "service": "Petstore HTTP",
-                    "method": "findPetsByStatus",
-                    "status": "success",
-                    "duration": 775,
-                    "client": "Pass Through"
-                }
-            ],
+            "serviceContext":
+            {
+                "monitor": true,
+                "service": "Petstore HTTP",
+                "method": "findPetsByStatus",
+                "status": "success",
+                "duration": 775,
+                "client": "Pass Through"
+            }
+            ,
             "path": "/v2/pet/findByStatus",
             "protocolSrc": "8065",
             "status": "success",
             "protocol": "https"
         }
     },
+    // Healthcheck policy with ID: 4e645e5e4600bb590c881179
     {
-        "transactionSummaryContext": null,
+        "log": {
+            "file": {
+                "path": "/var/log/work/group-2_instance-1_traffic.log"
+            },
+            "offset": 20867173
+        },
+        "tags": [
+            "beats_input_raw_event"
+        ],
+        "ecs": {
+            "version": "1.5.0"
+        },
+        "agent": {
+            "type": "filebeat",
+            "hostname": "b16e7c6b2be4",
+            "name": "Filebeat Gateway",
+            "id": "e1b8bbae-78b8-43ef-9b91-647a9ca1e424",
+            "version": "7.8.0",
+            "ephemeral_id": "6d5aa448-a23c-4ad6-a136-a0ca0daa07d7"
+        },
         "correlationId": "4e645e5e4600bb590c881179",
         "circuitPath": [
             {
-                "policy": "Health Check",
                 "execTime": 0,
+                "policy": "Health Check",
                 "filters": [
                     {
+                        "type": "ChangeMessageFilter",
+                        "espk": "DEFAULT_PRIMARY_VordelGateway_7.7.0:-1095086795812854131",
                         "execTime": 0,
-                        "status": "Pass",
-                        "class": "com.vordel.circuit.conversion.ChangeMessageFilter",
                         "name": "Set Message",
-                        "filterTime": 1583244366351,
-                        "espk": "DEFAULT_PRIMARY_VordelGateway_7.7.0:3321373268751955789",
-                        "type": "ChangeMessageFilter"
+                        "class": "com.vordel.circuit.conversion.ChangeMessageFilter",
+                        "filterTime": 1594837160744,
+                        "status": "Pass"
                     },
                     {
-                        "execTime": 0,
-                        "status": "Pass",
                         "type": "ReflectFilter",
+                        "espk": "DEFAULT_PRIMARY_VordelGateway_7.7.0:-4282446533257395104",
+                        "execTime": 0,
+                        "name": "Reflect",
                         "class": "com.vordel.circuit.net.ReflectFilter",
-                        "filterTime": 1583244366351,
-                        "espk": "DEFAULT_PRIMARY_VordelGateway_7.7.0:4710537086861623998",
-                        "name": "Reflect"
+                        "filterTime": 1594837160744,
+                        "status": "Pass"
                     }
                 ]
             }
         ],
+        "processInfo": {
+            "hostname": "api-env",
+            "groupName": "QuickStart Group",
+            "serviceName": "QuickStart Server",
+            "version": "7.7.20200130",
+            "serviceId": "instance-1",
+            "domainId": "ed992442-c363-4d36-963a-9e6314b0f421",
+            "groupId": "group-2"
+        },
+        "@timestamp": "2020-07-15T18:19:20.744Z",
         "@version": "1",
-        "tags": [
-            "openlog"
-        ],
+        "logtype": "openlog",
         "transactionSummary": {
-            "serviceContexts": [],
             "path": "/healthcheck",
+            "protocol": "http",
+            "serviceContexts": [],
             "protocolSrc": "8080",
-            "status": "success",
-            "protocol": "http"
+            "status": "success"
         },
         "transactionElements": {
             "leg0": {
-                "duration": 3,
-                "finalStatus": "Pass",
+                "duration": 1,
                 "protocolInfo": {
-                    "recvHeader": "GET /healthcheck HTTP/1.1\r\nHost: api-env:8080\r\nUser-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/60.0\r\nAccept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\r\nAccept-Language: en-US,en;q=0.5\r\nAccept-Encoding: gzip, deflate\r\nConnection: keep-alive\r\nUpgrade-Insecure-Requests: 1\r\nPragma: no-cache\r\nCache-Control: no-cache\r\n\r\n",
-                    "sentHeader": "HTTP/1.1 200 OK\r\nDate: Tue, 03 Mar 2020 14:06:06 GMT\r\nServer: Gateway\r\nConnection: close\r\nX-CorrelationID: Id-4e645e5e4600bb590c881179 0\r\nAccept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\r\nAccept-Language: en-US,en;q=0.5\r\nCache-Control: no-cache\r\nHost: api-env:8080\r\nPragma: no-cache\r\nUpgrade-Insecure-Requests: 1\r\nUser-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/60.0\r\nContent-Type: text/xml\r\n\r\n",
+                    "recvHeader": "GET /healthcheck HTTP/1.1\r\nHost: api-env:8080\r\nUser-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101 Firefox/78.0\r\nAccept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8\r\nAccept-Language: en-US,en;q=0.5\r\nAccept-Encoding: gzip, deflate\r\nConnection: keep-alive\r\nCookie: _ga=GA1.1.177509375.1593442001; iconSize=16x16; portal.logintypesso=false; portal.demo=off; portal.isgridSortIgnoreCase=on; layout_type=table; cookie_pressed_153=false; portal.slate.api=no; portal.slate.dev=no\r\nUpgrade-Insecure-Requests: 1",
                     "http": {
-                        "statusText": "OK",
-                        "status": 200,
-                        "method": "GET",
-                        "bytesReceived": 366,
                         "wafStatus": 0,
-                        "bytesSent": 464,
+                        "bytesReceived": 563,
                         "localPort": "8080",
-                        "remoteName": "192.168.65.145",
+                        "method": "GET",
+                        "statusText": "OK",
+                        "remotePort": "62131",
+                        "bytesSent": 661,
+                        "localAddr": "192.168.65.129",
                         "uri": "/healthcheck",
-                        "remotePort": "40578",
-                        "remoteAddr": "192.168.65.145",
-                        "localAddr": "192.168.65.145"
-                    }
+                        "remoteName": "192.168.65.1",
+                        "remoteAddr": "192.168.65.1",
+                        "status": 200
+                    },
+                    "sentHeader": "HTTP/1.1 200 OK\r\nDate: Wed, 15 Jul 2020 18:19:20 GMT\r\nServer: Gateway\r\nConnection: close\r\nX-CorrelationID: Id-a8480f5f4d2d6bdc093f6b6d 0\r\nAccept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8\r\nAccept-Language: en-US,en;q=0.5\r\nCookie: _ga=GA1.1.177509375.1593442001; iconSize=16x16; portal.logintypesso=false; portal.demo=off; portal.isgridSortIgnoreCase=on; layout_type=table; cookie_pressed_153=false; portal.slate.api=no; portal.slate.dev=no\r\nHost: api-env:8080\r\nUpgrade-Insecure-Requests: 1\r\nUser-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101 Firefox/78.0\r\nContent-Type: text/xml"
                 },
-                "leg": 0
+                "finalStatus": "Pass"
             }
-        },
-        "timestampOriginal": getDate('65m'),
-        "processInfo": {
-            "groupName": "QuickStart Group",
-            "hostname": "api-env",
-            "serviceName": "QuickStart Server",
-            "groupId": "group-2",
-            "version": "7.7.20200130",
-            "serviceId": "instance-1",
-            "domainId": "8064faa2-54d2-42aa-b549-af5a0b289284"
-        },
-        "@timestamp": "2020-03-03T14:16:56.280Z"
+        }
     },
     {
         "transactionElements": {
@@ -275,9 +280,7 @@ module.exports = [
             }
         },
         "@version": "1",
-        "transactionSummaryContext": null,
         "correlationId": "bb30715e5300e189d1da43fc",
-        "timestampOriginal": getDate('30000h'),
         "circuitPath": [
             {
                 "execTime": 1,
@@ -317,13 +320,10 @@ module.exports = [
             "path": "/healthcheck",
             "status": "success",
             "protocol": "http",
-            "serviceContexts": [],
+            "serviceContext": null,
             "protocolSrc": "8080"
         },
-        "@timestamp": "2020-03-17T20:19:20.945Z",
-        "tags": [
-            "openlog"
-        ],
+        "@timestamp": getDate('30000h'),
         "processInfo": {
             "groupId": "group-2",
             "serviceId": "instance-1",
@@ -334,6 +334,7 @@ module.exports = [
             "domainId": "8064faa2-54d2-42aa-b549-af5a0b289284"
         }
     },
+    // Test without circuit path information
     {
         "transactionElements": {
             "leg0": {
@@ -376,6 +377,7 @@ module.exports = [
             "hostname": "api-env"
         }
     },
+    // API Manager Protection Policy
     {
         "transactionElements": {
             "leg0": {
@@ -547,10 +549,6 @@ module.exports = [
                 ]
             }
         ],
-        "tags": [
-            "openlog"
-        ],
-        "timestampOriginal": "2020-03-17T11:23:06.838Z",
         "processInfo": {
             "groupName": "QuickStart Group",
             "serviceName": "QuickStart Server",

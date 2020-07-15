@@ -2,15 +2,6 @@ const getDate = require('../../util');
 
 module.exports = [
 {
-		"timestampOriginal": "2020-07-03T15:55:48.333Z",
-		"transactionSummaryContext": {
-			"monitor": true,
-			"service": "ARS ToDo API",
-			"client": "Pass Through",
-			"status": "success",
-			"duration": 383,
-			"method": "Get-all-todo-items"
-		},
 		"@version": "1",
 		"@timestamp": "2020-07-03T15:56:11.597Z",
 		"transactionElements": {
@@ -170,7 +161,7 @@ module.exports = [
 		"transactionSummary": {
 			"status": "success",
 			"protocol": "https",
-			"serviceContexts": [
+			"serviceContext": 
 				{
 					"monitor": true,
 					"service": "ARS ToDo API",
@@ -179,14 +170,11 @@ module.exports = [
 					"duration": 383,
 					"method": "Get-all-todo-items"
 				}
-			],
+			,
 			"protocolSrc": "8065",
 			"path": "/ars/api/todos"
 		},
 		"correlationId": "0455ff5e82267be8182a553d",
-		"tags": [
-			"openlog"
-		],
 		"processInfo": {
 			"hostname": "api-env",
 			"serviceId": "instance-1",
