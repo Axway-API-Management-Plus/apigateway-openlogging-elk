@@ -80,7 +80,7 @@ services:
       - 5044:5044
     volumes:
       - ${PWD}/logstash/pipeline/pipeline.conf:/usr/share/logstash/pipeline/pipeline.conf
-      - ${PWD}/logstash/pipeline/config/traffic_details_index_template.json:/usr/share/logstash/config/traffic_details_index_template.json.json
+      - ${PWD}/logstash/config/traffic_details_index_template.json:/usr/share/logstash/config/traffic_details_index_template.json.json
     command: logstash --path.config /usr/share/logstash/pipeline/pipeline.conf --pipeline.batch.size 20 --pipeline.workers 1 --log.level info
     depends_on:
       - elasticsearch1
