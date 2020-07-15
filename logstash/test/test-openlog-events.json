@@ -26,6 +26,7 @@
             "transactionElements": {
               "leg0": {
                 "duration": 20,
+                "leg" : 0,
                 "serviceName": "Petstore",
                 "operation": "getInventory",
                 "finalStatus": "Pass",
