@@ -143,18 +143,18 @@
 			"method": "Execute",
 			"parameters": [
 				{
-					"name": "code",
-					"type": "string",
-					"value": "\"let index = 'logstash-openlog';\\n  if(data.config.testElasticIndex) {\\n    index = data.config.testElasticIndex;\\n  }\\n  return index;\"",
-					"metaName": "code",
-					"metaDescription": "A JavaScript function body. Supports `await` and returning promises"
-				},
-				{
 					"name": "data",
 					"type": "jsonpath",
 					"value": "$",
 					"metaName": "data",
 					"metaDescription": "The value to apply as the `data` argument to the JavaScript code. For objects and arrays, `data` is passed by reference."
+				},
+				{
+					"name": "code",
+					"type": "string",
+					"value": "\"let index = 'apigw-traffic-*';\\n  if(data.config.testElasticIndex) {\\n    index = data.config.testElasticIndex;\\n  }\\n  return index;\"",
+					"metaName": "code",
+					"metaDescription": "A JavaScript function body. Supports `await` and returning promises"
 				}
 			],
 			"outputs": {
