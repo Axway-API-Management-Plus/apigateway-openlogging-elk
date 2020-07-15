@@ -1,6 +1,6 @@
 {
     "index_patterns": [
-        "*openlog*"
+        "apigw-traffic-details-*"
     ],
     "settings": {
         "number_of_shards": 5
