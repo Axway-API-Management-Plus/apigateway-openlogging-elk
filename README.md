@@ -13,8 +13,8 @@ Each API-Gateway instance is writing, [if configured](#enable-open-traffic-event
 
 Once the data is indexed by Elasticsearch it can be used by different clients. This process allows almost realtime monitoring of incoming requests. It takes around 5 seconds until a request is available in Elasticsearch.
 
-## Option 1 - Using the existing Traffic-Monitor
-One option is to use the existing API-Gateway Traffic-Monitor. That means, you use the same tooling as of today, but the underlying implementation of the Traffic-Monitor API is now pointing to Elasticsearch instead of the internal OPSDB hosted by each API-Gateway instance. This improves performance damatically, as Elasticsearch can scale across multiple machines if required and other dashboards can be created for instance with Kibana.  
+## Using the existing Traffic-Monitor
+Use the existing API-Gateway Traffic-Monitor. That means, you use the same tooling as of today, but the underlying implementation of the Traffic-Monitor API is now pointing to Elasticsearch instead of the internal OPSDB hosted by each API-Gateway instance. This improves performance damatically, as Elasticsearch can scale across multiple machines if required and other dashboards can be created for instance with Kibana.  
 The glue between Elasticsearch and the API-Gateway Traffic-Monitor is an [API-Builder project](./elk-traffic-monitor-api), that is exposing the same Traffic-Monitor API, but it is implemented using Elasticsearch instead of the OPSDB. The API-Builder is available as a ready to use Docker-Image and preconfigured in the docker-compose file.  
 Optionally you can import the API-Builder API into your API-Management system to apply additional security and by that secure access to your Elasticsearch instance.  
 
@@ -22,27 +22,6 @@ Finally, the Admin-Node-Manager has to be [configured](#configure-the-admin-node
 
 API-Builder exposing Traffic-Monitor API:  
 [![Traffic-Monitor API](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/workflows/Traffic-Monitor%20API/badge.svg)](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/actions)
-
-## Option 2 - Loginspector
-The Loginspector is a new separated user-interface with very basic set of functionalities. As part of the project the Loginspector is activated by default when using `docker-compose up -d`. If you don't wanna use it, it can be disabled by commenting out the following lines in the docker-compose.yml file:
-```yaml
-  nginx:
-    image: nginx:1.17.6
-    ports:
-      - 8888:90
-    volumes:
-      - ${PWD}/nginx/www:/usr/share/nginx/html
-      - ${PWD}/nginx/conf:/etc/nginx
-    depends_on:
-      - elasticsearch1
-    networks:
-      - elastic
-      - ingress
-```
-The Log-Inspector is accessible on the following URL: `http://hostname-to-your-docker-machine:8888/logspector.html`
-
-![Log-Inspector][img5]  
-
 
 ## Prerequisites
 For a simple deployment the prerequisites are very simple as all services can be started as a Docker-Container. In order to start all components in PoC-Like-Mode you just need:
