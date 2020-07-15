@@ -34,7 +34,7 @@
 	"nodes": {
 		"http.1": {
 			"type": "nodehandler://axway-flow/http",
-			"name": "Set HTTP Response",
+			"name": "Set Trace response",
 			"method": "setresponse",
 			"parameters": [
 				{
@@ -90,7 +90,7 @@
 				{
 					"name": "sort",
 					"type": "string",
-					"value": "\"@timestamp:desc\"",
+					"value": "\"@timestamp:asc\"",
 					"metaName": "sort",
 					"metaDescription": "A comma-separated list of <field>:<direction> pairs."
 				}
@@ -115,7 +115,7 @@
 		},
 		"javascript.1": {
 			"type": "nodehandler://@axway/api-builder-plugin-fn-javascript/javascript",
-			"name": "Format response",
+			"name": "Format Trace response",
 			"method": "Execute",
 			"parameters": [
 				{
@@ -153,7 +153,7 @@
 		},
 		"javascript.2": {
 			"type": "nodehandler://@axway/api-builder-plugin-fn-javascript/javascript",
-			"name": "Build ES query",
+			"name": "Build Trace ES query",
 			"method": "Execute",
 			"parameters": [
 				{
@@ -213,7 +213,7 @@
 		},
 		"javascript.3": {
 			"type": "nodehandler://@axway/api-builder-plugin-fn-javascript/javascript",
-			"name": "Check Params",
+			"name": "Check Trace Params",
 			"method": "Execute",
 			"parameters": [
 				{
@@ -280,7 +280,7 @@
 		},
 		"javascript.4": {
 			"type": "nodehandler://@axway/api-builder-plugin-fn-javascript/javascript",
-			"name": "Define Index",
+			"name": "Define Trace Index",
 			"method": "Execute",
 			"parameters": [
 				{

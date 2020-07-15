@@ -34,7 +34,7 @@
 	"nodes": {
 		"http.1": {
 			"type": "nodehandler://axway-flow/http",
-			"name": "Set HTTP Response",
+			"name": "Set Search response",
 			"method": "setresponse",
 			"parameters": [
 				{
@@ -63,7 +63,7 @@
 		},
 		"elasticsearch.1": {
 			"type": "nodehandler://@axway-api-builder-ext/api-builder-plugin-fn-elasticsearch/elasticsearch",
-			"name": "Search",
+			"name": "Query ES for Search",
 			"method": "search",
 			"parameters": [
 				{
@@ -106,7 +106,7 @@
 		},
 		"javascript.1": {
 			"type": "nodehandler://@axway/api-builder-plugin-fn-javascript/javascript",
-			"name": "Format result",
+			"name": "Format Search result",
 			"method": "Execute",
 			"parameters": [
 				{
@@ -149,7 +149,7 @@
 		},
 		"javascript.2": {
 			"type": "nodehandler://@axway/api-builder-plugin-fn-javascript/javascript",
-			"name": "Add All filters",
+			"name": "Add All search filters",
 			"method": "Execute",
 			"parameters": [
 				{
@@ -300,7 +300,7 @@
 		},
 		"javascript.8": {
 			"type": "nodehandler://@axway/api-builder-plugin-fn-javascript/javascript",
-			"name": "Define index",
+			"name": "Define index for search",
 			"method": "Execute",
 			"parameters": [
 				{
@@ -336,7 +336,7 @@
 		},
 		"javascript.10": {
 			"type": "nodehandler://@axway/api-builder-plugin-fn-javascript/javascript",
-			"name": "Init variables",
+			"name": "Init search variables",
 			"method": "Execute",
 			"parameters": [
 				{
@@ -372,7 +372,7 @@
 		},
 		"javascript.21": {
 			"type": "nodehandler://@axway/api-builder-plugin-fn-javascript/javascript",
-			"name": "Handle filter",
+			"name": "Handle search filter",
 			"method": "Execute",
 			"parameters": [
 				{

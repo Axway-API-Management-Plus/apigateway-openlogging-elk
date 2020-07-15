@@ -7,6 +7,9 @@
     },
     "mappings": {
         "properties": {
+            "correlationId": {
+                "type": "keyword"
+            },
             "processInfo.serviceId": {
                 "type": "keyword"
             },
