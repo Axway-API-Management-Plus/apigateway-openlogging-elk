@@ -12,7 +12,6 @@
         {
           "@timestamp": "2020-07-13T09:41:03.205Z",
           "correlationId": "000000000000000000000000",
-          "entrytype": "trace",
           "level": "ERROR",
           "logtype": "trace",
           "message": "failed to flush dirty page to ops DB: No such file or directory. open 'conf/opsdb.d/000001b7.idx' failed: cannot open index file 439: cannot flush page {\"file\":439,\"page\":5}"
@@ -28,7 +27,6 @@
         {
           "@timestamp": "2020-07-13T15:11:52.189Z",
           "correlationId": "000000000000000000000000",
-          "entrytype": "trace",
           "level": "INFO",
           "logtype": "trace",
           "message": "Management Service - Pipe client disconnected"
