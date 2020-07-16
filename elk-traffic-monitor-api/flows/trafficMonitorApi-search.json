@@ -86,6 +86,13 @@
 					"value": "\"@timestamp:desc\"",
 					"metaName": "sort",
 					"metaDescription": "A comma-separated list of <field>:<direction> pairs."
+				},
+				{
+					"name": "size",
+					"type": "jsonpath",
+					"value": "$.params.count",
+					"metaName": "size",
+					"metaDescription": "Defines the number of hits to return. Defaults to 10."
 				}
 			],
 			"outputs": {
