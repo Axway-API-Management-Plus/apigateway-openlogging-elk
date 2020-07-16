@@ -81,7 +81,7 @@ services:
     volumes:
       - ${PWD}/logstash/pipeline/pipeline.conf:/usr/share/logstash/pipeline/pipeline.conf
       - ${PWD}/logstash/config/traffic_details_index_template.json:/usr/share/logstash/config/traffic_details_index_template.json
-    command: logstash --path.config /usr/share/logstash/pipeline/pipeline.conf --pipeline.batch.size 20 --log.level info
+    command: logstash --path.config /usr/share/logstash/pipeline/pipeline.conf --pipeline.batch.size 400 --log.level info
     depends_on:
       - elasticsearch1
     networks:
