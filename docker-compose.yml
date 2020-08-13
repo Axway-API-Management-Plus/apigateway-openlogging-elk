@@ -2,7 +2,7 @@ version: '3.7'
 services:
   # The core component
   elasticsearch1:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.8.0
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.8.1
     container_name: elasticsearch1
     environment:
       - "ES_JAVA_OPTS=-Xms750M -Xmx750M"
@@ -29,7 +29,7 @@ services:
 
   # This is optional, but good to have to perform manual queries and create custom dashboards
   kibana:
-    image: docker.elastic.co/kibana/kibana:7.8.0
+    image: docker.elastic.co/kibana/kibana:7.8.1
     container_name: kibana
     environment:
       SERVER_NAME: localhost
@@ -52,7 +52,7 @@ services:
 
   # Supposed to run side-by-side with the API-Gateway to watch the Open-Traffic Event files and send event to Logstash
   filebeat:
-    image: docker.elastic.co/beats/filebeat:7.8.0
+    image: docker.elastic.co/beats/filebeat:7.8.1
     command: --strict.perms=false
     environment:
       - setup.kibana.host=kibana:5601
@@ -70,7 +70,7 @@ services:
 
   # Is receiving events from Filebeat and does pre-processing
   logstash:
-    image: docker.elastic.co/logstash/logstash:7.8.0
+    image: docker.elastic.co/logstash/logstash:7.8.1
     links:
       - elasticsearch1
     environment:
