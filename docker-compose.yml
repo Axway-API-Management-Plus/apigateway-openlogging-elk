@@ -94,6 +94,7 @@ services:
       - elasticsearch1
     environment:
       - ELASTIC_NODE=http://elasticsearch1:9200
+      #- LOG_LEVEL=debug
     ports:
       - 8889:8080
     depends_on:

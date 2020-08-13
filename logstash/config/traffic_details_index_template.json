@@ -122,6 +122,20 @@
             "transactionElements.leg4.duration": { "type": "integer" },
             "transactionElements.leg4.finalStatus": { "type": "keyword" },
 
+            "transactionSummary.status": {
+                "type": "keyword"
+            },
+            "transactionSummary.protocol": {
+                "type": "keyword"
+            },
+            "transactionSummary.protocolSrc": {
+                "type": "integer"
+            },
+
+            "transactionSummary.path": {
+                "type": "text"
+            },
+
             "transactionSummary.serviceContext.service": {
                 "type": "text",
                 "fields": {

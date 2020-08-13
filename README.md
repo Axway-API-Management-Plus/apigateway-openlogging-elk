@@ -136,11 +136,20 @@ Make sure, the Filebeat Harvester is started on the Open-Traffic-Files:
 ```
 INFO	log/harvester.go:251	Harvester started for file: /var/log/work/group-2_instance-1_traffic.log
 ```
-The following error means, Logstash is not running or reachable:
+The following error means, Logstash is not running or reachable (Or just not yet fully started):
 ```
 ERROR	pipeline/output.go:100	Failed to connect to backoff(async(tcp://logstash:5044)): lookup logstash on 127.0.0.11:53: no such host
 ```
-General note: You don't see Filebeat telling you, when it is successfully processing your log-files. When the Harvester process is started and you don't see any errors, you can assume your files are processed.
+General note: You don't see Filebeat telling you, when it is successfully processing your log-files. When the Harvester process is started and you don't see any errors, you can assume your files are processed. 
+If the Filebeat-Harvester doesn't start, you may validate that the Open-Traffic-Event log files are visible by checking the following directory within the running container:
+```
+ls -l /var/log/work
+-rw-rw-r--. 1 filebeat filebeat  2941509 Aug 13 12:38 group-2_instance-1_traffic.log
+-rw-rw-r--. 1 filebeat filebeat 20972249 Jul  7 19:32 group-2_instance-1_traffic_2020-07-07-1.log
+-rw-rw-r--. 1 filebeat filebeat 20972436 Jul  8 18:08 group-2_instance-1_traffic_2020-07-08-1.log
+-rw-rw-r--. 1 filebeat filebeat 20972005 Jul 17 07:32 group-2_instance-1_traffic_2020-07-17-1.log
+
+```
 
 ### Check Logstash processing
 Logstash write to Stdout, hence you can view information just with:
@@ -165,7 +174,7 @@ When Logstash is successfully started you should see the following:
 [INFO ][logstash.agent           ] Pipelines running {:count=>2, :running_pipelines=>[:main, :".monitoring-logstash"], :non_running_pipelines=>[]}
 [INFO ][logstash.agent           ] Successfully started Logstash API endpoint {:port=>9600}
 ```
-Once, Logstash is successfully processing data, you see them flying by as JSON-Payload in the log output.
+
 
 ### Check Elasticsearch processing
 It takes a while until Elasticsearch is finally started and reports it with the following line: 
@@ -191,13 +200,24 @@ docker logs apigateway-openlogging-elk_elk-traffic-monitor-api_1_3fbba4deea37 --
 server started on port 8080
 ```
 #### Check requests from Admin-Node-Manager
-When using the API-Gateway Traffic-Monitor and having the Admin-Node-Manager re-configured you see how API-Builder is processing the requests:
+When using the API-Gateway Traffic-Monitor to monitor requests and having the Admin-Node-Manager re-configured you should see how API-Builder is processing the requests:
 ```
 Request {"method":"GET","url":"/api/elk/v1/api/router/service/instance-1/ops/search?format=json&field=leg&value=0&count=1000&ago=10m&protocol=http","headers":{"host":"localhost:8889","max-forwards":"20","via":"1.0 api-env (Gateway)","accept":"application/json","accept-language":"en-US,en;q=0.5","cookie":"cookie_pressed_153=false; t3-admin-tour-firstshow=1; VIDUSR=1584691147-TE1M3vI9BFWgkA%3d%3d; layout_type=table; portal.logintypesso=false; portal.demo=off; portal.isgridSortIgnoreCase=on; 6e7e1bb1dd446d4cd36889414ccb4cb7=8g9p3kh27t1se22lu6avkmu0a1; joomla_user_state=logged_in; 220b750abfbc8d2f2f878161bab0ab65=62gr71dkre858nc0gjldri18gt","csrf-token":"8E96374767C47BFADC9C606FF969D7CF56FB3F9523E41B34F3B3B269F7302646","referer":"https://api-env:8090/","user-agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:74.0) Gecko/20100101 Firefox/74.0","x-requested-with":"XMLHttpRequest","connection":"close","x-correlationid":"Id-fd7c745ebfaed039b2155481 1"},"remoteAddress":"::ffff:172.25.0.1","remotePort":55916}
 Response {"statusCode":200,"headers":{"server":"API Builder/4.25.0","request-id":"35fb859d-00b0-404b-97e6-b549db17f84c","x-xss-protection":"1; mode=block","x-frame-options":"DENY","surrogate-control":"no-store","cache-control":"no-store, no-cache, must-revalidate, proxy-revalidate","pragma":"no-cache","expires":"0","x-content-type-options":"nosniff","start-time":"1584692477587","content-type":"application/json; charset=utf-8","response-time":"408","content-md5":"e306ea2d930a3b80f0e91a29131d520b","content-length":"267","etag":"W/\"10b-2N+JsHuxDxMVKhJR1A8GuNGnKDQ\"","vary":"Accept-Encoding"}}
 ```
+
+If you do not see any requests arriving in the API builder, the ANM may not be able to reach the API builder listen socket.
+It is important to know that traffic information will still appear in this case, because in this case the OPSDB will be used. You should therefore check the ANM trace log.
+```
+tail -f /opt/Axway/APIM/apigateway/trace/nodemanageronapi-env_20200813000000.trc
+```
+In case you see the following message logged, please check the API-Builder process is running and reachable from the ANM.
+```
+logged Failure at 08.13.2020 05:46:09,730 with log description: Failed in calling policy shortcut
+```
+
 #### Check queries send to ElasticSearch
-In oder to see the queries that are send to ElasticSearch by API-Builder you need to run the Docker-Container with `LOG_LEVEL=debug`. This gives you in the console of the API-Builder the following output:  
+In oder to see queries that are send to ElasticSearch by API-Builder you need to run the Docker-Container with `LOG_LEVEL=debug`. You can activate debug in the docker-compose.yml. This gives you in the console of the API-Builder the following output:  
 ```
 Using elastic search query body: {"index":"logstash-openlog","body":{"query":{"bool":{"must":[{"range":{"timestampOriginal":{"gt":1587541496568}}},{"term":{"processInfo.serviceId":"instance-1"}}]}}},"size":"1000","sort":""}
 ```
