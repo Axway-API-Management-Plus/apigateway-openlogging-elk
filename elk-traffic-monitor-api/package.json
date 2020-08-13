@@ -29,18 +29,18 @@
 	"homepage": "https://github.com/cwiechmann/apigateway-openlogging-elk",
 	"dependencies": {
 		"@axway-api-builder-ext/api-builder-plugin-fn-elasticsearch": "^1.0.3",
-		"@axway/api-builder-plugin-fn-base64": "^2.1.3",
-		"@axway/api-builder-plugin-fn-javascript": "^1.2.5",
-		"@axway/api-builder-plugin-fn-json": "^2.0.15",
-		"@axway/api-builder-plugin-fn-mustache": "^1.0.5",
-		"@axway/api-builder-plugin-fn-restclient": "^2.0.21",
-		"@axway/api-builder-plugin-fn-swagger": "^2.7.4",
-		"@axway/api-builder-runtime": "^4.27.10"
+		"@axway/api-builder-plugin-fn-base64": "^2.1.5",
+		"@axway/api-builder-plugin-fn-javascript": "^1.2.7",
+		"@axway/api-builder-plugin-fn-json": "^2.0.16",
+		"@axway/api-builder-plugin-fn-mustache": "^1.0.6",
+		"@axway/api-builder-plugin-fn-restclient": "^2.0.22",
+		"@axway/api-builder-plugin-fn-swagger": "^2.7.8",
+		"@axway/api-builder-runtime": "^4.32.2"
 	},
 	"devDependencies": {
-		"@axway/api-builder-admin": "^1.16.2",
+		"@axway/api-builder-admin": "^1.21.0",
 		"chai": "^4.2.0",
-		"mocha": "^7.1.2"
+		"mocha": "^7.2.0"
 	},
 	"scripts": {
 		"start": "node .",
