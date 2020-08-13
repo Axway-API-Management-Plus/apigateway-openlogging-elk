@@ -109,7 +109,7 @@ Of course, the components can also run on different machines or on a Docker-Orch
 
 ### Stop local Elasticsearch cluster
 ````
-docker-compose down
+docker-compose down 
 ````
 
 ### Securing API-Builder Traffic-Monitor API
