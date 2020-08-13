@@ -75,7 +75,7 @@ The compare attribute filter should look like this:
   ![Use Callback][img4]  
 
 :point_right: It is recommended to disable the audit log for Failure transaction to avoid unneeded log messages in the ANM trace file:  
-![Use Callback][img4]  
+![Use Callback][img9]  
 You may add a custom Success-Message (e.g. `Used ElasticSearch API`) is you like.
   
 After you have saved, copy the configuration files from your local *Policy Studio* project (path on Linux: `/home/<user>/apiprojects/\<project-name\>`) back the configuration to the Admin-Node-Manager configuration (`\<install-dir\>/apigateway/conf/fed`) and restarted it. The Admin-Node-Manager will use the API provided by API-Builder to query the Elasticsearch API to serve the specified request-types.  
