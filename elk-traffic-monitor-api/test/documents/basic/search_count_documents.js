@@ -58,7 +58,6 @@ module.exports = [
             "serviceId": "instance-1"
         },
         "@timestamp": getDate('15m'),
-        "@version": "1",
         "logtype": "openlog",
         "transactionSummary": {
             "path": "/favicon.ico",
@@ -141,7 +140,6 @@ module.exports = [
             "serviceId": "instance-1"
         },
         "@timestamp": getDate('120h'),
-        "@version": "1",
         "logtype": "openlog",
         "transactionSummary": {
             "path": "/petstore/v2/pet/findByStatus",
@@ -234,7 +232,6 @@ module.exports = [
             "groupId": "group-2"
         },
         "@timestamp": getDate('65m'),
-        "@version": "1",
         "logtype": "openlog",
         "transactionSummary": {
             "path": "/healthcheck",
@@ -328,7 +325,6 @@ module.exports = [
             "serviceId": "instance-1"
         },
         "@timestamp": getDate('3000h'),
-        "@version": "1",
         "logtype": "openlog",
         "transactionSummary": {
             "path": "/healthcheck",
@@ -446,7 +442,6 @@ module.exports = [
             "serviceId": "instance-1"
         },
         "@timestamp": getDate('8m'),
-        "@version": "1",
         "logtype": "openlog",
         "circuitPath": [
             {
@@ -623,7 +618,6 @@ module.exports = [
             "serviceId": "instance-1"
         },
         "@timestamp": getDate('8m'),
-        "@version": "1",
         "logtype": "openlog",
         "circuitPath": [
             {
@@ -800,7 +794,6 @@ module.exports = [
             "serviceId": "instance-1"
         },
         "@timestamp": getDate('8m'),
-        "@version": "1",
         "logtype": "openlog",
         "circuitPath": [
             {
@@ -977,7 +970,6 @@ module.exports = [
             "serviceId": "instance-1"
         },
         "@timestamp": getDate('8m'),
-        "@version": "1",
         "logtype": "openlog",
         "circuitPath": [
             {
@@ -1154,7 +1146,6 @@ module.exports = [
             "serviceId": "instance-1"
         },
         "@timestamp": getDate('8m'),
-        "@version": "1",
         "logtype": "openlog",
         "circuitPath": [
             {
@@ -1331,7 +1322,6 @@ module.exports = [
             "serviceId": "instance-1"
         },
         "@timestamp": getDate('8m'),
-        "@version": "1",
         "logtype": "openlog",
         "circuitPath": [
             {
@@ -1508,7 +1498,6 @@ module.exports = [
             "serviceId": "instance-1"
         },
         "@timestamp": getDate('8m'),
-        "@version": "1",
         "logtype": "openlog",
         "circuitPath": [
             {
@@ -1685,7 +1674,6 @@ module.exports = [
             "serviceId": "instance-1"
         },
         "@timestamp": getDate('8m'),
-        "@version": "1",
         "logtype": "openlog",
         "circuitPath": [
             {
@@ -1862,7 +1850,6 @@ module.exports = [
             "serviceId": "instance-1"
         },
         "@timestamp": getDate('8m'),
-        "@version": "1",
         "logtype": "openlog",
         "circuitPath": [
             {

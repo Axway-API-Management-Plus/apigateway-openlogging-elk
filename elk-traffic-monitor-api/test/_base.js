@@ -71,19 +71,25 @@ async function sendToElasticsearch(elasticConfig, index, dataset) {
 	const client = new Client({
 		node: elasticConfig.node
 	});
+	debugger;
 	const mappingConfig = JSON.parse(fs.readFileSync('../logstash/config/traffic_details_index_template.json')).mappings;
-	await client.indices.create({
+	const createdIndexResponse = await client.indices.create({
 		index: index,
 		body: {
 			mappings: mappingConfig
 		}
 	}, { ignore: [400] });
+	if (createdIndexResponse.statusCode!=200) {
+		throw Error(`Error creating index: ${index} with template: ${createdIndexResponse.body.error.reason}`);
+	}
+
 
 	const body = dataset.flatMap(doc => [{ index: { _index: index } }, doc]);
 	const { body: bulkResponse } = await client.bulk({ refresh: true, body });
 
 	if (bulkResponse.errors) {
-		console.log(JSON.stringify(bulkResponse.errors));
+		console.log(JSON.stringify(bulkResponse.items[0].index.error));
+		throw Error(`Error inserting test document into index: ${index}`);
 	}
 	console.log(`Inserted test data into index: ${index}`);
 }

@@ -26,7 +26,8 @@ describe('Endpoints', function () {
 				sendToElasticsearch(elasticConfig, indexName, entryset)
 				.then(() => {
 					resolve();
-				});
+				})
+				.catch(err => reject(err));
 			});
 		});
 	});
@@ -402,7 +403,7 @@ describe('Endpoints', function () {
 				expect(body.data[0].uri).to.equals('/healthcheck');
 			});
 		});
-		it('[Endpoint-0019] should return results with a wirldcard path.', () => {
+		it('[Endpoint-0019] should return results with a wildcard path.', () => {
 			const auth = {
 				user: server.apibuilder.config.apikey || 'test',
 				password: ''

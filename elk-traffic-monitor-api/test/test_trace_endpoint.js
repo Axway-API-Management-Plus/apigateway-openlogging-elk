@@ -25,7 +25,8 @@ describe('Traffic Monitor API', function () {
 				sendToElasticsearch(elasticConfig, indexName, entryset)
 				.then(() => {
 					resolve();
-				});
+				})
+				.catch(err => reject(err));
 			});
 		});
 	});

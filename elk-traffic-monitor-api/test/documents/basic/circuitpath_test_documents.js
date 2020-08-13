@@ -12,7 +12,6 @@ module.exports = [
             "groupId": "group-2",
             "serviceName": "QuickStart Server"
         },
-        "@version": "1",
         "@timestamp": getDate('8m'),
         "circuitPath": [
             {
@@ -218,7 +217,6 @@ module.exports = [
             "groupId": "group-2"
         },
         "@timestamp": "2020-07-15T18:19:20.744Z",
-        "@version": "1",
         "logtype": "openlog",
         "transactionSummary": {
             "path": "/healthcheck",
@@ -279,7 +277,6 @@ module.exports = [
                 "finalStatus": "Error"
             }
         },
-        "@version": "1",
         "correlationId": "bb30715e5300e189d1da43fc",
         "circuitPath": [
             {
@@ -361,7 +358,6 @@ module.exports = [
             }
         },
         "correlationId": "edb1705e7d0168a34d74bfba",
-        "@version": "1",
         "circuitPath": [],
         "tags": [
             "openlog"
@@ -405,7 +401,6 @@ module.exports = [
             }
         },
         "correlationId": "1ab3705e920284217e6aae73",
-        "@version": "1",
         "circuitPath": [
             {
                 "execTime": 1,

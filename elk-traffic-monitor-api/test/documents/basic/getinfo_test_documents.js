@@ -2,7 +2,6 @@ const getDate = require('../../util');
 
 module.exports = [
 {
-		"@version": "1",
 		"@timestamp": "2020-07-03T15:56:11.597Z",
 		"transactionElements": {
 			"leg1": {

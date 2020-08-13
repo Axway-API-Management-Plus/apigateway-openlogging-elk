@@ -25,7 +25,6 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "             Trace Filter {",
-		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:49.790Z",
 
 		"tags": [
@@ -60,7 +59,6 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 api.application.quota.warn.percent {",
-		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:49.790Z",
 
 		"tags": [
@@ -95,7 +93,6 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Value:     80",
-		"@version": "1",
 		"@timestamp": "2020-07-02T10:37:49.790Z",
 
 		"tags": [
@@ -130,7 +127,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Type:      java.lang.String",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:49.790Z",
 
 		"tags": [
@@ -165,7 +162,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 }",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:49.790Z",
 
 		"tags": [
@@ -200,7 +197,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 api.custom.properties {",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:49.794Z",
 
 		"tags": [
@@ -235,7 +232,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Value:     (not set)",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:49.794Z",
 
 		"tags": [
@@ -270,7 +267,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Type:      (unknown)",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:49.794Z",
 
 		"tags": [
@@ -305,7 +302,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 }",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:49.798Z",
 
 		"tags": [
@@ -340,7 +337,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 api.id {",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:49.814Z",
 
 		"tags": [
@@ -375,7 +372,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Value:     3cdd611b-b433-49b9-b65a-f21bd3c3ddbb",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:49.814Z",
 
 		"tags": [
@@ -410,7 +407,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Type:      java.lang.String",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:49.814Z",
 
 		"tags": [
@@ -445,7 +442,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 }",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.413Z",
 
 		"tags": [
@@ -480,7 +477,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 api.method.id {",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.413Z",
 
 		"tags": [
@@ -515,7 +512,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Value:     a49c8c50-a70c-44af-b63a-3bef6a5d6325",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.413Z",
 
 		"tags": [
@@ -550,7 +547,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Type:      java.lang.String",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.413Z",
 
 		"tags": [
@@ -585,7 +582,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 }",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.413Z",
 
 		"tags": [
@@ -620,7 +617,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 api.method.name {",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.413Z",
 
 		"tags": [
@@ -655,7 +652,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Value:     Get-all-todo-items",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.413Z",
 
 		"tags": [
@@ -690,7 +687,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Type:      java.lang.String",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.413Z",
 
 		"tags": [
@@ -725,7 +722,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 }",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.413Z",
 
 		"tags": [
@@ -760,7 +757,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 api.method.path {",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.413Z",
 
 		"tags": [
@@ -795,7 +792,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Value:     /todos",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.413Z",
 
 		"tags": [
@@ -830,7 +827,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Type:      java.lang.String",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.413Z",
 
 		"tags": [
@@ -865,7 +862,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 }",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.413Z",
 
 		"tags": [
@@ -900,7 +897,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 api.name {",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.414Z",
 
 		"tags": [
@@ -935,7 +932,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Value:     ARS ToDo API",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.414Z",
 
 		"tags": [
@@ -970,7 +967,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Type:      java.lang.String",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.414Z",
 
 		"tags": [
@@ -1005,7 +1002,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 }",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.414Z",
 
 		"tags": [
@@ -1040,7 +1037,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 api.path {",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.414Z",
 
 		"tags": [
@@ -1075,7 +1072,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Value:     /ars/pups",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.414Z",
 
 		"tags": [
@@ -1110,7 +1107,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Type:      java.lang.String",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.414Z",
 
 		"tags": [
@@ -1145,7 +1142,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 }",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.414Z",
 
 		"tags": [
@@ -1180,7 +1177,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 api.system.quota.warn.percent {",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.414Z",
 
 		"tags": [
@@ -1215,7 +1212,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Value:     80",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.415Z",
 
 		"tags": [
@@ -1250,7 +1247,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Type:      java.lang.String",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.415Z",
 
 		"tags": [
@@ -1285,7 +1282,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 }",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.415Z",
 
 		"tags": [
@@ -1320,7 +1317,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 apigw.maintenance.ongoing {",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.428Z",
 
 		"tags": [
@@ -1355,7 +1352,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Value:     false",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.428Z",
 
 		"tags": [
@@ -1390,7 +1387,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Type:      java.lang.String",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.428Z",
 
 		"tags": [
@@ -1425,7 +1422,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 }",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.429Z",
 
 		"tags": [
@@ -1460,7 +1457,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 apiruntime.apiproxy {",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.429Z",
 
 		"tags": [
@@ -1495,7 +1492,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "\", discriminator: \"null\", oneOf: \"null\", allOf: \"null\", anyOf: \"null\"}",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.429Z",
 
 		"tags": [
@@ -1530,7 +1527,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Type:      com.vordel.apiportal.api.portal.model.swagger.v11ex.Swagger",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.429Z",
 
 		"tags": [
@@ -1565,7 +1562,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 }",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.429Z",
 
 		"tags": [
@@ -1600,7 +1597,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 apiruntime.apiproxy.method {",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.429Z",
 
 		"tags": [
@@ -1635,7 +1632,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Value:     com.vordel.apiportal.api.portal.model.proxy.VirtualizedAPIMethod@28d7f311",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.429Z",
 
 		"tags": [
@@ -1670,7 +1667,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Type:      com.vordel.apiportal.api.portal.model.proxy.VirtualizedAPIMethod",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.429Z",
 
 		"tags": [
@@ -1705,7 +1702,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 }",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.429Z",
 
 		"tags": [
@@ -1740,7 +1737,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 apiruntime.authN {",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.430Z",
 
 		"tags": [
@@ -1775,7 +1772,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.430Z",
 
 		"tags": [
@@ -1810,7 +1807,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Type:      com.vordel.coreapireg.runtime.AuthResult",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.430Z",
 
 		"tags": [
@@ -1845,7 +1842,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 }",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.430Z",
 
 		"tags": [
@@ -1880,7 +1877,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 authentication.subject.id {",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.430Z",
 
 		"tags": [
@@ -1915,7 +1912,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Value:     Pass Through",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.430Z",
 
 		"tags": [
@@ -1950,7 +1947,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Type:      java.lang.String",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.432Z",
 
 		"tags": [
@@ -1985,7 +1982,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 }",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.432Z",
 
 		"tags": [
@@ -2020,7 +2017,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 content.body {",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.432Z",
 
 		"tags": [
@@ -2055,7 +2052,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Value:     (not set)",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.433Z",
 
 		"tags": [
@@ -2090,7 +2087,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Type:      (unknown)",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.433Z",
 
 		"tags": [
@@ -2125,7 +2122,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 }",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.433Z",
 
 		"tags": [
@@ -2160,7 +2157,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 destinationURL {",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.433Z",
 
 		"tags": [
@@ -2195,7 +2192,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Value:     http://79f6a7dbf03ba9dc3fcdda2486d26adfab68584e.cloudapp-enterprise.appcelerator.com/api/todos",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.433Z",
 
 		"tags": [
@@ -2230,7 +2227,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Type:      java.lang.String",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.433Z",
 
 		"tags": [
@@ -2265,7 +2262,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 }",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.434Z",
 
 		"tags": [
@@ -2300,7 +2297,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 dwe.protocol {",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.434Z",
 
 		"tags": [
@@ -2335,7 +2332,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Value:     com.vordel.dwe.http.HTTPProtocol@63708e4",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.434Z",
 
 		"tags": [
@@ -2370,7 +2367,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Type:      com.vordel.dwe.http.HTTPProtocol",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.434Z",
 
 		"tags": [
@@ -2405,7 +2402,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 }",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.434Z",
 
 		"tags": [
@@ -2440,7 +2437,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 http.client {",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.434Z",
 
 		"tags": [
@@ -2475,7 +2472,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Value:     com.vordel.dwe.http.ServerTransaction@7e8df70f",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.434Z",
 
 		"tags": [
@@ -2510,7 +2507,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Type:      com.vordel.dwe.http.ServerTransaction",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.434Z",
 
 		"tags": [
@@ -2545,7 +2542,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 }",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.434Z",
 
 		"tags": [
@@ -2580,7 +2577,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 http.content.headers {",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.436Z",
 
 		"tags": [
@@ -2615,7 +2612,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Value:     {}",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.436Z",
 
 		"tags": [
@@ -2650,7 +2647,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Type:      com.vordel.mime.HeaderSet",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.436Z",
 
 		"tags": [
@@ -2685,7 +2682,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 }",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.448Z",
 
 		"tags": [
@@ -2720,7 +2717,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 http.headers {",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.448Z",
 
 		"tags": [
@@ -2755,7 +2752,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Value:     com.vordel.common.util.BinaryEscapeFilter@5ffbb220",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.448Z",
 
 		"tags": [
@@ -2790,7 +2787,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Type:      com.vordel.mime.HeaderSet",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.448Z",
 
 		"tags": [
@@ -2825,7 +2822,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 }",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.448Z",
 
 		"tags": [
@@ -2860,7 +2857,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 http.querystring {",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.448Z",
 
 		"tags": [
@@ -2895,7 +2892,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Value:     com.vordel.mime.QueryStringHeaderSet@48238db5",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.448Z",
 
 		"tags": [
@@ -2930,7 +2927,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Type:      com.vordel.mime.QueryStringHeaderSet",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.448Z",
 
 		"tags": [
@@ -2965,7 +2962,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 }",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.448Z",
 
 		"tags": [
@@ -3000,7 +2997,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 http.raw.querystring {",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.449Z",
 
 		"tags": [
@@ -3035,7 +3032,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Value:     (not set)",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.449Z",
 
 		"tags": [
@@ -3070,7 +3067,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Type:      (unknown)",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.449Z",
 
 		"tags": [
@@ -3105,7 +3102,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 }",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.449Z",
 
 		"tags": [
@@ -3140,7 +3137,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 http.request.cipher {",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.449Z",
 
 		"tags": [
@@ -3175,7 +3172,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Value:     ECDHE-RSA-AES128-GCM-SHA256",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.449Z",
 
 		"tags": [
@@ -3210,7 +3207,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Type:      java.lang.String",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.449Z",
 
 		"tags": [
@@ -3245,7 +3242,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 }",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.449Z",
 
 		"tags": [
@@ -3280,7 +3277,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 http.request.clientaddr {",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.449Z",
 
 		"tags": [
@@ -3315,7 +3312,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Value:     192.168.233.1",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.450Z",
 
 		"tags": [
@@ -3350,7 +3347,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Type:      java.net.InetSocketAddress",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.450Z",
 
 		"tags": [
@@ -3385,7 +3382,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 }",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.450Z",
 
 		"tags": [
@@ -3420,7 +3417,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 http.request.clientcert {",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.450Z",
 
 		"tags": [
@@ -3455,7 +3452,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Value:     (not set)",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.450Z",
 
 		"tags": [
@@ -3490,7 +3487,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Type:      (unknown)",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.450Z",
 
 		"tags": [
@@ -3525,7 +3522,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 }",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.450Z",
 
 		"tags": [
@@ -3560,7 +3557,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 http.request.hostname {",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.450Z",
 
 		"tags": [
@@ -3595,7 +3592,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Value:     192.168.233.1",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.450Z",
 
 		"tags": [
@@ -3630,7 +3627,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Type:      java.lang.String",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.450Z",
 
 		"tags": [
@@ -3665,7 +3662,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 }",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.450Z",
 
 		"tags": [
@@ -3700,7 +3697,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 http.request.incoming.path {",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.450Z",
 
 		"tags": [
@@ -3735,7 +3732,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Value:     /ars/pups/todos",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.451Z",
 
 		"tags": [
@@ -3770,7 +3767,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Type:      java.lang.String",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.451Z",
 
 		"tags": [
@@ -3805,7 +3802,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 }",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.451Z",
 
 		"tags": [
@@ -3840,7 +3837,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 http.request.ip {",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.451Z",
 
 		"tags": [
@@ -3875,7 +3872,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Value:     192.168.233.137",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.451Z",
 
 		"tags": [
@@ -3910,7 +3907,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Type:      java.lang.String",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.451Z",
 
 		"tags": [
@@ -3945,7 +3942,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 }",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.451Z",
 
 		"tags": [
@@ -3980,7 +3977,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 http.request.localaddr {",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.451Z",
 
 		"tags": [
@@ -4015,7 +4012,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Value:     /192.168.233.137:8065",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.451Z",
 
 		"tags": [
@@ -4050,7 +4047,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Type:      java.net.InetSocketAddress",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.452Z",
 
 		"tags": [
@@ -4085,7 +4082,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 }",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.452Z",
 
 		"tags": [
@@ -4120,7 +4117,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 http.request.method {",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.452Z",
 
 		"tags": [
@@ -4155,7 +4152,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Value:     GET",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.464Z",
 
 		"tags": [
@@ -4190,7 +4187,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Type:      java.lang.String",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.464Z",
 
 		"tags": [
@@ -4225,7 +4222,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 }",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.464Z",
 
 		"tags": [
@@ -4260,7 +4257,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 http.request.path {",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.464Z",
 
 		"tags": [
@@ -4295,7 +4292,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Value:     /ars/pups/todos",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.465Z",
 
 		"tags": [
@@ -4330,7 +4327,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Type:      java.lang.String",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.465Z",
 
 		"tags": [
@@ -4365,7 +4362,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 }",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.465Z",
 
 		"tags": [
@@ -4400,7 +4397,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 http.request.protocol {",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.465Z",
 
 		"tags": [
@@ -4435,7 +4432,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Value:     https",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.465Z",
 
 		"tags": [
@@ -4470,7 +4467,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Type:      java.lang.String",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.465Z",
 
 		"tags": [
@@ -4505,7 +4502,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 }",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.465Z",
 
 		"tags": [
@@ -4540,7 +4537,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 http.request.rawURI {",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.465Z",
 
 		"tags": [
@@ -4575,7 +4572,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Value:     /ars/pups/todos",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.465Z",
 
 		"tags": [
@@ -4610,7 +4607,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Type:      java.lang.String",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.465Z",
 
 		"tags": [
@@ -4645,7 +4642,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 }",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.465Z",
 
 		"tags": [
@@ -4680,7 +4677,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 http.request.rawURI.fragment {",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.465Z",
 
 		"tags": [
@@ -4715,7 +4712,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Value:     (not set)",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.466Z",
 
 		"tags": [
@@ -4750,7 +4747,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Type:      (unknown)",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.466Z",
 
 		"tags": [
@@ -4785,7 +4782,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 }",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.466Z",
 
 		"tags": [
@@ -4820,7 +4817,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 http.request.rawURI.path {",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.466Z",
 
 		"tags": [
@@ -4855,7 +4852,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Value:     /ars/pups/todos",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.466Z",
 
 		"tags": [
@@ -4890,7 +4887,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Type:      java.lang.String",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.466Z",
 
 		"tags": [
@@ -4925,7 +4922,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 }",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.467Z",
 
 		"tags": [
@@ -4960,7 +4957,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 http.request.rawURI.query {",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.467Z",
 
 		"tags": [
@@ -4995,7 +4992,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Value:     (not set)",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.467Z",
 
 		"tags": [
@@ -5030,7 +5027,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Type:      (unknown)",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.468Z",
 
 		"tags": [
@@ -5065,7 +5062,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 }",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.468Z",
 
 		"tags": [
@@ -5100,7 +5097,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 http.request.sni {",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.468Z",
 
 		"tags": [
@@ -5135,7 +5132,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Value:     api-env.demo.axway.com",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:37:55.485Z",
 
 		"tags": [
@@ -5170,7 +5167,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Type:      java.lang.String",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.335Z",
 
 		"tags": [
@@ -5205,7 +5202,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 }",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.335Z",
 
 		"tags": [
@@ -5240,7 +5237,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 http.request.uri {",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.335Z",
 
 		"tags": [
@@ -5275,7 +5272,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Value:     /ars/pups/todos",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.335Z",
 
 		"tags": [
@@ -5310,7 +5307,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Type:      java.net.URI",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.336Z",
 
 		"tags": [
@@ -5345,7 +5342,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 }",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.336Z",
 
 		"tags": [
@@ -5380,7 +5377,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 http.request.url {",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.336Z",
 
 		"tags": [
@@ -5415,7 +5412,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Value:     https://api-env.demo.axway.com:8065/ars/pups/todos",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.336Z",
 
 		"tags": [
@@ -5450,7 +5447,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Type:      java.net.URL",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.336Z",
 
 		"tags": [
@@ -5485,7 +5482,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 }",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.336Z",
 
 		"tags": [
@@ -5520,7 +5517,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 http.request.verb {",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.336Z",
 
 		"tags": [
@@ -5555,7 +5552,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Value:     GET",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.336Z",
 
 		"tags": [
@@ -5590,7 +5587,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Type:      java.lang.String",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.336Z",
 
 		"tags": [
@@ -5625,7 +5622,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 }",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.336Z",
 
 		"tags": [
@@ -5660,7 +5657,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 http.request.version {",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.336Z",
 
 		"tags": [
@@ -5695,7 +5692,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Value:     1.0",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.336Z",
 
 		"tags": [
@@ -5730,7 +5727,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Type:      java.lang.String",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.336Z",
 
 		"tags": [
@@ -5765,7 +5762,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 }",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.336Z",
 
 		"tags": [
@@ -5800,7 +5797,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 id {",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.336Z",
 
 		"tags": [
@@ -5835,7 +5832,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Value:     Id-f1aefd5e3501dd00a16eebc0",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.338Z",
 
 		"tags": [
@@ -5870,7 +5867,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Type:      java.lang.String",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.338Z",
 
 		"tags": [
@@ -5905,7 +5902,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 }",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.338Z",
 
 		"tags": [
@@ -5940,7 +5937,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 leg0 {",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.341Z",
 
 		"tags": [
@@ -5975,7 +5972,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.341Z",
 
 		"tags": [
@@ -6010,7 +6007,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Type:      com.vordel.vary.VariantObject",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.341Z",
 
 		"tags": [
@@ -6045,7 +6042,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 }",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.342Z",
 
 		"tags": [
@@ -6080,7 +6077,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 message.client.name {",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.342Z",
 
 		"tags": [
@@ -6115,7 +6112,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Value:     192.168.233.1",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.342Z",
 
 		"tags": [
@@ -6150,7 +6147,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Type:      java.lang.String",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.343Z",
 
 		"tags": [
@@ -6185,7 +6182,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 }",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.343Z",
 
 		"tags": [
@@ -6220,7 +6217,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 message.local.address {",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.343Z",
 
 		"tags": [
@@ -6255,7 +6252,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Value:     /192.168.233.137:8065",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.362Z",
 
 		"tags": [
@@ -6290,7 +6287,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Type:      java.net.InetSocketAddress",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.362Z",
 
 		"tags": [
@@ -6325,7 +6322,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 }",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.362Z",
 
 		"tags": [
@@ -6360,7 +6357,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 message.metrics.transaction {",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.362Z",
 
 		"tags": [
@@ -6395,7 +6392,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Value:     com.vordel.dwe.http.ServerTransaction@7e8df70f",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.362Z",
 
 		"tags": [
@@ -6430,7 +6427,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Type:      com.vordel.dwe.http.ServerTransaction",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.362Z",
 
 		"tags": [
@@ -6465,7 +6462,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 }",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.373Z",
 
 		"tags": [
@@ -6500,7 +6497,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 message.protocol.type {",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.373Z",
 
 		"tags": [
@@ -6535,7 +6532,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Value:     http",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.373Z",
 
 		"tags": [
@@ -6570,7 +6567,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Type:      java.lang.String",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.373Z",
 
 		"tags": [
@@ -6605,7 +6602,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 }",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.373Z",
 
 		"tags": [
@@ -6640,7 +6637,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 message.reception_date {",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.373Z",
 
 		"tags": [
@@ -6675,7 +6672,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Value:     Thu Jul 02 02:54:57 MST 2020",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.374Z",
 
 		"tags": [
@@ -6710,7 +6707,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Type:      java.util.Date",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.374Z",
 
 		"tags": [
@@ -6745,7 +6742,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 }",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.374Z",
 
 		"tags": [
@@ -6780,7 +6777,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 message.reception_time {",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.374Z",
 
 		"tags": [
@@ -6815,7 +6812,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Value:     1593683697922",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.374Z",
 
 		"tags": [
@@ -6850,7 +6847,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Type:      java.lang.Long",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.374Z",
 
 		"tags": [
@@ -6885,7 +6882,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 }",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.374Z",
 
 		"tags": [
@@ -6920,7 +6917,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 message.source {",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.374Z",
 
 		"tags": [
@@ -6955,7 +6952,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Value:     8065",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.374Z",
 
 		"tags": [
@@ -6990,7 +6987,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Type:      java.lang.String",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.375Z",
 
 		"tags": [
@@ -7025,7 +7022,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 }",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.375Z",
 
 		"tags": [
@@ -7060,7 +7057,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 message.uri {",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.375Z",
 
 		"tags": [
@@ -7095,7 +7092,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Value:     /ars/pups/todos",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.378Z",
 
 		"tags": [
@@ -7130,7 +7127,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Type:      java.net.URI",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.378Z",
 
 		"tags": [
@@ -7165,7 +7162,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 }",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.378Z",
 
 		"tags": [
@@ -7200,7 +7197,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 monitoring.enabled {",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.378Z",
 
 		"tags": [
@@ -7235,7 +7232,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Value:     true",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.378Z",
 
 		"tags": [
@@ -7270,7 +7267,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Type:      java.lang.Boolean",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.378Z",
 
 		"tags": [
@@ -7305,7 +7302,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 }",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.379Z",
 
 		"tags": [
@@ -7340,7 +7337,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 params.form {",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.379Z",
 
 		"tags": [
@@ -7375,7 +7372,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Value:     com.vordel.mime.QueryStringHeaderSet@76edcc7d",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.379Z",
 
 		"tags": [
@@ -7410,7 +7407,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Type:      com.vordel.mime.QueryStringHeaderSet",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.379Z",
 
 		"tags": [
@@ -7445,7 +7442,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 }",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.379Z",
 
 		"tags": [
@@ -7480,7 +7477,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 params.header {",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.379Z",
 
 		"tags": [
@@ -7515,7 +7512,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Value:     {}",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.379Z",
 
 		"tags": [
@@ -7550,7 +7547,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Type:      com.vordel.mime.HeaderSet",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.379Z",
 
 		"tags": [
@@ -7585,7 +7582,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 }",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.379Z",
 
 		"tags": [
@@ -7620,7 +7617,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 params.in.header {",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.379Z",
 
 		"tags": [
@@ -7655,7 +7652,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "}",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.379Z",
 
 		"tags": [
@@ -7690,7 +7687,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Type:      com.vordel.mime.HeaderSet",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.379Z",
 
 		"tags": [
@@ -7725,7 +7722,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 }",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.380Z",
 
 		"tags": [
@@ -7760,7 +7757,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 params.path {",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.380Z",
 
 		"tags": [
@@ -7795,7 +7792,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Value:     {}",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.380Z",
 
 		"tags": [
@@ -7830,7 +7827,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Type:      java.util.HashMap",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.380Z",
 
 		"tags": [
@@ -7865,7 +7862,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 }",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.380Z",
 
 		"tags": [
@@ -7900,7 +7897,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 params.query {",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.380Z",
 
 		"tags": [
@@ -7935,7 +7932,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Value:     com.vordel.mime.QueryStringHeaderSet@67497820",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.381Z",
 
 		"tags": [
@@ -7970,7 +7967,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Type:      com.vordel.mime.QueryStringHeaderSet",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.381Z",
 
 		"tags": [
@@ -8005,7 +8002,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 }",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.381Z",
 
 		"tags": [
@@ -8040,7 +8037,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 resolved.to.path {",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.431Z",
 
 		"tags": [
@@ -8075,7 +8072,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Value:     /",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.431Z",
 
 		"tags": [
@@ -8110,7 +8107,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Type:      java.lang.String",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:00.431Z",
 
 		"tags": [
@@ -8145,7 +8142,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 }",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:09.569Z",
 
 		"tags": [
@@ -8180,7 +8177,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 rest {",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:09.590Z",
 
 		"tags": [
@@ -8215,7 +8212,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:09.590Z",
 
 		"tags": [
@@ -8250,7 +8247,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Type:      com.vordel.coreapireg.runtime.AuthResult",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:09.590Z",
 
 		"tags": [
@@ -8285,7 +8282,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 }",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:09.591Z",
 
 		"tags": [
@@ -8320,7 +8317,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 service.name {",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:09.591Z",
 
 		"tags": [
@@ -8355,7 +8352,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Value:     ARS ToDo API",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:09.591Z",
 
 		"tags": [
@@ -8390,7 +8387,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Type:      java.lang.String",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:09.591Z",
 
 		"tags": [
@@ -8425,7 +8422,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 }",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:09.591Z",
 
 		"tags": [
@@ -8460,7 +8457,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 soap.request.method {",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:09.591Z",
 
 		"tags": [
@@ -8495,7 +8492,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Value:     Get-all-todo-items",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:09.591Z",
 
 		"tags": [
@@ -8530,7 +8527,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Type:      java.lang.String",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:09.591Z",
 
 		"tags": [
@@ -8565,7 +8562,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 }",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:09.591Z",
 
 		"tags": [
@@ -8600,7 +8597,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 statistics {",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:09.591Z",
 
 		"tags": [
@@ -8635,7 +8632,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Value:     com.vordel.statistics.MessageMetrics@65a1bc5b",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:09.591Z",
 
 		"tags": [
@@ -8670,7 +8667,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                     Type:      com.vordel.statistics.MessageMetrics",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:09.591Z",
 
 		"tags": [
@@ -8705,7 +8702,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "                 }",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:09.592Z",
 
 		"tags": [
@@ -8740,7 +8737,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "             }",
-		"@version": "1",
+
 		"@timestamp": "2020-07-02T10:38:09.592Z",
 
 		"tags": [
@@ -8777,7 +8774,7 @@ module.exports = [
 			"beats_input_codec_plain_applied",
 			"trace"
 		],
-		"@version": "1",
+
 		"agent": {
 			"id": "ac847a41-9cce-406e-94e0-4a0efc90d749",
 			"version": "7.4.0",
@@ -8812,7 +8809,7 @@ module.exports = [
 			"beats_input_codec_plain_applied",
 			"trace"
 		],
-		"@version": "1",
+
 		"agent": {
 			"id": "ac847a41-9cce-406e-94e0-4a0efc90d749",
 			"version": "7.4.0",
