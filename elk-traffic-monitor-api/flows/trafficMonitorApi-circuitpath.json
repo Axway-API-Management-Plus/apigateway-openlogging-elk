@@ -79,14 +79,14 @@
 					"name": "status",
 					"type": "number",
 					"value": "200",
-					"metaName": "status",
+					"metaName": "Status",
 					"metaDescription": "The HTTP status code"
 				},
 				{
 					"name": "body",
 					"type": "jsonpath",
 					"value": "$.result",
-					"metaName": "body",
+					"metaName": "Body",
 					"metaDescription": "The response payload"
 				}
 			],
@@ -116,7 +116,7 @@
 					"type": "string",
 					"value": "\"let result = [];\\n  //console.log(data);\\n  \\n  if(typeof data.hits[0] != \\\"undefined\\\"){\\n  \\tresult = data.hits[0]._source.circuitPath;\\n  }\\n  \\n  return result;\"",
 					"metaName": "code",
-					"metaDescription": "A JavaScript function body. Supports `await` and returning promises"
+					"metaDescription": "A JavaScript function body. Supports `await` and returning promises."
 				}
 			],
 			"outputs": {
@@ -154,7 +154,7 @@
 					"type": "string",
 					"value": "\"let index = 'apigw-traffic-details*';\\n  if(data.config.testElasticIndex) {\\n    index = data.config.testElasticIndex;\\n  }\\n  return index;\"",
 					"metaName": "code",
-					"metaDescription": "A JavaScript function body. Supports `await` and returning promises"
+					"metaDescription": "A JavaScript function body. Supports `await` and returning promises."
 				}
 			],
 			"outputs": {
@@ -192,7 +192,7 @@
 					"type": "string",
 					"value": "\"let elasticQuery = ({\\n    \\\"bool\\\": {\\n      \\\"must\\\": {\\n        \\\"term\\\": {\\n          \\\"correlationId\\\": data.params.correlationID\\n        }\\n      },\\n      \\\"filter\\\": {\\n        \\t\\\"term\\\": {\\n          \\t\\t\\\"processInfo.serviceId\\\": data.params.serviceID\\n        \\t}\\n      \\t}\\n    }\\n});\\n\\n  return elasticQuery;\"",
 					"metaName": "code",
-					"metaDescription": "A JavaScript function body. Supports `await` and returning promises"
+					"metaDescription": "A JavaScript function body. Supports `await` and returning promises."
 				}
 			],
 			"outputs": {
@@ -222,14 +222,14 @@
 					"name": "status",
 					"type": "number",
 					"value": "500",
-					"metaName": "status",
+					"metaName": "Status",
 					"metaDescription": "The HTTP status code"
 				},
 				{
 					"name": "body",
 					"type": "object",
 					"value": "{\n  \"errors\": [\n    {\n      \"code\": \"n.a\",\n      \"message\": \"error occurred\" \n    }\n  ]\n}",
-					"metaName": "body",
+					"metaName": "Body",
 					"metaDescription": "The response payload"
 				}
 			],

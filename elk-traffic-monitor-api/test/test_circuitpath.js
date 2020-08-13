@@ -1,6 +1,5 @@
 const { expect } = require('chai');
 const { startApiBuilder, stopApiBuilder, requestAsync, sendToElasticsearch, getRandomInt } = require('./_base');
-const fs = require('fs');
 
 describe('Traffic Monitor API', function () {
 	this.timeout(30000);

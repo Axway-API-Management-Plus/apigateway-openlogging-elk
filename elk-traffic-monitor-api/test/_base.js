@@ -1,6 +1,7 @@
 const APIBuilder = require('@axway/api-builder-runtime');
 const request = require('request');
 const { Client } = require('@elastic/elasticsearch');
+const fs = require('fs');
 
 /**
  * Start the API Builder server.
@@ -70,16 +71,11 @@ async function sendToElasticsearch(elasticConfig, index, dataset) {
 	const client = new Client({
 		node: elasticConfig.node
 	});
-
+	const mappingConfig = JSON.parse(fs.readFileSync('../logstash/config/traffic_details_index_template.json')).mappings;
 	await client.indices.create({
 		index: index,
 		body: {
-			mappings: {
-				properties: {
-					'processInfo.serviceId': { type: 'keyword' },
-					'transactionElements.leg0.protocolInfo.http.remoteName': { type: 'keyword' }
-				}
-			}
+			mappings: mappingConfig
 		}
 	}, { ignore: [400] });
 

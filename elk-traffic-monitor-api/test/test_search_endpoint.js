@@ -1,6 +1,5 @@
 const { expect } = require('chai');
 const { startApiBuilder, stopApiBuilder, requestAsync, sendToElasticsearch, getRandomInt } = require('./_base');
-const fs = require('fs');
 const getDate = require('./util');
 
 describe('Endpoints', function () {
