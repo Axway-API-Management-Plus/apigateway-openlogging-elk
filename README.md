@@ -73,6 +73,10 @@ The compare attribute filter should look like this:
 ![Connect to ES API][img7]
 - Insert the created policy as a callback policy (filter: Shortcut filter) into the main policy: `Protect Management Interfaces` and wire it like shown here:  
   ![Use Callback][img4]  
+
+:point_right: It is recommended to disable the audit log for Failure transaction to avoid unneeded log messages in the ANM trace file:  
+![Use Callback][img4]  
+You may add a custom Success-Message (e.g. `Used ElasticSearch API`) is you like.
   
 After you have saved, copy the configuration files from your local *Policy Studio* project (path on Linux: `/home/<user>/apiprojects/\<project-name\>`) back the configuration to the Admin-Node-Manager configuration (`\<install-dir\>/apigateway/conf/fed`) and restarted it. The Admin-Node-Manager will use the API provided by API-Builder to query the Elasticsearch API to serve the specified request-types.  
 
@@ -211,10 +215,6 @@ It is important to know that traffic information will still appear in this case,
 ```
 tail -f /opt/Axway/APIM/apigateway/trace/nodemanageronapi-env_20200813000000.trc
 ```
-In case you see the following message logged, please check the API-Builder process is running and reachable from the ANM.
-```
-logged Failure at 08.13.2020 05:46:09,730 with log description: Failed in calling policy shortcut
-```
 
 #### Check queries send to ElasticSearch
 In oder to see queries that are send to ElasticSearch by API-Builder you need to run the Docker-Container with `LOG_LEVEL=debug`. You can activate debug in the docker-compose.yml. This gives you in the console of the API-Builder the following output:  
@@ -233,5 +233,7 @@ This helps you to further analyze if ElasticSearch is returning the correct info
 [img6]: imgs/IsmanagedbyElasticsearchAPI.png
 [img7]: imgs/connect-to-elasticsearch-api.png
 [img8]: imgs/kibana-dev-tool-sample-query.png
+[img9]: imgs/policy-shortcut-disable-failure.png
+
 
 [1]: https://docs.axway.com/bundle/axway-open-docs/page/docs/apim_administration/apigtw_admin/admin_open_logging/index.html#configure-open-traffic-event-logging

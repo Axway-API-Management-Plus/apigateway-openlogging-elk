@@ -15,6 +15,7 @@ on:
 
 jobs:
   build:
+    if: "!contains(github.event.head_commit.message, 'skip ci')"
     env:
       workingDirectory: 'elk-traffic-monitor-api'
 
@@ -48,7 +49,7 @@ jobs:
         npm ci
         npm run build --if-present
         npm test
-    - name: Publish Docker image
+    - name: Publish Docker image (latest)
       uses: elgohr/Publish-Docker-Github-Action@2.13
       with:
         name: cwiechmann/elk-traffic-monitor-api
