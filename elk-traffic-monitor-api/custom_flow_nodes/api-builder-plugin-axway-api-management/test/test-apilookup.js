@@ -56,6 +56,17 @@ describe('Test API Lookup', () => {
 			expect(output).to.equal('error');
 		});
 
+		it('should follow the Error path if the API-Manager host cannot be reached/communicated', async () => {
+			// We just have NO mock to make this test
+			const { value, output } = await flowNode.lookupAPIDetails({
+				apiPath: '/v1/unkownAPI'
+			});
+
+			expect(value).to.be.instanceOf(Error);
+			expect(value.message).to.have.string(`Error sending request to API-Manager: unknown-host`);
+			expect(output).to.equal('error');
+		});
+
 		it('should error with an unknown API', async () => {
 			nock('https://mocked-api-gateway:8175').get('/api/portal/v1.3/proxies?field=path&op=eq&value=/v1/unkownAPI').reply(200, '[]');
 			const { value, output } = await flowNode.lookupAPIDetails({

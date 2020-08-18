@@ -29,7 +29,6 @@ async function lookupCurrentUser(params, options) {
 	const { logger } = options;
 	cache = options.pluginContext.userCache;
 	pluginConfig = options.pluginConfig;
-	debugger;
 	if (!requestHeaders) {
 		throw new Error('You must provide the requestHeaders originally sent to the ANM to this method.');
 	}
@@ -47,7 +46,6 @@ async function lookupCurrentUser(params, options) {
 		return cache.get(VIDUSR);
 	}
 	const user = {};
-	debugger;
 	user.loginName = await _getCurrentGWUser(VIDUSR);
 	user.gatewayManager = {isAdmin : false};
 	var permissions = await _getCurrentGWPermissions(VIDUSR, requestHeaders['csrf-token'], loginName);

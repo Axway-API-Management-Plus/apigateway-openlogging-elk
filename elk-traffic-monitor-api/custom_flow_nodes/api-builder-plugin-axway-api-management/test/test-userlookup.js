@@ -71,7 +71,6 @@ describe('Configuration parameter tests', () => {
 			plugin.setOptions({ validateOutputs: true });
 			flowNode = plugin.getFlowNode('axway-api-management');
 			expect(pluginConfig.apimanager.hostname).to.equal(pluginConfig.apigateway.hostname);
-			debugger;
 		});
 	});
 });
