@@ -94,6 +94,9 @@ services:
       - elasticsearch1
     environment:
       - ELASTIC_NODE=http://elasticsearch1:9200
+      - API_GATEWAY_HOSTNAME=${API_GATEWAY_HOSTNAME}
+      - API_MANAGER_USERNAME=${API_MANAGER_USERNAME}
+      - API_MANAGER_PASSWORD=${API_MANAGER_PASSWORD}
       #- LOG_LEVEL=debug
     ports:
       - 8889:8080

@@ -184,34 +184,38 @@ async function _getAPIProxy(apiPath) {
 
 async function sendRequest(options) {
 	return new Promise((resolve, reject) => {
-		var req = https.request(options, function (response) {
-			var chunks = [];
-			var statusCode = response.statusCode;
-			response.on("data", function (chunk) {
-				chunks.push(chunk);
-			});
+		try {
+			var req = https.request(options, function (response) {
+				var chunks = [];
+				var statusCode = response.statusCode;
+				response.on("data", function (chunk) {
+					chunks.push(chunk);
+				});
 
-			response.on("end", function () {
-				var body = Buffer.concat(chunks);
-				if (statusCode < 200 || statusCode > 299) {
-					reject(`Unexpected response for HTTP-Request. Response-Code: ${statusCode}`);
+				response.on("end", function () {
+					var body = Buffer.concat(chunks);
+					if (statusCode < 200 || statusCode > 299) {
+						reject(`Unexpected response for HTTP-Request. Response-Code: ${statusCode}`);
+						return;
+					}
+					const userResponse = body.toString();
+					if (!userResponse) {
+						resolve(userResponse);
+						return;
+					}
+					resolve(JSON.parse(userResponse));
 					return;
-				}
-				const userResponse = body.toString();
-				if (!userResponse) {
-					resolve(userResponse);
-					return;
-				}
-				resolve(JSON.parse(userResponse));
-				return;
-			});
+				});
 
-			response.on("error", function (error) {
-				reject(error);
-				return;
+				response.on("error", function (error) {
+					reject(error);
+					return;
+				});
 			});
-		});
-		req.end();
+			req.end();
+		} catch (ex) {
+			reject(error);
+		}
 	});
 }
 
