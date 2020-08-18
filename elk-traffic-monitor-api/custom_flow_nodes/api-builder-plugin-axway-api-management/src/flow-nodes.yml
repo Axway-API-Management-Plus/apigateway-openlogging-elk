@@ -30,13 +30,13 @@ flow-nodes:
             schema:
               type: object
       lookupAPIDetails:
-        name: Lookup an API
+        name: Lookup API
         description: Looks up the details of an API based on the given API-Path
         parameters:
           apiPath:
             name: Path of the API
             description: The Path of the API that should be looked up
-            required: false
+            required: true
             initialType: string
             schema:
               type: string
@@ -44,7 +44,7 @@ flow-nodes:
           next:
             name: Next
             description: The API-Proxy
-            context: $.user
+            context: $.api
             schema:
               type: object
           error:

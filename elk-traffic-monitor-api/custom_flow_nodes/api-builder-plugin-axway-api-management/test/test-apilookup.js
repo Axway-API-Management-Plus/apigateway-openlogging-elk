@@ -67,7 +67,7 @@ describe('Test API Lookup', () => {
 			expect(output).to.equal('error');
 		});
 
-		it('should result into the resolved API proxy details', async () => {
+		it('should return the resolved API proxy details (cache is tested as well)', async () => {
 			nock('https://mocked-api-gateway:8175').get('/api/portal/v1.3/proxies?field=path&op=eq&value=/v1/petstore').replyWithFile(200, './test/testReplies/apimanager/apiProxyFound.json');
 			nock('https://mocked-api-gateway:8175').get(`/api/portal/v1.3/organizations/439ec2bd-0350-459c-8df3-bb6d14da6bc8`).replyWithFile(200, './test/testReplies/apimanager/organizationAPIDevelopment.json');
 			
@@ -78,6 +78,12 @@ describe('Test API Lookup', () => {
 			expect(value.name).to.equal(`Petstore HTTPS`);
 			expect(value.path).to.equal(`/v1/petstore`);
 			expect(output).to.equal('next');
+			// Make sure the result is cached
+			nock.cleanAll();
+			// This re-run should be delivered out of the cache
+			await flowNode.lookupAPIDetails({ 
+				apiPath: '/v1/petstore'
+			});
 		});
 	});
 });

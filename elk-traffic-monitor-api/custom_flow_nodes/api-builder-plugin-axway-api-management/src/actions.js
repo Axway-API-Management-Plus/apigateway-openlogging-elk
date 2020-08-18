@@ -83,13 +83,14 @@ async function lookupAPIDetails(params, options) {
 	apiProxy = proxies[0]; // We just pick the first result
 	apiProxy.organizationName = await _getOrganizationName(apiProxy.organizationId);
 	// Remove a few properties we really don't need
-	apiProxy.corsProfiles = null;
-	apiProxy.securityProfiles = null;
-	apiProxy.authenticationProfiles = null;
-	apiProxy.inboundProfiles = null;
-	apiProxy.outboundProfiles = null;
-	apiProxy.serviceProfiles = null;
-	apiProxy.caCerts = null;
+	delete apiProxy.corsProfiles;
+	delete apiProxy.securityProfiles;
+	delete apiProxy.authenticationProfiles;
+	delete apiProxy.inboundProfiles;
+	delete apiProxy.outboundProfiles;
+	delete apiProxy.serviceProfiles;
+	delete apiProxy.caCerts;
+	if(cache.set(apiPath, apiProxy));
 	return apiProxy;
 }
 

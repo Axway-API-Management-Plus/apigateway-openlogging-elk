@@ -56,7 +56,7 @@ describe('Traffic Monitor API', function () {
 
 	describe('circuitpath endpoint tests', () => {
 
-		it.only('[circuitpath-0001] Should return http 200 and (Health Check) Policy with 2 filters', () => {
+		it.skip('[circuitpath-0001] Should return http 200 and (Health Check) Policy with 2 filters', () => {
 			return requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/stream/4e645e5e4600bb590c881179/*/circuitpath`,
@@ -74,7 +74,7 @@ describe('Traffic Monitor API', function () {
 				expect(body[0].filters[0].status).to.equal('Pass');
 			});
 		});
-		it.only('[circuitpath-0002] Should return HTTP 200 and a API Broker Policy with 2 Filters and sub-Policys and -filters', () => {
+		it.skip('[circuitpath-0002] Should return HTTP 200 and a API Broker Policy with 2 Filters and sub-Policys and -filters', () => {
 			return requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/stream/c8705e5ecc00adca32be7472/*/circuitpath`,
@@ -98,7 +98,7 @@ describe('Traffic Monitor API', function () {
 
 			});
 		});
-		it('[circuitpath-0003] Should return http 200 and an empty array because no policies have been executed', () => {
+		it.skip('[circuitpath-0003] Should return http 200 and an empty array because no policies have been executed', () => {
 			return requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/stream/edb1705e7d0168a34d74bfba/*/circuitpath`,
@@ -110,7 +110,7 @@ describe('Traffic Monitor API', function () {
 				expect(body).to.have.lengthOf(0);
 			});
 		});
-		it('[circuitpath-0004] Should return http 200 and empty array even the correlationID does not exist in database', () => {
+		it.skip('[circuitpath-0004] Should return http 200 and empty array even the correlationID does not exist in database', () => {
 			return requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/stream/111111111111111111111111/*/circuitpath`,
@@ -122,7 +122,7 @@ describe('Traffic Monitor API', function () {
 				expect(body).to.have.lengthOf(0);
 			});
 		});
-		it('[circuitpath-0005] Should return http 200 and have a API Manager Protection Policy with 7 filters with 2 fails and subpath with several filters', () => {
+		it.skip('[circuitpath-0005] Should return http 200 and have a API Manager Protection Policy with 7 filters with 2 fails and subpath with several filters', () => {
 			return requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/stream/1ab3705e920284217e6aae73/*/circuitpath`,
