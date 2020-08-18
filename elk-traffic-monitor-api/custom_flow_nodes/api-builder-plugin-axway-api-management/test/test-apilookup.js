@@ -66,7 +66,7 @@ describe('Test API Lookup', () => {
 			expect(output).to.equal('error');
 		});
 
-		it.only('should follow the Error path if the API-Manager host cannot be reached/communicated', async () => {
+		it('should follow the Error path if the API-Manager host cannot be reached/communicated', async () => {
 			// We just have NO mock to make this test
 			const { value, output } = await flowNode.lookupAPIDetails({
 				apiName: 'Unknown API', apiPath: '/v1/unkownAPI'
