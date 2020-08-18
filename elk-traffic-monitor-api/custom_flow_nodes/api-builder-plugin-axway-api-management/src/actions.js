@@ -163,7 +163,7 @@ async function _getManagerUser(user) {
 		method: 'GET',
 		hostname: pluginConfig.apimanager.hostname,
 		port: pluginConfig.apimanager.port,
-		path: `/api/portal/v1.3/users?field=loginName&op=eq&value=${user.loginName}&field=enabled&op=eq&value=true`,
+		path: `/api/portal/v1.3/users?field=loginName&op=eq&value=${user.loginName}&field=enabled&op=eq&value=enabled`,
 		headers: {
 			'Authorization': 'Basic ' + Buffer.from(pluginConfig.apimanager.username + ':' + pluginConfig.apimanager.password).toString('base64')
 		},
