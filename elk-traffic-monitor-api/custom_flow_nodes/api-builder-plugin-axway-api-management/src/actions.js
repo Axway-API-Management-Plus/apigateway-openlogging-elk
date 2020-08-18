@@ -46,19 +46,24 @@ async function lookupCurrentUser(params, options) {
 		return cache.get(VIDUSR);
 	}
 	const user = {};
+	logger.trace(`Trying to get current user based on VIDUSR: ${VIDUSR}`);
 	user.loginName = await _getCurrentGWUser(VIDUSR);
+	logger.trace(`Current user is: ${user.loginName}`);
 	user.gatewayManager = {isAdmin : false};
 	var permissions = await _getCurrentGWPermissions(VIDUSR, requestHeaders['csrf-token'], loginName);
 	if(permissions.includes("adminusers_modify")) {
 		user.gatewayManager.isAdmin = true;
+		logger.debug(`Current user is: '${user.loginName}' Is Gateway admin: ${user.gatewayManager.isAdmin}`);
 		return user;
 	}
+	logger.trace(`Trying to load API-Manager user using Login-Name: '${user.loginName}'`);
 	const users = await _getManagerUser(user);
 	if(!users || users.length == 0) {
 		throw new Error(`User: '${user.loginName}' not found in API-Manager.`);
 	}
 	user.apiManager = users[0];
 	user.apiManager.organizationName = await _getOrganizationName(user.apiManager.organizationId);
+	logger.debug(`User: '${user.loginName}' found in API-Manager. Organization ${user.apiManager.organizationName}`);
 	cache.set( VIDUSR, user);
 	return user;
 	//logger.info('Lookup user');

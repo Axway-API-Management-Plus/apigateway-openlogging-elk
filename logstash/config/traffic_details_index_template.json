@@ -168,6 +168,21 @@
                     }
                 },
                 "norms": false
+            },
+            "transactionSummary.serviceContext.appOrg": {
+                "type": "keyword"
+            },
+            "transactionSummary.serviceContext.apiOrg": {
+                "type": "keyword"
+            },
+            "transactionSummary.serviceContext.apiVersion": {
+                "type": "keyword"
+            },
+            "transactionSummary.serviceContext.apiDeprecated": {
+                "type": "boolean"
+            },
+            "transactionSummary.serviceContext.apiState": {
+                "type": "keyword"
             }
         }
     }

@@ -528,7 +528,11 @@ module.exports = [
                 "service": "Petstore",
                 "client": "4e8634ba-6762-45ca-bbe5-7ca4e99192ac",
                 "monitor": true,
-                "status": "success"
+                "status": "success",
+                "apiOrg": "Chris Org", 
+                "apiVersion": "1.0.5", 
+                "apiDeprecated": false, 
+                "apiState": "published"
             },
             "protocolSrc": "8065",
             "status": "success"
@@ -704,7 +708,11 @@ module.exports = [
                 "service": "Petstore",
                 "client": "4e8634ba-6762-45ca-bbe5-7ca4e99192ac",
                 "monitor": true,
-                "status": "success"
+                "status": "success",
+                "apiOrg": "API Development", 
+                "apiVersion": "1.0.5", 
+                "apiDeprecated": false, 
+                "apiState": "published"
             },
             "protocolSrc": "8065",
             "status": "success"
@@ -880,7 +888,11 @@ module.exports = [
                 "service": "Petstore",
                 "client": "4e8634ba-6762-45ca-bbe5-7ca4e99192ac",
                 "monitor": true,
-                "status": "success"
+                "status": "success",
+                "apiOrg": "API Development", 
+                "apiVersion": "1.0.5", 
+                "apiDeprecated": false, 
+                "apiState": "published"
             },
             "protocolSrc": "8065",
             "status": "success"
@@ -1056,7 +1068,11 @@ module.exports = [
                 "service": "Petstore",
                 "client": "4e8634ba-6762-45ca-bbe5-7ca4e99192ac",
                 "monitor": true,
-                "status": "success"
+                "status": "success",
+                "apiOrg": "API Development", 
+                "apiVersion": "1.0.5", 
+                "apiDeprecated": false, 
+                "apiState": "published"
             },
             "protocolSrc": "8065",
             "status": "success"
@@ -1232,7 +1248,11 @@ module.exports = [
                 "service": "Petstore",
                 "client": "4e8634ba-6762-45ca-bbe5-7ca4e99192ac",
                 "monitor": true,
-                "status": "success"
+                "status": "success",
+                "apiOrg": "Chris Org", 
+                "apiVersion": "1.0.5", 
+                "apiDeprecated": false, 
+                "apiState": "published"
             },
             "protocolSrc": "8065",
             "status": "success"
@@ -1408,7 +1428,11 @@ module.exports = [
                 "service": "Petstore",
                 "client": "4e8634ba-6762-45ca-bbe5-7ca4e99192ac",
                 "monitor": true,
-                "status": "success"
+                "status": "success",
+                "apiOrg": "API Development", 
+                "apiVersion": "1.0.5", 
+                "apiDeprecated": false, 
+                "apiState": "published"
             },
             "protocolSrc": "8065",
             "status": "success"
@@ -1584,7 +1608,11 @@ module.exports = [
                 "service": "Petstore",
                 "client": "4e8634ba-6762-45ca-bbe5-7ca4e99192ac",
                 "monitor": true,
-                "status": "success"
+                "status": "success",
+                "apiOrg": "API Development", 
+                "apiVersion": "1.0.5", 
+                "apiDeprecated": false, 
+                "apiState": "published"
             },
             "protocolSrc": "8065",
             "status": "success"
@@ -1760,7 +1788,11 @@ module.exports = [
                 "service": "Petstore",
                 "client": "4e8634ba-6762-45ca-bbe5-7ca4e99192ac",
                 "monitor": true,
-                "status": "success"
+                "status": "success",
+                "apiOrg": "API Development", 
+                "apiVersion": "1.0.5", 
+                "apiDeprecated": false, 
+                "apiState": "published"
             },
             "protocolSrc": "8065",
             "status": "success"
@@ -1936,7 +1968,11 @@ module.exports = [
                 "service": "Petstore",
                 "client": "4e8634ba-6762-45ca-bbe5-7ca4e99192ac",
                 "monitor": true,
-                "status": "success"
+                "status": "success",
+                "apiOrg": "API Development", 
+                "apiVersion": "1.0.5", 
+                "apiDeprecated": false, 
+                "apiState": "published"
             },
             "protocolSrc": "8065",
             "status": "success"

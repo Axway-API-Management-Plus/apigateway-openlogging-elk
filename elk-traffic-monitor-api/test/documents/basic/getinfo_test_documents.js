@@ -167,7 +167,11 @@ module.exports = [
 					"client": "Pass Through",
 					"status": "success",
 					"duration": 383,
-					"method": "Get-all-todo-items"
+					"method": "Get-all-todo-items",
+					"apiOrg": "API Development", 
+					"apiVersion": "1.0.5", 
+					"apiDeprecated": false, 
+					"apiState": "published"
 				}
 			,
 			"protocolSrc": "8065",

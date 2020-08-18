@@ -399,7 +399,7 @@
 				{
 					"name": "code",
 					"type": "string",
-					"value": "\"var queryFilters = data.queryFilters;\\n  data.fields.map(function(entry) {\\n    data.params.field.map(function(fieldEntry, index) {\\n      if(entry.fieldName === fieldEntry) {\\n        var queryType = entry.queryType;\\n        var queryLocation = entry.queryLocation;\\n        var value = data.params.value[index];\\n        var filter = {};\\n        var filterQuery = {};\\n        filterQuery[queryLocation] = value;\\n        filter[queryType] =  filterQuery;\\n        if(!data.user.gatewayManager.isAdmin) {\\n        }\\n        queryFilters.push(filter);\\n        return queryFilters;\\n      }\\n    });\\n  });\"",
+					"value": "\"var queryFilters = data.queryFilters;\\n  data.fields.map(function(entry) {\\n    data.params.field.map(function(fieldEntry, index) {\\n      if(entry.fieldName === fieldEntry) {\\n        var queryType = entry.queryType;\\n        var queryLocation = entry.queryLocation;\\n        var value = data.params.value[index];\\n        var filter = {};\\n        var filterQuery = {};\\n        filterQuery[queryLocation] = value;\\n        filter[queryType] =  filterQuery;\\n        queryFilters.push(filter);\\n        return queryFilters;\\n      }\\n    });\\n  });\"",
 					"metaName": "code",
 					"metaDescription": "A JavaScript function body. Supports `await` and returning promises."
 				}
@@ -410,7 +410,8 @@
 					"routes": [
 						"javascript.3",
 						"javascript.6",
-						"javascript.7"
+						"javascript.7",
+						"javascript.4"
 					],
 					"metaName": "Next"
 				},
@@ -450,6 +451,42 @@
 				}
 			},
 			"metaMethod": "Lookup current user"
+		},
+		"javascript.4": {
+			"type": "nodehandler://@axway/api-builder-plugin-fn-javascript/javascript",
+			"name": "Org-Admin filter",
+			"method": "Execute",
+			"parameters": [
+				{
+					"name": "data",
+					"type": "jsonpath",
+					"value": "$",
+					"metaName": "data",
+					"metaDescription": "The value to apply as the `data` argument to the JavaScript code. For objects and arrays, `data` is passed by reference."
+				},
+				{
+					"name": "code",
+					"type": "string",
+					"value": "\"var queryFilters = data.queryFilters;\\n  if(!data.user.gatewayManager.isAdmin) {\\n    var filter;\\n    if(data.user.apiManager.role == \\\"admin\\\") {\\n      filter = {\\n        exists: {\\n          \\\"field\\\" : \\\"transactionSummary.serviceContext\\\"\\n        }\\n      };\\n    } else {\\n      filter = {\\n        term: {\\n          \\\"transactionSummary.serviceContext.apiOrg\\\" : data.user.apiManager.organizationName\\n        }\\n      };\\n    }\\n    queryFilters.push(filter);\\n  }\\n  return queryFilters;\"",
+					"metaName": "code",
+					"metaDescription": "A JavaScript function body. Supports `await` and returning promises."
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.result",
+					"routes": [
+						"javascript.2"
+					],
+					"metaName": "Next"
+				},
+				"error": {
+					"context": "$.error",
+					"routes": [],
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Execute"
 		}
 	}
 }

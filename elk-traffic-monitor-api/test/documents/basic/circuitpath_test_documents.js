@@ -149,7 +149,11 @@ module.exports = [
                 "method": "findPetsByStatus",
                 "status": "success",
                 "duration": 775,
-                "client": "Pass Through"
+                "client": "Pass Through", 
+                "apiOrg": "Chris Org", 
+                "apiVersion": "1.0.5", 
+                "apiDeprecated": false, 
+                "apiState": "published" 
             }
             ,
             "path": "/v2/pet/findByStatus",
