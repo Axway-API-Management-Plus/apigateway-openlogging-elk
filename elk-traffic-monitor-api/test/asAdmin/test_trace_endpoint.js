@@ -1,5 +1,9 @@
 const { expect } = require('chai');
-const { startApiBuilder, stopApiBuilder, requestAsync, sendToElasticsearch, getRandomInt } = require('./_base');
+const { startApiBuilder, stopApiBuilder, requestAsync, sendToElasticsearch, getRandomInt } = require('../_base');
+const path = require('path');
+const fs = require('fs');
+const nock = require('nock');
+const envLoader = require('dotenv');
 
 describe('Traffic Monitor API', function () {
 	this.timeout(30000);
@@ -7,11 +11,25 @@ describe('Traffic Monitor API', function () {
 	let auth;
 	const indexName = `trace_test_${getRandomInt(9999)}`;
 
+	beforeEach(() => {
+		// Simulate all responses in this test-file to be an admin, which will not lead to any result restriction
+		nock('https://mocked-api-gateway:8090').get('/api/rbac/currentuser').reply(200, { "result": "gwadmin" });
+		nock('https://mocked-api-gateway:8090').get('/api/rbac/permissions/currentuser').replyWithFile(200, './test/mockedReplies/apigateway/gwadminUserPermissions.json');
+	});
+
+	afterEach(() => {
+		nock.cleanAll();
+	});
+
 	/**
 	 * Start API Builder.
 	 */
 	before(() => {
 		return new Promise(function(resolve, reject){
+			const envFilePath = path.join(__dirname, '../.env');
+			if (fs.existsSync(envFilePath)) {
+				envLoader.config({ path: envFilePath });
+			}
 			server = startApiBuilder();
 			auth = {
 				user: server.apibuilder.config.apikey || 'test',
@@ -21,7 +39,7 @@ describe('Traffic Monitor API', function () {
 			elasticConfig = server.apibuilder.config.pluginConfig['@axway-api-builder-ext/api-builder-plugin-fn-elasticsearch'].elastic;
 			server.started
 			.then(() => {
-				const entryset = require('./documents/basic/trace_test_documents');
+				const entryset = require('../documents/basic/trace_test_documents');
 				sendToElasticsearch(elasticConfig, indexName, entryset)
 				.then(() => {
 					resolve();

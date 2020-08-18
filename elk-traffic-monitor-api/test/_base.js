@@ -71,7 +71,6 @@ async function sendToElasticsearch(elasticConfig, index, dataset) {
 	const client = new Client({
 		node: elasticConfig.node
 	});
-	debugger;
 	const mappingConfig = JSON.parse(fs.readFileSync('../logstash/config/traffic_details_index_template.json')).mappings;
 	const createdIndexResponse = await client.indices.create({
 		index: index,

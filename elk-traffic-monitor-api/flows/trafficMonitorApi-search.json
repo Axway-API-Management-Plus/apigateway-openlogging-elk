@@ -30,7 +30,7 @@
 			"env"
 		]
 	},
-	"start": "javascript.8",
+	"start": "axway-api-management.1",
 	"nodes": {
 		"http.1": {
 			"type": "nodehandler://axway-flow/http",
@@ -399,7 +399,7 @@
 				{
 					"name": "code",
 					"type": "string",
-					"value": "\"var queryFilters = data.queryFilters;\\n  data.fields.map(function(entry) {\\n    data.params.field.map(function(fieldEntry, index) {\\n      if(entry.fieldName === fieldEntry) {\\n        var queryType = entry.queryType;\\n        var queryLocation = entry.queryLocation;\\n        var value = data.params.value[index];\\n        var filter = {};\\n        var filterQuery = {};\\n        filterQuery[queryLocation] = value;\\n        filter[queryType] =  filterQuery;\\n        queryFilters.push(filter);\\n        return queryFilters;\\n      }\\n    });\\n  });\"",
+					"value": "\"var queryFilters = data.queryFilters;\\n  data.fields.map(function(entry) {\\n    data.params.field.map(function(fieldEntry, index) {\\n      if(entry.fieldName === fieldEntry) {\\n        var queryType = entry.queryType;\\n        var queryLocation = entry.queryLocation;\\n        var value = data.params.value[index];\\n        var filter = {};\\n        var filterQuery = {};\\n        filterQuery[queryLocation] = value;\\n        filter[queryType] =  filterQuery;\\n        if(!data.user.gatewayManager.isAdmin) {\\n        }\\n        queryFilters.push(filter);\\n        return queryFilters;\\n      }\\n    });\\n  });\"",
 					"metaName": "code",
 					"metaDescription": "A JavaScript function body. Supports `await` and returning promises."
 				}
@@ -421,6 +421,35 @@
 				}
 			},
 			"metaMethod": "Execute"
+		},
+		"axway-api-management.1": {
+			"type": "nodehandler://api-builder-plugin-axway-api-management/axway-api-management",
+			"name": "Lookup current user",
+			"method": "lookupCurrentUser",
+			"parameters": [
+				{
+					"name": "requestHeaders",
+					"type": "jsonpath",
+					"value": "$.request.headers",
+					"metaName": "Request Headers",
+					"metaDescription": "The request headers are used to lookup the current users based on the current session cookie (VIDUSR)."
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.user",
+					"routes": [
+						"javascript.8"
+					],
+					"metaName": "Next"
+				},
+				"error": {
+					"context": "$.error",
+					"routes": [],
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Lookup current user"
 		}
 	}
 }

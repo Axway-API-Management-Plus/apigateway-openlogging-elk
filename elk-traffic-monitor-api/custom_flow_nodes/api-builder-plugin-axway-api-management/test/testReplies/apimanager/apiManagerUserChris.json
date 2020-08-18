@@ -1,0 +1,15 @@
+[
+    {
+        "id": "d66a42d6-b9c7-4efd-b33a-de8b88545861",
+        "organizationId": "2bfaa1c2-49ab-4059-832d-f833ca1c0a74",
+        "name": "Chris",
+        "loginName": "chris",
+        "email": "chris@axway.com",
+        "role": "oadmin",
+        "enabled": true,
+        "createdOn": 1597338071490,
+        "state": "approved",
+        "type": "internal",
+        "dn": "cn=chris,o=API Development,ou=organizations,ou=APIPortal"
+    }
+]

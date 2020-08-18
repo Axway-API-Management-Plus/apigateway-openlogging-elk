@@ -1,0 +1,18 @@
+{
+    "id": "2bfaa1c2-49ab-4059-832d-f833ca1c0a74",
+    "name": "API Development",
+    "description": null,
+    "email": null,
+    "image": null,
+    "restricted": false,
+    "virtualHost": null,
+    "phone": null,
+    "enabled": true,
+    "development": false,
+    "dn": "o=API Development,ou=organizations,ou=APIPortal",
+    "createdOn": 1597326913559,
+    "startTrialDate": null,
+    "endTrialDate": null,
+    "trialDuration": null,
+    "isTrial": null
+}
