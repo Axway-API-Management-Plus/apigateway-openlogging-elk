@@ -89,7 +89,7 @@
                 "service": "Petstore",
                 "monitor": true,
                 "client": null,
-                "org": null,
+                "appOrg": null,
                 "app": null,
                 "method": "getUserByName",
                 "status": "success",
