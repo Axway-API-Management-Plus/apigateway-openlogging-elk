@@ -56,14 +56,14 @@ describe('Test API Lookup', () => {
 			expect(output).to.equal('error');
 		});
 
-		it('should follow the Error path if the API-Manager host cannot be reached/communicated', async () => {
+		it.only('should follow the Error path if the API-Manager host cannot be reached/communicated', async () => {
 			// We just have NO mock to make this test
 			const { value, output } = await flowNode.lookupAPIDetails({
 				apiPath: '/v1/unkownAPI'
 			});
 
 			expect(value).to.be.instanceOf(Error);
-			expect(value.message).to.have.string(`Error sending request to API-Manager: unknown-host`);
+			expect(value.message).to.equal(`Error getting API-Proxy details for API exposed on path: /v1/unkownAPI. Request sent to: \'mocked-api-gateway:8175\'. Error: getaddrinfo ENOTFOUND mocked-api-gateway`);
 			expect(output).to.equal('error');
 		});
 

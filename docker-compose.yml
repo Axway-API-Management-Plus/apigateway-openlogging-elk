@@ -84,6 +84,7 @@ services:
     command: logstash --path.config /usr/share/logstash/pipeline/pipeline.conf --pipeline.batch.size 400 --log.level info
     depends_on:
       - elasticsearch1
+      - elk-traffic-monitor-api
     networks:
       - elastic
 

@@ -175,7 +175,7 @@ async function _getAPIProxy(apiPath) {
 			return response;
 		})
 		.catch(err => {
-			throw new Error(`Error getting API-Proxy details for API exposed on path: ${apiPath} Request sent to: '${pluginConfig.apimanager.hostname}:${pluginConfig.apimanager.port}'. ${err}`);
+			throw new Error(`Error getting API-Proxy details for API exposed on path: ${apiPath}. Request sent to: '${pluginConfig.apimanager.hostname}:${pluginConfig.apimanager.port}'. ${err}`);
 		});
 	return apiProxy;
 }
@@ -204,15 +204,14 @@ async function sendRequest(options) {
 					resolve(JSON.parse(userResponse));
 					return;
 				});
-
-				response.on("error", function (error) {
-					reject(error);
-					return;
-				});
+			});
+			req.on("error", function (error) {
+				reject(error);
+				return;
 			});
 			req.end();
 		} catch (ex) {
-			reject(error);
+			reject(ex);
 		}
 	});
 }
