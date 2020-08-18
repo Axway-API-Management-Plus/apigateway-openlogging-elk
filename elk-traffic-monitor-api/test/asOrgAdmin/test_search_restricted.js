@@ -98,11 +98,11 @@ describe('Endpoints', function () {
 			nock('https://mocked-api-gateway:8090').get('/api/rbac/permissions/currentuser').replyWithFile(200, './test/mockedReplies/apigateway/operatorRene.json');
 			nock('https://mocked-api-gateway:8075').get(`/api/portal/v1.3/users?field=loginName&op=eq&value=rene&field=enabled&op=eq&value=true`).replyWithFile(200, './test/mockedReplies/apimanager/apiManagerUserRene.json');		
 			nock('https://mocked-api-gateway:8075').get(`/api/portal/v1.3/organizations/2bfaa1c2-49ab-4059-832d-XXXXXXXXX`).replyWithFile(200, './test/mockedReplies/apimanager/ChrisOrganization.json');
-			requestAsync({
+			return requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search`,
 				headers: {
-					'cookie': 'VIDUSR=1597468226-Z+qdRW4rGZnwzQ==', 
+					'cookie': '_ga=GA1.1.177509375.1593442001; iconSize=16x16; cookie_pressed_153=false; portal.logintypesso=false; portal.demo=off; portal.isgridSortIgnoreCase=on; VIDUSR=1597762865-iUI5a8+v+zLkNA%3d%3d; APIMANAGERSTATIC=92122e5c-6bb3-4fd1-ad2f-08b65554d116', 
 					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
 				},
 				auth: auth,
@@ -112,8 +112,8 @@ describe('Endpoints', function () {
 				expect(body).to.be.an('Object');
 				expect(body).to.have.property('data');
 				expect(body.data).to.have.lengthOf(2);
+				nock.cleanAll();
 			});
-			nock.cleanAll();
 		});
 	});
 });

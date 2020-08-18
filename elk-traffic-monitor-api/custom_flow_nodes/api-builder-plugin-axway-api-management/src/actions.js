@@ -37,9 +37,11 @@ async function lookupCurrentUser(params, options) {
 	}
 	const VIDUSR = _getCookie(requestHeaders.cookie, "VIDUSR");
 	if(!VIDUSR) {
+		logger.trace(`Received cookies: ${requestHeaders.cookie}`);
 		throw new Error('The requestHeaders do not contain the required cookie VIDUSR');
 	}
 	if(!requestHeaders['csrf-token']) {
+		logger.trace(`Received headers: ${requestHeaders}`);
 		throw new Error('The requestHeaders do not contain the required header csrf-token');
 	}
 	if(cache.has(VIDUSR)) {
@@ -236,7 +238,8 @@ async function sendRequest(options) {
 }
 
 function _getCookie(cookies, cookieName) {
-	const fields = cookies.split(",");
+	debugger;
+	const fields = cookies.split(";");
 	for (var i = 0; i < fields.length; ++i) {
 		var cookie = fields[i].trim();
 		const foundCookie = cookie.substring(0, cookie.indexOf("="));
