@@ -31,11 +31,18 @@ flow-nodes:
               type: object
       lookupAPIDetails:
         name: Lookup API
-        description: Looks up the details of an API based on the given API-Path
+        description: Looks up the details of an API based on the given API-Name and API-Path
         parameters:
+          apiName:
+            name: API-Name
+            description: Name of the API is primary used to lookup the API
+            required: true
+            initialType: string
+            schema:
+              type: string
           apiPath:
             name: Path of the API
-            description: The Path of the API that should be looked up
+            description: This request path is used to double check that the API found is correct.
             required: true
             initialType: string
             schema:

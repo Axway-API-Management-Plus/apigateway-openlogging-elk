@@ -31,6 +31,13 @@
             "name": "apiPath",
             "description": "The exposed path of the API to be looked up",
             "required": true
+          },
+          {
+            "type": "string",
+            "in": "query",
+            "name": "apiName",
+            "required": true,
+            "description": "The name of the API to look up"
           }
         ],
         "summary": "Looks up an API based on the API-Path",

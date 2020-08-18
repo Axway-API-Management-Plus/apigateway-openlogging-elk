@@ -65,20 +65,33 @@ async function lookupCurrentUser(params, options) {
 }
 
 async function lookupAPIDetails(params, options) {
-	const { apiPath } = params;
+	const { apiName, apiPath } = params;
 	cache = options.pluginContext.userCache;
 	pluginConfig = options.pluginConfig;
+	if (!apiName) {
+		throw new Error('You must provide the apiName that should be used to lookup the API.');
+	}
 	if (!apiPath) {
 		throw new Error('You must provide the apiPath that should be used to lookup the API.');
 	}
 	if(cache.has(apiPath)) {
 		return cache.get(apiPath);
 	}
-	const proxies = await _getAPIProxy(apiPath);
+	debugger;
+	const proxies = await _getAPIProxy(apiName);
 	if(!proxies || proxies.length == 0) {
-		throw new Error(`No API found exposed on path: '${apiPath}'`);
+		throw new Error(`No APIs found with name: '${apiName}'`);
 	}
-	apiProxy = proxies[0]; // We just pick the first result
+	apiProxy = undefined;
+	for (i = 0; i < proxies.length; i++) {
+		api = proxies[i];
+		if(apiPath.startsWith(api.path)) {
+			apiProxy = api;
+		}
+	}
+	if(!apiProxy) {
+		throw new Error(`No APIs found with name: '${apiName}' and apiPath: '${apiPath}'`);
+	}
 	apiProxy.organizationName = await _getOrganizationName(apiProxy.organizationId);
 	// Remove a few properties we really don't need
 	delete apiProxy.corsProfiles;
@@ -159,12 +172,12 @@ async function _getManagerUser(user) {
 	return managerUser;
 }
 
-async function _getAPIProxy(apiPath) {
+async function _getAPIProxy(apiName) {
 	var options = {
 		method: 'GET',
 		hostname: pluginConfig.apimanager.hostname,
 		port: pluginConfig.apimanager.port,
-		path: `/api/portal/v1.3/proxies?field=path&op=eq&value=${apiPath}`,
+		path: `/api/portal/v1.3/proxies?field=name&op=eq&value=${apiName}`,
 		headers: {
 			'Authorization': 'Basic ' + Buffer.from(pluginConfig.apimanager.username + ':' + pluginConfig.apimanager.password).toString('base64')
 		},
@@ -175,7 +188,7 @@ async function _getAPIProxy(apiPath) {
 			return response;
 		})
 		.catch(err => {
-			throw new Error(`Error getting API-Proxy details for API exposed on path: ${apiPath}. Request sent to: '${pluginConfig.apimanager.hostname}:${pluginConfig.apimanager.port}'. ${err}`);
+			throw new Error(`Error getting APIs with API-Name: ${apiName}. Request sent to: '${pluginConfig.apimanager.hostname}:${pluginConfig.apimanager.port}'. ${err}`);
 		});
 	return apiProxy;
 }
@@ -183,6 +196,7 @@ async function _getAPIProxy(apiPath) {
 async function sendRequest(options) {
 	return new Promise((resolve, reject) => {
 		try {
+			options.path = encodeURI(options.path);
 			var req = https.request(options, function (response) {
 				var chunks = [];
 				var statusCode = response.statusCode;

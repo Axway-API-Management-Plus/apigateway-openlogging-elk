@@ -1,7 +1,7 @@
 {
 	"schemaVersion": "4",
 	"info": {
-		"name": "lookupAPI - get /api/management/lookup/api"
+		"name": "lookupAPI - get /lookup/api"
 	},
 	"parameter": {
 		"properties": {
@@ -38,11 +38,18 @@
 			"method": "lookupAPIDetails",
 			"parameters": [
 				{
+					"name": "apiName",
+					"type": "jsonpath",
+					"value": "$.params.apiName",
+					"metaName": "API-Name",
+					"metaDescription": "Name of the API is primary used to lookup the API"
+				},
+				{
 					"name": "apiPath",
 					"type": "jsonpath",
 					"value": "$.params.apiPath",
 					"metaName": "Path of the API",
-					"metaDescription": "The Path of the API that should be looked up"
+					"metaDescription": "This request path is used to double check that the API found is correct."
 				}
 			],
 			"outputs": {
@@ -106,8 +113,8 @@
 				},
 				{
 					"name": "body",
-					"type": "object",
-					"value": "{\"message\":\"API not found\"}",
+					"type": "jsonpath",
+					"value": "$.error",
 					"metaName": "Body",
 					"metaDescription": "The response payload"
 				}

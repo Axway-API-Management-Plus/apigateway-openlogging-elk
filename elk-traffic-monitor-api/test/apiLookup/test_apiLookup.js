@@ -60,13 +60,13 @@ describe('Test API-Lookup endpoint', function () {
 			nock('https://mocked-api-gateway:8075').get('/api/portal/v1.3/proxies?field=path&op=eq&value=/omg/this/api/doesnt/exists').reply(200, '[]');
 			return requestAsync({
 				method: 'GET',
-				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/lookup/api?apiPath=/omg/this/api/doesnt/exists`,
+				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/lookup/api?apiName=UnknownAPI&apiPath=/any/path`,
 				auth: auth,
 				json: true
 			}).then(({ response, body }) => {
 				expect(response.statusCode).to.equal(404);
 				expect(body).to.be.an('Object');
-				expect(body.message).to.equal('API not found');
+				expect(body.message).to.equal(`API not found`);
 			});
 		});
 	});
