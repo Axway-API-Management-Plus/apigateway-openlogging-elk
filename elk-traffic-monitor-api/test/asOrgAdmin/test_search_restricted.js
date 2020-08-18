@@ -11,6 +11,10 @@ describe('Endpoints', function () {
 	let auth;
 	const indexName = `search_count_test_${getRandomInt(9999)}`;
 
+	beforeEach(() => {
+		nock.cleanAll();
+	});
+
 	/**
 	 * Start API Builder.
 	 */
@@ -20,6 +24,7 @@ describe('Endpoints', function () {
 			if (fs.existsSync(envFilePath)) {
 				envLoader.config({ path: envFilePath });
 			}
+			nock.cleanAll();
 			server = startApiBuilder();
 			auth = {
 				user: server.apibuilder.config.apikey || 'test',
@@ -42,19 +47,22 @@ describe('Endpoints', function () {
 	/**
 	 * Stop API Builder after the tests.
 	 */
-	after(() => stopApiBuilder(server));
+	after(() => {
+		stopApiBuilder(server);
+		nock.cleanAll();
+	});
 
 	describe('Search', () => {
 		it('[Restriced-Search-0001] Execute a search as Org-Admin without any filter - Only two of them belong to Chris-Org', () => {
 			nock('https://mocked-api-gateway:8090').get('/api/rbac/currentuser').reply(200, { "result": "chris" });
 			nock('https://mocked-api-gateway:8090').get('/api/rbac/permissions/currentuser').replyWithFile(200, './test/mockedReplies/apigateway/operatorRoleOnlyPermissions.json');
-			nock('https://mocked-api-gateway:8075').get(`/api/portal/v1.3/users?field=loginName&op=eq&value=chris&field=enabled&op=eq&value=true`).replyWithFile(200, './test/mockedReplies/apimanager/apiManagerOAdminUserChris.json');		
+			nock('https://mocked-api-gateway:8075').get(`/api/portal/v1.3/users?field=loginName&op=eq&value=chris&field=enabled&op=eq&value=enabled`).replyWithFile(200, './test/mockedReplies/apimanager/apiManagerOAdminUserChris.json');		
 			nock('https://mocked-api-gateway:8075').get(`/api/portal/v1.3/organizations/2bfaa1c2-49ab-4059-832d-XXXXXXXXX`).replyWithFile(200, './test/mockedReplies/apimanager/ChrisOrganization.json');
-			requestAsync({
+			return requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search`,
 				headers: {
-					'cookie': 'VIDUSR=1597468226-Z+qdRW4rGZnwzQ==', 
+					'cookie': 'VIDUSR=CHRIS-1597468226-Z+qdRW4rGZnwzQ==', 
 					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
 				},
 				auth: auth,
@@ -65,20 +73,19 @@ describe('Endpoints', function () {
 				expect(body).to.have.property('data');
 				expect(body.data).to.have.lengthOf(2);
 			});
-			nock.cleanAll();
 		});
 
 		it('[Restriced-Search-0002] Execute a search - NOT being an API-GW-Admin - But admin in API-Manager', () => {
 			// For that kind of user all APIs having a service-context should be returned
 			nock('https://mocked-api-gateway:8090').get('/api/rbac/currentuser').reply(200, { "result": "max" });
 			nock('https://mocked-api-gateway:8090').get('/api/rbac/permissions/currentuser').replyWithFile(200, './test/mockedReplies/apigateway/operatorMax.json');
-			nock('https://mocked-api-gateway:8075').get(`/api/portal/v1.3/users?field=loginName&op=eq&value=max&field=enabled&op=eq&value=true`).replyWithFile(200, './test/mockedReplies/apimanager/apiManagerOAdminUserMax.json');		
-			nock('https://mocked-api-gateway:8075').get(`/api/portal/v1.3/organizations/2bfaa1c2-49ab-4059-832d-XXXXXXXXX`).replyWithFile(200, './test/mockedReplies/apimanager/ChrisOrganization.json');
-			requestAsync({
+			nock('https://mocked-api-gateway:8075').get(`/api/portal/v1.3/users?field=loginName&op=eq&value=max&field=enabled&op=eq&value=enabled`).replyWithFile(200, './test/mockedReplies/apimanager/apiManagerOAdminUserMax.json');		
+			nock('https://mocked-api-gateway:8075').get(`/api/portal/v1.3/organizations/2bfaa1c2-49ab-4059-832d-YYYYYYY`).replyWithFile(200, './test/mockedReplies/apimanager/ChrisOrganization.json');
+			return requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search`,
 				headers: {
-					'cookie': 'VIDUSR=1597468226-Z+qdRW4rGZnwzQ==', 
+					'cookie': 'VIDUSR=MAX1597468226-Z+qdRW4rGZnwzQ==', 
 					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
 				},
 				auth: auth,
@@ -89,20 +96,19 @@ describe('Endpoints', function () {
 				expect(body).to.have.property('data');
 				expect(body.data).to.have.lengthOf(9); // Nine entries have any kind of serviceContext
 			});
-			nock.cleanAll();
 		});
 
-		it.only('[Restriced-Search-0003] Execute a search - NOT being an API-GW-Admin - Normal user in API-Manager', () => {
+		it('[Restriced-Search-0003] Execute a search - NOT being an API-GW-Admin - Normal user in API-Manager', () => {
 			// For that kind of user all APIs having a service-context should be returned
 			nock('https://mocked-api-gateway:8090').get('/api/rbac/currentuser').reply(200, { "result": "rene" });
 			nock('https://mocked-api-gateway:8090').get('/api/rbac/permissions/currentuser').replyWithFile(200, './test/mockedReplies/apigateway/operatorRene.json');
-			nock('https://mocked-api-gateway:8075').get(`/api/portal/v1.3/users?field=loginName&op=eq&value=rene&field=enabled&op=eq&value=true`).replyWithFile(200, './test/mockedReplies/apimanager/apiManagerUserRene.json');		
+			nock('https://mocked-api-gateway:8075').get(`/api/portal/v1.3/users?field=loginName&op=eq&value=rene&field=enabled&op=eq&value=enabled`).replyWithFile(200, './test/mockedReplies/apimanager/apiManagerUserRene.json');		
 			nock('https://mocked-api-gateway:8075').get(`/api/portal/v1.3/organizations/2bfaa1c2-49ab-4059-832d-XXXXXXXXX`).replyWithFile(200, './test/mockedReplies/apimanager/ChrisOrganization.json');
 			return requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search`,
 				headers: {
-					'cookie': '_ga=GA1.1.177509375.1593442001; iconSize=16x16; cookie_pressed_153=false; portal.logintypesso=false; portal.demo=off; portal.isgridSortIgnoreCase=on; VIDUSR=1597762865-iUI5a8+v+zLkNA%3d%3d; APIMANAGERSTATIC=92122e5c-6bb3-4fd1-ad2f-08b65554d116', 
+					'cookie': '_ga=GA1.1.177509375.1593442001; iconSize=16x16; cookie_pressed_153=false; portal.logintypesso=false; portal.demo=off; portal.isgridSortIgnoreCase=on; VIDUSR=RENE-1597762865-iUI5a8+v+zLkNA%3d%3d; APIMANAGERSTATIC=92122e5c-6bb3-4fd1-ad2f-08b65554d116', 
 					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
 				},
 				auth: auth,
