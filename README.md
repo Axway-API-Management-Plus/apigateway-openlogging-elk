@@ -67,7 +67,7 @@ For a simple deployment the prerequisites are very simple as all services can be
 Using the provided docker-compose is good to play with, however this approach is not recommended for production environments. Depending on the load, a dedicated machine (node) for Elasticsearch is recommended. The default configuration is prepared to scale up to five Elasticsearch nodes, which can handle millions of requests. To run Logstash and the API-Builder service a Docker-Orchestration framework is recommended as you get monitoring, self-healing, elasticity and more.
 
 ## Installation / Configuration
-To run the components in a PoC-Like mode, the recommended way is to clone this project onto a machine having docker and docker-compose installed. Also this machine must have file-based access to the running API-Gateway instance, as the Filebeat docker container will mount the open-traffic folder into the container.
+To run the components in a PoC-Like mode, the recommended way is to clone this project onto a machine having docker and docker-compose installed. Also this machine must have file-based access to the running API-Gateway instance, as the Filebeat docker container will mount the open-traffic folder into the container. In fact, only the Filebeat process needs to have access to the OpenTraffic-Event files, all other components can be deployed somewhere else.
 
 `git clone https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk.git`  
 
