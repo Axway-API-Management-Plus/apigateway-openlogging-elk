@@ -215,7 +215,10 @@ When Logstash is successfully started you should see the following:
 [INFO ][logstash.agent           ] Pipelines running {:count=>2, :running_pipelines=>[:main, :".monitoring-logstash"], :non_running_pipelines=>[]}
 [INFO ][logstash.agent           ] Successfully started Logstash API endpoint {:port=>9600}
 ```
-
+If you see the following or similar error message during processing of events the API-Builder Lookup-API cannot be reached. In case, please make sure the environment variable: `API_BUILDER_URL`is set correctly.
+```
+[2020-08-19T10:51:05,671][ERROR][logstash.filters.http    ][main][......] error during HTTP request {:url=>"/api/elk/v1/api/lookup/api", :body=>nil, :client_error=>"Target host is not specified"}
+```
 
 ### Check Elasticsearch processing
 It takes a while until Elasticsearch is finally started and reports it with the following line: 
