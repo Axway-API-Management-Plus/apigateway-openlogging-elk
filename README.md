@@ -1,6 +1,21 @@
 # API-Management Traffic-Monitor based ELK stack
 
+This project has 3 main objectives in relation to the Axway API management solution.
+
+__Performance__  
+
 When having many API-Gateway instances with millions of requests the API-Gateway Traffic Monitor can become slow and the observation period quite short. The purpose of this project is to solve that performance issue, make it possible to observe a long time-frame and get other benefits by using a standard external datastore: [Elasticsearch](https://www.elastic.co/elasticsearch).  
+
+__Visibility__  
+
+This solution allows API service providers to give access to the Standard Traffic Monitor so that they only see the API traffic of their own organization. This allows API service providers to analyze their own traffic using the extensive information in the traffic monitor.
+
+__Analytics__  
+
+With the help of Kibana, the goal of the project is to deliver standard dashboards that provide analysis capabilities across multiple perspectives.  
+It should still be possible to add your own dashboards as you wish.
+
+## Architecture
 
 The overall architecture this project provides looks like this:  
 ![Architecture][img1]   
@@ -11,20 +26,35 @@ It also helps, when running the Axway API-Gateway in Docker-Orchestration-Enviro
 Watch this video to see a side by side compare betwen the classical and ElasticSearch based Traffic-Monitor:  
 [![API-Management CLI](https://img.youtube.com/vi/MUbx4m9EtpY/0.jpg)](https://youtu.be/MUbx4m9EtpY)
 
-### How it works  
+## How it works  
 Each API-Gateway instance is writing, [if configured](#enable-open-traffic-event-log), Open-Traffic Event-Log-Files, which are streamed by [Filebeat](https://www.elastic.co/beats/filebeat) into a Logstash-Instance. [Logstash](https://www.elastic.co/logstash) performs data pre-processing, combines different events and finally forwards these so called documents into an Elasticsearch cluster.  
 
 Once the data is indexed by Elasticsearch it can be used by different clients. This process allows almost realtime monitoring of incoming requests. It takes around 5 seconds until a request is available in Elasticsearch.
 
-## Using the existing Traffic-Monitor
-Use the existing API-Gateway Traffic-Monitor. That means, you use the same tooling as of today, but the underlying implementation of the Traffic-Monitor API is now pointing to Elasticsearch instead of the internal OPSDB hosted by each API-Gateway instance. This improves performance damatically, as Elasticsearch can scale across multiple machines if required and other dashboards can be created for instance with Kibana.  
+## The Traffic-Monitor
+
+The standard API-Gateway Traffic-Monitor which is shipped with the solution is based on a REST-API that is provided by the Admin-Node-Manager. By default the Traffic-Information is loaded from the OBSDB running on each API-Gateway instance. This project is partly re-implementing this REST-API, which makes it possible, that the Traffic-Monitor is using data from ElasticSearch instead of the internal OBSDB.  
+That means, you can use the same tooling as of today, but the underlying implementation of the Traffic-Monitor is now pointing to Elasticsearch instead of the internal OPSDB hosted by each API-Gateway instance. This improves performance damatically, as Elasticsearch can scale across multiple machines if required and other dashboards can be created for instance with Kibana.  
 The glue between Elasticsearch and the API-Gateway Traffic-Monitor is an [API-Builder project](./elk-traffic-monitor-api), that is exposing the same Traffic-Monitor API, but it is implemented using Elasticsearch instead of the OPSDB. The API-Builder is available as a ready to use Docker-Image and preconfigured in the docker-compose file.  
 Optionally you can import the API-Builder API into your API-Management system to apply additional security and by that secure access to your Elasticsearch instance.  
 
-Finally, the Admin-Node-Manager has to be [configured](#configure-the-admin-node-manager) to use the API-Builder API instead of the internal implementation.
+## Restrict the Traffic-Monitor
 
-API-Builder exposing Traffic-Monitor API:  
-[![Traffic-Monitor API](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/workflows/Traffic-Monitor%20API/badge.svg)](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/actions)
+In larger companies hundreds of API service providers are using the API Manager to register their own services/APIs and want or should be able to monitor their own API independently. During registration, the corresponding APIs are assigned to API Manager organizations. However, the standard traffic monitor does not know the organization concept and therefore cannot restrict the view for a user based on the organization of an API.  
+This project solves the problem by storing the API transactions in Elasticsearch with the appropriate organization. This API organization is used when reading the traffic data from Elasticsearch according to the following rules.
+
+| API-Gateway Manager  | API-Manager   | Restriction | Comment | 
+| :---          | :---                 | :---  | :---  |
+| **Administrator**    | N/A           | Unrestricted access | A GW-Manager user is considered as an Admin, when is owns the permission: `adminusers_modify` |
+| **Operator**         | API-Admin     | All APIs having a Service-Context | By default each API processed by the API-Manager has a Service-Context. Pure Gateway APIs (e.g. /healthcheck) will not be visible.|
+| **Operator**         | Org-Admin     | APIs of its own organization | Such a user will only see the APIs that belong to the same organization as himself. |
+| **Operator**         | User          | APIs of its own organization | The same rules apply as for the Org-Admin |
+
+### Setup Restricted user
+
+To give a user limited access to the API Traffic Monitor, the user must use the same login name in the API Manager and API Gateway Manager. Here, for example, an LDAP connection can be a simplification.
+In order to give the user a restricted view in the API Gateway Manager, none of his roles must contain the permission: `adminusers_modify`. A suitable standard role is the `API Gateway Operator role`. 
+You can, of course, create additional roles in the API Gateway Manager to adjust the user's rights according to your needs.
 
 ## Prerequisites
 For a simple deployment the prerequisites are very simple as all services can be started as a Docker-Container. In order to start all components in PoC-Like-Mode you just need:
@@ -81,31 +111,54 @@ You may add a custom success message (e.g. `Used ElasticSearch API`) if you like
 :point_right:    
 Please remember to copy the changed Admin-Node-Manager configuration from the Policy-Studio project folder (path on Linux: `/home/<user>/apiprojects/\<project-name\>`) back to the ANM folder (`\<install-dir\>/apigateway/conf/fed`). Afterwards the ANM must be restarted.
 
+## Setup 
+
+Before you start the environment based on the `docker-compose.yml` file, please adjust the `.env` file accordingly. The configuration is already used by the different modules as described below.
+
 ### Setup filebeat
 :exclamation: __This is an important step, as otherwise Filebeat will not see and send any Open-Traffic Event data!__  
-Before starting the container using docker-compose, make sure to setup the paths in the project `*.env` file. The variables must point to your running API-Gateway instance. These parameters are used to mount the Open-Traffic-Folder into the Filebeat container. For a typical Linux installation it looks like this (APIM beeing a symlink to current software version):
+Setup the paths in the project `*.env` file. The variables must point to your running API-Gateway instance. These parameters are used to mount the Open-Traffic-Folder into the Filebeat container. For a typical Linux installation it looks like this (APIM being a symlink to current software version):
 ```
 APIGATEWAY_LOGS_FOLDER=/opt/Axway/APIM/apigateway/logs/opentraffic
 APIGATEWAY_TRACES_FOLDER=/opt/Axway/APIM/apigateway/groups/group-2/instance-1/trace
 ```
 
+### Setup Logstash
+
+Logstash receives the open traffic and open trace events from Filebeat and processes them. Among other things, an HTTP lookup is performed on an API detail lookup REST-API to enrich the API information. Therefore Logstash must know under which URL the API builder can be reached.  
+This parameter is optional if you use the default docker-compose.yml file.
+```
+API_BUILDER_URL=http://my-api-builder:8080
+```
+
 ### Setup API-Builder
-As the API-Builder container needs to communicate with Elasticsearch it needs to know where Elasticsearch is running. Again, this environment variable must be configured within `.env`:
+As the API-Builder container needs to communicate with Elasticsearch it needs to know where Elasticsearch is running:
+Please note, when using the default docker-compose.yaml the default setting is sufficient, as it's using the internal Docker-Network `elastic`.  
 ```
 ELASTIC_NODE=http://elasticsearch1:9200
 ```
-Please note, when using the default docker-compose.yaml the default setting is sufficient, as it's using the internal Docker-Network `elastic`.
+Furthermore, the API Builder communicates with the Admin Node Manager and API Manager. Therefore the following parameters must be configured in the `.env` file.  
+```
+ADMIN_NODE_MANAGER=https://api-env:8090
+API_MANAGER_USERNAME=<admin-user>
+API_MANAGER_PASSWORD=<admin-password>
+```
 
-### Update vm.max_map_count kernel setting to at least 262144
+Build status API-Builder Traffic-Monitor API:  
+[![Traffic-Monitor API](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/workflows/Traffic-Monitor%20API/badge.svg)](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/actions)
 
-See https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html#docker-prod-prerequisites
-
-###  Start local Elasticsearch cluster
-Bring the cluster up using docker-compose:
+##  Start the environment
+To bring up the entire environment using docker-compose:
 ````
 docker-compose up -d
 ````
-Of course, the components can also run on different machines or on a Docker-Orchestration framework such as Kubernetes.
+You can also run the individual components on different environments. To do this, you can check out the project on the appropriate machines, adjust the docker-compose.yml and .env file and start the desired services.  
+To start a single service (e.g. the API-Builder project):
+```
+docker-compose up -d elk-traffic-monitor-api
+```
+
+Of course it is also possible to run the containers in a docker orchestration framework, like Kubernetes or OpenShift.
 
 ### Stop local Elasticsearch cluster
 ````
@@ -179,7 +232,10 @@ When Logstash is successfully started you should see the following:
 [INFO ][logstash.agent           ] Pipelines running {:count=>2, :running_pipelines=>[:main, :".monitoring-logstash"], :non_running_pipelines=>[]}
 [INFO ][logstash.agent           ] Successfully started Logstash API endpoint {:port=>9600}
 ```
-
+If you see the following or similar error message during processing of events the API-Builder Lookup-API cannot be reached. In case, please make sure the environment variable: `API_BUILDER_URL`is set correctly.
+```
+[2020-08-19T10:51:05,671][ERROR][logstash.filters.http    ][main][......] error during HTTP request {:url=>"/api/elk/v1/api/lookup/api", :body=>nil, :client_error=>"Target host is not specified"}
+```
 
 ### Check Elasticsearch processing
 It takes a while until Elasticsearch is finally started and reports it with the following line: 

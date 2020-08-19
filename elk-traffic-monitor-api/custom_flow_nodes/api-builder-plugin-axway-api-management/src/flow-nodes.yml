@@ -1,0 +1,62 @@
+flow-nodes:
+  axway-api-management:
+    name: Axway API-Management Utils
+    icon: axway-logo.png
+    description: Flow providing utility functions related to the Axway-API-Management solution. As of today it can be used to lookup a user in API-Gateway Manager and API-Manager to get a union view.
+    category: general
+    methods:
+      lookupCurrentUser:
+        name: Lookup current user
+        description: Looks up the current user in Axway API-Gateway Manager and API-Manager based on the provided Request-Header that contains the session-cookie and CSRF-Token.
+        parameters:
+          requestHeaders:
+            name: Request Headers
+            description: The request headers are used to lookup the current users based on the current session cookie (VIDUSR).
+            required: true
+            initialType: string
+            schema:
+              type: string
+        outputs:
+          next:
+            name: Next
+            description: The user was found in API-Gateway and API-Manager.
+            context: $.user
+            schema:
+              type: object
+          error:
+            name: Error
+            description: An unexpected error happened
+            context: $.error
+            schema:
+              type: object
+      lookupAPIDetails:
+        name: Lookup API
+        description: Looks up the details of an API based on the given API-Name and API-Path
+        parameters:
+          apiName:
+            name: API-Name
+            description: Name of the API is primary used to lookup the API
+            required: true
+            initialType: string
+            schema:
+              type: string
+          apiPath:
+            name: Path of the API
+            description: This request path is used to double check that the API found is correct.
+            required: true
+            initialType: string
+            schema:
+              type: string
+        outputs:
+          next:
+            name: Next
+            description: The API-Proxy
+            context: $.api
+            schema:
+              type: object
+          error:
+            name: Error
+            description: An unexpected error happened
+            context: $.error
+            schema:
+              type: object

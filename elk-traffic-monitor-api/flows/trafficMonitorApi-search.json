@@ -1,7 +1,8 @@
 {
 	"schemaVersion": "4",
 	"info": {
-		"name": "monitoringApiApi - get /router/service/{serviceID}/ops/search"
+		"name": "Traffic-Monitor API - Search",
+		"description": "Used by Traffic monitor to search for APIs (Table overview)"
 	},
 	"parameter": {
 		"properties": {
@@ -30,7 +31,7 @@
 			"env"
 		]
 	},
-	"start": "javascript.8",
+	"start": "axway-api-management.1",
 	"nodes": {
 		"http.1": {
 			"type": "nodehandler://axway-flow/http",
@@ -410,7 +411,73 @@
 					"routes": [
 						"javascript.3",
 						"javascript.6",
-						"javascript.7"
+						"javascript.7",
+						"javascript.4"
+					],
+					"metaName": "Next"
+				},
+				"error": {
+					"context": "$.error",
+					"routes": [],
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Execute"
+		},
+		"axway-api-management.1": {
+			"type": "nodehandler://api-builder-plugin-axway-api-management/axway-api-management",
+			"name": "Lookup current user",
+			"method": "lookupCurrentUser",
+			"parameters": [
+				{
+					"name": "requestHeaders",
+					"type": "jsonpath",
+					"value": "$.request.headers",
+					"metaName": "Request Headers",
+					"metaDescription": "The request headers are used to lookup the current users based on the current session cookie (VIDUSR)."
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.user",
+					"routes": [
+						"javascript.8"
+					],
+					"metaName": "Next"
+				},
+				"error": {
+					"context": "$.error",
+					"routes": [],
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Lookup current user"
+		},
+		"javascript.4": {
+			"type": "nodehandler://@axway/api-builder-plugin-fn-javascript/javascript",
+			"name": "Org-Admin filter",
+			"method": "Execute",
+			"parameters": [
+				{
+					"name": "data",
+					"type": "jsonpath",
+					"value": "$",
+					"metaName": "data",
+					"metaDescription": "The value to apply as the `data` argument to the JavaScript code. For objects and arrays, `data` is passed by reference."
+				},
+				{
+					"name": "code",
+					"type": "string",
+					"value": "\"var queryFilters = data.queryFilters;\\n  if(!data.user.gatewayManager.isAdmin) {\\n    var filter;\\n    if(data.user.apiManager.role == \\\"admin\\\") {\\n      filter = {\\n        exists: {\\n          \\\"field\\\" : \\\"transactionSummary.serviceContext\\\"\\n        }\\n      };\\n    } else {\\n      filter = {\\n        term: {\\n          \\\"transactionSummary.serviceContext.apiOrg\\\" : data.user.apiManager.organizationName\\n        }\\n      };\\n    }\\n    queryFilters.push(filter);\\n  }\\n  return queryFilters;\"",
+					"metaName": "code",
+					"metaDescription": "A JavaScript function body. Supports `await` and returning promises."
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.result",
+					"routes": [
+						"javascript.2"
 					],
 					"metaName": "Next"
 				},

@@ -76,6 +76,7 @@ services:
     environment:
       - PIPELINE_WORKERS=1
       - XPACK_MONITORING_ELASTICSEARCH_HOSTS=["elasticsearch1:9200"]
+      - API_BUILDER_URL=${API_BUILDER_URL}
     ports:
       - 5044:5044
     volumes:
@@ -84,6 +85,7 @@ services:
     command: logstash --path.config /usr/share/logstash/pipeline/pipeline.conf --pipeline.batch.size 400 --log.level info
     depends_on:
       - elasticsearch1
+      - elk-traffic-monitor-api
     networks:
       - elastic
 
@@ -93,7 +95,10 @@ services:
     links:
       - elasticsearch1
     environment:
-      - ELASTIC_NODE=http://elasticsearch1:9200
+      - ELASTIC_NODE=${ELASTIC_NODE}
+      - ADMIN_NODE_MANAGER=${ADMIN_NODE_MANAGER}
+      - API_MANAGER_USERNAME=${API_MANAGER_USERNAME}
+      - API_MANAGER_PASSWORD=${API_MANAGER_PASSWORD}
       #- LOG_LEVEL=debug
     ports:
       - 8889:8080

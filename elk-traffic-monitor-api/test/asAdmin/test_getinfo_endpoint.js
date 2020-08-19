@@ -1,5 +1,9 @@
 const { expect } = require('chai');
-const { startApiBuilder, stopApiBuilder, requestAsync, sendToElasticsearch, getRandomInt } = require('./_base');
+const { startApiBuilder, stopApiBuilder, requestAsync, sendToElasticsearch, getRandomInt } = require('../_base');
+const path = require('path');
+const fs = require('fs');
+const nock = require('nock');
+const envLoader = require('dotenv');
 
 describe('Endpoints', function () {
 	this.timeout(30000);
@@ -7,11 +11,25 @@ describe('Endpoints', function () {
 	let auth;
 	const indexName = `getinfo_test_${getRandomInt(9999)}`;
 
+	beforeEach(() => {
+		// Simulate all responses in this test-file to be an admin, which will not lead to any result restriction
+		nock('https://mocked-api-gateway:8090').get('/api/rbac/currentuser').reply(200, { "result": "david" });
+		nock('https://mocked-api-gateway:8090').get('/api/rbac/permissions/currentuser').replyWithFile(200, './test/mockedReplies/apigateway/adminUserDavid.json');
+	});
+
+	afterEach(() => {
+		nock.cleanAll();
+	});
+
 	/**
 	 * Start API Builder.
 	 */
 	before(() => {
 		return new Promise(function(resolve, reject){
+			const envFilePath = path.join(__dirname, '../.env');
+			if (fs.existsSync(envFilePath)) {
+				envLoader.config({ path: envFilePath });
+			}
 			server = startApiBuilder();
 			auth = {
 				user: server.apibuilder.config.apikey || 'test',
@@ -21,7 +39,7 @@ describe('Endpoints', function () {
 			elasticConfig = server.apibuilder.config.pluginConfig['@axway-api-builder-ext/api-builder-plugin-fn-elasticsearch'].elastic;
 			server.started
 			.then(() => {
-				const entryset = require('./documents/basic/getinfo_test_documents');
+				const entryset = require('../documents/basic/getinfo_test_documents');
 				sendToElasticsearch(elasticConfig, indexName, entryset)
 				.then(() => {
 					resolve();
@@ -37,11 +55,14 @@ describe('Endpoints', function () {
 	after(() => stopApiBuilder(server));
 
 	describe('Search', () => {
-
 		it('[Getinfo-0001]  Should return http 200 with details and headers for all legs (*) ', () => {
 			return requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/http/0455ff5e82267be8182a553d/*/getinfo?format=json&details=1&rheaders=1&sheaders=1`,
+				headers: {
+					'cookie': 'VIDUSR=Getinfo-0001-DAVID-1597762865-iUI5a8+v+zLkNA%3d%3d; APIMANAGERSTATIC=92122e5c-6bb3-4fd1-ad2f-08b65554d116', 
+					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
+				},
 				auth: auth,
 				json: true
 			}).then(({ response, body }) => {
@@ -60,10 +81,14 @@ describe('Endpoints', function () {
 			});
 		});
 
-		it('[Getinfo-0002 Should return http 200 with details and all headers for leg 0', () => {
+		it('[Getinfo-0002] Should return http 200 with details and all headers for leg 0', () => {
 			return requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/http/0455ff5e82267be8182a553d/0/getinfo?format=json&details=1&rheaders=1&sheaders=1`,
+				headers: {
+					'cookie': 'VIDUSR=Getinfo-0002-DAVID-1597762865-iUI5a8+v+zLkNA%3d%3d; APIMANAGERSTATIC=92122e5c-6bb3-4fd1-ad2f-08b65554d116', 
+					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
+				},
 				auth: auth,
 				json: true
 			}).then(({ response, body }) => {
@@ -76,10 +101,14 @@ describe('Endpoints', function () {
 				expect(body).to.have.property('sheaders');
 			});
 		});
-		it('[Getinfo-0003 Should return http 200 with details and all headers for leg 1', () => {
+		it('[Getinfo-0003] Should return http 200 with details and all headers for leg 1', () => {
 			return requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/http/0455ff5e82267be8182a553d/1/getinfo?format=json&details=1&rheaders=1&sheaders=1`,
+				headers: {
+					'cookie': 'VIDUSR=Getinfo-0003-DAVID-1597762865-iUI5a8+v+zLkNA%3d%3d; APIMANAGERSTATIC=92122e5c-6bb3-4fd1-ad2f-08b65554d116', 
+					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
+				},
 				auth: auth,
 				json: true
 			}).then(({ response, body }) => {
@@ -92,10 +121,14 @@ describe('Endpoints', function () {
 				expect(body).to.have.property('sheaders');
 			});
 		});
-		it('[Getinfo-0004 Should return http 200 without details but all headers for all legs (*)', () => {
+		it('[Getinfo-0004] Should return http 200 without details but all headers for all legs (*)', () => {
 			return requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/http/0455ff5e82267be8182a553d/*/getinfo?format=json&details=0&rheaders=1&sheaders=1`,
+				headers: {
+					'cookie': 'VIDUSR=Getinfo-0004-DAVID-1597762865-iUI5a8+v+zLkNA%3d%3d; APIMANAGERSTATIC=92122e5c-6bb3-4fd1-ad2f-08b65554d116', 
+					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
+				},
 				auth: auth,
 				json: true
 			}).then(({ response, body }) => {
@@ -114,10 +147,14 @@ describe('Endpoints', function () {
 				expect(body[1]).to.have.property('sheaders');
 			});
 		});
-		it('[Getinfo-0005 Should return http 200 with details but no headers for all legs (*)', () => {
+		it('[Getinfo-0005] Should return http 200 with details but no headers for all legs (*)', () => {
 			return requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/http/0455ff5e82267be8182a553d/*/getinfo?format=json&details=1&rheaders=0&sheaders=0`,
+				headers: {
+					'cookie': 'VIDUSR=Getinfo-0005-DAVID-1597762865-iUI5a8+v+zLkNA%3d%3d; APIMANAGERSTATIC=92122e5c-6bb3-4fd1-ad2f-08b65554d116', 
+					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
+				},
 				auth: auth,
 				json: true
 			}).then(({ response, body }) => {

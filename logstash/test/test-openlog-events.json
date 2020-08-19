@@ -77,6 +77,9 @@
               "serviceName": "instance-3",
               "version": "7.7.20200530"
             },
+            "tags": [
+              "_httprequestfailure"
+            ],
             "transactionSummary": {
               "path": "/petstore/v2/user/Chris",
               "protocol": "https",
@@ -86,7 +89,7 @@
                 "service": "Petstore",
                 "monitor": true,
                 "client": null,
-                "org": null,
+                "appOrg": null,
                 "app": null,
                 "method": "getUserByName",
                 "status": "success",

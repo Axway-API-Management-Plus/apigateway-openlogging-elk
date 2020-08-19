@@ -1,0 +1,36 @@
+{
+    "result": {
+        "user": "admin",
+        "permissions": [
+            "ama_modify",
+            "fips_modify",
+            "group_lock",
+            "group_force_unlock",
+            "traffic_monitor",
+            "deploy",
+            "group_unlock",
+            "domain_audit",
+            "domain_audit_modify",
+            "logs",
+            "dashboard",
+            "events",
+            "adminusers_passwordpolicy_modify",
+            "settings_modify",
+            "adminusers",
+            "settings",
+            "dashboard_modify",
+            "fips_read",
+            "mgmt_modify",
+            "adminusers_modify",
+            "monitoring",
+            "adminusers_reset",
+            "kps",
+            "mgmt",
+            "ama",
+            "discovery",
+            "adminusers_advisorybanner_modify",
+            "emc",
+            "config"
+        ]
+    }
+}

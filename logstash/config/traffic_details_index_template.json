@@ -122,6 +122,18 @@
             "transactionElements.leg4.duration": { "type": "integer" },
             "transactionElements.leg4.finalStatus": { "type": "keyword" },
 
+            "transactionElements.leg5.protocolInfo.http.remoteName": { "type": "text", "norms": false },
+            "transactionElements.leg5.protocolInfo.http.wafStatus": { "type": "integer" },
+            "transactionElements.leg5.protocolInfo.http.remotePort": { "type": "integer" },
+            "transactionElements.leg5.protocolInfo.http.status": { "type": "text", "norms": false, "fields": { "keyword": { "type": "keyword" } } },
+            "transactionElements.leg5.protocolInfo.http.authSubjectId": { "type": "text", "norms": false, "fields": { "keyword": { "type": "keyword" } } },
+            "transactionElements.leg5.protocolInfo.http.localPort": { "type": "integer" },
+            "transactionElements.leg5.protocolInfo.http.localAddr": { "type": "text", "norms": false, "fields": { "keyword": { "type": "keyword" } } },
+            "transactionElements.leg5.protocolInfo.http.method": { "type": "text", "norms": false, "fields": { "keyword": {"type": "keyword" } } },
+            "transactionElements.leg5.protocolInfo.http.uri": { "type": "text","norms": false, "fields": { "keyword": { "type": "keyword" } } },
+            "transactionElements.leg5.duration": { "type": "integer" },
+            "transactionElements.leg5.finalStatus": { "type": "keyword" },
+
             "transactionSummary.status": {
                 "type": "keyword"
             },
@@ -168,6 +180,21 @@
                     }
                 },
                 "norms": false
+            },
+            "transactionSummary.serviceContext.appOrg": {
+                "type": "keyword"
+            },
+            "transactionSummary.serviceContext.apiOrg": {
+                "type": "keyword"
+            },
+            "transactionSummary.serviceContext.apiVersion": {
+                "type": "keyword"
+            },
+            "transactionSummary.serviceContext.apiDeprecated": {
+                "type": "boolean"
+            },
+            "transactionSummary.serviceContext.apiState": {
+                "type": "keyword"
             }
         }
     }

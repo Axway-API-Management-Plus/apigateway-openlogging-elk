@@ -1,5 +1,9 @@
 const { expect } = require('chai');
-const { startApiBuilder, stopApiBuilder, requestAsync, sendToElasticsearch, getRandomInt } = require('./_base');
+const { startApiBuilder, stopApiBuilder, requestAsync, sendToElasticsearch, getRandomInt } = require('../_base');
+const path = require('path');
+const fs = require('fs');
+const nock = require('nock');
+const envLoader = require('dotenv');
 
 describe('Traffic Monitor API', function () {
 	this.timeout(30000);
@@ -7,11 +11,25 @@ describe('Traffic Monitor API', function () {
 	let auth;
 	const indexName = `circuitpath_test_${getRandomInt(9999)}`;
 
+	beforeEach(() => {
+		// Simulate all responses in this test-file to be an admin, which will not lead to any result restriction
+		nock('https://mocked-api-gateway:8090').get('/api/rbac/currentuser').reply(200, { "result": "david" });
+		nock('https://mocked-api-gateway:8090').get('/api/rbac/permissions/currentuser').replyWithFile(200, './test/mockedReplies/apigateway/adminUserDavid.json');
+	});
+
+	afterEach(() => {
+		nock.cleanAll();
+	});
+
 	/**
 	 * Start API Builder.
 	 */
 	before(() => {
 		return new Promise(function(resolve, reject){
+			const envFilePath = path.join(__dirname, '../.env');
+			if (fs.existsSync(envFilePath)) {
+				envLoader.config({ path: envFilePath });
+			}
 			server = startApiBuilder();
 			auth = {
 				user: server.apibuilder.config.apikey || 'test',
@@ -21,7 +39,7 @@ describe('Traffic Monitor API', function () {
 			elasticConfig = server.apibuilder.config.pluginConfig['@axway-api-builder-ext/api-builder-plugin-fn-elasticsearch'].elastic;
 			server.started
 			.then(() => {
-				const entryset = require('./documents/basic/circuitpath_test_documents');
+				const entryset = require('../documents/basic/circuitpath_test_documents');
 				sendToElasticsearch(elasticConfig, indexName, entryset)
 				.then(() => {
 					resolve();
@@ -42,6 +60,10 @@ describe('Traffic Monitor API', function () {
 			return requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/stream/4e645e5e4600bb590c881179/*/circuitpath`,
+				headers: {
+					'cookie': 'VIDUSR=circuitpath-0001-DAVID-1597762865-iUI5a8+v+zLkNA%3d%3d; APIMANAGERSTATIC=92122e5c-6bb3-4fd1-ad2f-08b65554d116', 
+					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
+				},
 				auth: auth,
 				json: true
 			}).then(({ response, body }) => {
@@ -60,6 +82,10 @@ describe('Traffic Monitor API', function () {
 			return requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/stream/c8705e5ecc00adca32be7472/*/circuitpath`,
+				headers: {
+					'cookie': 'VIDUSR=circuitpath-0002-DAVID-1597762865-iUI5a8+v+zLkNA%3d%3d; APIMANAGERSTATIC=92122e5c-6bb3-4fd1-ad2f-08b65554d116', 
+					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
+				},
 				auth: auth,
 				json: true
 			}).then(({ response, body }) => {
@@ -84,6 +110,10 @@ describe('Traffic Monitor API', function () {
 			return requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/stream/edb1705e7d0168a34d74bfba/*/circuitpath`,
+				headers: {
+					'cookie': 'VIDUSR=circuitpath-0003-DAVID-1597762865-iUI5a8+v+zLkNA%3d%3d; APIMANAGERSTATIC=92122e5c-6bb3-4fd1-ad2f-08b65554d116', 
+					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
+				},
 				auth: auth,
 				json: true
 			}).then(({ response, body }) => {
@@ -96,6 +126,10 @@ describe('Traffic Monitor API', function () {
 			return requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/stream/111111111111111111111111/*/circuitpath`,
+				headers: {
+					'cookie': 'VIDUSR=circuitpath-0004-DAVID-1597762865-iUI5a8+v+zLkNA%3d%3d; APIMANAGERSTATIC=92122e5c-6bb3-4fd1-ad2f-08b65554d116', 
+					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
+				},
 				auth: auth,
 				json: true
 			}).then(({ response, body }) => {
@@ -108,6 +142,10 @@ describe('Traffic Monitor API', function () {
 			return requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/stream/1ab3705e920284217e6aae73/*/circuitpath`,
+				headers: {
+					'cookie': 'VIDUSR=circuitpath-0005-DAVID-1597762865-iUI5a8+v+zLkNA%3d%3d; APIMANAGERSTATIC=92122e5c-6bb3-4fd1-ad2f-08b65554d116', 
+					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
+				},
 				auth: auth,
 				json: true
 			}).then(({ response, body }) => {

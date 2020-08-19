@@ -1,0 +1,133 @@
+{
+	"schemaVersion": "4",
+	"info": {
+		"name": "API Lookup",
+		"description": "Looks up an API - Used by Logstash to enrich documents."
+	},
+	"parameter": {
+		"properties": {
+			"params": {
+				"type": "object",
+				"description": "The parameters from the endpoint."
+			},
+			"request": {
+				"type": "object",
+				"description": "The HTTP request."
+			},
+			"config": {
+				"type": "object",
+				"description": "The service's configuration"
+			},
+			"env": {
+				"type": "object",
+				"description": "The host OS environment"
+			}
+		},
+		"additionalProperties": false,
+		"required": [
+			"params",
+			"request",
+			"config",
+			"env"
+		]
+	},
+	"start": "axway-api-management.1",
+	"nodes": {
+		"axway-api-management.1": {
+			"type": "nodehandler://api-builder-plugin-axway-api-management/axway-api-management",
+			"name": "Lookup API",
+			"method": "lookupAPIDetails",
+			"parameters": [
+				{
+					"name": "apiName",
+					"type": "jsonpath",
+					"value": "$.params.apiName",
+					"metaName": "API-Name",
+					"metaDescription": "Name of the API is primary used to lookup the API"
+				},
+				{
+					"name": "apiPath",
+					"type": "jsonpath",
+					"value": "$.params.apiPath",
+					"metaName": "Path of the API",
+					"metaDescription": "This request path is used to double check that the API found is correct."
+				}
+			],
+			"outputs": {
+				"next": {
+					"routes": [
+						"http.1"
+					],
+					"context": "$.api",
+					"metaName": "Next"
+				},
+				"error": {
+					"routes": [
+						"http.2"
+					],
+					"context": "$.error",
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Lookup API"
+		},
+		"http.1": {
+			"type": "nodehandler://axway-flow/http",
+			"name": "Return API",
+			"method": "setresponse",
+			"parameters": [
+				{
+					"name": "status",
+					"type": "number",
+					"value": "200",
+					"metaName": "Status",
+					"metaDescription": "The HTTP status code"
+				},
+				{
+					"name": "body",
+					"type": "jsonpath",
+					"value": "$.api",
+					"metaName": "Body",
+					"metaDescription": "The response payload"
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.response",
+					"routes": [],
+					"metaName": "Next"
+				}
+			},
+			"metaMethod": "Set HTTP Response"
+		},
+		"http.2": {
+			"type": "nodehandler://axway-flow/http",
+			"name": "API not found",
+			"method": "setresponse",
+			"parameters": [
+				{
+					"name": "status",
+					"type": "number",
+					"value": "404",
+					"metaName": "Status",
+					"metaDescription": "The HTTP status code"
+				},
+				{
+					"name": "body",
+					"type": "jsonpath",
+					"value": "$.error",
+					"metaName": "Body",
+					"metaDescription": "The response payload"
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.response",
+					"routes": [],
+					"metaName": "Next"
+				}
+			},
+			"metaMethod": "Set HTTP Response"
+		}
+	}
+}

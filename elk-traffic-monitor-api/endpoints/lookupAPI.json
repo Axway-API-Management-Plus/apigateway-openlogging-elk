@@ -1,0 +1,52 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "API-Management Lookup API",
+    "version": "1.0",
+    "description": "This API is some kind of helper API to allow Logstash to enrich the data inserted into ElasticSearch. Initially this API was required to lookup the API being called to get the organization of this API",
+    "license": {
+      "name": "Apache 2.0"
+    },
+    "contact": {
+      "name": "Chris Wiechmann",
+      "email": "cwiechmann@axway.com"
+    }
+  },
+  "host": "example.com",
+  "paths": {
+    "/lookup/api": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Returned if the API has been found"
+          },
+          "404": {
+            "description": "Returned if the API can't be found."
+          }
+        },
+        "parameters": [
+          {
+            "type": "string",
+            "in": "query",
+            "name": "apiPath",
+            "description": "The exposed path of the API to be looked up",
+            "required": true
+          },
+          {
+            "type": "string",
+            "in": "query",
+            "name": "apiName",
+            "required": true,
+            "description": "The name of the API to look up"
+          }
+        ],
+        "summary": "Looks up an API based on the API-Path",
+        "description": "This endpoint is taking in the API-Path (e.g. /v1/my/api) and tries to find this API in the Axway API-Management system. If successful it returns the API-Details.",
+        "operationId": "search",
+        "x-flow": "lookupAPI-search"
+      },
+      "parameters": []
+    }
+  },
+  "basePath": "/elk/v1/api"
+}

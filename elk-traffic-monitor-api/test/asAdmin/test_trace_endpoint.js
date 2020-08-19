@@ -1,5 +1,9 @@
 const { expect } = require('chai');
-const { startApiBuilder, stopApiBuilder, requestAsync, sendToElasticsearch, getRandomInt } = require('./_base');
+const { startApiBuilder, stopApiBuilder, requestAsync, sendToElasticsearch, getRandomInt } = require('../_base');
+const path = require('path');
+const fs = require('fs');
+const nock = require('nock');
+const envLoader = require('dotenv');
 
 describe('Traffic Monitor API', function () {
 	this.timeout(30000);
@@ -7,11 +11,25 @@ describe('Traffic Monitor API', function () {
 	let auth;
 	const indexName = `trace_test_${getRandomInt(9999)}`;
 
+	beforeEach(() => {
+		// Simulate all responses in this test-file to be an admin, which will not lead to any result restriction
+		nock('https://mocked-api-gateway:8090').get('/api/rbac/currentuser').reply(200, { "result": "david" });
+		nock('https://mocked-api-gateway:8090').get('/api/rbac/permissions/currentuser').replyWithFile(200, './test/mockedReplies/apigateway/adminUserDavid.json');
+	});
+
+	afterEach(() => {
+		nock.cleanAll();
+	});
+
 	/**
 	 * Start API Builder.
 	 */
 	before(() => {
 		return new Promise(function(resolve, reject){
+			const envFilePath = path.join(__dirname, '../.env');
+			if (fs.existsSync(envFilePath)) {
+				envLoader.config({ path: envFilePath });
+			}
 			server = startApiBuilder();
 			auth = {
 				user: server.apibuilder.config.apikey || 'test',
@@ -21,7 +39,7 @@ describe('Traffic Monitor API', function () {
 			elasticConfig = server.apibuilder.config.pluginConfig['@axway-api-builder-ext/api-builder-plugin-fn-elasticsearch'].elastic;
 			server.started
 			.then(() => {
-				const entryset = require('./documents/basic/trace_test_documents');
+				const entryset = require('../documents/basic/trace_test_documents');
 				sendToElasticsearch(elasticConfig, indexName, entryset)
 				.then(() => {
 					resolve();
@@ -42,6 +60,10 @@ describe('Traffic Monitor API', function () {
 			return requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/trace/81adfd5ef8008da2d6186cdb`,
+				headers: {
+					'cookie': 'VIDUSR=trace-0001-DAVID-1597468226-Z+qdRW4rGZnwzQ==', 
+					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
+				},
 				auth: auth,
 				json: true
 			}).then(({ response, body }) => {
@@ -55,6 +77,10 @@ describe('Traffic Monitor API', function () {
 			return requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/trace/81adfd5ef8008da2d6186cdb?format=json`,
+				headers: {
+					'cookie': 'VIDUSR=trace-0002-DAVID-1597468226-Z+qdRW4rGZnwzQ==', 
+					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
+				},
 				auth: auth,
 				json: true
 			}).then(({ response, body }) => {
@@ -68,6 +94,10 @@ describe('Traffic Monitor API', function () {
 			return requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/trace/81adfd5ef8008da2d6186cdb?format=xml`,
+				headers: {
+					'cookie': 'VIDUSR=trace-0003-DAVID-1597468226-Z+qdRW4rGZnwzQ==', 
+					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
+				},
 				auth: auth,
 				json: true
 			}).then(({ response, body }) => {
@@ -82,6 +112,10 @@ describe('Traffic Monitor API', function () {
 			return requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/trace/f1aefd5e3501dd00a16eebc0`,
+				headers: {
+					'cookie': 'VIDUSR=trace-0004-DAVID-1597468226-Z+qdRW4rGZnwzQ==', 
+					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
+				},
 				auth: auth,
 				json: true
 			}).then(({ response, body }) => {
@@ -104,6 +138,10 @@ describe('Traffic Monitor API', function () {
 			return requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/trace/5bb7e85e940e4dcca856cd26?format=json`,
+				headers: {
+					'cookie': 'VIDUSR=trace-0005-DAVID-1597468226-Z+qdRW4rGZnwzQ==', 
+					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
+				},
 				auth: auth,
 				json: true
 			}).then(({ response, body }) => {

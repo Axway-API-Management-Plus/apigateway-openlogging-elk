@@ -1,0 +1,19 @@
+{
+    "result": {
+        "user": "rene",
+        "permissions": [
+            "adminusers",
+            "settings",
+            "mgmt",
+            "ama",
+            "fips_read",
+            "emc",
+            "traffic_monitor",
+            "monitoring",
+            "logs",
+            "adminusers_reset",
+            "dashboard",
+            "events"
+        ]
+    }
+}
