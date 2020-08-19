@@ -73,7 +73,7 @@ describe('Test API Lookup', () => {
 			});
 
 			expect(value).to.be.instanceOf(Error);
-			expect(value.message).to.equal(`Error getting APIs with API-Name: Unknown API. Request sent to: 'https://mocked-api-gateway:8175'. Error: getaddrinfo ENOTFOUND mocked-api-gateway`);
+			expect(value.message).to.have.string(`Error getting APIs with API-Name: Unknown API. Request sent to: 'https://mocked-api-gateway:8175'. Error: getaddrinfo`);
 			expect(output).to.equal('error');
 		});
 
