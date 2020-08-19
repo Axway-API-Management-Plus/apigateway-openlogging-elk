@@ -12,7 +12,7 @@ flow-nodes:
           requestHeaders:
             name: Request Headers
             description: The request headers are used to lookup the current users based on the current session cookie (VIDUSR).
-            required: false
+            required: true
             initialType: string
             schema:
               type: string

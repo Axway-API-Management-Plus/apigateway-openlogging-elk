@@ -709,7 +709,7 @@ module.exports = [
                 "client": "4e8634ba-6762-45ca-bbe5-7ca4e99192ac",
                 "monitor": true,
                 "status": "success",
-                "apiOrg": "API Development", 
+                "apiOrg": "Max Org", 
                 "apiVersion": "1.0.5", 
                 "apiDeprecated": false, 
                 "apiState": "published"
@@ -1969,7 +1969,7 @@ module.exports = [
                 "client": "4e8634ba-6762-45ca-bbe5-7ca4e99192ac",
                 "monitor": true,
                 "status": "success",
-                "apiOrg": "API Development", 
+                "apiOrg": "Max Org", 
                 "apiVersion": "1.0.5", 
                 "apiDeprecated": false, 
                 "apiState": "published"

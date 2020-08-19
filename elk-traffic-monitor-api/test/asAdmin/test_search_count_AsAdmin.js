@@ -13,8 +13,8 @@ describe('Endpoints', function () {
 
 	beforeEach(() => {
 		// Simulate all responses in this test-file to be an admin, which will not lead to any result restriction
-		nock('https://mocked-api-gateway:8090').get('/api/rbac/currentuser').reply(200, { "result": "gwadmin" });
-		nock('https://mocked-api-gateway:8090').get('/api/rbac/permissions/currentuser').replyWithFile(200, './test/mockedReplies/apigateway/gwadminUserPermissions.json');
+		nock('https://mocked-api-gateway:8090').get('/api/rbac/currentuser').reply(200, { "result": "david" });
+		nock('https://mocked-api-gateway:8090').get('/api/rbac/permissions/currentuser').replyWithFile(200, './test/mockedReplies/apigateway/adminUserDavid.json');
 	});
 
 	afterEach(() => {
@@ -61,7 +61,7 @@ describe('Endpoints', function () {
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search`,
 				headers: {
-					'cookie': 'VIDUSR=1597468226-Z+qdRW4rGZnwzQ==', 
+					'cookie': 'VIDUSR=Search-Count-0001-DAVID-1597468226-Z+qdRW4rGZnwzQ==', 
 					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
 				},
 				auth: auth,
@@ -83,7 +83,7 @@ describe('Endpoints', function () {
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?count=5`,
 				headers: {
-					'cookie': 'VIDUSR=1597468226-Z+qdRW4rGZnwzQ==', 
+					'cookie': 'VIDUSR=Search-Count-0002-DAVID-1597468226-Z+qdRW4rGZnwzQ==', 
 					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
 				},
 				auth: auth,
@@ -105,7 +105,7 @@ describe('Endpoints', function () {
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?count=50`,
 				headers: {
-					'cookie': 'VIDUSR=1597468226-Z+qdRW4rGZnwzQ==', 
+					'cookie': 'VIDUSR=Search-Count-0003-DAVID-1597468226-Z+qdRW4rGZnwzQ==', 
 					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
 				},
 				auth: auth,

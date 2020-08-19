@@ -13,8 +13,8 @@ describe('Traffic Monitor API', function () {
 
 	beforeEach(() => {
 		// Simulate all responses in this test-file to be an admin, which will not lead to any result restriction
-		nock('https://mocked-api-gateway:8090').get('/api/rbac/currentuser').reply(200, { "result": "gwadmin" });
-		nock('https://mocked-api-gateway:8090').get('/api/rbac/permissions/currentuser').replyWithFile(200, './test/mockedReplies/apigateway/gwadminUserPermissions.json');
+		nock('https://mocked-api-gateway:8090').get('/api/rbac/currentuser').reply(200, { "result": "david" });
+		nock('https://mocked-api-gateway:8090').get('/api/rbac/permissions/currentuser').replyWithFile(200, './test/mockedReplies/apigateway/adminUserDavid.json');
 	});
 
 	afterEach(() => {
@@ -60,6 +60,10 @@ describe('Traffic Monitor API', function () {
 			return requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/trace/81adfd5ef8008da2d6186cdb`,
+				headers: {
+					'cookie': 'VIDUSR=trace-0001-DAVID-1597468226-Z+qdRW4rGZnwzQ==', 
+					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
+				},
 				auth: auth,
 				json: true
 			}).then(({ response, body }) => {
@@ -73,6 +77,10 @@ describe('Traffic Monitor API', function () {
 			return requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/trace/81adfd5ef8008da2d6186cdb?format=json`,
+				headers: {
+					'cookie': 'VIDUSR=trace-0002-DAVID-1597468226-Z+qdRW4rGZnwzQ==', 
+					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
+				},
 				auth: auth,
 				json: true
 			}).then(({ response, body }) => {
@@ -86,6 +94,10 @@ describe('Traffic Monitor API', function () {
 			return requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/trace/81adfd5ef8008da2d6186cdb?format=xml`,
+				headers: {
+					'cookie': 'VIDUSR=trace-0003-DAVID-1597468226-Z+qdRW4rGZnwzQ==', 
+					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
+				},
 				auth: auth,
 				json: true
 			}).then(({ response, body }) => {
@@ -100,6 +112,10 @@ describe('Traffic Monitor API', function () {
 			return requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/trace/f1aefd5e3501dd00a16eebc0`,
+				headers: {
+					'cookie': 'VIDUSR=trace-0004-DAVID-1597468226-Z+qdRW4rGZnwzQ==', 
+					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
+				},
 				auth: auth,
 				json: true
 			}).then(({ response, body }) => {
@@ -122,6 +138,10 @@ describe('Traffic Monitor API', function () {
 			return requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/trace/5bb7e85e940e4dcca856cd26?format=json`,
+				headers: {
+					'cookie': 'VIDUSR=trace-0005-DAVID-1597468226-Z+qdRW4rGZnwzQ==', 
+					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
+				},
 				auth: auth,
 				json: true
 			}).then(({ response, body }) => {

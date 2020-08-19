@@ -1,6 +1,6 @@
 {
-    "id": "2bfaa1c2-49ab-4059-832d-XXXXXXXXX",
-    "name": "Chris Org",
+    "id": "2bfaa1c2-49ab-4059-832d-MAX",
+    "name": "Max Org",
     "description": null,
     "email": null,
     "image": null,
@@ -9,7 +9,7 @@
     "phone": null,
     "enabled": true,
     "development": true,
-    "dn": "o=Chris Org,ou=organizations,ou=APIPortal",
+    "dn": "o=Max Org,ou=organizations,ou=APIPortal",
     "createdOn": 1597326913559,
     "startTrialDate": null,
     "endTrialDate": null,

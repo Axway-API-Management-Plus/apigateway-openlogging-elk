@@ -2,6 +2,7 @@ const https = require('https');
 
 var pluginConfig = {};
 var cache = {};
+var logger;
 
 //process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 /**
@@ -26,7 +27,7 @@ var cache = {};
  */
 async function lookupCurrentUser(params, options) {
 	const { requestHeaders, apiManagerUserRequired } = params;
-	const { logger } = options;
+	logger = options.logger;
 	cache = options.pluginContext.userCache;
 	pluginConfig = options.pluginConfig;
 	if (!requestHeaders) {
@@ -64,11 +65,11 @@ async function lookupCurrentUser(params, options) {
 		throw new Error(`User: '${user.loginName}' not found in API-Manager.`);
 	}
 	user.apiManager = users[0];
-	user.apiManager.organizationName = await _getOrganizationName(user.apiManager.organizationId);
-	logger.debug(`User: '${user.loginName}' found in API-Manager. Organization ${user.apiManager.organizationName}`);
+	var org = await _getOrganization(user.apiManager.organizationId);
+	user.apiManager.organizationName = org.name;
+	logger.debug(`User: '${user.loginName}' (Role: ${user.apiManager.role}) found in API-Manager. Organization: '${user.apiManager.organizationName}'`);
 	cache.set( VIDUSR, user);
 	return user;
-	//logger.info('Lookup user');
 }
 
 async function lookupAPIDetails(params, options) {
@@ -99,7 +100,8 @@ async function lookupAPIDetails(params, options) {
 	if(!apiProxy) {
 		throw new Error(`No APIs found with name: '${apiName}' and apiPath: '${apiPath}'`);
 	}
-	apiProxy.organizationName = await _getOrganizationName(apiProxy.organizationId);
+	var org = await _getOrganization(apiProxy.organizationId);
+	apiProxy.organizationName = org.name;
 	// Remove a few properties we really don't need
 	delete apiProxy.corsProfiles;
 	delete apiProxy.securityProfiles;
@@ -250,9 +252,11 @@ function _getCookie(cookies, cookieName) {
 	return;
 }
 
-async function _getOrganizationName(orgId) {
+async function _getOrganization(orgId) {
 	if(cache.has(`ORG-${orgId}`)) {
-		return cache.get(`ORG-${orgId}`).name;
+		var org = cache.get(`ORG-${orgId}`);
+		logger.debug(`Organization: '${org.name}' (ID: ${orgId}) found in cache.`);
+		return org;
 	}
 	var options = {
 		method: 'GET',
@@ -281,7 +285,7 @@ async function _getOrganizationName(orgId) {
 		throw new Error(`Organization: '${org.name}' is not a development organization.`);
 	}
 	cache.set(`ORG-${orgId}`, org)
-	return org.name;
+	return org;
 }
 
 module.exports = {
