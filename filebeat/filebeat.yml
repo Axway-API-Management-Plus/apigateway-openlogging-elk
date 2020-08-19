@@ -1,4 +1,4 @@
-name: ${NAME:"Filebeat Gateway"}
+name: ${FILEBEAT_NAME:"Filebeat Gateway"}
 filebeat.inputs:
 - input_type: log
   paths: ["/var/log/work/*.log"]
@@ -19,7 +19,7 @@ filebeat.inputs:
     logtype: trace
 
 output.logstash:
-  hosts: ["${LOGSTASH|logstash:5044}"]
+  hosts: ["${LOGSTASH}"]
 
 processors:
   - timestamp:
@@ -33,4 +33,4 @@ monitoring:
   # Get the Cluster-ID (cluster_uuid) with this simple query: http://elasticsearch1:9200/
   cluster_uuid: <YOUR_ELASTICSEARCH-CLUSTER-UUID>
   elasticsearch:
-    hosts: ["${ELASTIC_NODE|http://elasticsearch1:9200}"]
+    hosts: ["${ELASTIC_NODE}"]
