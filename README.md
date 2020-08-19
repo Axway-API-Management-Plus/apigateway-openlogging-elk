@@ -31,16 +31,30 @@ Each API-Gateway instance is writing, [if configured](#enable-open-traffic-event
 
 Once the data is indexed by Elasticsearch it can be used by different clients. This process allows almost realtime monitoring of incoming requests. It takes around 5 seconds until a request is available in Elasticsearch.
 
-## The Axway Traffic-Monitor
-The standard API-Gateway Traffic-Monitor which is shipped with the solution is based on a REST-API that is provided by the Admin-Node-Manager, which gets the Traffic-Information from the OBSDB. This project is partly re-implementing this REST-API, which makes it possible, that the Traffic-Monitor is using data from ElasticSearch instead of the internal OBSDB.  
+## The Traffic-Monitor
+
+The standard API-Gateway Traffic-Monitor which is shipped with the solution is based on a REST-API that is provided by the Admin-Node-Manager. By default the Traffic-Information is loaded from the OBSDB running on each API-Gateway instance. This project is partly re-implementing this REST-API, which makes it possible, that the Traffic-Monitor is using data from ElasticSearch instead of the internal OBSDB.  
 That means, you can use the same tooling as of today, but the underlying implementation of the Traffic-Monitor is now pointing to Elasticsearch instead of the internal OPSDB hosted by each API-Gateway instance. This improves performance damatically, as Elasticsearch can scale across multiple machines if required and other dashboards can be created for instance with Kibana.  
 The glue between Elasticsearch and the API-Gateway Traffic-Monitor is an [API-Builder project](./elk-traffic-monitor-api), that is exposing the same Traffic-Monitor API, but it is implemented using Elasticsearch instead of the OPSDB. The API-Builder is available as a ready to use Docker-Image and preconfigured in the docker-compose file.  
 Optionally you can import the API-Builder API into your API-Management system to apply additional security and by that secure access to your Elasticsearch instance.  
 
-Finally, the Admin-Node-Manager has to be [configured](#configure-the-admin-node-manager) to use the API-Builder API instead of the internal implementation.
+## Restrict the Traffic-Monitor
 
-API-Builder exposing Traffic-Monitor API:  
-[![Traffic-Monitor API](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/workflows/Traffic-Monitor%20API/badge.svg)](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/actions)
+In larger companies hundreds of API service providers are using the API Manager to register their own services/APIs and want or should be able to monitor their own API independently. During registration, the corresponding APIs are assigned to API Manager organizations. However, the standard traffic monitor does not know the organization concept and therefore cannot restrict the view for a user based on the organization of an API.  
+This project solves the problem by storing the API transactions in Elasticsearch with the appropriate organization. This API organization is used when reading the traffic data from Elasticsearch according to the following rules.
+
+| API-Gateway Manager  | API-Manager   | Restriction | Comment | 
+| :---          | :---                 | :---  | :---  |
+| **Administrator**    | N/A           | Unrestricted access | A GW-Manager user is considered as an Admin, when is owns the permission: `adminusers_modify` |
+| **Operator**         | API-Admin     | All APIs having a Service-Context | By default each API processed by the API-Manager has a Service-Context. Pure Gateway APIs (e.g. /healthcheck) will not be visible.|
+| **Operator**         | Org-Admin     | APIs of its own organization | Such a user will only see the APIs that belong to the same organization as himself. |
+| **Operator**         | User          | APIs of its own organization | The same rules apply as for the Org-Admin |
+
+### Setup Restricted user
+
+To give a user limited access to the API Traffic Monitor, the user must use the same login name in the API Manager and API Gateway Manager. Here, for example, an LDAP connection can be a simplification.
+In order to give the user a restricted view in the API Gateway Manager, none of his roles must contain the permission: `adminusers_modify`. A suitable standard role is the `API Gateway Operator role`. 
+You can, of course, create additional roles in the API Gateway Manager to adjust the user's rights according to your needs.
 
 ## Prerequisites
 For a simple deployment the prerequisites are very simple as all services can be started as a Docker-Container. In order to start all components in PoC-Like-Mode you just need:
@@ -129,6 +143,9 @@ ADMIN_NODE_MANAGER=https://api-env:8090
 API_MANAGER_USERNAME=<admin-user>
 API_MANAGER_PASSWORD=<admin-password>
 ```
+
+Build status API-Builder Traffic-Monitor API:  
+[![Traffic-Monitor API](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/workflows/Traffic-Monitor%20API/badge.svg)](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/actions)
 
 ##  Start the environment
 To bring up the entire environment using docker-compose:
