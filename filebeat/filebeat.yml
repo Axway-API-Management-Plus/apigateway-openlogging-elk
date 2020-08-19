@@ -19,7 +19,7 @@ filebeat.inputs:
     logtype: trace
 
 output.logstash:
-  hosts: ["logstash:5044"]
+  hosts: ["${LOGSTASH|logstash:5044}"]
 
 processors:
   - timestamp:
@@ -30,7 +30,7 @@ setup.template.enabled: true
 
 monitoring:
   enabled: true
-  # Get the Cluster-ID with this query: GET /
+  # Get the Cluster-ID (cluster_uuid) with this simple query: http://elasticsearch1:9200/
   cluster_uuid: <YOUR_ELASTICSEARCH-CLUSTER-UUID>
   elasticsearch:
-    hosts: ["elasticsearch1:9200"]
+    hosts: ["${ELASTIC_NODE|http://elasticsearch1:9200}"]
