@@ -1,7 +1,8 @@
 {
 	"schemaVersion": "4",
 	"info": {
-		"name": "trafficMonitorApi - get /router/service/{serviceID}/ops/stream/{correlationID}/*/circuitpath"
+		"name": "Traffic-Monitor API - CircuitPath",
+		"description": "Used by Traffic monitor display the Policy-Execution path"
 	},
 	"parameter": {
 		"properties": {

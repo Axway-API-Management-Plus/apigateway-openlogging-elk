@@ -85,7 +85,6 @@ async function lookupAPIDetails(params, options) {
 	if(cache.has(apiPath)) {
 		return cache.get(apiPath);
 	}
-	debugger;
 	const proxies = await _getAPIProxy(apiName);
 	if(!proxies || proxies.length == 0) {
 		throw new Error(`No APIs found with name: '${apiName}'`);
@@ -116,16 +115,13 @@ async function lookupAPIDetails(params, options) {
 
 async function _getCurrentGWUser(VIDUSR) {
 	var options = {
-		method: 'GET',
-		hostname: pluginConfig.apigateway.hostname,
-		port: pluginConfig.apigateway.port,
 		path: '/api/rbac/currentuser',
 		headers: {
 			'Cookie': `VIDUSR=${VIDUSR}`
 		},
 		agent: new https.Agent({ rejectUnauthorized: false })
 	};
-	loginName = await sendRequest(options)
+	loginName = await sendRequest(pluginConfig.apigateway.url, options)
 		.then(response => {
 			return response.result;
 		})
@@ -137,9 +133,6 @@ async function _getCurrentGWUser(VIDUSR) {
 
 async function _getCurrentGWPermissions(VIDUSR, csrfToken, loginName) {
 	var options = {
-		method: 'GET',
-		hostname: pluginConfig.apigateway.hostname,
-		port: pluginConfig.apigateway.port,
 		path: '/api/rbac/permissions/currentuser',
 		headers: {
 			'Cookie': `VIDUSR=${VIDUSR}`, 
@@ -147,7 +140,7 @@ async function _getCurrentGWPermissions(VIDUSR, csrfToken, loginName) {
 		},
 		agent: new https.Agent({ rejectUnauthorized: false })
 	};
-	result = await sendRequest(options)
+	result = await sendRequest(pluginConfig.apigateway.url, options)
 		.then(response => {
 			return response.result;
 		})
@@ -162,16 +155,13 @@ async function _getCurrentGWPermissions(VIDUSR, csrfToken, loginName) {
 
 async function _getManagerUser(user) {
 	var options = {
-		method: 'GET',
-		hostname: pluginConfig.apimanager.hostname,
-		port: pluginConfig.apimanager.port,
 		path: `/api/portal/v1.3/users?field=loginName&op=eq&value=${user.loginName}&field=enabled&op=eq&value=enabled`,
 		headers: {
 			'Authorization': 'Basic ' + Buffer.from(pluginConfig.apimanager.username + ':' + pluginConfig.apimanager.password).toString('base64')
 		},
 		agent: new https.Agent({ rejectUnauthorized: false })
 	};
-	managerUser = await sendRequest(options)
+	managerUser = await sendRequest(pluginConfig.apimanager.url, options)
 		.then(response => {
 			return response;
 		})
@@ -183,30 +173,27 @@ async function _getManagerUser(user) {
 
 async function _getAPIProxy(apiName) {
 	var options = {
-		method: 'GET',
-		hostname: pluginConfig.apimanager.hostname,
-		port: pluginConfig.apimanager.port,
 		path: `/api/portal/v1.3/proxies?field=name&op=eq&value=${apiName}`,
 		headers: {
 			'Authorization': 'Basic ' + Buffer.from(pluginConfig.apimanager.username + ':' + pluginConfig.apimanager.password).toString('base64')
 		},
 		agent: new https.Agent({ rejectUnauthorized: false })
 	};
-	apiProxy = await sendRequest(options)
+	apiProxy = await sendRequest(pluginConfig.apimanager.url, options)
 		.then(response => {
 			return response;
 		})
 		.catch(err => {
-			throw new Error(`Error getting APIs with API-Name: ${apiName}. Request sent to: '${pluginConfig.apimanager.hostname}:${pluginConfig.apimanager.port}'. ${err}`);
+			throw new Error(`Error getting APIs with API-Name: ${apiName}. Request sent to: '${pluginConfig.apimanager.url}'. ${err}`);
 		});
 	return apiProxy;
 }
 
-async function sendRequest(options) {
+async function sendRequest(url, options) {
 	return new Promise((resolve, reject) => {
 		try {
 			options.path = encodeURI(options.path);
-			var req = https.request(options, function (response) {
+			var req = https.request(url, options, function (response) {
 				var chunks = [];
 				var statusCode = response.statusCode;
 				response.on("data", function (chunk) {
@@ -240,7 +227,6 @@ async function sendRequest(options) {
 }
 
 function _getCookie(cookies, cookieName) {
-	debugger;
 	const fields = cookies.split(";");
 	for (var i = 0; i < fields.length; ++i) {
 		var cookie = fields[i].trim();
@@ -259,16 +245,13 @@ async function _getOrganization(orgId) {
 		return org;
 	}
 	var options = {
-		method: 'GET',
-		hostname: pluginConfig.apimanager.hostname,
-		port: pluginConfig.apimanager.port,
 		path: `/api/portal/v1.3/organizations/${orgId}`,
 		headers: {
 			'Authorization': 'Basic ' + Buffer.from(pluginConfig.apimanager.username + ':' + pluginConfig.apimanager.password).toString('base64')
 		},
 		agent: new https.Agent({ rejectUnauthorized: false })
 	};
-	org = await sendRequest(options)
+	org = await sendRequest(pluginConfig.apimanager.url, options)
 		.then(response => {
 			if(!response) {
 				throw new Error(`Organization with : '${orgId}' not found in API-Manager.`);

@@ -1,7 +1,8 @@
 {
 	"schemaVersion": "4",
 	"info": {
-		"name": "trafficMonitorApi - get /router/service/{serviceID}/ops/trace/{correlationID}"
+		"name": "Traffic-Monitor API - Trace",
+		"description": "Used by Traffic monitor to show the trace details"
 	},
 	"parameter": {
 		"properties": {

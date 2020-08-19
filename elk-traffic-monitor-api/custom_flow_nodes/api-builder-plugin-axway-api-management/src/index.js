@@ -22,11 +22,13 @@ async function getPlugin(pluginConfig, options) {
 	if(!pluginConfig.apimanager) {
 		throw new Error(`API-Manager (apimanager) paramater section is missing in configuration`);
 	}
-	if(!pluginConfig.apigateway.hostname) {
-		throw new Error(`Required parameter: apigateway.hostname is not set.`);
+	if(!pluginConfig.apigateway.url) {
+		throw new Error(`Required parameter: apigateway.url is not set.`);
 	}
-	if(!pluginConfig.apimanager.hostname) {
-		pluginConfig.apimanager.hostname = pluginConfig.apigateway.hostname;
+	if(!pluginConfig.apimanager.url) {
+		const managerURL = new URL(pluginConfig.apigateway.url);
+		managerURL.port = 8075;
+		pluginConfig.apimanager.url = managerURL.toString();
 	}
 	if(!pluginConfig.apimanager.username) {
 		throw new Error(`Required parameter: apimanager.username is not set.`)

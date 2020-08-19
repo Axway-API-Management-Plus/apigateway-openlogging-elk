@@ -1,7 +1,8 @@
 {
 	"schemaVersion": "4",
 	"info": {
-		"name": "monitoringApiApi - get /router/service/{serviceID}/ops/search"
+		"name": "Traffic-Monitor API - Search",
+		"description": "Used by Traffic monitor to search for APIs (Table overview)"
 	},
 	"parameter": {
 		"properties": {

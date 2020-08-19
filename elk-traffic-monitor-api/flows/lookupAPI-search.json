@@ -1,7 +1,8 @@
 {
 	"schemaVersion": "4",
 	"info": {
-		"name": "lookupAPI - get /lookup/api"
+		"name": "API Lookup",
+		"description": "Looks up an API - Used by Logstash to enrich documents."
 	},
 	"parameter": {
 		"properties": {

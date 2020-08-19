@@ -28,21 +28,21 @@ describe('Configuration parameter tests', () => {
 				.and.to.have.property('message', 'API-Manager (apimanager) paramater section is missing in configuration');
 			}
 		});
-		it('should error when API-Gateway hostname is missing', async () => {
+		it('should error when API-Gateway URL is missing', async () => {
 			try {
 				pluginConfig.apimanager = {};
 				pluginConfig.apigateway = {};
 				const plugin = await MockRuntime.loadPlugin(getPlugin,pluginConfig);
 			} catch(e) {
 				expect(e).to.be.an('Error')
-				.and.to.have.property('message', 'Required parameter: apigateway.hostname is not set.');
+				.and.to.have.property('message', 'Required parameter: apigateway.url is not set.');
 			}
 		});
 		it('should error when API-Manager username is not set', async () => {
 			try {
 				pluginConfig.apimanager = {};
 				pluginConfig.apigateway = {};
-				pluginConfig.apigateway.hostname = "api-amanager-host";
+				pluginConfig.apigateway.url = "https://api-gateway-host:8090";
 				const plugin = await MockRuntime.loadPlugin(getPlugin,pluginConfig);
 			} catch(e) {
 				expect(e).to.be.an('Error')
@@ -53,7 +53,7 @@ describe('Configuration parameter tests', () => {
 			try {
 				pluginConfig.apimanager = {};
 				pluginConfig.apigateway = {};
-				pluginConfig.apigateway.hostname = "api-amanager-host";
+				pluginConfig.apigateway.url = "https://api-gateway-host:8090";
 				pluginConfig.apimanager.username = "apiadmin";
 				const plugin = await MockRuntime.loadPlugin(getPlugin,pluginConfig);
 			} catch(e) {
@@ -61,10 +61,10 @@ describe('Configuration parameter tests', () => {
 				.and.to.have.property('message', 'Required parameter: apimanager.password is not set.');
 			}
 		});
-		it('should NOT FAIL when API-Manager hostname is not set', async () => {
+		it('should NOT FAIL when API-Manager URL is not set', async () => {
 			pluginConfig.apimanager = {};
 			pluginConfig.apigateway = {};
-			pluginConfig.apigateway.hostname = "any.host.com";
+			pluginConfig.apigateway.url = "https://any-gateway-host:8090";
 			pluginConfig.apimanager.username = "apiadmin";
 			pluginConfig.apimanager.password = "changeme";
 			plugin = await MockRuntime.loadPlugin(getPlugin,pluginConfig);
@@ -79,7 +79,7 @@ describe('Tests with complete configuration parameters', () => {
 	let plugin;
 	let flowNode;
 
-	const enabledField = "&field=enabled&op=eq&value=true";
+	const enabledField = "&field=enabled&op=eq&value=enabled";
 
 	// Loads environment variables from .env if the file exists
 	const envFilePath = path.join(__dirname, '.env');

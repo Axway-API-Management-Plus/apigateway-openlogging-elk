@@ -76,6 +76,7 @@ services:
     environment:
       - PIPELINE_WORKERS=1
       - XPACK_MONITORING_ELASTICSEARCH_HOSTS=["elasticsearch1:9200"]
+      - API_BUILDER_HOST=${API_BUILDER_HOST}
     ports:
       - 5044:5044
     volumes:
@@ -94,7 +95,7 @@ services:
     links:
       - elasticsearch1
     environment:
-      - ELASTIC_NODE=http://elasticsearch1:9200
+      - ELASTIC_NODE=${ELASTIC_NODE}
       - API_GATEWAY_HOSTNAME=${API_GATEWAY_HOSTNAME}
       - API_MANAGER_USERNAME=${API_MANAGER_USERNAME}
       - API_MANAGER_PASSWORD=${API_MANAGER_PASSWORD}

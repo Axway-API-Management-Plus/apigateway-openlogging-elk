@@ -1,7 +1,8 @@
 {
 	"schemaVersion": "4",
 	"info": {
-		"name": "trafficMonitorApi - get /router/service/{serviceID}/ops/{protocol}/{correlationID}/{legID}/getinfo"
+		"name": "Traffic-Monitor API - GetInfo",
+		"description": "Used by Traffic monitor to display Request/Responses"
 	},
 	"parameter": {
 		"properties": {

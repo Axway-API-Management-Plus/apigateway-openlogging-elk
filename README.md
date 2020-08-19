@@ -1,6 +1,19 @@
 # API-Management Traffic-Monitor based ELK stack
 
+This project has 3 objectives in relation to the Axway API management solution
+
+__Performance__  
+
 When having many API-Gateway instances with millions of requests the API-Gateway Traffic Monitor can become slow and the observation period quite short. The purpose of this project is to solve that performance issue, make it possible to observe a long time-frame and get other benefits by using a standard external datastore: [Elasticsearch](https://www.elastic.co/elasticsearch).  
+
+__Visibility__  
+
+This solution allows API service providers to give access to the Standard Traffic Monitor so that they only see the API traffic of their own organization. This allows API service providers to analyze their own traffic using the extensive information in the traffic monitor.
+
+__Analytics__  
+
+With the help of Kibana, the goal of the project is to deliver standard dashboards that provide analysis capabilities across multiple perspectives.  
+It should still be possible to add your own dashboards as you wish.
 
 The overall architecture this project provides looks like this:  
 ![Architecture][img1]   
@@ -83,11 +96,14 @@ Please remember to copy the changed Admin-Node-Manager configuration from the Po
 
 ### Setup filebeat
 :exclamation: __This is an important step, as otherwise Filebeat will not see and send any Open-Traffic Event data!__  
-Before starting the container using docker-compose, make sure to setup the paths in the project `*.env` file. The variables must point to your running API-Gateway instance. These parameters are used to mount the Open-Traffic-Folder into the Filebeat container. For a typical Linux installation it looks like this (APIM beeing a symlink to current software version):
+Before starting the containers using docker-compose, make sure to setup the paths in the project `*.env` file. The variables must point to your running API-Gateway instance. These parameters are used to mount the Open-Traffic-Folder into the Filebeat container. For a typical Linux installation it looks like this (APIM beeing a symlink to current software version):
 ```
 APIGATEWAY_LOGS_FOLDER=/opt/Axway/APIM/apigateway/logs/opentraffic
 APIGATEWAY_TRACES_FOLDER=/opt/Axway/APIM/apigateway/groups/group-2/instance-1/trace
 ```
+
+### Setup Logstash
+
 
 ### Setup API-Builder
 As the API-Builder container needs to communicate with Elasticsearch it needs to know where Elasticsearch is running. Again, this environment variable must be configured within `.env`:
