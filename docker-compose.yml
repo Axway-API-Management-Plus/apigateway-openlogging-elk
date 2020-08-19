@@ -58,6 +58,7 @@ services:
       - setup.kibana.host=kibana:5601
       - output.elasticsearch.hosts=["elasticsearch1:9200"]
       - LOGSTASH=${LOGSTASH}
+      - ELASTIC_NODE=${ELASTIC_NODE}
     ports:
       - 9000:9000
     volumes:
