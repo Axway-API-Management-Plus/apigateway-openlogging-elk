@@ -10,7 +10,10 @@ module.exports = {
 				url: process.env.API_MANAGER, // If not set, the Admin-Node-Manager hostname is used
 				username: process.env.API_MANAGER_USERNAME, // User with Admin-Privileges required
 				password: process.env.API_MANAGER_PASSWORD
-			} 
+			}, 
+			// This is used, when running the project as part of the Logstash pipeline to simulate 
+			// successful look ups.
+			mockLookupAPI: process.env.MOCK_LOOKUP_API
 		}
 	}
 };

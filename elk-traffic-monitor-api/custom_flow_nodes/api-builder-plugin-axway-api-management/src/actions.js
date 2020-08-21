@@ -28,7 +28,7 @@ var logger;
 async function lookupCurrentUser(params, options) {
 	const { requestHeaders, apiManagerUserRequired } = params;
 	logger = options.logger;
-	cache = options.pluginContext.userCache;
+	cache = options.pluginContext.cache;
 	pluginConfig = options.pluginConfig;
 	if (!requestHeaders) {
 		throw new Error('You must provide the requestHeaders originally sent to the ANM to this method.');
@@ -74,7 +74,7 @@ async function lookupCurrentUser(params, options) {
 
 async function lookupAPIDetails(params, options) {
 	const { apiName, apiPath } = params;
-	cache = options.pluginContext.userCache;
+	cache = options.pluginContext.cache;
 	pluginConfig = options.pluginConfig;
 	if (!apiName) {
 		throw new Error('You must provide the apiName that should be used to lookup the API.');
