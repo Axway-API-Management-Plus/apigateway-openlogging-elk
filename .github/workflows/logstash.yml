@@ -27,10 +27,9 @@ jobs:
     - name: Install Logstash-Verifier
       run: |
         wget -c https://github.com/magnusbaeck/logstash-filter-verifier/releases/download/1.6.1/logstash-filter-verifier_1.6.1_linux_amd64.tar.gz -O - | tar -xvz
-    - name: Run Logstash config tests
+    - name: Test Logstash pipeline
       run: |
-        dir
-        echo Using  API_BUILDER_URL: $API_BUILDER_URL
+        echo Using API_BUILDER_URL: $API_BUILDER_URL
         ./logstash-filter-verifier --diff-command="diff -y" --keep-env API_BUILDER_URL ./logstash/test ./logstash/pipeline
       env:
         API_BUILDER_URL: 'http://api-builder:8080'

@@ -77,9 +77,6 @@
               "serviceName": "instance-3",
               "version": "7.7.20200530"
             },
-            "tags": [
-              "_httprequestfailure"
-            ],
             "transactionSummary": {
               "path": "/petstore/v2/user/Chris",
               "protocol": "https",
