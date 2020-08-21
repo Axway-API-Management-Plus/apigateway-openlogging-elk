@@ -6,13 +6,16 @@ jobs:
   test-logstash:
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     runs-on: ubuntu-latest
+    services:
+      api-builder:
+        image: cwiechmann/elk-traffic-monitor-api:latest
+        ports: 
+          - 8080:8080
 
     steps:
     - uses: actions/checkout@v2
 
     # Runs a set of commands using the runners shell
-    - name: Start API-Builder Lookup-API
-      uses: docker://cwiechmann/elk-traffic-monitor-api:latest 
     - name: Install logstash
       run: |
         wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
