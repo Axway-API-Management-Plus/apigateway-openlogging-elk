@@ -59,7 +59,7 @@
         ]
       },
       {
-        "description": "Test transactionSummary event",
+        "description": "Test transactionSummary event with existing API",
         "input": [
           "{\"timestamp\":1594670847467,\"correlationId\":\"ffbe0c5f95da03f602a6e587\",\"processInfo\":{\"hostname\":\"ip-172-31-62-146.ec2.internal\",\"domainId\":\"e1ff3aab-3b11-4820-a1be-3763da2beda4\",\"groupId\":\"group-2\",\"groupName\":\"group-a\",\"serviceId\":\"instance-3\",\"serviceName\":\"instance-3\",\"version\":\"7.7.20200530\"},\"transactionSummary\":{\"path\":\"/petstore/v2/user/Chris\", \"protocol\":\"https\", \"protocolSrc\":\"8065\", \"status\":\"success\", \"serviceContexts\":[{\"service\":\"Petstore\", \"monitor\":true, \"client\":null, \"org\":null, \"app\":null, \"method\":\"getUserByName\", \"status\":\"success\", \"duration\":2}]}}"
         ],
@@ -88,6 +88,44 @@
                 "apiState": "published",
                 "apiVersion": "X.X.X",
                 "service": "Petstore",
+                "monitor": true,
+                "client": null,
+                "appOrg": null,
+                "app": null,
+                "method": "getUserByName",
+                "status": "success",
+                "duration": 2
+              }
+            }
+          }
+        ]
+      },
+      {
+        "description": "Test transactionSummary event with unknwon API that cannot be looked up",
+        "input": [
+          "{\"timestamp\":1594670847467,\"correlationId\":\"OMG-UNKNOWN-API\",\"processInfo\":{\"hostname\":\"ip-172-31-62-146.ec2.internal\",\"domainId\":\"e1ff3aab-3b11-4820-a1be-3763da2beda4\",\"groupId\":\"group-2\",\"groupName\":\"group-a\",\"serviceId\":\"instance-3\",\"serviceName\":\"instance-3\",\"version\":\"7.7.20200530\"},\"transactionSummary\":{\"path\":\"/petstore/v2/user/Chris\", \"protocol\":\"https\", \"protocolSrc\":\"8065\", \"status\":\"success\", \"serviceContexts\":[{\"service\":\"Petstore\", \"monitor\":true, \"client\":null, \"org\":null, \"app\":null, \"method\":\"getUserByName\", \"status\":\"success\", \"duration\":2}]}}"
+        ],
+        "expected": [
+          {
+            "@timestamp": "2020-07-13T20:07:27.467Z",
+            "correlationId": "OMG-UNKNOWN-API",
+            "logtype": "openlog",
+            "processInfo": {
+              "hostname": "ip-172-31-62-146.ec2.internal",
+              "domainId": "e1ff3aab-3b11-4820-a1be-3763da2beda4",
+              "groupId": "group-2",
+              "groupName": "group-a",
+              "serviceId": "instance-3",
+              "serviceName": "instance-3",
+              "version": "7.7.20200530"
+            },
+            "transactionSummary": {
+              "path": "/this/api/is/unknown",
+              "protocol": "https",
+              "protocolSrc": "8065",
+              "status": "success",
+              "serviceContext": {
+                "service": "A unknown API",
                 "monitor": true,
                 "client": null,
                 "appOrg": null,
