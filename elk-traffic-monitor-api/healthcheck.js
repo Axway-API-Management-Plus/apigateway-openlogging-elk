@@ -15,6 +15,9 @@ const options = {
 };
 
 http.request(options, (resp) => {
+
+	console.log(`process.env.MOCK_LOOKUP_API: ${process.env.MOCK_LOOKUP_API}`);
+
 	let data = '';
 
 	resp.on('data', (chunk) => {
