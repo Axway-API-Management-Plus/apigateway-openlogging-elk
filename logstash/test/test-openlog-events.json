@@ -103,7 +103,7 @@
       {
         "description": "Test transactionSummary event with unknwon API that cannot be looked up",
         "input": [
-          "{\"timestamp\":1594670847467,\"correlationId\":\"OMG-UNKNOWN-API\",\"processInfo\":{\"hostname\":\"ip-172-31-62-146.ec2.internal\",\"domainId\":\"e1ff3aab-3b11-4820-a1be-3763da2beda4\",\"groupId\":\"group-2\",\"groupName\":\"group-a\",\"serviceId\":\"instance-3\",\"serviceName\":\"instance-3\",\"version\":\"7.7.20200530\"},\"transactionSummary\":{\"path\":\"/petstore/v2/user/Chris\", \"protocol\":\"https\", \"protocolSrc\":\"8065\", \"status\":\"success\", \"serviceContexts\":[{\"service\":\"Petstore\", \"monitor\":true, \"client\":null, \"org\":null, \"app\":null, \"method\":\"getUserByName\", \"status\":\"success\", \"duration\":2}]}}"
+          "{\"timestamp\":1594670847467,\"correlationId\":\"OMG-UNKNOWN-API\",\"processInfo\":{\"hostname\":\"ip-172-31-62-146.ec2.internal\",\"domainId\":\"e1ff3aab-3b11-4820-a1be-3763da2beda4\",\"groupId\":\"group-2\",\"groupName\":\"group-a\",\"serviceId\":\"instance-3\",\"serviceName\":\"instance-3\",\"version\":\"7.7.20200530\"},\"transactionSummary\":{\"path\":\"/this/api/is/unknown\", \"protocol\":\"https\", \"protocolSrc\":\"8065\", \"status\":\"success\", \"serviceContexts\":[{\"service\":\"A unknown API\", \"monitor\":true, \"client\":null, \"org\":null, \"app\":null, \"method\":\"getUserByName\", \"status\":\"success\", \"duration\":2}]}}"
         ],
         "expected": [
           {
