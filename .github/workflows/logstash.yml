@@ -6,15 +6,12 @@ jobs:
   test-logstash:
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     runs-on: ubuntu-latest
-    env:
-      MOCK_LOOKUP_API: true
     services:
       api-builder:
         image: cwiechmann/elk-traffic-monitor-api:latest
         ports: 
           - 8080:8080
         env:
-          LOG_LEVEL: DEBUG
           MOCK_LOOKUP_API: true
 
     steps:
@@ -31,6 +28,8 @@ jobs:
       run: |
         wget -c https://github.com/magnusbaeck/logstash-filter-verifier/releases/download/1.6.1/logstash-filter-verifier_1.6.1_linux_amd64.tar.gz -O - | tar -xvz
     - name: Run Logstash config tests
+      env:
+        API_BUILDER_URL: 'http://${{ api-builder }}:8080'
       run: |
         dir
-        ./logstash-filter-verifier --diff-command="diff -y" --sockets ./logstash/test ./logstash/pipeline
+        ./logstash-filter-verifier --diff-command="diff -y" ./logstash/test ./logstash/pipeline
