@@ -135,6 +135,48 @@
                 "duration": 2
               }
             }
+          },
+          {
+            "@timestamp": "2020-07-13T20:07:27.467Z",
+            "correlationId": "OMG-UNKNOWN-API",
+            "logtype": "openlog",
+            "processInfo": {
+              "hostname": "ip-172-31-62-146.ec2.internal",
+              "domainId": "e1ff3aab-3b11-4820-a1be-3763da2beda4",
+              "groupId": "group-2",
+              "groupName": "group-a",
+              "serviceId": "instance-3",
+              "serviceName": "instance-3",
+              "version": "7.7.20200530"
+            },
+            "transactionElements" : {
+              "leg0" : {
+                "protocolInfo" : {
+                  "http" : {
+                    "statusText" : "ERROR",
+                    "status" : "XXX",
+                    "authSubjectId" : "ID: OMG-UNKNOWN-API"
+                  }
+                }
+              }
+            },
+            "transactionSummary": {
+              "path": "/this/api/is/unknown",
+              "protocol": "https",
+              "protocolSrc": "8065",
+              "status": "success",
+              "serviceContext": {
+                "service": "A unknown API",
+                "monitor": true,
+                "client": null,
+                "appOrg": null,
+                "app": null,
+                "method": "getUserByName",
+                "status": "success",
+                "duration": 2,
+                "vhost" : "Logstash Error"
+              }
+            }
           }
         ]
       },
