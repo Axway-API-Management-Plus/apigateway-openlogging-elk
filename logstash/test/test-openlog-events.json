@@ -119,6 +119,23 @@
               "serviceName": "instance-3",
               "version": "7.7.20200530"
             },
+            "tags": [
+              "_httprequestfailure"
+            ],
+            "transactionElements" : {
+              "leg0" : {
+                "protocolInfo" : {
+                  "http" : {
+                    "authSubjectId" : "ID: OMG-UNKNOWN-API",
+                    "method": "LOGSTASH",
+                    "status": "900",
+                    "statusText" : "ERROR",
+                    "uri": "/this/api/is/unknown",
+                    "vhost": "Logstash Error"
+                  }
+                }
+              }
+            },
             "transactionSummary": {
               "path": "/this/api/is/unknown",
               "protocol": "https",
@@ -134,7 +151,8 @@
                 "status": "success",
                 "duration": 2
               }
-            }
+            },
+            "type": "errorEvent"
           },
           {
             "@timestamp": "2020-07-13T20:07:27.467Z",
@@ -148,17 +166,6 @@
               "serviceId": "instance-3",
               "serviceName": "instance-3",
               "version": "7.7.20200530"
-            },
-            "transactionElements" : {
-              "leg0" : {
-                "protocolInfo" : {
-                  "http" : {
-                    "statusText" : "ERROR",
-                    "status" : "XXX",
-                    "authSubjectId" : "ID: OMG-UNKNOWN-API"
-                  }
-                }
-              }
             },
             "transactionSummary": {
               "path": "/this/api/is/unknown",
@@ -199,6 +206,9 @@
               "serviceName": "instance-1",
               "version": "7.7.20200530"
             },
+            "tags": [
+              "_httprequestfailure"
+            ],
             "transactionSummary": {
               "path": "/healthcheck",
               "protocol": "http",
