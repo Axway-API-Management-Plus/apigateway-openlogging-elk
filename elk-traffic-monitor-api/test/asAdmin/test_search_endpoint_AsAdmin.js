@@ -581,6 +581,26 @@ describe('Endpoints', function () {
 				expect(body.data[0].uri).to.equals('/petstore/v2/pet/findByStatus');
 			});
 		});
+		it.only('[Endpoint-0023] Should include the V-Host value', () => {
+			const auth = {
+				user: server.apibuilder.config.apikey || 'test',
+				password: ''
+			};
+			return requestAsync({
+				method: 'GET',
+				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?field=correlationId&value=7a240f5f0e21555d2d343482`,
+				headers: {
+					'cookie': 'VIDUSR=Search-0022-DAVID-1597468226-Z+qdRW4rGZnwzQ==', 
+					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
+				},
+				auth: auth,
+				json: true
+			}).then(({ response, body }) => {
+				expect(response.statusCode).to.equal(200);
+				expect(body).to.be.an('Object');
+				expect(body.data[0].vhost).to.equal('api.customer.com:443', 'V-Host is not part of the result');
+			});
+		});
 	});
 });
 

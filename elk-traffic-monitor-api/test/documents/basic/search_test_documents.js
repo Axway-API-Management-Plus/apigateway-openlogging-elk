@@ -76,6 +76,7 @@ module.exports = [
                         "bytesReceived": 747,
                         "localPort": "8065",
                         "method": "GET",
+                        "vhost": "api.customer.com:443",
                         "statusText": "Not Found",
                         "remotePort": "59641",
                         "bytesSent": 834,
