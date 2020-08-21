@@ -108,7 +108,7 @@
         "expected": [
           {
             "@timestamp": "2020-07-13T20:07:27.467Z",
-            "correlationId": "OMG-UNKNOWN-API",
+            "correlationId": "OMG-UNKNOWN-API-Error",
             "logtype": "openlog",
             "processInfo": {
               "hostname": "ip-172-31-62-146.ec2.internal",
@@ -147,7 +147,7 @@
                 "client": null,
                 "appOrg": null,
                 "app": null,
-                "method": "getUserByName",
+                "method": "check the logs",
                 "status": "success",
                 "duration": 2
               }
@@ -156,7 +156,7 @@
           },
           {
             "@timestamp": "2020-07-13T20:07:27.467Z",
-            "correlationId": "OMG-UNKNOWN-API-Error",
+            "correlationId": "OMG-UNKNOWN-API",
             "logtype": "openlog",
             "processInfo": {
               "hostname": "ip-172-31-62-146.ec2.internal",
@@ -167,6 +167,9 @@
               "serviceName": "instance-3",
               "version": "7.7.20200530"
             },
+            "tags": [
+              "_httprequestfailure"
+            ],
             "transactionSummary": {
               "path": "/this/api/is/unknown",
               "protocol": "https",
@@ -206,9 +209,6 @@
               "serviceName": "instance-1",
               "version": "7.7.20200530"
             },
-            "tags": [
-              "_httprequestfailure"
-            ],
             "transactionSummary": {
               "path": "/healthcheck",
               "protocol": "http",
