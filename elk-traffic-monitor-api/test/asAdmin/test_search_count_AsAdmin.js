@@ -26,7 +26,6 @@ describe('Endpoints', function () {
 	 */
 	before(() => {
 		return new Promise(function(resolve, reject){
-			debugger;
 			const envFilePath = path.join(__dirname, '../.env');
 			if (fs.existsSync(envFilePath)) {
 				envLoader.config({ path: envFilePath });

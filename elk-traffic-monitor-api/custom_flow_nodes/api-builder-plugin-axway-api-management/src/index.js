@@ -14,9 +14,10 @@ const NodeCache = require( "node-cache" );
  * @returns {object} An API Builder plugin.
  */
 async function getPlugin(pluginConfig, options) {
+	debugger;
 	const cache = new NodeCache({ stdTTL: 3600, useClones: false });
 	const sdk = new SDK({ pluginConfig });
-	if(pluginConfig.CI) {
+	if(pluginConfig.MOCK_LOOKUP_API==true) {
 		options.logger.info("Lookup API will mock for tests");
 		await addLookupAPIMocks(cache);
 	} else {
@@ -46,7 +47,7 @@ async function getPlugin(pluginConfig, options) {
 }
 
 /**
- * This add a number of Keys into the cache that are triggered 
+ * This adds a number of Keys into the cache that are triggered 
  * by the Logstash-Pipeline tests. 
  * This avoids to have an API-Manager Up&Running 
  */

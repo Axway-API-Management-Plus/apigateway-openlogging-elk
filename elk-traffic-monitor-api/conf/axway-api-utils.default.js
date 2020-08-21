@@ -13,7 +13,7 @@ module.exports = {
 			}, 
 			// This is true, when running as part of the CI-Pipeline (GitHub Actions)
 			// If true, some test API-Requests are then mocked
-			CI: process.env.CI
+			MOCK_LOOKUP_API: process.env.MOCK_LOOKUP_API
 		}
 	}
 };
