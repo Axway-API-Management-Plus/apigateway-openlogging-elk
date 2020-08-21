@@ -6,8 +6,6 @@ jobs:
   test-logstash:
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     runs-on: ubuntu-latest
-    env:
-      MOCK_LOOKUP_API: true
     services:
       api-builder:
         image: cwiechmann/elk-traffic-monitor-api:latest

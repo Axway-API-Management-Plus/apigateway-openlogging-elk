@@ -11,9 +11,9 @@ module.exports = {
 				username: process.env.API_MANAGER_USERNAME, // User with Admin-Privileges required
 				password: process.env.API_MANAGER_PASSWORD
 			}, 
-			// This is used, when running the project as part of the Logstash pipeline to simulate 
-			// successful look ups.
-			mockLookupAPI: process.env.MOCK_LOOKUP_API
+			// This is true, when running as part of the CI-Pipeline (GitHub Actions)
+			// If true, some test API-Requests are then mocked
+			CI: process.env.CI
 		}
 	}
 };

@@ -16,7 +16,7 @@ const NodeCache = require( "node-cache" );
 async function getPlugin(pluginConfig, options) {
 	const cache = new NodeCache({ stdTTL: 3600, useClones: false });
 	const sdk = new SDK({ pluginConfig });
-	if(pluginConfig.mockLookupAPI) {
+	if(pluginConfig.CI) {
 		options.logger.info("Lookup API will mock for tests");
 		await addLookupAPIMocks(cache);
 	} else {
