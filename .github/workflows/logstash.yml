@@ -32,4 +32,4 @@ jobs:
         echo Using API_BUILDER_URL: $API_BUILDER_URL
         ./logstash-filter-verifier --diff-command="diff -y" --logstash-output --keep-env=API_BUILDER_URL ./logstash/test ./logstash/pipeline
       env:
-        API_BUILDER_URL: 'http://api-builder:8080'
+        API_BUILDER_URL: 'http://localhost:8080'
