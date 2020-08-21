@@ -1,4 +1,4 @@
-name: Logstash config test
+name: Test Logstash pipeline
 
 on: [push, pull_request]
 
@@ -30,6 +30,6 @@ jobs:
     - name: Test Logstash pipeline
       run: |
         echo Using API_BUILDER_URL: $API_BUILDER_URL
-        ./logstash-filter-verifier --diff-command="diff -y" --keep-env API_BUILDER_URL ./logstash/test ./logstash/pipeline
+        ./logstash-filter-verifier --diff-command="diff -y" --loglevel=DEBUG --keep-env=API_BUILDER_URL ./logstash/test ./logstash/pipeline
       env:
         API_BUILDER_URL: 'http://api-builder:8080'
