@@ -83,6 +83,10 @@
               "protocolSrc": "8065",
               "status": "success",
               "serviceContext": {
+                "apiDeprecated": "false",
+                "apiOrg": "Mocked Org A",
+                "apiState": "published",
+                "apiVersion": "X.X.X",
                 "service": "Petstore",
                 "monitor": true,
                 "client": null,
