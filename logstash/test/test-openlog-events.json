@@ -338,7 +338,7 @@
                 "serviceName": "Scheduled policy",
                 "operation": "N/A",
                 "finalStatus": "Pass",
-                "duration": -1,
+                "duration": "-1",
                 "protocolInfo": {
                   "http": {
                     "uri": "N/A",
