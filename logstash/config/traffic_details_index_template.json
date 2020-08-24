@@ -1,7 +1,6 @@
 {
     "index_patterns": [
-        "apigw-traffic-details-*",
-        "apigw-traffic-errors-*"
+        "apigw-traffic-*"
     ],
     "settings": {
         "number_of_shards": 5, 
