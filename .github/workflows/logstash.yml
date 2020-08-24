@@ -17,8 +17,6 @@ jobs:
         image: memcached:1.6.6-alpine
         ports: 
           - 11211:11211
-        env:
-          MOCK_LOOKUP_API: true
 
     steps:
     - uses: actions/checkout@v2
