@@ -93,7 +93,7 @@ services:
 
   # This is the API-Builder project exposing the API-Gateway Manager REST-API
   elk-traffic-monitor-api:
-    image: cwiechmann/elk-traffic-monitor-api:v0.0.9
+    image: cwiechmann/elk-traffic-monitor-api:latest
     links:
       - elasticsearch1
     environment:
