@@ -4,7 +4,7 @@
 
 name: Traffic-Monitor API
 
-on: [push, pull_request, published ]
+on: [push, pull_request]
 
 jobs:
   build:
