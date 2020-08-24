@@ -4,7 +4,6 @@ const actions = require('./actions');
 const NodeCache = require( "node-cache" );
 const { sendRequest, _getSession } = require('./utils');
 const https = require('https');
-const { Logger } = require('@axway/api-builder-runtime');
 
 /**
  * Resolves the API Builder plugin.
