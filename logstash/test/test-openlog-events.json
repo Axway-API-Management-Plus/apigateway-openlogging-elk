@@ -313,6 +313,54 @@
             ]
           }
         ]
+      },
+      {
+        "description": "A scheduled policy",
+        "input": [
+          "{\"timestamp\":1598271030003,\"correlationId\":\"36ae435faa3e258ee1092b60\",\"processInfo\":{\"hostname\":\"api-env\",\"domainId\":\"ed992442-c363-4d36-963a-9e6314b0f421\",\"groupId\":\"group-2\",\"groupName\":\"QuickStart Group\",\"serviceId\":\"instance-1\",\"serviceName\":\"QuickStart Server\",\"version\":\"7.7.20200730\"},\"transactionSummary\":{\"path\":null, \"protocol\":null, \"protocolSrc\":null, \"status\":\"success\", \"serviceContexts\":[]}}"
+        ],
+        "expected": [
+          {
+            "@timestamp": "2020-07-13T18:40:15.973Z",
+            "correlationId": "82ad435f683e5d5187dde411",
+            "logtype": "openlog",
+            "processInfo": {
+              "hostname": "api-env",
+              "domainId": "ed992442-c363-4d36-963a-9e6314b0f421",
+              "groupId": "group-2",
+              "groupName": "QuickStart Group",
+              "serviceId": "instance-1",
+              "serviceName": "QuickStart Server",
+              "version": "7.7.20200530"
+            },
+            "transactionElements": {
+              "leg0": {
+                "serviceName": "Scheduled policy",
+                "operation": "N/A",
+                "finalStatus": "Pass",
+                "duration": "N/A",
+                "protocolInfo": {
+                  "http": {
+                    "uri": "N/A",
+                    "status": 901,
+                    "statusText": "OK",
+                    "method": "N/A"
+                  }
+                }
+              }
+            },
+            "transactionSummary": {
+              "path": null,
+              "protocol": null,
+              "protocolSrc": null,
+              "status": "success",
+              "serviceContext": [
+
+              ]
+            },
+            "type": "scheduledPolicy"
+          }
+        ]
       }
     ]
   }
