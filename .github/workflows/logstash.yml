@@ -37,3 +37,4 @@ jobs:
         ./logstash-filter-verifier --diff-command="diff -y" --keep-env=API_BUILDER_URL ./logstash/test ./logstash/pipeline
       env:
         API_BUILDER_URL: 'http://localhost:8080'
+        MEMCACHED: 'http://localhost:11211'
