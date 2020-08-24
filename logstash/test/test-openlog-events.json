@@ -335,7 +335,6 @@
             },
             "transactionElements": {
               "leg0": {
-                "serviceName": "Scheduled policy",
                 "operation": "N/A",
                 "finalStatus": "Pass",
                 "duration": "-1",
@@ -354,7 +353,10 @@
               "protocol": null,
               "protocolSrc": null,
               "status": "success",
-              "serviceContext": null
+              "serviceContext": {
+                "method": "N/A",
+                "service": "Scheduled policy"
+              }
             },
             "type": "scheduledPolicy"
           }
