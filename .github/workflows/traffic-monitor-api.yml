@@ -7,7 +7,7 @@ name: Traffic-Monitor API
 on: [push, pull_request]
 
 jobs:
-  traffic-monitor-api:
+  test-traffic-monitor-api:
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     env:
       workingDirectory: 'elk-traffic-monitor-api'
@@ -52,11 +52,11 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
         tags: "latest"
 
-  publish:
+  publish-traffic-monitor-api:
     if: github.event.action == 'published'
     env:
       workingDirectory: 'elk-traffic-monitor-api'
-    needs: build
+    needs: test-traffic-monitor-api
 
     runs-on: ubuntu-latest
 
