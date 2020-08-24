@@ -342,7 +342,7 @@
                 "protocolInfo": {
                   "http": {
                     "uri": "N/A",
-                    "status": 901,
+                    "status": "901",
                     "statusText": "OK",
                     "method": "N/A"
                   }
