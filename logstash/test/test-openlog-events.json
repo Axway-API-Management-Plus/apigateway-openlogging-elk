@@ -321,8 +321,8 @@
         ],
         "expected": [
           {
-            "@timestamp": "2020-07-13T18:40:15.973Z",
-            "correlationId": "82ad435f683e5d5187dde411",
+            "@timestamp": "2020-08-24T12:10:30.003Z",
+            "correlationId": "36ae435faa3e258ee1092b60",
             "logtype": "openlog",
             "processInfo": {
               "hostname": "api-env",
@@ -331,7 +331,7 @@
               "groupName": "QuickStart Group",
               "serviceId": "instance-1",
               "serviceName": "QuickStart Server",
-              "version": "7.7.20200530"
+              "version": "7.7.20200730"
             },
             "transactionElements": {
               "leg0": {
@@ -354,9 +354,7 @@
               "protocol": null,
               "protocolSrc": null,
               "status": "success",
-              "serviceContext": [
-
-              ]
+              "serviceContext": null
             },
             "type": "scheduledPolicy"
           }
