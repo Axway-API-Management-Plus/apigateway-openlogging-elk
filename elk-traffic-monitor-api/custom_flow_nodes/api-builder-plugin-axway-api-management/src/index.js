@@ -4,6 +4,7 @@ const actions = require('./actions');
 const NodeCache = require( "node-cache" );
 const { sendRequest, _getSession } = require('./utils');
 const https = require('https');
+const { Logger } = require('@axway/api-builder-runtime');
 
 /**
  * Resolves the API Builder plugin.
@@ -49,6 +50,8 @@ async function getPlugin(pluginConfig, options) {
 			} else {
 				options.logger.info("Connection to API-Manager successfully validated.");
 			}
+		} else {
+			options.logger.warn("Config validation is skipped, as parameter: pluginConfig.validateConfig=true");
 		}
 	}
 	sdk.load(path.resolve(__dirname, 'flow-nodes.yml'), actions, { pluginContext: { cache: cache }, pluginConfig});

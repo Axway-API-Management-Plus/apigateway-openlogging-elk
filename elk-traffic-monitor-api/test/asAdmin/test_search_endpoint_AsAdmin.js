@@ -581,7 +581,7 @@ describe('Endpoints', function () {
 				expect(body.data[0].uri).to.equals('/petstore/v2/pet/findByStatus');
 			});
 		});
-		it.only('[Endpoint-0023] Should include the V-Host value', () => {
+		it('[Endpoint-0023] Should include the V-Host value', () => {
 			const auth = {
 				user: server.apibuilder.config.apikey || 'test',
 				password: ''
