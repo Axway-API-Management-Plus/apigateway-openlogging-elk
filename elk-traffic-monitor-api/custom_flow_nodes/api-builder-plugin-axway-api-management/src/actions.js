@@ -1,4 +1,5 @@
 const https = require('https');
+const { sendRequest, _getCookie } = require('./utils');
 
 var pluginConfig = {};
 var cache = {};
@@ -123,7 +124,7 @@ async function _getCurrentGWUser(VIDUSR) {
 	};
 	loginName = await sendRequest(pluginConfig.apigateway.url, options)
 		.then(response => {
-			return response.result;
+			return response.body.result;
 		})
 		.catch(err => {
 			throw new Error(`Error getting current user Request sent to: '${pluginConfig.apigateway.hostname}'. ${err}`);
@@ -142,7 +143,7 @@ async function _getCurrentGWPermissions(VIDUSR, csrfToken, loginName) {
 	};
 	result = await sendRequest(pluginConfig.apigateway.url, options)
 		.then(response => {
-			return response.result;
+			return response.body.result;
 		})
 		.catch(err => {
 			throw new Error(err);
@@ -163,7 +164,7 @@ async function _getManagerUser(user) {
 	};
 	managerUser = await sendRequest(pluginConfig.apimanager.url, options)
 		.then(response => {
-			return response;
+			return response.body;
 		})
 		.catch(err => {
 			throw new Error(err);
@@ -181,61 +182,12 @@ async function _getAPIProxy(apiName) {
 	};
 	apiProxy = await sendRequest(pluginConfig.apimanager.url, options)
 		.then(response => {
-			return response;
+			return response.body;
 		})
 		.catch(err => {
 			throw new Error(`Error getting APIs with API-Name: ${apiName}. Request sent to: '${pluginConfig.apimanager.url}'. ${err}`);
 		});
 	return apiProxy;
-}
-
-async function sendRequest(url, options) {
-	return new Promise((resolve, reject) => {
-		try {
-			options.path = encodeURI(options.path);
-			var req = https.request(url, options, function (response) {
-				var chunks = [];
-				var statusCode = response.statusCode;
-				response.on("data", function (chunk) {
-					chunks.push(chunk);
-				});
-
-				response.on("end", function () {
-					var body = Buffer.concat(chunks);
-					if (statusCode < 200 || statusCode > 299) {
-						reject(`Unexpected response for HTTP-Request. Response-Code: ${statusCode}`);
-						return;
-					}
-					const userResponse = body.toString();
-					if (!userResponse) {
-						resolve(userResponse);
-						return;
-					}
-					resolve(JSON.parse(userResponse));
-					return;
-				});
-			});
-			req.on("error", function (error) {
-				reject(error);
-				return;
-			});
-			req.end();
-		} catch (ex) {
-			reject(ex);
-		}
-	});
-}
-
-function _getCookie(cookies, cookieName) {
-	const fields = cookies.split(";");
-	for (var i = 0; i < fields.length; ++i) {
-		var cookie = fields[i].trim();
-		const foundCookie = cookie.substring(0, cookie.indexOf("="));
-		if(cookieName == foundCookie) {
-			return cookie.substring(cookie.indexOf("=")+1);
-		}
-	}
-	return;
 }
 
 async function _getOrganization(orgId) {
@@ -253,10 +205,10 @@ async function _getOrganization(orgId) {
 	};
 	org = await sendRequest(pluginConfig.apimanager.url, options)
 		.then(response => {
-			if(!response) {
+			if(!response.body) {
 				throw new Error(`Organization with : '${orgId}' not found in API-Manager.`);
 			}
-			return response;
+			return response.body;
 		})
 		.catch(err => {
 			throw new Error(err);

@@ -2,6 +2,8 @@ const path = require('path');
 const { SDK } = require('@axway/api-builder-sdk');
 const actions = require('./actions');
 const NodeCache = require( "node-cache" );
+const { sendRequest, _getSession } = require('./utils');
+const https = require('https');
 
 /**
  * Resolves the API Builder plugin.
@@ -40,9 +42,62 @@ async function getPlugin(pluginConfig, options) {
 		if(!pluginConfig.apimanager.password) {
 			throw new Error(`Required parameter: apimanager.password is not set.`)
 		}
+		if(pluginConfig.validateConfig==true) {
+			var isAdmin = await isAPIManagerUserAdmin(pluginConfig.apimanager, options.logger);
+			if(!isAdmin) {
+				throw new Error(`Configured API-Manager user: ${pluginConfig.apimanager.username} is either incorrect or has no Admin-Role.`);
+			} else {
+				options.logger.info("Connection to API-Manager successfully validated.");
+			}
+		}
 	}
 	sdk.load(path.resolve(__dirname, 'flow-nodes.yml'), actions, { pluginContext: { cache: cache }, pluginConfig});
 	return sdk.getPlugin();
+}
+
+async function isAPIManagerUserAdmin(apiManagerConfig, logger) {
+	try {
+		var data = `username=${apiManagerConfig.username}&password=${apiManagerConfig.password}`;
+		var options = {
+			path: `/api/portal/v1.3/login`,
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded',
+				'Content-Length': data.length
+			},
+			agent: new https.Agent({ rejectUnauthorized: false })
+		};
+		result = await sendRequest(apiManagerConfig.url, options, data, 303)
+			.then(response => {
+				return response;
+			})
+			.catch(err => {
+				throw new Error(`Cant login to API-Manager: ${err}`);
+			});
+		const session = _getSession(result.headers);
+		var options = {
+			path: `/api/portal/v1.3/currentuser`,
+			headers: {
+				'Cookie': `APIMANAGERSESSION=${session}`
+			},
+			agent: new https.Agent({ rejectUnauthorized: false })
+		};
+		const currentUser = await sendRequest(apiManagerConfig.url, options)
+			.then(response => {
+				return response;
+			})
+			.catch(err => {
+				throw new Error(`Cant get current user: ${err}`);
+			});
+		if(currentUser.body.role!='admin') {
+			logger.error(`User: ${currentUser.body.loginName} has no admin role.`);
+			return false;
+		}
+		return true;
+	} catch (ex) {
+		logger.error(ex);
+		throw ex;
+	}
 }
 
 /**

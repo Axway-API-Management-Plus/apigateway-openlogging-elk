@@ -9,8 +9,13 @@ module.exports = {
 			'apimanager': {
 				url: process.env.API_MANAGER, // If not set, the API-Gateway hostname is used
 				username: process.env.API_MANAGER_USERNAME, // User with Admin-Privileges required
-				password: process.env.API_MANAGER_PASSWORD
-			} 
+				password: process.env.API_MANAGER_PASSWORD 
+			}, 
+			// This is true, when running as part of the CI-Pipeline (GitHub Actions)
+			// If true, some test API-Requests are then mocked
+			MOCK_LOOKUP_API: process.env.MOCK_LOOKUP_API,
+			// This optionally disables the validation of the configuration on API-Builder startup
+			validateConfig: (process.env.VALIDATE_CONFIG) ? process.env.VALIDATE_CONFIG : true
 		}
 	}
 };
