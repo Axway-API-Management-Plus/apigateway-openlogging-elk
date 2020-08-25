@@ -2,7 +2,7 @@ module.exports = {
 	pluginConfig: {
 		'@axway-api-builder-ext/api-builder-plugin-fn-elasticsearch': {
 			'elastic': {
-				node: (process.env.ELASTIC_NODE) ? process.env.ELASTIC_NODE : 'http://elasticsearch1:9200', 
+				node: (process.env.ELASTICSEARCH_HOST) ? process.env.ELASTICSEARCH_HOST : 'http://elasticsearch1:9200', 
 				auth: {
 					/* Use an API-Key
 					apiKey: process.env.ELASTIC_API_KEY
