@@ -35,7 +35,7 @@ jobs:
     - name: Run npm ci, npm test
       working-directory: ${{env.workingDirectory}}
       env:
-        ELASTIC_NODE: 'http://localhost:9200'
+        ELASTICSEARCH_HOST: 'http://localhost:9200'
         VALIDATE_CONFIG: false
         LOG_LEVEL: INFO
         CI: true
