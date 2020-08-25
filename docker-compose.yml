@@ -59,6 +59,8 @@ services:
     environment:
       - LOGSTASH=${LOGSTASH}
       - ELASTICSEARCH_HOST=${ELASTICSEARCH_HOST}
+      - ELASTICSEARCH_CLUSTER_UUID=${ELASTICSEARCH_CLUSTER_UUID}
+      - FILEBEAT_NAME=${FILEBEAT_NAME}
     ports:
       - 9000:9000
     volumes:
