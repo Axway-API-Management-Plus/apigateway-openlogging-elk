@@ -7,7 +7,7 @@ services:
     environment:
       # This should be 50% of your available memory, but not more than 31GB
       # The remaining 50% of memory will be used by Apache Lucene
-      - ES_HEAP_SIZE: 1g
+      ES_HEAP_SIZE: 2g
     ulimits:
       memlock:
         soft: -1
