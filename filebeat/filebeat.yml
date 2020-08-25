@@ -31,6 +31,7 @@ setup.template.enabled: true
 monitoring:
   enabled: true
   # Get the Cluster-ID (cluster_uuid) with this simple query: http://elasticsearch1:9200/
-  cluster_uuid: <YOUR_ELASTICSEARCH-CLUSTER-UUID>
+  # This links this filebeat instance to the Cluster with the given ID
+  # cluster_uuid: <YOUR_ELASTICSEARCH-CLUSTER-UUID>
   elasticsearch:
-    hosts: ["${ELASTIC_NODE}"]
+    hosts: ["${ELASTICSEARCH_HOST}"]

@@ -57,10 +57,8 @@ services:
     image: docker.elastic.co/beats/filebeat:7.8.1
     command: --strict.perms=false
     environment:
-      - setup.kibana.host=kibana:5601
-      - output.elasticsearch.hosts=["elasticsearch1:9200"]
       - LOGSTASH=${LOGSTASH}
-      - ELASTIC_NODE=${ELASTIC_NODE}
+      - ELASTICSEARCH_HOST=${ELASTICSEARCH_HOST}
     ports:
       - 9000:9000
     volumes:
