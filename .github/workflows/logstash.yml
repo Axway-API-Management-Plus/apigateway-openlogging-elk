@@ -13,6 +13,10 @@ jobs:
           - 8080:8080
         env:
           MOCK_LOOKUP_API: true
+      memcached:
+        image: memcached:1.6.6-alpine
+        ports: 
+          - 11211:11211
 
     steps:
     - uses: actions/checkout@v2
@@ -30,6 +34,8 @@ jobs:
     - name: Test Logstash pipeline
       run: |
         echo Using API_BUILDER_URL: $API_BUILDER_URL
-        ./logstash-filter-verifier --diff-command="diff -y" --keep-env=API_BUILDER_URL ./logstash/test ./logstash/pipeline
+        echo Using MEMCACHED: $MEMCACHED
+        ./logstash-filter-verifier --diff-command="diff -y" --keep-env=API_BUILDER_URL --keep-env=MEMCACHED ./logstash/test ./logstash/pipeline
       env:
         API_BUILDER_URL: 'http://localhost:8080'
+        MEMCACHED: 'localhost:11211'

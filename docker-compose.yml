@@ -79,6 +79,7 @@ services:
       - PIPELINE_WORKERS=1
       - XPACK_MONITORING_ELASTICSEARCH_HOSTS=["elasticsearch1:9200"]
       - API_BUILDER_URL=${API_BUILDER_URL}
+      - MEMCACHED=${MEMCACHED}
     ports:
       - 5044:5044
     volumes:
@@ -88,6 +89,15 @@ services:
     depends_on:
       - elasticsearch1
       - elk-traffic-monitor-api
+      - memcached
+    networks:
+      - elastic
+
+  # Memcached is used by the Logstash pipeline to cache API-Lookup information that are used to get the API-Organization
+  memcached:
+    image: memcached:1.6.6-alpine
+    links:
+      - elasticsearch1
     networks:
       - elastic
 
