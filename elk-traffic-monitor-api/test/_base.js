@@ -66,12 +66,12 @@ function requestAsync(uri, options, cb) {
 	});
 }
 
-async function sendToElasticsearch(elasticConfig, index, dataset) {
+async function sendToElasticsearch(elasticConfig, index, template, dataset) {
 	console.log(`Creating connection to ElasticSearch cluster: ${elasticConfig.node}`)
 	const client = new Client({
 		node: elasticConfig.node
 	});
-	const mappingConfig = JSON.parse(fs.readFileSync('../logstash/config/traffic_details_index_template.json')).mappings;
+	const mappingConfig = JSON.parse(fs.readFileSync(`../logstash/config/${template}`)).mappings;
 	const createdIndexResponse = await client.indices.create({
 		index: index,
 		body: {

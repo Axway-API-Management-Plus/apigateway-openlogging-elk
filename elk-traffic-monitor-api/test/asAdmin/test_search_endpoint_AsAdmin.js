@@ -41,7 +41,7 @@ describe('Endpoints', function () {
 			server.started
 			.then(() => {
 				const entryset = require('../documents/basic/search_test_documents');
-				sendToElasticsearch(elasticConfig, indexName, entryset)
+				sendToElasticsearch(elasticConfig, indexName, 'traffic_details_index_template.json', entryset)
 				.then(() => {
 					resolve();
 				})
