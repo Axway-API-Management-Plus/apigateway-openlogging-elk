@@ -9,7 +9,7 @@ describe('Traffic Monitor API', function () {
 	this.timeout(30000);
 	let server;
 	let auth;
-	const indexName = `circuitpath_test_${getRandomInt(9999)}`;
+	const indexName = `apigw-traffic-circuitpath_test_${getRandomInt(9999)}`;
 
 	/**
 	 * Start API Builder.
@@ -30,7 +30,7 @@ describe('Traffic Monitor API', function () {
 			server.started
 			.then(() => {
 				const entryset = require('../documents/basic/circuitpath_test_documents');
-				sendToElasticsearch(elasticConfig, indexName, entryset)
+				sendToElasticsearch(elasticConfig, indexName, 'traffic_details_index_template.json', entryset)
 				.then(() => {
 					resolve();
 				})

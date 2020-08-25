@@ -9,7 +9,7 @@ describe('Endpoints', function () {
 	this.timeout(30000);
 	let server;
 	let auth;
-	const indexName = `search_count_test_${getRandomInt(9999)}`;
+	const indexName = `apigw-traffic-search_count_test_${getRandomInt(9999)}`;
 
 	beforeEach(() => {
 		// Simulate all responses in this test-file to be an admin, which will not lead to any result restriction
@@ -40,7 +40,7 @@ describe('Endpoints', function () {
 			server.started
 			.then(() => {
 				const entryset = require('../documents/basic/search_count_documents');
-				sendToElasticsearch(elasticConfig, indexName, entryset)
+				sendToElasticsearch(elasticConfig, indexName, 'traffic_details_index_template.json', entryset)
 				.then(() => {
 					resolve();
 				})

@@ -5,7 +5,9 @@ services:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.8.1
     container_name: elasticsearch1
     environment:
-      - "ES_JAVA_OPTS=-Xms750M -Xmx750M"
+      # This should be 50% of your available memory, but not more than 31GB
+      # The remaining 50% of memory will be used by Apache Lucene
+      - ES_HEAP_SIZE: 1g
     ulimits:
       memlock:
         soft: -1
