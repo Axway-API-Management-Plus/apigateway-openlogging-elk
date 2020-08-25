@@ -104,7 +104,7 @@ services:
   elk-traffic-monitor-api:
     image: cwiechmann/elk-traffic-monitor-api:v0.0.10
     environment:
-      - ELASTIC_NODE=${ELASTIC_NODE}
+      - ELASTICSEARCH_HOST=${ELASTICSEARCH_HOST}
       - ADMIN_NODE_MANAGER=${ADMIN_NODE_MANAGER}
       - API_MANAGER_USERNAME=${API_MANAGER_USERNAME}
       - API_MANAGER_PASSWORD=${API_MANAGER_PASSWORD}
