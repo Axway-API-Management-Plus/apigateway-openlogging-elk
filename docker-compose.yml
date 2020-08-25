@@ -75,8 +75,6 @@ services:
   # Is receiving events from Filebeat and does pre-processing
   logstash:
     image: docker.elastic.co/logstash/logstash:7.8.1
-    links:
-      - elasticsearch1
     environment:
       - PIPELINE_WORKERS=1
       - ELASTICSEARCH_HOST=${ELASTICSEARCH_HOST}
@@ -99,16 +97,12 @@ services:
   # Memcached is used by the Logstash pipeline to cache API-Lookup information that are used to get the API-Organization
   memcached:
     image: memcached:1.6.6-alpine
-    links:
-      - elasticsearch1
     networks:
       - elastic
 
   # This is the API-Builder project exposing the API-Gateway Manager REST-API
   elk-traffic-monitor-api:
     image: cwiechmann/elk-traffic-monitor-api:v0.0.10
-    links:
-      - elasticsearch1
     environment:
       - ELASTIC_NODE=${ELASTIC_NODE}
       - ADMIN_NODE_MANAGER=${ADMIN_NODE_MANAGER}
