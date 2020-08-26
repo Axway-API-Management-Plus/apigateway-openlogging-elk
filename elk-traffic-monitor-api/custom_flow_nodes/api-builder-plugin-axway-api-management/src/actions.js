@@ -75,6 +75,7 @@ async function lookupCurrentUser(params, options) {
 
 async function lookupAPIDetails(params, options) {
 	const { apiName, apiPath } = params;
+	logger = options.logger;
 	cache = options.pluginContext.cache;
 	pluginConfig = options.pluginConfig;
 	if (!apiName) {
