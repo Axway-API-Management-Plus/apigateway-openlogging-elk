@@ -1,7 +1,4 @@
 {
-  "fields": {
-    "logtype": "trace"
-  },
   "testcases": [
     {
       "description": "Test unrelated ERROR event is forwarded to general trace index",

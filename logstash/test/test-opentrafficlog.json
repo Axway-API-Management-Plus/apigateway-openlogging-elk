@@ -1,7 +1,4 @@
 {
-    "fields": {
-      "logtype": "openlog"
-    },
     "codec": "json_lines",
     "testcases": [
       {

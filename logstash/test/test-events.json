@@ -1,7 +1,5 @@
 {
-  "fields": {
-    "logtype": "trace"
-  },
+  "codec": "json_lines",
   "testcases": [
     {
       "description": "Header events should be dropped, hence we don't expect an event",
