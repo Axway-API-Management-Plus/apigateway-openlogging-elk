@@ -18,7 +18,7 @@
     {
       "description": "System events should produce an event",
       "input": [
-        "{\"type\":\"system\", \"time\":1598469315360, \"diskUsed\":88, \"host\": { \"name:\" \"Filebeat Gateway\"}, \"instCpu\":3, \"sysCpu\":13, \"instMem\":2269044, \"sysMem\":15677168, \"sysMemTotal\":16266828}"
+        "{\"type\":\"system\", \"time\":1598469315360, \"diskUsed\":88, \"host\": { \"name:\": \"Filebeat Gateway\"}, \"instCpu\":3, \"sysCpu\":13, \"instMem\":2269044, \"sysMem\":15677168, \"sysMemTotal\":16266828}"
       ],
       "expected": [
         {
