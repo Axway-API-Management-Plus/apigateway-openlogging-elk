@@ -10,7 +10,6 @@
           {
             "@timestamp": "2020-07-13T20:58:38.042Z",
             "correlationId": "feca0c5f7f550c81357fdfee",
-            "logtype": "openlog",
             "processInfo": {
               "hostname": "ip-172-31-56-150.ec2.internal",
               "domainId": "e1ff3aab-3b11-4820-a1be-3763da2beda4",
@@ -64,7 +63,6 @@
           {
             "@timestamp": "2020-07-13T20:07:27.467Z",
             "correlationId": "ffbe0c5f95da03f602a6e587",
-            "logtype": "openlog",
             "processInfo": {
               "hostname": "ip-172-31-62-146.ec2.internal",
               "domainId": "e1ff3aab-3b11-4820-a1be-3763da2beda4",
@@ -106,7 +104,6 @@
           {
             "@timestamp": "2020-07-13T20:07:27.467Z",
             "correlationId": "OMG-UNKNOWN-API-Error",
-            "logtype": "openlog",
             "processInfo": {
               "hostname": "ip-172-31-62-146.ec2.internal",
               "domainId": "e1ff3aab-3b11-4820-a1be-3763da2beda4",
@@ -154,7 +151,6 @@
           {
             "@timestamp": "2020-07-13T20:07:27.467Z",
             "correlationId": "OMG-UNKNOWN-API",
-            "logtype": "openlog",
             "processInfo": {
               "hostname": "ip-172-31-62-146.ec2.internal",
               "domainId": "e1ff3aab-3b11-4820-a1be-3763da2beda4",
@@ -195,7 +191,6 @@
           {
             "@timestamp": "2020-07-13T18:40:15.973Z",
             "correlationId": "8faa0c5f4da87df2ad8c394a",
-            "logtype": "openlog",
             "processInfo": {
               "hostname": "ip-172-31-48-17.ec2.internal",
               "domainId": "e1ff3aab-3b11-4820-a1be-3763da2beda4",
@@ -224,7 +219,6 @@
           {
             "@timestamp": "2020-07-13T20:58:59.577Z",
             "correlationId": "13cb0c5f2d58b335499405fa",
-            "logtype": "openlog",
             "processInfo": {
               "hostname": "ip-172-31-56-150.ec2.internal",
               "domainId": "e1ff3aab-3b11-4820-a1be-3763da2beda4",
@@ -320,7 +314,6 @@
           {
             "@timestamp": "2020-08-24T12:10:30.003Z",
             "correlationId": "36ae435faa3e258ee1092b60",
-            "logtype": "openlog",
             "processInfo": {
               "hostname": "api-env",
               "domainId": "ed992442-c363-4d36-963a-9e6314b0f421",
