@@ -1,6 +1,7 @@
 {
     "index_patterns": [
-        "apigw-trace-*"
+        "apigw-trace-*", 
+        "apigw-traffic-trace-*"
     ],
     "settings": {
         "number_of_shards": 5, 

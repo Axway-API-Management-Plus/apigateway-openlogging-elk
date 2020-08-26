@@ -1,0 +1,19 @@
+- pipeline.id: BeatsInput
+  path.config: "pipelines/BeatsInputPipeline.conf"
+  pipeline.workers: 4
+  pipeline.ordered: false
+
+- pipeline.id: OpenTraffic
+  path.config: "pipelines/OpenTrafficPipeline.conf"
+  pipeline.workers: 4
+  pipeline.ordered: false
+
+- pipeline.id: TraceMessages
+  path.config: "pipelines/TraceMessagesPipeline.conf"
+  pipeline.workers: 1
+  pipeline.ordered: false
+
+- pipeline.id: Events
+  path.config: "pipelines/EventsPipeline.conf"
+  pipeline.workers: 1
+  pipeline.ordered: false

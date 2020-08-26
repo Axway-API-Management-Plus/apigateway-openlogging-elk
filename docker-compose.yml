@@ -65,8 +65,9 @@ services:
       - 9000:9000
     volumes:
       - ${PWD}/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml
-      - ${APIGATEWAY_LOGS_FOLDER}:/var/log/work
+      - ${APIGATEWAY_OPENTRAFFIC_FOLDER}:/var/log/opentraffic
       - ${APIGATEWAY_TRACES_FOLDER}:/var/log/trace
+      - ${APIGATEWAY_EVENTS_FOLDER}:/var/log/events
       - /var/lib/docker/containers:/var/lib/docker/containers:ro
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
@@ -76,7 +77,6 @@ services:
   logstash:
     image: docker.elastic.co/logstash/logstash:7.8.1
     environment:
-      - PIPELINE_WORKERS=1
       - ELASTICSEARCH_HOST=${ELASTICSEARCH_HOST}
       - XPACK_MONITORING_ELASTICSEARCH_HOSTS=${ELASTICSEARCH_HOST}
       - API_BUILDER_URL=${API_BUILDER_URL}
@@ -84,9 +84,10 @@ services:
     ports:
       - 5044:5044
     volumes:
-      - ${PWD}/logstash/pipeline/pipeline.conf:/usr/share/logstash/pipeline/pipeline.conf
+      - ${PWD}/logstash/config/pipelines.yml:/usr/share/logstash/config/pipelines.yml
+      - ${PWD}/logstash/pipelines:/usr/share/logstash/pipelines
       - ${PWD}/logstash/index_templates:/usr/share/logstash/index_templates
-    command: logstash --path.config /usr/share/logstash/pipeline/pipeline.conf --pipeline.workers 4 --pipeline.batch.size 400 --pipeline.ordered false --log.level info
+    #command: logstash --path.config /usr/share/logstash/pipelines/pipelines.yml
     depends_on:
       - elasticsearch1
       - elk-traffic-monitor-api
@@ -102,7 +103,7 @@ services:
 
   # This is the API-Builder project exposing the API-Gateway Manager REST-API
   elk-traffic-monitor-api:
-    image: cwiechmann/elk-traffic-monitor-api:v0.0.10
+    image: cwiechmann/elk-traffic-monitor-api:latest
     environment:
       - ELASTICSEARCH_HOST=${ELASTICSEARCH_HOST}
       - ADMIN_NODE_MANAGER=${ADMIN_NODE_MANAGER}
