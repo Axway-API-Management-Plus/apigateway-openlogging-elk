@@ -35,7 +35,7 @@ jobs:
       run: |
         echo Using API_BUILDER_URL: $API_BUILDER_URL
         echo Using MEMCACHED: $MEMCACHED
-        ./logstash-filter-verifier --diff-command="diff -y" --keep-env=API_BUILDER_URL --keep-env=MEMCACHED ./logstash/test ./logstash/config/pipelines.yml
+        ./logstash-filter-verifier --diff-command="diff -y" --keep-env=API_BUILDER_URL --keep-env=MEMCACHED ./logstash/test ./logstash/pipelines
       env:
         API_BUILDER_URL: 'http://localhost:8080'
         MEMCACHED: 'localhost:11211'

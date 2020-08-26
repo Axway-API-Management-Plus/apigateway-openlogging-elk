@@ -12,6 +12,9 @@
             "@timestamp": {
                 "type" : "date"
             },
+            "host.name": {
+                "type": "keyword"
+            },
             "diskUsed": {
                 "type": "integer"
             },
