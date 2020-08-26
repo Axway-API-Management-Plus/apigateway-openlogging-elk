@@ -1,0 +1,43 @@
+{
+  "fields": {
+    "logtype": "trace"
+  },
+  "testcases": [
+    {
+      "description": "Header events should be dropped, hence we don't expect an event",
+      "input": [
+        "{\"type\":\"header\", \"logCreationTime\":\"2020-08-26 12:15:00.010\", \"hostname\":\"api-env\", \"domainId\":\"ed992442-c363-4d36-963a-9e6314b0f421\", \"groupId\":\"group-2\", \"groupName\":\"QuickStart Group\", \"serviceId\":\"instance-1\", \"serviceName\":\"QuickStart Server\", \"version\":\"v7.7.0-Internal\"}"
+      ],
+      "expected": [ ]
+    },
+    {
+      "description": "For now, we also skip transaction events - Might be changed later",
+      "input": [
+        "{\"type\":\"transaction\", \"time\":1598469300007, \"path\":null, \"protocol\":null, \"protocolSrc\":null, \"duration\":2, \"status\":\"success\", \"serviceContexts\":[], \"customMsgAtts\":{}, \"correlationId\":\"b4b4465f0093bdc9ba91150e\", \"legs\":[]}"
+      ],
+      "expected": [ ]
+    },
+    {
+      "description": "System events should produce an event",
+      "input": [
+        "{\"type\":\"system\", \"time\":1598469315360, \"diskUsed\":88, \"instCpu\":3, \"sysCpu\":13, \"instMem\":2269044, \"sysMem\":15677168, \"sysMemTotal\":16266828}"
+      ],
+      "expected": [
+        {
+          "sysMem": 15677168,
+          "diskUsed": 88,
+          "instMem": 2269044,
+          "sysCpu": 13,
+          "@timestamp": "2020-08-26T19:23:15.685Z",
+          "host": {
+            "name": "Filebeat Gateway"
+          },
+          "sysMemTotal": 16266828,
+          "@version": "1",
+          "instCpu": 3,
+          "time": 1598469795685
+        }
+      ]
+    }
+  ]
+}
