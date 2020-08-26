@@ -18,14 +18,16 @@
     {
       "description": "System events should produce an event",
       "input": [
-        "{\"type\":\"system\", \"time\":1598469315360, \"diskUsed\":88, \"instCpu\":3, \"sysCpu\":13, \"instMem\":2269044, \"sysMem\":15677168, \"sysMemTotal\":16266828}"
+        "{\"type\":\"system\", \"time\":1598469315360, \"diskUsed\":88, \"host\": { \"name\": \"Filebeat Gateway\"}, \"instCpu\":3, \"sysCpu\":13, \"instMem\":2269044, \"sysMem\":15677168, \"sysMemTotal\":16266828}"
       ],
       "expected": [
         {
           "@timestamp": "2020-08-26T19:15:15.360Z",
-          "@version": "1",
           "sysMem": 15677168,
           "diskUsed": 88,
+          "host": {
+            "name": "Filebeat Gateway"
+          },
           "instMem": 2269044,
           "sysCpu": 13,
           "sysMemTotal": 16266828,
