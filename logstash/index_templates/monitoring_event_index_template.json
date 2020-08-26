@@ -1,0 +1,35 @@
+{
+    "index_patterns": [
+        "apigw-monitoring-*"
+    ],
+    "settings": {
+        "number_of_shards": 5, 
+        "number_of_replicas": 1
+    },
+    "mappings": {
+        "dynamic": false,
+        "properties": {
+            "@timestamp": {
+                "type" : "date"
+            },
+            "diskUsed": {
+                "type": "integer"
+            },
+            "instCpu": {
+                "type": "integer"
+            },
+            "sysCpu": {
+                "type": "integer"
+            },
+            "instMem": {
+                "type": "double"
+            },
+            "sysMem": {
+                "type": "double"
+            },
+            "sysMemTotal": {
+                "type": "double"
+            }
+        }
+    }
+}
