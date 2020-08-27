@@ -92,7 +92,28 @@ describe('Test API-Lookup endpoint', function () {
 			});
 		});
 
-		it('[apilookup-0004] Should return http 200 with API configured backend base path', () => {
+		it.only('[apilookup-0004] Should NULL values for Policies, etc. when not given by the API', () => {
+			nock('https://mocked-api-gateway:8075').get('/api/portal/v1.3/proxies?field=name&op=eq&value=Petstore%20HTTPS').replyWithFile(200, './test/mockedReplies/apimanager/oneApiProxyFound.json');
+			nock('https://mocked-api-gateway:8075').get('/api/portal/v1.3/organizations/2bfaa1c2-49ab-4059-832d-CHRIS').replyWithFile(200, './test/mockedReplies/apimanager/organizationChris.json');
+			return requestAsync({
+				method: 'GET',
+				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/lookup/api?apiName=Petstore%20HTTPS&apiPath=/my/api/exists/with/some/more`,
+				auth: auth,
+				json: true
+			}).then(({ response, body }) => {
+				expect(response.statusCode).to.equal(200);
+				expect(body).to.be.an('Object');
+				expect(body.organizationName).to.equal('Chris Org');
+				expect(body.requestPolicy).to.equal(null);
+				expect(body.routingPolicy).to.equal(null);
+				expect(body.responsePolicy).to.equal(null);
+				expect(body.faulthandlerPolicy).to.equal(null);
+				expect(body.path).to.equal('/my/api/exists');
+				nock.cleanAll();
+			});
+		});
+
+		it('[apilookup-0005] Should return http 200 with API configured backend base path', () => {
 			nock('https://mocked-api-gateway:8075').get('/api/portal/v1.3/proxies?field=name&op=eq&value=Petstore%20HTTPS').replyWithFile(200, './test/mockedReplies/apimanager/ApiProxyWithSpecialBackendBasePath.json');
 			nock('https://mocked-api-gateway:8075').get('/api/portal/v1.3/organizations/2bfaa1c2-49ab-4059-832d-CHRIS').replyWithFile(200, './test/mockedReplies/apimanager/organizationChris.json');
 			return requestAsync({
@@ -110,7 +131,7 @@ describe('Test API-Lookup endpoint', function () {
 			});
 		});
 
-		it.only('[apilookup-0005] should return OAuth security', () => {
+		it('[apilookup-0006] should return OAuth security', () => {
 			nock('https://mocked-api-gateway:8075').get('/api/portal/v1.3/proxies?field=name&op=eq&value=Petstore%20HTTPS').replyWithFile(200, './test/mockedReplies/apimanager/ApiProxyWithSpecialBackendBasePath.json');
 			nock('https://mocked-api-gateway:8075').get('/api/portal/v1.3/organizations/2bfaa1c2-49ab-4059-832d-CHRIS').replyWithFile(200, './test/mockedReplies/apimanager/organizationChris.json');
 			return requestAsync({

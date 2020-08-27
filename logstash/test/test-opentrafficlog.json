@@ -90,7 +90,13 @@
               "app": "Weather App",
               "method": "getUserByName",
               "status": "success",
-              "duration": 2
+              "duration": 2,
+              "apiSecurity": "API-Key", 
+              "requestPolicy": null, 
+              "routingPolicy": null, 
+              "responsePolicy": null, 
+              "faulthandlerPolicy": null, 
+              "backendBasePath": "https://petstore.swagger.io"
             }
           }
         }
@@ -115,15 +121,15 @@
             "gatewayRegion": "US"
           },
           "transactionSummary": {
-            "path": "/petstore/v2/user/Chris",
+            "path": "/api/with/policies/backend/and/oauth",
             "protocol": "https",
             "protocolSrc": "8065",
             "status": "success",
             "serviceContext": {
-              "apiDeprecated": "false",
-              "apiOrg": "Mocked Org A",
-              "apiState": "published",
-              "apiVersion": "X.X.X",
+              "apiDeprecated": "true",
+              "apiOrg": "Mocked Org B",
+              "apiState": "unpublished",
+              "apiVersion": "Z.Z.Z",
               "service": "Petstore",
               "monitor": true,
               "appOrg": "Apps org",
