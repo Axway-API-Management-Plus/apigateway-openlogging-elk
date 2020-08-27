@@ -187,6 +187,9 @@
             "transactionSummary.serviceContext.apiDeprecated": {
                 "type": "boolean"
             },
+            "transactionSummary.serviceContext.monitor": {
+                "type": "boolean"
+            },
             "transactionSummary.serviceContext.apiState": {
                 "type": "keyword"
             }
