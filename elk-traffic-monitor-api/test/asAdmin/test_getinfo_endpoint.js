@@ -9,7 +9,7 @@ describe('Endpoints', function () {
 	this.timeout(30000);
 	let server;
 	let auth;
-	const indexName = `apigw-traffic-getinfo_test_${getRandomInt(9999)}`;
+	const indexName = `apigw-traffic-details-getinfo_test_${getRandomInt(9999)}`;
 
 	beforeEach(() => {
 		// Simulate all responses in this test-file to be an admin, which will not lead to any result restriction

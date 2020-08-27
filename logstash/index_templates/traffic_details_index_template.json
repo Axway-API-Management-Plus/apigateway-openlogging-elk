@@ -1,6 +1,6 @@
 {
     "index_patterns": [
-        "apigw-traffic-*"
+        "apigw-traffic-details*"
     ],
     "settings": {
         "number_of_shards": 5, 
@@ -42,7 +42,10 @@
                 },
                 "norms": false
             },
-            "processInfo.serviceName": {
+            "processInfo.gatewayRegion": {
+                "type": "keyword"
+            },
+            "processInfo.gatewayName": {
                 "type": "text",
                 "fields": {
                     "keyword": {
@@ -96,7 +99,13 @@
                 },
                 "norms": false
             },
-            "transactionSummary.serviceContext.client": {
+            "transactionSummary.serviceContext.status": {
+                "type": "keyword"
+            },
+            "transactionSummary.serviceContext.duration": {
+                "type": "integer"
+            },
+            "transactionSummary.serviceContext.method": {
                 "type": "text",
                 "fields": {
                     "keyword": {
@@ -105,13 +114,7 @@
                 },
                 "norms": false
             },
-            "transactionSummary.serviceContext.status": {
-                "type": "keyword"
-            },
-            "transactionSummary.serviceContext.duration": {
-                "type": "integer"
-            },
-            "transactionSummary.serviceContext.method": {
+            "transactionSummary.serviceContext.app": {
                 "type": "text",
                 "fields": {
                     "keyword": {

@@ -32,6 +32,18 @@
             },
             "sysMemTotal": {
                 "type": "double"
+            },
+            "processInfo.gatewayRegion": {
+                "type": "keyword"
+            },
+            "processInfo.gatewayName": {
+                "type": "text",
+                "fields": {
+                    "keyword": {
+                        "type": "keyword"
+                    }
+                },
+                "norms": false
             }
         }
     }

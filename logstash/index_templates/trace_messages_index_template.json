@@ -22,6 +22,18 @@
             "message": {
                 "type": "text", 
                 "norms": false
+            },
+            "processInfo.gatewayRegion": {
+                "type": "keyword"
+            },
+            "processInfo.gatewayName": {
+                "type": "text",
+                "fields": {
+                    "keyword": {
+                        "type": "keyword"
+                    }
+                },
+                "norms": false
             }
         }
     }

@@ -1,4 +1,4 @@
-name: ${FILEBEAT_NAME:"Filebeat Gateway"}
+name: Filebeat ${GATEWAY_NAME:"API-Gateway"}
 filebeat.inputs:
 - input_type: log
   paths: ["/var/log/opentraffic/*.log"]
@@ -8,6 +8,8 @@ filebeat.inputs:
   fields_under_root: true
   fields:
     logtype: openlog
+    gatewayName: ${GATEWAY_NAME:"API-Gateway"}
+    gatewayRegion: ${GATEWAY_REGION:"N/A"}
 
 - input_type: log
   paths: ["/var/log/trace/*.trc"]
@@ -18,6 +20,8 @@ filebeat.inputs:
   fields_under_root: true
   fields:
     logtype: trace
+    gatewayName: ${GATEWAY_NAME:"API-Gateway"}
+    gatewayRegion: ${GATEWAY_REGION:"N/A"}
 
 - input_type: log
   paths: ["/var/log/events/*.log", "/var/log/events/processed/*.log.PROCESSED"]
@@ -27,6 +31,8 @@ filebeat.inputs:
   fields_under_root: true
   fields:
     logtype: events
+    gatewayName: ${GATEWAY_NAME:"API-Gateway"}
+    gatewayRegion: ${GATEWAY_REGION:"N/A"}
 
 output.logstash:
   hosts: ["${LOGSTASH}"]

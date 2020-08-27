@@ -1,4 +1,8 @@
 {
+  "fields": {
+    "gatewayName": "API-Gateway 1",
+    "gatewayRegion": "APAC"
+  },
   "codec": "json_lines",
   "testcases": [
     {
@@ -9,7 +13,7 @@
       "expected": [ ]
     },
     {
-      "description": "For now, we also skip transaction events - Might be changed later",
+      "description": "For now, we skip transaction events - Might be changed later",
       "input": [
         "{\"type\":\"transaction\", \"time\":1598469300007, \"path\":null, \"protocol\":null, \"protocolSrc\":null, \"duration\":2, \"status\":\"success\", \"serviceContexts\":[], \"customMsgAtts\":{}, \"correlationId\":\"b4b4465f0093bdc9ba91150e\", \"legs\":[]}"
       ],
@@ -25,13 +29,14 @@
           "@timestamp": "2020-08-26T19:15:15.360Z",
           "sysMem": 15677168,
           "diskUsed": 88,
-          "host": {
-            "name": "Filebeat Gateway"
-          },
           "instMem": 2269044,
           "sysCpu": 13,
           "sysMemTotal": 16266828,
-          "instCpu": 3
+          "instCpu": 3,
+          "processInfo": {
+            "gatewayName": "API-Gateway 1", 
+            "gatewayRegion": "US"
+          }
         }
       ]
     }

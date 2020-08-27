@@ -9,7 +9,7 @@ describe('Traffic Monitor API', function () {
 	this.timeout(30000);
 	let server;
 	let auth;
-	const indexName = `apigw-traffic-circuitpath_test_${getRandomInt(9999)}`;
+	const indexName = `apigw-traffic-details-circuitpath_test_${getRandomInt(9999)}`;
 
 	/**
 	 * Start API Builder.
