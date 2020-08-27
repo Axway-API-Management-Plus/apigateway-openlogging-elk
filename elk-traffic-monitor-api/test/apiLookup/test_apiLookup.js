@@ -70,6 +70,63 @@ describe('Test API-Lookup endpoint', function () {
 				expect(body.message).to.equal(`No APIs found with name: 'UnknownAPI'`);
 			});
 		});
+
+		it('[apilookup-0003] Should return http 200 with API including configured policies', () => {
+			nock('https://mocked-api-gateway:8075').get('/api/portal/v1.3/proxies?field=name&op=eq&value=Petstore%20HTTPS').replyWithFile(200, './test/mockedReplies/apimanager/ApiProxyWithPoliciesConfigured.json');
+			nock('https://mocked-api-gateway:8075').get('/api/portal/v1.3/organizations/2bfaa1c2-49ab-4059-832d-CHRIS').replyWithFile(200, './test/mockedReplies/apimanager/organizationChris.json');
+			return requestAsync({
+				method: 'GET',
+				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/lookup/api?apiName=Petstore%20HTTPS&apiPath=/my/api/exists/with/some/more`,
+				auth: auth,
+				json: true
+			}).then(({ response, body }) => {
+				expect(response.statusCode).to.equal(200);
+				expect(body).to.be.an('Object');
+				expect(body.organizationName).to.equal('Chris Org');
+				expect(body.requestPolicy).to.equal('My Request Policy');
+				expect(body.routingPolicy).to.equal('I do the routing');
+				expect(body.responsePolicy).to.equal('I take care abouth the response');
+				expect(body.faulthandlerPolicy).to.equal('All faults to me');
+				expect(body.path).to.equal('/my/api/exists');
+				nock.cleanAll();
+			});
+		});
+
+		it('[apilookup-0004] Should return http 200 with API configured backend base path', () => {
+			nock('https://mocked-api-gateway:8075').get('/api/portal/v1.3/proxies?field=name&op=eq&value=Petstore%20HTTPS').replyWithFile(200, './test/mockedReplies/apimanager/ApiProxyWithSpecialBackendBasePath.json');
+			nock('https://mocked-api-gateway:8075').get('/api/portal/v1.3/organizations/2bfaa1c2-49ab-4059-832d-CHRIS').replyWithFile(200, './test/mockedReplies/apimanager/organizationChris.json');
+			return requestAsync({
+				method: 'GET',
+				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/lookup/api?apiName=Petstore%20HTTPS&apiPath=/my/api/exists/with/some/more`,
+				auth: auth,
+				json: true
+			}).then(({ response, body }) => {
+				expect(response.statusCode).to.equal(200);
+				expect(body).to.be.an('Object');
+				expect(body.organizationName).to.equal('Chris Org');
+				expect(body.backendBasePath).to.equal('https://im.a.special.backend.host:7788');
+				expect(body.path).to.equal('/my/api/exists');
+				nock.cleanAll();
+			});
+		});
+
+		it.only('[apilookup-0005] should return OAuth security', () => {
+			nock('https://mocked-api-gateway:8075').get('/api/portal/v1.3/proxies?field=name&op=eq&value=Petstore%20HTTPS').replyWithFile(200, './test/mockedReplies/apimanager/ApiProxyWithSpecialBackendBasePath.json');
+			nock('https://mocked-api-gateway:8075').get('/api/portal/v1.3/organizations/2bfaa1c2-49ab-4059-832d-CHRIS').replyWithFile(200, './test/mockedReplies/apimanager/organizationChris.json');
+			return requestAsync({
+				method: 'GET',
+				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/lookup/api?apiName=Petstore%20HTTPS&apiPath=/my/api/exists/with/some/more`,
+				auth: auth,
+				json: true
+			}).then(({ response, body }) => {
+				expect(response.statusCode).to.equal(200);
+				expect(body).to.be.an('Object');
+				expect(body.organizationName).to.equal('Chris Org');
+				expect(body.backendBasePath).to.equal('https://im.a.special.backend.host:7788');
+				expect(body.path).to.equal('/my/api/exists');
+				nock.cleanAll();
+			});
+		});
 	});
 });
 	

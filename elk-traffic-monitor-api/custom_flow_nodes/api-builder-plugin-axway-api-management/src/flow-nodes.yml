@@ -47,6 +47,13 @@ flow-nodes:
             initialType: string
             schema:
               type: string
+          operationId:
+            name: The ID of the operation
+            description: This is ID of how the method is defined in the API-Definition. For instance updatePet
+            required: false
+            initialType: string
+            schema:
+              type: string
         outputs:
           next:
             name: Next

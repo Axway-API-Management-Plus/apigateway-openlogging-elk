@@ -38,6 +38,12 @@
             "name": "apiName",
             "required": true,
             "description": "The name of the API to look up"
+          },
+          {
+            "type": "string",
+            "in": "query",
+            "name": "operationId",
+            "description": "If given the operationId (e.g. getUserByName) is also used to identify the correct API"
           }
         ],
         "summary": "Looks up an API based on the API-Path",

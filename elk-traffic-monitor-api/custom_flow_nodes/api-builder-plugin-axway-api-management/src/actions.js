@@ -5,6 +5,17 @@ var pluginConfig = {};
 var cache = {};
 var logger;
 
+const securityDeviceTypes = {
+	apiKey: "API-Key",
+	basic: "HTTP Basic",
+	oauth: "OAuth",
+	oauthExternal: "OAuth (External)", 
+	authPolicy: "Security policy", 
+	awsHeader: "AWS Header", 
+	awsQuery: "AWS Query", 
+	twoWaySSL: "Mutual SSL"
+  };
+
 //process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 /**
  * Action method.
@@ -74,7 +85,7 @@ async function lookupCurrentUser(params, options) {
 }
 
 async function lookupAPIDetails(params, options) {
-	const { apiName, apiPath } = params;
+	const { apiName, apiPath, operationId } = params;
 	logger = options.logger;
 	cache = options.pluginContext.cache;
 	pluginConfig = options.pluginConfig;
@@ -103,6 +114,12 @@ async function lookupAPIDetails(params, options) {
 	}
 	var org = await _getOrganization(apiProxy.organizationId);
 	apiProxy.organizationName = org.name;
+	apiProxy.apiSecurity = await _getAPISecurity(apiProxy, operationId);
+	apiProxy.requestPolicy = await _getRequestPolicy(apiProxy, operationId);
+	apiProxy.routingPolicy = await _getRoutingPolicy(apiProxy, operationId);
+	apiProxy.responsePolicy = await _getResponsePolicy(apiProxy, operationId);
+	apiProxy.backendBasePath = await _getBackendBasePath(apiProxy, operationId);
+	apiProxy.faulthandlerPolicy = await _getFaulthandlerPolicy(apiProxy, operationId);
 	// Remove a few properties we really don't need
 	delete apiProxy.corsProfiles;
 	delete apiProxy.securityProfiles;
@@ -131,6 +148,80 @@ async function _getCurrentGWUser(VIDUSR) {
 			throw new Error(`Error getting current user Request sent to: '${pluginConfig.apigateway.hostname}'. ${err}`);
 		});
 	return loginName;
+}
+
+async function _getAPISecurity(apiProxy, operationId) {
+	if(!operationId) {
+		for (var i = 0; i < apiProxy.securityProfiles.length; ++i) {
+			var securityProfile = apiProxy.securityProfiles[i];
+			if(!securityProfile.isDefault) continue;
+			// For now we pick the first Security device
+			return securityDeviceTypes[securityProfile.devices[0].type];
+		}
+		return null;
+	}
+	throw new Error('_getAPISecurity with operationId not yet supported.');
+}
+
+async function _getRequestPolicy(apiProxy, operationId) {
+	if(!operationId) {
+		if(apiProxy.outboundProfiles._default.requestPolicy) {
+			return getPolicyName(apiProxy.outboundProfiles._default.requestPolicy);
+		} else {
+			return null;
+		}
+	}
+	throw new Error('_getRequestPolicy with operationId not yet supported.');
+}
+
+async function _getRoutingPolicy(apiProxy, operationId) {
+	if(!operationId) {
+		if(apiProxy.outboundProfiles._default.routePolicy) {
+			return getPolicyName(apiProxy.outboundProfiles._default.routePolicy);
+		} else {
+			return null;
+		}
+	}
+	throw new Error('_getRoutingPolicy with operationId not yet supported.');
+}
+
+async function _getResponsePolicy(apiProxy, operationId) {
+	if(!operationId) {
+		if(apiProxy.outboundProfiles._default.responsePolicy) {
+			return getPolicyName(apiProxy.outboundProfiles._default.responsePolicy);
+		} else {
+			return null;
+		}
+	}
+	throw new Error('_getResponsePolicy with operationId not yet supported.');
+}
+
+async function _getFaulthandlerPolicy(apiProxy, operationId) {
+	if(!operationId) {
+		if(apiProxy.outboundProfiles._default.faultHandlerPolicy) {
+			return getPolicyName(apiProxy.outboundProfiles._default.faultHandlerPolicy);
+		} else {
+			return null;
+		}
+	}
+	throw new Error('_getResponsePolicy with operationId not yet supported.');
+}
+
+function getPolicyName(policy) {
+	// An internal policy-name looks like this 
+	// <key type='FilterCircuit'><id field='name' value='Response Policy 1'/></key>
+	// or like so:
+	// <key type='CircuitContainer'><id field='name' value='Custom policies'/><key type='FilterCircuit'><id field='name' value='Request Policy 1'/></key></key>
+	policy = policy.substring(policy.indexOf("<key type='FilterCircuit'>"));
+	policyName = policy.substring(policy.indexOf("value='")+7, policy.lastIndexOf("'/></key>"));
+	return policyName;
+}
+
+async function _getBackendBasePath(apiProxy, operationId) {
+	if(!operationId) {
+		return apiProxy.serviceProfiles._default.basePath
+	}
+	throw new Error('_getBackendBasePath with operationId not yet implemented.');
 }
 
 async function _getCurrentGWPermissions(VIDUSR, csrfToken, loginName) {
