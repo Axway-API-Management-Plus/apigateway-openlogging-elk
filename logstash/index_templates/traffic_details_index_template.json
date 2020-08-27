@@ -78,56 +78,6 @@
             "transactionElements.leg0.duration": { "type": "integer" },
             "transactionElements.leg0.finalStatus": { "type": "keyword" },
 
-            "transactionElements.leg1.duration": { "type": "integer" },
-            "transactionElements.leg1.protocolInfo.http.remoteName": { "type": "text", "norms": false },
-            "transactionElements.leg1.protocolInfo.http.remoteAddr": { "type": "text", "norms": false },
-            "transactionElements.leg1.protocolInfo.http.remotePort": { "type": "integer" },
-            "transactionElements.leg1.protocolInfo.http.bytesSent": { "type": "integer" },
-            "transactionElements.leg1.protocolInfo.http.bytesReceived": { "type": "integer" },
-            "transactionElements.leg1.protocolInfo.http.statusText": { "type": "keyword" },
-            "transactionElements.leg1.protocolInfo.http.status": { "type": "integer" },
-            "transactionElements.leg1.protocolInfo.http.uri": { "type": "text","norms": false },
-            
-            "transactionElements.leg2.duration": { "type": "integer" },
-            "transactionElements.leg2.protocolInfo.http.remoteName": { "type": "text", "norms": false },
-            "transactionElements.leg2.protocolInfo.http.remoteAddr": { "type": "text", "norms": false },
-            "transactionElements.leg2.protocolInfo.http.remotePort": { "type": "integer" },
-            "transactionElements.leg2.protocolInfo.http.bytesSent": { "type": "integer" },
-            "transactionElements.leg2.protocolInfo.http.bytesReceived": { "type": "integer" },
-            "transactionElements.leg2.protocolInfo.http.statusText": { "type": "keyword" },
-            "transactionElements.leg2.protocolInfo.http.status": { "type": "integer" },
-            "transactionElements.leg2.protocolInfo.http.uri": { "type": "text","norms": false },
-
-            "transactionElements.leg3.duration": { "type": "integer" },
-            "transactionElements.leg3.protocolInfo.http.remoteName": { "type": "text", "norms": false },
-            "transactionElements.leg3.protocolInfo.http.remoteAddr": { "type": "text", "norms": false },
-            "transactionElements.leg3.protocolInfo.http.remotePort": { "type": "integer" },
-            "transactionElements.leg3.protocolInfo.http.bytesSent": { "type": "integer" },
-            "transactionElements.leg3.protocolInfo.http.bytesReceived": { "type": "integer" },
-            "transactionElements.leg3.protocolInfo.http.statusText": { "type": "keyword" },
-            "transactionElements.leg3.protocolInfo.http.status": { "type": "integer" },
-            "transactionElements.leg3.protocolInfo.http.uri": { "type": "text","norms": false },
-
-            "transactionElements.leg4.duration": { "type": "integer" },
-            "transactionElements.leg4.protocolInfo.http.remoteName": { "type": "text", "norms": false },
-            "transactionElements.leg4.protocolInfo.http.remoteAddr": { "type": "text", "norms": false },
-            "transactionElements.leg4.protocolInfo.http.remotePort": { "type": "integer" },
-            "transactionElements.leg4.protocolInfo.http.bytesSent": { "type": "integer" },
-            "transactionElements.leg4.protocolInfo.http.bytesReceived": { "type": "integer" },
-            "transactionElements.leg4.protocolInfo.http.statusText": { "type": "keyword" },
-            "transactionElements.leg4.protocolInfo.http.status": { "type": "integer" },
-            "transactionElements.leg4.protocolInfo.http.uri": { "type": "text","norms": false },
-
-            "transactionElements.leg5.duration": { "type": "integer" },
-            "transactionElements.leg5.protocolInfo.http.remoteName": { "type": "text", "norms": false },
-            "transactionElements.leg5.protocolInfo.http.remoteAddr": { "type": "text", "norms": false },
-            "transactionElements.leg5.protocolInfo.http.remotePort": { "type": "integer" },
-            "transactionElements.leg5.protocolInfo.http.bytesSent": { "type": "integer" },
-            "transactionElements.leg5.protocolInfo.http.bytesReceived": { "type": "integer" },
-            "transactionElements.leg5.protocolInfo.http.statusText": { "type": "keyword" },
-            "transactionElements.leg5.protocolInfo.http.status": { "type": "integer" },
-            "transactionElements.leg5.protocolInfo.http.uri": { "type": "text","norms": false },
-
             "transactionSummary.status": {
                 "type": "keyword"
             },
@@ -191,6 +141,24 @@
                 "type": "boolean"
             },
             "transactionSummary.serviceContext.apiState": {
+                "type": "keyword"
+            },
+            "transactionSummary.serviceContext.apiSecurity": {
+                "type": "keyword"
+            },
+            "transactionSummary.serviceContext.requestPolicy": {
+                "type": "keyword"
+            },
+            "transactionSummary.serviceContext.routingPolicy": {
+                "type": "keyword"
+            },
+            "transactionSummary.serviceContext.responsePolicy": {
+                "type": "keyword"
+            },
+            "transactionSummary.serviceContext.faulthandlerPolicy": {
+                "type": "keyword"
+            },
+            "transactionSummary.serviceContext.backendBasePath": {
                 "type": "keyword"
             }
         }
