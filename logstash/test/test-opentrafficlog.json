@@ -27,8 +27,6 @@
             "leg0": {
               "duration": 20,
               "leg": 0,
-              "serviceName": "Petstore",
-              "operation": "getInventory",
               "finalStatus": "Pass",
               "protocolInfo": {
                 "http": {
@@ -322,7 +320,6 @@
           },
           "transactionElements": {
             "leg0": {
-              "operation": "N/A",
               "finalStatus": "Pass",
               "duration": "-1",
               "protocolInfo": {
