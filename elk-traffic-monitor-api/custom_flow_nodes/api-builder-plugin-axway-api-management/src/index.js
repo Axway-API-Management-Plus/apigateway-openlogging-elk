@@ -113,10 +113,10 @@ async function addLookupAPIMocks(cache) {
 		version: "X.X.X", 
 		deprecated: false, 
 		state: "published",
-		routingPolicy: null, 
-		requestPolicy: null, 
-		responsePolicy: null, 
-		faulthandlerPolicy: null,
+		routingPolicy: "N/A", 
+		requestPolicy: "N/A", 
+		responsePolicy: "N/A", 
+		faulthandlerPolicy: "N/A", 
 		apiSecurity: "API-Key", 
 		backendBasePath:"https://petstore.swagger.io"
 	});
