@@ -121,6 +121,7 @@ async function lookupAPIDetails(params, options) {
 	apiProxy.backendBasePath = await _getBackendBasePath(apiProxy, operationId);
 	apiProxy.faulthandlerPolicy = await _getFaulthandlerPolicy(apiProxy, operationId);
 	// Remove a few properties we really don't need
+	delete apiProxy.id;
 	delete apiProxy.corsProfiles;
 	delete apiProxy.securityProfiles;
 	delete apiProxy.authenticationProfiles;

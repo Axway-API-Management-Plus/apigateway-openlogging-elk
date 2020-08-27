@@ -110,6 +110,18 @@ async function isAPIManagerUserAdmin(apiManagerConfig, logger) {
 async function addLookupAPIMocks(cache) {
 	cache.set( "/petstore/v2/user/Chris", {organizationName: "Mocked Org A", version: "X.X.X", deprecated: false, state: "published"});
 	cache.set( "/healthcheck", {organizationName: "Mocked Org B", version: "Z.Z.Z", deprecated: true, state: "unpublished"});
+	cache.set( "/api/with/policies/backend/and/oauth", {
+		organizationName: "Mocked Org B", 
+		version: "Z.Z.Z", 
+		deprecated: true, 
+		state: "unpublished", 
+		routingPolicy: "I do the routing", 
+		requestPolicy: "My Request Policy", 
+		responsePolicy: "I take care abouth the response", 
+		faulthandlerPolicy: "OMG Errors",
+		apiSecurity: "OAuth", 
+		backendBasePath:"https://im.a.special.backend.host:7788"
+	});
 }
 
 module.exports = getPlugin;
