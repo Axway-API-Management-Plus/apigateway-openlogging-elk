@@ -72,7 +72,6 @@
             "groupId": "group-2",
             "groupName": "group-a",
             "serviceId": "instance-3",
-            "serviceName": "instance-3",
             "version": "7.7.20200530",
             "gatewayName": "API-Gateway 3", 
             "gatewayRegion": "US"
@@ -113,7 +112,6 @@
             "groupId": "group-2",
             "groupName": "group-a",
             "serviceId": "instance-3",
-            "serviceName": "instance-3",
             "version": "7.7.20200530",
             "gatewayName": "API-Gateway 3", 
             "gatewayRegion": "US"
@@ -158,7 +156,6 @@
             "groupId": "group-2",
             "groupName": "group-a",
             "serviceId": "instance-3",
-            "serviceName": "instance-3",
             "version": "7.7.20200530",
             "gatewayName": "API-Gateway 3", 
             "gatewayRegion": "US"
@@ -196,7 +193,6 @@
             "groupId": "group-2",
             "groupName": "group-a",
             "serviceId": "instance-1",
-            "serviceName": "instance-1",
             "version": "7.7.20200530",
             "gatewayName": "API-Gateway 3", 
             "gatewayRegion": "US"
@@ -225,7 +221,6 @@
             "groupId": "group-2",
             "groupName": "group-a",
             "serviceId": "instance-2",
-            "serviceName": "instance-2",
             "version": "7.7.20200530",
             "gatewayName": "API-Gateway 3", 
             "gatewayRegion": "US"
@@ -321,7 +316,6 @@
             "groupId": "group-2",
             "groupName": "QuickStart Group",
             "serviceId": "instance-1",
-            "serviceName": "QuickStart Server",
             "version": "7.7.20200730",
             "gatewayName": "API-Gateway 3", 
             "gatewayRegion": "US"
