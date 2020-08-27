@@ -7,7 +7,7 @@
         "version": "1.0.5",
         "apiRoutingKey": null,
         "vhost": null,
-        "path": "/my/api/exists",
+        "path": "/my/api/exists/with/backend",
         "descriptionType": "original",
         "descriptionManual": null,
         "descriptionMarkdown": null,

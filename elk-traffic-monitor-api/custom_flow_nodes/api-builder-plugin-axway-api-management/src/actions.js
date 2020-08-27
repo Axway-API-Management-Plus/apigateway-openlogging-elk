@@ -159,7 +159,7 @@ async function _getAPISecurity(apiProxy, operationId) {
 			// For now we pick the first Security device
 			return securityDeviceTypes[securityProfile.devices[0].type];
 		}
-		return null;
+		return "N/A";
 	}
 	throw new Error('_getAPISecurity with operationId not yet supported.');
 }
@@ -169,7 +169,7 @@ async function _getRequestPolicy(apiProxy, operationId) {
 		if(apiProxy.outboundProfiles._default.requestPolicy) {
 			return getPolicyName(apiProxy.outboundProfiles._default.requestPolicy);
 		} else {
-			return null;
+			return "N/A";
 		}
 	}
 	throw new Error('_getRequestPolicy with operationId not yet supported.');
@@ -180,7 +180,7 @@ async function _getRoutingPolicy(apiProxy, operationId) {
 		if(apiProxy.outboundProfiles._default.routePolicy) {
 			return getPolicyName(apiProxy.outboundProfiles._default.routePolicy);
 		} else {
-			return null;
+			return "N/A";
 		}
 	}
 	throw new Error('_getRoutingPolicy with operationId not yet supported.');
@@ -191,7 +191,7 @@ async function _getResponsePolicy(apiProxy, operationId) {
 		if(apiProxy.outboundProfiles._default.responsePolicy) {
 			return getPolicyName(apiProxy.outboundProfiles._default.responsePolicy);
 		} else {
-			return null;
+			return "N/A";
 		}
 	}
 	throw new Error('_getResponsePolicy with operationId not yet supported.');
@@ -202,7 +202,7 @@ async function _getFaulthandlerPolicy(apiProxy, operationId) {
 		if(apiProxy.outboundProfiles._default.faultHandlerPolicy) {
 			return getPolicyName(apiProxy.outboundProfiles._default.faultHandlerPolicy);
 		} else {
-			return null;
+			return "N/A";
 		}
 	}
 	throw new Error('_getResponsePolicy with operationId not yet supported.');

@@ -187,10 +187,10 @@ describe('Test API Lookup', () => {
 				apiName: 'Petstore HTTPS', apiPath: '/v1/petstore'
 			});
 			//expect(value.organizationName).to.equal(`API Development`);
-			expect(value.requestPolicy).to.equal(null);
-			expect(value.routingPolicy).to.equal(null);
-			expect(value.responsePolicy).to.equal(null);
-			expect(value.faulthandlerPolicy).to.equal(null);
+			expect(value.requestPolicy).to.equal("N/A");
+			expect(value.routingPolicy).to.equal("N/A");
+			expect(value.responsePolicy).to.equal("N/A");
+			expect(value.faulthandlerPolicy).to.equal("N/A");
 			expect(value.name).to.equal(`Petstore HTTPS`);
 			expect(value.path).to.equal(`/v1/petstore`);
 			expect(output).to.equal('next');
