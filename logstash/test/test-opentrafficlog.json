@@ -92,10 +92,10 @@
               "status": "success",
               "duration": 2,
               "apiSecurity": "API-Key", 
-              "requestPolicy": null, 
-              "routingPolicy": null, 
-              "responsePolicy": null, 
-              "faulthandlerPolicy": null, 
+              "requestPolicy": "N/A", 
+              "routingPolicy": "N/A", 
+              "responsePolicy": "N/A", 
+              "faulthandlerPolicy": "N/A", 
               "backendBasePath": "https://petstore.swagger.io"
             }
           }
