@@ -16,7 +16,6 @@
           "correlationId": "feca0c5f7f550c81357fdfee",
           "processInfo": {
             "hostname": "ip-172-31-56-150.ec2.internal",
-            "domainId": "e1ff3aab-3b11-4820-a1be-3763da2beda4",
             "groupId": "group-2",
             "groupName": "group-a",
             "serviceId": "instance-2",
@@ -70,7 +69,6 @@
           "correlationId": "ffbe0c5f95da03f602a6e587",
           "processInfo": {
             "hostname": "ip-172-31-62-146.ec2.internal",
-            "domainId": "e1ff3aab-3b11-4820-a1be-3763da2beda4",
             "groupId": "group-2",
             "groupName": "group-a",
             "serviceId": "instance-3",
@@ -112,7 +110,6 @@
           "correlationId": "OMG-UNKNOWN-API-Error",
           "processInfo": {
             "hostname": "ip-172-31-62-146.ec2.internal",
-            "domainId": "e1ff3aab-3b11-4820-a1be-3763da2beda4",
             "groupId": "group-2",
             "groupName": "group-a",
             "serviceId": "instance-3",
@@ -158,7 +155,6 @@
           "correlationId": "OMG-UNKNOWN-API",
           "processInfo": {
             "hostname": "ip-172-31-62-146.ec2.internal",
-            "domainId": "e1ff3aab-3b11-4820-a1be-3763da2beda4",
             "groupId": "group-2",
             "groupName": "group-a",
             "serviceId": "instance-3",
@@ -197,7 +193,6 @@
           "correlationId": "8faa0c5f4da87df2ad8c394a",
           "processInfo": {
             "hostname": "ip-172-31-48-17.ec2.internal",
-            "domainId": "e1ff3aab-3b11-4820-a1be-3763da2beda4",
             "groupId": "group-2",
             "groupName": "group-a",
             "serviceId": "instance-1",
@@ -227,7 +222,6 @@
           "correlationId": "13cb0c5f2d58b335499405fa",
           "processInfo": {
             "hostname": "ip-172-31-56-150.ec2.internal",
-            "domainId": "e1ff3aab-3b11-4820-a1be-3763da2beda4",
             "groupId": "group-2",
             "groupName": "group-a",
             "serviceId": "instance-2",
@@ -324,7 +318,6 @@
           "correlationId": "36ae435faa3e258ee1092b60",
           "processInfo": {
             "hostname": "api-env",
-            "domainId": "ed992442-c363-4d36-963a-9e6314b0f421",
             "groupId": "group-2",
             "groupName": "QuickStart Group",
             "serviceId": "instance-1",

@@ -21,9 +21,6 @@
             "processInfo.groupId": {
                 "type": "keyword"
             },
-            "processInfo.domainId": {
-                "type": "keyword"
-            },
             "processInfo.groupName": {
                 "type": "text",
                 "fields": {
