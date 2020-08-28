@@ -16,7 +16,7 @@ const https = require('https');
  * @returns {object} An API Builder plugin.
  */
 async function getPlugin(pluginConfig, options) {
-	const cache = new NodeCache({ stdTTL: 600, useClones: false });
+	const cache = new NodeCache({ stdTTL: pluginConfig.lookupCacheTTL, useClones: false });
 	const sdk = new SDK({ pluginConfig });
 	if(pluginConfig.MOCK_LOOKUP_API=="true") {
 		options.logger.info("MOCK_LOOKUP_API set to true - Lookup API will mock for tests");
