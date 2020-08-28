@@ -13,7 +13,8 @@ const securityDeviceTypes = {
 	authPolicy: "Security policy", 
 	awsHeader: "AWS Header", 
 	awsQuery: "AWS Query", 
-	twoWaySSL: "Mutual SSL"
+	twoWaySSL: "Mutual SSL", 
+	passThrough: "Pass Through"
   };
 
 //process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
