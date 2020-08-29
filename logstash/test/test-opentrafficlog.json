@@ -12,6 +12,16 @@
       ],
       "expected": [
         {
+          "correlationId": "feca0c5f7f550c81357fdfee",
+          "transactionSummary": {
+            "method": "GET",
+            "statusText": "OK",
+            "status": 200,
+            "bytesSent": 774,
+            "bytesReceived": 126
+          }
+        },
+        {
           "@timestamp": "2020-07-13T20:58:38.042Z",
           "correlationId": "feca0c5f7f550c81357fdfee",
           "processInfo": {
@@ -52,16 +62,6 @@
                 "sentPayload": null
               }
             }
-          }
-        }, 
-        {
-          "correlationId": "feca0c5f7f550c81357fdfee",
-          "transactionSummary": {
-            "method": "GET",
-            "statusText": "OK",
-            "status": 200,
-            "bytesSent": 774,
-            "bytesReceived": 126
           }
         }
       ]
