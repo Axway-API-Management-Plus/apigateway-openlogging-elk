@@ -1,0 +1,166 @@
+{
+    "index_patterns": [
+        "apigw-traffic-summary-*"
+    ],
+    "settings": {
+        "number_of_shards": 5, 
+        "number_of_replicas": 1
+    },
+    "mappings": {
+        "dynamic": false,
+        "properties": {
+            "@timestamp": {
+                "type" : "date"
+            },
+            "correlationId": {
+                "type": "keyword"
+            },
+            "processInfo.serviceId": {
+                "type": "keyword"
+            },
+            "processInfo.groupId": {
+                "type": "keyword"
+            },
+            "processInfo.groupName": {
+                "type": "text",
+                "fields": {
+                    "keyword": {
+                        "type": "keyword"
+                    }
+                },
+                "norms": false
+            },
+            "processInfo.hostname": {
+                "type": "text",
+                "fields": {
+                    "keyword": {
+                        "type": "keyword"
+                    }
+                },
+                "norms": false
+            },
+            "processInfo.gatewayRegion": {
+                "type": "keyword"
+            },
+            "processInfo.gatewayName": {
+                "type": "text",
+                "fields": {
+                    "keyword": {
+                        "type": "keyword"
+                    }
+                },
+                "norms": false
+            },
+            "processInfo.version": {
+                "type": "text",
+                "fields": {
+                    "keyword": {
+                        "type": "keyword"
+                    }
+                },
+                "norms": false
+            },
+
+            "transactionElements.leg0.protocolInfo.http.remoteName": { "type": "text", "norms": false },
+            "transactionElements.leg0.protocolInfo.http.remoteAddr": { "type": "text", "norms": false },
+            "transactionElements.leg0.protocolInfo.http.wafStatus": { "type": "integer" },
+            "transactionElements.leg0.protocolInfo.http.remotePort": { "type": "integer" },
+            "transactionElements.leg0.protocolInfo.http.bytesSent": { "type": "integer" },
+            "transactionElements.leg0.protocolInfo.http.bytesReceived": { "type": "integer" },
+            "transactionElements.leg0.protocolInfo.http.statusText": { "type": "keyword" },
+            "transactionElements.leg0.protocolInfo.http.status": { "type": "integer" },
+            "transactionElements.leg0.protocolInfo.http.authSubjectId": { "type": "text", "norms": false },
+            "transactionElements.leg0.protocolInfo.http.localPort": { "type": "integer" },
+            "transactionElements.leg0.protocolInfo.http.localAddr": { "type": "text", "norms": false },
+            "transactionElements.leg0.protocolInfo.http.method": { "type": "text", "norms": false },
+            "transactionElements.leg0.protocolInfo.http.uri": { "type": "text","norms": false },
+            "transactionElements.leg0.protocolInfo.http.vhost": { "type": "text","norms": false },
+            "transactionElements.leg0.duration": { "type": "integer" },
+            "transactionElements.leg0.finalStatus": { "type": "keyword" },
+
+            "transactionSummary.status": {
+                "type": "keyword"
+            },
+            "transactionSummary.protocol": {
+                "type": "keyword"
+            },
+            "transactionSummary.protocolSrc": {
+                "type": "integer"
+            },
+
+            "transactionSummary.path": {
+                "type": "text"
+            },
+
+            "transactionSummary.serviceContext.service": {
+                "type": "text",
+                "fields": {
+                    "keyword": {
+                        "type": "keyword"
+                    }
+                },
+                "norms": false
+            },
+            "transactionSummary.serviceContext.status": {
+                "type": "keyword"
+            },
+            "transactionSummary.serviceContext.duration": {
+                "type": "integer"
+            },
+            "transactionSummary.serviceContext.method": {
+                "type": "text",
+                "fields": {
+                    "keyword": {
+                        "type": "keyword"
+                    }
+                },
+                "norms": false
+            },
+            "transactionSummary.serviceContext.app": {
+                "type": "text",
+                "fields": {
+                    "keyword": {
+                        "type": "keyword"
+                    }
+                },
+                "norms": false
+            },
+            "transactionSummary.serviceContext.appOrg": {
+                "type": "keyword"
+            },
+            "transactionSummary.serviceContext.apiOrg": {
+                "type": "keyword"
+            },
+            "transactionSummary.serviceContext.apiVersion": {
+                "type": "keyword"
+            },
+            "transactionSummary.serviceContext.apiDeprecated": {
+                "type": "boolean"
+            },
+            "transactionSummary.serviceContext.monitor": {
+                "type": "boolean"
+            },
+            "transactionSummary.serviceContext.apiState": {
+                "type": "keyword"
+            },
+            "transactionSummary.serviceContext.apiSecurity": {
+                "type": "keyword"
+            },
+            "transactionSummary.serviceContext.requestPolicy": {
+                "type": "keyword"
+            },
+            "transactionSummary.serviceContext.routingPolicy": {
+                "type": "keyword"
+            },
+            "transactionSummary.serviceContext.responsePolicy": {
+                "type": "keyword"
+            },
+            "transactionSummary.serviceContext.faulthandlerPolicy": {
+                "type": "keyword"
+            },
+            "transactionSummary.serviceContext.backendBasePath": {
+                "type": "keyword"
+            }
+        }
+    }
+}
