@@ -61,25 +61,23 @@
                 "norms": false
             },
 
-            "transactionElements.leg0.protocolInfo.http.remoteName": { "type": "text", "norms": false },
-            "transactionElements.leg0.protocolInfo.http.remoteAddr": { "type": "text", "norms": false },
-            "transactionElements.leg0.protocolInfo.http.wafStatus": { "type": "integer" },
-            "transactionElements.leg0.protocolInfo.http.remotePort": { "type": "integer" },
-            "transactionElements.leg0.protocolInfo.http.bytesSent": { "type": "integer" },
-            "transactionElements.leg0.protocolInfo.http.bytesReceived": { "type": "integer" },
-            "transactionElements.leg0.protocolInfo.http.statusText": { "type": "keyword" },
-            "transactionElements.leg0.protocolInfo.http.status": { "type": "integer" },
-            "transactionElements.leg0.protocolInfo.http.authSubjectId": { "type": "text", "norms": false },
-            "transactionElements.leg0.protocolInfo.http.localPort": { "type": "integer" },
-            "transactionElements.leg0.protocolInfo.http.localAddr": { "type": "text", "norms": false },
-            "transactionElements.leg0.protocolInfo.http.method": { "type": "text", "norms": false },
-            "transactionElements.leg0.protocolInfo.http.uri": { "type": "text","norms": false },
-            "transactionElements.leg0.protocolInfo.http.vhost": { "type": "text","norms": false },
-            "transactionElements.leg0.duration": { "type": "integer" },
-            "transactionElements.leg0.finalStatus": { "type": "keyword" },
-
             "transactionSummary.status": {
                 "type": "keyword"
+            },
+            "transactionSummary.method": {
+                "type": "keyword"
+            },
+            "transactionSummary.statusText": {
+                "type": "keyword"
+            },
+            "transactionSummary.statusCode": {
+                "type": "integer"
+            },
+            "transactionSummary.bytesSent": {
+                "type": "integer"
+            },
+            "transactionSummary.bytesReceived": {
+                "type": "integer"
             },
             "transactionSummary.protocol": {
                 "type": "keyword"
@@ -87,11 +85,9 @@
             "transactionSummary.protocolSrc": {
                 "type": "integer"
             },
-
             "transactionSummary.path": {
                 "type": "text"
             },
-
             "transactionSummary.serviceContext.service": {
                 "type": "text",
                 "fields": {
