@@ -61,34 +61,35 @@
                 "norms": false
             },
 
-            "transactionSummary.status": {
+            "status": {
                 "type": "keyword"
             },
-            "transactionSummary.method": {
+            "method": {
                 "type": "keyword"
             },
-            "transactionSummary.statusText": {
+            "statusText": {
                 "type": "keyword"
             },
-            "transactionSummary.statusCode": {
+            "statusCode": {
                 "type": "integer"
             },
-            "transactionSummary.bytesSent": {
+            "bytesSent": {
                 "type": "integer"
             },
-            "transactionSummary.bytesReceived": {
+            "bytesReceived": {
                 "type": "integer"
             },
-            "transactionSummary.protocol": {
+            "protocol": {
                 "type": "keyword"
             },
-            "transactionSummary.protocolSrc": {
+            "protocolSrc": {
                 "type": "integer"
             },
-            "transactionSummary.path": {
-                "type": "text"
+            "path": {
+                "type": "text", 
+                "norms": false
             },
-            "transactionSummary.serviceContext.service": {
+            "serviceContext.service": {
                 "type": "text",
                 "fields": {
                     "keyword": {
@@ -97,13 +98,13 @@
                 },
                 "norms": false
             },
-            "transactionSummary.serviceContext.status": {
+            "serviceContext.status": {
                 "type": "keyword"
             },
-            "transactionSummary.serviceContext.duration": {
+            "serviceContext.duration": {
                 "type": "integer"
             },
-            "transactionSummary.serviceContext.method": {
+            "serviceContext.method": {
                 "type": "text",
                 "fields": {
                     "keyword": {
@@ -112,7 +113,7 @@
                 },
                 "norms": false
             },
-            "transactionSummary.serviceContext.app": {
+            "serviceContext.app": {
                 "type": "text",
                 "fields": {
                     "keyword": {
@@ -121,40 +122,40 @@
                 },
                 "norms": false
             },
-            "transactionSummary.serviceContext.appOrg": {
+            "serviceContext.appOrg": {
                 "type": "keyword"
             },
-            "transactionSummary.serviceContext.apiOrg": {
+            "serviceContext.apiOrg": {
                 "type": "keyword"
             },
-            "transactionSummary.serviceContext.apiVersion": {
+            "serviceContext.apiVersion": {
                 "type": "keyword"
             },
-            "transactionSummary.serviceContext.apiDeprecated": {
+            "serviceContext.apiDeprecated": {
                 "type": "boolean"
             },
-            "transactionSummary.serviceContext.monitor": {
+            "serviceContext.monitor": {
                 "type": "boolean"
             },
-            "transactionSummary.serviceContext.apiState": {
+            "serviceContext.apiState": {
                 "type": "keyword"
             },
-            "transactionSummary.serviceContext.apiSecurity": {
+            "serviceContext.apiSecurity": {
                 "type": "keyword"
             },
-            "transactionSummary.serviceContext.requestPolicy": {
+            "serviceContext.requestPolicy": {
                 "type": "keyword"
             },
-            "transactionSummary.serviceContext.routingPolicy": {
+            "serviceContext.routingPolicy": {
                 "type": "keyword"
             },
-            "transactionSummary.serviceContext.responsePolicy": {
+            "serviceContext.responsePolicy": {
                 "type": "keyword"
             },
-            "transactionSummary.serviceContext.faulthandlerPolicy": {
+            "serviceContext.faulthandlerPolicy": {
                 "type": "keyword"
             },
-            "transactionSummary.serviceContext.backendBasePath": {
+            "serviceContext.backendBasePath": {
                 "type": "keyword"
             }
         }
