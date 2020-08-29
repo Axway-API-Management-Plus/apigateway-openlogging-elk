@@ -16,9 +16,9 @@
           "transactionSummary": {
             "method": "GET",
             "statusText": "OK",
-            "status": 200,
-            "bytesSent": 774,
-            "bytesReceived": 126
+            "status": "200",
+            "bytesSent": "774",
+            "bytesReceived": "126"
           }
         },
         {
