@@ -14,13 +14,11 @@
         {
           "@timestamp": "2020-07-13T20:58:38.042Z",
           "correlationId": "feca0c5f7f550c81357fdfee",
-          "transactionSummary": {
             "method": "GET",
             "statusText": "OK",
             "statusCode": 200,
             "bytesSent": 774,
             "bytesReceived": 126
-          }
         },
         {
           "@timestamp": "2020-07-13T20:58:38.042Z",
@@ -85,30 +83,28 @@
             "gatewayName": "API-Gateway 3", 
             "gatewayRegion": "US"
           },
-          "transactionSummary": {
-            "path": "/petstore/v2/user/Chris",
-            "protocol": "https",
-            "protocolSrc": "8065",
+          "path": "/petstore/v2/user/Chris",
+          "protocol": "https",
+          "protocolSrc": "8065",
+          "status": "success",
+          "serviceContext": {
+            "apiDeprecated": "false",
+            "apiOrg": "Mocked Org A",
+            "apiState": "published",
+            "apiVersion": "X.X.X",
+            "service": "Petstore",
+            "monitor": true,
+            "appOrg": "Apps org",
+            "app": "Weather App",
+            "method": "getUserByName",
             "status": "success",
-            "serviceContext": {
-              "apiDeprecated": "false",
-              "apiOrg": "Mocked Org A",
-              "apiState": "published",
-              "apiVersion": "X.X.X",
-              "service": "Petstore",
-              "monitor": true,
-              "appOrg": "Apps org",
-              "app": "Weather App",
-              "method": "getUserByName",
-              "status": "success",
-              "duration": 2,
-              "apiSecurity": "API-Key", 
-              "requestPolicy": "N/A", 
-              "routingPolicy": "N/A", 
-              "responsePolicy": "N/A", 
-              "faulthandlerPolicy": "N/A", 
-              "backendBasePath": "https://petstore.swagger.io"
-            }
+            "duration": 2,
+            "apiSecurity": "API-Key", 
+            "requestPolicy": "N/A", 
+            "routingPolicy": "N/A", 
+            "responsePolicy": "N/A", 
+            "faulthandlerPolicy": "N/A", 
+            "backendBasePath": "https://petstore.swagger.io"
           }
         }
       ]
@@ -131,30 +127,28 @@
             "gatewayName": "API-Gateway 3", 
             "gatewayRegion": "US"
           },
-          "transactionSummary": {
-            "path": "/api/with/policies/backend/and/oauth",
-            "protocol": "https",
-            "protocolSrc": "8065",
+          "path": "/api/with/policies/backend/and/oauth",
+          "protocol": "https",
+          "protocolSrc": "8065",
+          "status": "success",
+          "serviceContext": {
+            "apiDeprecated": "true",
+            "apiOrg": "Mocked Org B",
+            "apiState": "unpublished",
+            "apiVersion": "Z.Z.Z",
+            "service": "Petstore",
+            "monitor": true,
+            "appOrg": "Apps org",
+            "app": "Weather App",
+            "method": "getUserByName",
             "status": "success",
-            "serviceContext": {
-              "apiDeprecated": "true",
-              "apiOrg": "Mocked Org B",
-              "apiState": "unpublished",
-              "apiVersion": "Z.Z.Z",
-              "service": "Petstore",
-              "monitor": true,
-              "appOrg": "Apps org",
-              "app": "Weather App",
-              "method": "getUserByName",
-              "status": "success",
-              "duration": 2, 
-              "apiSecurity": "OAuth", 
-              "requestPolicy": "My Request Policy", 
-              "routingPolicy": "I do the routing", 
-              "responsePolicy": "I take care abouth the response", 
-              "faulthandlerPolicy": "OMG Errors", 
-              "backendBasePath": "https://im.a.special.backend.host:7788"
-            }
+            "duration": 2, 
+            "apiSecurity": "OAuth", 
+            "requestPolicy": "My Request Policy", 
+            "routingPolicy": "I do the routing", 
+            "responsePolicy": "I take care abouth the response", 
+            "faulthandlerPolicy": "OMG Errors", 
+            "backendBasePath": "https://im.a.special.backend.host:7788"
           }
         }
       ]
@@ -192,20 +186,18 @@
               }
             }
           },
-          "transactionSummary": {
-            "path": "/this/api/is/unknown",
-            "protocol": "https",
-            "protocolSrc": "8065",
+          "path": "/this/api/is/unknown",
+          "protocol": "https",
+          "protocolSrc": "8065",
+          "status": "success",
+          "serviceContext": {
+            "service": "A unknown API",
+            "monitor": true,
+            "appOrg": null,
+            "app": null,
+            "method": "check the logs",
             "status": "success",
-            "serviceContext": {
-              "service": "A unknown API",
-              "monitor": true,
-              "appOrg": null,
-              "app": null,
-              "method": "check the logs",
-              "status": "success",
-              "duration": 2
-            }
+            "duration": 2
           },
           "type": "errorEvent"
         },
@@ -222,20 +214,18 @@
             "gatewayRegion": "US"
           },
           "tags": ["_httprequestfailure"],
-          "transactionSummary": {
-            "path": "/this/api/is/unknown",
-            "protocol": "https",
-            "protocolSrc": "8065",
+          "path": "/this/api/is/unknown",
+          "protocol": "https",
+          "protocolSrc": "8065",
+          "status": "success",
+          "serviceContext": {
+            "service": "A unknown API",
+            "monitor": true,
+            "appOrg": null,
+            "app": null,
+            "method": "getUserByName",
             "status": "success",
-            "serviceContext": {
-              "service": "A unknown API",
-              "monitor": true,
-              "appOrg": null,
-              "app": null,
-              "method": "getUserByName",
-              "status": "success",
-              "duration": 2
-            }
+            "duration": 2
           }
         }
       ]
@@ -258,13 +248,11 @@
             "gatewayName": "API-Gateway 3", 
             "gatewayRegion": "US"
           },
-          "transactionSummary": {
-            "path": "/healthcheck",
-            "protocol": "http",
-            "protocolSrc": "8080",
-            "status": "success",
-            "serviceContext": null
-          }
+          "path": "/healthcheck",
+          "protocol": "http",
+          "protocolSrc": "8080",
+          "status": "success",
+          "serviceContext": null
         }
       ]
     },
@@ -395,15 +383,13 @@
               }
             }
           },
-          "transactionSummary": {
-            "path": null,
-            "protocol": null,
-            "protocolSrc": null,
-            "status": "success",
-            "serviceContext": {
-              "method": "N/A",
-              "service": "Scheduled policy"
-            }
+          "path": null,
+          "protocol": null,
+          "protocolSrc": null,
+          "status": "success",
+          "serviceContext": {
+            "method": "N/A",
+            "service": "Scheduled policy"
           },
           "type": "scheduledPolicy"
         }
