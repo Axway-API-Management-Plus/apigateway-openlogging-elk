@@ -4,7 +4,10 @@
     ],
     "settings": {
         "number_of_shards": 5, 
-        "number_of_replicas": 1
+        "number_of_replicas": 1,
+        "index": {
+            "codec": "best_compression"
+        }
     },
     "mappings": {
         "dynamic": false,
