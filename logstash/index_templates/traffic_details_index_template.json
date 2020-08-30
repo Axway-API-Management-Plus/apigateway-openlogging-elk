@@ -16,7 +16,8 @@
                 "type" : "date"
             },
             "correlationId": {
-                "type": "keyword"
+                "type": "keyword",
+                "doc_values": false
             }
         }
     }

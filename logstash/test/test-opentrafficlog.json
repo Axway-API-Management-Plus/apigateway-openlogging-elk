@@ -18,7 +18,8 @@
             "statusText": "OK",
             "statusCode": 200,
             "bytesSent": 774,
-            "bytesReceived": 126
+            "bytesReceived": 126,
+            "type": "transactionSummary"
         },
         {
           "@timestamp": "2020-07-13T20:58:38.042Z",
@@ -87,6 +88,7 @@
           "protocol": "https",
           "protocolSrc": "8065",
           "status": "success",
+          "type": "transactionSummary",
           "serviceContext": {
             "apiDeprecated": "false",
             "apiOrg": "Mocked Org A",
@@ -131,6 +133,7 @@
           "protocol": "https",
           "protocolSrc": "8065",
           "status": "success",
+          "type": "transactionSummary",
           "serviceContext": {
             "apiDeprecated": "true",
             "apiOrg": "Mocked Org B",
@@ -172,6 +175,7 @@
             "gatewayRegion": "US"
           },
           "tags": ["_httprequestfailure"],
+          "type": "transactionSummary",
           "transactionElements": {
             "leg0": {
               "protocolInfo": {
@@ -198,8 +202,7 @@
             "method": "check the logs",
             "status": "success",
             "duration": 2
-          },
-          "type": "errorEvent"
+          }
         },
         {
           "@timestamp": "2020-07-13T20:07:27.467Z",
@@ -252,6 +255,7 @@
           "protocol": "http",
           "protocolSrc": "8080",
           "status": "success",
+          "type": "transactionSummary",
           "serviceContext": null
         }
       ]
