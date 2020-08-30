@@ -36,6 +36,7 @@ filebeat.inputs:
 
 output.logstash:
   hosts: ["${LOGSTASH}"]
+  worker: ["${FILEBEAT_WORKERS:2}"]
 
 monitoring:
   enabled: true

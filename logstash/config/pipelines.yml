@@ -6,6 +6,7 @@
 - pipeline.id: OpenTraffic
   path.config: "pipelines/OpenTrafficPipeline.conf"
   pipeline.workers: 4
+  pipeline.batch.size: 2000
   pipeline.ordered: false
 
 - pipeline.id: TraceMessages
