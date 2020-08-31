@@ -98,6 +98,15 @@
             "faulthandlerPolicy": "N/A", 
             "backendBasePath": "https://petstore.swagger.io",
             "type": "summaryIndex"
+          },
+          "processInfo": {
+            "hostname": "ip-172-31-62-146.ec2.internal",
+            "groupId": "group-2",
+            "groupName": "group-a",
+            "serviceId": "instance-3",
+            "version": "7.7.20200530",
+            "gatewayName": "API-Gateway 3", 
+            "gatewayRegion": "US"
           }
         },
         {
@@ -172,6 +181,15 @@
             "faulthandlerPolicy": "OMG Errors", 
             "backendBasePath": "https://im.a.special.backend.host:7788",
             "type": "summaryIndex"
+          },
+          "processInfo": {
+            "hostname": "ip-172-31-62-146.ec2.internal",
+            "groupId": "group-2",
+            "groupName": "group-a",
+            "serviceId": "instance-3",
+            "version": "7.7.20200530",
+            "gatewayName": "API-Gateway 3", 
+            "gatewayRegion": "US"
           }
         },
         {
@@ -239,7 +257,16 @@
             "status": "success",
             "duration": 2
           }, 
-          "type": "summaryIndex"
+          "type": "summaryIndex",
+          "processInfo": {
+            "hostname": "ip-172-31-62-146.ec2.internal",
+            "groupId": "group-2",
+            "groupName": "group-a",
+            "serviceId": "instance-3",
+            "version": "7.7.20200530",
+            "gatewayName": "API-Gateway 3", 
+            "gatewayRegion": "US"
+          }
         },
         {
           "@timestamp": "2020-07-13T20:07:27.467Z",
@@ -329,7 +356,16 @@
           "protocol": "http",
           "protocolSrc": "8080",
           "status": "success",
-          "serviceContext": null
+          "serviceContext": null,
+          "processInfo": {
+            "hostname": "ip-172-31-48-17.ec2.internal",
+            "groupId": "group-2",
+            "groupName": "group-a",
+            "serviceId": "instance-1",
+            "version": "7.7.20200530",
+            "gatewayName": "API-Gateway 3", 
+            "gatewayRegion": "US"
+          }
         },
         {
           "@timestamp": "2020-07-13T18:40:15.973Z",
@@ -467,7 +503,16 @@
             "method": "N/A",
             "service": "Scheduled policy"
           }, 
-          "type": "summaryIndex"
+          "type": "summaryIndex",
+          "processInfo": {
+            "hostname": "api-env",
+            "groupId": "group-2",
+            "groupName": "QuickStart Group",
+            "serviceId": "instance-1",
+            "version": "7.7.20200730",
+            "gatewayName": "API-Gateway 3", 
+            "gatewayRegion": "US"
+          }
         },
         {
           "@timestamp": "2020-08-24T12:10:30.003Z",
