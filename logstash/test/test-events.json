@@ -50,7 +50,7 @@
         {
           "@timestamp": "2020-08-27T14:11:35.841Z",
           "type": "alert",
-          "alertType": "AlertMessage2",
+          "alertType": "AlertMessage",
           "level": 3,
           "srcId": "api-env:instance-1",
           "msgId": "Id-17bf475fb303f8664492b7ba",
