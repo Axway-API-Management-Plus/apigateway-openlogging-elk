@@ -245,15 +245,12 @@
           "protocol": "https",
           "protocolSrc": "8065",
           "status": "success",
-          "method": "LOGSTASH",
-          "statusCode": "900",
-          "statusText": "ERROR",
           "serviceContext": {
             "service": "A unknown API",
             "monitor": true,
             "appOrg": null,
             "app": null,
-            "method": "check the logs",
+            "method": "getUserByName",
             "status": "success",
             "duration": 2
           }, 
@@ -266,7 +263,8 @@
             "version": "7.7.20200530",
             "gatewayName": "API-Gateway 3", 
             "gatewayRegion": "US"
-          }
+          },
+          "tags": ["_httprequestfailure"]
         },
         {
           "@timestamp": "2020-07-13T20:07:27.467Z",
