@@ -8,7 +8,7 @@
     {
       "description": "Test transactionElement event with leg0",
       "input": [
-        "{\"timestamp\":1594673918042,\"correlationId\":\"feca0c5f7f550c81357fdfXX\",\"processInfo\":{\"hostname\":\"ip-172-31-56-150.ec2.internal\",\"domainId\":\"e1ff3aab-3b11-4820-a1be-3763da2beda4\",\"groupId\":\"group-2\",\"groupName\":\"group-a\",\"serviceId\":\"instance-2\",\"serviceName\":\"instance-2\",\"version\":\"7.7.20200530\"},\"transactionElement\":{\"leg\":0,\"duration\":20,\"serviceName\":\"Petstore\",\"operation\":\"getInventory\",\"finalStatus\":\"Pass\",\"protocolInfo\":{\"http\":{\"uri\":\"/petstore/v2/store/inventory\",\"status\":200,\"statusText\":\"OK\",\"method\":\"GET\",\"vhost\":null,\"wafStatus\":0,\"bytesSent\":774,\"bytesReceived\":126,\"remoteName\":\"127.0.0.1\",\"remoteAddr\":\"127.0.0.1\",\"localAddr\":\"127.0.0.1\",\"remotePort\":\"59574\",\"localPort\":\"8065\",\"sslSubject\":null,\"authSubjectId\":\"180b1f32-d72f-40f4-949a-fc3f3f7dec2c\"},\"recvHeader\":\"GET /petstore/v2/store/inventory HTTP/1.0\\r\\nConnection: close\\r\\nHost: localhost\\r\\nKeyId: 6cd55c27-675a-444a-9bc7-ae9a7869184d\\r\\n\\r\\n\",\"sentHeader\":\"HTTP/1.1 200 OK\\r\\nMax-Forwards: 20\\r\\nVia: 1.0 ip-172-31-56-150.ec2.internal (Gateway)\\r\\nConnection: close\\r\\nX-CorrelationID: Id-feca0c5f7f550c81357fdfee 0\\r\\ncache-control: no-store, no-cache, must-revalidate, proxy-revalidate\\r\\nDate: Mon, 13 Jul 2020 20:58:38 GMT\\r\\netag: W/\\\"52-LxypU3mP2zpjiEr7yZRKlgVdx3c\\\"\\r\\nexpires: 0\\r\\npragma: no-cache\\r\\nrequest-id: c190fa5f-a192-4e57-8eec-c75a6f52b90d\\r\\nresponse-time: 2\\r\\nserver: API Builder/4.28.10\\r\\nstart-time: 1594673918059\\r\\nsurrogate-control: no-store\\r\\nVary: Accept-Encoding\\r\\nx-content-type-options: nosniff\\r\\nx-frame-options: DENY\\r\\nx-xss-protection: 1; mode=block\\r\\ncontent-md5: 43364b0ef391a24f9a0e587356726c0d\\r\\ncontent-type: application/json; charset=utf-8\\r\\n\\r\\n\",\"recvPayload\":null,\"sentPayload\":null}}}"
+        "{\"timestamp\":1594673918042,\"correlationId\":\"feca0c5f7f550c81357fdfXX\",\"processInfo\":{\"hostname\":\"ip-172-31-56-150.ec2.internal\",\"domainId\":\"e1ff3aab-3b11-4820-a1be-3763da2beda4\",\"groupId\":\"group-2\",\"groupName\":\"group-a\",\"serviceId\":\"instance-2\",\"serviceName\":\"instance-2\",\"version\":\"7.7.20200530\"},\"transactionElement\":{\"leg\":0,\"duration\":20,\"serviceName\":\"Petstore\",\"operation\":\"getInventory\",\"finalStatus\":\"Pass\",\"protocolInfo\":{\"http\":{\"uri\":\"/petstore/v2/store/inventory\",\"status\":200,\"statusText\":\"OK\",\"method\":\"GET\",\"vhost\":null,\"wafStatus\":0,\"bytesSent\":774,\"bytesReceived\":126,\"remoteName\":\"127.0.0.1\",\"remoteAddr\":\"127.0.0.1\",\"localAddr\":\"127.0.0.1\",\"remotePort\":\"59574\",\"localPort\":\"8065\",\"sslSubject\":null,\"authSubjectId\":\"180b1f32-d72f-40f4-949a-fc3f3f7dec2c\"},\"recvHeader\":\"GET /petstore/v2/store/inventory HTTP/1.0\\r\\nConnection: close\\r\\nHost: localhost\\r\\nKeyId: 6cd55c27-675a-444a-9bc7-ae9a7869184d\\r\\n\\r\\n\",\"sentHeader\":\"HTTP/1.1 200 OK\\r\\nMax-Forwards: 20\\r\\nVia: 1.0 ip-172-31-56-150.ec2.internal (Gateway)\\r\\nConnection: close\\r\\nX-CorrelationID: Id-feca0c5f7f550c81357fdfXX 0\\r\\ncache-control: no-store, no-cache, must-revalidate, proxy-revalidate\\r\\nDate: Mon, 13 Jul 2020 20:58:38 GMT\\r\\netag: W/\\\"52-LxypU3mP2zpjiEr7yZRKlgVdx3c\\\"\\r\\nexpires: 0\\r\\npragma: no-cache\\r\\nrequest-id: c190fa5f-a192-4e57-8eec-c75a6f52b90d\\r\\nresponse-time: 2\\r\\nserver: API Builder/4.28.10\\r\\nstart-time: 1594673918059\\r\\nsurrogate-control: no-store\\r\\nVary: Accept-Encoding\\r\\nx-content-type-options: nosniff\\r\\nx-frame-options: DENY\\r\\nx-xss-protection: 1; mode=block\\r\\ncontent-md5: 43364b0ef391a24f9a0e587356726c0d\\r\\ncontent-type: application/json; charset=utf-8\\r\\n\\r\\n\",\"recvPayload\":null,\"sentPayload\":null}}}"
       ],
       "expected": [
         {
@@ -62,6 +62,15 @@
           "statusText": "OK",
           "statusCode": 200,
           "method": "GET", 
+          "processInfo": {
+            "hostname": "ip-172-31-56-150.ec2.internal",
+            "groupId": "group-2",
+            "groupName": "group-a",
+            "serviceId": "instance-2",
+            "version": "7.7.20200530", 
+            "gatewayName": "API-Gateway 3", 
+            "gatewayRegion": "US"
+          },
           "type": "summaryIndex"
         }
       ]
@@ -117,6 +126,15 @@
           "protocol": "https",
           "protocolSrc": "8065",
           "status": "success",
+          "processInfo": {
+            "hostname": "ip-172-31-62-146.ec2.internal",
+            "groupId": "group-2",
+            "groupName": "group-a",
+            "serviceId": "instance-3",
+            "version": "7.7.20200530",
+            "gatewayName": "API-Gateway 3", 
+            "gatewayRegion": "US"
+          },
           "serviceContext": {
             "apiDeprecated": "false",
             "apiOrg": "Mocked Org A",
@@ -134,18 +152,9 @@
             "routingPolicy": "N/A", 
             "responsePolicy": "N/A", 
             "faulthandlerPolicy": "N/A", 
-            "backendBasePath": "https://petstore.swagger.io",
-            "type": "summaryIndex"
+            "backendBasePath": "https://petstore.swagger.io"
           },
-          "processInfo": {
-            "hostname": "ip-172-31-62-146.ec2.internal",
-            "groupId": "group-2",
-            "groupName": "group-a",
-            "serviceId": "instance-3",
-            "version": "7.7.20200530",
-            "gatewayName": "API-Gateway 3", 
-            "gatewayRegion": "US"
-          }
+          "type": "summaryIndex"
         }
       ]
     },
