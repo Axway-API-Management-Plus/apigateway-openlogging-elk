@@ -250,36 +250,6 @@
         {
           "@timestamp": "2020-07-13T20:07:27.467Z",
           "correlationId": "OMG-UNKNOWN-API-Error",
-          "path": "/this/api/is/unknown",
-          "protocol": "https",
-          "protocolSrc": "8065",
-          "status": "success",
-          "method": "LOGSTASH",
-          "statusCode": "900",
-          "statusText": "ERROR",
-          "serviceContext": {
-            "service": "A unknown API",
-            "monitor": true,
-            "appOrg": null,
-            "app": null,
-            "method": "check the logs",
-            "status": "success",
-            "duration": 2
-          }, 
-          "type": "summaryIndex",
-          "processInfo": {
-            "hostname": "ip-172-31-62-146.ec2.internal",
-            "groupId": "group-2",
-            "groupName": "group-a",
-            "serviceId": "instance-3",
-            "version": "7.7.20200530",
-            "gatewayName": "API-Gateway 3", 
-            "gatewayRegion": "US"
-          }
-        },
-        {
-          "@timestamp": "2020-07-13T20:07:27.467Z",
-          "correlationId": "OMG-UNKNOWN-API-Error",
           "processInfo": {
             "hostname": "ip-172-31-62-146.ec2.internal",
             "groupId": "group-2",
@@ -320,6 +290,36 @@
             }
           },
           "type": "errorEvent"
+        },
+        {
+          "@timestamp": "2020-07-13T20:07:27.467Z",
+          "correlationId": "OMG-UNKNOWN-API-Error",
+          "path": "/this/api/is/unknown",
+          "protocol": "https",
+          "protocolSrc": "8065",
+          "status": "success",
+          "method": "LOGSTASH",
+          "statusCode": "900",
+          "statusText": "ERROR",
+          "serviceContext": {
+            "service": "A unknown API",
+            "monitor": true,
+            "appOrg": null,
+            "app": null,
+            "method": "check the logs",
+            "status": "success",
+            "duration": 2
+          }, 
+          "type": "summaryIndex",
+          "processInfo": {
+            "hostname": "ip-172-31-62-146.ec2.internal",
+            "groupId": "group-2",
+            "groupName": "group-a",
+            "serviceId": "instance-3",
+            "version": "7.7.20200530",
+            "gatewayName": "API-Gateway 3", 
+            "gatewayRegion": "US"
+          }
         },
         {
           "@timestamp": "2020-07-13T20:07:27.467Z",
@@ -500,30 +500,6 @@
         "{\"timestamp\":1598271030003,\"correlationId\":\"36ae435faa3e258ee1092b60\",\"processInfo\":{\"hostname\":\"api-env\",\"domainId\":\"ed992442-c363-4d36-963a-9e6314b0f421\",\"groupId\":\"group-2\",\"groupName\":\"QuickStart Group\",\"serviceId\":\"instance-1\",\"serviceName\":\"QuickStart Server\",\"version\":\"7.7.20200730\"},\"transactionSummary\":{\"path\":null, \"protocol\":null, \"protocolSrc\":null, \"status\":\"success\", \"serviceContexts\":[]}}"
       ],
       "expected": [
-        {
-          "@timestamp": "2020-08-24T12:10:30.003Z",
-          "correlationId": "36ae435faa3e258ee1092b60",
-          "statusText": "OK",
-          "statusCode": 901,
-          "path": null,
-          "protocol": null,
-          "protocolSrc": null,
-          "status": "success",
-          "serviceContext": {
-            "method": "N/A",
-            "service": "Scheduled policy"
-          }, 
-          "type": "summaryIndex",
-          "processInfo": {
-            "hostname": "api-env",
-            "groupId": "group-2",
-            "groupName": "QuickStart Group",
-            "serviceId": "instance-1",
-            "version": "7.7.20200730",
-            "gatewayName": "API-Gateway 3", 
-            "gatewayRegion": "US"
-          }
-        },
         {
           "@timestamp": "2020-08-24T12:10:30.003Z",
           "correlationId": "36ae435faa3e258ee1092b60",
