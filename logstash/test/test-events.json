@@ -27,6 +27,7 @@
       "expected": [
         {
           "@timestamp": "2020-08-26T19:15:15.360Z",
+          "type": "system",
           "sysMem": 15677168,
           "diskUsed": 88,
           "instMem": 2269044,
@@ -37,6 +38,26 @@
             "gatewayName": "API-Gateway 1", 
             "gatewayRegion": "APAC"
           }
+        }
+      ]
+    },
+    {
+      "description": "Alert events should produce an event",
+      "input": [
+        "{\"type\":\"alert\", \"time\":1598537495841, \"alertType\":\"AlertMessage\", \"level\":3, \"id\":\"-749bad62:174302050ef:-7fff\", \"srcId\":\"api-env:instance-1\", \"msgId\":\"Id-17bf475fb303f8664492b7ba\", \"defaultMsg\":\"API Manager: Frontend API weatherbit with ID 65182d09-88de-49c6-a303-5dcf64df71c2 has been unpublished.\", \"clientIP\":\"192.168.233.1\", \"policy\":\"Send Alert\", \"filter\":\"Send API Manager Alert\"}"
+      ],
+      "expected": [
+        {
+          "@timestamp": "2020-08-26T19:15:15.360Z",
+          "type": "alert",
+          "alertType": "AlertMessage",
+          "level": 3,
+          "srcId": "api-env:instance-1",
+          "msgId": "Id-17bf475fb303f8664492b7ba",
+          "defaultMsg": "API Manager: Frontend API weatherbit with ID 65182d09-88de-49c6-a303-5dcf64df71c2 has been unpublished.",
+          "clientIP": "192.168.233.1",
+          "policy": "Send Alert",
+          "filter": "Send API Manager Alert"
         }
       ]
     }

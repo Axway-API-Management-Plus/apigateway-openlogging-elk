@@ -47,6 +47,18 @@
                     }
                 },
                 "norms": false
+            },
+            "type": {
+                "type": "keyword"
+            },
+            "alertType": {
+                "type": "keyword"
+            },
+            "level": {
+                "type": "integer"
+            },
+            "srcId": {
+                "type": "keyword"
             }
         }
     }
