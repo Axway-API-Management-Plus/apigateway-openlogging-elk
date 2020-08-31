@@ -21,9 +21,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    # ./logstash-filter-verifier --diff-command="diff -y" --keep-env=API_BUILDER_URL --keep-env=MEMCACHED ./logstash/test/test-tracemessages.json ./logstash/pipelines/TraceMessagesPipeline.conf
-    # ./logstash-filter-verifier --diff-command="diff -y" --keep-env=API_BUILDER_URL --keep-env=MEMCACHED ./logstash/test/test-events.json ./logstash/pipelines/EventsPipeline.conf
-
     # Runs a set of commands using the runners shell
     - name: Install logstash
       run: |
@@ -38,6 +35,8 @@ jobs:
       run: |
         echo Using API_BUILDER_URL: $API_BUILDER_URL
         echo Using MEMCACHED: $MEMCACHED
+        ./logstash-filter-verifier --diff-command="diff -y" --keep-env=API_BUILDER_URL --keep-env=MEMCACHED ./logstash/test/test-tracemessages.json ./logstash/pipelines/TraceMessagesPipeline.conf
+        ./logstash-filter-verifier --diff-command="diff -y" --keep-env=API_BUILDER_URL --keep-env=MEMCACHED ./logstash/test/test-events.json ./logstash/pipelines/EventsPipeline.conf
         ./logstash-filter-verifier --diff-command="diff -y" --sockets --sockets-timeout=120s --keep-env=API_BUILDER_URL --keep-env=MEMCACHED ./logstash/test/test-opentrafficlog.json ./logstash/pipelines/OpenTrafficPipeline.conf
       env:
         API_BUILDER_URL: 'http://localhost:8080'
