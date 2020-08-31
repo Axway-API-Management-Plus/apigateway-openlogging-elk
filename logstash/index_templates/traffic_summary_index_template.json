@@ -11,6 +11,9 @@
     },
     "mappings": {
         "dynamic": false,
+        "_source": {
+            "enabled": true
+        },
         "properties": {
             "@timestamp": {
                 "type" : "date"
