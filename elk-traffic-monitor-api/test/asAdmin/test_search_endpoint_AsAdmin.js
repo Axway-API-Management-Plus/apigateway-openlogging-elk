@@ -10,7 +10,7 @@ describe('Endpoints', function () {
 	this.timeout(30000);
 	let server;
 	let auth;
-	const indexName = `apigw-traffic-details-search_test_${getRandomInt(9999)}`;
+	const indexName = `apigw-traffic-summary-search_test_${getRandomInt(9999)}`;
 
 	beforeEach(() => {
 		// Simulate all responses in this test-file to be an admin, which will not lead to any result restriction
@@ -41,7 +41,7 @@ describe('Endpoints', function () {
 			server.started
 			.then(() => {
 				const entryset = require('../documents/basic/search_test_documents');
-				sendToElasticsearch(elasticConfig, indexName, 'traffic_details_index_template.json', entryset)
+				sendToElasticsearch(elasticConfig, indexName, 'traffic_summary_index_template.json', entryset)
 				.then(() => {
 					resolve();
 				})
@@ -283,7 +283,7 @@ describe('Endpoints', function () {
 				expect(body).to.be.an('Object');
 				expect(body).to.have.property('data');
 				expect(body.data).to.have.lengthOf(2);
-				expect(body.data[0].localPort).to.equals('8080');
+				expect(body.data[0].localPort).to.equals(8080);
 			});
 		});
 
@@ -306,7 +306,7 @@ describe('Endpoints', function () {
 				expect(body).to.be.an('Object');
 				expect(body).to.have.property('data');
 				expect(body.data).to.have.lengthOf(1);
-				expect(body.data[0].localPort).to.equals('8080');
+				expect(body.data[0].localPort).to.equals(8080);
 				expect(body.data[0].subject).to.equals('Chris-Test');
 			});
 		});
@@ -425,7 +425,7 @@ describe('Endpoints', function () {
 				expect(body.data[0].uri).to.equals('/petstore/v2/pet/findByStatus');
 			});
 		});
-		it('[Endpoint-0016] should return one entry with service name Petstore HTTP', () => {
+		it('[Endpoint-0016] should return one entry WAF-Status 1', () => {
 			const auth = {
 				user: server.apibuilder.config.apikey || 'test',
 				password: ''

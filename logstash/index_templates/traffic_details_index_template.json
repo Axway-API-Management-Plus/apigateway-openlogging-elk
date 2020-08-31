@@ -18,6 +18,14 @@
             "correlationId": {
                 "type": "keyword",
                 "doc_values": false
+            }, 
+            "processInfo.serviceId": {
+                "type": "keyword",
+                "doc_values": false
+            },
+            "transactionSummary.serviceContext.apiOrg": {
+                "type": "keyword",
+                "doc_values": false
             }
         }
     }
