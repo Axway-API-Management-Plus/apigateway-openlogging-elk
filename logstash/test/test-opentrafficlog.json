@@ -82,7 +82,7 @@
       ],
       "expected": [
         {
-          "@timestamp": "2020-07-13T20:58:38.042Z",
+          "@timestamp": "2020-07-13T20:07:27.467Z",
           "correlationId": "AAbe0c5f95da03f602a6e587",
           "path": "/petstore/v2/user/Chris",
           "protocol": "https",
@@ -171,6 +171,7 @@
           "protocol": "https",
           "protocolSrc": "8065",
           "status": "success",
+          "type": "summaryIndex",
           "serviceContext": {
             "apiDeprecated": "true",
             "apiOrg": "Mocked Org B",
@@ -241,11 +242,41 @@
       ]
     },
     {
-      "description": "Test transactionSummary event with unknwon API that cannot be looked up - An ErrorEvent and the original Event is expected.",
+      "description": "Test transactionSummary event with unknwon API that cannot be looked up - An ErrorEvent, the original and a summaryIndex event is expected.",
       "input": [
         "{\"timestamp\":1594670847467,\"correlationId\":\"OMG-UNKNOWN-API\",\"processInfo\":{\"hostname\":\"ip-172-31-62-146.ec2.internal\",\"domainId\":\"e1ff3aab-3b11-4820-a1be-3763da2beda4\",\"groupId\":\"group-2\",\"groupName\":\"group-a\",\"serviceId\":\"instance-3\",\"serviceName\":\"instance-3\",\"version\":\"7.7.20200530\"},\"transactionSummary\":{\"path\":\"/this/api/is/unknown\", \"protocol\":\"https\", \"protocolSrc\":\"8065\", \"status\":\"success\", \"serviceContexts\":[{\"service\":\"A unknown API\", \"monitor\":true, \"client\":null, \"org\":null, \"app\":null, \"method\":\"getUserByName\", \"status\":\"success\", \"duration\":2}]}}"
       ],
       "expected": [
+        {
+          "@timestamp": "2020-07-13T20:07:27.467Z",
+          "correlationId": "OMG-UNKNOWN-API-Error",
+          "path": "/this/api/is/unknown",
+          "protocol": "https",
+          "protocolSrc": "8065",
+          "status": "success",
+          "method": "LOGSTASH",
+          "statusCode": "900",
+          "statusText": "ERROR",
+          "serviceContext": {
+            "service": "A unknown API",
+            "monitor": true,
+            "appOrg": null,
+            "app": null,
+            "method": "check the logs",
+            "status": "success",
+            "duration": 2
+          }, 
+          "type": "summaryIndex",
+          "processInfo": {
+            "hostname": "ip-172-31-62-146.ec2.internal",
+            "groupId": "group-2",
+            "groupName": "group-a",
+            "serviceId": "instance-3",
+            "version": "7.7.20200530",
+            "gatewayName": "API-Gateway 3", 
+            "gatewayRegion": "US"
+          }
+        },
         {
           "@timestamp": "2020-07-13T20:07:27.467Z",
           "correlationId": "OMG-UNKNOWN-API-Error",
@@ -318,36 +349,6 @@
               "duration": 2
             }
           }
-        },
-        {
-          "@timestamp": "2020-07-13T20:07:27.467Z",
-          "correlationId": "OMG-UNKNOWN-API-Error",
-          "path": "/this/api/is/unknown",
-          "protocol": "https",
-          "protocolSrc": "8065",
-          "status": "success",
-          "method": "LOGSTASH",
-          "statusCode": "900",
-          "statusText": "ERROR",
-          "serviceContext": {
-            "service": "A unknown API",
-            "monitor": true,
-            "appOrg": null,
-            "app": null,
-            "method": "check the logs",
-            "status": "success",
-            "duration": 2
-          }, 
-          "type": "summaryIndex",
-          "processInfo": {
-            "hostname": "ip-172-31-62-146.ec2.internal",
-            "groupId": "group-2",
-            "groupName": "group-a",
-            "serviceId": "instance-3",
-            "version": "7.7.20200530",
-            "gatewayName": "API-Gateway 3", 
-            "gatewayRegion": "US"
-          }
         }
       ]
     },
@@ -357,6 +358,25 @@
         "{\"timestamp\":1594665615973,\"correlationId\":\"8faa0c5f4da87df2ad8c394a\",\"processInfo\":{\"hostname\":\"ip-172-31-48-17.ec2.internal\",\"domainId\":\"e1ff3aab-3b11-4820-a1be-3763da2beda4\",\"groupId\":\"group-2\",\"groupName\":\"group-a\",\"serviceId\":\"instance-1\",\"serviceName\":\"instance-1\",\"version\":\"7.7.20200530\"},\"transactionSummary\":{\"path\":\"/healthcheck\", \"protocol\":\"http\", \"protocolSrc\":\"8080\", \"status\":\"success\", \"serviceContexts\":[]}}"
       ],
       "expected": [
+        {
+          "@timestamp": "2020-07-13T18:40:15.973Z",
+          "correlationId": "8faa0c5f4da87df2ad8c394a",
+          "path": "/healthcheck",
+          "protocol": "http",
+          "protocolSrc": "8080",
+          "status": "success",
+          "serviceContext": null,
+          "type": "summaryIndex",
+          "processInfo": {
+            "hostname": "ip-172-31-48-17.ec2.internal",
+            "groupId": "group-2",
+            "groupName": "group-a",
+            "serviceId": "instance-1",
+            "version": "7.7.20200530",
+            "gatewayName": "API-Gateway 3", 
+            "gatewayRegion": "US"
+          }
+        },
         {
           "@timestamp": "2020-07-13T18:40:15.973Z",
           "correlationId": "8faa0c5f4da87df2ad8c394a",
@@ -375,25 +395,6 @@
             "protocolSrc": "8080",
             "status": "success",
             "serviceContext": null
-          }
-        },
-        {
-          "@timestamp": "2020-07-13T18:40:15.973Z",
-          "correlationId": "8faa0c5f4da87df2ad8c394a",
-          "path": "/healthcheck",
-          "protocol": "http",
-          "protocolSrc": "8080",
-          "status": "success",
-          "serviceContext": null,
-          "type": "summaryIndex",
-          "processInfo": {
-            "hostname": "ip-172-31-48-17.ec2.internal",
-            "groupId": "group-2",
-            "groupName": "group-a",
-            "serviceId": "instance-1",
-            "version": "7.7.20200530",
-            "gatewayName": "API-Gateway 3", 
-            "gatewayRegion": "US"
           }
         }
       ]
@@ -502,6 +503,30 @@
         {
           "@timestamp": "2020-08-24T12:10:30.003Z",
           "correlationId": "36ae435faa3e258ee1092b60",
+          "statusText": "OK",
+          "statusCode": 901,
+          "path": null,
+          "protocol": null,
+          "protocolSrc": null,
+          "status": "success",
+          "serviceContext": {
+            "method": "N/A",
+            "service": "Scheduled policy"
+          }, 
+          "type": "summaryIndex",
+          "processInfo": {
+            "hostname": "api-env",
+            "groupId": "group-2",
+            "groupName": "QuickStart Group",
+            "serviceId": "instance-1",
+            "version": "7.7.20200730",
+            "gatewayName": "API-Gateway 3", 
+            "gatewayRegion": "US"
+          }
+        },
+        {
+          "@timestamp": "2020-08-24T12:10:30.003Z",
+          "correlationId": "36ae435faa3e258ee1092b60",
           "processInfo": {
             "hostname": "api-env",
             "groupId": "group-2",
@@ -536,30 +561,6 @@
             }
           },
           "type": "scheduledPolicy"
-        },
-        {
-          "@timestamp": "2020-08-24T12:10:30.003Z",
-          "correlationId": "36ae435faa3e258ee1092b60",
-          "statusText": "OK",
-          "statusCode": 901,
-          "path": null,
-          "protocol": null,
-          "protocolSrc": null,
-          "status": "success",
-          "serviceContext": {
-            "method": "N/A",
-            "service": "Scheduled policy"
-          }, 
-          "type": "summaryIndex",
-          "processInfo": {
-            "hostname": "api-env",
-            "groupId": "group-2",
-            "groupName": "QuickStart Group",
-            "serviceId": "instance-1",
-            "version": "7.7.20200730",
-            "gatewayName": "API-Gateway 3", 
-            "gatewayRegion": "US"
-          }
         }
       ]
     }
