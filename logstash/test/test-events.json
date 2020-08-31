@@ -48,7 +48,7 @@
       ],
       "expected": [
         {
-          "@timestamp": "2020-08-26T19:15:15.360Z",
+          "@timestamp": "2020-08-27T14:11:35.841Z",
           "type": "alert",
           "alertType": "AlertMessage",
           "level": 3,
