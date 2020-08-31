@@ -50,14 +50,18 @@
         {
           "@timestamp": "2020-08-27T14:11:35.841Z",
           "type": "alert",
-          "alertType": "AlertMessage",
+          "alertType": "AlertMessage2",
           "level": 3,
           "srcId": "api-env:instance-1",
           "msgId": "Id-17bf475fb303f8664492b7ba",
           "defaultMsg": "API Manager: Frontend API weatherbit with ID 65182d09-88de-49c6-a303-5dcf64df71c2 has been unpublished.",
           "clientIP": "192.168.233.1",
           "policy": "Send Alert",
-          "filter": "Send API Manager Alert"
+          "filter": "Send API Manager Alert",
+          "processInfo": {
+            "gatewayName": "API-Gateway 1", 
+            "gatewayRegion": "APAC"
+          }
         }
       ]
     }
