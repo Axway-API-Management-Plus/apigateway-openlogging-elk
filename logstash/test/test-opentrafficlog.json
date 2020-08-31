@@ -26,7 +26,8 @@
           "remoteName": "127.0.0.1",
           "remotePort": "59574",
           "type": "summaryIndex",
-          "wafStatus": 0
+          "wafStatus": 0,
+          "authSubjectId": "180b1f32-d72f-40f4-949a-fc3f3f7dec2c"
         },
         {
           "@timestamp": "2020-07-13T20:58:38.042Z",
