@@ -238,7 +238,8 @@
             "method": "check the logs",
             "status": "success",
             "duration": 2
-          }
+          }, 
+          "type": "summaryIndex"
         },
         {
           "@timestamp": "2020-07-13T20:07:27.467Z",
