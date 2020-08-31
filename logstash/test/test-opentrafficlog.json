@@ -249,51 +249,7 @@
       "expected": [
         {
           "@timestamp": "2020-07-13T20:07:27.467Z",
-          "correlationId": "OMG-UNKNOWN-API-Error",
-          "processInfo": {
-            "hostname": "ip-172-31-62-146.ec2.internal",
-            "groupId": "group-2",
-            "groupName": "group-a",
-            "serviceId": "instance-3",
-            "version": "7.7.20200530",
-            "gatewayName": "API-Gateway 3", 
-            "gatewayRegion": "US"
-          },
-          "tags": ["_httprequestfailure"],
-          "transactionElements": {
-            "leg0": {
-              "protocolInfo": {
-                "http": {
-                  "authSubjectId": "ID: OMG-UNKNOWN-API",
-                  "method": "LOGSTASH",
-                  "status": "900",
-                  "statusText": "ERROR",
-                  "uri": "/this/api/is/unknown",
-                  "vhost": "Logstash Error"
-                }
-              }
-            }
-          },
-          "transactionSummary": {
-            "path": "/this/api/is/unknown",
-            "protocol": "https",
-            "protocolSrc": "8065",
-            "status": "success",
-            "serviceContext": {
-              "service": "A unknown API",
-              "monitor": true,
-              "appOrg": null,
-              "app": null,
-              "method": "check the logs",
-              "status": "success",
-              "duration": 2
-            }
-          },
-          "type": "errorEvent"
-        },
-        {
-          "@timestamp": "2020-07-13T20:07:27.467Z",
-          "correlationId": "OMG-UNKNOWN-API-Error",
+          "correlationId": "OMG-UNKNOWN-API",
           "path": "/this/api/is/unknown",
           "protocol": "https",
           "protocolSrc": "8065",
@@ -349,6 +305,50 @@
               "duration": 2
             }
           }
+        },
+        {
+          "@timestamp": "2020-07-13T20:07:27.467Z",
+          "correlationId": "OMG-UNKNOWN-API-Error",
+          "processInfo": {
+            "hostname": "ip-172-31-62-146.ec2.internal",
+            "groupId": "group-2",
+            "groupName": "group-a",
+            "serviceId": "instance-3",
+            "version": "7.7.20200530",
+            "gatewayName": "API-Gateway 3", 
+            "gatewayRegion": "US"
+          },
+          "tags": ["_httprequestfailure"],
+          "transactionElements": {
+            "leg0": {
+              "protocolInfo": {
+                "http": {
+                  "authSubjectId": "ID: OMG-UNKNOWN-API",
+                  "method": "LOGSTASH",
+                  "status": "900",
+                  "statusText": "ERROR",
+                  "uri": "/this/api/is/unknown",
+                  "vhost": "Logstash Error"
+                }
+              }
+            }
+          },
+          "transactionSummary": {
+            "path": "/this/api/is/unknown",
+            "protocol": "https",
+            "protocolSrc": "8065",
+            "status": "success",
+            "serviceContext": {
+              "service": "A unknown API",
+              "monitor": true,
+              "appOrg": null,
+              "app": null,
+              "method": "check the logs",
+              "status": "success",
+              "duration": 2
+            }
+          },
+          "type": "errorEvent"
         }
       ]
     },
