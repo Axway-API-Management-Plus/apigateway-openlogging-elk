@@ -14,6 +14,25 @@
         {
           "@timestamp": "2020-07-13T20:58:38.042Z",
           "correlationId": "feca0c5f7f550c81357fdfXX",
+          "bytesSent": 774,
+          "bytesReceived": 126,
+          "statusText": "OK",
+          "statusCode": 200,
+          "method": "GET", 
+          "processInfo": {
+            "hostname": "ip-172-31-56-150.ec2.internal",
+            "groupId": "group-2",
+            "groupName": "group-a",
+            "serviceId": "instance-2",
+            "version": "7.7.20200530", 
+            "gatewayName": "API-Gateway 3", 
+            "gatewayRegion": "US"
+          },
+          "type": "summaryIndex"
+        },
+        {
+          "@timestamp": "2020-07-13T20:58:38.042Z",
+          "correlationId": "feca0c5f7f550c81357fdfXX",
           "processInfo": {
             "hostname": "ip-172-31-56-150.ec2.internal",
             "groupId": "group-2",
@@ -53,25 +72,6 @@
               }
             }
           }
-        },
-        {
-          "@timestamp": "2020-07-13T20:58:38.042Z",
-          "correlationId": "feca0c5f7f550c81357fdfXX",
-          "bytesSent": 774,
-          "bytesReceived": 126,
-          "statusText": "OK",
-          "statusCode": 200,
-          "method": "GET", 
-          "processInfo": {
-            "hostname": "ip-172-31-56-150.ec2.internal",
-            "groupId": "group-2",
-            "groupName": "group-a",
-            "serviceId": "instance-2",
-            "version": "7.7.20200530", 
-            "gatewayName": "API-Gateway 3", 
-            "gatewayRegion": "US"
-          },
-          "type": "summaryIndex"
         }
       ]
     },
