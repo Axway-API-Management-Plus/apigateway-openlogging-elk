@@ -18,7 +18,8 @@
           "bytesReceived": 126,
           "statusText": "OK",
           "statusCode": 200,
-          "method": "GET"
+          "method": "GET", 
+          "type": "summaryIndex"
         },
         {
           "@timestamp": "2020-07-13T20:58:38.042Z",
@@ -95,7 +96,8 @@
             "routingPolicy": "N/A", 
             "responsePolicy": "N/A", 
             "faulthandlerPolicy": "N/A", 
-            "backendBasePath": "https://petstore.swagger.io"
+            "backendBasePath": "https://petstore.swagger.io",
+            "type": "summaryIndex"
           }
         },
         {
@@ -168,7 +170,8 @@
             "routingPolicy": "I do the routing", 
             "responsePolicy": "I take care abouth the response", 
             "faulthandlerPolicy": "OMG Errors", 
-            "backendBasePath": "https://im.a.special.backend.host:7788"
+            "backendBasePath": "https://im.a.special.backend.host:7788",
+            "type": "summaryIndex"
           }
         },
         {
@@ -462,7 +465,8 @@
           "serviceContext": {
             "method": "N/A",
             "service": "Scheduled policy"
-          }
+          }, 
+          "type": "summaryIndex"
         },
         {
           "@timestamp": "2020-08-24T12:10:30.003Z",
