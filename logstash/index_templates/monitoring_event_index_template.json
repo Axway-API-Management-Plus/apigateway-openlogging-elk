@@ -59,7 +59,11 @@
             },
             "srcId": {
                 "type": "keyword"
-            }
+            },
+            "defaultMsg": {
+                "type": "text",
+                "norms": false
+            }   
         }
     }
 }
