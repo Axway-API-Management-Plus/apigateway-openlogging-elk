@@ -135,7 +135,7 @@
             "serviceContext.status": {
                 "type": "keyword"
             },
-            "duration": {
+            "serviceContext.duration": {
                 "type": "integer"
             },
             "serviceContext.method": {
