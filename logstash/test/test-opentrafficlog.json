@@ -16,7 +16,6 @@
           "correlationId": "feca0c5f7f550c81357fdfXX",
           "type": "summaryIndex",
           "duration": 20,
-          "leg": 0,
           "finalStatus": "Pass",
           "http": {
             "status": 200,
