@@ -71,40 +71,40 @@
             "status": {
                 "type": "keyword"
             },
-            "method": {
+            "http.method": {
                 "type": "keyword"
             },
-            "statusText": {
+            "http.statusText": {
                 "type": "keyword"
             },
-            "statusCode": {
+            "http.status": {
                 "type": "integer"
             },
-            "bytesSent": {
+            "http.bytesSent": {
                 "type": "integer"
             },
-            "bytesReceived": {
+            "http.bytesReceived": {
                 "type": "integer"
             },
-            "localPort": {
+            "http.localPort": {
                 "type": "integer"
             },
-            "localAddr": {
+            "http.localAddr": {
                 "type": "keyword"
             },
-            "remotePort": {
+            "http.remotePort": {
                 "type": "integer"
             },
-            "remoteName": {
+            "http.remoteName": {
                 "type": "keyword"
             },
-            "remoteAddr": {
+            "http.remoteAddr": {
                 "type": "keyword"
             },
-            "vhost": {
+            "http.vhost": {
                 "type": "keyword"
             },
-            "authSubjectId": {
+            "http.authSubjectId": {
                 "type": "keyword"
             },
             "protocol": {
@@ -113,10 +113,10 @@
             "finalStatus": {
                 "type": "keyword"
             },
-            "protocolSrc": {
+            "http.protocolSrc": {
                 "type": "integer"
             },
-            "wafStatus": {
+            "http.wafStatus": {
                 "type": "integer"
             },
             "path": {
