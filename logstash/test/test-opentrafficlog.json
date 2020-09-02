@@ -256,8 +256,7 @@
             "appOrg": null,
             "app": null,
             "method": "getUserByName",
-            "status": "success",
-            "duration": 2
+            "status": "success"
           }, 
           "type": "summaryIndex",
           "processInfo": {
@@ -295,8 +294,7 @@
               "appOrg": null,
               "app": null,
               "method": "getUserByName",
-              "status": "success",
-              "duration": 2
+              "status": "success"
             }
           }
         },
@@ -338,8 +336,7 @@
               "appOrg": null,
               "app": null,
               "method": "check the logs",
-              "status": "success",
-              "duration": 2
+              "status": "success"
             }
           },
           "type": "errorEvent"
@@ -509,7 +506,6 @@
           "transactionElements": {
             "leg0": {
               "finalStatus": "Pass",
-              "duration": "-1",
               "protocolInfo": {
                 "http": {
                   "uri": "N/A",
@@ -525,6 +521,7 @@
             "protocol": null,
             "protocolSrc": null,
             "status": "success",
+            "duration": "-1",
             "serviceContext": {
               "method": "N/A",
               "service": "Scheduled policy"
