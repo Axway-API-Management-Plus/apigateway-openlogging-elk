@@ -109,8 +109,6 @@
             "size": 50,
             "authSubjectId": "abc"
           },
-          "gatewayName": "API-Gateway 3", 
-          "gatewayRegion": "US",
           "type": "summaryIndex"
         },
         {
@@ -121,7 +119,9 @@
             "groupId": "group-2",
             "groupName": "QuickStart Group",
             "serviceId": "instance-1",
-            "version": "7.7.20200730"
+            "version": "7.7.20200730",
+            "gatewayName": "API-Gateway 3", 
+            "gatewayRegion": "US"
           },
           "transactionElements": {
             "leg0": {
