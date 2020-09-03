@@ -1,6 +1,6 @@
 const { expect } = require('chai');
-const { startApiBuilder, stopApiBuilder, requestAsync, sendToElasticsearch, getRandomInt } = require('../_base');
-const getDate = require('../util');
+const { startApiBuilder, stopApiBuilder, requestAsync, sendToElasticsearch, getRandomInt } = require('../../../_base');
+const getDate = require('../../../util');
 const path = require('path');
 const fs = require('fs');
 const nock = require('nock');
@@ -40,7 +40,7 @@ describe('Endpoints', function () {
 			elasticConfig = server.apibuilder.config.pluginConfig['@axway-api-builder-ext/api-builder-plugin-fn-elasticsearch'].elastic;
 			server.started
 			.then(() => {
-				const entryset = require('../documents/basic/search_test_documents');
+				const entryset = require('../../../documents/http/search_test_documents');
 				sendToElasticsearch(elasticConfig, indexName, 'traffic_summary_index_template.json', entryset)
 				.then(() => {
 					resolve();

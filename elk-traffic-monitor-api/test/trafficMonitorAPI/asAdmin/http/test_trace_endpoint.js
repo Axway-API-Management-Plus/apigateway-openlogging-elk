@@ -1,5 +1,5 @@
 const { expect } = require('chai');
-const { startApiBuilder, stopApiBuilder, requestAsync, sendToElasticsearch, getRandomInt } = require('../_base');
+const { startApiBuilder, stopApiBuilder, requestAsync, sendToElasticsearch, getRandomInt } = require('../../../_base');
 const path = require('path');
 const fs = require('fs');
 const nock = require('nock');
@@ -39,7 +39,7 @@ describe('Traffic Monitor API', function () {
 			elasticConfig = server.apibuilder.config.pluginConfig['@axway-api-builder-ext/api-builder-plugin-fn-elasticsearch'].elastic;
 			server.started
 			.then(() => {
-				const entryset = require('../documents/basic/trace_test_documents');
+				const entryset = require('../../../documents/http/trace_test_documents');
 				sendToElasticsearch(elasticConfig, indexName, 'trace_messages_index_template.json', entryset)
 				.then(() => {
 					resolve();
