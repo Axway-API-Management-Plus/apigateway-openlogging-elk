@@ -177,7 +177,7 @@
 				{
 					"name": "code",
 					"type": "string",
-					"value": "\"var queryFilters = data.queryFilters;\\n  var elasticQuery = {};\\n  queryFilters.push( {\\n    \\\"term\\\": {\\n      \\\"processInfo.serviceId\\\": data.params.serviceID\\n    }\\n  });\\n  elasticQuery = { \\n    bool: {\\n      must: queryFilters\\n    }\\n  };\\n  return elasticQuery;\"",
+					"value": "\"var queryFilters = data.queryFilters;\\n  var elasticQuery = {};\\n  // The serviceId is given by the Traffic-Monitor UI request (Requests are executed for each sericeId)\\n  queryFilters.push( {\\n    \\\"term\\\": {\\n      \\\"processInfo.serviceId\\\": data.params.serviceID\\n    }\\n  });\\n  // Making sure, it's getting data only for the selected protocol\\n  queryFilters.push( {\\n    \\\"exists\\\": {\\n      \\\"field\\\": data.params.protocol\\n    }\\n  });\\n  // Finally, add all collected filters to the final query \\n  elasticQuery = { \\n    bool: {\\n      must: queryFilters\\n    }\\n  };\\n  return elasticQuery;\"",
 					"metaName": "code",
 					"metaDescription": "A JavaScript function body. Supports `await` and returning promises."
 				}
