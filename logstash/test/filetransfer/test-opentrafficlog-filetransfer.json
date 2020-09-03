@@ -97,7 +97,7 @@
       ],
       "expected": [
         {
-          "@timestamp": "2020-09-02T20:10:51.271Z",
+          "@timestamp": "2020-09-02T20:10:50.348Z",
           "correlationId": "4afc4f5fa70015d93db3a15c",
           "finalStatus": "success",
           "duration": 924,
@@ -114,23 +114,20 @@
           "type": "summaryIndex"
         },
         {
-          "@timestamp": "2020-09-02T20:10:51.271Z",
+          "@timestamp": "2020-09-02T20:10:50.348Z",
           "correlationId": "4afc4f5fa70015d93db3a15c",
           "processInfo": {
             "hostname": "api-env",
             "groupId": "group-2",
             "groupName": "QuickStart Group",
             "serviceId": "instance-1",
-            "version": "7.7.20200730",
-            "gatewayName": "API-Gateway 3", 
-            "gatewayRegion": "US"
+            "version": "7.7.20200730"
           },
           "transactionElements": {
             "leg0": {
               "duration": 924,
-              "serviceName": null,
-              "operation": null,
               "finalStatus": "success",
+              "leg": 0,
               "protocolInfo": {
                 "fileTransfer": {
                   "remoteAddr": "/192.168.65.1:63026",
