@@ -38,7 +38,7 @@ jobs:
         ./logstash-filter-verifier --diff-command="diff -y" --sockets --sockets-timeout=120s --keep-env=API_BUILDER_URL --keep-env=MEMCACHED ./logstash/test/http/test-tracemessages.json ./logstash/pipelines/TraceMessagesPipeline.conf
         ./logstash-filter-verifier --diff-command="diff -y" --sockets --sockets-timeout=120s --keep-env=API_BUILDER_URL --keep-env=MEMCACHED ./logstash/test/http/test-events.json ./logstash/pipelines/EventsPipeline.conf
         ./logstash-filter-verifier --diff-command="diff -y" --sockets --sockets-timeout=120s --keep-env=API_BUILDER_URL --keep-env=MEMCACHED ./logstash/test/http/test-opentrafficlog.json ./logstash/pipelines/OpenTrafficPipeline.conf
-        ./logstash-filter-verifier --diff-command="diff -y" --sockets --sockets-timeout=120s --keep-env=API_BUILDER_URL --keep-env=MEMCACHED ./logstash/test/filetransfer/test-opentrafficlog.json ./logstash/pipelines/OpenTrafficPipeline.conf
+        ./logstash-filter-verifier --diff-command="diff -y" --sockets --sockets-timeout=120s --keep-env=API_BUILDER_URL --keep-env=MEMCACHED ./logstash/test/filetransfer/test-opentrafficlog-filetransfer.json ./logstash/pipelines/OpenTrafficPipeline.conf
       env:
         API_BUILDER_URL: 'http://localhost:8080'
         MEMCACHED: 'localhost:11211'
