@@ -56,7 +56,7 @@ describe('Endpoints', function () {
 	after(() => stopApiBuilder(server));
 
 	describe('Search', () => {
-		it.only('[Filetransfer-Search-0001] Execute a search without any filter with protocol filetransfer', () => {
+		it('[Filetransfer-Search-0001] Execute a search without any filter with protocol filetransfer', () => {
 			return requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?protocol=filetransfer`,
@@ -75,7 +75,7 @@ describe('Endpoints', function () {
 			});
 		});
 
-		it.only('[Filetransfer-Search-0002] Execute a search for a specific duration - Should only 1 entry', () => {
+		it('[Filetransfer-Search-0002] Execute a search for a specific duration - Should only 1 entry', () => {
 			return requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?field=duration&op=lt&value=110&protocol=filetransfer`,
@@ -93,7 +93,7 @@ describe('Endpoints', function () {
 			});
 		});
 
-		it.only('[Filetransfer-Search-0003] Execute a search for a specific service type', () => {
+		it('[Filetransfer-Search-0003] Execute a search for a specific service type', () => {
 			return requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?field=servicetype&value=ftps&protocol=filetransfer`,
