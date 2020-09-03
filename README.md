@@ -171,6 +171,81 @@ The API-Builder project for providing access to Elasticsearch data has no access
 To import the API Builder project REST-API into your API-Manager, you can access the Swagger/OpenAPI definition here (replace docker-host and port appropriately for the container that is hosting the API-Builder project):  
 http://docker-host:8889/apidoc/swagger.json?endpoints/trafficMonitorApi
 
+## Sizing your infrastructure
+
+The solution is designed to process and store millions of transactions per day and make them quickly available for traffic monitoring and analytics. 
+This advantage of being able to access millions of transactions is not free of charge with Elasticsearch, but is available in the size of the disc space provided.
+The solution has been extensively tested, especially for high-volume requirements. It processed 900 transactions per second, up to 55 million transactions per day on the following infrastructure.
+
+### Test infrastructure
+
+| Node/Instance              |CPUS    |RAM   |Disc  | Component      | Version | Comment | 
+| :---                       | :---   | :--- | :--- | :---           | :---    | :---    |
+| AWS EC2 t2.xlarge instance | 4 vCPUS|16GB  |30GB  | API-Management | 7.7-July| Classical deployment |
+|                            |        |      |      | Filebeat       | 7.9.0   | Docker-Container running on API-Gateway Host |
+| AWS EC2 t2.xlarge instance | 4 vCPUS|16GB  |30GB  | API-Management | 7.7-July| Classical deployment |
+|                            |        |      |      | Filebeat       | 7.9.0   | Docker-Container running on API-Gateway Host |
+| AWS EC2 t2.xlarge instance | 4 vCPUS|16GB  |30GB  | API-Management | 7.7-July| Classical deployment |
+|                            |        |      |      | Filebeat       | 7.9.0   | Docker-Container running on API-Gateway Host |
+| AWS EC2 t2.xlarge instance | 4 vCPUS|16GB  |30GB  | API-Management | 7.7-July| Classical deployment |
+|                            |        |      |      | Filebeat       | 7.9.0   | Docker-Container running on API-Gateway Host |
+| AWS EC2 t2.xlarge instance | 4 vCPUS|16GB  |30GB  | API-Management | 7.7-July| Classical deployment |
+|                            |        |      |      | Filebeat       | 7.9.0   | Docker-Container running on API-Gateway Host |
+| AWS EC2 t2.xlarge instance | 4 vCPUS|16GB  |30GB  | API-Management | 7.7-July| Classical deployment |
+|                            |        |      |      | Filebeat       | 7.9.0   | Docker-Container running on API-Gateway Host |
+| AWS EC2 t2.xlarge instance | 4 vCPUS|16GB  |30GB  | Logstash       | 7.9.0   | Standard Logstash Docker-Container |
+|                            |        |      |      | API-Builder    | 0.0.10  | API-Builder proving Traffic-Monitor & Lookup API |
+| AWS EC2 t2.xlarge instance | 4 vCPUS|16GB  |80GB  | Elasticsearch  | 7.9.0   | Standard Elasticsearch Docker-Container |
+|                            |        |      |      | Kibana         | 7.9.0   | Standard Kibana Docker-Container |
+
+### Sizing recommendations
+The most important key figure for sizing is the number of transactions per day or per month. The sizing of the platform depends on this and how long the data should be available in real-time. To store around 10 Millionen Transactions with all details and trace-messages ap. 6,5 GB disc space is required.
+The recommendation based on our tests is as follows.
+
+#### 7 Days rentention period
+
+
+| Volume                  | Components           | Nodes | Shards  | Comment |
+| :---                    | :---                 | :---  | :---    | :---    | 
+| up to 1 Mio  (~15 TPS)  | All                  | 4 CPU-Cores, 16 GB RAM, 15 GB HDD  || One node for all components, Filebeat is running close to the API-Gateway    |
+| up to 5 Mio  (~60 TPS)  | All                  | 4 CPU-Cores, 16 GB RAM, 50 GB HDD  || One node for all components, Filebeat is running close to the API-Gateway    |
+| up to 10 Mio (~120 TPS) | Logstash/API-Builder | 2 CPU-Cores, 1 GB RAM, 10 GB HDD   || Dedicated Logstash processing node    |
+|                         | Others               | 4 CPU-Cores, 16 GB RAM, 80 GB HDD  || ElasticSearch, Kibana node    |
+| up to 25 Mio (~300 TPS) | Logstash/API-Builder | 2 CPU-Cores, 1 GB RAM, 10 GB HDD   || Dedicated Logstash processing node    |
+|                         | Others               | 4 CPU-Cores, 16 GB RAM, 150 GB HDD || ElasticSearch, Kibana node    |
+| up to 50 Mio (~600 TPS) | Logstash/API-Builder | 4 CPU-Cores, 1 GB RAM, 10 GB HDD   || Dedicated Logstash processing node    |
+|                         | ElasticSearch 1      | 4 CPU-Cores, 32 GB RAM, 300 GB HDD || ElasticSearch, Kibana node    |
+
+#### 14 Days rentention period
+
+| Volume                  | Components           | Nodes | Shards  | Comment |
+| :---                    | :---                 | :---  | :---    | :---    | 
+| up to 1 Mio  (~15 TPS)  | All                  | 4 CPU-Cores, 16 GB RAM, 30 GB HDD  || One node for all components, Filebeat is running close to the API-Gateway    |
+| up to 5 Mio  (~60 TPS)  | All                  | 4 CPU-Cores, 16 GB RAM, 100 GB HDD  || One node for all components, Filebeat is running close to the API-Gateway    |
+| up to 10 Mio (~120 TPS) | Logstash/API-Builder | 2 CPU-Cores, 1 GB RAM, 10 GB HDD   || Dedicated Logstash processing node    |
+|                         | Others               | 4 CPU-Cores, 16 GB RAM, 160 GB HDD || ElasticSearch, Kibana node    |
+| up to 25 Mio (~300 TPS) | Logstash/API-Builder | 2 CPU-Cores, 1 GB RAM, 10 GB HDD   || Dedicated Logstash processing node    |
+|                         | Others               | 4 CPU-Cores, 16 GB RAM, 300 GB HDD || ElasticSearch, Kibana node    |
+| up to 50 Mio (~600 TPS) | Logstash/API-Builder | 4 CPU-Cores, 1 GB RAM, 10 GB HDD   || Dedicated Logstash processing node    |
+|                         | ElasticSearch 1      | 4 CPU-Cores, 32 GB RAM, 300 GB HDD || ElasticSearch, Kibana node    |
+|                         | ElasticSearch 2      | 4 CPU-Cores, 32 GB RAM, 300 GB HDD || ElasticSearch node    |
+
+#### 30 Days rentention period
+
+| Volume                  | Components           | Nodes | Shards  | Comment |
+| :---                    | :---                 | :---  | :---    | :---    | 
+| up to 1 Mio  (~15 TPS)  | All                  | 4 CPU-Cores, 16 GB RAM, 60 GB HDD  || One node for all components, Filebeat is running close to the API-Gateway    |
+| up to 5 Mio  (~60 TPS)  | All                  | 4 CPU-Cores, 16 GB RAM, 200 GB HDD  || One node for all components, Filebeat is running close to the API-Gateway    |
+| up to 10 Mio (~120 TPS) | Logstash/API-Builder | 2 CPU-Cores, 1 GB RAM, 10 GB HDD   || Dedicated Logstash processing node    |
+|                         | Others               | 4 CPU-Cores, 16 GB RAM, 320 GB HDD  || ElasticSearch, Kibana node    |
+| up to 25 Mio (~300 TPS) | Logstash/API-Builder | 2 CPU-Cores, 1 GB RAM, 10 GB HDD   || Dedicated Logstash processing node    |
+|                         | ElasticSearch 1      | 4 CPU-Cores, 16 GB RAM, 300 GB HDD || ElasticSearch, Kibana node    |
+|                         | ElasticSearch 2      | 4 CPU-Cores, 16 GB RAM, 300 GB HDD || ElasticSearch, Kibana node    |
+| up to 50 Mio (~600 TPS) | Logstash/API-Builder | 4 CPU-Cores, 1 GB RAM, 10 GB HDD   || Dedicated Logstash processing node    |
+|                         | ElasticSearch 1      | 4 CPU-Cores, 32 GB RAM, 750 GB HDD |120| ElasticSearch, Kibana node    |
+|                         | ElasticSearch 2      | 4 CPU-Cores, 32 GB RAM, 750 GB HDD |120| ElasticSearch node    |
+
+
 ## Troubleshooting
 ### Check processes/containers are running
 From within the folder where the docker-compose.yml file is located (git project folder) execute: 
