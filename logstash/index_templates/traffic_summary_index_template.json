@@ -113,8 +113,9 @@
             "finalStatus": {
                 "type": "keyword"
             },
-            "http.protocolSrc": {
-                "type": "integer"
+            "protocolSrc": {
+                "type": "text",
+                "norms": false
             },
             "http.wafStatus": {
                 "type": "integer"
@@ -190,6 +191,12 @@
                 "type": "keyword"
             },
             "serviceContext.backendBasePath": {
+                "type": "keyword"
+            }, 
+            "fileTransfer.direction": {
+                "type": "keyword"
+            },
+            "fileTransfer.serviceType": {
                 "type": "keyword"
             }
         }

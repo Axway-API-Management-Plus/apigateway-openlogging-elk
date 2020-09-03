@@ -601,7 +601,7 @@ describe('Endpoints', function () {
 				expect(body.data[0].vhost).to.equal('api.customer.com:443', 'V-Host is not part of the result');
 			});
 		});
-		it.only('[Endpoint-0024] Should not return anything other then the requested protocol', () => {
+		it('[Endpoint-0024] Should not return anything other then the requested protocol', () => {
 			const auth = {
 				user: server.apibuilder.config.apikey || 'test',
 				password: ''
