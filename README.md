@@ -199,11 +199,14 @@ The solution has been extensively tested, especially for high-volume requirement
 |                            |        |      |      | Kibana         | 7.9.0   | Standard Kibana Docker-Container |
 
 ### Sizing recommendations
-The most important key figure for sizing is the number of transactions per day or per month. The sizing of the platform depends on this and how long the data should be available in real-time. To store around 10 Millionen Transactions with all details and trace-messages ap. 6,5 GB disc space is required.
-The recommendation based on our tests is as follows.
+The most important key figure for sizing is the number of transactions per day or per month. The sizing of the platform depends on this and how long the data should be available in real-time. To store around 10 Millionen transactions with all details and trace-messages ap. 6,5 GB disc space is required.
+The following recommendations are based on our tests and is splitted by the desired rentention period.
 
 #### 7 Days rentention period
 
+Please note the following:
+The Standard Index Lifecycle Policy defines that an index can grow to 50 GB and rolls into a new after 30 days. For __7 days__, the indexes should be rolled after __2 days__ instead of 30 days.
+The recommendation contains only one ElasticSearch node, which provides no data redundancy if this node fails. If you need data redundancy, another ElasticSearch node must be added. After adding another node the data is automatically distributed between them.
 
 | Volume                  | Components           | Nodes | Shards  | Comment |
 | :---                    | :---                 | :---  | :---    | :---    | 
@@ -218,10 +221,14 @@ The recommendation based on our tests is as follows.
 
 #### 14 Days rentention period
 
+Please note the following:
+The Standard Index Lifecycle Policy defines that an index can grow to 50 GB and rolls into a new after 30 days. For __14 days__, the indexes should be rolled after __4 days__ instead of 30 days.
+The recommendation contains only one ElasticSearch node up to a volume of max. 25 million transactions. This means no data redundancy if this node fails. If you need data redundancy, another ElasticSearch node must be added. After adding another node the data is automatically distributed between them.
+
 | Volume                  | Components           | Nodes | Shards  | Comment |
 | :---                    | :---                 | :---  | :---    | :---    | 
 | up to 1 Mio  (~15 TPS)  | All                  | 4 CPU-Cores, 16 GB RAM, 30 GB HDD  || One node for all components, Filebeat is running close to the API-Gateway    |
-| up to 5 Mio  (~60 TPS)  | All                  | 4 CPU-Cores, 16 GB RAM, 100 GB HDD  || One node for all components, Filebeat is running close to the API-Gateway    |
+| up to 5 Mio  (~60 TPS)  | All                  | 4 CPU-Cores, 16 GB RAM, 100 GB HDD || One node for all components, Filebeat is running close to the API-Gateway    |
 | up to 10 Mio (~120 TPS) | Logstash/API-Builder | 2 CPU-Cores, 1 GB RAM, 10 GB HDD   || Dedicated Logstash processing node    |
 |                         | Others               | 4 CPU-Cores, 16 GB RAM, 160 GB HDD || ElasticSearch, Kibana node    |
 | up to 25 Mio (~300 TPS) | Logstash/API-Builder | 2 CPU-Cores, 1 GB RAM, 10 GB HDD   || Dedicated Logstash processing node    |
@@ -232,18 +239,21 @@ The recommendation based on our tests is as follows.
 
 #### 30 Days rentention period
 
-| Volume                  | Components           | Nodes | Shards  | Comment |
-| :---                    | :---                 | :---  | :---    | :---    | 
-| up to 1 Mio  (~15 TPS)  | All                  | 4 CPU-Cores, 16 GB RAM, 60 GB HDD  || One node for all components, Filebeat is running close to the API-Gateway    |
-| up to 5 Mio  (~60 TPS)  | All                  | 4 CPU-Cores, 16 GB RAM, 200 GB HDD  || One node for all components, Filebeat is running close to the API-Gateway    |
-| up to 10 Mio (~120 TPS) | Logstash/API-Builder | 2 CPU-Cores, 1 GB RAM, 10 GB HDD   || Dedicated Logstash processing node    |
-|                         | Others               | 4 CPU-Cores, 16 GB RAM, 320 GB HDD  || ElasticSearch, Kibana node    |
-| up to 25 Mio (~300 TPS) | Logstash/API-Builder | 2 CPU-Cores, 1 GB RAM, 10 GB HDD   || Dedicated Logstash processing node    |
-|                         | ElasticSearch 1      | 4 CPU-Cores, 16 GB RAM, 300 GB HDD || ElasticSearch, Kibana node    |
-|                         | ElasticSearch 2      | 4 CPU-Cores, 16 GB RAM, 300 GB HDD || ElasticSearch, Kibana node    |
-| up to 50 Mio (~600 TPS) | Logstash/API-Builder | 4 CPU-Cores, 1 GB RAM, 10 GB HDD   || Dedicated Logstash processing node    |
-|                         | ElasticSearch 1      | 4 CPU-Cores, 32 GB RAM, 750 GB HDD |120| ElasticSearch, Kibana node    |
-|                         | ElasticSearch 2      | 4 CPU-Cores, 32 GB RAM, 750 GB HDD |120| ElasticSearch node    |
+The Standard Index Lifecycle Policy is sufficient for 30 days data retention.
+The recommendation contains only one ElasticSearch node up to a volume of max. 10 million transactions. This means no data redundancy if this node fails. If you need data redundancy, another ElasticSearch node must be added. After adding another node the data is automatically distributed between them.
+
+| Volume                  | Components           | Nodes | Comment |
+| :---                    | :---                 | :---  | :---    | 
+| up to 1 Mio  (~15 TPS)  | All                  | 4 CPU-Cores, 16 GB RAM, 60 GB HDD  | One node for all components, Filebeat is running close to the API-Gateway    |
+| up to 5 Mio  (~60 TPS)  | All                  | 4 CPU-Cores, 16 GB RAM, 200 GB HDD | One node for all components, Filebeat is running close to the API-Gateway    |
+| up to 10 Mio (~120 TPS) | Logstash/API-Builder | 2 CPU-Cores, 1 GB RAM, 10 GB HDD   | Dedicated Logstash processing node    |
+|                         | Others               | 4 CPU-Cores, 16 GB RAM, 320 GB HDD | ElasticSearch, Kibana node    |
+| up to 25 Mio (~300 TPS) | Logstash/API-Builder | 2 CPU-Cores, 1 GB RAM, 10 GB HDD   | Dedicated Logstash processing node    |
+|                         | ElasticSearch 1      | 4 CPU-Cores, 16 GB RAM, 300 GB HDD | ElasticSearch, Kibana node    |
+|                         | ElasticSearch 2      | 4 CPU-Cores, 16 GB RAM, 300 GB HDD | ElasticSearch, Kibana node    |
+| up to 50 Mio (~600 TPS) | Logstash/API-Builder | 4 CPU-Cores, 1 GB RAM, 10 GB HDD   | Dedicated Logstash processing node    |
+|                         | ElasticSearch 1      | 4 CPU-Cores, 32 GB RAM, 750 GB HDD | ElasticSearch, Kibana node    |
+|                         | ElasticSearch 2      | 4 CPU-Cores, 32 GB RAM, 750 GB HDD | ElasticSearch node    |
 
 
 ## Troubleshooting
