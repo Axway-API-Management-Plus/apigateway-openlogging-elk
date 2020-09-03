@@ -1,0 +1,200 @@
+{
+  "fields": {
+    "gatewayName": "API-Gateway 3",
+    "gatewayRegion": "US"
+  },
+  "codec": "json_lines",
+  "testcases": [
+    {
+      "description": "Test transactionSummary event for a filetransfer",
+      "input": [
+        "{\"timestamp\":1599077451272,\"correlationId\":\"4afc4f5fa70015d93db3a15c\",\"processInfo\":{\"hostname\":\"api-env\",\"domainId\":\"ed992442-c363-4d36-963a-9e6314b0f421\",\"groupId\":\"group-2\",\"groupName\":\"QuickStart Group\",\"serviceId\":\"instance-1\",\"serviceName\":\"QuickStart Server\",\"version\":\"7.7.20200730\"},\"transactionSummary\":{\"path\":null, \"protocol\":\"ftp-local\", \"protocolSrc\":\"10021//opt/Axway/APIM-7.7.0/apigateway/groups/group-2/instance-1/file-transfer/in/persistent/abc\", \"status\":\"success\", \"serviceContexts\":[]}}"
+      ],
+      "expected": [
+        {
+          "@timestamp": "2020-07-13T20:07:27.467Z",
+          "correlationId": "4afc4f5fa70015d93db3a15c",
+          "path": null,
+          "protocol": null,
+          "protocolSrc": "10021//opt/Axway/APIM-7.7.0/apigateway/groups/group-2/instance-1/file-transfer/in/persistent/abc",
+          "status": "success",
+          "serviceContext": [],
+          "processInfo": {
+            "hostname": "api-env",
+            "domainId": "ed992442-c363-4d36-963a-9e6314b0f421",
+            "groupId": "group-2",
+            "groupName": "QuickStart Group",
+            "serviceId": "instance-1",
+            "serviceName": "QuickStart Server",
+            "version": "7.7.20200730",
+            "gatewayName": "API-Gateway 3", 
+            "gatewayRegion": "US"
+          },
+          "type": "summaryIndex"
+        },
+        {
+          "@timestamp": "2020-07-13T20:07:27.467Z",
+          "correlationId": "4afc4f5fa70015d93db3a15c",
+          "processInfo": {
+            "hostname": "api-env",
+            "domainId": "ed992442-c363-4d36-963a-9e6314b0f421",
+            "groupId": "group-2",
+            "groupName": "QuickStart Group",
+            "serviceId": "instance-1",
+            "serviceName": "QuickStart Server",
+            "version": "7.7.20200730"
+          },
+          "transactionSummary": {
+            "path": null,
+            "protocol": "ftp-local",
+            "protocolSrc": "10021//opt/Axway/APIM-7.7.0/apigateway/groups/group-2/instance-1/file-transfer/in/persistent/abc",
+            "status": "success",
+            "serviceContexts": []
+          }
+        }
+      ]
+    },
+    {
+      "description": "Test ciruitPath event for a FileTransfer",
+      "input": [
+        "{\"timestamp\":1599077451271,\"correlationId\":\"4afc4f5fa70015d93db3a15c\",\"processInfo\":{\"hostname\":\"api-env\",\"domainId\":\"ed992442-c363-4d36-963a-9e6314b0f421\",\"groupId\":\"group-2\",\"groupName\":\"QuickStart Group\",\"serviceId\":\"instance-1\",\"serviceName\":\"QuickStart Server\",\"version\":\"7.7.20200730\"},\"circuitPath\":[ { \"policy\": \"Amazon V2 - DescribeInstances\", \"execTime\": 908, \"filters\": [  { \"espk\": \"DEFAULT_PRIMARY_VordelGateway_7.7.0:4431391743617482992\", \"name\": \"Connect to URL\", \"type\": \"ConnectToURLFilter\", \"class\": \"com.vordel.circuit.net.ConnectToURLFilter\", \"status\": \"Pass\", \"filterTime\": 1599077451265, \"execTime\": 908 }  ] } ]}"
+      ],
+      "expected": [
+        {
+          "@timestamp": "2020-07-13T20:58:59.577Z",
+          "correlationId": "4afc4f5fa70015d93db3a15c",
+          "processInfo": {
+            "hostname": "api-env",
+            "domainId": "ed992442-c363-4d36-963a-9e6314b0f421",
+            "groupId": "group-2",
+            "groupName": "QuickStart Group",
+            "serviceId": "instance-1",
+            "serviceName": "QuickStart Server",
+            "version": "7.7.20200730",
+            "gatewayName": "API-Gateway 3", 
+            "gatewayRegion": "US"
+          },
+          "circuitPath": [
+            {
+              "policy": "Amazon V2 - DescribeInstances",
+              "execTime": 908,
+              "filters": [
+                {
+                  "espk": "DEFAULT_PRIMARY_VordelGateway_7.7.0:4431391743617482992",
+                  "name": "Connect to URL",
+                  "type": "ConnectToURLFilter",
+                  "class": "com.vordel.circuit.net.ConnectToURLFilter",
+                  "status": "Pass",
+                  "filterTime": 1599077451265,
+                  "execTime": 908
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "Test leg0 event for a fileTransfer",
+      "input": [
+        "{{\"timestamp\":1599077450348,\"correlationId\":\"4afc4f5fa70015d93db3a15c\",\"processInfo\":{\"hostname\":\"api-env\",\"domainId\":\"ed992442-c363-4d36-963a-9e6314b0f421\",\"groupId\":\"group-2\",\"groupName\":\"QuickStart Group\",\"serviceId\":\"instance-1\",\"serviceName\":\"QuickStart Server\",\"version\":\"7.7.20200730\"},\"transactionElement\":{\"leg\":0,\"duration\":924,\"serviceName\":null,\"operation\":null,\"finalStatus\":\"success\",\"protocolInfo\":{\"fileTransfer\":{\"remoteAddr\":\"/192.168.65.1:63026\",\"uploadFile\":\"/opt/Axway/APIM-7.7.0/apigateway/groups/group-2/instance-1/file-transfer/in/persistent/abc/WLAN-DUS.txt\",\"direction\":\"up\",\"serviceType\":\"ftp\",\"size\":50,\"authSubjectId\":\"abc\"},\"recvHeader\":null,\"sentHeader\":null,\"recvPayload\":null,\"sentPayload\":null}}}"
+      ],
+      "expected": [
+        {
+          "@timestamp": "2020-07-13T20:58:38.042Z",
+          "correlationId": "4afc4f5fa70015d93db3a15c",
+          "finalStatus": "success",
+          "duration": 924,
+          "fileTransfer": {
+            "remoteAddr": "/192.168.65.1:63026",
+            "uploadFile": "/opt/Axway/APIM-7.7.0/apigateway/groups/group-2/instance-1/file-transfer/in/persistent/abc/WLAN-DUS.txt",
+            "direction": "up",
+            "serviceType": "ftp",
+            "size": 50,
+            "authSubjectId": "abc"
+          },
+          "gatewayName": "API-Gateway 3", 
+          "gatewayRegion": "US",
+          "type": "summaryIndex"
+        },
+        {
+          "@timestamp": "2020-07-13T20:58:38.042Z",
+          "correlationId": "4afc4f5fa70015d93db3a15c",
+          "processInfo": {
+            "hostname": "api-env",
+            "domainId": "ed992442-c363-4d36-963a-9e6314b0f421",
+            "groupId": "group-2",
+            "groupName": "QuickStart Group",
+            "serviceId": "instance-1",
+            "serviceName": "QuickStart Server",
+            "version": "7.7.20200730",
+            "gatewayName": "API-Gateway 3", 
+            "gatewayRegion": "US"
+          },
+          "transactionElements": {
+            "leg0": {
+              "duration": 924,
+              "serviceName": null,
+              "operation": null,
+              "finalStatus": "success",
+              "protocolInfo": {
+                "fileTransfer": {
+                  "remoteAddr": "/192.168.65.1:63026",
+                  "uploadFile": "/opt/Axway/APIM-7.7.0/apigateway/groups/group-2/instance-1/file-transfer/in/persistent/abc/WLAN-DUS.txt",
+                  "direction": "up",
+                  "serviceType": "ftp",
+                  "size": 50,
+                  "authSubjectId": "abc"
+                },
+                "recvHeader": null,
+                "sentHeader": null,
+                "recvPayload": null,
+                "sentPayload": null
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "description": "Test ciruitPath event",
+      "input": [
+        "{\"timestamp\":1599077451271,\"correlationId\":\"4afc4f5fa70015d93db3a15c\",\"processInfo\":{\"hostname\":\"api-env\",\"domainId\":\"ed992442-c363-4d36-963a-9e6314b0f421\",\"groupId\":\"group-2\",\"groupName\":\"QuickStart Group\",\"serviceId\":\"instance-1\",\"serviceName\":\"QuickStart Server\",\"version\":\"7.7.20200730\"},\"circuitPath\":[ { \"policy\": \"Amazon V2 - DescribeInstances\", \"execTime\": 908, \"filters\": [  { \"espk\": \"DEFAULT_PRIMARY_VordelGateway_7.7.0:4431391743617482992\", \"name\": \"Connect to URL\", \"type\": \"ConnectToURLFilter\", \"class\": \"com.vordel.circuit.net.ConnectToURLFilter\", \"status\": \"Pass\", \"filterTime\": 1599077451265, \"execTime\": 908 }  ] } ]}"
+      ],
+      "expected": [
+        {
+          "@timestamp": "2020-07-13T20:58:59.577Z",
+          "correlationId": "4afc4f5fa70015d93db3a15c",
+          "processInfo": {
+            "hostname": "api-env",
+            "domainId": "ed992442-c363-4d36-963a-9e6314b0f421",
+            "groupId": "group-2",
+            "groupName": "QuickStart Group",
+            "serviceId": "instance-1",
+            "serviceName": "QuickStart Server",
+            "version": "7.7.20200730",
+            "gatewayName": "API-Gateway 3", 
+            "gatewayRegion": "US"
+          },
+          "circuitPath": [
+            {
+              "policy": "Amazon V2 - DescribeInstances",
+              "execTime": 908,
+              "filters": [
+                {
+                  "espk": "DEFAULT_PRIMARY_VordelGateway_7.7.0:4431391743617482992",
+                  "name": "Connect to URL",
+                  "type": "ConnectToURLFilter",
+                  "class": "com.vordel.circuit.net.ConnectToURLFilter",
+                  "status": "Pass",
+                  "filterTime": 1599077451265,
+                  "execTime": 908
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
