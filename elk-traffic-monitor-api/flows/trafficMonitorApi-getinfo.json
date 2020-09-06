@@ -157,14 +157,14 @@
 					"name": "index",
 					"type": "jsonpath",
 					"value": "$.index",
-					"metaName": "index",
+					"metaName": "Index",
 					"metaDescription": "Comma-separated list or wildcard expression of index names used to limit the request."
 				},
 				{
 					"name": "query",
 					"type": "jsonpath",
 					"value": "$.elasticsearch.query",
-					"metaName": "query",
+					"metaName": "Query",
 					"metaDescription": "Defines the search definition using the Query DSL. Learn more: https://www.elastic.co/guide/en/elasticsearch/reference/7.x/query-dsl.html"
 				}
 			],

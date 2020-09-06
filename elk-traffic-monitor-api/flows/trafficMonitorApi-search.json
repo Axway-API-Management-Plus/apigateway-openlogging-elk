@@ -64,35 +64,35 @@
 		},
 		"elasticsearch.1": {
 			"type": "nodehandler://@axway-api-builder-ext/api-builder-plugin-fn-elasticsearch/elasticsearch",
-			"name": "Query ES for Search",
+			"name": "Query Elasticsearch",
 			"method": "search",
 			"parameters": [
 				{
 					"name": "query",
 					"type": "jsonpath",
 					"value": "$.elasticQuery",
-					"metaName": "query",
+					"metaName": "Query",
 					"metaDescription": "Defines the search definition using the Query DSL. Learn more: https://www.elastic.co/guide/en/elasticsearch/reference/7.x/query-dsl.html"
 				},
 				{
 					"name": "index",
 					"type": "jsonpath",
 					"value": "$.index",
-					"metaName": "index",
+					"metaName": "Index",
 					"metaDescription": "Comma-separated list or wildcard expression of index names used to limit the request."
 				},
 				{
 					"name": "sort",
 					"type": "string",
 					"value": "\"@timestamp:desc\"",
-					"metaName": "sort",
+					"metaName": "Sort",
 					"metaDescription": "A comma-separated list of <field>:<direction> pairs."
 				},
 				{
 					"name": "size",
 					"type": "jsonpath",
 					"value": "$.params.count",
-					"metaName": "size",
+					"metaName": "Size",
 					"metaDescription": "Defines the number of hits to return. Defaults to 10."
 				}
 			],
