@@ -108,6 +108,7 @@ async function lookupAPIDetails(params, options) {
 		api = proxies[i];
 		if(apiPath.startsWith(api.path)) {
 			apiProxy = api;
+			break;
 		}
 	}
 	if(!apiProxy) {

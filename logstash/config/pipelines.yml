@@ -12,7 +12,7 @@
 - pipeline.id: TraceMessages
   path.config: "pipelines/TraceMessagesPipeline.conf"
   pipeline.workers: 1
-  pipeline.ordered: false
+  pipeline.ordered: true
 
 - pipeline.id: Events
   path.config: "pipelines/EventsPipeline.conf"
