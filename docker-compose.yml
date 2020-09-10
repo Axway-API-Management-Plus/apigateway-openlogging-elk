@@ -5,7 +5,7 @@ services:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.9.0
     container_name: elasticsearch1
     environment:
-      ES_JAVA_OPTS: ${ES_JAVA_OPTS}
+      - ES_JAVA_OPTS=${ES_JAVA_OPTS}
     ulimits:
       memlock:
         soft: -1
@@ -32,8 +32,11 @@ services:
     image: docker.elastic.co/kibana/kibana:7.9.0
     container_name: kibana
     environment:
-      SERVER_NAME: localhost
-      ELASTICSEARCH_HOSTS: http://elasticsearch1:9200/
+      - SERVER_NAME: localhost
+      - ELASTICSEARCH_HOSTS=${ELASTICSEARCH_HOSTS}
+      - ELASTICSEARCH_USERNAME=${ELASTICSEARCH_USERNAME}
+      - ELASTICSEARCH_PASSWORD=${ELASTICSEARCH_PASSWORD}
+      - ELASTICSEARCH_API_KEY=${ELASTICSEARCH_API_KEY}
     ports:
       - 5601:5601
     volumes:
@@ -78,6 +81,9 @@ services:
     image: docker.elastic.co/logstash/logstash:7.9.0
     environment:
       - ELASTICSEARCH_HOST=${ELASTICSEARCH_HOST}
+      - ELASTICSEARCH_USERNAME=${ELASTICSEARCH_USERNAME}
+      - ELASTICSEARCH_PASSWORD=${ELASTICSEARCH_PASSWORD}
+      - ELASTICSEARCH_API_KEY=${ELASTICSEARCH_API_KEY}
       - XPACK_MONITORING_ELASTICSEARCH_HOSTS=${ELASTICSEARCH_HOST}
       - API_BUILDER_URL=${API_BUILDER_URL}
       - MEMCACHED=${MEMCACHED}
