@@ -7,13 +7,13 @@ module.exports = {
 				node: process.env.ELASTICSEARCH_HOST || 'http://elasticsearch1:9200',
 				auth: {
 					// Use an API-Key
-					apiKey: process.env.ELASTIC_API_KEY,
+					apiKey: process.env.ELASTICSEARCH_APIKEY,
 					// or username / password based
-					username: process.env.ELASTIC_USERNAME,
-					password: process.env.ELASTIC_PASSWORD
+					username: process.env.ELASTICSEARCH_USERNAME,
+					password: process.env.ELASTICSEARCH_PASSWORD
 				},
 				// The name to identify the client instance in the events.
-				name: process.env.ELASTIC_CLIENT_NAME || 'elk-traffic-monitor-api',
+				name: process.env.ELASTICSEARCH_CLIENT_NAME || 'elk-traffic-monitor-api',
 				// You can use all configuration options documented here: 
 				// https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/7.x/client-configuration.html
 				maxRetries: 5,
