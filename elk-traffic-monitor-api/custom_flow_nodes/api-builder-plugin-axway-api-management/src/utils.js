@@ -64,31 +64,46 @@ function _getSession(headers) {
     throw new Error('No session found.');
 }
 
-  /**
-   * Tests whether or not the API Builder application is in developer mode.  The test
-   * is to check to see if @axway/api-builder-admin exists.
-   *
-   * @returns {boolean} True if in developer mode.
-   */
+/**
+ * Tests whether or not the API Builder application is in developer mode.  The test
+ * is to check to see if @axway/api-builder-admin exists.
+ *
+ * @returns {boolean} True if in developer mode.
+ */
 function isDeveloperMode() {
-    try {
-      // If we are in "development mode" we are going to have @axway/api-builder-admin
-      // dependency installed. So we guarantee that only generate config files in
-      // "development mode" and ensure immutable production environments.
-      // eslint-disable-next-line import/no-unresolved
-      require('@axway/api-builder-admin');
-      return true;
-    } catch (ex) {
-      // when we run plugin test suite @axway/api-builder-admin is not there 
-      // so we are kind of simulating production mode
-      return false;
-    }
-  }
+	try {
+		// If we are in "development mode" we are going to have @axway/api-builder-admin
+		// dependency installed. So we guarantee that only generate config files in
+		// "development mode" and ensure immutable production environments.
+		// eslint-disable-next-line import/no-unresolved
+		require('@axway/api-builder-admin');
+		return true;
+	} catch (ex) {
+		// when we run plugin test suite @axway/api-builder-admin is not there 
+		// so we are kind of simulating production mode
+		return false;
+	}
+}
 
+function getManagerConfig(apiManagerConfig, groupId) {
+	if (apiManagerConfig[groupId]) {
+		if (!apiManagerConfig[groupId].password) {
+			apiManagerConfig[groupId].password = apiManagerConfig.password;
+			apiManagerConfig[groupId].username = apiManagerConfig.username;
+		}
+		return apiManagerConfig[groupId];
+	} else {
+		if (apiManagerConfig.url.indexOf('#') != -1) {
+			throw new Error(`You have configured API-Manager URLs based on groupIds (e.g. group-a#https://manager-host.com:8075), but the groupId: ${groupId} ist NOT configured. Please check the configuration parameter: API_MANAGER`);
+		}
+		return apiManagerConfig;
+	}
+}
 
 module.exports = {
     sendRequest, 
     _getCookie, 
     _getSession, 
-    isDeveloperMode
+	isDeveloperMode, 
+	getManagerConfig
 }

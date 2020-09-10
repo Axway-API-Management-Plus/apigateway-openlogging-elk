@@ -1,5 +1,5 @@
 const https = require('https');
-const { sendRequest, _getCookie } = require('./utils');
+const { sendRequest, _getCookie, getManagerConfig } = require('./utils');
 
 var pluginConfig = {};
 var cache = {};
@@ -250,7 +250,7 @@ async function _getCurrentGWPermissions(VIDUSR, csrfToken, loginName) {
 }
 
 async function _getManagerUser(user, groupId) {
-	const apiManagerConfig = getManagerConfig(groupId);
+	const apiManagerConfig = getManagerConfig(pluginConfig.apimanager, groupId);
 	var options = {
 		path: `/api/portal/v1.3/users?field=loginName&op=eq&value=${user.loginName}&field=enabled&op=eq&value=enabled`,
 		headers: {
@@ -269,7 +269,7 @@ async function _getManagerUser(user, groupId) {
 }
 
 async function _getAPIProxy(apiName, groupId) {
-	const apiManagerConfig = getManagerConfig(groupId);
+	const apiManagerConfig = getManagerConfig(pluginConfig.apimanager, groupId);
 	var options = {
 		path: `/api/portal/v1.3/proxies?field=name&op=eq&value=${apiName}`,
 		headers: {
@@ -288,7 +288,7 @@ async function _getAPIProxy(apiName, groupId) {
 }
 
 async function _getOrganization(orgId, groupId) {
-	const apiManagerConfig = getManagerConfig(groupId);
+	const apiManagerConfig = getManagerConfig(pluginConfig.apimanager, groupId);
 	const orgCacheKey = `ORG-${orgId}###${groupId}`
 	if(cache.has(orgCacheKey)) {
 		var org = cache.get(orgCacheKey);
@@ -320,21 +320,6 @@ async function _getOrganization(orgId, groupId) {
 	}
 	cache.set(orgCacheKey, org)
 	return org;
-}
-
-function getManagerConfig(groupId) {
-	if(pluginConfig.apimanager[groupId]) {
-		if(!pluginConfig.apimanager[groupId].password) {
-			pluginConfig.apimanager[groupId].password = pluginConfig.apimanager.password;
-			pluginConfig.apimanager[groupId].username = pluginConfig.apimanager.username;
-		}
-		return pluginConfig.apimanager[groupId];
-	} else {
-		if(pluginConfig.apimanager.url.indexOf('#')!=-1) {
-			throw new Error(`You have configured API-Manager URLs based on groupIds (e.g. group-a#https://manager-host.com:8075), but the groupId: ${groupId} ist NOT configured. Please check the configuration parameter: API_MANAGER`);
-		}
-		return pluginConfig.apimanager;
-	}
 }
 
 module.exports = {
