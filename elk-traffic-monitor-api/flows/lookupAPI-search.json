@@ -51,6 +51,13 @@
 					"value": "$.params.apiPath",
 					"metaName": "Path of the API",
 					"metaDescription": "This request path is used to double check that the API found is correct."
+				},
+				{
+					"name": "groupId",
+					"type": "jsonpath",
+					"value": "$.params.groupId",
+					"metaName": "The API-Gateway Group-ID",
+					"metaDescription": "The ID of the Domain-Group where this event was created. If given, it's used to determined which API-Manager to use. For that, the parameter: API_MANAGER must be configured like so: API_MANAGER=group-5#https://manager-1:8075, group-2#https://manager-2:8075, ...."
 				}
 			],
 			"outputs": {

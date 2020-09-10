@@ -44,6 +44,13 @@
             "in": "query",
             "name": "operationId",
             "description": "If given the operationId (e.g. getUserByName) is also used to identify the correct API"
+          },
+          {
+            "type": "string",
+            "in": "query",
+            "name": "groupId",
+            "description": "The ID of the Domain-Group where this event was created. It's used to determined which API-Manager to use for the API-Details Lookup.\nIf the parameter: API_MANAGER is configured with multiple groupIds this groupId is used to determine which API-Manager to use.\nAPI_MANAGER=group-5#https://manager-1:8075, group-2#https://manager-2:8075, ....",
+            "required": true
           }
         ],
         "summary": "Looks up an API based on the API-Path",

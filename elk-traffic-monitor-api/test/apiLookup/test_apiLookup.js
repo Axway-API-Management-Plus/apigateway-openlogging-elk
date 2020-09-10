@@ -45,7 +45,7 @@ describe('Test API-Lookup endpoint', function () {
 			nock('https://mocked-api-gateway:8075').get('/api/portal/v1.3/organizations/2bfaa1c2-49ab-4059-832d-CHRIS').replyWithFile(200, './test/mockedReplies/apimanager/organizationChris.json');
 			return requestAsync({
 				method: 'GET',
-				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/lookup/api?apiName=Petstore%20HTTPS&apiPath=/my/api/exists/with/some/more`,
+				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/lookup/api?apiName=Petstore%20HTTPS&apiPath=/my/api/exists/with/some/more&groupId=XXXX`, // The groupd doesn't matter for this test
 				auth: auth,
 				json: true
 			}).then(({ response, body }) => {
@@ -61,7 +61,7 @@ describe('Test API-Lookup endpoint', function () {
 			nock('https://mocked-api-gateway:8075').get('/api/portal/v1.3/proxies?field=name&op=eq&value=UnknownAPI').reply(200, '[]');
 			return requestAsync({
 				method: 'GET',
-				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/lookup/api?apiName=UnknownAPI&apiPath=/any/path`,
+				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/lookup/api?apiName=UnknownAPI&apiPath=/any/path&groupId=XXXX`, // The groupd doesn't matter for this test
 				auth: auth,
 				json: true
 			}).then(({ response, body }) => {
@@ -77,7 +77,7 @@ describe('Test API-Lookup endpoint', function () {
 			nock('https://mocked-api-gateway:8075').get('/api/portal/v1.3/organizations/2bfaa1c2-49ab-4059-832d-CHRIS').replyWithFile(200, './test/mockedReplies/apimanager/organizationChris.json');
 			return requestAsync({
 				method: 'GET',
-				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/lookup/api?apiName=Petstore-with-policies&apiPath=/my/api/exists/with/policies`,
+				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/lookup/api?apiName=Petstore-with-policies&apiPath=/my/api/exists/with/policies&groupId=XXXX`, // The groupd doesn't matter for this test
 				auth: auth,
 				json: true
 			}).then(({ response, body }) => {
@@ -98,7 +98,7 @@ describe('Test API-Lookup endpoint', function () {
 			nock('https://mocked-api-gateway:8075').get('/api/portal/v1.3/organizations/2bfaa1c2-49ab-4059-832d-CHRIS').replyWithFile(200, './test/mockedReplies/apimanager/organizationChris.json');
 			return requestAsync({
 				method: 'GET',
-				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/lookup/api?apiName=API-without-Policies&apiPath=/my/api/exists/with/some/more`,
+				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/lookup/api?apiName=API-without-Policies&apiPath=/my/api/exists/with/some/more&groupId=XXXX`, // The groupd doesn't matter for this test
 				auth: auth,
 				json: true
 			}).then(({ response, body }) => {
@@ -119,7 +119,7 @@ describe('Test API-Lookup endpoint', function () {
 			nock('https://mocked-api-gateway:8075').get('/api/portal/v1.3/organizations/2bfaa1c2-49ab-4059-832d-CHRIS').replyWithFile(200, './test/mockedReplies/apimanager/organizationChris.json');
 			return requestAsync({
 				method: 'GET',
-				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/lookup/api?apiName=Petstore-with-special-backend&apiPath=/my/api/exists/with/backend`,
+				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/lookup/api?apiName=Petstore-with-special-backend&apiPath=/my/api/exists/with/backend&groupId=XXXX`, // The groupd doesn't matter for this test
 				auth: auth,
 				json: true
 			}).then(({ response, body }) => {
@@ -137,7 +137,7 @@ describe('Test API-Lookup endpoint', function () {
 			nock('https://mocked-api-gateway:8075').get('/api/portal/v1.3/organizations/2bfaa1c2-49ab-4059-832d-CHRIS').replyWithFile(200, './test/mockedReplies/apimanager/organizationChris.json');
 			return requestAsync({
 				method: 'GET',
-				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/lookup/api?apiName=Petstore%20OAuth&apiPath=/my/api/exists/with/backend`,
+				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/lookup/api?apiName=Petstore%20OAuth&apiPath=/my/api/exists/with/backend&groupId=XXXX`, // The groupd doesn't matter for this test
 				auth: auth,
 				json: true
 			}).then(({ response, body }) => {

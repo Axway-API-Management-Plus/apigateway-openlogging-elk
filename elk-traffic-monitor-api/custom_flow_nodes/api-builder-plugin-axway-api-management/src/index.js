@@ -31,10 +31,21 @@ async function getPlugin(pluginConfig, options) {
 		if(!pluginConfig.apigateway.url) {
 			throw new Error(`Required parameter: apigateway.url is not set.`);
 		}
+		debugger;
 		if(!pluginConfig.apimanager.url) {
+			// If no API-Manager URL is given, use the Admin-Node-Manager URL
 			const managerURL = new URL(pluginConfig.apigateway.url);
 			managerURL.port = 8075;
 			pluginConfig.apimanager.url = managerURL.toString();
+		} else {
+			// Check, if multiple API-Manager URLs based on the groupId are given (Format: groupId#managerUrl)
+			if(pluginConfig.apimanager.url.indexOf('#')!=-1) {
+				// Looks like manager URLs are given based on groupIds
+				pluginConfig.apimanager.url.split(',').forEach(groupAndURL => {
+					groupAndURL = groupAndURL.trim().split('#');
+					pluginConfig.apimanager[groupAndURL[0]] = { url: groupAndURL[1] };
+				});
+			}
 		}
 		if(!pluginConfig.apimanager.username) {
 			throw new Error(`Required parameter: apimanager.username is not set.`)
