@@ -45,8 +45,8 @@ services:
     environment:
       - SERVER_NAME=localhost
       - ELASTICSEARCH_HOSTS=${ELASTICSEARCH_HOST}
-      - ELASTICSEARCH_USERNAME=${ELASTICSEARCH_USERNAME}
-      - ELASTICSEARCH_PASSWORD=${ELASTICSEARCH_PASSWORD}
+      - KIBANA_USERNAME=${KIBANA_USERNAME}
+      - KIBANA_PASSWORD=${KIBANA_PASSWORD}
       - ELASTICSEARCH_API_KEY=${ELASTICSEARCH_API_KEY}
       - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=/usr/share/kibana/config/certificates/ca.crt
       - SERVER_SSL_ENABLED="true"
@@ -78,12 +78,12 @@ services:
       - xpack.monitoring.enabled=true
       - xpack.monitoring.elasticsearch.ssl.certificate_authority=/usr/share/logstash/config/certificates/elasticsearch1.crt
       - xpack.monitoring.elasticsearch.hosts=${ELASTICSEARCH_HOST}
-      - xpack.monitoring.elasticsearch.username=${ELASTICSEARCH_USERNAME}
-      - xpack.monitoring.elasticsearch.password=${ELASTICSEARCH_PASSWORD}
+      - xpack.monitoring.elasticsearch.username=${LOGSTASH_MONITORING_USERNAME}
+      - xpack.monitoring.elasticsearch.password=${LOGSTASH_MONITORING_PASSWORD}
       - ELASTICSEARCH_CERT=/usr/share/logstash/config/certificates/elasticsearch1.crt
       - ELASTICSEARCH_HOST=${ELASTICSEARCH_HOST}
-      - ELASTICSEARCH_USERNAME=${ELASTICSEARCH_USERNAME}
-      - ELASTICSEARCH_PASSWORD=${ELASTICSEARCH_PASSWORD}
+      - LOGSTASH_USERNAME=${LOGSTASH_USERNAME}
+      - LOGSTASH_PASSWORD=${LOGSTASH_PASSWORD}
       - API_BUILDER_URL=${API_BUILDER_URL}
       - MEMCACHED=${MEMCACHED}
     ports:
@@ -109,6 +109,8 @@ services:
       - LOGSTASH=${LOGSTASH}
       - ELASTICSEARCH_HOST=${ELASTICSEARCH_HOST}
       - ELASTICSEARCH_CLUSTER_UUID=${ELASTICSEARCH_CLUSTER_UUID}
+      - FILEBEAT_MONITORING_USERNAME=${FILEBEAT_MONITORING_USERNAME}
+      - FILEBEAT_MONITORING_PASSWORD=${FILEBEAT_MONITORING_PASSWORD}
       - GATEWAY_NAME=${GATEWAY_NAME}
       - GATEWAY_REGION=${GATEWAY_REGION}
       - FILEBEAT_WORKER=${FILEBEAT_WORKER}

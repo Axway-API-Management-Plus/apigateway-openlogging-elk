@@ -7,4 +7,7 @@ server.host: "0"
 elasticsearch.hosts: [ "https://elasticsearch1:9200" ]
 monitoring.ui.container.elasticsearch.enabled: true
 
+elasticsearch.username: "${KIBANA_USERNAME}"
+elasticsearch.password: "${KIBANA_PASSWORD}"
+
 xpack.encryptedSavedObjects.encryptionKey: "YT8d68CZE4Z3mXBxYDVqjC4hhts4H9TQ"
