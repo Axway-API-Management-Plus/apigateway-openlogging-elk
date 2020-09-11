@@ -133,7 +133,7 @@ async function isAPIManagerUserAdmin(apiManagerConfig, logger) {
  * This avoids to have an API-Manager Up&Running 
  */
 async function addLookupAPIMocks(cache) {
-	cache.set( "/petstore/v2/user/Chris", {
+	cache.set( "/petstore/v2/user/Chris###group-2", {
 		organizationName: "Mocked Org A", 
 		version: "X.X.X", 
 		deprecated: false, 
@@ -145,8 +145,8 @@ async function addLookupAPIMocks(cache) {
 		apiSecurity: "API-Key", 
 		backendBasePath:"https://petstore.swagger.io"
 	});
-	cache.set( "/healthcheck", {organizationName: "Mocked Org B", version: "Z.Z.Z", deprecated: true, state: "unpublished"});
-	cache.set( "/api/with/policies/backend/and/oauth", {
+	cache.set( "/healthcheck###group-2", {organizationName: "Mocked Org B", version: "Z.Z.Z", deprecated: true, state: "unpublished"});
+	cache.set( "/api/with/policies/backend/and/oauth###group-2", {
 		organizationName: "Mocked Org B", 
 		version: "Z.Z.Z", 
 		deprecated: true, 

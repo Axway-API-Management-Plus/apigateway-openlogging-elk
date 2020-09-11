@@ -4,13 +4,13 @@ module.exports = {
 	pluginConfig: {
 		'@axway-api-builder-ext/api-builder-plugin-fn-elasticsearch': {
 			'elastic': {
-				node: process.env.ELASTICSEARCH_HOST || 'http://elasticsearch1:9200',
+				node: process.env.ELASTICSEARCH_HOST || 'https://elasticsearch1:9200',
 				auth: {
 					// Use an API-Key
-					apiKey: process.env.ELASTICSEARCH_APIKEY,
+					// apiKey: process.env.ELASTICSEARCH_APIKEY,
 					// or username / password based
-					username: process.env.ELASTICSEARCH_USERNAME,
-					password: process.env.ELASTICSEARCH_PASSWORD
+					username: process.env.API_BUILDER_USERNAME,
+					password: process.env.API_BUILDER_PASSWORD
 				},
 				// The name to identify the client instance in the events.
 				name: process.env.ELASTICSEARCH_CLIENT_NAME || 'elk-traffic-monitor-api',
