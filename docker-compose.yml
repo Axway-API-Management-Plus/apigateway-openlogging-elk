@@ -147,7 +147,7 @@ services:
       - API_BUILDER_SSL_KEY_PASSWORD=${API_BUILDER_SSL_KEY_PASSWORD}
       #- LOG_LEVEL=debug
     ports:
-      - 8443:8443
+      - 8889:8080
     depends_on:
       - elasticsearch1
     networks:
