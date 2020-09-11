@@ -6,14 +6,23 @@ __Performance__
 
 When having many API-Gateway instances with millions of requests the API-Gateway Traffic Monitor can become slow and the observation period quite short. The purpose of this project is to solve that performance issue, make it possible to observe a long time-frame and get other benefits by using a standard external datastore: [Elasticsearch](https://www.elastic.co/elasticsearch).  
 
+Watch this video to see a side by side compare betwen the classical and ElasticSearch based Traffic-Monitor:  
+[![Traffic-Monitor performance](https://img.youtube.com/vi/MUbx4m9EtpY/0.jpg)](https://youtu.be/MUbx4m9EtpY)
+
 __Visibility__  
 
-This solution allows API service providers to give access to the Standard Traffic Monitor so that they only see the API traffic of their own organization. This allows API service providers to analyze their own traffic using the extensive information in the traffic monitor.
+This solution allows API service providers to give access to the Standard Traffic Monitor so that they only see the API traffic of their own organization. This allows API service providers to analyze their own traffic using the extensive information in the traffic monitor.  
+
+This video shows how API-Manager users can access the traffic monitor to see their data:  
+[![Traffic-Monitor for API-Manager users](https://img.youtube.com/vi/rlzi2kAXD4M/0.jpg)](https://youtu.be/rlzi2kAXD4M)
 
 __Analytics__  
 
 With the help of Kibana, the goal of the project is to deliver standard dashboards that provide analysis capabilities across multiple perspectives.  
-It should still be possible to add your own dashboards as you wish.
+It should still be possible to add your own dashboards as you wish.  
+
+This shows a sample dashboard created in Kibana based on the indexed documents:  
+![Architecture][img10]
 
 ## Architecture
 
@@ -22,9 +31,6 @@ The overall architecture this project provides looks like this:
 
 This also makes it possible to collect data from API-Gateways running all over the world into a centralized Elasticsearch instance to have it available with the best possible performance indendent from the network performance.  
 It also helps, when running the Axway API-Gateway in Docker-Orchestration-Environment where containers are started and stopped as it avoids to loose data, when an API-Gateway container is stopped.  
-
-Watch this video to see a side by side compare betwen the classical and ElasticSearch based Traffic-Monitor:  
-[![API-Management CLI](https://img.youtube.com/vi/MUbx4m9EtpY/0.jpg)](https://youtu.be/MUbx4m9EtpY)
 
 ## How it works  
 Each API-Gateway instance is writing, [if configured](#enable-open-traffic-event-log), Open-Traffic Event-Log-Files, which are streamed by [Filebeat](https://www.elastic.co/beats/filebeat) into a Logstash-Instance. [Logstash](https://www.elastic.co/logstash) performs data pre-processing, combines different events and finally forwards these so called documents into an Elasticsearch cluster.  
@@ -61,6 +67,7 @@ For a simple deployment the prerequisites are very simple as all services can be
 
 1. A Docker engine
 2. Docker-compose
+3. Open-Traffic Log enabled
 3. An API-Management Version >7.7-20200130  
    - Versin 7.7-20200130 is required due to some Dateformat changes in the Open-Traffic-Format. With older versions of the API-Gateway you will get an error in Logstash processing.
 
@@ -111,9 +118,11 @@ You may add a custom success message (e.g. `Used ElasticSearch API`) if you like
 :point_right:    
 Please remember to copy the changed Admin-Node-Manager configuration from the Policy-Studio project folder (path on Linux: `/home/<user>/apiprojects/\<project-name\>`) back to the ANM folder (`\<install-dir\>/apigateway/conf/fed`). Afterwards the ANM  must be restarted.
 
-## Setup 
+## Basic Setup 
 
-Before you start the environment based on the `docker-compose.yml` file, please adjust the `.env` file accordingly. The configuration is already used by the different modules as described below.
+Before you start the environment based on the `docker-compose.yml` file for the first time, please adjust the provided `.env` file accordingly. This file populates a number of environment variables, that are used by one or more components. Each environment variable is described direclty within the file.  
+Obviously it's supported to run the different components on different machines. For instance using an existing Elasticsearch cluster or install Filebeat on your API-Gateway machine as a native software installation, instead of using a Docker-Container.  For that, please adjust the provided `docker-compose.yml` as needed and remove the components you don't need on a certain system.  
+Also, even it's not tested yet, there is no reason preventing you from deploying the Docker-Containers on a Docker-Orchestration framework such as Kubernetes, OpenShift. If you run into trouble with that, please create an issue.  
 
 ### Setup filebeat
 :exclamation: __This is an important step, as otherwise Filebeat will not see and send any Open-Traffic Event data!__  
@@ -121,6 +130,7 @@ Setup the paths in the project `*.env` file. The variables must point to your ru
 ```
 APIGATEWAY_LOGS_FOLDER=/opt/Axway/APIM/apigateway/logs/opentraffic
 APIGATEWAY_TRACES_FOLDER=/opt/Axway/APIM/apigateway/groups/group-2/instance-1/trace
+APIGATEWAY_EVENTS_FOLDER=/home/localuser/Axway-x.y.z/apigateway/events
 ```
 
 ### Setup Logstash
@@ -135,7 +145,7 @@ API_BUILDER_URL=http://my-api-builder:8080
 As the API-Builder container needs to communicate with Elasticsearch it needs to know where Elasticsearch is running:
 Please note, when using the default docker-compose.yaml the default setting is sufficient, as it's using the internal Docker-Network `elastic`.  
 ```
-ELASTIC_NODE=http://elasticsearch1:9200
+ELASTICSEARCH_HOST=http://elasticsearch1:9200
 ```
 Furthermore, the API Builder communicates with the Admin Node Manager and API Manager. Therefore the following parameters must be configured in the `.env` file.  
 ```
@@ -144,26 +154,90 @@ API_MANAGER_USERNAME=<admin-user>
 API_MANAGER_PASSWORD=<admin-password>
 ```
 
-Build status API-Builder Traffic-Monitor API:  
-[![Traffic-Monitor API](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/workflows/Traffic-Monitor%20API/badge.svg)](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/actions)
-
-##  Start the environment
-To bring up the entire environment using docker-compose:
+###  Start the environment
+To bring up the components you have configured use docker-compose:
 ````
 docker-compose up -d
 ````
-You can also run the individual components on different environments. To do this, you can check out the project on the appropriate machines, adjust the docker-compose.yml and .env file and start the desired services.  
-To start a single service (e.g. the API-Builder project):
-```
-docker-compose up -d elk-traffic-monitor-api
-```
-
-Of course it is also possible to run the containers in a docker orchestration framework, like Kubernetes or OpenShift.
+With that, the environment is started with default setup. Read further on to learn for instance how to enable User-Authentication for the Elasticsearch database.   
 
 ### Stop local Elasticsearch cluster
 ````
 docker-compose down 
 ````
+
+## Advanced Setup
+
+With the default setup everything is using HTTPS but using an anonyomus user. Also the default setup is using dummy certificates which you should not use in a production. Therefore it's strongly recommended to replace the certificates and activate user authentication.  
+
+### Activate user authentication
+
+#### Generate Built-In user passwords
+
+_This step can be ignored, when it's planned to use an existing Elasticsearch cluster._
+Elasticsearch is initially configured with a number of built-in users, that don't have a password by default. So, the first step is to generate passwords for there users
+```
+docker exec elasticsearch1 /bin/bash -c "bin/elasticsearch-setup-passwords auto --batch --url https://localhost:9200"
+Changed password for user apm_system
+PASSWORD apm_system = MpYBNJZjyHSL3PoRyjKU
+
+Changed password for user kibana_system
+PASSWORD kibana_system = qJdDRYyL97lP5ERkHHrj
+
+Changed password for user kibana
+PASSWORD kibana = qJdDRYyL97lP5ERkHHrj
+
+Changed password for user logstash_system
+PASSWORD logstash_system = Y6J6vgw9Z0RTPcFR8Qp3
+
+Changed password for user beats_system
+PASSWORD beats_system = DyxUva2a6CwedZUhcpFH
+
+Changed password for user remote_monitoring_user
+PASSWORD remote_monitoring_user = tMF7X0UUv16hgHFllEjZ
+
+Changed password for user elastic
+PASSWORD elastic = 2x8vxZrvXX9a3KdGuA26
+```
+
+#### Update the .env with the passwords
+
+Please update the `.env` and setup all passwords as shown above. If you are using an existing Elasticsearch please use the passwords provided to you. The `.env` contains information about each password and for what it is used:  
+```
+FILEBEAT_MONITORING_USERNAME=beats_system
+FILEBEAT_MONITORING_PASSWORD=DyxUva2a6CwedZUhcpFH
+
+KIBANA_USERNAME=kibana_system
+KIBANA_PASSWORD=qJdDRYyL97lP5ERkHHrj
+
+LOGSTASH_MONITORING_USERNAME=logstash_system
+LOGSTASH_MONITORING_PASSWORD=Y6J6vgw9Z0RTPcFR8Qp3
+
+LOGSTASH_USERNAME=elastic
+LOGSTASH_PASSWORD=2x8vxZrvXX9a3KdGuA26
+
+API_BUILDER_USERNAME=elastic
+API_BUILDER_PASSWORD=2x8vxZrvXX9a3KdGuA26
+```
+
+After you have configured everything, please restart all services.  
+  
+It's very likely that you don't use the super-user `elastic` for `LOGSTASH_USERNAME` and `API_BUILDER_USERNAME`. It's recommended to create dedicated accounts for these two users.  
+The monitoring users are used to send metric information to Elasticsearch to enable stack monitoring, which gives you insight about event processing of the complete platform:  
+
+![Monitoring-Overview][img3]  
+
+### Configure cluster UUID
+
+This step is optional, but required to monitor your Filebeat instances as part of the stack monitoring. To obtain the Cluster UUID run the following in your browser:  
+`https://elasticsearch1:9200/` (if you have already activated authentication you can use the elastic user here)  
+
+Take over the UUID into the .env file:  
+`ELASTICSEARCH_CLUSTER_UUID=XBmL4QynThmwg0X0YN-ONA` 
+
+You may also configure the following parameters: `GATEWAY_NAME` & `GATEWAY_REGION` to make you Filebeat instances unique.  
+
+To activate these changes the Filebeat service must be restarted. 
 
 ### Securing API-Builder Traffic-Monitor API
 The API-Builder project for providing access to Elasticsearch data has no access restrictions right now. To ensure only API-Gateway Manager users (topology administrators with proper RBAC role) or other users with appropriate access rights can query the log data, one can expose this API via API-Manager and add security here.
@@ -376,6 +450,12 @@ This helps you to further analyze if ElasticSearch is returning the correct info
 [img7]: imgs/connect-to-elasticsearch-api.png
 [img8]: imgs/kibana-dev-tool-sample-query.png
 [img9]: imgs/policy-shortcut-disable-failure.png
+[img10]: imgs/sample-apim-overview-dashboard.png
+[Monitoring-Overview]: imgs/stack-monitoring-overview.png
+[Monitoring-Logstash]: imgs/stack-monitoring-logstash.png
 
 
 [1]: https://docs.axway.com/bundle/axway-open-docs/page/docs/apim_administration/apigtw_admin/admin_open_logging/index.html#configure-open-traffic-event-logging
+
+Build status API-Builder Traffic-Monitor API:  
+[![Traffic-Monitor API](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/workflows/Traffic-Monitor%20API/badge.svg)](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/actions)
