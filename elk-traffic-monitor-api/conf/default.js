@@ -45,7 +45,7 @@ module.exports = {
 
 		// When this is true, the service will no longer listen on requests over http.
 		// Disabling http requires 'ssl' to be configured.
-		disabled: true
+		disabled: Boolean(process.env.ENABLE_HTTP_PORT) ? false:  true,
 	},
 
 	// SSL configuration. For a step-by-step tutorial on how to configure SSL see:
