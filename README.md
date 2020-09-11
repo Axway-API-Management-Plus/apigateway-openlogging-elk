@@ -225,7 +225,7 @@ After you have configured everything, please restart all services.
 It's very likely that you don't use the super-user `elastic` for `LOGSTASH_USERNAME` and `API_BUILDER_USERNAME`. It's recommended to create dedicated accounts for these two users.  
 The monitoring users are used to send metric information to Elasticsearch to enable stack monitoring, which gives you insight about event processing of the complete platform:  
 
-![Monitoring-Overview][img3]  
+![Monitoring-Overview][Monitoring-Overview]  
 
 ### Configure cluster UUID
 
