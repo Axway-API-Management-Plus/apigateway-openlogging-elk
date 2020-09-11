@@ -6,6 +6,16 @@ services:
     container_name: elasticsearch1
     environment:
       - ES_JAVA_OPTS=${ES_JAVA_OPTS}
+      - xpack.security.enabled=true
+      - xpack.security.http.ssl.enabled=true
+      - xpack.security.http.ssl.key=/usr/share/elasticsearch/config/certificates/elasticsearch1.key
+      - xpack.security.http.ssl.certificate_authorities=/usr/share/elasticsearch/config/certificates/ca.crt
+      - xpack.security.http.ssl.certificate=/usr/share/elasticsearch/config/certificates/elasticsearch1.crt
+      - xpack.security.transport.ssl.enabled=true
+      - xpack.security.transport.ssl.verification_mode=certificate
+      - xpack.security.transport.ssl.certificate_authorities=/usr/share/elasticsearch/config/certificates/ca.crt
+      - xpack.security.transport.ssl.certificate=/usr/share/elasticsearch/config/certificates/elasticsearch1.crt
+      - xpack.security.transport.ssl.key=/usr/share/elasticsearch/config/certificates/elasticsearch1.key
     ulimits:
       memlock:
         soft: -1
@@ -20,6 +30,7 @@ services:
         source: esdata1
         target: /usr/share/elasticsearch/data
       - ${PWD}/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+      - ${PWD}/certificates:/usr/share/elasticsearch/config/certificates
     networks:
       - elastic
       - ingress
@@ -32,17 +43,23 @@ services:
     image: docker.elastic.co/kibana/kibana:7.9.0
     container_name: kibana
     environment:
-      - SERVER_NAME: localhost
-      - ELASTICSEARCH_HOSTS=${ELASTICSEARCH_HOSTS}
+      - SERVER_NAME=localhost
+      - ELASTICSEARCH_HOSTS=${ELASTICSEARCH_HOST}
       - ELASTICSEARCH_USERNAME=${ELASTICSEARCH_USERNAME}
       - ELASTICSEARCH_PASSWORD=${ELASTICSEARCH_PASSWORD}
       - ELASTICSEARCH_API_KEY=${ELASTICSEARCH_API_KEY}
+      - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=/usr/share/kibana/config/certificates/ca.crt
+      - SERVER_SSL_ENABLED="true"
+      - SERVER_SSL_KEY=/usr/share/kibana/config/certificates/kibana.key
+      - SERVER_SSL_CERTIFICATE=/usr/share/kibana/config/certificates/kibana.crt
     ports:
       - 5601:5601
     volumes:
       - type: volume
         source: logs
         target: /var/log
+      - ${PWD}/certificates:/usr/share/kibana/config/certificates
+      - ${PWD}/kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml
     ulimits:
       memlock:
         soft: -1
@@ -52,6 +69,37 @@ services:
     networks:
       - elastic
       - ingress
+
+  # Is receiving events from Filebeat and does pre-processing
+  # https://github.com/elastic/logstash-docker/blob/master/build/logstash/env2yaml/env2yaml.go
+  logstash:
+    image: docker.elastic.co/logstash/logstash:7.9.0
+    environment:
+      - xpack.monitoring.enabled=true
+      - xpack.monitoring.elasticsearch.ssl.certificate_authority=/usr/share/logstash/config/certificates/elasticsearch1.crt
+      - xpack.monitoring.elasticsearch.hosts=${ELASTICSEARCH_HOST}
+      - xpack.monitoring.elasticsearch.username=${ELASTICSEARCH_USERNAME}
+      - xpack.monitoring.elasticsearch.password=${ELASTICSEARCH_PASSWORD}
+      - ELASTICSEARCH_CERT=/usr/share/logstash/config/certificates/elasticsearch1.crt
+      - ELASTICSEARCH_HOST=${ELASTICSEARCH_HOST}
+      - ELASTICSEARCH_USERNAME=${ELASTICSEARCH_USERNAME}
+      - ELASTICSEARCH_PASSWORD=${ELASTICSEARCH_PASSWORD}
+      - API_BUILDER_URL=${API_BUILDER_URL}
+      - MEMCACHED=${MEMCACHED}
+    ports:
+      - 5044:5044
+    volumes:
+      - ${PWD}/logstash/config/pipelines.yml:/usr/share/logstash/config/pipelines.yml
+      - ${PWD}/logstash/pipelines:/usr/share/logstash/pipelines
+      - ${PWD}/logstash/index_templates:/usr/share/logstash/index_templates
+      - ${PWD}/certificates:/usr/share/logstash/config/certificates
+    #command: logstash --path.config /usr/share/logstash/pipelines/pipelines.yml
+    depends_on:
+      - elasticsearch1
+      - elk-traffic-monitor-api
+      - memcached
+    networks:
+      - elastic
 
   # Supposed to run side-by-side with the API-Gateway to watch the Open-Traffic Event files and send event to Logstash
   filebeat:
@@ -73,31 +121,7 @@ services:
       - ${APIGATEWAY_EVENTS_FOLDER}:/var/log/events
       - /var/lib/docker/containers:/var/lib/docker/containers:ro
       - /var/run/docker.sock:/var/run/docker.sock
-    networks:
-      - elastic
-
-  # Is receiving events from Filebeat and does pre-processing
-  logstash:
-    image: docker.elastic.co/logstash/logstash:7.9.0
-    environment:
-      - ELASTICSEARCH_HOST=${ELASTICSEARCH_HOST}
-      - ELASTICSEARCH_USERNAME=${ELASTICSEARCH_USERNAME}
-      - ELASTICSEARCH_PASSWORD=${ELASTICSEARCH_PASSWORD}
-      - ELASTICSEARCH_API_KEY=${ELASTICSEARCH_API_KEY}
-      - XPACK_MONITORING_ELASTICSEARCH_HOSTS=${ELASTICSEARCH_HOST}
-      - API_BUILDER_URL=${API_BUILDER_URL}
-      - MEMCACHED=${MEMCACHED}
-    ports:
-      - 5044:5044
-    volumes:
-      - ${PWD}/logstash/config/pipelines.yml:/usr/share/logstash/config/pipelines.yml
-      - ${PWD}/logstash/pipelines:/usr/share/logstash/pipelines
-      - ${PWD}/logstash/index_templates:/usr/share/logstash/index_templates
-    #command: logstash --path.config /usr/share/logstash/pipelines/pipelines.yml
-    depends_on:
-      - elasticsearch1
-      - elk-traffic-monitor-api
-      - memcached
+      - ${PWD}/certificates:/usr/share/filebeat/certificates
     networks:
       - elastic
 

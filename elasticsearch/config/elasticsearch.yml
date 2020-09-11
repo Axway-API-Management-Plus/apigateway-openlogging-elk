@@ -10,4 +10,10 @@ node.name: elasticsearch1
 discovery.type: single-node
 bootstrap.memory_lock: true
 
-xpack.security.enabled: false
+# Enable security in general
+xpack.security.enabled: true
+
+xpack.security.authc.anonymous.roles: kibana_admin,  superuser, beats_system, logstash_system
+xpack.security.authc.anonymous.username: anonymous
+
+xpack.monitoring.collection.enabled: true

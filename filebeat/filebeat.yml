@@ -1,6 +1,6 @@
 name: Filebeat ${GATEWAY_NAME:"API-Gateway"}
 filebeat.inputs:
-- input_type: log
+- type: log
   paths: ["/var/log/opentraffic/*.log"]
   json.keys_under_root: true
   json.overwrite_keys: false
@@ -11,7 +11,7 @@ filebeat.inputs:
     gatewayName: ${GATEWAY_NAME:"API-Gateway"}
     gatewayRegion: ${GATEWAY_REGION:"N/A"}
 
-- input_type: log
+- type: log
   paths: ["/var/log/trace/*.trc"]
   multiline.pattern: '^\[ALERT|TRACE|DEBUG|NOTICE|INFO|WARNING|ERROR|CRITICAL|FATAL|SEVERE]'
   multiline.negate: true
@@ -23,7 +23,7 @@ filebeat.inputs:
     gatewayName: ${GATEWAY_NAME:"API-Gateway"}
     gatewayRegion: ${GATEWAY_REGION:"N/A"}
 
-- input_type: log
+- type: log
   paths: ["/var/log/events/*.log", "/var/log/events/processed/*.log.PROCESSED"]
   json.keys_under_root: true
   json.overwrite_keys: false
@@ -36,12 +36,16 @@ filebeat.inputs:
 
 output.logstash:
   hosts: ["${LOGSTASH}"]
-  worker: ["${FILEBEAT_WORKERS:2}"]
+  worker: ${FILEBEAT_WORKERS:2}
 
 monitoring:
   enabled: true
   # Get the Cluster-ID (cluster_uuid) with this simple query: http://elasticsearch1:9200/
   # This links this filebeat instance to the Cluster with the given ID
-  cluster_uuid: ${ELASTICSEARCH_CLUSTER_UUID:NOT-SET-PLEASE-CONFIGURE}
+  cluster_uuid: ${ELASTICSEARCH_CLUSTER_UUID:?NOT-SET-PLEASE-CONFIGURE}
   elasticsearch:
     hosts: ["${ELASTICSEARCH_HOST}"]
+    ssl.enabled: true
+    ssl.certificate_authorities: ["/usr/share/filebeat/certificates/elasticsearch1.crt"]
+    #username: beats_system
+    #password: somepassword
