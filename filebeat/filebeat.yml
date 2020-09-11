@@ -48,4 +48,4 @@ monitoring:
     ssl.enabled: true
     ssl.certificate_authorities: ["/usr/share/filebeat/certificates/elasticsearch1.crt"]
     username: "${FILEBEAT_MONITORING_USERNAME:beats_system}"
-    password: "${FILEBEAT_MONITORING_PASSWORD}"
+    password: "${FILEBEAT_MONITORING_PASSWORD:NOT-SET}"
