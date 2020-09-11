@@ -99,7 +99,7 @@ For the following steps, please open the ANM configuration in Policy-Studio. You
 
 The compare attribute filter should look like this:   
 ![Is API Managed][img6]  
-- Adjust the URL of the Connect to URL filter to your running API-Builder docker container and port - **default is 8889**. Sample: `http://api-env:8889/api/elk/v1${http.request.rawURI}`  
+- Adjust the URL of the Connect to URL filter to your running API-Builder docker container and port - **default is 8443**. Sample: `https://api-env:8443/api/elk/v1${http.request.rawURI}`  
 ![Connect to ES API][img7]
 - Insert the created policy as a callback policy (filter: Shortcut filter) into the main policy: `Protect Management Interfaces` and wire it like shown here:  
   ![Use Callback][img4]  

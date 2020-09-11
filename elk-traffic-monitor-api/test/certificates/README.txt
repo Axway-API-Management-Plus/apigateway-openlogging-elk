@@ -1,0 +1,1 @@
+Certificates in this folder are used as a fallback when no external certificates are given.

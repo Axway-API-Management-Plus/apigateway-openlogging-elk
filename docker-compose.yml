@@ -142,14 +142,18 @@ services:
       - API_MANAGER_USERNAME=${API_MANAGER_USERNAME}
       - API_MANAGER_PASSWORD=${API_MANAGER_PASSWORD}
       - API_BUILDER_USERNAME=${API_BUILDER_USERNAME}
-      - API_BUILDER_PASSWORD=${API_BUILDER_PASSWORD}
+      - API_BUILDER_SSL_KEY=${API_BUILDER_SSL_KEY}
+      - API_BUILDER_SSL_CERT=${API_BUILDER_SSL_CERT}
+      - API_BUILDER_SSL_KEY_PASSWORD=${API_BUILDER_SSL_KEY_PASSWORD}
       #- LOG_LEVEL=debug
     ports:
-      - 8889:8080
+      - 8443:8443
     depends_on:
       - elasticsearch1
     networks:
       - elastic
+    volumes:
+      - ${PWD}/certificates:/app/certificates
 
 volumes:
   esdata1:
