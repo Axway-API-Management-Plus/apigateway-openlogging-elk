@@ -36,8 +36,8 @@ This shows a sample dashboard created in Kibana based on the indexed documents:
     - [The Traffic-Monitor](#the-traffic-monitor)
 - [Prerequisites](#prerequisites)
 - [Preparations](#preparations)
-- [Basic setup](#basic-setup)
-    - [Getting started](#getting-started)
+- [Getting started](#getting-started)
+    - [Basic setup](#basic-setup)
     - [Filebeat](#filebeat)
     - [Logstash](#logstash)
     - [API-Builder](#api-builder)
@@ -147,9 +147,9 @@ To give a user limited access to the API Traffic Monitor, the user must use the 
 In order to give the user a restricted view in the API Gateway Manager, none of his roles must contain the permission: `adminusers_modify`. A suitable standard role is the `API Gateway Operator role`. 
 You can, of course, create additional roles in the API Gateway Manager to adjust the user's rights according to your needs.
 
-## Basic setup
+## Getting started
 
-### Getting started
+### Basic setup
 
 To get started please download the release package from the GitHub project onto your machine:  
 ```
