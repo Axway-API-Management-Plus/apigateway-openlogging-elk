@@ -153,7 +153,7 @@ You can, of course, create additional roles in the API Gateway Manager to adjust
 
 To get started please download the release package from the GitHub project onto your machine:  
 ```
-wget --no-check-certificate --content-disposition https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/tarball/v0.0.11 -O - | tar -xvz
+wget --no-check-certificate https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v0.0.11/axway-apim-elk-v0.0.11.tar.gz -O - | tar -xvz
 ```
 
 The basic setup assumes you are running the individual components based on the provided docker-compose file, which is using the `.env` to read the required configuration parameters.  
