@@ -26,7 +26,7 @@ jobs:
         cp README.md /tmp/axway-apim-elk
         cp CHANGELOG.md /tmp/axway-apim-elk
         cd /tmp
-        'tar -czvf ${{ env.ARCHIVE_NAME }}.tar.gz *'
+        'tar -czvf ${{ env.ARCHIVE_NAME }}.tar.gz axway-apim-elk'
     - name: create-checksum
       run: sha256sum "${{ env.ARCHIVE_NAME }}".tar.gz >${{ env.ARCHIVE_NAME }}-checksum.txt
     - name: upload-archive
