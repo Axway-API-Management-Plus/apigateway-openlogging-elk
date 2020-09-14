@@ -13,14 +13,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Publish Docker image
-      uses: elgohr/Publish-Docker-Github-Action@2.13
-      with:
-        name: cwiechmann/elk-traffic-monitor-api
-        workdir: 'elk-traffic-monitor-api'
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
-        tags: "${{ github.event.release.tag_name }}"
     - name: Create release archive
       run: |
         tar -czvf ${{ env.ARCHIVE_NAME }}.tar.gz
@@ -47,3 +39,11 @@ jobs:
         asset_content_type: text/plain
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Publish Docker image
+      uses: elgohr/Publish-Docker-Github-Action@2.13
+      with:
+        name: cwiechmann/elk-traffic-monitor-api
+        workdir: 'elk-traffic-monitor-api'
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        tags: "${{ github.event.release.tag_name }}"
