@@ -136,7 +136,7 @@ The compare attribute filter should look like this:
 - Adjust the URL of the Connect to URL filter to your running API-Builder docker container and port - **default is 8889**. Sample: `https://api-env:8443/api/elk/v1${http.request.rawURI}`  
 ![Connect to ES API][img7]
 - Is not implemented is a compare attribute filter configured like so:  
-![Is not implemented][imgs/is_not_implemented.png]  
+![Is not implemented](imgs/is_not_implemented.png)  
 
 
 #### Update main policy
