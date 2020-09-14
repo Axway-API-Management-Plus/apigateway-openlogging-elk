@@ -21,7 +21,11 @@ This video shows how API-Manager users can access the traffic monitor to see the
 With the help of Kibana, the goal of the project is to deliver standard dashboards that provide analysis capabilities across multiple perspectives.  
 It should still be possible to add your own dashboards as you wish.  
 This shows a sample dashboard created in Kibana based on the indexed documents:  
-![Architecture][img10]
+<p align="center">
+<img src="imgs/sample-apim-overview-dashboard.png"
+  alt="Sample dashboard"
+  width="686" height="289">
+</p>
 
 
 ## Table of content
