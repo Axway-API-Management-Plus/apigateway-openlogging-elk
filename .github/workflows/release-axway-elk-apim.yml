@@ -14,11 +14,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Create release archive
-      run: |
-        tar -czvf ${{ env.ARCHIVE_NAME }}.tar.gz
-        * 
-        --exclude=imgs 
-        --exclude=elk-traffic-monitor-api
+      run: tar -czvf ${{ env.ARCHIVE_NAME }}.tar.gz * --exclude=imgs --exclude=elk-traffic-monitor-api
     - name: create-checksum
       run: sha256sum "${{ env.ARCHIVE_NAME }}".tar.gz >checksum.txt
     - name: upload-archive
