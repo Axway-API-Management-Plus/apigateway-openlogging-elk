@@ -268,6 +268,89 @@
 		</key>
 	</value></fval>
 </entity>
+<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="FalseFilter">
+	<key type='CircuitContainer'>
+		<id field='name' value='Elasticsearch Traffic-Monitor'/>
+		<key type='FilterCircuit'>
+			<id field='name' value='Use Elasticsearch API'/>
+		</key>
+	</key>
+	<fval name="abortProcessingOnLogError"><value>0</value></fval>
+	<fval name="category"><value contentType="reference">
+		<key type='CategoryGroup'>
+			<id field='name' value='Filter Categories'/>
+			<key type='Category'>
+				<id field='name' value='miscellaneous'/>
+			</key>
+		</key>
+	</value></fval>
+	<fval name="logFailure"><value>Filter failed</value></fval>
+	<fval name="logFatal"><value>False filter error. Error: ${circuit.exception}</value></fval>
+	<fval name="logMask"><value>0</value></fval>
+	<fval name="logMaskType"><value>FILTER</value></fval>
+	<fval name="logSuccess"><value></value></fval>
+	<fval name="name"><value>False Filter</value></fval>
+</entity>
+<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="CompareAttributeFilter">
+	<key type='CircuitContainer'>
+		<id field='name' value='Elasticsearch Traffic-Monitor'/>
+		<key type='FilterCircuit'>
+			<id field='name' value='Use Elasticsearch API'/>
+		</key>
+	</key>
+	<fval name="abortProcessingOnLogError"><value>0</value></fval>
+	<fval name="category"><value contentType="reference">
+		<key type='CategoryGroup'>
+			<id field='name' value='Filter Categories'/>
+			<key type='Category'>
+				<id field='name' value='miscellaneous'/>
+			</key>
+		</key>
+	</value></fval>
+	<fval name="failureNode"><value contentType="reference">
+		<key type='CircuitContainer'>
+			<id field='name' value='Elasticsearch Traffic-Monitor'/>
+			<key type='FilterCircuit'>
+				<id field='name' value='Use Elasticsearch API'/>
+				<key type='TrueFilter'>
+					<id field='name' value='True Filter'/>
+				</key>
+			</key>
+		</key>
+	</value></fval>
+	<fval name="logFailure"><value>Filter failed</value></fval>
+	<fval name="logFatal"><value>Filter aborted due to exception</value></fval>
+	<fval name="logMask"><value>0</value></fval>
+	<fval name="logMaskType"><value>FILTER</value></fval>
+	<fval name="logSuccess"><value>Filter passed</value></fval>
+	<fval name="matchingRule"><value>MATCH_ONE</value></fval>
+	<fval name="name"><value>Is not implemented</value></fval>
+	<fval name="successNode"><value contentType="reference">
+		<key type='CircuitContainer'>
+			<id field='name' value='Elasticsearch Traffic-Monitor'/>
+			<key type='FilterCircuit'>
+				<id field='name' value='Use Elasticsearch API'/>
+				<key type='FalseFilter'>
+					<id field='name' value='False Filter'/>
+				</key>
+			</key>
+		</key>
+	</value></fval>
+</entity>
+<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="AttributeCompare">
+	<key type='CircuitContainer'>
+		<id field='name' value='Elasticsearch Traffic-Monitor'/>
+		<key type='FilterCircuit'>
+			<id field='name' value='Use Elasticsearch API'/>
+			<key type='CompareAttributeFilter'>
+				<id field='name' value='Is not implemented'/>
+			</key>
+		</key>
+	</key>
+	<fval name="attrName"><value>http.response.status</value></fval>
+	<fval name="expression"><value>501</value></fval>
+	<fval name="matchType"><value>IS</value></fval>
+</entity>
 <entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="CompareAttributeFilter">
 	<key type='CircuitContainer'>
 		<id field='name' value='Elasticsearch Traffic-Monitor'/>
@@ -297,8 +380,8 @@
 	</value></fval>
 	<fval name="logFailure"><value>Filter failed</value></fval>
 	<fval name="logFatal"><value>Filter aborted due to exception</value></fval>
-	<fval name="logMask"><value>2</value></fval>
-	<fval name="logMaskType"><value>SERVICE</value></fval>
+	<fval name="logMask"><value>0</value></fval>
+	<fval name="logMaskType"><value>FILTER</value></fval>
 	<fval name="logSuccess"><value>Filter passed</value></fval>
 	<fval name="matchingRule"><value>MATCH_ONE</value></fval>
 	<fval name="name"><value>Is managed by Elasticsearch API?</value></fval>
@@ -325,7 +408,7 @@
 		</key>
 	</key>
 	<fval name="attrName"><value>http.request.path</value></fval>
-	<fval name="expression"><value>^\/api\/router\/service\/[A-Za-z0-9-.]+\/ops\/search$</value></fval>
+	<fval name="expression"><value>^\/api\/router\/service\/[A-Za-z0-9-.]+\/ops\/trace\/[A-Za-z0-9]+[\?]?.*$</value></fval>
 	<fval name="matchType"><value>MATCHES</value></fval>
 </entity>
 <entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="AttributeCompare">
@@ -353,7 +436,7 @@
 		</key>
 	</key>
 	<fval name="attrName"><value>http.request.path</value></fval>
-	<fval name="expression"><value>^\/api\/router\/service\/[A-Za-z0-9-.]+\/ops\/trace\/[A-Za-z0-9]+[\?]?.*$</value></fval>
+	<fval name="expression"><value>^\/api\/router\/service\/[A-Za-z0-9-.]+\/ops\/search$</value></fval>
 	<fval name="matchType"><value>MATCHES</value></fval>
 </entity>
 <entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="AttributeCompare">
@@ -370,7 +453,7 @@
 	<fval name="expression"><value>^\/api\/router\/service\/[A-Za-z0-9-.]+\/ops\/[A-Za-z0-9]+\/[A-Za-z0-9]+\/[\*0-9]{1}\/getinfo[\?]?.*$</value></fval>
 	<fval name="matchType"><value>MATCHES</value></fval>
 </entity>
-<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="FalseFilter">
+<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="TrueFilter">
 	<key type='CircuitContainer'>
 		<id field='name' value='Elasticsearch Traffic-Monitor'/>
 		<key type='FilterCircuit'>
@@ -386,12 +469,12 @@
 			</key>
 		</key>
 	</value></fval>
-	<fval name="logFailure"><value>Filter failed</value></fval>
-	<fval name="logFatal"><value>False filter error. Error: ${circuit.exception}</value></fval>
+	<fval name="logFailure"><value></value></fval>
+	<fval name="logFatal"><value>True filter error. Error: ${circuit.exception}</value></fval>
 	<fval name="logMask"><value>2</value></fval>
 	<fval name="logMaskType"><value>SERVICE</value></fval>
-	<fval name="logSuccess"><value></value></fval>
-	<fval name="name"><value>False Filter</value></fval>
+	<fval name="logSuccess"><value>True filter passed</value></fval>
+	<fval name="name"><value>True Filter</value></fval>
 </entity>
 <entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="ConnectToURLFilter">
 	<key type='CircuitContainer'>
@@ -498,89 +581,6 @@
 	<fval name="maxFileSize"><value>1000</value></fval>
 	<fval name="maxNumberFiles"><value>500</value></fval>
 	<fval name="name"><value>Persistence Details</value></fval>
-</entity>
-<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="CompareAttributeFilter">
-	<key type='CircuitContainer'>
-		<id field='name' value='Elasticsearch Traffic-Monitor'/>
-		<key type='FilterCircuit'>
-			<id field='name' value='Use Elasticsearch API'/>
-		</key>
-	</key>
-	<fval name="abortProcessingOnLogError"><value>0</value></fval>
-	<fval name="category"><value contentType="reference">
-		<key type='CategoryGroup'>
-			<id field='name' value='Filter Categories'/>
-			<key type='Category'>
-				<id field='name' value='miscellaneous'/>
-			</key>
-		</key>
-	</value></fval>
-	<fval name="failureNode"><value contentType="reference">
-		<key type='CircuitContainer'>
-			<id field='name' value='Elasticsearch Traffic-Monitor'/>
-			<key type='FilterCircuit'>
-				<id field='name' value='Use Elasticsearch API'/>
-				<key type='TrueFilter'>
-					<id field='name' value='True Filter'/>
-				</key>
-			</key>
-		</key>
-	</value></fval>
-	<fval name="logFailure"><value>Filter failed</value></fval>
-	<fval name="logFatal"><value>Filter aborted due to exception</value></fval>
-	<fval name="logMask"><value>0</value></fval>
-	<fval name="logMaskType"><value>FILTER</value></fval>
-	<fval name="logSuccess"><value>Filter passed</value></fval>
-	<fval name="matchingRule"><value>MATCH_ONE</value></fval>
-	<fval name="name"><value>Is not implemented</value></fval>
-	<fval name="successNode"><value contentType="reference">
-		<key type='CircuitContainer'>
-			<id field='name' value='Elasticsearch Traffic-Monitor'/>
-			<key type='FilterCircuit'>
-				<id field='name' value='Use Elasticsearch API'/>
-				<key type='FalseFilter'>
-					<id field='name' value='False Filter'/>
-				</key>
-			</key>
-		</key>
-	</value></fval>
-</entity>
-<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="AttributeCompare">
-	<key type='CircuitContainer'>
-		<id field='name' value='Elasticsearch Traffic-Monitor'/>
-		<key type='FilterCircuit'>
-			<id field='name' value='Use Elasticsearch API'/>
-			<key type='CompareAttributeFilter'>
-				<id field='name' value='Is not implemented'/>
-			</key>
-		</key>
-	</key>
-	<fval name="attrName"><value>http.response.status</value></fval>
-	<fval name="expression"><value>501</value></fval>
-	<fval name="matchType"><value>IS</value></fval>
-</entity>
-<entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="TrueFilter">
-	<key type='CircuitContainer'>
-		<id field='name' value='Elasticsearch Traffic-Monitor'/>
-		<key type='FilterCircuit'>
-			<id field='name' value='Use Elasticsearch API'/>
-		</key>
-	</key>
-	<fval name="abortProcessingOnLogError"><value>0</value></fval>
-	<fval name="category"><value contentType="reference">
-		<key type='CategoryGroup'>
-			<id field='name' value='Filter Categories'/>
-			<key type='Category'>
-				<id field='name' value='miscellaneous'/>
-			</key>
-		</key>
-	</value></fval>
-	<fval name="logFailure"><value></value></fval>
-	<fval name="logFatal"><value>True filter error. Error: ${circuit.exception}</value></fval>
-	<fval name="logMask"><value>2</value></fval>
-	<fval name="logMaskType"><value>SERVICE</value></fval>
-	<fval name="logSuccess"><value>True filter passed</value></fval>
-	<fval name="name"><value>True Filter</value></fval>
 </entity>
 <entity xmlns="http://www.vordel.com/2005/06/24/entityStore"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="CircuitContainer">
 	<fval name="name"><value>Elasticsearch Traffic-Monitor</value></fval>
