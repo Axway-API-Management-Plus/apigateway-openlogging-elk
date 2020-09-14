@@ -8,14 +8,14 @@ services:
       - ES_JAVA_OPTS=${ES_JAVA_OPTS}
       - xpack.security.enabled=true
       - xpack.security.http.ssl.enabled=true
-      - xpack.security.http.ssl.key=/usr/share/elasticsearch/config/certificates/elasticsearch.key
-      - xpack.security.http.ssl.certificate_authorities=/usr/share/elasticsearch/config/certificates/ca.crt
-      - xpack.security.http.ssl.certificate=/usr/share/elasticsearch/config/certificates/elasticsearch.crt
+      - xpack.security.http.ssl.key=${ELASTICSEARCH_KEY}
+      - xpack.security.http.ssl.certificate=${ELASTICSEARCH_CRT}
+      - xpack.security.http.ssl.certificate_authorities=${ELASTICSEARCH_CA}
       - xpack.security.transport.ssl.enabled=true
       - xpack.security.transport.ssl.verification_mode=certificate
-      - xpack.security.transport.ssl.certificate_authorities=/usr/share/elasticsearch/config/certificates/ca.crt
-      - xpack.security.transport.ssl.certificate=/usr/share/elasticsearch/config/certificates/elasticsearch.crt
-      - xpack.security.transport.ssl.key=/usr/share/elasticsearch/config/certificates/elasticsearch.key
+      - xpack.security.transport.ssl.key=${ELASTICSEARCH_KEY}
+      - xpack.security.transport.ssl.certificate=${ELASTICSEARCH_CRT}
+      - xpack.security.transport.ssl.certificate_authorities=${ELASTICSEARCH_CA}
     ulimits:
       memlock:
         soft: -1
@@ -48,10 +48,10 @@ services:
       - KIBANA_SYSTEM_USERNAME=${KIBANA_SYSTEM_USERNAME}
       - KIBANA_SYSTEM_PASSWORD=${KIBANA_SYSTEM_PASSWORD}
       - ELASTICSEARCH_API_KEY=${ELASTICSEARCH_API_KEY}
-      - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=/usr/share/kibana/config/certificates/ca.crt
+      - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=${ELASICSEARCH_CA}
       - SERVER_SSL_ENABLED="true"
-      - SERVER_SSL_KEY=/usr/share/kibana/config/certificates/kibana.key
-      - SERVER_SSL_CERTIFICATE=/usr/share/kibana/config/certificates/kibana.crt
+      - SERVER_SSL_KEY=${KIBANA_KEY}
+      - SERVER_SSL_CERTIFICATE=${KIBANA_CRT}
     ports:
       - 5601:5601
     volumes:
@@ -81,7 +81,7 @@ services:
       - xpack.monitoring.elasticsearch.hosts=${ELASTICSEARCH_HOST}
       - xpack.monitoring.elasticsearch.username=${LOGSTASH_SYSTEM_USERNAME}
       - xpack.monitoring.elasticsearch.password=${LOGSTASH_SYSTEM_PASSWORD}
-      - ELASTICSEARCH_CERT=/usr/share/logstash/config/certificates/elasticsearch.crt
+      - ELASTICSEARCH_CERT=${ELASTICSEARCH_CRT}
       - ELASTICSEARCH_HOST=${ELASTICSEARCH_HOST}
       - LOGSTASH_USERNAME=${LOGSTASH_USERNAME}
       - LOGSTASH_PASSWORD=${LOGSTASH_PASSWORD}
