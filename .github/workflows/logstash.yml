@@ -4,7 +4,7 @@ on: [push, pull_request]
 
 jobs:
   logstash:
-    if: "!contains(github.event.head_commit.message, 'skip ci')"
+    if: "!contains(github.event.head_commit.message, 'skip ci') and !contains(github.event.head_commit.message, 'Update README.md')"
     runs-on: ubuntu-latest
     services:
       api-builder:
