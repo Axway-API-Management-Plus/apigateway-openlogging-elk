@@ -5,6 +5,7 @@ const path = require('path');
 const fs = require('fs');
 const nock = require('nock');
 const envLoader = require('dotenv');
+const decache = require('decache');
 
 describe('Tests User-Lookup with complete configuration parameters', () => {
 	let plugin;
@@ -15,36 +16,17 @@ describe('Tests User-Lookup with complete configuration parameters', () => {
 	// Loads environment variables from .env if the file exists
 	const envFilePath = path.join(__dirname, '.env');
 	if (fs.existsSync(envFilePath)) {
+		delete process.env.API_MANAGER; // Otherwise it is not overwritten
 		envLoader.config({ path: envFilePath });
 	}
+	// Delete the cached module 
+	decache('../config/axway-api-utils.default.js');
 	var pluginConfig = require('../config/axway-api-utils.default.js').pluginConfig['api-builder-plugin-axway-api-management'];
 
 	beforeEach(async () => {
 		plugin = await MockRuntime.loadPlugin(getPlugin,pluginConfig);
 		plugin.setOptions({ validateOutputs: true });
 		flowNode = plugin.getFlowNode('axway-api-management');
-	});
-
-	describe('#constructor lookupCurrentUser', () => {
-		it('should define flow-nodes', () => {
-			expect(plugin).to.be.a('object');
-			expect(plugin.getFlowNodeIds()).to.deep.equal([
-				'axway-api-management'
-			]);
-			expect(flowNode).to.be.a('object');
-
-			// Ensure the flow-node matches the spec
-			expect(flowNode.name).to.equal('Axway API-Management Utils');
-			expect(flowNode.icon).to.be.a('string');
-			expect(flowNode.getMethods()).to.deep.equal([
-				'lookupAPIDetails', 
-				'lookupCurrentUser'
-			]);
-		});
-
-		it('should define valid flow-nodes', () => {
-			plugin.validate();
-		});
 	});
 
 	describe('#lookupCurrentUser', () => {

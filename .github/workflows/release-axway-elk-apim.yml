@@ -1,0 +1,45 @@
+name: Release Axway ELK APIM
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  release-elk-apim:
+
+    runs-on: ubuntu-latest
+    env:
+      ARCHIVE_NAME: axway-apim-elk-${{ github.event.release.tag_name }}
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Create release archive
+      run: 'tar -czvf ${{ env.ARCHIVE_NAME }}.tar.gz certificates elasticsearch filebeat kibana logstash docker-compose.yml README.md CHANGELOG.md'
+    - name: create-checksum
+      run: sha256sum "${{ env.ARCHIVE_NAME }}".tar.gz >${{ env.ARCHIVE_NAME }}-checksum.txt
+    - name: upload-archive
+      uses: actions/upload-release-asset@v1
+      with:
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_path: ${{ env.ARCHIVE_NAME }}.tar.gz
+        asset_name: ${{ env.ARCHIVE_NAME }}.tar.gz
+        asset_content_type: application/gzip
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: upload-checksum
+      uses: actions/upload-release-asset@v1
+      with:
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_path: ${{ env.ARCHIVE_NAME }}-checksum.txt
+        asset_name: ${{ env.ARCHIVE_NAME }}-checksum.txt
+        asset_content_type: text/plain
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Publish Docker image
+      uses: elgohr/Publish-Docker-Github-Action@2.13
+      with:
+        name: cwiechmann/elk-traffic-monitor-api
+        workdir: 'elk-traffic-monitor-api'
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        tag_names: "${{ github.event.release.tag_name }}"

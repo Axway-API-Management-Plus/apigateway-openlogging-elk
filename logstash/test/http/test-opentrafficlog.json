@@ -1,0 +1,539 @@
+{
+  "fields": {
+    "gatewayName": "API-Gateway 3",
+    "gatewayRegion": "US"
+  },
+  "codec": "json_lines",
+  "testcases": [
+    {
+      "description": "Test transactionElement event with leg0",
+      "input": [
+        "{\"timestamp\":1594673918042,\"correlationId\":\"feca0c5f7f550c81357fdfXX\",\"processInfo\":{\"hostname\":\"ip-172-31-56-150.ec2.internal\",\"domainId\":\"e1ff3aab-3b11-4820-a1be-3763da2beda4\",\"groupId\":\"group-2\",\"groupName\":\"group-a\",\"serviceId\":\"instance-2\",\"serviceName\":\"instance-2\",\"version\":\"7.7.20200530\"},\"transactionElement\":{\"leg\":0,\"duration\":20,\"serviceName\":\"Petstore\",\"operation\":\"getInventory\",\"finalStatus\":\"Pass\",\"protocolInfo\":{\"http\":{\"uri\":\"/petstore/v2/store/inventory\",\"status\":200,\"statusText\":\"OK\",\"method\":\"GET\",\"vhost\":null,\"wafStatus\":0,\"bytesSent\":774,\"bytesReceived\":126,\"remoteName\":\"127.0.0.1\",\"remoteAddr\":\"127.0.0.1\",\"localAddr\":\"127.0.0.1\",\"remotePort\":\"59574\",\"localPort\":\"8065\",\"sslSubject\":null,\"authSubjectId\":\"180b1f32-d72f-40f4-949a-fc3f3f7dec2c\"},\"recvHeader\":\"GET /petstore/v2/store/inventory HTTP/1.0\\r\\nConnection: close\\r\\nHost: localhost\\r\\nKeyId: 6cd55c27-675a-444a-9bc7-ae9a7869184d\\r\\n\\r\\n\",\"sentHeader\":\"HTTP/1.1 200 OK\\r\\nMax-Forwards: 20\\r\\nVia: 1.0 ip-172-31-56-150.ec2.internal (Gateway)\\r\\nConnection: close\\r\\nX-CorrelationID: Id-feca0c5f7f550c81357fdfXX 0\\r\\ncache-control: no-store, no-cache, must-revalidate, proxy-revalidate\\r\\nDate: Mon, 13 Jul 2020 20:58:38 GMT\\r\\netag: W/\\\"52-LxypU3mP2zpjiEr7yZRKlgVdx3c\\\"\\r\\nexpires: 0\\r\\npragma: no-cache\\r\\nrequest-id: c190fa5f-a192-4e57-8eec-c75a6f52b90d\\r\\nresponse-time: 2\\r\\nserver: API Builder/4.28.10\\r\\nstart-time: 1594673918059\\r\\nsurrogate-control: no-store\\r\\nVary: Accept-Encoding\\r\\nx-content-type-options: nosniff\\r\\nx-frame-options: DENY\\r\\nx-xss-protection: 1; mode=block\\r\\ncontent-md5: 43364b0ef391a24f9a0e587356726c0d\\r\\ncontent-type: application/json; charset=utf-8\\r\\n\\r\\n\",\"recvPayload\":null,\"sentPayload\":null}}}"
+      ],
+      "expected": [
+        {
+          "@timestamp": "2020-07-13T20:58:38.042Z",
+          "correlationId": "feca0c5f7f550c81357fdfXX",
+          "type": "summaryIndex",
+          "duration": 20,
+          "finalStatus": "Pass",
+          "http": {
+            "status": 200,
+            "statusText": "OK",
+            "method": "GET",
+            "vhost": null,
+            "wafStatus": 0,
+            "bytesSent": 774,
+            "bytesReceived": 126,
+            "remoteName": "127.0.0.1",
+            "remoteAddr": "127.0.0.1",
+            "localAddr": "127.0.0.1",
+            "remotePort": "59574",
+            "localPort": "8065",
+            "sslSubject": null,
+            "authSubjectId": "180b1f32-d72f-40f4-949a-fc3f3f7dec2c"
+          }
+        },
+        {
+          "@timestamp": "2020-07-13T20:58:38.042Z",
+          "correlationId": "feca0c5f7f550c81357fdfXX",
+          "processInfo": {
+            "hostname": "ip-172-31-56-150.ec2.internal",
+            "groupId": "group-2",
+            "groupName": "group-a",
+            "serviceId": "instance-2",
+            "version": "7.7.20200530", 
+            "gatewayName": "API-Gateway 3", 
+            "gatewayRegion": "US"
+          },
+          "transactionElements": {
+            "leg0": {
+              "duration": 20,
+              "leg": 0,
+              "finalStatus": "Pass",
+              "protocolInfo": {
+                "http": {
+                  "uri": "/petstore/v2/store/inventory",
+                  "status": 200,
+                  "statusText": "OK",
+                  "method": "GET",
+                  "vhost": null,
+                  "wafStatus": 0,
+                  "bytesSent": 774,
+                  "bytesReceived": 126,
+                  "remoteName": "127.0.0.1",
+                  "remoteAddr": "127.0.0.1",
+                  "localAddr": "127.0.0.1",
+                  "remotePort": "59574",
+                  "localPort": "8065",
+                  "sslSubject": null,
+                  "authSubjectId": "180b1f32-d72f-40f4-949a-fc3f3f7dec2c"
+                },
+                "recvHeader": "GET /petstore/v2/store/inventory HTTP/1.0\r\nConnection: close\r\nHost: localhost\r\nKeyId: 6cd55c27-675a-444a-9bc7-ae9a7869184d\r\n\r\n",
+                "sentHeader": "HTTP/1.1 200 OK\r\nMax-Forwards: 20\r\nVia: 1.0 ip-172-31-56-150.ec2.internal (Gateway)\r\nConnection: close\r\nX-CorrelationID: Id-feca0c5f7f550c81357fdfXX 0\r\ncache-control: no-store, no-cache, must-revalidate, proxy-revalidate\r\nDate: Mon, 13 Jul 2020 20:58:38 GMT\r\netag: W/\"52-LxypU3mP2zpjiEr7yZRKlgVdx3c\"\r\nexpires: 0\r\npragma: no-cache\r\nrequest-id: c190fa5f-a192-4e57-8eec-c75a6f52b90d\r\nresponse-time: 2\r\nserver: API Builder/4.28.10\r\nstart-time: 1594673918059\r\nsurrogate-control: no-store\r\nVary: Accept-Encoding\r\nx-content-type-options: nosniff\r\nx-frame-options: DENY\r\nx-xss-protection: 1; mode=block\r\ncontent-md5: 43364b0ef391a24f9a0e587356726c0d\r\ncontent-type: application/json; charset=utf-8\r\n\r\n",
+                "recvPayload": null,
+                "sentPayload": null
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "description": "Test transactionSummary event with existing API",
+      "input": [
+        "{\"timestamp\":1594670847467,\"correlationId\":\"AAbe0c5f95da03f602a6e587\",\"processInfo\":{\"hostname\":\"ip-172-31-62-146.ec2.internal\",\"domainId\":\"e1ff3aab-3b11-4820-a1be-3763da2beda4\",\"groupId\":\"group-2\",\"groupName\":\"group-a\",\"serviceId\":\"instance-3\",\"serviceName\":\"instance-3\",\"version\":\"7.7.20200530\"},\"transactionSummary\":{\"path\":\"/petstore/v2/user/Chris\", \"protocol\":\"https\", \"protocolSrc\":\"8065\", \"status\":\"success\", \"serviceContexts\":[{\"service\":\"Petstore\", \"monitor\":true, \"client\":\"8678678986896896\", \"org\":\"Apps org\", \"app\":\"Weather App\", \"method\":\"getUserByName\", \"status\":\"success\", \"duration\":2}]}}"
+      ],
+      "expected": [
+        {
+          "@timestamp": "2020-07-13T20:07:27.467Z",
+          "correlationId": "AAbe0c5f95da03f602a6e587",
+          "path": "/petstore/v2/user/Chris",
+          "protocol": "https",
+          "protocolSrc": "8065",
+          "status": "success",
+          "processInfo": {
+            "hostname": "ip-172-31-62-146.ec2.internal",
+            "groupId": "group-2",
+            "groupName": "group-a",
+            "serviceId": "instance-3",
+            "version": "7.7.20200530",
+            "gatewayName": "API-Gateway 3", 
+            "gatewayRegion": "US"
+          },
+          "serviceContext": {
+            "apiDeprecated": "false",
+            "apiOrg": "Mocked Org A",
+            "apiState": "published",
+            "apiVersion": "X.X.X",
+            "service": "Petstore",
+            "monitor": true,
+            "appOrg": "Apps org",
+            "app": "Weather App",
+            "method": "getUserByName",
+            "status": "success",
+            "apiSecurity": "API-Key", 
+            "requestPolicy": "N/A", 
+            "routingPolicy": "N/A", 
+            "responsePolicy": "N/A", 
+            "faulthandlerPolicy": "N/A", 
+            "backendBasePath": "https://petstore.swagger.io"
+          },
+          "type": "summaryIndex"
+        },
+        {
+          "@timestamp": "2020-07-13T20:07:27.467Z",
+          "correlationId": "AAbe0c5f95da03f602a6e587",
+          "processInfo": {
+            "hostname": "ip-172-31-62-146.ec2.internal",
+            "groupId": "group-2",
+            "groupName": "group-a",
+            "serviceId": "instance-3",
+            "version": "7.7.20200530",
+            "gatewayName": "API-Gateway 3", 
+            "gatewayRegion": "US"
+          },
+          "transactionSummary": {
+            "path": "/petstore/v2/user/Chris",
+            "protocol": "https",
+            "protocolSrc": "8065",
+            "status": "success",
+            "serviceContext": {
+              "apiDeprecated": "false",
+              "apiOrg": "Mocked Org A",
+              "apiState": "published",
+              "apiVersion": "X.X.X",
+              "service": "Petstore",
+              "monitor": true,
+              "appOrg": "Apps org",
+              "app": "Weather App",
+              "method": "getUserByName",
+              "status": "success",
+              "apiSecurity": "API-Key", 
+              "requestPolicy": "N/A", 
+              "routingPolicy": "N/A", 
+              "responsePolicy": "N/A", 
+              "faulthandlerPolicy": "N/A", 
+              "backendBasePath": "https://petstore.swagger.io"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "description": "Test API that should include policies, OAuth security and a special backend",
+      "input": [
+        "{\"timestamp\":1594670847467,\"correlationId\":\"BBbe0c5f95da03f602a6e587\",\"processInfo\":{\"hostname\":\"ip-172-31-62-146.ec2.internal\",\"domainId\":\"e1ff3aab-3b11-4820-a1be-3763da2beda4\",\"groupId\":\"group-2\",\"groupName\":\"group-a\",\"serviceId\":\"instance-3\",\"serviceName\":\"instance-3\",\"version\":\"7.7.20200530\"},\"transactionSummary\":{\"path\":\"/api/with/policies/backend/and/oauth\", \"protocol\":\"https\", \"protocolSrc\":\"8065\", \"status\":\"success\", \"serviceContexts\":[{\"service\":\"Petstore\", \"monitor\":true, \"client\":\"8678678986896896\", \"org\":\"Apps org\", \"app\":\"Weather App\", \"method\":\"getUserByName\", \"status\":\"success\", \"duration\":2}]}}"
+      ],
+      "expected": [
+        {
+          "@timestamp": "2020-07-13T20:07:27.467Z",
+          "correlationId": "BBbe0c5f95da03f602a6e587",
+          "path": "/api/with/policies/backend/and/oauth",
+          "protocol": "https",
+          "protocolSrc": "8065",
+          "status": "success",
+          "type": "summaryIndex",
+          "serviceContext": {
+            "apiDeprecated": "true",
+            "apiOrg": "Mocked Org B",
+            "apiState": "unpublished",
+            "apiVersion": "Z.Z.Z",
+            "service": "Petstore",
+            "monitor": true,
+            "appOrg": "Apps org",
+            "app": "Weather App",
+            "method": "getUserByName",
+            "status": "success",
+            "apiSecurity": "OAuth", 
+            "requestPolicy": "My Request Policy", 
+            "routingPolicy": "I do the routing", 
+            "responsePolicy": "I take care abouth the response", 
+            "faulthandlerPolicy": "OMG Errors", 
+            "backendBasePath": "https://im.a.special.backend.host:7788"
+          },
+          "processInfo": {
+            "hostname": "ip-172-31-62-146.ec2.internal",
+            "groupId": "group-2",
+            "groupName": "group-a",
+            "serviceId": "instance-3",
+            "version": "7.7.20200530",
+            "gatewayName": "API-Gateway 3", 
+            "gatewayRegion": "US"
+          }
+        },
+        {
+          "@timestamp": "2020-07-13T20:07:27.467Z",
+          "correlationId": "BBbe0c5f95da03f602a6e587",
+          "processInfo": {
+            "hostname": "ip-172-31-62-146.ec2.internal",
+            "groupId": "group-2",
+            "groupName": "group-a",
+            "serviceId": "instance-3",
+            "version": "7.7.20200530",
+            "gatewayName": "API-Gateway 3", 
+            "gatewayRegion": "US"
+          },
+          "transactionSummary": {
+            "path": "/api/with/policies/backend/and/oauth",
+            "protocol": "https",
+            "protocolSrc": "8065",
+            "status": "success",
+            "serviceContext": {
+              "apiDeprecated": "true",
+              "apiOrg": "Mocked Org B",
+              "apiState": "unpublished",
+              "apiVersion": "Z.Z.Z",
+              "service": "Petstore",
+              "monitor": true,
+              "appOrg": "Apps org",
+              "app": "Weather App",
+              "method": "getUserByName",
+              "status": "success",
+              "apiSecurity": "OAuth", 
+              "requestPolicy": "My Request Policy", 
+              "routingPolicy": "I do the routing", 
+              "responsePolicy": "I take care abouth the response", 
+              "faulthandlerPolicy": "OMG Errors", 
+              "backendBasePath": "https://im.a.special.backend.host:7788"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "description": "Test transactionSummary event with unknwon API that cannot be looked up - An ErrorEvent, the original and a summaryIndex event is expected.",
+      "input": [
+        "{\"timestamp\":1594670847467,\"correlationId\":\"OMG-UNKNOWN-API\",\"processInfo\":{\"hostname\":\"ip-172-31-62-146.ec2.internal\",\"domainId\":\"e1ff3aab-3b11-4820-a1be-3763da2beda4\",\"groupId\":\"group-2\",\"groupName\":\"group-a\",\"serviceId\":\"instance-3\",\"serviceName\":\"instance-3\",\"version\":\"7.7.20200530\"},\"transactionSummary\":{\"path\":\"/this/api/is/unknown\", \"protocol\":\"https\", \"protocolSrc\":\"8065\", \"status\":\"success\", \"serviceContexts\":[{\"service\":\"A unknown API\", \"monitor\":true, \"client\":null, \"org\":null, \"app\":null, \"method\":\"getUserByName\", \"status\":\"success\", \"duration\":2}]}}"
+      ],
+      "expected": [
+        {
+          "@timestamp": "2020-07-13T20:07:27.467Z",
+          "correlationId": "OMG-UNKNOWN-API",
+          "path": "/this/api/is/unknown",
+          "protocol": "https",
+          "protocolSrc": "8065",
+          "status": "success",
+          "serviceContext": {
+            "service": "A unknown API",
+            "monitor": true,
+            "appOrg": null,
+            "app": null,
+            "method": "getUserByName",
+            "status": "success"
+          }, 
+          "type": "summaryIndex",
+          "processInfo": {
+            "hostname": "ip-172-31-62-146.ec2.internal",
+            "groupId": "group-2",
+            "groupName": "group-a",
+            "serviceId": "instance-3",
+            "version": "7.7.20200530",
+            "gatewayName": "API-Gateway 3", 
+            "gatewayRegion": "US"
+          },
+          "tags": ["_httprequestfailure"]
+        },
+        {
+          "@timestamp": "2020-07-13T20:07:27.467Z",
+          "correlationId": "OMG-UNKNOWN-API",
+          "processInfo": {
+            "hostname": "ip-172-31-62-146.ec2.internal",
+            "groupId": "group-2",
+            "groupName": "group-a",
+            "serviceId": "instance-3",
+            "version": "7.7.20200530",
+            "gatewayName": "API-Gateway 3", 
+            "gatewayRegion": "US"
+          },
+          "tags": ["_httprequestfailure"],
+          "transactionSummary": {
+            "path": "/this/api/is/unknown",
+            "protocol": "https",
+            "protocolSrc": "8065",
+            "status": "success",
+            "serviceContext": {
+              "service": "A unknown API",
+              "monitor": true,
+              "appOrg": null,
+              "app": null,
+              "method": "getUserByName",
+              "status": "success"
+            }
+          }
+        },
+        {
+          "@timestamp": "2020-07-13T20:07:27.467Z",
+          "correlationId": "OMG-UNKNOWN-API-Error",
+          "processInfo": {
+            "hostname": "ip-172-31-62-146.ec2.internal",
+            "groupId": "group-2",
+            "groupName": "group-a",
+            "serviceId": "instance-3",
+            "version": "7.7.20200530",
+            "gatewayName": "API-Gateway 3", 
+            "gatewayRegion": "US"
+          },
+          "tags": ["_httprequestfailure"],
+          "transactionElements": {
+            "leg0": {
+              "protocolInfo": {
+                "http": {
+                  "authSubjectId": "ID: OMG-UNKNOWN-API",
+                  "method": "LOGSTASH",
+                  "status": "900",
+                  "statusText": "ERROR",
+                  "uri": "/this/api/is/unknown",
+                  "vhost": "Logstash Error"
+                }
+              }
+            }
+          },
+          "transactionSummary": {
+            "path": "/this/api/is/unknown",
+            "protocol": "https",
+            "protocolSrc": "8065",
+            "status": "success",
+            "serviceContext": {
+              "service": "A unknown API",
+              "monitor": true,
+              "appOrg": null,
+              "app": null,
+              "method": "check the logs",
+              "status": "success"
+            }
+          },
+          "type": "errorEvent"
+        }
+      ]
+    },
+    {
+      "description": "Test transactionSummary without ServiceConext event",
+      "input": [
+        "{\"timestamp\":1594665615973,\"correlationId\":\"8faa0c5f4da87df2ad8c394a\",\"processInfo\":{\"hostname\":\"ip-172-31-48-17.ec2.internal\",\"domainId\":\"e1ff3aab-3b11-4820-a1be-3763da2beda4\",\"groupId\":\"group-2\",\"groupName\":\"group-a\",\"serviceId\":\"instance-1\",\"serviceName\":\"instance-1\",\"version\":\"7.7.20200530\"},\"transactionSummary\":{\"path\":\"/healthcheck\", \"protocol\":\"http\", \"protocolSrc\":\"8080\", \"status\":\"success\", \"serviceContexts\":[]}}"
+      ],
+      "expected": [
+        {
+          "@timestamp": "2020-07-13T18:40:15.973Z",
+          "correlationId": "8faa0c5f4da87df2ad8c394a",
+          "path": "/healthcheck",
+          "protocol": "http",
+          "protocolSrc": "8080",
+          "status": "success",
+          "serviceContext": null,
+          "type": "summaryIndex",
+          "processInfo": {
+            "hostname": "ip-172-31-48-17.ec2.internal",
+            "groupId": "group-2",
+            "groupName": "group-a",
+            "serviceId": "instance-1",
+            "version": "7.7.20200530",
+            "gatewayName": "API-Gateway 3", 
+            "gatewayRegion": "US"
+          }
+        },
+        {
+          "@timestamp": "2020-07-13T18:40:15.973Z",
+          "correlationId": "8faa0c5f4da87df2ad8c394a",
+          "processInfo": {
+            "hostname": "ip-172-31-48-17.ec2.internal",
+            "groupId": "group-2",
+            "groupName": "group-a",
+            "serviceId": "instance-1",
+            "version": "7.7.20200530",
+            "gatewayName": "API-Gateway 3", 
+            "gatewayRegion": "US"
+          },
+          "transactionSummary": {
+            "path": "/healthcheck",
+            "protocol": "http",
+            "protocolSrc": "8080",
+            "status": "success",
+            "serviceContext": null
+          }
+        }
+      ]
+    },
+    {
+      "description": "Test ciruitPath event",
+      "input": [
+        "{\"timestamp\":1594673939577,\"correlationId\":\"13cb0c5f2d58b335499405fa\",\"processInfo\":{\"hostname\":\"ip-172-31-56-150.ec2.internal\",\"domainId\":\"e1ff3aab-3b11-4820-a1be-3763da2beda4\",\"groupId\":\"group-2\",\"groupName\":\"group-a\",\"serviceId\":\"instance-2\",\"serviceName\":\"instance-2\",\"version\":\"7.7.20200530\"},\"circuitPath\":[ { \"policy\": \"API Broker\", \"execTime\": 46, \"filters\": [  { \"name\": \"Set service context\", \"type\": \"VApiServiceContextFilter\", \"class\": \"com.vordel.circuit.vapi.VApiServiceContextFilter\", \"status\": \"Pass\", \"filterTime\": 1594673939531, \"execTime\": 0 } , { \"name\": \"Custom Routing\", \"type\": \"VApiCircuitDelegateFilter\", \"class\": \"com.vordel.apiportal.runtime.virtualized.VApiCircuitDelegateFilter\", \"status\": \"Pass\", \"filterTime\": 1594673939577, \"execTime\": 46, \"subPaths\": [  { \"policy\": \"Default API Proxy Routing\", \"execTime\": 46, \"filters\": [  { \"espk\": \"DEFAULT_PRIMARY_VordelGateway_7.7.0:-2948634492645772937\", \"name\": \"Default Routing\", \"type\": \"SwitchFilter\", \"class\": \"com.vordel.circuit.switchcase.SwitchFilter\", \"status\": \"Pass\", \"filterTime\": 1594673939577, \"execTime\": 46, \"subPaths\": [  { \"policy\": \"Default API Proxy Routing\", \"execTime\": 46, \"filters\": [  { \"name\": \"not-required-here\", \"type\": \"CircuitDelegateFilter\", \"class\": \"com.vordel.circuit.CircuitDelegateFilter\", \"status\": \"Pass\", \"filterTime\": 1594673939577, \"execTime\": 46, \"subPaths\": [  { \"policy\": \"Default Profile-based Routing\", \"execTime\": 46, \"filters\": [  { \"espk\": \"DEFAULT_PRIMARY_VordelGateway_7.7.0:-3718249635933793053\", \"name\": \"Connect to URL\", \"type\": \"ConnectToURLFilter\", \"class\": \"com.vordel.circuit.net.ConnectToURLFilter\", \"status\": \"Pass\", \"filterTime\": 1594673939577, \"execTime\": 46 }  ] }  ]  }  ] }  ]  }  ] }  ]  }  ] } ]}"
+      ],
+      "expected": [
+        {
+          "@timestamp": "2020-07-13T20:58:59.577Z",
+          "correlationId": "13cb0c5f2d58b335499405fa",
+          "processInfo": {
+            "hostname": "ip-172-31-56-150.ec2.internal",
+            "groupId": "group-2",
+            "groupName": "group-a",
+            "serviceId": "instance-2",
+            "version": "7.7.20200530",
+            "gatewayName": "API-Gateway 3", 
+            "gatewayRegion": "US"
+          },
+          "circuitPath": [
+            {
+              "policy": "API Broker",
+              "execTime": 46,
+              "filters": [
+                {
+                  "name": "Set service context",
+                  "type": "VApiServiceContextFilter",
+                  "class": "com.vordel.circuit.vapi.VApiServiceContextFilter",
+                  "status": "Pass",
+                  "filterTime": 1594673939531,
+                  "execTime": 0
+                },
+                {
+                  "name": "Custom Routing",
+                  "type": "VApiCircuitDelegateFilter",
+                  "class": "com.vordel.apiportal.runtime.virtualized.VApiCircuitDelegateFilter",
+                  "status": "Pass",
+                  "filterTime": 1594673939577,
+                  "execTime": 46,
+                  "subPaths": [
+                    {
+                      "policy": "Default API Proxy Routing",
+                      "execTime": 46,
+                      "filters": [
+                        {
+                          "espk": "DEFAULT_PRIMARY_VordelGateway_7.7.0:-2948634492645772937",
+                          "name": "Default Routing",
+                          "type": "SwitchFilter",
+                          "class": "com.vordel.circuit.switchcase.SwitchFilter",
+                          "status": "Pass",
+                          "filterTime": 1594673939577,
+                          "execTime": 46,
+                          "subPaths": [
+                            {
+                              "policy": "Default API Proxy Routing",
+                              "execTime": 46,
+                              "filters": [
+                                {
+                                  "name": "not-required-here",
+                                  "type": "CircuitDelegateFilter",
+                                  "class": "com.vordel.circuit.CircuitDelegateFilter",
+                                  "status": "Pass",
+                                  "filterTime": 1594673939577,
+                                  "execTime": 46,
+                                  "subPaths": [
+                                    {
+                                      "policy": "Default Profile-based Routing",
+                                      "execTime": 46,
+                                      "filters": [
+                                        {
+                                          "espk": "DEFAULT_PRIMARY_VordelGateway_7.7.0:-3718249635933793053",
+                                          "name": "Connect to URL",
+                                          "type": "ConnectToURLFilter",
+                                          "class": "com.vordel.circuit.net.ConnectToURLFilter",
+                                          "status": "Pass",
+                                          "filterTime": 1594673939577,
+                                          "execTime": 46
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "A scheduled policy",
+      "input": [
+        "{\"timestamp\":1598271030003,\"correlationId\":\"36ae435faa3e258ee1092b60\",\"processInfo\":{\"hostname\":\"api-env\",\"domainId\":\"ed992442-c363-4d36-963a-9e6314b0f421\",\"groupId\":\"group-2\",\"groupName\":\"QuickStart Group\",\"serviceId\":\"instance-1\",\"serviceName\":\"QuickStart Server\",\"version\":\"7.7.20200730\"},\"transactionSummary\":{\"path\":null, \"protocol\":null, \"protocolSrc\":null, \"status\":\"success\", \"serviceContexts\":[]}}"
+      ],
+      "expected": [
+        {
+          "@timestamp": "2020-08-24T12:10:30.003Z",
+          "correlationId": "36ae435faa3e258ee1092b60",
+          "processInfo": {
+            "hostname": "api-env",
+            "groupId": "group-2",
+            "groupName": "QuickStart Group",
+            "serviceId": "instance-1",
+            "version": "7.7.20200730",
+            "gatewayName": "API-Gateway 3", 
+            "gatewayRegion": "US"
+          },
+          "transactionElements": {
+            "leg0": {
+              "finalStatus": "Pass",
+              "protocolInfo": {
+                "http": {
+                  "uri": "N/A",
+                  "status": "901",
+                  "statusText": "OK",
+                  "method": "N/A"
+                }
+              }
+            }
+          },
+          "transactionSummary": {
+            "path": null,
+            "protocol": null,
+            "protocolSrc": null,
+            "status": "success",
+            "duration": "-1",
+            "serviceContext": {
+              "method": "N/A",
+              "service": "Scheduled policy"
+            }
+          },
+          "type": "scheduledPolicy"
+        }
+      ]
+    }
+  ]
+}

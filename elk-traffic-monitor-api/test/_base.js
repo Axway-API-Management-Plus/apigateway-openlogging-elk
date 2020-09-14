@@ -67,11 +67,9 @@ function requestAsync(uri, options, cb) {
 }
 
 async function sendToElasticsearch(elasticConfig, index, template, dataset) {
-	console.log(`Creating connection to ElasticSearch cluster: ${elasticConfig.node}`)
-	const client = new Client({
-		node: elasticConfig.node
-	});
-	const mappingConfig = JSON.parse(fs.readFileSync(`../logstash/config/${template}`)).mappings;
+	console.log(`Creating connection to ElasticSearch cluster: ${elasticConfig.node}`);
+	const client = new Client(elasticConfig);
+	const mappingConfig = JSON.parse(fs.readFileSync(`../logstash/index_templates/${template}`)).mappings;
 	const createdIndexResponse = await client.indices.create({
 		index: index,
 		body: {
@@ -87,8 +85,12 @@ async function sendToElasticsearch(elasticConfig, index, template, dataset) {
 	const { body: bulkResponse } = await client.bulk({ refresh: true, body });
 
 	if (bulkResponse.errors) {
-		console.log(JSON.stringify(bulkResponse.items[0].index.error));
-		throw Error(`Error inserting test document into index: ${index}`);
+		bulkResponse.items.map(function(element) { 
+			if(element.index.error) {
+				console.log(JSON.stringify(element.index.error));
+			}
+		});
+		throw Error(`Error inserting test document into index: ${index}.`);
 	}
 	console.log(`Inserted test data into index: ${index}`);
 }

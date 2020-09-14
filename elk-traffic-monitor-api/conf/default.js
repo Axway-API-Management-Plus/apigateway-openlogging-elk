@@ -1,3 +1,5 @@
+const fs = require('fs');
+const path = require('path');
 /**
  * These are your configuration file defaults.
  *
@@ -43,7 +45,7 @@ module.exports = {
 
 		// When this is true, the service will no longer listen on requests over http.
 		// Disabling http requires 'ssl' to be configured.
-		disabled: false
+		disabled: Boolean(process.env.ENABLE_HTTP_PORT) ? false:  false,
 	},
 
 	// SSL configuration. For a step-by-step tutorial on how to configure SSL see:
@@ -51,12 +53,12 @@ module.exports = {
 	// Note that the sample SSL code below uses the 'fs' and 'path' modules, e.g.:
 	// const fs = require('fs');
 	// const path = require('path');
-	// ssl: {
+	//ssl: {
 	// 	port: 8443,
-	//	key: fs.readFileSync(path.join('.', 'ssl','key.pem'), 'utf8'),
-	//	cert: fs.readFileSync(path.join('.', 'ssl','cert.pem'), 'utf8'),
-	//	passphrase: 'secret'
-	// },
+	//	key: fs.readFileSync(path.join('.', process.env.API_BUILDER_SSL_KEY || 'test/certificates/api-builder.key'), 'utf8'),
+	//	cert: fs.readFileSync(path.join('.', process.env.API_BUILDER_SSL_CERT || 'test/certificates/api-builder.crt'), 'utf8'),
+	//	passphrase: process.env.API_BUILDER_SSL_PASSWORD || 'axway'
+	//},
 
 	// The number of milliseconds before timing out a request to the server.
 	timeout: 120000,

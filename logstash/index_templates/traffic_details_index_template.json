@@ -1,0 +1,32 @@
+{
+    "index_patterns": [
+        "apigw-traffic-details-*"
+    ],
+    "settings": {
+        "number_of_shards": 5, 
+        "number_of_replicas": 1,
+        "index": {
+            "codec": "best_compression"
+        }
+    },
+    "mappings": {
+        "dynamic": false,
+        "properties": {
+            "@timestamp": {
+                "type" : "date"
+            },
+            "correlationId": {
+                "type": "keyword",
+                "doc_values": false
+            }, 
+            "processInfo.serviceId": {
+                "type": "keyword",
+                "doc_values": false
+            },
+            "transactionSummary.serviceContext.apiOrg": {
+                "type": "keyword",
+                "doc_values": false
+            }
+        }
+    }
+}

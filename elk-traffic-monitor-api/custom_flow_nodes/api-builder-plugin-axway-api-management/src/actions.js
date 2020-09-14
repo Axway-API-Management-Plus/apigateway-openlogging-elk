@@ -1,11 +1,22 @@
 const https = require('https');
-const { sendRequest, _getCookie } = require('./utils');
+const { sendRequest, _getCookie, getManagerConfig } = require('./utils');
 
 var pluginConfig = {};
 var cache = {};
 var logger;
 
-//process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+const securityDeviceTypes = {
+	apiKey: "API-Key",
+	basic: "HTTP Basic",
+	oauth: "OAuth",
+	oauthExternal: "OAuth (External)", 
+	authPolicy: "Security policy", 
+	awsHeader: "AWS Header", 
+	awsQuery: "AWS Query", 
+	twoWaySSL: "Mutual SSL", 
+	passThrough: "Pass Through"
+  };
+
 /**
  * Action method.
  *
@@ -27,7 +38,7 @@ var logger;
  *	 does not define "next", the first defined output).
  */
 async function lookupCurrentUser(params, options) {
-	const { requestHeaders, apiManagerUserRequired } = params;
+	const { requestHeaders, apiManagerUserRequired, groupId } = params;
 	logger = options.logger;
 	cache = options.pluginContext.cache;
 	pluginConfig = options.pluginConfig;
@@ -61,12 +72,12 @@ async function lookupCurrentUser(params, options) {
 		return user;
 	}
 	logger.trace(`Trying to load API-Manager user using Login-Name: '${user.loginName}'`);
-	const users = await _getManagerUser(user);
+	const users = await _getManagerUser(user, groupId);
 	if(!users || users.length == 0) {
 		throw new Error(`User: '${user.loginName}' not found in API-Manager.`);
 	}
 	user.apiManager = users[0];
-	var org = await _getOrganization(user.apiManager.organizationId);
+	var org = await _getOrganization(user.apiManager.organizationId, groupId);
 	user.apiManager.organizationName = org.name;
 	logger.debug(`User: '${user.loginName}' (Role: ${user.apiManager.role}) found in API-Manager. Organization: '${user.apiManager.organizationName}'`);
 	cache.set( VIDUSR, user);
@@ -74,7 +85,8 @@ async function lookupCurrentUser(params, options) {
 }
 
 async function lookupAPIDetails(params, options) {
-	const { apiName, apiPath } = params;
+	const { apiName, apiPath, operationId, groupId } = params;
+	logger = options.logger;
 	cache = options.pluginContext.cache;
 	pluginConfig = options.pluginConfig;
 	if (!apiName) {
@@ -83,10 +95,11 @@ async function lookupAPIDetails(params, options) {
 	if (!apiPath) {
 		throw new Error('You must provide the apiPath that should be used to lookup the API.');
 	}
-	if(cache.has(apiPath)) {
-		return cache.get(apiPath);
+	const cacheKey = `${apiPath}###${groupId}`;
+	if(cache.has(cacheKey)) {
+		return cache.get(cacheKey);
 	}
-	const proxies = await _getAPIProxy(apiName);
+	const proxies = await _getAPIProxy(apiName, groupId);
 	if(!proxies || proxies.length == 0) {
 		throw new Error(`No APIs found with name: '${apiName}'`);
 	}
@@ -95,14 +108,22 @@ async function lookupAPIDetails(params, options) {
 		api = proxies[i];
 		if(apiPath.startsWith(api.path)) {
 			apiProxy = api;
+			break;
 		}
 	}
 	if(!apiProxy) {
 		throw new Error(`No APIs found with name: '${apiName}' and apiPath: '${apiPath}'`);
 	}
-	var org = await _getOrganization(apiProxy.organizationId);
+	var org = await _getOrganization(apiProxy.organizationId, groupId);
 	apiProxy.organizationName = org.name;
+	apiProxy.apiSecurity = await _getAPISecurity(apiProxy, operationId);
+	apiProxy.requestPolicy = await _getRequestPolicy(apiProxy, operationId);
+	apiProxy.routingPolicy = await _getRoutingPolicy(apiProxy, operationId);
+	apiProxy.responsePolicy = await _getResponsePolicy(apiProxy, operationId);
+	apiProxy.backendBasePath = await _getBackendBasePath(apiProxy, operationId);
+	apiProxy.faulthandlerPolicy = await _getFaulthandlerPolicy(apiProxy, operationId);
 	// Remove a few properties we really don't need
+	delete apiProxy.id;
 	delete apiProxy.corsProfiles;
 	delete apiProxy.securityProfiles;
 	delete apiProxy.authenticationProfiles;
@@ -110,7 +131,7 @@ async function lookupAPIDetails(params, options) {
 	delete apiProxy.outboundProfiles;
 	delete apiProxy.serviceProfiles;
 	delete apiProxy.caCerts;
-	if(cache.set(apiPath, apiProxy));
+	if(cache.set(cacheKey, apiProxy));
 	return apiProxy;
 }
 
@@ -130,6 +151,80 @@ async function _getCurrentGWUser(VIDUSR) {
 			throw new Error(`Error getting current user Request sent to: '${pluginConfig.apigateway.hostname}'. ${err}`);
 		});
 	return loginName;
+}
+
+async function _getAPISecurity(apiProxy, operationId) {
+	if(!operationId) {
+		for (var i = 0; i < apiProxy.securityProfiles.length; ++i) {
+			var securityProfile = apiProxy.securityProfiles[i];
+			if(!securityProfile.isDefault) continue;
+			// For now we pick the first Security device
+			return securityDeviceTypes[securityProfile.devices[0].type];
+		}
+		return "N/A";
+	}
+	throw new Error('_getAPISecurity with operationId not yet supported.');
+}
+
+async function _getRequestPolicy(apiProxy, operationId) {
+	if(!operationId) {
+		if(apiProxy.outboundProfiles._default.requestPolicy) {
+			return getPolicyName(apiProxy.outboundProfiles._default.requestPolicy);
+		} else {
+			return "N/A";
+		}
+	}
+	throw new Error('_getRequestPolicy with operationId not yet supported.');
+}
+
+async function _getRoutingPolicy(apiProxy, operationId) {
+	if(!operationId) {
+		if(apiProxy.outboundProfiles._default.routePolicy) {
+			return getPolicyName(apiProxy.outboundProfiles._default.routePolicy);
+		} else {
+			return "N/A";
+		}
+	}
+	throw new Error('_getRoutingPolicy with operationId not yet supported.');
+}
+
+async function _getResponsePolicy(apiProxy, operationId) {
+	if(!operationId) {
+		if(apiProxy.outboundProfiles._default.responsePolicy) {
+			return getPolicyName(apiProxy.outboundProfiles._default.responsePolicy);
+		} else {
+			return "N/A";
+		}
+	}
+	throw new Error('_getResponsePolicy with operationId not yet supported.');
+}
+
+async function _getFaulthandlerPolicy(apiProxy, operationId) {
+	if(!operationId) {
+		if(apiProxy.outboundProfiles._default.faultHandlerPolicy) {
+			return getPolicyName(apiProxy.outboundProfiles._default.faultHandlerPolicy);
+		} else {
+			return "N/A";
+		}
+	}
+	throw new Error('_getResponsePolicy with operationId not yet supported.');
+}
+
+function getPolicyName(policy) {
+	// An internal policy-name looks like this 
+	// <key type='FilterCircuit'><id field='name' value='Response Policy 1'/></key>
+	// or like so:
+	// <key type='CircuitContainer'><id field='name' value='Custom policies'/><key type='FilterCircuit'><id field='name' value='Request Policy 1'/></key></key>
+	policy = policy.substring(policy.indexOf("<key type='FilterCircuit'>"));
+	policyName = policy.substring(policy.indexOf("value='")+7, policy.lastIndexOf("'/></key>"));
+	return policyName;
+}
+
+async function _getBackendBasePath(apiProxy, operationId) {
+	if(!operationId) {
+		return apiProxy.serviceProfiles._default.basePath
+	}
+	throw new Error('_getBackendBasePath with operationId not yet implemented.');
 }
 
 async function _getCurrentGWPermissions(VIDUSR, csrfToken, loginName) {
@@ -154,15 +249,16 @@ async function _getCurrentGWPermissions(VIDUSR, csrfToken, loginName) {
 	return result.permissions;
 }
 
-async function _getManagerUser(user) {
+async function _getManagerUser(user, groupId) {
+	const apiManagerConfig = getManagerConfig(pluginConfig.apimanager, groupId);
 	var options = {
 		path: `/api/portal/v1.3/users?field=loginName&op=eq&value=${user.loginName}&field=enabled&op=eq&value=enabled`,
 		headers: {
-			'Authorization': 'Basic ' + Buffer.from(pluginConfig.apimanager.username + ':' + pluginConfig.apimanager.password).toString('base64')
+			'Authorization': 'Basic ' + Buffer.from(apiManagerConfig.username + ':' + apiManagerConfig.password).toString('base64')
 		},
 		agent: new https.Agent({ rejectUnauthorized: false })
 	};
-	managerUser = await sendRequest(pluginConfig.apimanager.url, options)
+	managerUser = await sendRequest(apiManagerConfig.url, options)
 		.then(response => {
 			return response.body;
 		})
@@ -172,38 +268,41 @@ async function _getManagerUser(user) {
 	return managerUser;
 }
 
-async function _getAPIProxy(apiName) {
+async function _getAPIProxy(apiName, groupId) {
+	const apiManagerConfig = getManagerConfig(pluginConfig.apimanager, groupId);
 	var options = {
 		path: `/api/portal/v1.3/proxies?field=name&op=eq&value=${apiName}`,
 		headers: {
-			'Authorization': 'Basic ' + Buffer.from(pluginConfig.apimanager.username + ':' + pluginConfig.apimanager.password).toString('base64')
+			'Authorization': 'Basic ' + Buffer.from(apiManagerConfig.username + ':' + apiManagerConfig.password).toString('base64')
 		},
 		agent: new https.Agent({ rejectUnauthorized: false })
 	};
-	apiProxy = await sendRequest(pluginConfig.apimanager.url, options)
+	apiProxy = await sendRequest(apiManagerConfig.url, options)
 		.then(response => {
 			return response.body;
 		})
 		.catch(err => {
-			throw new Error(`Error getting APIs with API-Name: ${apiName}. Request sent to: '${pluginConfig.apimanager.url}'. ${err}`);
+			throw new Error(`Error getting APIs with API-Name: ${apiName}. Request sent to: '${apiManagerConfig.url}'. ${err}`);
 		});
 	return apiProxy;
 }
 
-async function _getOrganization(orgId) {
-	if(cache.has(`ORG-${orgId}`)) {
-		var org = cache.get(`ORG-${orgId}`);
-		logger.debug(`Organization: '${org.name}' (ID: ${orgId}) found in cache.`);
+async function _getOrganization(orgId, groupId) {
+	const apiManagerConfig = getManagerConfig(pluginConfig.apimanager, groupId);
+	const orgCacheKey = `ORG-${orgId}###${groupId}`
+	if(cache.has(orgCacheKey)) {
+		var org = cache.get(orgCacheKey);
+		logger.debug(`Organization: '${org.name}' (ID: ${orgId}) found in cache for groupId: ${groupId}.`);
 		return org;
 	}
 	var options = {
 		path: `/api/portal/v1.3/organizations/${orgId}`,
 		headers: {
-			'Authorization': 'Basic ' + Buffer.from(pluginConfig.apimanager.username + ':' + pluginConfig.apimanager.password).toString('base64')
+			'Authorization': 'Basic ' + Buffer.from(apiManagerConfig.username + ':' + apiManagerConfig.password).toString('base64')
 		},
 		agent: new https.Agent({ rejectUnauthorized: false })
 	};
-	org = await sendRequest(pluginConfig.apimanager.url, options)
+	org = await sendRequest(apiManagerConfig.url, options)
 		.then(response => {
 			if(!response.body) {
 				throw new Error(`Organization with : '${orgId}' not found in API-Manager.`);
@@ -219,7 +318,7 @@ async function _getOrganization(orgId) {
 	if(!org.development) {
 		throw new Error(`Organization: '${org.name}' is not a development organization.`);
 	}
-	cache.set(`ORG-${orgId}`, org)
+	cache.set(orgCacheKey, org)
 	return org;
 }
 

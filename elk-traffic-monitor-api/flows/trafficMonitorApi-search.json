@@ -64,35 +64,35 @@
 		},
 		"elasticsearch.1": {
 			"type": "nodehandler://@axway-api-builder-ext/api-builder-plugin-fn-elasticsearch/elasticsearch",
-			"name": "Query ES for Search",
+			"name": "Query Elasticsearch",
 			"method": "search",
 			"parameters": [
 				{
 					"name": "query",
 					"type": "jsonpath",
 					"value": "$.elasticQuery",
-					"metaName": "query",
+					"metaName": "Query",
 					"metaDescription": "Defines the search definition using the Query DSL. Learn more: https://www.elastic.co/guide/en/elasticsearch/reference/7.x/query-dsl.html"
 				},
 				{
 					"name": "index",
 					"type": "jsonpath",
 					"value": "$.index",
-					"metaName": "index",
+					"metaName": "Index",
 					"metaDescription": "Comma-separated list or wildcard expression of index names used to limit the request."
 				},
 				{
 					"name": "sort",
 					"type": "string",
 					"value": "\"@timestamp:desc\"",
-					"metaName": "sort",
+					"metaName": "Sort",
 					"metaDescription": "A comma-separated list of <field>:<direction> pairs."
 				},
 				{
 					"name": "size",
 					"type": "jsonpath",
 					"value": "$.params.count",
-					"metaName": "size",
+					"metaName": "Size",
 					"metaDescription": "Defines the number of hits to return. Defaults to 10."
 				}
 			],
@@ -118,13 +118,6 @@
 			"method": "Execute",
 			"parameters": [
 				{
-					"name": "data",
-					"type": "jsonpath",
-					"value": "$.elasticsearch.result.body.hits",
-					"metaName": "data",
-					"metaDescription": "The value to apply as the `data` argument to the JavaScript code. For objects and arrays, `data` is passed by reference."
-				},
-				{
 					"name": "unsafe",
 					"type": "boolean",
 					"value": "false",
@@ -132,9 +125,16 @@
 					"metaDescription": "USE WITH CAUTION. When enabled, JavaScript is not executed in a sandboxed environment and all globals are available."
 				},
 				{
+					"name": "data",
+					"type": "jsonpath",
+					"value": "$",
+					"metaName": "data",
+					"metaDescription": "The value to apply as the `data` argument to the JavaScript code. For objects and arrays, `data` is passed by reference."
+				},
+				{
 					"name": "code",
 					"type": "string",
-					"value": "\"var result = {};\\n  result.processId = \\\"\\\";\\n  result.data = [];\\n  data.hits.map(function(entry) {\\n    var dataObject = {};\\n    var _source = entry._source;\\n    dataObject.correlationId = _source.correlationId;\\n    dataObject.timestamp = Date.parse(_source['@timestamp']);\\n    if(_source.transactionSummary && _source.transactionSummary.serviceContext) {\\n      dataObject.serviceName = _source.transactionSummary.serviceContext.service;\\n      dataObject.operation = _source.transactionSummary.serviceContext.method;\\n    }\\n    processInitialTransactionElement(dataObject, _source);\\n    result.data.push(dataObject);\\n  });\\n  \\n  function processInitialTransactionElement(dataObject, _source) {\\n    if(_source.transactionElements && _source.transactionElements.leg0) {\\n      dataObject.statustext = _source.transactionElements.leg0.protocolInfo.http.statusText;\\n      dataObject.method = _source.transactionElements.leg0.protocolInfo.http.method;\\n      dataObject.status = _source.transactionElements.leg0.protocolInfo.http.status;\\n      dataObject.wafStatus = _source.transactionElements.leg0.protocolInfo.http.wafStatus;\\n      dataObject.subject = _source.transactionElements.leg0.protocolInfo.http.authSubjectId;\\n      dataObject.localPort = _source.transactionElements.leg0.protocolInfo.http.localPort;\\n      dataObject.uri = _source.transactionElements.leg0.protocolInfo.http.uri;\\n      dataObject.vhost = _source.transactionElements.leg0.protocolInfo.http.vhost;\\n      dataObject.duration = _source.transactionElements.leg0.duration;\\n      dataObject.type = getProtocolType(_source.transactionElements.leg0.protocolInfo);\\n      dataObject.finalStatus = _source.transactionElements.leg0.finalStatus;\\n    }\\n  }\\n  \\n  function getProtocolType(protocolInfo) {\\n    if(protocolInfo.hasOwnProperty('http')) {\\n       return 'http';\\n    }\\n  }\\n  \\n  return result;\"",
+					"value": "\"var result = {};\\n  var hits = data.elasticsearch.result.body.hits.hits;\\n  var protocol = data.params.protocol;\\n  result.processId = \\\"\\\";\\n  result.data = [];\\n  hits.map(function(entry) {\\n    var dataObject = {};\\n    var _source = entry._source;\\n    dataObject.correlationId = _source.correlationId;\\n    dataObject.timestamp = Date.parse(_source['@timestamp']);\\n    if(_source.serviceContext) {\\n      dataObject.serviceName = _source.serviceContext.service;\\n      dataObject.operation = _source.serviceContext.method;\\n    }\\n    dataObject.type = protocol;\\n    switch (protocol) {\\n      case \\\"http\\\":\\n        formatHttpFields(dataObject, _source);\\n        break;\\n      case \\\"fileTransfer\\\":\\n        formatFiletransferFields(dataObject, _source);\\n        break;\\n    }\\n    result.data.push(dataObject);\\n  });\\n  \\n  function formatHttpFields(dataObject, _source) {    \\n      dataObject.statustext = _source.http.statusText;\\n      dataObject.method = _source.http.method;\\n      dataObject.status = _source.http.status;\\n      dataObject.wafStatus = _source.http.wafStatus;\\n      dataObject.subject = _source.http.authSubjectId;\\n      dataObject.localPort = _source.http.localPort;\\n      dataObject.uri = _source.path;\\n      dataObject.vhost = _source.http.vhost;\\n      dataObject.duration = _source.duration;\\n      dataObject.finalStatus = _source.finalStatus;\\n  }\\n  \\n  function formatFiletransferFields(dataObject, _source) {\\n      dataObject.remoteAddr = _source.fileTransfer.remoteAddr;\\n      dataObject.uploadFile = _source.fileTransfer.uploadFile;\\n      dataObject.direction = _source.fileTransfer.direction;\\n      dataObject.servicetype = _source.fileTransfer.serviceType;\\n      dataObject.size = _source.fileTransfer.size;\\n      dataObject.duration = _source.duration;\\n      dataObject.subject = _source.fileTransfer.authSubjectId;\\n      dataObject.finalStatus = _source.finalStatus;\\n  }\\n\\n  \\n  return result;\"",
 					"metaName": "code",
 					"metaDescription": "A JavaScript function body. Supports `await` and returning promises."
 				}
@@ -177,7 +177,7 @@
 				{
 					"name": "code",
 					"type": "string",
-					"value": "\"var queryFilters = data.queryFilters;\\n  var elasticQuery = {};\\n  queryFilters.push( {\\n    \\\"term\\\": {\\n      \\\"processInfo.serviceId\\\": data.params.serviceID\\n    }\\n  });\\n  elasticQuery = { \\n    bool: {\\n      must: queryFilters\\n    }\\n  };\\n  return elasticQuery;\"",
+					"value": "\"var queryFilters = data.queryFilters;\\n  var elasticQuery = {};\\n  // The serviceId is given by the Traffic-Monitor UI request (Requests are executed for each sericeId)\\n  queryFilters.push( {\\n    \\\"term\\\": {\\n      \\\"processInfo.serviceId\\\": data.params.serviceID\\n    }\\n  });\\n  // Making sure, it's getting data only for the selected protocol\\n  queryFilters.push( {\\n    \\\"exists\\\": {\\n      \\\"field\\\": data.params.protocol\\n    }\\n  });\\n  // Finally, add all collected filters to the final query \\n  elasticQuery = { \\n    bool: {\\n      must: queryFilters\\n    }\\n  };\\n  return elasticQuery;\"",
 					"metaName": "code",
 					"metaDescription": "A JavaScript function body. Supports `await` and returning promises."
 				}
@@ -213,7 +213,7 @@
 				{
 					"name": "code",
 					"type": "string",
-					"value": "\"var queryFilters = data.queryFilters;\\n  data.params.field.map(function(entry, index) {\\n    var op = data.params.op;\\n    var value = data.params.value[index];\\n    if(entry === 'duration') {\\n      var filter = {\\n        range: {\\n          \\\"transactionElements.leg0.duration\\\": {\\n            \\\"gte\\\": value\\n          }\\n        }\\n      };\\n      queryFilters.push(filter);\\n      return queryFilters;\\n \\t}\\n  });\"",
+					"value": "\"var queryFilters = data.queryFilters;\\n  data.params.field.map(function(entry, index) {\\n    var op = data.params.op;\\n    var value = data.params.value[index];\\n    if(entry === 'duration') {\\n      var filter = {\\n        range: {\\n          \\\"duration\\\": {\\n            \\\"gte\\\": value\\n          }\\n        }\\n      };\\n      queryFilters.push(filter);\\n      return queryFilters;\\n \\t}\\n  });\"",
 					"metaName": "code",
 					"metaDescription": "A JavaScript function body. Supports `await` and returning promises."
 				}
@@ -321,7 +321,7 @@
 				{
 					"name": "code",
 					"type": "string",
-					"value": "\"// Overview screen (Traffic-Details table) \\n  // should also include the apigw-traffic-errors documents\\n  let index = 'apigw-traffic-*';\\n  if(data.config.testElasticIndex) {\\n    index = data.config.testElasticIndex;\\n  }\\n  return index;\"",
+					"value": "\"// Overview screen (Traffic-Details table) \\n  // should also include the apigw-traffic-errors documents\\n  let index = 'apigw-traffic-summary-*';\\n  if(data.config.testElasticIndex) {\\n    index = data.config.testElasticIndex;\\n  }\\n  return index;\"",
 					"metaName": "code",
 					"metaDescription": "A JavaScript function body. Supports `await` and returning promises."
 				}
@@ -357,7 +357,7 @@
 				{
 					"name": "code",
 					"type": "string",
-					"value": "\"var queryFilters = [];\\n  \\n  data.fields = [\\n    // This Object-Array declares for each field how to query it in ES\\n    { fieldName: 'uri', queryType: 'match', queryLocation: 'transactionElements.leg0.protocolInfo.http.uri' }, \\n    { fieldName: 'wafStatus', queryType: 'match', queryLocation: 'transactionElements.leg0.protocolInfo.http.wafStatus' }, \\n    { fieldName: 'finalStatus', queryType: 'match', queryLocation: 'transactionElements.leg0.finalStatus' }, \\n    { fieldName: 'remotePort', queryType: 'match', queryLocation: 'transactionElements.leg0.protocolInfo.http.remotePort' }, \\n    { fieldName: 'remoteName', queryType: 'match', queryLocation: 'transactionElements.leg0.protocolInfo.http.remoteName' }, \\n    { fieldName: 'localAddr', queryType: 'match', queryLocation: 'transactionElements.leg0.protocolInfo.http.localAddr' },\\n    { fieldName: 'status', queryType: 'match', queryLocation: 'transactionElements.leg0.protocolInfo.http.status' },\\n    { fieldName: 'subject', queryType: 'match', queryLocation: 'transactionElements.leg0.protocolInfo.http.authSubjectId' },\\n    { fieldName: 'operation', queryType: 'match', queryLocation: 'transactionSummary.serviceContext.method' },\\n    { fieldName: 'localPort', queryType: 'match', queryLocation: 'transactionElements.leg0.protocolInfo.http.localPort' },\\n    { fieldName: 'method', queryType: 'match', queryLocation: 'transactionElements.leg0.protocolInfo.http.method' },\\n    { fieldName: 'correlationId', queryType: 'match', queryLocation: 'correlationId' },\\n    { fieldName: 'serviceName', queryType: 'match', queryLocation: 'transactionSummary.serviceContext.service' },\\n    \\n  ];\\n  \\n  if(typeof data.params.field == 'undefined') {\\n    data.params.field = [];\\n  }\\n  if(typeof data.params.field == 'string') {\\n    data.params.field = [data.params.field];\\n  }\\n  if(typeof data.params.value === 'undefined') {\\n    data.params.value = [];\\n  }\\n  if(typeof data.params.value == 'string') {\\n    data.params.value = [data.params.value];\\n  }\\n  return queryFilters;\"",
+					"value": "\"var queryFilters = [];\\n  \\n  if(typeof data.params.protocol == 'undefined') {\\n    data.params.protocol = 'http';\\n  }\\n  \\n  if(data.params.protocol == 'filetransfer') {\\n    data.params.protocol = 'fileTransfer';\\n  }\\n  \\n  data.fields = [\\n    // This Object-Array declares for each field how to query it in ES\\n    { fieldName: 'uri', queryType: 'match', queryLocation: 'path' }, \\n    { fieldName: 'wafStatus', queryType: 'match', queryLocation: 'http.wafStatus' }, \\n    { fieldName: 'finalStatus', queryType: 'match', queryLocation: 'finalStatus' }, \\n    { fieldName: 'remotePort', queryType: 'match', queryLocation: 'http.remotePort' }, \\n    { fieldName: 'remoteName', queryType: 'match', queryLocation: 'http.remoteName' }, \\n    { fieldName: 'localAddr', queryType: 'match', queryLocation: 'http.localAddr' },\\n    { fieldName: 'status', queryType: 'match', queryLocation: 'http.status' },\\n    { fieldName: 'subject', queryType: 'match', queryLocation: 'http.authSubjectId' },\\n    { fieldName: 'operation', queryType: 'match', queryLocation: 'serviceContext.method' },\\n    { fieldName: 'localPort', queryType: 'match', queryLocation: 'http.localPort' },\\n    { fieldName: 'method', queryType: 'match', queryLocation: 'http.method' },\\n    { fieldName: 'correlationId', queryType: 'match', queryLocation: 'correlationId' },\\n    { fieldName: 'serviceName', queryType: 'match', queryLocation: 'serviceContext.service' },\\n    { fieldName: 'servicetype', queryType: 'match', queryLocation: `${data.params.protocol}.serviceType` }\\n  ];\\n  \\n  if(typeof data.params.field == 'undefined') {\\n    data.params.field = [];\\n  }\\n  if(typeof data.params.field == 'string') {\\n    data.params.field = [data.params.field];\\n  }\\n  if(typeof data.params.value === 'undefined') {\\n    data.params.value = [];\\n  }\\n  if(typeof data.params.value == 'string') {\\n    data.params.value = [data.params.value];\\n  }\\n  return queryFilters;\"",
 					"metaName": "code",
 					"metaDescription": "A JavaScript function body. Supports `await` and returning promises."
 				}
@@ -366,7 +366,7 @@
 				"next": {
 					"context": "$.queryFilters",
 					"routes": [
-						"javascript.21"
+						"condition.1"
 					],
 					"metaName": "Next"
 				},
@@ -435,6 +435,13 @@
 					"value": "$.request.headers",
 					"metaName": "Request Headers",
 					"metaDescription": "The request headers are used to lookup the current users based on the current session cookie (VIDUSR)."
+				},
+				{
+					"name": "groupId",
+					"type": "jsonpath",
+					"value": "$.params.groupId",
+					"metaName": "The API-Gateway Group-ID",
+					"metaDescription": "The ID of the Domain-Group where this event was created. If given, it's used to determined which API-Manager to use. For that, the parameter: API_MANAGER must be configured like so: API_MANAGER=group-5#https://manager-1:8075, group-2#https://manager-2:8075, ...."
 				}
 			],
 			"outputs": {
@@ -468,7 +475,7 @@
 				{
 					"name": "code",
 					"type": "string",
-					"value": "\"var queryFilters = data.queryFilters;\\n  if(!data.user.gatewayManager.isAdmin) {\\n    var filter;\\n    if(data.user.apiManager.role == \\\"admin\\\") {\\n      filter = {\\n        exists: {\\n          \\\"field\\\" : \\\"transactionSummary.serviceContext\\\"\\n        }\\n      };\\n    } else {\\n      filter = {\\n        term: {\\n          \\\"transactionSummary.serviceContext.apiOrg\\\" : data.user.apiManager.organizationName\\n        }\\n      };\\n    }\\n    queryFilters.push(filter);\\n  }\\n  return queryFilters;\"",
+					"value": "\"var queryFilters = data.queryFilters;\\n  if(!data.user.gatewayManager.isAdmin) {\\n    var filter;\\n    if(data.user.apiManager.role == \\\"admin\\\") {\\n      filter = {\\n        exists: {\\n          \\\"field\\\" : \\\"serviceContext\\\"\\n        }\\n      };\\n    } else {\\n      filter = {\\n        term: {\\n          \\\"serviceContext.apiOrg\\\" : data.user.apiManager.organizationName\\n        }\\n      };\\n    }\\n    queryFilters.push(filter);\\n  }\\n  return queryFilters;\"",
 					"metaName": "code",
 					"metaDescription": "A JavaScript function body. Supports `await` and returning promises."
 				}
@@ -488,6 +495,111 @@
 				}
 			},
 			"metaMethod": "Execute"
+		},
+		"condition.1": {
+			"type": "nodehandler://axway-flow/condition",
+			"name": "Is Gateway Admin?",
+			"method": "equals",
+			"parameters": [
+				{
+					"name": "source",
+					"type": "jsonpath",
+					"value": "$.user.gatewayManager.isAdmin",
+					"metaName": "Source",
+					"metaDescription": "The input to test."
+				},
+				{
+					"name": "value",
+					"type": "boolean",
+					"value": "true",
+					"metaName": "Value",
+					"metaDescription": "The value to test input against."
+				}
+			],
+			"outputs": {
+				"true": {
+					"routes": [
+						"javascript.21"
+					],
+					"context": "$.equals",
+					"metaName": "True"
+				},
+				"false": {
+					"routes": [
+						"condition.2"
+					],
+					"context": "$.equals",
+					"metaName": "False"
+				}
+			},
+			"metaMethod": "Equals"
+		},
+		"condition.2": {
+			"type": "nodehandler://axway-flow/condition",
+			"name": "Is protocol HTTP?",
+			"method": "equals",
+			"parameters": [
+				{
+					"name": "source",
+					"type": "jsonpath",
+					"value": "$.params.protocol",
+					"metaName": "Source",
+					"metaDescription": "The input to test."
+				},
+				{
+					"name": "value",
+					"type": "string",
+					"value": "\"http\"",
+					"metaName": "Value",
+					"metaDescription": "The value to test input against."
+				}
+			],
+			"outputs": {
+				"true": {
+					"routes": [
+						"javascript.21"
+					],
+					"context": "$.equals",
+					"metaName": "True"
+				},
+				"false": {
+					"routes": [
+						"http.2"
+					],
+					"context": "$.equals",
+					"metaName": "False"
+				}
+			},
+			"metaMethod": "Equals"
+		},
+		"http.2": {
+			"type": "nodehandler://axway-flow/http",
+			"name": "No access to other protocols",
+			"method": "setresponse",
+			"parameters": [
+				{
+					"name": "status",
+					"type": "number",
+					"value": "403",
+					"metaName": "Status",
+					"metaDescription": "The HTTP status code"
+				},
+				{
+					"name": "body",
+					"type": "object",
+					"value": "{\"processId\":\"\", \"data\":[ \n]}",
+					"metaName": "Body",
+					"metaDescription": "The response payload"
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.response",
+					"routes": [],
+					"metaName": "Next"
+				}
+			},
+			"metaMethod": "Set HTTP Response"
 		}
 	}
 }

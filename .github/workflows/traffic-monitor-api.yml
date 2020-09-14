@@ -2,7 +2,7 @@
 # For that an Elasticsearch instance is started, test-data inserted and the 
 # API-Builder Traffic-Monitor API is executed with all possible parameters.
 
-name: Traffic-Monitor API
+name: Test Traffic-Monitor API
 
 on: [push, pull_request]
 
@@ -27,15 +27,15 @@ jobs:
     - name: Starting Elasticsearch instance
       uses: nyaruka/elasticsearch-action@v1
       with:
-        elastic version: '7.8.1' 
+        elastic version: '7.9.0' 
     - name: Sleep 15 seconds to make sure ES is ready
       uses: jakejarvis/wait-action@master
       with:
         time: '15s'
-    - name: Run npm ci, npm test
+    - name: Test API-Builder API
       working-directory: ${{env.workingDirectory}}
       env:
-        ELASTIC_NODE: 'http://localhost:9200'
+        ELASTICSEARCH_HOST: 'http://localhost:9200'
         VALIDATE_CONFIG: false
         LOG_LEVEL: INFO
         CI: true
@@ -50,27 +50,4 @@ jobs:
         workdir: ${{env.workingDirectory}}
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
-        tags: "latest"
-
-  publish-traffic-monitor-api:
-    if: github.event.action == 'published'
-    env:
-      workingDirectory: 'elk-traffic-monitor-api'
-    needs: test-traffic-monitor-api
-
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v2
-    - name: Get release version
-      id: get_version
-      run: echo ::set-env name=RELEASE_VERSION::$(echo ${GITHUB_REF:10})
-    - name: Publish Docker image
-      uses: elgohr/Publish-Docker-Github-Action@2.13
-      with:
-        name: cwiechmann/elk-traffic-monitor-api
-        workdir: ${{env.workingDirectory}}
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
-        tags: "${{ env.RELEASE_VERSION }}"
-
+        tag_names: "latest"

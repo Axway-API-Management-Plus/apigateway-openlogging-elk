@@ -5,6 +5,7 @@ const path = require('path');
 const fs = require('fs');
 const nock = require('nock');
 const envLoader = require('dotenv');
+const decache = require('decache');
 
 describe('Test API Lookup', () => {
 	let plugin;
@@ -13,8 +14,11 @@ describe('Test API Lookup', () => {
 	// Loads environment variables from .env if the file exists
 	const envFilePath = path.join(__dirname, '.env');
 	if (fs.existsSync(envFilePath)) {
+		delete process.env.API_MANAGER; // Otherwise it is not overwritten
 		envLoader.config({ path: envFilePath });
 	}
+	// Delete the cached module 
+	decache('../config/axway-api-utils.default.js');
 	var pluginConfig = require('../config/axway-api-utils.default.js').pluginConfig['api-builder-plugin-axway-api-management'];
 
 	beforeEach(async () => {
@@ -23,7 +27,7 @@ describe('Test API Lookup', () => {
 		flowNode = plugin.getFlowNode('axway-api-management');
 	});
 
-	describe('#constructor apilookup', () => {
+	describe('#constructor', () => {
 		it('should define flow-nodes', () => {
 			expect(plugin).to.be.a('object');
 			expect(plugin.getFlowNodeIds()).to.deep.equal([
@@ -116,6 +120,108 @@ describe('Test API Lookup', () => {
 			await flowNode.lookupAPIDetails({ 
 				apiPath: '/v1/petstore'
 			});
+		});
+
+		it('should return the default backend base path when not providing an operationId', async () => {
+			nock('https://mocked-api-gateway:8175').get('/api/portal/v1.3/proxies?field=name&op=eq&value=Petstore HTTPS').replyWithFile(200, './test/testReplies/apimanager/apiProxyFound.json');
+			nock('https://mocked-api-gateway:8175').get(`/api/portal/v1.3/organizations/439ec2bd-0350-459c-8df3-bb6d14da6bc8`).replyWithFile(200, './test/testReplies/apimanager/organizationAPIDevelopment.json');
+			
+			const { value, output } = await flowNode.lookupAPIDetails({ 
+				apiName: 'Petstore HTTPS', apiPath: '/v1/petstore'
+			});
+			expect(value.backendBasePath).to.equal(`https://petstore.swagger.io`);
+			expect(value.name).to.equal(`Petstore HTTPS`);
+			expect(value.path).to.equal(`/v1/petstore`);
+			expect(output).to.equal('next');
+			// Make sure the result is cached
+			nock.cleanAll();
+			// This re-run should be delivered out of the cache
+			await flowNode.lookupAPIDetails({ 
+				apiPath: '/v1/petstore'
+			});
+		});
+
+		it('should return API-Key security when not providing any operationId and API-Key is configured as default', async () => {
+			nock('https://mocked-api-gateway:8175').get('/api/portal/v1.3/proxies?field=name&op=eq&value=Petstore HTTPS').replyWithFile(200, './test/testReplies/apimanager/apiProxyFound.json');
+			nock('https://mocked-api-gateway:8175').get(`/api/portal/v1.3/organizations/439ec2bd-0350-459c-8df3-bb6d14da6bc8`).replyWithFile(200, './test/testReplies/apimanager/organizationAPIDevelopment.json');
+			
+			const { value, output } = await flowNode.lookupAPIDetails({ 
+				apiName: 'Petstore HTTPS', apiPath: '/v1/petstore'
+			});
+			expect(value.apiSecurity).to.equal(`API-Key`);
+			expect(value.name).to.equal(`Petstore HTTPS`);
+			expect(value.path).to.equal(`/v1/petstore`);
+			expect(output).to.equal('next');
+			// Make sure the result is cached
+			nock.cleanAll();
+			// This re-run should be delivered out of the cache
+			await flowNode.lookupAPIDetails({ 
+				apiPath: '/v1/petstore'
+			});
+		});
+
+		it('should return default policies when not providing an operationId', async () => {
+			nock('https://mocked-api-gateway:8175').get('/api/portal/v1.3/proxies?field=name&op=eq&value=Petstore HTTPS').replyWithFile(200, './test/testReplies/apimanager/apiProxyWithDefaultPolicies.json');
+			nock('https://mocked-api-gateway:8175').get(`/api/portal/v1.3/organizations/439ec2bd-0350-459c-8df3-bb6d14da6bc8`).replyWithFile(200, './test/testReplies/apimanager/organizationAPIDevelopment.json');
+			
+			const { value, output } = await flowNode.lookupAPIDetails({ 
+				apiName: 'Petstore HTTPS', apiPath: '/v1/petstore'
+			});
+			//expect(value.organizationName).to.equal(`API Development`);
+			expect(value.requestPolicy).to.equal(`Request Policy 1`);
+			expect(value.routingPolicy).to.equal(`Routing Policy 1`);
+			expect(value.responsePolicy).to.equal(`Response Policy 1`);
+			expect(value.faulthandlerPolicy).to.equal(`Fault Handler Policy 1`);
+			expect(value.name).to.equal(`Petstore HTTPS`);
+			expect(value.path).to.equal(`/v1/petstore`);
+			expect(output).to.equal('next');
+			// Make sure the result is cached
+			nock.cleanAll();
+			// This re-run should be delivered out of the cache
+			await flowNode.lookupAPIDetails({ 
+				apiPath: '/v1/petstore'
+			});
+		});
+
+		it('should return null for policies (Request, Response, ....) when no policy is configured', async () => {
+			nock('https://mocked-api-gateway:8175').get('/api/portal/v1.3/proxies?field=name&op=eq&value=Petstore HTTPS').replyWithFile(200, './test/testReplies/apimanager/apiProxyFound.json');
+			nock('https://mocked-api-gateway:8175').get(`/api/portal/v1.3/organizations/439ec2bd-0350-459c-8df3-bb6d14da6bc8`).replyWithFile(200, './test/testReplies/apimanager/organizationAPIDevelopment.json');
+			
+			const { value, output } = await flowNode.lookupAPIDetails({ 
+				apiName: 'Petstore HTTPS', apiPath: '/v1/petstore'
+			});
+			//expect(value.organizationName).to.equal(`API Development`);
+			expect(value.requestPolicy).to.equal("N/A");
+			expect(value.routingPolicy).to.equal("N/A");
+			expect(value.responsePolicy).to.equal("N/A");
+			expect(value.faulthandlerPolicy).to.equal("N/A");
+			expect(value.name).to.equal(`Petstore HTTPS`);
+			expect(value.path).to.equal(`/v1/petstore`);
+			expect(output).to.equal('next');
+			// Make sure the result is cached
+			nock.cleanAll();
+			// This re-run should be delivered out of the cache - Should work without the Mocks!
+			await flowNode.lookupAPIDetails({ 
+				apiPath: '/v1/petstore'
+			});
+		});
+
+		it('should ignore the given groupId, if only ONE API-Manager is configured anyway', async () => {
+			nock('https://mocked-api-gateway:8175').get('/api/portal/v1.3/proxies?field=name&op=eq&value=Petstore HTTPS').replyWithFile(200, './test/testReplies/apimanager/apiProxyFound.json');
+			nock('https://mocked-api-gateway:8175').get(`/api/portal/v1.3/organizations/439ec2bd-0350-459c-8df3-bb6d14da6bc8`).replyWithFile(200, './test/testReplies/apimanager/organizationAPIDevelopment.json');
+			
+			const { value, output } = await flowNode.lookupAPIDetails({ 
+				apiName: 'Petstore HTTPS', apiPath: '/v1/petstore', groupId: 'group-unknown'
+			});
+			expect(value.organizationName).to.equal(`API Development`);
+			expect(value.requestPolicy).to.equal("N/A");
+			expect(value.routingPolicy).to.equal("N/A");
+			expect(value.responsePolicy).to.equal("N/A");
+			expect(value.faulthandlerPolicy).to.equal("N/A");
+			expect(value.name).to.equal(`Petstore HTTPS`);
+			expect(value.path).to.equal(`/v1/petstore`);
+			expect(output).to.equal('next');
+			nock.cleanAll();
 		});
 	});
 });

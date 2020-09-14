@@ -42,14 +42,14 @@
 					"name": "query",
 					"type": "jsonpath",
 					"value": "$.elasticQuery",
-					"metaName": "query",
+					"metaName": "Query",
 					"metaDescription": "Defines the search definition using the Query DSL. Learn more: https://www.elastic.co/guide/en/elasticsearch/reference/7.x/query-dsl.html"
 				},
 				{
 					"name": "index",
 					"type": "jsonpath",
 					"value": "$.index",
-					"metaName": "index",
+					"metaName": "Index",
 					"metaDescription": "Comma-separated list or wildcard expression of index names used to limit the request."
 				}
 			],
@@ -254,6 +254,13 @@
 					"value": "$.request.headers",
 					"metaName": "Request Headers",
 					"metaDescription": "The request headers are used to lookup the current users based on the current session cookie (VIDUSR)."
+				},
+				{
+					"name": "groupId",
+					"type": "jsonpath",
+					"value": "$.params.groupId",
+					"metaName": "The API-Gateway Group-ID",
+					"metaDescription": "The ID of the Domain-Group where this event was created. If given, it's used to determined which API-Manager to use. For that, the parameter: API_MANAGER must be configured like so: API_MANAGER=group-5#https://manager-1:8075, group-2#https://manager-2:8075, ...."
 				}
 			],
 			"outputs": {

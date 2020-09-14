@@ -1,0 +1,69 @@
+{
+    "index_patterns": [
+        "apigw-monitoring-*"
+    ],
+    "settings": {
+        "number_of_shards": 5, 
+        "number_of_replicas": 1,
+        "index": {
+            "codec": "best_compression"
+        }
+    },
+    "mappings": {
+        "dynamic": false,
+        "properties": {
+            "@timestamp": {
+                "type" : "date"
+            },
+            "host.name": {
+                "type": "keyword"
+            },
+            "diskUsed": {
+                "type": "integer"
+            },
+            "instCpu": {
+                "type": "integer"
+            },
+            "sysCpu": {
+                "type": "integer"
+            },
+            "instMem": {
+                "type": "double"
+            },
+            "sysMem": {
+                "type": "double"
+            },
+            "sysMemTotal": {
+                "type": "double"
+            },
+            "processInfo.gatewayRegion": {
+                "type": "keyword"
+            },
+            "processInfo.gatewayName": {
+                "type": "text",
+                "fields": {
+                    "keyword": {
+                        "type": "keyword"
+                    }
+                },
+                "norms": false
+            },
+            "type": {
+                "type": "keyword"
+            },
+            "alertType": {
+                "type": "keyword"
+            },
+            "level": {
+                "type": "integer"
+            },
+            "srcId": {
+                "type": "keyword"
+            },
+            "defaultMsg": {
+                "type": "text",
+                "norms": false
+            }   
+        }
+    }
+}

@@ -15,7 +15,9 @@ module.exports = {
 			// If true, some test API-Requests are then mocked
 			MOCK_LOOKUP_API: process.env.MOCK_LOOKUP_API,
 			// This optionally disables the validation of the configuration on API-Builder startup
-			validateConfig: (process.env.VALIDATE_CONFIG) ? process.env.VALIDATE_CONFIG : true
+			validateConfig: (process.env.VALIDATE_CONFIG) ? process.env.VALIDATE_CONFIG : true,
+			// For how should looked up entities (API, User) stay in the cached
+			lookupCacheTTL: parseInt(process.env.LOOKUP_CACHE_TTL) ? process.env.LOOKUP_CACHE_TTL : 600
 		}
 	}
 };

@@ -1,0 +1,69 @@
+{
+  "fields": {
+    "gatewayName": "API-Gateway 1",
+    "gatewayRegion": "APAC"
+  },
+  "codec": "json_lines",
+  "testcases": [
+    {
+      "description": "Header events should be dropped, hence we don't expect an event",
+      "input": [
+        "{\"type\":\"header\", \"logCreationTime\":\"2020-08-26 12:15:00.010\", \"hostname\":\"api-env\", \"domainId\":\"ed992442-c363-4d36-963a-9e6314b0f421\", \"groupId\":\"group-2\", \"groupName\":\"QuickStart Group\", \"serviceId\":\"instance-1\", \"serviceName\":\"QuickStart Server\", \"version\":\"v7.7.0-Internal\"}"
+      ],
+      "expected": [ ]
+    },
+    {
+      "description": "For now, we skip transaction events - Might be changed later",
+      "input": [
+        "{\"type\":\"transaction\", \"time\":1598469300007, \"path\":null, \"protocol\":null, \"protocolSrc\":null, \"duration\":2, \"status\":\"success\", \"serviceContexts\":[], \"customMsgAtts\":{}, \"correlationId\":\"b4b4465f0093bdc9ba91150e\", \"legs\":[]}"
+      ],
+      "expected": [ ]
+    },
+    {
+      "description": "System events should produce an event",
+      "input": [
+        "{\"type\":\"system\", \"time\":1598469315360, \"diskUsed\":88, \"instCpu\":3, \"sysCpu\":13, \"instMem\":2269044, \"sysMem\":15677168, \"sysMemTotal\":16266828}"
+      ],
+      "expected": [
+        {
+          "@timestamp": "2020-08-26T19:15:15.360Z",
+          "type": "system",
+          "sysMem": 15677168,
+          "diskUsed": 88,
+          "instMem": 2269044,
+          "sysCpu": 13,
+          "sysMemTotal": 16266828,
+          "instCpu": 3,
+          "processInfo": {
+            "gatewayName": "API-Gateway 1", 
+            "gatewayRegion": "APAC"
+          }
+        }
+      ]
+    },
+    {
+      "description": "Alert events should produce an event",
+      "input": [
+        "{\"type\":\"alert\", \"time\":1598537495841, \"alertType\":\"AlertMessage\", \"level\":3, \"id\":\"-749bad62:174302050ef:-7fff\", \"srcId\":\"api-env:instance-1\", \"msgId\":\"Id-17bf475fb303f8664492b7ba\", \"defaultMsg\":\"API Manager: Frontend API weatherbit with ID 65182d09-88de-49c6-a303-5dcf64df71c2 has been unpublished.\", \"clientIP\":\"192.168.233.1\", \"policy\":\"Send Alert\", \"filter\":\"Send API Manager Alert\"}"
+      ],
+      "expected": [
+        {
+          "@timestamp": "2020-08-27T14:11:35.841Z",
+          "type": "alert",
+          "alertType": "AlertMessage",
+          "level": 3,
+          "srcId": "api-env:instance-1",
+          "msgId": "Id-17bf475fb303f8664492b7ba",
+          "defaultMsg": "API Manager: Frontend API weatherbit with ID 65182d09-88de-49c6-a303-5dcf64df71c2 has been unpublished.",
+          "clientIP": "192.168.233.1",
+          "policy": "Send Alert",
+          "filter": "Send API Manager Alert",
+          "processInfo": {
+            "gatewayName": "API-Gateway 1", 
+            "gatewayRegion": "APAC"
+          }
+        }
+      ]
+    }
+  ]
+}
