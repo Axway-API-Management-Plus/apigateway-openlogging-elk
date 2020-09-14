@@ -23,12 +23,12 @@ jobs:
         tags: "${{ github.event.release.tag_name }}"
     - name: Create release archive
       run: |
-        tar -czvf ${{ARCHIVE_NAME}}.tar.gz
+        tar -czvf ${{ env.ARCHIVE_NAME }}.tar.gz
         * 
         --exclude=imgs 
         --exclude=elk-traffic-monitor-api
     - name: create-checksum
-      run: sha256sum "$ARCHIVE_NAME".tar.gz >checksum.txt
+      run: sha256sum "${{ env.ARCHIVE_NAME }}".tar.gz >checksum.txt
     - name: upload-archive
       uses: actions/upload-release-asset@v1
       with:
