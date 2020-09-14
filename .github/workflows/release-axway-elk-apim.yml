@@ -14,7 +14,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Create release archive
-      run: 'tar -czvf ${{ env.ARCHIVE_NAME }}.tar.gz certificates elasticsearch filebeat kibana logstash docker-compose.yml README.md CHANGELOG.md'
+      run: 'tar -czvf ${{ env.ARCHIVE_NAME }}.tar.gz certificates elasticsearch filebeat kibana logstash docker-compose.yml nodemanager README.md CHANGELOG.md'
     - name: create-checksum
       run: sha256sum "${{ env.ARCHIVE_NAME }}".tar.gz >${{ env.ARCHIVE_NAME }}-checksum.txt
     - name: upload-archive

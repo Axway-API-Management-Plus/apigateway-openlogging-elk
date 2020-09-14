@@ -115,6 +115,8 @@ It is recommended to disable the audit log for Failure transactions to avoid not
 ![Use Callback][img9]  
 You may add a custom success message (e.g. `Used ElasticSearch API`) if you like.
 
+Before you restart the Admin-Node-Manager process, please open the file: `<apigateway-install-dir>/apigateway/conf/envSettings.props` and add the following new environment variable: `API_BUILDER_URL=https://elk-traffic-monitor-api:8443`. 
+
 :point_right:    
 Please remember to copy the changed Admin-Node-Manager configuration from the Policy-Studio project folder (path on Linux: `/home/<user>/apiprojects/\<project-name\>`) back to the ANM folder (`\<install-dir\>/apigateway/conf/fed`). Afterwards the ANM  must be restarted.
 
