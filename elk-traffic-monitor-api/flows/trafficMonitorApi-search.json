@@ -357,7 +357,7 @@
 				{
 					"name": "code",
 					"type": "string",
-					"value": "\"var queryFilters = [];\\n  \\n  if(typeof data.params.protocol == 'undefined') {\\n    data.params.protocol = 'http';\\n  }\\n  \\n  if(data.params.protocol == 'filetransfer') {\\n    data.params.protocol = 'fileTransfer';\\n  }\\n  \\n  data.fields = [\\n    // This Object-Array declares for each field how to query it in ES\\n    { fieldName: 'uri', queryType: 'match', queryLocation: 'path' }, \\n    { fieldName: 'wafStatus', queryType: 'match', queryLocation: 'http.wafStatus' }, \\n    { fieldName: 'finalStatus', queryType: 'match', queryLocation: 'finalStatus' }, \\n    { fieldName: 'remotePort', queryType: 'match', queryLocation: 'http.remotePort' }, \\n    { fieldName: 'remoteName', queryType: 'match', queryLocation: 'http.remoteName' }, \\n    { fieldName: 'localAddr', queryType: 'match', queryLocation: 'http.localAddr' },\\n    { fieldName: 'status', queryType: 'match', queryLocation: 'http.status' },\\n    { fieldName: 'subject', queryType: 'match', queryLocation: 'http.authSubjectId' },\\n    { fieldName: 'operation', queryType: 'match', queryLocation: 'serviceContext.method' },\\n    { fieldName: 'localPort', queryType: 'match', queryLocation: 'http.localPort' },\\n    { fieldName: 'method', queryType: 'match', queryLocation: 'http.method' },\\n    { fieldName: 'correlationId', queryType: 'match', queryLocation: 'correlationId' },\\n    { fieldName: 'serviceName', queryType: 'match', queryLocation: 'serviceContext.service' },\\n    { fieldName: 'servicetype', queryType: 'match', queryLocation: `${data.params.protocol}.serviceType` }\\n  ];\\n  \\n  if(typeof data.params.field == 'undefined') {\\n    data.params.field = [];\\n  }\\n  if(typeof data.params.field == 'string') {\\n    data.params.field = [data.params.field];\\n  }\\n  if(typeof data.params.value === 'undefined') {\\n    data.params.value = [];\\n  }\\n  if(typeof data.params.value == 'string') {\\n    data.params.value = [data.params.value];\\n  }\\n  return queryFilters;\"",
+					"value": "\"var queryFilters = [];\\n  \\n  if(typeof data.params.protocol == 'undefined') {\\n    data.params.protocol = 'http';\\n  }\\n  \\n  if(data.params.protocol == 'filetransfer') {\\n    data.params.protocol = 'fileTransfer';\\n  }\\n  \\n  console.log('Requested protocol: ' + data.params.protocol);\\n  \\n  data.fields = [\\n    // This Object-Array declares for each field how to query it in ES\\n    { fieldName: 'uri', queryType: 'match', queryLocation: 'path' }, \\n    { fieldName: 'wafStatus', queryType: 'match', queryLocation: 'http.wafStatus' }, \\n    { fieldName: 'finalStatus', queryType: 'match', queryLocation: 'finalStatus' }, \\n    { fieldName: 'remotePort', queryType: 'match', queryLocation: 'http.remotePort' }, \\n    { fieldName: 'remoteName', queryType: 'match', queryLocation: 'http.remoteName' }, \\n    { fieldName: 'localAddr', queryType: 'match', queryLocation: 'http.localAddr' },\\n    { fieldName: 'status', queryType: 'match', queryLocation: 'http.status' },\\n    { fieldName: 'subject', queryType: 'match', queryLocation: 'http.authSubjectId' },\\n    { fieldName: 'operation', queryType: 'match', queryLocation: 'serviceContext.method' },\\n    { fieldName: 'localPort', queryType: 'match', queryLocation: 'http.localPort' },\\n    { fieldName: 'method', queryType: 'match', queryLocation: 'http.method' },\\n    { fieldName: 'correlationId', queryType: 'match', queryLocation: 'correlationId' },\\n    { fieldName: 'serviceName', queryType: 'match', queryLocation: 'serviceContext.service' },\\n    { fieldName: 'servicetype', queryType: 'match', queryLocation: `${data.params.protocol}.serviceType` }\\n  ];\\n  \\n  if(typeof data.params.field == 'undefined') {\\n    data.params.field = [];\\n  }\\n  if(typeof data.params.field == 'string') {\\n    data.params.field = [data.params.field];\\n  }\\n  if(typeof data.params.value === 'undefined') {\\n    data.params.value = [];\\n  }\\n  if(typeof data.params.value == 'string') {\\n    data.params.value = [data.params.value];\\n  }\\n  return queryFilters;\"",
 					"metaName": "code",
 					"metaDescription": "A JavaScript function body. Supports `await` and returning promises."
 				}
@@ -519,7 +519,7 @@
 			"outputs": {
 				"true": {
 					"routes": [
-						"javascript.21"
+						"condition.3"
 					],
 					"context": "$.equals",
 					"metaName": "True"
@@ -536,7 +536,7 @@
 		},
 		"condition.2": {
 			"type": "nodehandler://axway-flow/condition",
-			"name": "Is protocol HTTP?",
+			"name": "Is HTTP?",
 			"method": "equals",
 			"parameters": [
 				{
@@ -600,6 +600,111 @@
 				}
 			},
 			"metaMethod": "Set HTTP Response"
+		},
+		"condition.3": {
+			"type": "nodehandler://axway-flow/condition",
+			"name": "Is Websockets?",
+			"method": "equals",
+			"parameters": [
+				{
+					"name": "source",
+					"type": "jsonpath",
+					"value": "$.params.protocol",
+					"metaName": "Source",
+					"metaDescription": "The input to test."
+				},
+				{
+					"name": "value",
+					"type": "string",
+					"value": "\"websock\"",
+					"metaName": "Value",
+					"metaDescription": "The value to test input against."
+				}
+			],
+			"outputs": {
+				"true": {
+					"routes": [
+						"http.3"
+					],
+					"context": "$.equals",
+					"metaName": "True"
+				},
+				"false": {
+					"routes": [
+						"condition.4"
+					],
+					"context": "$.equals",
+					"metaName": "False"
+				}
+			},
+			"metaMethod": "Equals"
+		},
+		"http.3": {
+			"type": "nodehandler://axway-flow/http",
+			"name": "Protocol not implemented",
+			"method": "setresponse",
+			"parameters": [
+				{
+					"name": "status",
+					"type": "number",
+					"value": "501",
+					"metaName": "Status",
+					"metaDescription": "The HTTP status code"
+				},
+				{
+					"name": "body",
+					"type": "object",
+					"value": "{\"message\": \"Protocol is not yet implemented\"}",
+					"metaName": "Body",
+					"metaDescription": "The response payload"
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.response",
+					"routes": [],
+					"metaName": "Next"
+				}
+			},
+			"metaMethod": "Set HTTP Response"
+		},
+		"condition.4": {
+			"type": "nodehandler://axway-flow/condition",
+			"name": "Is JMS?",
+			"method": "equals",
+			"parameters": [
+				{
+					"name": "source",
+					"type": "jsonpath",
+					"value": "$.params.protocol",
+					"metaName": "Source",
+					"metaDescription": "The input to test."
+				},
+				{
+					"name": "value",
+					"type": "string",
+					"value": "\"jms\"",
+					"metaName": "Value",
+					"metaDescription": "The value to test input against."
+				}
+			],
+			"outputs": {
+				"true": {
+					"routes": [
+						"http.3"
+					],
+					"context": "$.equals",
+					"metaName": "True"
+				},
+				"false": {
+					"routes": [
+						"javascript.21"
+					],
+					"context": "$.equals",
+					"metaName": "False"
+				}
+			},
+			"metaMethod": "Equals"
 		}
 	}
 }
