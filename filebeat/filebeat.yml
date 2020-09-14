@@ -42,10 +42,10 @@ monitoring:
   enabled: true
   # Get the Cluster-ID (cluster_uuid) with this simple query: http://elasticsearch1:9200/
   # This links this filebeat instance to the Cluster with the given ID
-  cluster_uuid: ${ELASTICSEARCH_CLUSTER_UUID:NOT-SET}
+  cluster_uuid: ${ELASTICSEARCH_CLUSTER_UUID:ELASTICSEARCH_CLUSTER_UUID-NOT-SET}
   elasticsearch:
     hosts: ["${ELASTICSEARCH_HOST}"]
     ssl.enabled: true
-    ssl.certificate_authorities: ["${ELASTICSEARCH_CRT:NOT-SET}"]
+    ssl.certificate_authorities: ["${ELASTICSEARCH_CRT:ELASTICSEARCH_CRT-NOT-SET}"]
     username: "${BEATS_SYSTEM_USERNAME:beats_system}"
-    password: "${BEATS_SYSTEM_PASSWORD:NOT-SET}"
+    password: "${BEATS_SYSTEM_PASSWORD:BEATS_SYSTEM_PASSWORD-NOT-SET}"
