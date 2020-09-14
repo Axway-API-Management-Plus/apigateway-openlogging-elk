@@ -19,7 +19,7 @@ module.exports = {
 				maxRetries: 5,
 				requestTimeout: 60000,
 				ssl: {
-					//ca: fs.readFileSync('C:/temp/elasticsearch1.crt'),
+					//ca: fs.readFileSync('C:/temp/elasticsearch.crt'),
 					rejectUnauthorized: false
 				}
 			}

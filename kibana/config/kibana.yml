@@ -7,7 +7,13 @@ server.host: "0"
 elasticsearch.hosts: [ "https://elasticsearch1:9200" ]
 monitoring.ui.container.elasticsearch.enabled: true
 
-elasticsearch.username: "${KIBANA_USERNAME}"
-elasticsearch.password: "${KIBANA_PASSWORD}"
+elasticsearch.username: "${KIBANA_SYSTEM_USERNAME}"
+elasticsearch.password: "${KIBANA_SYSTEM_PASSWORD}"
 
 xpack.encryptedSavedObjects.encryptionKey: "YT8d68CZE4Z3mXBxYDVqjC4hhts4H9TQ"
+xpack.reporting.encryptionKey: "YT8d68CZE4Z3mXBxYDVqjC4hhts4H9TQ"
+xpack.security.encryptionKey: "YT8d68CZE4Z3mXBxYDVqjC4hhts4H9TQ"
+
+#xpack.reporting.kibanaServer.hostname: 0.0.0.0
+
+monitoring.cluster_alerts.email_notifications.email_address: noreply@notification.email

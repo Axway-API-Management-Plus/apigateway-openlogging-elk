@@ -8,14 +8,14 @@ services:
       - ES_JAVA_OPTS=${ES_JAVA_OPTS}
       - xpack.security.enabled=true
       - xpack.security.http.ssl.enabled=true
-      - xpack.security.http.ssl.key=/usr/share/elasticsearch/config/certificates/elasticsearch1.key
+      - xpack.security.http.ssl.key=/usr/share/elasticsearch/config/certificates/elasticsearch.key
       - xpack.security.http.ssl.certificate_authorities=/usr/share/elasticsearch/config/certificates/ca.crt
-      - xpack.security.http.ssl.certificate=/usr/share/elasticsearch/config/certificates/elasticsearch1.crt
+      - xpack.security.http.ssl.certificate=/usr/share/elasticsearch/config/certificates/elasticsearch.crt
       - xpack.security.transport.ssl.enabled=true
       - xpack.security.transport.ssl.verification_mode=certificate
       - xpack.security.transport.ssl.certificate_authorities=/usr/share/elasticsearch/config/certificates/ca.crt
-      - xpack.security.transport.ssl.certificate=/usr/share/elasticsearch/config/certificates/elasticsearch1.crt
-      - xpack.security.transport.ssl.key=/usr/share/elasticsearch/config/certificates/elasticsearch1.key
+      - xpack.security.transport.ssl.certificate=/usr/share/elasticsearch/config/certificates/elasticsearch.crt
+      - xpack.security.transport.ssl.key=/usr/share/elasticsearch/config/certificates/elasticsearch.key
     ulimits:
       memlock:
         soft: -1
@@ -45,8 +45,8 @@ services:
     environment:
       - SERVER_NAME=localhost
       - ELASTICSEARCH_HOSTS=${ELASTICSEARCH_HOST}
-      - KIBANA_USERNAME=${KIBANA_USERNAME}
-      - KIBANA_PASSWORD=${KIBANA_PASSWORD}
+      - KIBANA_SYSTEM_USERNAME=${KIBANA_SYSTEM_USERNAME}
+      - KIBANA_SYSTEM_PASSWORD=${KIBANA_SYSTEM_PASSWORD}
       - ELASTICSEARCH_API_KEY=${ELASTICSEARCH_API_KEY}
       - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=/usr/share/kibana/config/certificates/ca.crt
       - SERVER_SSL_ENABLED="true"
@@ -74,13 +74,14 @@ services:
   # https://github.com/elastic/logstash-docker/blob/master/build/logstash/env2yaml/env2yaml.go
   logstash:
     image: docker.elastic.co/logstash/logstash:7.9.0
+    container_name: logstash
     environment:
       - xpack.monitoring.enabled=true
-      - xpack.monitoring.elasticsearch.ssl.certificate_authority=/usr/share/logstash/config/certificates/elasticsearch1.crt
+      - xpack.monitoring.elasticsearch.ssl.certificate_authority=/usr/share/logstash/config/certificates/elasticsearch.crt
       - xpack.monitoring.elasticsearch.hosts=${ELASTICSEARCH_HOST}
-      - xpack.monitoring.elasticsearch.username=${LOGSTASH_MONITORING_USERNAME}
-      - xpack.monitoring.elasticsearch.password=${LOGSTASH_MONITORING_PASSWORD}
-      - ELASTICSEARCH_CERT=/usr/share/logstash/config/certificates/elasticsearch1.crt
+      - xpack.monitoring.elasticsearch.username=${LOGSTASH_SYSTEM_USERNAME}
+      - xpack.monitoring.elasticsearch.password=${LOGSTASH_SYSTEM_PASSWORD}
+      - ELASTICSEARCH_CERT=/usr/share/logstash/config/certificates/elasticsearch.crt
       - ELASTICSEARCH_HOST=${ELASTICSEARCH_HOST}
       - LOGSTASH_USERNAME=${LOGSTASH_USERNAME}
       - LOGSTASH_PASSWORD=${LOGSTASH_PASSWORD}
@@ -104,13 +105,14 @@ services:
   # Supposed to run side-by-side with the API-Gateway to watch the Open-Traffic Event files and send event to Logstash
   filebeat:
     image: docker.elastic.co/beats/filebeat:7.9.0
+    container_name: filebeat
     command: --strict.perms=false
     environment:
       - LOGSTASH=${LOGSTASH}
       - ELASTICSEARCH_HOST=${ELASTICSEARCH_HOST}
       - ELASTICSEARCH_CLUSTER_UUID=${ELASTICSEARCH_CLUSTER_UUID}
-      - FILEBEAT_MONITORING_USERNAME=${FILEBEAT_MONITORING_USERNAME}
-      - FILEBEAT_MONITORING_PASSWORD=${FILEBEAT_MONITORING_PASSWORD}
+      - BEATS_SYSTEM_USERNAME=${BEATS_SYSTEM_USERNAME}
+      - BEATS_SYSTEM_PASSWORD=${BEATS_SYSTEM_PASSWORD}
       - GATEWAY_NAME=${GATEWAY_NAME}
       - GATEWAY_REGION=${GATEWAY_REGION}
       - FILEBEAT_WORKER=${FILEBEAT_WORKER}
@@ -136,6 +138,7 @@ services:
   # This is the API-Builder project exposing the API-Gateway Manager REST-API
   elk-traffic-monitor-api:
     image: cwiechmann/elk-traffic-monitor-api:latest
+    container_name: apibuilder
     environment:
       - ELASTICSEARCH_HOST=${ELASTICSEARCH_HOST}
       - ADMIN_NODE_MANAGER=${ADMIN_NODE_MANAGER}

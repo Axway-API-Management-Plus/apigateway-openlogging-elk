@@ -106,7 +106,7 @@ For the following steps, please open the ANM configuration in Policy-Studio. You
 
 The compare attribute filter should look like this:   
 ![Is API Managed][img6]  
-- Adjust the URL of the Connect to URL filter to your running API-Builder docker container and port - **default is 8889**. Sample: `http://api-env:8889/api/elk/v1${http.request.rawURI}`  
+- Adjust the URL of the Connect to URL filter to your running API-Builder docker container and port - **default is 8889**. Sample: `https://api-env:8443/api/elk/v1${http.request.rawURI}`  
 ![Connect to ES API][img7]
 - Insert the created policy as a callback policy (filter: Shortcut filter) into the main policy: `Protect Management Interfaces` and wire it like shown here:  
   ![Use Callback][img4]  
@@ -138,14 +138,14 @@ APIGATEWAY_EVENTS_FOLDER=/home/localuser/Axway-x.y.z/apigateway/events
 Logstash receives the open traffic and open trace events from Filebeat and processes them. Among other things, an HTTP lookup is performed on an API detail lookup REST-API to enrich the API information. Therefore Logstash must know under which URL the API builder can be reached.  
 This parameter is optional if you use the default docker-compose.yml file.
 ```
-API_BUILDER_URL=http://my-api-builder:8080
+API_BUILDER_URL=https://my-api-builder:8443
 ```
 
 ### Setup API-Builder
 As the API-Builder container needs to communicate with Elasticsearch it needs to know where Elasticsearch is running:
 Please note, when using the default docker-compose.yaml the default setting is sufficient, as it's using the internal Docker-Network `elastic`.  
 ```
-ELASTICSEARCH_HOST=http://elasticsearch1:9200
+ELASTICSEARCH_HOST=https://elasticsearch1:9200
 ```
 Furthermore, the API Builder communicates with the Admin Node Manager and API Manager. Therefore the following parameters must be configured in the `.env` file.  
 ```
@@ -243,7 +243,7 @@ To activate these changes the Filebeat service must be restarted.
 The API-Builder project for providing access to Elasticsearch data has no access restrictions right now. To ensure only API-Gateway Manager users (topology administrators with proper RBAC role) or other users with appropriate access rights can query the log data, one can expose this API via API-Manager and add security here.
 
 To import the API Builder project REST-API into your API-Manager, you can access the Swagger/OpenAPI definition here (replace docker-host and port appropriately for the container that is hosting the API-Builder project):  
-http://docker-host:8889/apidoc/swagger.json?endpoints/trafficMonitorApi
+https://docker-host:8443/apidoc/swagger.json?endpoints/trafficMonitorApi
 
 ## Sizing your infrastructure
 
@@ -383,7 +383,7 @@ When Logstash is successfully started you should see the following:
 ...
 ......
 ...
-[INFO ][logstash.outputs.elasticsearch] Elasticsearch pool URLs updated {:changes=>{:removed=>[], :added=>[http://elasticsearch1:9200/]}}
+[INFO ][logstash.outputs.elasticsearch] Elasticsearch pool URLs updated {:changes=>{:removed=>[], :added=>[https://elasticsearch1:9200/]}}
 [INFO ][logstash.outputs.elasticsearch] ES Output version determined {:es_version=>7}
 [INFO ][logstash.outputs.elasticsearch] New Elasticsearch output {:class=>"LogStash::Outputs::ElasticSearch", :hosts=>["//elasticsearch1:9200"]}
 [INFO ][logstash.javapipeline    ] Starting pipeline {:pipeline_id=>".monitoring-logstash", "pipeline.workers"=>1, "pipeline.batch.size"=>2, "pipeline.batch.delay"=>50, "pipeline.max_inflight"=>2, :thread=>"#<Thread:0x147f9919 run>"}

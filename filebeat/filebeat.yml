@@ -46,6 +46,6 @@ monitoring:
   elasticsearch:
     hosts: ["${ELASTICSEARCH_HOST}"]
     ssl.enabled: true
-    ssl.certificate_authorities: ["/usr/share/filebeat/certificates/elasticsearch1.crt"]
-    username: "${FILEBEAT_MONITORING_USERNAME:beats_system}"
-    password: "${FILEBEAT_MONITORING_PASSWORD:NOT-SET}"
+    ssl.certificate_authorities: ["/usr/share/filebeat/certificates/elasticsearch.crt"]
+    username: "${BEATS_SYSTEM_USERNAME:beats_system}"
+    password: "${BEATS_SYSTEM_PASSWORD:NOT-SET}"
