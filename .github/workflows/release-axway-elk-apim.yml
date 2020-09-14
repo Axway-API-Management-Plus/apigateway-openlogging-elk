@@ -5,7 +5,7 @@ on:
     types: [published]
 
 jobs:
-  publish-traffic-monitor-api:
+  release-elk-apim:
 
     runs-on: ubuntu-latest
     env:
@@ -14,7 +14,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Create release archive
-      run: tar -czvf ${{ env.ARCHIVE_NAME }}.tar.gz * --exclude=imgs --exclude=elk-traffic-monitor-api
+      run: 'tar -czvf ${{ env.ARCHIVE_NAME }}.tar.gz certificates elasticsearch filebeat kibana logstash docker-compose.yml README.md CHANGELOG.md'
     - name: create-checksum
       run: sha256sum "${{ env.ARCHIVE_NAME }}".tar.gz >checksum.txt
     - name: upload-archive
@@ -42,4 +42,4 @@ jobs:
         workdir: 'elk-traffic-monitor-api'
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
-        tags: "${{ github.event.release.tag_name }}"
+        tag_names: "${{ github.event.release.tag_name }}"
