@@ -13,6 +13,7 @@ jobs:
           - 8080:8080
         env:
           MOCK_LOOKUP_API: true
+          ENABLE_HTTP_PORT: true
       memcached:
         image: memcached:1.6.6-alpine
         ports: 
