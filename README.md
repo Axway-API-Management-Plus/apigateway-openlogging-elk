@@ -2,24 +2,58 @@
 
 This project has 3 main objectives in relation to the Axway API management solution.
 
-__Performance__  
+### Performance
 
 When having many API-Gateway instances with millions of requests the API-Gateway Traffic Monitor can become slow and the observation period quite short. The purpose of this project is to solve that performance issue, make it possible to observe a long time-frame and get other benefits by using a standard external datastore: [Elasticsearch](https://www.elastic.co/elasticsearch).  
 
 Watch this video to see a side by side compare betwen the classical and ElasticSearch based Traffic-Monitor:  
 [![Traffic-Monitor performance](https://img.youtube.com/vi/MUbx4m9EtpY/0.jpg)](https://youtu.be/MUbx4m9EtpY)
 
-__Visibility__  
+### Visibility 
 
 This solution allows API service providers to give access to the Standard Traffic Monitor so that they only see the API traffic of their own organization. This allows API service providers to analyze their own traffic using the extensive information in the traffic monitor.  
 
 This video shows how API-Manager users can access the traffic monitor to see their data:  
 [![Traffic-Monitor for API-Manager users](https://img.youtube.com/vi/rlzi2kAXD4M/0.jpg)](https://youtu.be/rlzi2kAXD4M)
 
-__Analytics__  
+### Analytics
 
 With the help of Kibana, the goal of the project is to deliver standard dashboards that provide analysis capabilities across multiple perspectives.  
 It should still be possible to add your own dashboards as you wish.  
+
+
+## Table of content
+
+- [Overview](#overview)
+    - [Architecture](#architecture)
+    - [How it works](#how-it-works)
+- [Preparations](#preparations)
+    - [Open-Traffic event log](#open-traffic-event-log)
+    - [Configure Admin Node Manager](#configure-admin-node-manager)
+- [Basic setup](#basic-setup)
+    - [Filebeat](#filebeat)
+    - [Logstash](#logstash)
+    - [API-Builder](#api-builder)
+    - [Elasticsearch](#elasticsearch)
+    - [Kibana](#kibana)
+- [Manage environment](#start-and-stop)
+    - [Start/Stop using docker-compose](#start-using-docker-compose)
+    - [Acccess components](#start-using-docker-compose)
+- [Advanced setup](#advanced-setup)
+    - [Activate user authentication](#activate-user-authentication)
+    - [Configure cluster UUID](#configure-cluster-uuid)
+    - [Securing API-Builder Traffic-Monitor API](#configure-cluster-uuid)
+- [Infrastructure sizing](#infrastructure-sizing)
+    - [Sizing recommendations](#sizing-recommendations)
+    - [Test infrastructure](#test-infrastructure)
+- [Troubleshooting](#troubleshooting)
+    - [Check processes/containers are running](#test-infrastructure)
+    - [Check Filebeat is picking up data](#test-infrastructure)
+    - [Check Logstash processing](#test-infrastructure)
+    - [Check Elasticsearch processing](#test-infrastructure)
+    - [Check API-Builder processing](#test-infrastructure)
+- [License](#license)
+- [Links](#links)
 
 This shows a sample dashboard created in Kibana based on the indexed documents:  
 ![Architecture][img10]
