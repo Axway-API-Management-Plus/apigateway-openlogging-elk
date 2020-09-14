@@ -31,7 +31,7 @@ This shows a sample dashboard created in Kibana based on the indexed documents:
     - [How it works](#how-it-works)
     - [The Traffic-Monitor](#the-traffic-monitor)
 - [Prerequisites](#prerequisites)
-- [Installation](#preparations)
+- [Preparations](#preparations)
 - [Basic setup](#basic-setup)
     - [Filebeat](#filebeat)
     - [Logstash](#logstash)
