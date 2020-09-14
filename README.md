@@ -37,6 +37,7 @@ This shows a sample dashboard created in Kibana based on the indexed documents:
 - [Prerequisites](#prerequisites)
 - [Preparations](#preparations)
 - [Basic setup](#basic-setup)
+    - [Getting started](#getting-started)
     - [Filebeat](#filebeat)
     - [Logstash](#logstash)
     - [API-Builder](#api-builder)
@@ -109,6 +110,11 @@ After this configuration has been done, Open-Traffic log-files will be created b
 As the idea of this project is to use the existing API-Gateway Manager UI (short: ANM) to render log data now provided by Elasticsearch instead of the individual API-Gateway instances before (the build in behavior), it is required to patch the ANM configuration to make use of Elasticsearch instead of the API-Gateway instances (default setup). By default, ANM is listening on port 8090 for administrative traffic. This API is responsible to serve the Traffic-Monitor and needs to be configured to use the API-Builder REST-API instead.
 
 For the following steps, please open the ANM configuration in Policy-Studio. You can read [here](https://docs.axway.com/bundle/axway-open-docs/page/docs/apim_administration/apigtw_admin/general_rbac_ad_ldap/index.html#use-the-ldap-policy-to-protect-management-services) how to do that.  
+
+:point_right: You download a pre-package Policy-Fragement here: [policy-use-elasticsearch-api-7.7.0.xml](nodemanager/policy-use-elasticsearch-api-7.7.0.xml)
+
+#### Create the policy manually
+
 - Create a new policy and name it `Use Elasticsearch API` - *This Policy will decide on what API calls can be routed to Elasticsearch*
 - The configured Policy should look like this:
 
@@ -129,17 +135,22 @@ The compare attribute filter should look like this:
 ![Is API Managed][img6]  
 - Adjust the URL of the Connect to URL filter to your running API-Builder docker container and port - **default is 8889**. Sample: `https://api-env:8443/api/elk/v1${http.request.rawURI}`  
 ![Connect to ES API][img7]
-- Insert the created policy as a callback policy (filter: Shortcut filter) into the main policy: `Protect Management Interfaces` and wire it like shown here:  
-  ![Use Callback][img4]  
+- Is not implemented is a compare attribute filter configured like so:  
+![Is not implemented][imgs/is_not_implemented.png]  
+
+
+#### Update main policy
+
+Insert the created policy as a callback policy (filter: Shortcut filter) into the main policy: `Protect Management Interfaces` and wire it like shown here:  
+![Use Callback][img4]  
 
 It is recommended to disable the audit log for Failure transactions to avoid not needed log messages in the ANM trace file:  
 ![Use Callback][img9]  
 You may add a custom success message (e.g. `Used ElasticSearch API`) if you like.
 
-Before you restart the Admin-Node-Manager process, please open the file: `<apigateway-install-dir>/apigateway/conf/envSettings.props` and add the following new environment variable: `API_BUILDER_URL=https://elk-traffic-monitor-api:8443`. 
-
 :point_right:    
-Please remember to copy the changed Admin-Node-Manager configuration from the Policy-Studio project folder (path on Linux: `/home/<user>/apiprojects/\<project-name\>`) back to the ANM folder (`\<install-dir\>/apigateway/conf/fed`). Afterwards the ANM  must be restarted.
+-  Before you restart the Admin-Node-Manager process, please open the file: `<apigateway-install-dir>/apigateway/conf/envSettings.props` and add the following new environment variable: `API_BUILDER_URL=https://elk-traffic-monitor-api:8443`. 
+- Please remember to copy the changed Admin-Node-Manager configuration from the Policy-Studio project folder (path on Linux: `/home/<user>/apiprojects/\<project-name\>`) back to the ANM folder (`\<install-dir\>/apigateway/conf/fed`). Afterwards the ANM  must be restarted.
 
 ### Restrict the Traffic-Monitor
 
@@ -164,7 +175,9 @@ You can, of course, create additional roles in the API Gateway Manager to adjust
 ### Getting started
 
 To get started please download the release package from the GitHub project onto your machine:  
-`wget --no-check-certificate --content-disposition https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/tarball/v0.0.11 -O - | tar -xvz`
+```
+wget --no-check-certificate --content-disposition https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/tarball/v0.0.11 -O - | tar -xvz
+```
 
 The basic setup assumes you are running the individual components based on the provided docker-compose file, which is using the `.env` to read the required configuration parameters.  
 For the basic setup the following describes what needs to be changed in the provided `.env` file. This file populates a number of environment variables, that are used by one or more components. For advanced configuration topics you can study the environment file as each parameter is explained. 
