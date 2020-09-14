@@ -111,7 +111,7 @@ As the idea of this project is to use the existing API-Gateway Manager UI (short
 
 For the following steps, please open the ANM configuration in Policy-Studio. You can read [here](https://docs.axway.com/bundle/axway-open-docs/page/docs/apim_administration/apigtw_admin/general_rbac_ad_ldap/index.html#use-the-ldap-policy-to-protect-management-services) how to do that.  
 
-:point_right: You download a pre-package Policy-Fragement here: [policy-use-elasticsearch-api-7.7.0.xml](nodemanager/policy-use-elasticsearch-api-7.7.0.xml)
+:point_right: You can download a pre-packaged Policy-Fragement (Ver. 7.7.0) here: [policy-use-elasticsearch-api-7.7.0.xml](nodemanager/policy-use-elasticsearch-api-7.7.0.xml)
 
 #### Create the policy manually
 
