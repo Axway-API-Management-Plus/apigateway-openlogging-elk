@@ -8,7 +8,7 @@ When having many API-Gateway instances with millions of requests the API-Gateway
 
 Watch this video to see a side by side compare betwen the classical and ElasticSearch based Traffic-Monitor:  
 <p align="center">
-  [![Traffic-Monitor performance](https://img.youtube.com/vi/MUbx4m9EtpY/0.jpg)](https://youtu.be/MUbx4m9EtpY)
+  <iframe width="560" height="315" src="https://www.youtube.com/embed/MUbx4m9EtpY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </p>
 
 ### Visibility 
@@ -17,7 +17,7 @@ This solution allows API service providers to give access to the Standard Traffi
 
 This video shows how API-Manager users can access the traffic monitor to see their data:  
 <p align="center">
-  [![Traffic-Monitor for API-Manager users](https://img.youtube.com/vi/rlzi2kAXD4M/0.jpg)](https://youtu.be/rlzi2kAXD4M)
+  <iframe width="560" height="315" src="https://www.youtube.com/embed/rlzi2kAXD4M" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </p>
 
 ### Analytics
