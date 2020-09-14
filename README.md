@@ -38,9 +38,9 @@ This shows a sample dashboard created in Kibana based on the indexed documents:
     - [API-Builder](#api-builder)
     - [Elasticsearch](#elasticsearch)
     - [Kibana](#kibana)
-- [Manage environment](#start-and-stop)
-    - [Start/Stop using docker-compose](#start-using-docker-compose)
-    - [Acccess components](#start-using-docker-compose)
+- [Manage the environment](#manage-the-environment)
+    - [Using docker-compose](#using-docker-compose)
+    - [Acccess components](#acccess-components)
 - [Advanced setup](#advanced-setup)
     - [Activate user authentication](#activate-user-authentication)
     - [Configure cluster UUID](#configure-cluster-uuid)
@@ -96,11 +96,6 @@ The solution can run completely based on docker containers, which for example ar
 Of course you can also use existing components and install them manually. For example an Elasticsearch service at AWS or Azure. The solution has been tested with Elasticsearch 7.x version.
 
 ## Preparations
-To run the components in a PoC-Like mode, the recommended way is to clone this project onto a machine having docker and docker-compose installed. Also this machine must have file-based access to the running API-Gateway instance, as the Filebeat docker container will mount the open-traffic folder into the container. In fact, only the Filebeat process needs to have access to the OpenTraffic-Event files, all other components can be deployed somewhere else.
-
-`git clone https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk.git`  
-
-This creates a local copy of the repository and you can start from there.
 
 ### Enable Open-Traffic Event Log
 Obviously, you have to enable Open-Traffic-Event log for your API-Gateway instance(s). [Read here][1] how to enable the Open-Traffic Event-Log.  
@@ -162,9 +157,13 @@ You can, of course, create additional roles in the API Gateway Manager to adjust
 
 ## Basic setup
 
-Before you start the environment based on the `docker-compose.yml` file for the first time, please adjust the provided `.env` file accordingly. This file populates a number of environment variables, that are used by one or more components. Each environment variable is described direclty within the file.  
-Obviously it's supported to run the different components on different machines. For instance using an existing Elasticsearch cluster or install Filebeat on your API-Gateway machine as a native software installation, instead of using a Docker-Container.  For that, please adjust the provided `docker-compose.yml` as needed and remove the components you don't need on a certain system.  
-Also, even it's not tested yet, there is no reason preventing you from deploying the Docker-Containers on a Docker-Orchestration framework such as Kubernetes, OpenShift. If you run into trouble with that, please create an issue.  
+### Getting started
+
+To get started please download the release package from the GitHub project onto your machine:  
+`wget --no-check-certificate --content-disposition https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/tarball/v0.0.11 -O - | tar -xvz`
+
+The basic setup assumes you are running the individual components based on the provided docker-compose file, which is using the `.env` to read the required configuration parameters.  
+For the basic setup the following describes what needs to be changed in the provided `.env` file. This file populates a number of environment variables, that are used by one or more components. For advanced configuration topics you can study the environment file as each parameter is explained. 
 
 ### Filebeat
 :exclamation: __This is an important step, as otherwise Filebeat will not see and send any Open-Traffic Event data!__  
@@ -177,7 +176,7 @@ APIGATEWAY_EVENTS_FOLDER=/home/localuser/Axway-x.y.z/apigateway/events
 
 ### Logstash
 
-Logstash receives the open traffic and open trace events from Filebeat and processes them. Among other things, an HTTP lookup is performed on an API detail lookup REST-API to enrich the API information. Therefore Logstash must know under which URL the API builder can be reached.  
+Logstash receives the different events from Filebeat and processes them. Among other things, an HTTP lookup is performed on an API detail lookup REST-API to enrich the API information. Therefore Logstash must know under which URL the API builder can be reached.  
 This parameter is optional if you use the default docker-compose.yml file.
 ```
 API_BUILDER_URL=https://my-api-builder:8443
@@ -198,27 +197,36 @@ API_MANAGER_PASSWORD=<admin-password>
 
 ### Elasticsearch
 
+For the basic setup there is no need to configured anything for Elasticsearch.
+
 ### Kibana
+
+For the basic setup there is no need to configured anything for Kibana.
 
 ## Manage the environment
 
 ###  Using docker-compose
+
 To bring up the components you have configured use docker-compose:
 ````
 docker-compose up -d
 ````
-With that, the environment is started with default setup. Read further on to learn for instance how to enable User-Authentication for the Elasticsearch database.   
-
+With that, the environment is started with the basic setup.  
 ````
 docker-compose down 
 ````
 
 ### Acccess components
 
+Elasticsearch and Kibana is started with HTTPS enabled. User-Authentication is disabled by default. The required ports are exposed by the docker-compose.yml:
+
+Access Kibana: `https://your.host.com:5601/`
+
+Access Elasticsearch: `https://your.host.com:9200`
 
 ## Advanced Setup
 
-With the default setup everything is using HTTPS but using an anonyomus user. Also the default setup is using dummy certificates which you should not use in a production. Therefore it's strongly recommended to replace the certificates and activate user authentication.  
+With the basic setup everything is using HTTPS but with an anonyomus user. Also the default setup is using dummy certificates which you should not use in a production environment. Therefore it's strongly recommended to replace the certificates and activate user authentication.  
 
 ### Activate user authentication
 
