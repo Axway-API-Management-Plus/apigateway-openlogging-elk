@@ -37,12 +37,6 @@ This shows a sample dashboard created in Kibana based on the indexed documents:
 - [Prerequisites](#prerequisites)
 - [Preparations](#preparations)
 - [Getting started](#getting-started)
-    - [Basic setup](#basic-setup)
-    - [Filebeat](#filebeat)
-    - [Logstash](#logstash)
-    - [API-Builder](#api-builder)
-    - [Elasticsearch](#elasticsearch)
-    - [Kibana](#kibana)
 - [Manage the environment](#manage-the-environment)
     - [Using docker-compose](#using-docker-compose)
     - [Acccess components](#acccess-components)
@@ -59,8 +53,6 @@ This shows a sample dashboard created in Kibana based on the indexed documents:
     - [Check Logstash processing](#test-infrastructure)
     - [Check Elasticsearch processing](#test-infrastructure)
     - [Check API-Builder processing](#test-infrastructure)
-- [License](#license)
-- [Links](#links)
 
 ## Overview
 
