@@ -32,6 +32,15 @@
             "localPort": "8065",
             "sslSubject": null,
             "authSubjectId": "180b1f32-d72f-40f4-949a-fc3f3f7dec2c"
+          },
+          "processInfo": {
+            "gatewayName": "API-Gateway 3",
+            "gatewayRegion": "US",
+            "groupId": "group-2",
+            "groupName": "group-a",
+            "hostname": "ip-172-31-56-150.ec2.internal",
+            "serviceId": "instance-2",
+            "version": "7.7.20200530"
           }
         },
         {
@@ -564,17 +573,16 @@
       ],
       "expected": [
         {
-          "@timestamp": "2020-07-13T20:58:38.042Z",
+          "@timestamp": "2020-09-15T15:37:36.487Z",
           "correlationId": "c0df605fa2047bebbOPTIONS",
           "type": "summaryIndex",
-          "duration": 20,
-          "finalStatus": "Pass",
+          "duration": 2,
           "processInfo": {
-            "hostname": "ip-172-31-62-146.ec2.internal",
+            "hostname": "api-env",
             "groupId": "group-2",
-            "groupName": "group-a",
-            "serviceId": "instance-3",
-            "version": "7.7.20200530",
+            "groupName": "QuickStart Group",
+            "serviceId": "instance-1",
+            "version": "7.7.20200730",
             "gatewayName": "API-Gateway 3", 
             "gatewayRegion": "US"
           },
@@ -584,54 +592,54 @@
             "method": "OPTIONS",
             "vhost": null,
             "wafStatus": 0,
-            "bytesSent": 774,
-            "bytesReceived": 126,
-            "remoteName": "127.0.0.1",
-            "remoteAddr": "127.0.0.1",
-            "localAddr": "127.0.0.1",
-            "remotePort": "59574",
+            "bytesSent": 212,
+            "bytesReceived": 477,
+            "remoteName": "192.168.65.1",
+            "remoteAddr": "192.168.65.1",
+            "localAddr": "192.168.65.133",
+            "remotePort": "60041",
             "localPort": "8065",
             "sslSubject": null,
-            "authSubjectId": "180b1f32-d72f-40f4-949a-fc3f3f7dec2c"
+            "authSubjectId": null
           }
         },
         {
-          "@timestamp": "2020-07-13T20:58:38.042Z",
+          "@timestamp": "2020-09-15T15:37:36.487Z",
           "correlationId": "c0df605fa2047bebbOPTIONS",
           "processInfo": {
-            "hostname": "ip-172-31-56-150.ec2.internal",
+            "hostname": "api-env",
             "groupId": "group-2",
-            "groupName": "group-a",
-            "serviceId": "instance-2",
-            "version": "7.7.20200530", 
+            "groupName": "QuickStart Group",
+            "serviceId": "instance-1",
+            "version": "7.7.20200730", 
             "gatewayName": "API-Gateway 3", 
             "gatewayRegion": "US"
           },
           "transactionElements": {
             "leg0": {
-              "duration": 20,
+              "duration": 2,
               "leg": 0,
-              "finalStatus": "Pass",
+              "finalStatus": null,
               "protocolInfo": {
                 "http": {
-                  "uri": "/petstore/v2/store/inventory",
+                  "uri": "/WebShop.svc",
                   "status": 200,
                   "statusText": "OK",
-                  "method": "GET",
+                  "method": "OPTIONS",
                   "vhost": null,
                   "wafStatus": 0,
-                  "bytesSent": 774,
-                  "bytesReceived": 126,
-                  "remoteName": "127.0.0.1",
-                  "remoteAddr": "127.0.0.1",
-                  "localAddr": "127.0.0.1",
-                  "remotePort": "59574",
+                  "bytesSent": 212,
+                  "bytesReceived": 477,
+                  "remoteName": "192.168.65.1",
+                  "remoteAddr": "192.168.65.1",
+                  "localAddr": "192.168.65.133",
+                  "remotePort": "60041",
                   "localPort": "8065",
                   "sslSubject": null,
                   "authSubjectId": "180b1f32-d72f-40f4-949a-fc3f3f7dec2c"
                 },
-                "recvHeader": "GET /petstore/v2/store/inventory HTTP/1.0\r\nConnection: close\r\nHost: localhost\r\nKeyId: 6cd55c27-675a-444a-9bc7-ae9a7869184d\r\n\r\n",
-                "sentHeader": "HTTP/1.1 200 OK\r\nMax-Forwards: 20\r\nVia: 1.0 ip-172-31-56-150.ec2.internal (Gateway)\r\nConnection: close\r\nX-CorrelationID: Id-feca0c5f7f550c81357fdfXX 0\r\ncache-control: no-store, no-cache, must-revalidate, proxy-revalidate\r\nDate: Mon, 13 Jul 2020 20:58:38 GMT\r\netag: W/\"52-LxypU3mP2zpjiEr7yZRKlgVdx3c\"\r\nexpires: 0\r\npragma: no-cache\r\nrequest-id: c190fa5f-a192-4e57-8eec-c75a6f52b90d\r\nresponse-time: 2\r\nserver: API Builder/4.28.10\r\nstart-time: 1594673918059\r\nsurrogate-control: no-store\r\nVary: Accept-Encoding\r\nx-content-type-options: nosniff\r\nx-frame-options: DENY\r\nx-xss-protection: 1; mode=block\r\ncontent-md5: 43364b0ef391a24f9a0e587356726c0d\r\ncontent-type: application/json; charset=utf-8\r\n\r\n",
+                "recvHeader": "OPTIONS \/WebShop.svc HTTP\/1.1\r\nHost: api-env:8065\r\nUser-Agent: Mozilla\/5.0 (Windows NT 10.0; Win64; x64; rv:80.0) Gecko\/20100101 Firefox\/80.0\r\nAccept: *\/*\r\nAccept-Language: en-US,en;q=0.5\r\nAccept-Encoding: gzip, deflate, br\r\nAccess-Control-Request-Method: POST\r\nAccess-Control-Request-Headers: content-type,keyid,soapaction,x-requested-with\r\nReferer: https:\/\/api-env:8075\/home\r\nOrigin: https:\/\/api-env:8075\r\nConnection: keep-alive\r\nPragma: no-cache\r\nCache-Control: no-cache\r\n\r\n",
+                "sentHeader": "HTTP\/1.1 200 OK\r\nDate: Tue, 15 Sep 2020 15:37:36 GMT\r\nAllow: GET, HEAD, OPTIONS\r\nServer: Gateway\r\nContent-Length: 0\r\nConnection: close\r\nX-CorrelationID: Id-c0df605fa2047bebb989e684 0\r\nContent-Type: text\/plain\r\n\r\n",
                 "recvPayload": null,
                 "sentPayload": null
               }
