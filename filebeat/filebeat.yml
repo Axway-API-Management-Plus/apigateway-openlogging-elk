@@ -1,3 +1,8 @@
+# Please don't change this file as it is supposed to be overwritten as 
+# part of fixes or enhancements.
+#
+# If you are missing a certain feature or discover a bug, please raise an issue instead:
+# https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues
 name: Filebeat ${GATEWAY_NAME:"API-Gateway"}
 filebeat.inputs:
 - type: log
