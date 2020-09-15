@@ -290,27 +290,6 @@ The solution is designed to process and store millions of transactions per day a
 This advantage of being able to access millions of transactions is not free of charge with Elasticsearch, but is available in the size of the disc space provided.
 The solution has been extensively tested, especially for high-volume requirements. It processed 900 transactions per second, up to 55 million transactions per day on the following infrastructure.
 
-### Test infrastructure
-
-| Node/Instance              |CPUS    |RAM   |Disc  | Component      | Version | Comment | 
-| :---                       | :---   | :--- | :--- | :---           | :---    | :---    |
-| AWS EC2 t2.xlarge instance | 4 vCPUS|16GB  |30GB  | API-Management | 7.7-July| Classical deployment |
-|                            |        |      |      | Filebeat       | 7.9.0   | Docker-Container running on API-Gateway Host |
-| AWS EC2 t2.xlarge instance | 4 vCPUS|16GB  |30GB  | API-Management | 7.7-July| Classical deployment |
-|                            |        |      |      | Filebeat       | 7.9.0   | Docker-Container running on API-Gateway Host |
-| AWS EC2 t2.xlarge instance | 4 vCPUS|16GB  |30GB  | API-Management | 7.7-July| Classical deployment |
-|                            |        |      |      | Filebeat       | 7.9.0   | Docker-Container running on API-Gateway Host |
-| AWS EC2 t2.xlarge instance | 4 vCPUS|16GB  |30GB  | API-Management | 7.7-July| Classical deployment |
-|                            |        |      |      | Filebeat       | 7.9.0   | Docker-Container running on API-Gateway Host |
-| AWS EC2 t2.xlarge instance | 4 vCPUS|16GB  |30GB  | API-Management | 7.7-July| Classical deployment |
-|                            |        |      |      | Filebeat       | 7.9.0   | Docker-Container running on API-Gateway Host |
-| AWS EC2 t2.xlarge instance | 4 vCPUS|16GB  |30GB  | API-Management | 7.7-July| Classical deployment |
-|                            |        |      |      | Filebeat       | 7.9.0   | Docker-Container running on API-Gateway Host |
-| AWS EC2 t2.xlarge instance | 4 vCPUS|16GB  |30GB  | Logstash       | 7.9.0   | Standard Logstash Docker-Container |
-|                            |        |      |      | API-Builder    | 0.0.10  | API-Builder proving Traffic-Monitor & Lookup API |
-| AWS EC2 t2.xlarge instance | 4 vCPUS|16GB  |80GB  | Elasticsearch  | 7.9.0   | Standard Elasticsearch Docker-Container |
-|                            |        |      |      | Kibana         | 7.9.0   | Standard Kibana Docker-Container |
-
 ### Sizing recommendations
 The most important key figure for sizing is the number of transactions per day or per month. The sizing of the platform depends on this and how long the data should be available in real-time. To store around 10 Millionen transactions with all details and trace-messages ap. 6,5 GB disc space is required.
 The following recommendations are based on our tests and is splitted by the desired rentention period.
@@ -368,6 +347,26 @@ The recommendation contains only one ElasticSearch node up to a volume of max. 1
 |                         | ElasticSearch 1      | 4 CPU-Cores, 32 GB RAM, 750 GB HDD | ElasticSearch, Kibana node    |
 |                         | ElasticSearch 2      | 4 CPU-Cores, 32 GB RAM, 750 GB HDD | ElasticSearch node    |
 
+### Test infrastructure
+
+| Node/Instance              |CPUS    |RAM   |Disc  | Component      | Version | Comment | 
+| :---                       | :---   | :--- | :--- | :---           | :---    | :---    |
+| AWS EC2 t2.xlarge instance | 4 vCPUS|16GB  |30GB  | API-Management | 7.7-July| Classical deployment |
+|                            |        |      |      | Filebeat       | 7.9.0   | Docker-Container running on API-Gateway Host |
+| AWS EC2 t2.xlarge instance | 4 vCPUS|16GB  |30GB  | API-Management | 7.7-July| Classical deployment |
+|                            |        |      |      | Filebeat       | 7.9.0   | Docker-Container running on API-Gateway Host |
+| AWS EC2 t2.xlarge instance | 4 vCPUS|16GB  |30GB  | API-Management | 7.7-July| Classical deployment |
+|                            |        |      |      | Filebeat       | 7.9.0   | Docker-Container running on API-Gateway Host |
+| AWS EC2 t2.xlarge instance | 4 vCPUS|16GB  |30GB  | API-Management | 7.7-July| Classical deployment |
+|                            |        |      |      | Filebeat       | 7.9.0   | Docker-Container running on API-Gateway Host |
+| AWS EC2 t2.xlarge instance | 4 vCPUS|16GB  |30GB  | API-Management | 7.7-July| Classical deployment |
+|                            |        |      |      | Filebeat       | 7.9.0   | Docker-Container running on API-Gateway Host |
+| AWS EC2 t2.xlarge instance | 4 vCPUS|16GB  |30GB  | API-Management | 7.7-July| Classical deployment |
+|                            |        |      |      | Filebeat       | 7.9.0   | Docker-Container running on API-Gateway Host |
+| AWS EC2 t2.xlarge instance | 4 vCPUS|16GB  |30GB  | Logstash       | 7.9.0   | Standard Logstash Docker-Container |
+|                            |        |      |      | API-Builder    | 0.0.10  | API-Builder proving Traffic-Monitor & Lookup API |
+| AWS EC2 t2.xlarge instance | 4 vCPUS|16GB  |80GB  | Elasticsearch  | 7.9.0   | Standard Elasticsearch Docker-Container |
+|                            |        |      |      | Kibana         | 7.9.0   | Standard Kibana Docker-Container |
 
 ## Troubleshooting
 ### Check processes/containers are running
