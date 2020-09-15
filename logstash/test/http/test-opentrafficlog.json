@@ -98,7 +98,6 @@
         {
           "@timestamp": "2020-07-13T20:07:27.467Z",
           "correlationId": "AAbe0c5f95da03f602a6e587",
-          "path": "/petstore/v2/user/Chris",
           "protocol": "https",
           "protocolSrc": "8065",
           "status": "success",
@@ -179,7 +178,6 @@
         {
           "@timestamp": "2020-07-13T20:07:27.467Z",
           "correlationId": "BBbe0c5f95da03f602a6e587",
-          "path": "/api/with/policies/backend/and/oauth",
           "protocol": "https",
           "protocolSrc": "8065",
           "status": "success",
@@ -260,7 +258,6 @@
         {
           "@timestamp": "2020-07-13T20:07:27.467Z",
           "correlationId": "OMG-UNKNOWN-API",
-          "path": "/this/api/is/unknown",
           "protocol": "https",
           "protocolSrc": "8065",
           "status": "success",
@@ -325,33 +322,16 @@
             "gatewayRegion": "US"
           },
           "tags": ["_httprequestfailure"],
-          "transactionElements": {
-            "leg0": {
-              "protocolInfo": {
-                "http": {
-                  "authSubjectId": "ID: OMG-UNKNOWN-API",
-                  "method": "LOGSTASH",
-                  "status": "900",
-                  "statusText": "ERROR",
-                  "uri": "/this/api/is/unknown",
-                  "vhost": "Logstash Error"
-                }
-              }
-            }
+          "http": {
+            "authSubjectId": "ID: OMG-UNKNOWN-API",
+            "method": "LOGSTASH",
+            "status": "900",
+            "statusText": "ERROR",
+            "uri": "/this/api/is/unknown",
+            "vhost": "Logstash Error"
           },
-          "transactionSummary": {
-            "path": "/this/api/is/unknown",
-            "protocol": "https",
-            "protocolSrc": "8065",
-            "status": "success",
-            "serviceContext": {
-              "service": "A unknown API",
-              "monitor": true,
-              "appOrg": null,
-              "app": null,
-              "method": "check the logs",
-              "status": "success"
-            }
+          "serviceContext": {
+            "method": "check the logs"
           },
           "type": "errorEvent"
         }
@@ -366,7 +346,6 @@
         {
           "@timestamp": "2020-07-13T18:40:15.973Z",
           "correlationId": "8faa0c5f4da87df2ad8c394a",
-          "path": "/healthcheck",
           "protocol": "http",
           "protocolSrc": "8080",
           "status": "success",
