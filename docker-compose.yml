@@ -139,9 +139,9 @@ services:
       - elastic
 
   # This is the API-Builder project exposing the API-Gateway Manager REST-API
-  elk-traffic-monitor-api:
-    image: cwiechmann/elk-traffic-monitor-api:v1.0.0-RC1
-    container_name: apibuilder
+  apibuilder4elastic:
+    image: cwiechmann/apibuilder4elastic:v1.0.0-RC1
+    container_name: apibuilder4elastic
     environment:
       - ELASTICSEARCH_HOST=${ELASTICSEARCH_HOST}
       - ADMIN_NODE_MANAGER=${ADMIN_NODE_MANAGER}

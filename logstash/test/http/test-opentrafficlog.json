@@ -534,6 +534,28 @@
           "type": "scheduledPolicy"
         }
       ]
+    },
+    {
+      "description": "OPTIONS request circuitPath",
+      "input": [
+        "{\"timestamp\":1600184256489,\"correlationId\":\"c0df605fa2047bebb989e684\",\"processInfo\":{\"hostname\":\"api-env\",\"domainId\":\"ed992442-c363-4d36-963a-9e6314b0f421\",\"groupId\":\"group-2\",\"groupName\":\"QuickStart Group\",\"serviceId\":\"instance-1\",\"serviceName\":\"QuickStart Server\",\"version\":\"7.7.20200730\"},\"circuitPath\":[  ]}"
+      ],
+      "expected": [
+        {
+          "@timestamp": "2020-07-13T20:58:59.577Z",
+          "correlationId": "c0df605fa2047bebb989e684",
+          "processInfo": {
+            "hostname": "api-env",
+            "groupId": "group-2",
+            "groupName": "group-a",
+            "serviceId": "instance-1",
+            "version": "7.7.20200530",
+            "gatewayName": "API-Gateway 3", 
+            "gatewayRegion": "US"
+          },
+          "circuitPath": []
+        }
+      ]
     }
   ]
 }

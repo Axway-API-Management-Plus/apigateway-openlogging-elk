@@ -3,6 +3,7 @@
 #
 # If you are missing a certain feature or discover a bug, please raise an issue instead:
 # https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues
+
 - pipeline.id: BeatsInput
   path.config: "pipelines/BeatsInputPipeline.conf"
   pipeline.workers: 4
