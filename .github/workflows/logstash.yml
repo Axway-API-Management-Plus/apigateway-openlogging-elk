@@ -14,7 +14,6 @@ jobs:
         env:
           MOCK_LOOKUP_API: true
           ENABLE_HTTP_PORT: true
-          API_BUILDER_SSL_CERT: ""
       memcached:
         image: memcached:1.6.6-alpine
         ports: 
@@ -44,3 +43,4 @@ jobs:
       env:
         API_BUILDER_URL: 'http://localhost:8080'
         MEMCACHED: 'localhost:11211'
+        API_BUILDER_SSL_CERT: ""
