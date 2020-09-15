@@ -293,17 +293,17 @@ You can find more information about the individual certificates in the `.env` fi
 
 ### Multiple API-Manager
 
-During Logstash event processing, additional information is loaded from the API manager through an API lookup. This lookup is performed by the API builder against the API manager.  
-By default the admin node manager hosts are used or the configured API manager URL:
+During Logstash event processing, additional information is loaded from the API Manager through an API lookup. This lookup is performed by the API builder against the API Manager.  
+By default the configured Admin Node Manager host is used or the configured API Manager URL:
 ```
 API_MANAGER=http://my.apimanager.com:443
 ```
-If you have several API managers within a domain, you have to configure via a mapping which group (groupId) belongs to which API manager. The following syntax is used for this:  
+If you have several API Managers within your domain, you have to configure via a mapping which group (groupId) belongs to which API Manager. The following syntax is used for this:  
 ```
 API_MANAGER=group-2#https://api-manager-1:8075, group-5#https://api-manager-2:8275
 ```
-When the API Builder is started, a login to each API manager is performed based on this configuration to check the configuration.  Currently the same 
-API manager user (API_MANAGER_USERNAME/API_MANAGER_PASSWORD) is used for each API manager. 
+When the API Builder is started, to validate the configuration, a login to each API-Manager is performed.  Currently the same 
+API manager user (API_MANAGER_USERNAME/API_MANAGER_PASSWORD) is used for each API Manager. 
 
 ### Secure API-Builder Traffic-Monitor API
 The API-Builder project for providing access to Elasticsearch data has no access restrictions right now. To ensure only API-Gateway Manager users (topology administrators with proper RBAC role) or other users with appropriate access rights can query the log data, one can expose this API via API-Manager and add security here.
