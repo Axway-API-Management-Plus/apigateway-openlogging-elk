@@ -43,7 +43,9 @@ This shows a sample dashboard created in Kibana based on the indexed documents:
 - [Advanced setup](#advanced-setup)
     - [Activate user authentication](#activate-user-authentication)
     - [Configure cluster UUID](#configure-cluster-uuid)
-    - [Securing API-Builder Traffic-Monitor API](#configure-cluster-uuid)
+    - [Custom certificates](#custom-certificates)
+    - [Multiple API-Manager](#multiple-api-manager)
+    - [Securing API-Builder Traffic-Monitor API](##securing-api-builder-traffic-monitor-api)
 - [Infrastructure sizing](#infrastructure-sizing)
     - [Sizing recommendations](#sizing-recommendations)
     - [Test infrastructure](#test-infrastructure)
@@ -270,25 +272,40 @@ You may also configure the following parameters: `GATEWAY_NAME` & `GATEWAY_REGIO
 
 To activate these changes the Filebeat service must be restarted. 
 
-### Use your own certificates
+### Custom certificates
 
-The project is shipped with long running certificates/keys that should help you to get started with the solution. For a production environment these certificates and keys should be replaced.  
+The project is shipped with long running certificates/keys that should help you to get started with the solution. For a production environment these certificates and keys 
+should be replaced with custom certificates.  
 
-After you have created the corresponding certificates and keys based on your CA, you must save them in the folder: certificates. 
+After you have created the corresponding certificates and keys based on your CA, you must save them in the folder: `certificates`. 
 Afterwards these certificates must be configured in the `.env` file.  
 ```
 API_BUILDER_SSL_KEY=config/certificates/corporate-certificate.key
 API_BUILDER_SSL_CERT=config/certificates/corporate-certificate.crt
 API_BUILDER_SSL_KEY_PASSWORD=dfslkjaskljdklasjdlas
-ELASTICSEARCH_KEY=config/certificates/elasticsearch.key
-ELASTICSEARCH_CRT=config/certificates/elasticsearch.crt
-ELASTICSEARCH_CA=config/certificates/ca.crt
-KIBANA_KEY=config/certificates/elasticsearch.key
-KIBANA_CRT=config/certificates/elasticsearch.crt
+ELASTICSEARCH_KEY=config/certificates/corporate-elasticsearch.key
+ELASTICSEARCH_CRT=config/certificates/corporate-elasticsearch.crt
+ELASTICSEARCH_CA=config/certificates/corp-ca.crt
+KIBANA_KEY=config/certificates/corporate-kibana.key
+KIBANA_CRT=config/certificates/corporate-kibana.crt
 ```
 You can find more information about the individual certificates in the `.env` file.
 
-### Securing API-Builder Traffic-Monitor API
+### Multiple API-Manager
+
+During Logstash event processing, additional information is loaded from the API manager through an API lookup. This lookup is performed by the API builder against the API manager.  
+By default the admin node manager hosts are used or the configured API manager URL:
+```
+API_MANAGER=http://my.apimanager.com:443
+```
+If you have several API managers within a domain, you have to configure via a mapping which group (groupId) belongs to which API manager. The following syntax is used for this:  
+```
+API_MANAGER=group-2#https://api-manager-1:8075, group-5#https://api-manager-2:8275
+```
+When the API Builder is started, a login to each API manager is performed based on this configuration to check the configuration.  Currently the same 
+API manager user (API_MANAGER_USERNAME/API_MANAGER_PASSWORD) is used for each API manager. 
+
+### Secure API-Builder Traffic-Monitor API
 The API-Builder project for providing access to Elasticsearch data has no access restrictions right now. To ensure only API-Gateway Manager users (topology administrators with proper RBAC role) or other users with appropriate access rights can query the log data, one can expose this API via API-Manager and add security here.
 
 To import the API Builder project REST-API into your API-Manager, you can access the Swagger/OpenAPI definition here (replace docker-host and port appropriately for the container that is hosting the API-Builder project):  
