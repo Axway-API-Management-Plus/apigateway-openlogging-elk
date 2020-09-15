@@ -1,0 +1,5 @@
+In order to support and upgrade the project, please don't change files in this directory as they 
+are supposed to be improved/enhanced as part of overall project improvement!
+
+If you are missing a certain feature or discover a bug, please raise an issue instead:
+https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues
