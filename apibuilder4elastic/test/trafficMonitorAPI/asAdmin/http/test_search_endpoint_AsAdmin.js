@@ -622,6 +622,28 @@ describe('Endpoints', function () {
 				expect(body.data).to.have.lengthOf(0);
 			});
 		});
+		it.only('[Endpoint-0025] Should return the OPTIONS request including the URI', () => {
+			const auth = {
+				user: server.apibuilder.config.apikey || 'test',
+				password: ''
+			};
+			return requestAsync({
+				method: 'GET',
+				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-2/ops/search?protocol=http&field=method&value=OPTIONS`,
+				headers: {
+					'cookie': 'VIDUSR=Search-0022-DAVID-1597468226-Z+qdRW4rGZnwzQ==', 
+					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
+				},
+				auth: auth,
+				json: true
+			}).then(({ response, body }) => {
+				expect(response.statusCode).to.equal(200);
+				expect(body).to.be.an('Object');
+				expect(body).to.have.property('data');
+				expect(body.data).to.have.lengthOf(1);
+				checkFields(body.data, false);
+			});
+		});
 	});
 });
 
@@ -636,7 +658,9 @@ function checkFields(data, hasServiceContext) {
 		expect(entry).to.have.property('uri');
 		expect(entry).to.have.property('duration');
 		expect(entry).to.have.property('type');
-		expect(entry).to.have.property('finalStatus');
+		if(entry.method!='OPTIONS') {
+			expect(entry).to.have.property('finalStatus');
+		}
 		if(hasServiceContext) {
 			expect(entry).to.have.property('subject');
 			expect(entry).to.have.property('correlationId');

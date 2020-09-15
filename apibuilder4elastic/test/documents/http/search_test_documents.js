@@ -23,6 +23,7 @@ module.exports = [
         "finalStatus" : "Fail", 
         "http": {
             "protocolSrc": "8065",
+            "uri": "/favicon.ico",
             "statusText": "Not Found",
             "status": 404,
             "method": "GET", 
@@ -38,36 +39,35 @@ module.exports = [
     },
     // Find Pets by status on instance-2 - OPTIONS Call - 120 hours ago - Instance-2
     {
-        "correlationId": "4e270f5f05224d71a5f24b78",
+        "@timestamp": getDate('120h'),
+        "correlationId": "c0df605fa2047bebbOPTIONS",
+        "type": "summaryIndex",
+        "duration": 2,
         "processInfo": {
             "hostname": "api-env",
-            "groupName": "QuickStart Group",
-            "serviceName": "QuickStart Server",
-            "version": "7.7.20200130",
             "groupId": "group-2",
-            "domainId": "ed992442-c363-4d36-963a-9e6314b0f421",
-            "serviceId": "instance-2"
+            "groupName": "QuickStart Group",
+            "serviceId": "instance-2",
+            "version": "7.7.20200730",
+            "gatewayName": "API-Gateway 3",
+            "gatewayRegion": "US"
         },
-        "@timestamp": getDate('120h'),
-        "logtype": "openlog",
-        "path": "/petstore/v2/pet/findByStatus",
-        "protocol": "https",
-        "serviceContext": null,
-        "protocolSrc": "8065",
-        "status": "success",
-        "finalStatus" : "Pass",
-        "duration" : 55,
         "http": {
-            "statusText": "OK",
             "status": 200,
-            "method": "OPTIONS", 
-            "bytesSent": 357, 
-            "bytesReceived": 441,
-            "localPort": 8065,
-            "localAddr" : "192.168.65.129",
-            "remoteName" : "192.168.65.1",
-            "remotePort" : 49586,
-            "wafStatus" : 0 
+            "statusText": "OK",
+            "method": "OPTIONS",
+            "uri": "/WebShop.svc",
+            "vhost": null,
+            "wafStatus": 0,
+            "bytesSent": 212,
+            "bytesReceived": 477,
+            "remoteName": "192.168.65.1",
+            "remoteAddr": "192.168.65.1",
+            "localAddr": "192.168.65.133",
+            "remotePort": "60041",
+            "localPort": "8065",
+            "sslSubject": null,
+            "authSubjectId": null
         }
     },
     // Healthcheck call - 65 minutes 
@@ -93,6 +93,7 @@ module.exports = [
         "duration" : 22,
         "http": {
             "statusText": "OK",
+            "uri": "/healthcheck",
             "status": 200,
             "method": "GET", 
             "bytesSent": 661, 
@@ -128,6 +129,7 @@ module.exports = [
         "duration" : 11,
         "http": {
             "statusText": "OK",
+            "uri": "/healthcheck",
             "status": 200,
             "method": "GET", 
             "bytesSent": 661, 
@@ -175,6 +177,7 @@ module.exports = [
         },
         "http": {
             "protocolSrc" : "8065",
+            "uri" : "/petstore/v2/pet/findByStatus",
             "wafStatus" : 0,
             "authSubjectId" : "4e8634ba-6762-45ca-bbe5-7ca4e99192ac",
             "wafStatus" : 0,
