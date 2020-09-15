@@ -254,9 +254,7 @@ After you have configured everything, please all services.
 - API-Builder - Is using the API-Builder user to query Elasticsearch
   
 It's very likely that you don't use the super-user `elastic` for `LOGSTASH_USERNAME` and `API_BUILDER_USERNAME`. It's recommended to create dedicated accounts for these two users.  
-The monitoring users are used to send metric information to Elasticsearch to enable stack monitoring, which gives you insight about event processing of the complete platform:  
-
-![Monitoring-Overview][Monitoring-Overview]  
+The monitoring users are used to send metric information to Elasticsearch to enable stack monitoring, which gives you insight about event processing of the complete platform.
 
 ### Configure cluster UUID
 
@@ -268,7 +266,27 @@ Take over the UUID into the .env file:
 
 You may also configure the following parameters: `GATEWAY_NAME` & `GATEWAY_REGION` to make you Filebeat instances unique.  
 
+![Monitoring-Overview][Monitoring-Overview]  
+
 To activate these changes the Filebeat service must be restarted. 
+
+### Use your own certificates
+
+The project is shipped with long running certificates/keys that should help you to get started with the solution. For a production environment these certificates and keys should be replaced.  
+
+After you have created the corresponding certificates and keys based on your CA, you must save them in the folder: certificates. 
+Afterwards these certificates must be configured in the `.env` file.  
+```
+API_BUILDER_SSL_KEY=config/certificates/corporate-certificate.key
+API_BUILDER_SSL_CERT=config/certificates/corporate-certificate.crt
+API_BUILDER_SSL_KEY_PASSWORD=dfslkjaskljdklasjdlas
+ELASTICSEARCH_KEY=config/certificates/elasticsearch.key
+ELASTICSEARCH_CRT=config/certificates/elasticsearch.crt
+ELASTICSEARCH_CA=config/certificates/ca.crt
+KIBANA_KEY=config/certificates/elasticsearch.key
+KIBANA_CRT=config/certificates/elasticsearch.crt
+```
+You can find more information about the individual certificates in the `.env` file.
 
 ### Securing API-Builder Traffic-Monitor API
 The API-Builder project for providing access to Elasticsearch data has no access restrictions right now. To ensure only API-Gateway Manager users (topology administrators with proper RBAC role) or other users with appropriate access rights can query the log data, one can expose this API via API-Manager and add security here.
