@@ -23,6 +23,24 @@
       ]
     },
     {
+      "description": "Trace message with leading spaces",
+      "input": [
+        "INFO    15/Sep/2020:10:46:33.426 [455a:697f605fdb408a78c01cc73e]                 api.application.quota.warn.percent {"
+      ],
+      "expected": [
+        {
+          "@timestamp": "2020-07-13T09:41:03.205Z",
+          "correlationId": "697f605fdb408a78c01cc73e",
+          "level": "INFO",
+          "message": "                api.application.quota.warn.percent {",
+          "processInfo": {
+            "gatewayName": "API-Gateway 2", 
+            "gatewayRegion": "EU"
+          }
+        }
+      ]
+    },
+    {
       "description": "Test general info message is forwarded into general trace index",
       "input": [
         "INFO    13/Jul/2020:15:11:52.189 [04b2:000000000000000000000000] Management Service - Pipe client disconnected"
@@ -42,3 +60,5 @@
     }
   ]
 }
+
+
