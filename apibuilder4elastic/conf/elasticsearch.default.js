@@ -13,7 +13,7 @@ module.exports = {
 					password: process.env.API_BUILDER_PASSWORD
 				},
 				// The name to identify the client instance in the events.
-				name: process.env.ELASTICSEARCH_CLIENT_NAME || 'elk-traffic-monitor-api',
+				name: process.env.ELASTICSEARCH_CLIENT_NAME || 'apibuilder4elastic',
 				// You can use all configuration options documented here: 
 				// https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/7.x/client-configuration.html
 				maxRetries: 5,

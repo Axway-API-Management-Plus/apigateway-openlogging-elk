@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     services:
       api-builder:
-        image: cwiechmann/elk-traffic-monitor-api:latest
+        image: cwiechmann/apibuilder4elastic:latest
         ports: 
           - 8080:8080
         env:

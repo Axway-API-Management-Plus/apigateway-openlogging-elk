@@ -10,7 +10,7 @@ jobs:
   test-traffic-monitor-api:
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     env:
-      workingDirectory: 'elk-traffic-monitor-api'
+      workingDirectory: 'apibuilder4elastic'
 
     runs-on: ubuntu-latest
 
@@ -46,7 +46,7 @@ jobs:
     - name: Publish Docker image (latest)
       uses: elgohr/Publish-Docker-Github-Action@2.13
       with:
-        name: cwiechmann/elk-traffic-monitor-api
+        name: cwiechmann/apibuilder4elastic
         workdir: ${{env.workingDirectory}}
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}

@@ -98,7 +98,7 @@ services:
     #command: logstash --path.config /usr/share/logstash/pipelines/pipelines.yml
     depends_on:
       - elasticsearch1
-      - elk-traffic-monitor-api
+      - apibuilder4elastic
       - memcached
     networks:
       - elastic
