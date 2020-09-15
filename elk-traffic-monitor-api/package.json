@@ -2,7 +2,7 @@
 	"name": "elk-traffic-monitor-api",
 	"description": "This API-Builder project provides an ELK-Based Traffic-Monitor API.",
 	"main": "app.js",
-	"version": "1.0.0",
+	"version": "v1.0.0-RC1",
 	"author": {
 		"email": "cwiechmann@axway.com",
 		"name": "Chris Wiechmann",

@@ -140,7 +140,7 @@ services:
 
   # This is the API-Builder project exposing the API-Gateway Manager REST-API
   elk-traffic-monitor-api:
-    image: cwiechmann/elk-traffic-monitor-api:latest
+    image: cwiechmann/elk-traffic-monitor-api:v1.0.0-RC1
     container_name: apibuilder
     environment:
       - ELASTICSEARCH_HOST=${ELASTICSEARCH_HOST}
