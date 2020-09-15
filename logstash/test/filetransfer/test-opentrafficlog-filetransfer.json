@@ -109,6 +109,15 @@
             "size": 50,
             "authSubjectId": "abc"
           },
+          "processInfo": {
+            "gatewayName": "API-Gateway 3",
+            "gatewayRegion": "US",
+            "groupId": "group-2",
+            "groupName": "QuickStart Group",
+            "hostname": "api-env",
+            "serviceId": "instance-1",
+            "version": "7.7.20200730"
+          },
           "type": "summaryIndex"
         },
         {
