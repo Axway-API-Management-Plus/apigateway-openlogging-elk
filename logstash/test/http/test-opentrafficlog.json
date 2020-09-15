@@ -20,6 +20,7 @@
           "http": {
             "status": 200,
             "statusText": "OK",
+            "uri": "/petstore/v2/store/inventory",
             "method": "GET",
             "vhost": null,
             "wafStatus": 0,
@@ -590,6 +591,7 @@
             "status": 200,
             "statusText": "OK",
             "method": "OPTIONS",
+            "uri": "/WebShop.svc",
             "vhost": null,
             "wafStatus": 0,
             "bytesSent": 212,
