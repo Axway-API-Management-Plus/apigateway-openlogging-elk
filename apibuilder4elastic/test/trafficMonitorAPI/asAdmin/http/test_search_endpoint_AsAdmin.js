@@ -622,7 +622,7 @@ describe('Endpoints', function () {
 				expect(body.data).to.have.lengthOf(0);
 			});
 		});
-		it.only('[Endpoint-0025] Should return the OPTIONS request including the URI', () => {
+		it('[Endpoint-0025] Should return the OPTIONS request including the URI', () => {
 			const auth = {
 				user: server.apibuilder.config.apikey || 'test',
 				password: ''

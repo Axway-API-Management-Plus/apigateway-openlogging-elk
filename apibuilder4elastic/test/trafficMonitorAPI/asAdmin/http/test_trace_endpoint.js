@@ -107,11 +107,10 @@ describe('Traffic Monitor API', function () {
 			});
 		});
 
-		// Having trouble with this test!
-		it.skip('[trace-0004] Should return http 200 and an array of length 250 (trace info) with no format parameter provided', () => {
+		it('[trace-0004] Should return the selected trace message with the correct depth', () => {
 			return requestAsync({
 				method: 'GET',
-				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/trace/f1aefd5e3501dd00a16eebc0`,
+				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/trace/TRACE-TEST-DEPTH`,
 				headers: {
 					'cookie': 'VIDUSR=trace-0004-DAVID-1597468226-Z+qdRW4rGZnwzQ==', 
 					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
@@ -121,16 +120,24 @@ describe('Traffic Monitor API', function () {
 			}).then(({ response, body }) => {
 				expect(response.statusCode).to.equal(200);
 				expect(body).to.be.an('Array');
-				expect(body).to.have.lengthOf(250);
+				expect(body).to.have.lengthOf(4);
 				expect(body[0].level).to.equal('INFO');
 				expect(body[0].text).to.equal('Trace Filter {');
-				expect(body[0].time).to.equal(1593658497923);
+				expect(body[0].time).to.equal(1593686269790);
 				expect(body[0].type).to.equal('trace');
-				expect(body[249].depth).to.equal(3);
-				expect(body[249].level).to.equal('INFO');
-				expect(body[249].text).to.equal('}');
-				expect(body[249].time).to.equal(1593658497959);
-				expect(body[249].type).to.equal('trace');
+				expect(body[0].depth).to.equal(3);
+				expect(body[1].level).to.equal('INFO');
+				expect(body[1].text).to.equal('Value:     {customProperty3=false}');
+				expect(body[1].time).to.equal(1593686270790);
+				expect(body[1].depth).to.equal(5);
+				expect(body[2].level).to.equal('WARN');
+				expect(body[2].text).to.equal('No leading spaces for this message');
+				expect(body[2].time).to.equal(1593686275790);
+				expect(body[2].depth).to.equal(0);
+				expect(body[3].level).to.equal('ERROR');
+				expect(body[3].text).to.equal('connection timed out after 30000ms');
+				expect(body[3].time).to.equal(1593686276790);
+				expect(body[3].depth).to.equal(2);
 			});
 		});
 

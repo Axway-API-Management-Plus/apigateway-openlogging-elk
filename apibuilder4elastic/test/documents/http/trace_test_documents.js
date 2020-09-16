@@ -23,6 +23,142 @@ module.exports = [
 			"type": "filebeat"
 		},
 		"month_field": "7",
+		"correlationId": "TRACE-TEST-DEPTH",
+		"message": "             Trace Filter {",
+		"@timestamp": "2020-07-02T10:37:49.790Z",
+
+		"tags": [
+			"beats_input_codec_plain_applied",
+			"trace"
+		],
+		"host": {
+			"name": "b16ac40a6c8b"
+		}
+	},
+	{
+		"level": "INFO",
+		"ecs": {
+			"version": "1.1.0"
+		},
+		"log": {
+			"offset": 713446,
+			"file": {
+				"path": "/var/log/trace/quickstartserver_20200702015317.trc"
+			}
+		},
+		"fields": {
+			"logtype": "trace"
+		},
+		"agent": {
+			"hostname": "b16ac40a6c8b",
+			"id": "9b133606-9164-4459-96fb-396e632ed36b",
+			"version": "7.4.0",
+			"ephemeral_id": "70fd7d93-b4cc-4b3c-aa61-070326cd5008",
+			"type": "filebeat"
+		},
+		"month_field": "7",
+		"correlationId": "TRACE-TEST-DEPTH",
+		"message": "                     Value:     {customProperty3=false}",
+		"@timestamp": "2020-07-02T10:37:50.790Z",
+
+		"tags": [
+			"beats_input_codec_plain_applied",
+			"trace"
+		],
+		"host": {
+			"name": "b16ac40a6c8b"
+		}
+	},
+	{
+		"level": "WARN",
+		"ecs": {
+			"version": "1.1.0"
+		},
+		"log": {
+			"offset": 713446,
+			"file": {
+				"path": "/var/log/trace/quickstartserver_20200702015317.trc"
+			}
+		},
+		"fields": {
+			"logtype": "trace"
+		},
+		"agent": {
+			"hostname": "b16ac40a6c8b",
+			"id": "9b133606-9164-4459-96fb-396e632ed36b",
+			"version": "7.4.0",
+			"ephemeral_id": "70fd7d93-b4cc-4b3c-aa61-070326cd5008",
+			"type": "filebeat"
+		},
+		"month_field": "7",
+		"correlationId": "TRACE-TEST-DEPTH",
+		"message": "No leading spaces for this message",
+		"@timestamp": "2020-07-02T10:37:55.790Z",
+
+		"tags": [
+			"beats_input_codec_plain_applied",
+			"trace"
+		],
+		"host": {
+			"name": "b16ac40a6c8b"
+		}
+	},
+	{
+		"level": "ERROR",
+		"ecs": {
+			"version": "1.1.0"
+		},
+		"log": {
+			"offset": 713446,
+			"file": {
+				"path": "/var/log/trace/quickstartserver_20200702015317.trc"
+			}
+		},
+		"fields": {
+			"logtype": "trace"
+		},
+		"agent": {
+			"hostname": "b16ac40a6c8b",
+			"id": "9b133606-9164-4459-96fb-396e632ed36b",
+			"version": "7.4.0",
+			"ephemeral_id": "70fd7d93-b4cc-4b3c-aa61-070326cd5008",
+			"type": "filebeat"
+		},
+		"month_field": "7",
+		"correlationId": "TRACE-TEST-DEPTH",
+		"message": "        connection timed out after 30000ms",
+		"@timestamp": "2020-07-02T10:37:56.790Z",
+
+		"tags": [
+			"beats_input_codec_plain_applied",
+			"trace"
+		],
+		"host": {
+			"name": "b16ac40a6c8b"
+		}
+	},
+	{
+		"level": "INFO",
+		"ecs": {
+			"version": "1.1.0"
+		},
+		"log": {
+			"offset": 713446,
+			"file": {
+				"path": "/var/log/trace/quickstartserver_20200702015317.trc"
+			}
+		},
+		"fields": {
+			"logtype": "trace"
+		},
+		"agent": {
+			"hostname": "b16ac40a6c8b",
+			"id": "9b133606-9164-4459-96fb-396e632ed36b",
+			"version": "7.4.0",
+			"ephemeral_id": "70fd7d93-b4cc-4b3c-aa61-070326cd5008",
+			"type": "filebeat"
+		},
+		"month_field": "7",
 		"correlationId": "f1aefd5e3501dd00a16eebc0",
 		"message": "             Trace Filter {",
 		"@timestamp": "2020-07-02T10:37:49.790Z",
