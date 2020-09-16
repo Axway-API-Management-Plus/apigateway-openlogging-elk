@@ -293,21 +293,7 @@
             "gatewayName": "API-Gateway 3", 
             "gatewayRegion": "US"
           },
-          "tags": ["_httprequestfailure"],
-          "transactionSummary": {
-            "path": "/this/api/is/unknown",
-            "protocol": "https",
-            "protocolSrc": "8065",
-            "status": "success",
-            "serviceContext": {
-              "service": "A unknown API",
-              "monitor": true,
-              "appOrg": null,
-              "app": null,
-              "method": "getUserByName",
-              "status": "success"
-            }
-          }
+          "tags": ["_httprequestfailure"]
         },
         {
           "@timestamp": "2020-07-13T20:07:27.467Z",
