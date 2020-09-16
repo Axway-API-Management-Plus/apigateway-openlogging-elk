@@ -46,4 +46,4 @@ jobs:
         MEMCACHED: 'localhost:11211'
         # This is not relevant as we test with HTTP
         # But it's required by Logstash to be a valid certificate
-        API_BUILDER_SSL_CERT: "./certificates/api-builder.crt"
+        API_BUILDER_SSL_CERT: "./certificates/apibuilder4elastic.crt"

@@ -54,8 +54,8 @@ module.exports = {
 	// const path = require('path');
 	ssl: {
 	 	port: 8443,
-		key: fs.readFileSync(path.join('.', process.env.API_BUILDER_SSL_KEY || 'certificates/api-builder.key'), 'utf8'),
-		cert: fs.readFileSync(path.join('.', process.env.API_BUILDER_SSL_CERT || 'certificates/api-builder.crt'), 'utf8'),
+		key: fs.readFileSync(path.join('.', process.env.API_BUILDER_SSL_KEY || 'certificates/apibuilder4elastic.key'), 'utf8'),
+		cert: fs.readFileSync(path.join('.', process.env.API_BUILDER_SSL_CERT || 'certificates/apibuilder4elastic.crt'), 'utf8'),
 		passphrase: process.env.API_BUILDER_SSL_PASSWORD || 'axway'
 	},
 
