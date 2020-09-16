@@ -293,6 +293,20 @@
             "gatewayName": "API-Gateway 3", 
             "gatewayRegion": "US"
           },
+          "transactionSummary": {
+            "path": "/this/api/is/unknown",
+            "protocol": "https",
+            "protocolSrc": "8065",
+            "status": "success",
+            "serviceContext": {
+              "service": "A unknown API",
+              "monitor": true,
+              "appOrg": null,
+              "app": null,
+              "method": "getUserByName",
+              "status": "success"
+            }
+          },
           "tags": ["_httprequestfailure"]
         },
         {
@@ -318,6 +332,20 @@
           },
           "serviceContext": {
             "method": "check the logs"
+          },
+          "transactionSummary": {
+            "path": "/this/api/is/unknown",
+            "protocol": "https",
+            "protocolSrc": "8065",
+            "serviceContext": {
+            "app": null,
+            "appOrg": null,
+            "method": "getUserByName",
+            "monitor": true,
+            "service": "A unknown API",
+            "status": "success"
+          },
+          "status": "success"
           },
           "type": "errorEvent"
         }
