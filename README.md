@@ -509,8 +509,8 @@ This helps you to further analyze if ElasticSearch is returning the correct info
 
 ## Known issues
 
-### Trace messages not shown in correct order
-See issue https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/37 for more details.
+- __Trace messages not shown in correct order__  
+  See issue https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/37
 
 
 [img1]: imgs/component-overview.png
