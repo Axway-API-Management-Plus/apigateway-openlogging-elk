@@ -332,12 +332,11 @@
             "protocol": "https",
             "protocolSrc": "8065",
             "serviceContext": {
-            "app": null,
-            "appOrg": null,
-            "method": "getUserByName",
-            "monitor": true,
-            "service": "A unknown API",
-            "status": "success"
+              "app": null,
+              "appOrg": null,
+              "method": "getUserByName",
+              "monitor": true,
+              "service": "A unknown API"
           },
           "status": "success"
           },
