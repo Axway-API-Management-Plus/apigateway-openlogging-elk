@@ -55,6 +55,7 @@ This shows a sample dashboard created in Kibana based on the indexed documents:
     - [Check Logstash processing](#test-infrastructure)
     - [Check Elasticsearch processing](#test-infrastructure)
     - [Check API-Builder processing](#test-infrastructure)
+- [Known issues](#known-issues)
 
 ## Overview
 
@@ -396,6 +397,7 @@ The recommendation contains only one ElasticSearch node up to a volume of max. 1
 |                            |        |      |      | Kibana         | 7.9.0   | Standard Kibana Docker-Container |
 
 ## Troubleshooting
+
 ### Check processes/containers are running
 From within the folder where the docker-compose.yml file is located (git project folder) execute: 
 ```
@@ -504,6 +506,11 @@ Using elastic search query body: {"index":"logstash-openlog","body":{"query":{"b
 ```
 This helps you to further analyze if ElasticSearch is returning the correct information for instance using the Kibana development console. Example sending the same request using the Kibana Development console:  
 ![Kibana Dev-Console][img8]
+
+## Known issues
+
+### Trace messages not shown in correct order
+See issue https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/37 for more details.
 
 
 [img1]: imgs/component-overview.png
