@@ -1,7 +1,8 @@
 {
   "fields": {
     "gatewayName": "API-Gateway 2",
-    "gatewayRegion": "EU"
+    "gatewayRegion": "EU",
+    "[event][timezone]": "+00:00"
   },
   "testcases": [
     {

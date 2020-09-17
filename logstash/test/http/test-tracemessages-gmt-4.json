@@ -1,0 +1,29 @@
+{
+  "fields": {
+    "gatewayName": "API-Gateway 2",
+    "gatewayRegion": "EU", 
+    "[event][timezone]": "-04:00"
+  },
+  "testcases": [
+    {
+      "description": "Validate the given date (which is New-York GMT-4) is parsed correctly into a UTC-Date",
+      "input": [
+        "INFO    17/Sep/2020:15:05:00.100 [04b2:000000000000000000000000] A log message logged on the New York API-Gateway"
+      ],
+      "expected": [
+        {
+          "@timestamp": "2020-09-17T19:05:00.100Z",
+          "correlationId": "000000000000000000000000",
+          "level": "INFO",
+          "message": "A log message logged on the New York API-Gateway",
+          "processInfo": {
+            "gatewayName": "API-Gateway 2", 
+            "gatewayRegion": "EU"
+          }
+        }
+      ]
+    }
+  ]
+}
+
+

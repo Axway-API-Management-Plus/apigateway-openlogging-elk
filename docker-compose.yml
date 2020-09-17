@@ -121,6 +121,7 @@ services:
     ports:
       - 9000:9000
     volumes:
+      - /etc/localtime:/etc/localtime:ro # Required to sync timezone of API-Gateway into the Docker-Container
       - ${PWD}/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml
       - ${APIGATEWAY_OPENTRAFFIC_FOLDER}:/var/log/opentraffic
       - ${APIGATEWAY_TRACES_FOLDER}:/var/log/trace
