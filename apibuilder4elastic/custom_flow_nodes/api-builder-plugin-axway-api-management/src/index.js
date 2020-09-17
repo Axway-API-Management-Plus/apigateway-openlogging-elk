@@ -16,7 +16,6 @@ const https = require('https');
  * @returns {object} An API Builder plugin.
  */
 async function getPlugin(pluginConfig, options) {
-	debugger;
 	const cache = new NodeCache({ stdTTL: pluginConfig.lookupCacheTTL, useClones: false });
 	const sdk = new SDK({ pluginConfig });
 	if(pluginConfig.MOCK_LOOKUP_API=="true") {

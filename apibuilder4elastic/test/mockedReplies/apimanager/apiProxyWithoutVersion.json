@@ -1,0 +1,94 @@
+[
+  {
+    "id": "1d5390ac-5de4-44ab-b631-ddca37abb17b",
+    "organizationId": "2bfaa1c2-49ab-4059-832d-CHRIS",
+    "apiId": "9c3d4952-0ec7-48a6-9d83-af13d7811c0d",
+    "name": "Myshop",
+    "version": null,
+    "apiRoutingKey": null,
+    "vhost": null,
+    "path": "/MyShopAPI",
+    "descriptionType": "original",
+    "descriptionManual": null,
+    "descriptionMarkdown": null,
+    "descriptionUrl": null,
+    "summary": null,
+    "retired": false,
+    "expired": false,
+    "image": null,
+    "retirementDate": 0,
+    "deprecated": false,
+    "state": "unpublished",
+    "createdOn": 1600182195787,
+    "createdBy": "f60e3e05-cdf3-4b70-affc-4cb61a10f4bb",
+    "corsProfiles": [
+      {
+        "name": "_default",
+        "isDefault": true,
+        "origins": ["*"],
+        "allowedHeaders": [],
+        "exposedHeaders": ["X-CorrelationID"],
+        "supportCredentials": false,
+        "maxAgeSeconds": 0
+      }
+    ],
+    "securityProfiles": [
+      {
+        "name": "_default",
+        "isDefault": true,
+        "devices": [
+          {
+            "name": "API Key",
+            "type": "apiKey",
+            "order": 1,
+            "properties": {
+              "apiKeyFieldName": "KeyId",
+              "takeFrom": "HEADER",
+              "removeCredentialsOnSuccess": "true"
+            }
+          }
+        ]
+      }
+    ],
+    "authenticationProfiles": [
+      {
+        "name": "_default",
+        "isDefault": true,
+        "parameters": {
+          "_id_": 0
+        },
+        "type": "none"
+      }
+    ],
+    "inboundProfiles": {
+      "_default": {
+        "securityProfile": "_default",
+        "corsProfile": "_default",
+        "monitorAPI": true,
+        "monitorSubject": "authentication.subject.id"
+      }
+    },
+    "outboundProfiles": {
+      "_default": {
+        "authenticationProfile": "_default",
+        "routeType": "proxy",
+        "requestPolicy": null,
+        "responsePolicy": null,
+        "routePolicy": null,
+        "faultHandlerPolicy": null,
+        "apiId": null,
+        "apiMethodId": null,
+        "parameters": []
+      }
+    },
+    "serviceProfiles": {
+      "_default": {
+        "apiId": "9c3d4952-0ec7-48a6-9d83-af13d7811c0d",
+        "basePath": "http://192.168.65.1:8380"
+      }
+    },
+    "caCerts": [],
+    "tags": {},
+    "customProperty3": "false"
+  }
+]

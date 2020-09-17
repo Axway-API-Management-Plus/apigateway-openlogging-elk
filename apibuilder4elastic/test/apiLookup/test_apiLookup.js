@@ -149,6 +149,24 @@ describe('Test API-Lookup endpoint', function () {
 				nock.cleanAll();
 			});
 		});
+
+		it('[apilookup-0007] should return "N/A" for the API-Version if not defined for the API', () => {
+			nock('https://mocked-api-gateway:8075').get('/api/portal/v1.3/proxies?field=name&op=eq&value=Myshop').replyWithFile(200, './test/mockedReplies/apimanager/apiProxyWithoutVersion.json');
+			nock('https://mocked-api-gateway:8075').get('/api/portal/v1.3/organizations/2bfaa1c2-49ab-4059-832d-CHRIS').replyWithFile(200, './test/mockedReplies/apimanager/organizationChris.json');
+			return requestAsync({
+				method: 'GET',
+				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/lookup/api?apiName=Myshop&apiPath=/MyShopAPI&groupId=XXXX`, // The groupd doesn't matter for this test
+				auth: auth,
+				json: true
+			}).then(({ response, body }) => {
+				expect(response.statusCode).to.equal(200);
+				expect(body).to.be.an('Object');
+				expect(body.version).to.equal('N/A');
+				
+				nock.cleanAll();
+			});
+		});
+		
 	});
 });
 	
