@@ -19,6 +19,10 @@
                 "type": "keyword",
                 "doc_values": false
             }, 
+            "loggedDate": {
+                "type": "text",
+                "doc_values": false
+            }, 
             "processInfo.serviceId": {
                 "type": "keyword",
                 "doc_values": false

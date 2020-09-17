@@ -120,7 +120,6 @@
             "appOrg": "Apps org",
             "app": "Weather App",
             "method": "getUserByName",
-            "status": "success",
             "apiSecurity": "API-Key", 
             "requestPolicy": "N/A", 
             "routingPolicy": "N/A", 
@@ -157,7 +156,6 @@
               "appOrg": "Apps org",
               "app": "Weather App",
               "method": "getUserByName",
-              "status": "success",
               "apiSecurity": "API-Key", 
               "requestPolicy": "N/A", 
               "routingPolicy": "N/A", 
@@ -192,7 +190,6 @@
             "appOrg": "Apps org",
             "app": "Weather App",
             "method": "getUserByName",
-            "status": "success",
             "apiSecurity": "OAuth", 
             "requestPolicy": "My Request Policy", 
             "routingPolicy": "I do the routing", 
@@ -237,7 +234,6 @@
               "appOrg": "Apps org",
               "app": "Weather App",
               "method": "getUserByName",
-              "status": "success",
               "apiSecurity": "OAuth", 
               "requestPolicy": "My Request Policy", 
               "routingPolicy": "I do the routing", 
@@ -266,8 +262,7 @@
             "monitor": true,
             "appOrg": null,
             "app": null,
-            "method": "getUserByName",
-            "status": "success"
+            "method": "getUserByName"
           }, 
           "type": "summaryIndex",
           "processInfo": {
@@ -303,8 +298,7 @@
               "monitor": true,
               "appOrg": null,
               "app": null,
-              "method": "getUserByName",
-              "status": "success"
+              "method": "getUserByName"
             }
           },
           "tags": ["_httprequestfailure"]
