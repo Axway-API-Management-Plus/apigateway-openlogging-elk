@@ -331,6 +331,7 @@
             "path": "/this/api/is/unknown",
             "protocol": "https",
             "protocolSrc": "8065",
+            "status": "success",
             "serviceContext": {
               "app": null,
               "appOrg": null,
