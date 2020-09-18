@@ -123,7 +123,8 @@ async function lookupAPIDetails(params, options) {
 	apiProxy.backendBasePath = await _getBackendBasePath(apiProxy, operationId);
 	apiProxy.faulthandlerPolicy = await _getFaulthandlerPolicy(apiProxy, operationId);
 	if(!apiProxy.version) apiProxy.version = 'N/A';
-	// Remove a few properties we really don't need
+	if(cache.set(cacheKey, apiProxy));
+	// Remove a few properties we don't really need in the response
 	delete apiProxy.id;
 	delete apiProxy.corsProfiles;
 	delete apiProxy.securityProfiles;
@@ -132,7 +133,6 @@ async function lookupAPIDetails(params, options) {
 	delete apiProxy.outboundProfiles;
 	delete apiProxy.serviceProfiles;
 	delete apiProxy.caCerts;
-	if(cache.set(cacheKey, apiProxy));
 	return apiProxy;
 }
 
