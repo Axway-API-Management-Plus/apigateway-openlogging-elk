@@ -121,6 +121,9 @@ services:
     ports:
       - 9000:9000
     volumes:
+      - type: volume
+        source: filebeatdata
+        target: /usr/share/filebeat/data # Required to make sure that Filebeat remembers the last position, even if the container has been removed
       - /etc/localtime:/etc/localtime:ro # Required to sync timezone of API-Gateway into the Docker-Container
       - ${PWD}/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml
       - ${APIGATEWAY_OPENTRAFFIC_FOLDER}:/var/log/opentraffic
@@ -167,6 +170,7 @@ volumes:
   esdata1:
   esdata2:
   logs:
+  filebeatdata:
 
 networks:
   elastic:
