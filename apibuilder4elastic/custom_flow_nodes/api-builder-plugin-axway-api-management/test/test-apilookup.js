@@ -223,5 +223,20 @@ describe('Test API Lookup', () => {
 			expect(output).to.equal('next');
 			nock.cleanAll();
 		});
+
+		it('should return passthrough as API-Security', async () => {
+			nock('https://mocked-api-gateway:8175').get('/api/portal/v1.3/proxies?field=name&op=eq&value=Petstore without security').replyWithFile(200, './test/testReplies/apimanager/apiProxyPassthrough.json');
+			nock('https://mocked-api-gateway:8175').get(`/api/portal/v1.3/organizations/439ec2bd-0350-459c-8df3-bb6d14da6bc8`).replyWithFile(200, './test/testReplies/apimanager/organizationAPIDevelopment.json');
+			
+			const { value, output } = await flowNode.lookupAPIDetails({ 
+				apiName: 'Petstore without security', apiPath: '/without/security'
+			});
+			expect(output).to.equal('next');
+			expect(value.organizationName).to.equal(`API Development`);
+			expect(value.name).to.equal(`Petstore without security`);
+			expect(value.path).to.equal(`/without/security`);
+			expect(value.apiSecurity).to.equal(`Pass Through`);
+			nock.cleanAll();
+		});
 	});
 });

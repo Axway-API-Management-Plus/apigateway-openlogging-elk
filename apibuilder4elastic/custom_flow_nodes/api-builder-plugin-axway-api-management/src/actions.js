@@ -160,6 +160,7 @@ async function _getAPISecurity(apiProxy, operationId) {
 			var securityProfile = apiProxy.securityProfiles[i];
 			if(!securityProfile.isDefault) continue;
 			// For now we pick the first Security device
+			if(securityProfile.devices.length==0) return securityDeviceTypes['passThrough'];
 			return securityDeviceTypes[securityProfile.devices[0].type];
 		}
 		return "N/A";
