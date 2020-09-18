@@ -133,9 +133,6 @@
                 },
                 "norms": false
             },
-            "serviceContext.status": {
-                "type": "keyword"
-            },
             "duration": {
                 "type": "integer"
             },
