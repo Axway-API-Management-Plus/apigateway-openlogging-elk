@@ -141,7 +141,7 @@ services:
 
   # This is the API-Builder project exposing the API-Gateway Manager REST-API
   apibuilder4elastic:
-    image: cwiechmann/apibuilder4elastic:v1.0.0-RC1
+    image: cwiechmann/apibuilder4elastic:v1.0.0-RC2
     container_name: apibuilder4elastic
     environment:
       - ELASTICSEARCH_HOST=${ELASTICSEARCH_HOST}
