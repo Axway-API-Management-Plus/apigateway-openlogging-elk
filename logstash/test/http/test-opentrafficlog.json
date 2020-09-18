@@ -607,7 +607,7 @@
             "leg0": {
               "duration": 2,
               "leg": 0,
-              "finalStatus": null,
+              "finalStatus": "Pass",
               "protocolInfo": {
                 "http": {
                   "uri": "/WebShop.svc",

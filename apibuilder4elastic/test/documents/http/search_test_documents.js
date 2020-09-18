@@ -18,7 +18,6 @@ module.exports = [
         "path": "/favicon.ico",
         "protocol": "https",
         "serviceContext": null,
-        "status": "failure", 
         "duration" : 55,
         "finalStatus" : "Fail", 
         "http": {

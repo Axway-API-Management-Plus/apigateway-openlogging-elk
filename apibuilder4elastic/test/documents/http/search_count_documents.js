@@ -19,7 +19,6 @@ module.exports = [
         "protocol": "https",
         "serviceContext": null,
         "protocolSrc": "8065",
-        "status": "failure",
         "finalStatus" : "Fail",
         "http": {
             "statusText": "Not Found",

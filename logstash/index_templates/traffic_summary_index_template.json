@@ -67,10 +67,6 @@
                 },
                 "norms": false
             },
-
-            "status": {
-                "type": "keyword"
-            },
             "http.uri": {
                 "type": "text", 
                 "norms": false

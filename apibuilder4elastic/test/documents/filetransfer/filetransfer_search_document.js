@@ -5,12 +5,11 @@ module.exports = [
     {
         "@timestamp": "2020-09-02T20:10:50.348Z",
         "correlationId": "4afc4f5fa70015d93db3a15c",
-        "finalStatus": "success",
+        "finalStatus": "Pass",
         "duration": 924,
         "path": null,
         "protocol": "ftp-local",
         "protocolSrc": "10021//opt/Axway/APIM-7.7.0/apigateway/groups/group-2/instance-1/file-transfer/in/persistent/abc",
-        "status": "success",
         "serviceContext": null,
         "fileTransfer": {
             "remoteAddr": "/192.168.65.1:63026",
@@ -34,12 +33,11 @@ module.exports = [
     {
         "@timestamp": "2020-09-02T20:10:50.348Z",
         "correlationId": "4afc4f5fa70015d93db-FTPS",
-        "finalStatus": "success",
+        "finalStatus": "Pass",
         "duration": 100,
         "path": null,
         "protocol": "ftp-local",
         "protocolSrc": "10021//opt/Axway/APIM-7.7.0/apigateway/groups/group-2/instance-1/file-transfer/in/persistent/abc",
-        "status": "success",
         "serviceContext": null,
         "fileTransfer": {
             "remoteAddr": "/192.168.65.1:63026",
