@@ -39,6 +39,10 @@ filebeat.inputs:
     gatewayName: ${GATEWAY_NAME:"API-Gateway"}
     gatewayRegion: ${GATEWAY_REGION:"N/A"}
 
+# Required for Trace-Messages logged by the API-Gateway
+processors:
+  - add_locale:  
+
 output.logstash:
   hosts: ["${LOGSTASH}"]
   worker: ${FILEBEAT_WORKERS:2}

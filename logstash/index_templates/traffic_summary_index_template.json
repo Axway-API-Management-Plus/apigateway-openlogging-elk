@@ -67,9 +67,9 @@
                 },
                 "norms": false
             },
-
-            "status": {
-                "type": "keyword"
+            "http.uri": {
+                "type": "text", 
+                "norms": false
             },
             "http.method": {
                 "type": "keyword"
@@ -120,10 +120,6 @@
             "http.wafStatus": {
                 "type": "integer"
             },
-            "path": {
-                "type": "text", 
-                "norms": false
-            },
             "serviceContext.service": {
                 "type": "text",
                 "fields": {
@@ -132,9 +128,6 @@
                     }
                 },
                 "norms": false
-            },
-            "serviceContext.status": {
-                "type": "keyword"
             },
             "duration": {
                 "type": "integer"

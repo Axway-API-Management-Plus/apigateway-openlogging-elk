@@ -38,8 +38,8 @@ jobs:
     - name: Publish Docker image
       uses: elgohr/Publish-Docker-Github-Action@2.13
       with:
-        name: cwiechmann/elk-traffic-monitor-api
-        workdir: 'elk-traffic-monitor-api'
+        name: cwiechmann/apibuilder4elastic
+        workdir: 'apibuilder4elastic'
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
         tags: "${{ github.event.release.tag_name }}"

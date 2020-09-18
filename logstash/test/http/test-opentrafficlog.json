@@ -20,6 +20,7 @@
           "http": {
             "status": 200,
             "statusText": "OK",
+            "uri": "/petstore/v2/store/inventory",
             "method": "GET",
             "vhost": null,
             "wafStatus": 0,
@@ -32,6 +33,15 @@
             "localPort": "8065",
             "sslSubject": null,
             "authSubjectId": "180b1f32-d72f-40f4-949a-fc3f3f7dec2c"
+          },
+          "processInfo": {
+            "gatewayName": "API-Gateway 3",
+            "gatewayRegion": "US",
+            "groupId": "group-2",
+            "groupName": "group-a",
+            "hostname": "ip-172-31-56-150.ec2.internal",
+            "serviceId": "instance-2",
+            "version": "7.7.20200530"
           }
         },
         {
@@ -88,10 +98,9 @@
         {
           "@timestamp": "2020-07-13T20:07:27.467Z",
           "correlationId": "AAbe0c5f95da03f602a6e587",
-          "path": "/petstore/v2/user/Chris",
+          "finalStatus": "Pass",
           "protocol": "https",
           "protocolSrc": "8065",
-          "status": "success",
           "processInfo": {
             "hostname": "ip-172-31-62-146.ec2.internal",
             "groupId": "group-2",
@@ -111,7 +120,6 @@
             "appOrg": "Apps org",
             "app": "Weather App",
             "method": "getUserByName",
-            "status": "success",
             "apiSecurity": "API-Key", 
             "requestPolicy": "N/A", 
             "routingPolicy": "N/A", 
@@ -148,7 +156,6 @@
               "appOrg": "Apps org",
               "app": "Weather App",
               "method": "getUserByName",
-              "status": "success",
               "apiSecurity": "API-Key", 
               "requestPolicy": "N/A", 
               "routingPolicy": "N/A", 
@@ -169,10 +176,9 @@
         {
           "@timestamp": "2020-07-13T20:07:27.467Z",
           "correlationId": "BBbe0c5f95da03f602a6e587",
-          "path": "/api/with/policies/backend/and/oauth",
+          "finalStatus": "Pass",
           "protocol": "https",
           "protocolSrc": "8065",
-          "status": "success",
           "type": "summaryIndex",
           "serviceContext": {
             "apiDeprecated": "true",
@@ -184,7 +190,6 @@
             "appOrg": "Apps org",
             "app": "Weather App",
             "method": "getUserByName",
-            "status": "success",
             "apiSecurity": "OAuth", 
             "requestPolicy": "My Request Policy", 
             "routingPolicy": "I do the routing", 
@@ -229,7 +234,6 @@
               "appOrg": "Apps org",
               "app": "Weather App",
               "method": "getUserByName",
-              "status": "success",
               "apiSecurity": "OAuth", 
               "requestPolicy": "My Request Policy", 
               "routingPolicy": "I do the routing", 
@@ -250,17 +254,15 @@
         {
           "@timestamp": "2020-07-13T20:07:27.467Z",
           "correlationId": "OMG-UNKNOWN-API",
-          "path": "/this/api/is/unknown",
+          "finalStatus": "Pass",
           "protocol": "https",
           "protocolSrc": "8065",
-          "status": "success",
           "serviceContext": {
             "service": "A unknown API",
             "monitor": true,
             "appOrg": null,
             "app": null,
-            "method": "getUserByName",
-            "status": "success"
+            "method": "getUserByName"
           }, 
           "type": "summaryIndex",
           "processInfo": {
@@ -286,7 +288,6 @@
             "gatewayName": "API-Gateway 3", 
             "gatewayRegion": "US"
           },
-          "tags": ["_httprequestfailure"],
           "transactionSummary": {
             "path": "/this/api/is/unknown",
             "protocol": "https",
@@ -297,10 +298,10 @@
               "monitor": true,
               "appOrg": null,
               "app": null,
-              "method": "getUserByName",
-              "status": "success"
+              "method": "getUserByName"
             }
-          }
+          },
+          "tags": ["_httprequestfailure"]
         },
         {
           "@timestamp": "2020-07-13T20:07:27.467Z",
@@ -315,19 +316,16 @@
             "gatewayRegion": "US"
           },
           "tags": ["_httprequestfailure"],
-          "transactionElements": {
-            "leg0": {
-              "protocolInfo": {
-                "http": {
-                  "authSubjectId": "ID: OMG-UNKNOWN-API",
-                  "method": "LOGSTASH",
-                  "status": "900",
-                  "statusText": "ERROR",
-                  "uri": "/this/api/is/unknown",
-                  "vhost": "Logstash Error"
-                }
-              }
-            }
+          "http": {
+            "authSubjectId": "ID: OMG-UNKNOWN-API",
+            "method": "LOGSTASH",
+            "status": "900",
+            "statusText": "ERROR",
+            "uri": "/this/api/is/unknown",
+            "vhost": "Logstash Error"
+          },
+          "serviceContext": {
+            "method": "check the logs"
           },
           "transactionSummary": {
             "path": "/this/api/is/unknown",
@@ -335,13 +333,12 @@
             "protocolSrc": "8065",
             "status": "success",
             "serviceContext": {
-              "service": "A unknown API",
-              "monitor": true,
-              "appOrg": null,
               "app": null,
-              "method": "check the logs",
-              "status": "success"
-            }
+              "appOrg": null,
+              "method": "getUserByName",
+              "monitor": true,
+              "service": "A unknown API"
+          }
           },
           "type": "errorEvent"
         }
@@ -356,10 +353,9 @@
         {
           "@timestamp": "2020-07-13T18:40:15.973Z",
           "correlationId": "8faa0c5f4da87df2ad8c394a",
-          "path": "/healthcheck",
+          "finalStatus": "Pass",
           "protocol": "http",
           "protocolSrc": "8080",
-          "status": "success",
           "serviceContext": null,
           "type": "summaryIndex",
           "processInfo": {
@@ -532,6 +528,112 @@
             }
           },
           "type": "scheduledPolicy"
+        }
+      ]
+    },
+    {
+      "description": "OPTIONS request circuitPath",
+      "input": [
+        "{\"timestamp\":1600184256489,\"correlationId\":\"c0df605fa2047bebb989e684\",\"processInfo\":{\"hostname\":\"api-env\",\"domainId\":\"ed992442-c363-4d36-963a-9e6314b0f421\",\"groupId\":\"group-2\",\"groupName\":\"QuickStart Group\",\"serviceId\":\"instance-1\",\"serviceName\":\"QuickStart Server\",\"version\":\"7.7.20200730\"},\"circuitPath\":[  ]}"
+      ],
+      "expected": [
+        {
+          "@timestamp": "2020-09-15T15:37:36.489Z",
+          "correlationId": "c0df605fa2047bebb989e684",
+          "processInfo": {
+            "hostname": "api-env",
+            "groupId": "group-2",
+            "groupName": "QuickStart Group",
+            "serviceId": "instance-1",
+            "version": "7.7.20200730",
+            "gatewayName": "API-Gateway 3", 
+            "gatewayRegion": "US"
+          },
+          "circuitPath": []
+        }
+      ]
+    },
+    {
+      "description": "OPTIONS request: TransactionElement event with leg0",
+      "input": [
+        "{\"timestamp\":1600184256487,\"correlationId\":\"c0df605fa2047bebbOPTIONS\",\"processInfo\":{\"hostname\":\"api-env\",\"domainId\":\"ed992442-c363-4d36-963a-9e6314b0f421\",\"groupId\":\"group-2\",\"groupName\":\"QuickStart Group\",\"serviceId\":\"instance-1\",\"serviceName\":\"QuickStart Server\",\"version\":\"7.7.20200730\"},\"transactionElement\":{\"leg\":0,\"duration\":2,\"serviceName\":null,\"operation\":null,\"finalStatus\":null,\"protocolInfo\":{\"http\":{\"uri\":\"/WebShop.svc\",\"status\":200,\"statusText\":\"OK\",\"method\":\"OPTIONS\",\"vhost\":null,\"wafStatus\":0,\"bytesSent\":212,\"bytesReceived\":477,\"remoteName\":\"192.168.65.1\",\"remoteAddr\":\"192.168.65.1\",\"localAddr\":\"192.168.65.133\",\"remotePort\":\"60041\",\"localPort\":\"8065\",\"sslSubject\":null,\"authSubjectId\":null},\"recvHeader\":\"OPTIONS \/WebShop.svc HTTP\/1.1\\r\\nHost: api-env:8065\\r\\nUser-Agent: Mozilla\/5.0 (Windows NT 10.0; Win64; x64; rv:80.0) Gecko\/20100101 Firefox\/80.0\\r\\nAccept: *\/*\\r\\nAccept-Language: en-US,en;q=0.5\\r\\nAccept-Encoding: gzip, deflate, br\\r\\nAccess-Control-Request-Method: POST\\r\\nAccess-Control-Request-Headers: content-type,keyid,soapaction,x-requested-with\\r\\nReferer: https:\/\/api-env:8075\/home\\r\\nOrigin: https:\/\/api-env:8075\\r\\nConnection: keep-alive\\r\\nPragma: no-cache\\r\\nCache-Control: no-cache\\r\\n\\r\\n\",\"sentHeader\":\"HTTP\/1.1 200 OK\\r\\nDate: Tue, 15 Sep 2020 15:37:36 GMT\\r\\nAllow: GET, HEAD, OPTIONS\\r\\nServer: Gateway\\r\\nContent-Length: 0\\r\\nConnection: close\\r\\nX-CorrelationID: Id-c0df605fa2047bebb989e684 0\\r\\nContent-Type: text\/plain\\r\\n\\r\\n\",\"recvPayload\":null,\"sentPayload\":null}}}"
+      ],
+      "expected": [
+        {
+          "@timestamp": "2020-09-15T15:37:36.487Z",
+          "correlationId": "c0df605fa2047bebbOPTIONS",
+          "type": "summaryIndex",
+          "duration": 2,
+          "finalStatus": "Pass",
+          "processInfo": {
+            "hostname": "api-env",
+            "groupId": "group-2",
+            "groupName": "QuickStart Group",
+            "serviceId": "instance-1",
+            "version": "7.7.20200730",
+            "gatewayName": "API-Gateway 3", 
+            "gatewayRegion": "US"
+          },
+          "http": {
+            "status": 200,
+            "statusText": "OK",
+            "method": "OPTIONS",
+            "uri": "/WebShop.svc",
+            "vhost": null,
+            "wafStatus": 0,
+            "bytesSent": 212,
+            "bytesReceived": 477,
+            "remoteName": "192.168.65.1",
+            "remoteAddr": "192.168.65.1",
+            "localAddr": "192.168.65.133",
+            "remotePort": "60041",
+            "localPort": "8065",
+            "sslSubject": null,
+            "authSubjectId": null
+          }
+        },
+        {
+          "@timestamp": "2020-09-15T15:37:36.487Z",
+          "correlationId": "c0df605fa2047bebbOPTIONS",
+          "processInfo": {
+            "hostname": "api-env",
+            "groupId": "group-2",
+            "groupName": "QuickStart Group",
+            "serviceId": "instance-1",
+            "version": "7.7.20200730", 
+            "gatewayName": "API-Gateway 3", 
+            "gatewayRegion": "US"
+          },
+          "transactionElements": {
+            "leg0": {
+              "duration": 2,
+              "leg": 0,
+              "finalStatus": null,
+              "protocolInfo": {
+                "http": {
+                  "uri": "/WebShop.svc",
+                  "status": 200,
+                  "statusText": "OK",
+                  "method": "OPTIONS",
+                  "vhost": null,
+                  "wafStatus": 0,
+                  "bytesSent": 212,
+                  "bytesReceived": 477,
+                  "remoteName": "192.168.65.1",
+                  "remoteAddr": "192.168.65.1",
+                  "localAddr": "192.168.65.133",
+                  "remotePort": "60041",
+                  "localPort": "8065",
+                  "sslSubject": null,
+                  "authSubjectId": null
+                },
+                "recvHeader": "OPTIONS \/WebShop.svc HTTP\/1.1\r\nHost: api-env:8065\r\nUser-Agent: Mozilla\/5.0 (Windows NT 10.0; Win64; x64; rv:80.0) Gecko\/20100101 Firefox\/80.0\r\nAccept: *\/*\r\nAccept-Language: en-US,en;q=0.5\r\nAccept-Encoding: gzip, deflate, br\r\nAccess-Control-Request-Method: POST\r\nAccess-Control-Request-Headers: content-type,keyid,soapaction,x-requested-with\r\nReferer: https:\/\/api-env:8075\/home\r\nOrigin: https:\/\/api-env:8075\r\nConnection: keep-alive\r\nPragma: no-cache\r\nCache-Control: no-cache\r\n\r\n",
+                "sentHeader": "HTTP\/1.1 200 OK\r\nDate: Tue, 15 Sep 2020 15:37:36 GMT\r\nAllow: GET, HEAD, OPTIONS\r\nServer: Gateway\r\nContent-Length: 0\r\nConnection: close\r\nX-CorrelationID: Id-c0df605fa2047bebb989e684 0\r\nContent-Type: text\/plain\r\n\r\n",
+                "recvPayload": null,
+                "sentPayload": null
+              }
+            }
+          }
         }
       ]
     }

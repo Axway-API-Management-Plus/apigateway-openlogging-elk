@@ -43,7 +43,9 @@ This shows a sample dashboard created in Kibana based on the indexed documents:
 - [Advanced setup](#advanced-setup)
     - [Activate user authentication](#activate-user-authentication)
     - [Configure cluster UUID](#configure-cluster-uuid)
-    - [Securing API-Builder Traffic-Monitor API](#configure-cluster-uuid)
+    - [Custom certificates](#custom-certificates)
+    - [Multiple API-Manager](#multiple-api-manager)
+    - [Securing API-Builder Traffic-Monitor API](##securing-api-builder-traffic-monitor-api)
 - [Infrastructure sizing](#infrastructure-sizing)
     - [Sizing recommendations](#sizing-recommendations)
     - [Test infrastructure](#test-infrastructure)
@@ -53,6 +55,7 @@ This shows a sample dashboard created in Kibana based on the indexed documents:
     - [Check Logstash processing](#test-infrastructure)
     - [Check Elasticsearch processing](#test-infrastructure)
     - [Check API-Builder processing](#test-infrastructure)
+- [Known issues](#known-issues)
 
 ## Overview
 
@@ -73,7 +76,7 @@ Once the data is indexed by Elasticsearch it can be used by different clients. T
 
 The standard API-Gateway Traffic-Monitor which is shipped with the solution is __based on a REST-API__ that is provided by the Admin-Node-Manager. By default the Traffic-Information is loaded from the OBSDB running on each API-Gateway instance. This project is partly __re-implementing this REST-API__, which makes it possible, that the standard Traffic-Monitor is using data from ElasticSearch instead of the internal OBSDB.  
 That means, you can use the same tooling as of today, but the underlying implementation of the Traffic-Monitor is now pointing to Elasticsearch instead of the internal OPSDB hosted by each API-Gateway instance. This improves performance damatically, as Elasticsearch can scale across multiple machines if required and other dashboards can be created for instance with Kibana.  
-The glue between Elasticsearch and the API-Gateway Traffic-Monitor is an [API-Builder project](./elk-traffic-monitor-api), that is exposing the same Traffic-Monitor API, but it is implemented using Elasticsearch instead of the OPSDB. The API-Builder is available as a ready to use Docker-Image and preconfigured in the docker-compose file.  
+The glue between Elasticsearch and the API-Gateway Traffic-Monitor is an [API-Builder project](./apibuilder4elastic), that is exposing the same Traffic-Monitor API, but it is implemented using Elasticsearch instead of the OPSDB. The API-Builder is available as a ready to use Docker-Image and preconfigured in the docker-compose file.  
 
 ## Prerequisites
 
@@ -116,7 +119,7 @@ into the main policy: `Protect Management Interfaces` and wire it like shown her
 It is recommended to disable the audit log for Failure transactions to avoid not needed log messages in the ANM trace file:  
 <p align="center"><img src="imgs/policy-shortcut-disable-failure.png" alt="Use Elasticsearch API" width="300" height="123"></p>
 
-- :point_right: Before you restart the Admin-Node-Manager process, please open the file: `<apigateway-install-dir>/apigateway/conf/envSettings.props` and add the following new environment variable: `API_BUILDER_URL=https://elk-traffic-monitor-api:8443`. 
+- :point_right: Before you restart the Admin-Node-Manager process, please open the file: `<apigateway-install-dir>/apigateway/conf/envSettings.props` and add the following new environment variable: `API_BUILDER_URL=https://apibuilder4elastic:8443`. 
 - :point_right: Please remember to copy the changed Admin-Node-Manager configuration from the Policy-Studio project folder (path on Linux: `/home/<user>/apiprojects/\<project-name\>`) back to the ANM folder (`\<install-dir\>/apigateway/conf/fed`). Then restart the ANM.
 
 ### Traffic-Monitor for API-Manager Users
@@ -147,7 +150,7 @@ Obviously this solution also supports enterprise deployments using a distributed
 
 To get started please download the release package from the GitHub project onto your machine:  
 ```
-wget --no-check-certificate https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v0.0.11/axway-apim-elk-v1.0.0-RC1.tar.gz -O - | tar -xvz
+wget --no-check-certificate https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v1.0.0-RC1/axway-apim-elk-v1.0.0-RC1.tar.gz -O - | tar -xvz
 ```
 
 ### Filebeat
@@ -254,9 +257,7 @@ After you have configured everything, please all services.
 - API-Builder - Is using the API-Builder user to query Elasticsearch
   
 It's very likely that you don't use the super-user `elastic` for `LOGSTASH_USERNAME` and `API_BUILDER_USERNAME`. It's recommended to create dedicated accounts for these two users.  
-The monitoring users are used to send metric information to Elasticsearch to enable stack monitoring, which gives you insight about event processing of the complete platform:  
-
-![Monitoring-Overview][Monitoring-Overview]  
+The monitoring users are used to send metric information to Elasticsearch to enable stack monitoring, which gives you insight about event processing of the complete platform.
 
 ### Configure cluster UUID
 
@@ -268,9 +269,44 @@ Take over the UUID into the .env file:
 
 You may also configure the following parameters: `GATEWAY_NAME` & `GATEWAY_REGION` to make you Filebeat instances unique.  
 
+![Monitoring-Overview][Monitoring-Overview]  
+
 To activate these changes the Filebeat service must be restarted. 
 
-### Securing API-Builder Traffic-Monitor API
+### Custom certificates
+
+The project is shipped with long running certificates/keys that should help you to get started with the solution. For a production environment these certificates and keys 
+should be replaced with custom certificates.  
+
+After you have created the corresponding certificates and keys based on your CA, you must save them in the folder: `certificates`. 
+Afterwards these certificates must be configured in the `.env` file.  
+```
+API_BUILDER_SSL_KEY=config/certificates/corporate-certificate.key
+API_BUILDER_SSL_CERT=config/certificates/corporate-certificate.crt
+API_BUILDER_SSL_KEY_PASSWORD=dfslkjaskljdklasjdlas
+ELASTICSEARCH_KEY=config/certificates/corporate-elasticsearch.key
+ELASTICSEARCH_CRT=config/certificates/corporate-elasticsearch.crt
+ELASTICSEARCH_CA=config/certificates/corp-ca.crt
+KIBANA_KEY=config/certificates/corporate-kibana.key
+KIBANA_CRT=config/certificates/corporate-kibana.crt
+```
+You can find more information about the individual certificates in the `.env` file.
+
+### Multiple API-Manager
+
+During Logstash event processing, additional information is loaded from the API Manager through an API lookup. This lookup is performed by the API builder against the API Manager.  
+By default the configured Admin Node Manager host is used or the configured API Manager URL:
+```
+API_MANAGER=http://my.apimanager.com:443
+```
+If you have several API Managers within your domain, you have to configure via a mapping which group (groupId) belongs to which API Manager. The following syntax is used for this:  
+```
+API_MANAGER=group-2#https://api-manager-1:8075, group-5#https://api-manager-2:8275
+```
+When the API Builder is started, to validate the configuration, a login to each API-Manager is performed.  Currently the same 
+API manager user (API_MANAGER_USERNAME/API_MANAGER_PASSWORD) is used for each API Manager. 
+
+### Secure API-Builder Traffic-Monitor API
 The API-Builder project for providing access to Elasticsearch data has no access restrictions right now. To ensure only API-Gateway Manager users (topology administrators with proper RBAC role) or other users with appropriate access rights can query the log data, one can expose this API via API-Manager and add security here.
 
 To import the API Builder project REST-API into your API-Manager, you can access the Swagger/OpenAPI definition here (replace docker-host and port appropriately for the container that is hosting the API-Builder project):  
@@ -361,6 +397,7 @@ The recommendation contains only one ElasticSearch node up to a volume of max. 1
 |                            |        |      |      | Kibana         | 7.9.0   | Standard Kibana Docker-Container |
 
 ## Troubleshooting
+
 ### Check processes/containers are running
 From within the folder where the docker-compose.yml file is located (git project folder) execute: 
 ```
@@ -469,6 +506,11 @@ Using elastic search query body: {"index":"logstash-openlog","body":{"query":{"b
 ```
 This helps you to further analyze if ElasticSearch is returning the correct information for instance using the Kibana development console. Example sending the same request using the Kibana Development console:  
 ![Kibana Dev-Console][img8]
+
+## Known issues
+
+- __Trace messages not shown in correct order__  
+  See issue https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/37
 
 
 [img1]: imgs/component-overview.png

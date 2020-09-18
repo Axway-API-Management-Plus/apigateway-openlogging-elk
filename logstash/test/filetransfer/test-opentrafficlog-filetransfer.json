@@ -14,10 +14,9 @@
         {
           "@timestamp": "2020-09-02T20:10:51.272Z",
           "correlationId": "4afc4f5fa70015d93db3a15c",
-          "path": null,
+          "finalStatus": "Pass",
           "protocol": "ftp-local",
           "protocolSrc": "10021//opt/Axway/APIM-7.7.0/apigateway/groups/group-2/instance-1/file-transfer/in/persistent/abc",
-          "status": "success",
           "serviceContext": null,
           "processInfo": {
             "hostname": "api-env",
@@ -108,6 +107,15 @@
             "serviceType": "ftp",
             "size": 50,
             "authSubjectId": "abc"
+          },
+          "processInfo": {
+            "gatewayName": "API-Gateway 3",
+            "gatewayRegion": "US",
+            "groupId": "group-2",
+            "groupName": "QuickStart Group",
+            "hostname": "api-env",
+            "serviceId": "instance-1",
+            "version": "7.7.20200730"
           },
           "type": "summaryIndex"
         },

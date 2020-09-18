@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     services:
       api-builder:
-        image: cwiechmann/elk-traffic-monitor-api:latest
+        image: cwiechmann/apibuilder4elastic:latest
         ports: 
           - 8080:8080
         env:
@@ -37,6 +37,7 @@ jobs:
         echo Using API_BUILDER_URL: $API_BUILDER_URL
         echo Using MEMCACHED: $MEMCACHED
         ./logstash-filter-verifier --diff-command="diff -y" --sockets --sockets-timeout=120s --keep-env=API_BUILDER_SSL_CERT --keep-env=API_BUILDER_URL --keep-env=MEMCACHED ./logstash/test/http/test-tracemessages.json ./logstash/pipelines/TraceMessagesPipeline.conf
+        ./logstash-filter-verifier --diff-command="diff -y" --sockets --sockets-timeout=120s --keep-env=API_BUILDER_SSL_CERT --keep-env=API_BUILDER_URL --keep-env=MEMCACHED ./logstash/test/http/test-tracemessages-gmt-4.json ./logstash/pipelines/TraceMessagesPipeline.conf
         ./logstash-filter-verifier --diff-command="diff -y" --sockets --sockets-timeout=120s --keep-env=API_BUILDER_SSL_CERT --keep-env=API_BUILDER_URL --keep-env=MEMCACHED ./logstash/test/http/test-events.json ./logstash/pipelines/EventsPipeline.conf
         ./logstash-filter-verifier --diff-command="diff -y" --sockets --sockets-timeout=120s --keep-env=API_BUILDER_SSL_CERT --keep-env=API_BUILDER_URL --keep-env=MEMCACHED ./logstash/test/http/test-opentrafficlog.json ./logstash/pipelines/OpenTrafficPipeline.conf
         ./logstash-filter-verifier --diff-command="diff -y" --sockets --sockets-timeout=120s --keep-env=API_BUILDER_SSL_CERT --keep-env=API_BUILDER_URL --keep-env=MEMCACHED ./logstash/test/filetransfer/test-opentrafficlog-filetransfer.json ./logstash/pipelines/OpenTrafficPipeline.conf
@@ -46,4 +47,4 @@ jobs:
         MEMCACHED: 'localhost:11211'
         # This is not relevant as we test with HTTP
         # But it's required by Logstash to be a valid certificate
-        API_BUILDER_SSL_CERT: "./certificates/api-builder.crt"
+        API_BUILDER_SSL_CERT: "./certificates/apibuilder4elastic.crt"

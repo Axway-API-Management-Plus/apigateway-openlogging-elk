@@ -1,0 +1,710 @@
+{
+	"schemaVersion": "4",
+	"info": {
+		"name": "Traffic-Monitor API - Search",
+		"description": "Used by Traffic monitor to search for APIs (Table overview)"
+	},
+	"parameter": {
+		"properties": {
+			"params": {
+				"type": "object",
+				"description": "The parameters from the endpoint."
+			},
+			"request": {
+				"type": "object",
+				"description": "The HTTP request."
+			},
+			"config": {
+				"type": "object",
+				"description": "The service's configuration"
+			},
+			"env": {
+				"type": "object",
+				"description": "The host OS environment"
+			}
+		},
+		"additionalProperties": false,
+		"required": [
+			"params",
+			"request",
+			"config",
+			"env"
+		]
+	},
+	"start": "axway-api-management.1",
+	"nodes": {
+		"http.1": {
+			"type": "nodehandler://axway-flow/http",
+			"name": "Set Search response",
+			"method": "setresponse",
+			"parameters": [
+				{
+					"name": "status",
+					"type": "number",
+					"value": "200",
+					"metaName": "Status",
+					"metaDescription": "The HTTP status code"
+				},
+				{
+					"name": "body",
+					"type": "jsonpath",
+					"value": "$.response",
+					"metaName": "Body",
+					"metaDescription": "The response payload"
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.response",
+					"routes": [],
+					"metaName": "Next"
+				}
+			},
+			"metaMethod": "Set HTTP Response"
+		},
+		"elasticsearch.1": {
+			"type": "nodehandler://@axway-api-builder-ext/api-builder-plugin-fn-elasticsearch/elasticsearch",
+			"name": "Query Elasticsearch",
+			"method": "search",
+			"parameters": [
+				{
+					"name": "query",
+					"type": "jsonpath",
+					"value": "$.elasticQuery",
+					"metaName": "Query",
+					"metaDescription": "Defines the search definition using the Query DSL. Learn more: https://www.elastic.co/guide/en/elasticsearch/reference/7.x/query-dsl.html"
+				},
+				{
+					"name": "index",
+					"type": "jsonpath",
+					"value": "$.index",
+					"metaName": "Index",
+					"metaDescription": "Comma-separated list or wildcard expression of index names used to limit the request."
+				},
+				{
+					"name": "sort",
+					"type": "string",
+					"value": "\"@timestamp:desc\"",
+					"metaName": "Sort",
+					"metaDescription": "A comma-separated list of <field>:<direction> pairs."
+				},
+				{
+					"name": "size",
+					"type": "jsonpath",
+					"value": "$.params.count",
+					"metaName": "Size",
+					"metaDescription": "Defines the number of hits to return. Defaults to 10."
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.elasticsearch.result",
+					"routes": [
+						"javascript.1"
+					],
+					"metaName": "Next"
+				},
+				"error": {
+					"context": "$.error",
+					"routes": [],
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Search"
+		},
+		"javascript.1": {
+			"type": "nodehandler://@axway/api-builder-plugin-fn-javascript/javascript",
+			"name": "Format Search result",
+			"method": "Execute",
+			"parameters": [
+				{
+					"name": "unsafe",
+					"type": "boolean",
+					"value": "false",
+					"metaName": "Unsafe mode",
+					"metaDescription": "USE WITH CAUTION. When enabled, JavaScript is not executed in a sandboxed environment and all globals are available."
+				},
+				{
+					"name": "code",
+					"type": "string",
+					"value": "\"var result = {};\\n  var hits = data.elasticsearch.result.body.hits.hits;\\n  var protocol = data.params.protocol;\\n  result.processId = \\\"\\\";\\n  result.data = [];\\n  hits.map(function(entry) {\\n    var dataObject = {};\\n    var _source = entry._source;\\n    dataObject.correlationId = _source.correlationId;\\n    dataObject.timestamp = Date.parse(_source['@timestamp']);\\n    if(_source.serviceContext) {\\n      dataObject.serviceName = _source.serviceContext.service;\\n      dataObject.operation = _source.serviceContext.method;\\n    }\\n    dataObject.type = protocol;\\n    switch (protocol) {\\n      case \\\"http\\\":\\n        formatHttpFields(dataObject, _source);\\n        break;\\n      case \\\"fileTransfer\\\":\\n        formatFiletransferFields(dataObject, _source);\\n        break;\\n    }\\n    result.data.push(dataObject);\\n  });\\n  \\n  function formatHttpFields(dataObject, _source) {    \\n      dataObject.statustext = _source.http.statusText;\\n      dataObject.method = _source.http.method;\\n      dataObject.status = _source.http.status;\\n      dataObject.wafStatus = _source.http.wafStatus;\\n      dataObject.subject = _source.http.authSubjectId;\\n      dataObject.localPort = _source.http.localPort;\\n      dataObject.uri = _source.http.uri;\\n      dataObject.vhost = _source.http.vhost;\\n      dataObject.duration = _source.duration;\\n      dataObject.finalStatus = _source.finalStatus;\\n  }\\n  \\n  function formatFiletransferFields(dataObject, _source) {\\n      dataObject.remoteAddr = _source.fileTransfer.remoteAddr;\\n      dataObject.uploadFile = _source.fileTransfer.uploadFile;\\n      dataObject.direction = _source.fileTransfer.direction;\\n      dataObject.servicetype = _source.fileTransfer.serviceType;\\n      dataObject.size = _source.fileTransfer.size;\\n      dataObject.duration = _source.duration;\\n      dataObject.subject = _source.fileTransfer.authSubjectId;\\n      dataObject.finalStatus = _source.finalStatus;\\n  }\\n\\n  \\n  return result;\"",
+					"metaName": "code",
+					"metaDescription": "A JavaScript function body. Supports `await` and returning promises."
+				},
+				{
+					"name": "data",
+					"type": "jsonpath",
+					"value": "$",
+					"metaName": "data",
+					"metaDescription": "The value to apply as the `data` argument to the JavaScript code. For objects and arrays, `data` is passed by reference."
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.response",
+					"routes": [
+						"http.1"
+					],
+					"metaName": "Next"
+				},
+				"error": {
+					"context": "$.error",
+					"routes": [],
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Execute"
+		},
+		"javascript.2": {
+			"type": "nodehandler://@axway/api-builder-plugin-fn-javascript/javascript",
+			"name": "Add All search filters",
+			"method": "Execute",
+			"parameters": [
+				{
+					"name": "data",
+					"type": "jsonpath",
+					"value": "$",
+					"metaName": "data",
+					"metaDescription": "The value to apply as the `data` argument to the JavaScript code. For objects and arrays, `data` is passed by reference."
+				},
+				{
+					"name": "unsafe",
+					"type": "boolean",
+					"value": "false",
+					"metaName": "Unsafe mode",
+					"metaDescription": "USE WITH CAUTION. When enabled, JavaScript is not executed in a sandboxed environment and all globals are available."
+				},
+				{
+					"name": "code",
+					"type": "string",
+					"value": "\"var queryFilters = data.queryFilters;\\n  var elasticQuery = {};\\n  // The serviceId is given by the Traffic-Monitor UI request (Requests are executed for each sericeId)\\n  queryFilters.push( {\\n    \\\"term\\\": {\\n      \\\"processInfo.serviceId\\\": data.params.serviceID\\n    }\\n  });\\n  // Making sure, it's getting data only for the selected protocol\\n  queryFilters.push( {\\n    \\\"exists\\\": {\\n      \\\"field\\\": data.params.protocol\\n    }\\n  });\\n  // Finally, add all collected filters to the final query \\n  elasticQuery = { \\n    bool: {\\n      must: queryFilters\\n    }\\n  };\\n  return elasticQuery;\"",
+					"metaName": "code",
+					"metaDescription": "A JavaScript function body. Supports `await` and returning promises."
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.elasticQuery",
+					"routes": [
+						"elasticsearch.1"
+					],
+					"metaName": "Next"
+				},
+				"error": {
+					"context": "$.error",
+					"routes": [],
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Execute"
+		},
+		"javascript.3": {
+			"type": "nodehandler://@axway/api-builder-plugin-fn-javascript/javascript",
+			"name": "Duration filter",
+			"method": "Execute",
+			"parameters": [
+				{
+					"name": "data",
+					"type": "jsonpath",
+					"value": "$",
+					"metaName": "data",
+					"metaDescription": "The value to apply as the `data` argument to the JavaScript code. For objects and arrays, `data` is passed by reference."
+				},
+				{
+					"name": "code",
+					"type": "string",
+					"value": "\"var queryFilters = data.queryFilters;\\n  data.params.field.map(function(entry, index) {\\n    var op = data.params.op;\\n    var value = data.params.value[index];\\n    if(entry === 'duration') {\\n      var filter = {\\n        range: {\\n          \\\"duration\\\": {\\n            \\\"gte\\\": value\\n          }\\n        }\\n      };\\n      queryFilters.push(filter);\\n      return queryFilters;\\n \\t}\\n  });\"",
+					"metaName": "code",
+					"metaDescription": "A JavaScript function body. Supports `await` and returning promises."
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.queryFilters",
+					"routes": [
+						"javascript.2"
+					],
+					"metaName": "Next"
+				},
+				"error": {
+					"context": "$.error",
+					"routes": [],
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Execute"
+		},
+		"javascript.6": {
+			"type": "nodehandler://@axway/api-builder-plugin-fn-javascript/javascript",
+			"name": "Ago filter",
+			"method": "Execute",
+			"parameters": [
+				{
+					"name": "data",
+					"type": "jsonpath",
+					"value": "$",
+					"metaName": "data",
+					"metaDescription": "The value to apply as the `data` argument to the JavaScript code. For objects and arrays, `data` is passed by reference."
+				},
+				{
+					"name": "code",
+					"type": "string",
+					"value": "\"var queryFilters = data.queryFilters;\\n  if(data.params.ago) {\\n    var ago = data.params.ago;\\n    var diff = convertAgo(ago);\\n    var filter = {\\n      range: {\\n        \\\"@timestamp\\\": {\\n          gt: diff\\n        }\\n      }\\n    };\\n    queryFilters.push(filter);\\n    return queryFilters;\\n  }\\n  \\n  function convertAgo(ago) {\\n    var diff = ago.substring(0, ago.length-1);\\n    var now = new Date();\\n    if(ago.endsWith('m')) {\\n      return now.setMinutes(now.getMinutes() - diff);\\n    } else if(ago.endsWith('h')) {\\n      return now.setHours(now.getHours() - diff);\\n    }\\n    console.log(`ERRRRO ${ago}`);\\n  }\"",
+					"metaName": "code",
+					"metaDescription": "A JavaScript function body. Supports `await` and returning promises."
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.result",
+					"routes": [
+						"javascript.2"
+					],
+					"metaName": "Next"
+				},
+				"error": {
+					"context": "$.error",
+					"routes": [],
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Execute"
+		},
+		"javascript.7": {
+			"type": "nodehandler://@axway/api-builder-plugin-fn-javascript/javascript",
+			"name": "Timestamp filter",
+			"method": "Execute",
+			"parameters": [
+				{
+					"name": "data",
+					"type": "jsonpath",
+					"value": "$",
+					"metaName": "data",
+					"metaDescription": "The value to apply as the `data` argument to the JavaScript code. For objects and arrays, `data` is passed by reference."
+				},
+				{
+					"name": "code",
+					"type": "string",
+					"value": "\"var queryFilters = data.queryFilters;\\n  data.params.field.map(function(entry, index, field) {\\n    var op = data.params.op;\\n    if(entry === 'timestamp') {\\n      // If timestamp is given, we expect to get a start and end\\n      var begin = data.params.value[index];\\n      var end = 0;\\n      if(field[index+1] === 'timestamp') {\\n        end = data.params.value[index+1];\\n      } else {\\n        return queryFilters;\\n      }\\n      console.log(`begin: ${begin}`);\\n      console.log(`end: ${end}`);\\n      var filter = {\\n        range: {\\n          \\\"@timestamp\\\": {\\n            \\\"gte\\\": begin, \\n            \\\"lte\\\": end\\n          }\\n        }\\n      };\\n      queryFilters.push(filter);\\n      return queryFilters;\\n \\t}\\n  });\"",
+					"metaName": "code",
+					"metaDescription": "A JavaScript function body. Supports `await` and returning promises."
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.result",
+					"routes": [
+						"javascript.2"
+					],
+					"metaName": "Next"
+				},
+				"error": {
+					"context": "$.error",
+					"routes": [],
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Execute"
+		},
+		"javascript.8": {
+			"type": "nodehandler://@axway/api-builder-plugin-fn-javascript/javascript",
+			"name": "Define index for search",
+			"method": "Execute",
+			"parameters": [
+				{
+					"name": "data",
+					"type": "jsonpath",
+					"value": "$",
+					"metaName": "data",
+					"metaDescription": "The value to apply as the `data` argument to the JavaScript code. For objects and arrays, `data` is passed by reference."
+				},
+				{
+					"name": "code",
+					"type": "string",
+					"value": "\"// Overview screen (Traffic-Details table) \\n  // should also include the apigw-traffic-errors documents\\n  let index = 'apigw-traffic-summary-*';\\n  if(data.config.testElasticIndex) {\\n    index = data.config.testElasticIndex;\\n  }\\n  return index;\"",
+					"metaName": "code",
+					"metaDescription": "A JavaScript function body. Supports `await` and returning promises."
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.index",
+					"routes": [
+						"javascript.10"
+					],
+					"metaName": "Next"
+				},
+				"error": {
+					"context": "$.error",
+					"routes": [],
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Execute"
+		},
+		"javascript.10": {
+			"type": "nodehandler://@axway/api-builder-plugin-fn-javascript/javascript",
+			"name": "Init search variables",
+			"method": "Execute",
+			"parameters": [
+				{
+					"name": "data",
+					"type": "jsonpath",
+					"value": "$",
+					"metaName": "data",
+					"metaDescription": "The value to apply as the `data` argument to the JavaScript code. For objects and arrays, `data` is passed by reference."
+				},
+				{
+					"name": "code",
+					"type": "string",
+					"value": "\"var queryFilters = [];\\n  \\n  if(typeof data.params.protocol == 'undefined') {\\n    data.params.protocol = 'http';\\n  }\\n  \\n  if(data.params.protocol == 'filetransfer') {\\n    data.params.protocol = 'fileTransfer';\\n  }\\n  \\n  console.log('Requested protocol: ' + data.params.protocol);\\n  \\n  data.fields = [\\n    // This Object-Array declares for each field how to query it in ES\\n    { fieldName: 'uri', queryType: 'match', queryLocation: 'http.uri' }, \\n    { fieldName: 'wafStatus', queryType: 'match', queryLocation: 'http.wafStatus' }, \\n    { fieldName: 'finalStatus', queryType: 'match', queryLocation: 'finalStatus' }, \\n    { fieldName: 'remotePort', queryType: 'match', queryLocation: 'http.remotePort' }, \\n    { fieldName: 'remoteName', queryType: 'match', queryLocation: 'http.remoteName' }, \\n    { fieldName: 'localAddr', queryType: 'match', queryLocation: 'http.localAddr' },\\n    { fieldName: 'status', queryType: 'match', queryLocation: 'http.status' },\\n    { fieldName: 'subject', queryType: 'match', queryLocation: 'http.authSubjectId' },\\n    { fieldName: 'operation', queryType: 'match', queryLocation: 'serviceContext.method' },\\n    { fieldName: 'localPort', queryType: 'match', queryLocation: 'http.localPort' },\\n    { fieldName: 'method', queryType: 'match', queryLocation: 'http.method' },\\n    { fieldName: 'correlationId', queryType: 'match', queryLocation: 'correlationId' },\\n    { fieldName: 'serviceName', queryType: 'match', queryLocation: 'serviceContext.service' },\\n    { fieldName: 'servicetype', queryType: 'match', queryLocation: `${data.params.protocol}.serviceType` }\\n  ];\\n  \\n  if(typeof data.params.field == 'undefined') {\\n    data.params.field = [];\\n  }\\n  if(typeof data.params.field == 'string') {\\n    data.params.field = [data.params.field];\\n  }\\n  if(typeof data.params.value === 'undefined') {\\n    data.params.value = [];\\n  }\\n  if(typeof data.params.value == 'string') {\\n    data.params.value = [data.params.value];\\n  }\\n  return queryFilters;\"",
+					"metaName": "code",
+					"metaDescription": "A JavaScript function body. Supports `await` and returning promises."
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.queryFilters",
+					"routes": [
+						"condition.1"
+					],
+					"metaName": "Next"
+				},
+				"error": {
+					"context": "$.error",
+					"routes": [],
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Execute"
+		},
+		"javascript.21": {
+			"type": "nodehandler://@axway/api-builder-plugin-fn-javascript/javascript",
+			"name": "Handle search filter",
+			"method": "Execute",
+			"parameters": [
+				{
+					"name": "data",
+					"type": "jsonpath",
+					"value": "$",
+					"metaName": "data",
+					"metaDescription": "The value to apply as the `data` argument to the JavaScript code. For objects and arrays, `data` is passed by reference."
+				},
+				{
+					"name": "unsafe",
+					"type": "boolean",
+					"value": "true",
+					"metaName": "Unsafe mode",
+					"metaDescription": "USE WITH CAUTION. When enabled, JavaScript is not executed in a sandboxed environment and all globals are available."
+				},
+				{
+					"name": "code",
+					"type": "string",
+					"value": "\"var queryFilters = data.queryFilters;\\n  data.fields.map(function(entry) {\\n    data.params.field.map(function(fieldEntry, index) {\\n      if(entry.fieldName === fieldEntry) {\\n        var queryType = entry.queryType;\\n        var queryLocation = entry.queryLocation;\\n        var value = data.params.value[index];\\n        var filter = {};\\n        var filterQuery = {};\\n        filterQuery[queryLocation] = value;\\n        filter[queryType] =  filterQuery;\\n        queryFilters.push(filter);\\n        return queryFilters;\\n      }\\n    });\\n  });\"",
+					"metaName": "code",
+					"metaDescription": "A JavaScript function body. Supports `await` and returning promises."
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.result",
+					"routes": [
+						"javascript.3",
+						"javascript.6",
+						"javascript.7",
+						"javascript.4"
+					],
+					"metaName": "Next"
+				},
+				"error": {
+					"context": "$.error",
+					"routes": [],
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Execute"
+		},
+		"axway-api-management.1": {
+			"type": "nodehandler://api-builder-plugin-axway-api-management/axway-api-management",
+			"name": "Lookup current user",
+			"method": "lookupCurrentUser",
+			"parameters": [
+				{
+					"name": "requestHeaders",
+					"type": "jsonpath",
+					"value": "$.request.headers",
+					"metaName": "Request Headers",
+					"metaDescription": "The request headers are used to lookup the current users based on the current session cookie (VIDUSR)."
+				},
+				{
+					"name": "groupId",
+					"type": "jsonpath",
+					"value": "$.params.groupId",
+					"metaName": "The API-Gateway Group-ID",
+					"metaDescription": "The ID of the Domain-Group where this event was created. If given, it's used to determined which API-Manager to use. For that, the parameter: API_MANAGER must be configured like so: API_MANAGER=group-5#https://manager-1:8075, group-2#https://manager-2:8075, ...."
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.user",
+					"routes": [
+						"javascript.8"
+					],
+					"metaName": "Next"
+				},
+				"error": {
+					"context": "$.error",
+					"routes": [],
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Lookup current user"
+		},
+		"javascript.4": {
+			"type": "nodehandler://@axway/api-builder-plugin-fn-javascript/javascript",
+			"name": "Org-Admin filter",
+			"method": "Execute",
+			"parameters": [
+				{
+					"name": "data",
+					"type": "jsonpath",
+					"value": "$",
+					"metaName": "data",
+					"metaDescription": "The value to apply as the `data` argument to the JavaScript code. For objects and arrays, `data` is passed by reference."
+				},
+				{
+					"name": "code",
+					"type": "string",
+					"value": "\"var queryFilters = data.queryFilters;\\n  if(!data.user.gatewayManager.isAdmin) {\\n    var filter;\\n    if(data.user.apiManager.role == \\\"admin\\\") {\\n      filter = {\\n        exists: {\\n          \\\"field\\\" : \\\"serviceContext\\\"\\n        }\\n      };\\n    } else {\\n      filter = {\\n        term: {\\n          \\\"serviceContext.apiOrg\\\" : data.user.apiManager.organizationName\\n        }\\n      };\\n    }\\n    queryFilters.push(filter);\\n  }\\n  return queryFilters;\"",
+					"metaName": "code",
+					"metaDescription": "A JavaScript function body. Supports `await` and returning promises."
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.result",
+					"routes": [
+						"javascript.2"
+					],
+					"metaName": "Next"
+				},
+				"error": {
+					"context": "$.error",
+					"routes": [],
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Execute"
+		},
+		"condition.1": {
+			"type": "nodehandler://axway-flow/condition",
+			"name": "Is Gateway Admin?",
+			"method": "equals",
+			"parameters": [
+				{
+					"name": "source",
+					"type": "jsonpath",
+					"value": "$.user.gatewayManager.isAdmin",
+					"metaName": "Source",
+					"metaDescription": "The input to test."
+				},
+				{
+					"name": "value",
+					"type": "boolean",
+					"value": "true",
+					"metaName": "Value",
+					"metaDescription": "The value to test input against."
+				}
+			],
+			"outputs": {
+				"true": {
+					"routes": [
+						"condition.3"
+					],
+					"context": "$.equals",
+					"metaName": "True"
+				},
+				"false": {
+					"routes": [
+						"condition.2"
+					],
+					"context": "$.equals",
+					"metaName": "False"
+				}
+			},
+			"metaMethod": "Equals"
+		},
+		"condition.2": {
+			"type": "nodehandler://axway-flow/condition",
+			"name": "Is HTTP?",
+			"method": "equals",
+			"parameters": [
+				{
+					"name": "source",
+					"type": "jsonpath",
+					"value": "$.params.protocol",
+					"metaName": "Source",
+					"metaDescription": "The input to test."
+				},
+				{
+					"name": "value",
+					"type": "string",
+					"value": "\"http\"",
+					"metaName": "Value",
+					"metaDescription": "The value to test input against."
+				}
+			],
+			"outputs": {
+				"true": {
+					"routes": [
+						"javascript.21"
+					],
+					"context": "$.equals",
+					"metaName": "True"
+				},
+				"false": {
+					"routes": [
+						"http.2"
+					],
+					"context": "$.equals",
+					"metaName": "False"
+				}
+			},
+			"metaMethod": "Equals"
+		},
+		"http.2": {
+			"type": "nodehandler://axway-flow/http",
+			"name": "No access to other protocols",
+			"method": "setresponse",
+			"parameters": [
+				{
+					"name": "status",
+					"type": "number",
+					"value": "403",
+					"metaName": "Status",
+					"metaDescription": "The HTTP status code"
+				},
+				{
+					"name": "body",
+					"type": "object",
+					"value": "{\"processId\":\"\", \"data\":[ \n]}",
+					"metaName": "Body",
+					"metaDescription": "The response payload"
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.response",
+					"routes": [],
+					"metaName": "Next"
+				}
+			},
+			"metaMethod": "Set HTTP Response"
+		},
+		"condition.3": {
+			"type": "nodehandler://axway-flow/condition",
+			"name": "Is Websockets?",
+			"method": "equals",
+			"parameters": [
+				{
+					"name": "source",
+					"type": "jsonpath",
+					"value": "$.params.protocol",
+					"metaName": "Source",
+					"metaDescription": "The input to test."
+				},
+				{
+					"name": "value",
+					"type": "string",
+					"value": "\"websock\"",
+					"metaName": "Value",
+					"metaDescription": "The value to test input against."
+				}
+			],
+			"outputs": {
+				"true": {
+					"routes": [
+						"http.3"
+					],
+					"context": "$.equals",
+					"metaName": "True"
+				},
+				"false": {
+					"routes": [
+						"condition.4"
+					],
+					"context": "$.equals",
+					"metaName": "False"
+				}
+			},
+			"metaMethod": "Equals"
+		},
+		"http.3": {
+			"type": "nodehandler://axway-flow/http",
+			"name": "Protocol not implemented",
+			"method": "setresponse",
+			"parameters": [
+				{
+					"name": "status",
+					"type": "number",
+					"value": "501",
+					"metaName": "Status",
+					"metaDescription": "The HTTP status code"
+				},
+				{
+					"name": "body",
+					"type": "object",
+					"value": "{\"message\": \"Protocol is not yet implemented\"}",
+					"metaName": "Body",
+					"metaDescription": "The response payload"
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.response",
+					"routes": [],
+					"metaName": "Next"
+				}
+			},
+			"metaMethod": "Set HTTP Response"
+		},
+		"condition.4": {
+			"type": "nodehandler://axway-flow/condition",
+			"name": "Is JMS?",
+			"method": "equals",
+			"parameters": [
+				{
+					"name": "source",
+					"type": "jsonpath",
+					"value": "$.params.protocol",
+					"metaName": "Source",
+					"metaDescription": "The input to test."
+				},
+				{
+					"name": "value",
+					"type": "string",
+					"value": "\"jms\"",
+					"metaName": "Value",
+					"metaDescription": "The value to test input against."
+				}
+			],
+			"outputs": {
+				"true": {
+					"routes": [
+						"http.3"
+					],
+					"context": "$.equals",
+					"metaName": "True"
+				},
+				"false": {
+					"routes": [
+						"javascript.21"
+					],
+					"context": "$.equals",
+					"metaName": "False"
+				}
+			},
+			"metaMethod": "Equals"
+		}
+	}
+}

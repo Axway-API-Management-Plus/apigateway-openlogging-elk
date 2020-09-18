@@ -1,0 +1,57 @@
+{
+	"name": "apibuilder4elastic",
+	"description": "This API-Builder project provides an ELK-Based Traffic-Monitor API.",
+	"main": "app.js",
+	"version": "v1.0.0-RC1",
+	"author": {
+		"email": "cwiechmann@axway.com",
+		"name": "Chris Wiechmann",
+		"url": "https://axway.com"
+	},
+	"license": "Apache-2.0",
+	"keywords": [
+		"api-builder",
+		"axway",
+		"api-gateway",
+		"monitoring",
+		"elasticsearch"
+	],
+	"engines": {
+		"node": ">=8.9"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/cwiechmann/apigateway-openlogging-elk.git"
+	},
+	"bugs": {
+		"url": "https://github.com/cwiechmann/apigateway-openlogging-elk/issues"
+	},
+	"homepage": "https://github.com/cwiechmann/apigateway-openlogging-elk",
+	"dependencies": {
+		"@axway-api-builder-ext/api-builder-plugin-fn-elasticsearch": "^1.0.6",
+		"@axway/api-builder-plugin-fn-base64": "^2.1.5",
+		"@axway/api-builder-plugin-fn-javascript": "^1.2.7",
+		"@axway/api-builder-plugin-fn-json": "^2.0.16",
+		"@axway/api-builder-plugin-fn-mustache": "^1.0.6",
+		"@axway/api-builder-plugin-fn-restclient": "^2.0.22",
+		"@axway/api-builder-plugin-fn-swagger": "^2.7.8",
+		"@axway/api-builder-runtime": "^4.33.9",
+		"api-builder-plugin-axway-api-management": "file:custom_flow_nodes/api-builder-plugin-axway-api-management"
+	},
+	"devDependencies": {
+		"@axway/api-builder-admin": "^1.22.3",
+		"chai": "^4.2.0",
+		"dotenv": "^8.2.0",
+		"mocha": "^7.2.0",
+		"nock": "^13.0.4"
+	},
+	"scripts": {
+		"start": "node .",
+		"test": "mocha --exit --colors ./test --recursive -R spec",
+		"test:search": "mocha --exit --colors ./test/test_search_endpoint.js -R spec",
+		"test:circuitpath": "mocha --exit --colors ./test/test_circuitpath.js -R spec",
+		"test:trace": "mocha --inspect-brk --exit --colors ./test/test_trace_endpoint.js -R spec",
+		"test:getinfo": "mocha --inspect-brk --exit --colors ./test/test_getinfo_endpoint.js -R spec",
+		"test:debug": "mocha --inspect-brk --exit --colors ./test --recursive -R spec --timeout 10000"
+	}
+}

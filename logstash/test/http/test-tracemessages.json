@@ -1,7 +1,8 @@
 {
   "fields": {
     "gatewayName": "API-Gateway 2",
-    "gatewayRegion": "EU"
+    "gatewayRegion": "EU",
+    "[event][timezone]": "+00:00"
   },
   "testcases": [
     {
@@ -15,6 +16,24 @@
           "correlationId": "000000000000000000000000",
           "level": "ERROR",
           "message": "failed to flush dirty page to ops DB: No such file or directory. open 'conf/opsdb.d/000001b7.idx' failed: cannot open index file 439: cannot flush page {\"file\":439,\"page\":5}",
+          "processInfo": {
+            "gatewayName": "API-Gateway 2", 
+            "gatewayRegion": "EU"
+          }
+        }
+      ]
+    },
+    {
+      "description": "Trace message with leading spaces",
+      "input": [
+        "INFO    15/Sep/2020:10:46:33.426 [455a:697f605fdb408a78c01cc73e]                 api.application.quota.warn.percent {"
+      ],
+      "expected": [
+        {
+          "@timestamp": "2020-09-15T10:46:33.426Z",
+          "correlationId": "697f605fdb408a78c01cc73e",
+          "level": "INFO",
+          "message": "                api.application.quota.warn.percent {",
           "processInfo": {
             "gatewayName": "API-Gateway 2", 
             "gatewayRegion": "EU"
@@ -42,3 +61,5 @@
     }
   ]
 }
+
+

@@ -1,0 +1,319 @@
+{
+	"schemaVersion": "4",
+	"info": {
+		"name": "Traffic-Monitor API - Trace",
+		"description": "Used by Traffic monitor to show the trace details"
+	},
+	"parameter": {
+		"properties": {
+			"params": {
+				"type": "object",
+				"description": "The parameters from the endpoint."
+			},
+			"request": {
+				"type": "object",
+				"description": "The HTTP request."
+			},
+			"config": {
+				"type": "object",
+				"description": "The service's configuration"
+			},
+			"env": {
+				"type": "object",
+				"description": "The host OS environment"
+			}
+		},
+		"additionalProperties": false,
+		"required": [
+			"params",
+			"request",
+			"config",
+			"env"
+		]
+	},
+	"start": "javascript.4",
+	"nodes": {
+		"http.1": {
+			"type": "nodehandler://axway-flow/http",
+			"name": "Set Trace response",
+			"method": "setresponse",
+			"parameters": [
+				{
+					"name": "status",
+					"type": "number",
+					"value": "200",
+					"metaName": "Status",
+					"metaDescription": "The HTTP status code"
+				},
+				{
+					"name": "body",
+					"type": "jsonpath",
+					"value": "$.result",
+					"metaName": "Body",
+					"metaDescription": "The response payload"
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.response",
+					"routes": [],
+					"metaName": "Next"
+				}
+			},
+			"metaMethod": "Set HTTP Response"
+		},
+		"elasticsearch.1": {
+			"type": "nodehandler://@axway-api-builder-ext/api-builder-plugin-fn-elasticsearch/elasticsearch",
+			"name": "Search trace",
+			"method": "search",
+			"parameters": [
+				{
+					"name": "query",
+					"type": "jsonpath",
+					"value": "$.elasticsearch.query",
+					"metaName": "Query",
+					"metaDescription": "Defines the search definition using the Query DSL. Learn more: https://www.elastic.co/guide/en/elasticsearch/reference/7.x/query-dsl.html"
+				},
+				{
+					"name": "size",
+					"type": "number",
+					"value": "10000",
+					"metaName": "Size",
+					"metaDescription": "Defines the number of hits to return. Defaults to 10."
+				},
+				{
+					"name": "index",
+					"type": "jsonpath",
+					"value": "$.index",
+					"metaName": "Index",
+					"metaDescription": "Comma-separated list or wildcard expression of index names used to limit the request."
+				},
+				{
+					"name": "sort",
+					"type": "string",
+					"value": "\"@timestamp:asc\"",
+					"metaName": "Sort",
+					"metaDescription": "A comma-separated list of <field>:<direction> pairs."
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.elasticsearch.result",
+					"routes": [
+						"javascript.1"
+					],
+					"metaName": "Next"
+				},
+				"error": {
+					"context": "$.error",
+					"routes": [
+						"http.2"
+					],
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Search"
+		},
+		"javascript.1": {
+			"type": "nodehandler://@axway/api-builder-plugin-fn-javascript/javascript",
+			"name": "Format Trace response",
+			"method": "Execute",
+			"parameters": [
+				{
+					"name": "data",
+					"type": "jsonpath",
+					"value": "$.elasticsearch.result.body.hits",
+					"metaName": "data",
+					"metaDescription": "The value to apply as the `data` argument to the JavaScript code. For objects and arrays, `data` is passed by reference."
+				},
+				{
+					"name": "code",
+					"type": "string",
+					"value": "\"let result = [];\\n  \\n  data.hits.map(function(entry) {\\n    let traceObj = {};\\n    let message = entry._source.message;\\n\\t\\n    // depth is the number of tabs befor start of the message. \\n    // Calculated based on count of white spaces divided by 4\\n    const regexPattern = new RegExp(/(^\\\\s*)\\\\S*/g);\\n    let leadingSpaces = regexPattern.exec(message)[1];\\n\\tlet depth = 0;\\n    \\n    if (leadingSpaces !== null){\\n      depth = Math.round(leadingSpaces.length/4);\\n    }\\n    \\n    traceObj.level = entry._source.level;\\n    traceObj.type = 'trace';\\n    traceObj.time = new Date(entry._source['@timestamp']).getTime();\\n    traceObj.depth = depth;\\n    traceObj.text = message.substring(message.lastIndexOf(\\\"]\\\")+1,message.length).trim();\\n    \\n    result.push(traceObj);\\n    \\n  });\\n  \\n  return result;\"",
+					"metaName": "code",
+					"metaDescription": "A JavaScript function body. Supports `await` and returning promises."
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.result",
+					"routes": [
+						"http.1"
+					],
+					"metaName": "Next"
+				},
+				"error": {
+					"context": "$.error",
+					"routes": [
+						"http.2"
+					],
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Execute"
+		},
+		"javascript.2": {
+			"type": "nodehandler://@axway/api-builder-plugin-fn-javascript/javascript",
+			"name": "Build Trace ES query",
+			"method": "Execute",
+			"parameters": [
+				{
+					"name": "data",
+					"type": "jsonpath",
+					"value": "$",
+					"metaName": "data",
+					"metaDescription": "The value to apply as the `data` argument to the JavaScript code. For objects and arrays, `data` is passed by reference."
+				},
+				{
+					"name": "code",
+					"type": "string",
+					"value": "\"let elasticQuery = ({\\n    \\\"bool\\\": {\\n      \\\"must\\\": [\\n        {\\\"term\\\": {\\n          \\\"correlationId\\\": data.params.correlationID\\n          }\\n        }\\n      ]\\n    }\\n  });\\n\\n  return elasticQuery;\"",
+					"metaName": "code",
+					"metaDescription": "A JavaScript function body. Supports `await` and returning promises."
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.elasticsearch.query",
+					"routes": [
+						"elasticsearch.1"
+					],
+					"metaName": "Next"
+				},
+				"error": {
+					"context": "$.error",
+					"routes": [
+						"http.2"
+					],
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Execute"
+		},
+		"http.2": {
+			"type": "nodehandler://axway-flow/http",
+			"name": "Set HTTP 500 Error Response",
+			"method": "setresponse",
+			"parameters": [
+				{
+					"name": "status",
+					"type": "number",
+					"value": "500",
+					"metaName": "Status",
+					"metaDescription": "The HTTP status code"
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.response",
+					"routes": [],
+					"metaName": "Next"
+				}
+			},
+			"metaMethod": "Set HTTP Response"
+		},
+		"javascript.3": {
+			"type": "nodehandler://@axway/api-builder-plugin-fn-javascript/javascript",
+			"name": "Check Trace Params",
+			"method": "Execute",
+			"parameters": [
+				{
+					"name": "data",
+					"type": "jsonpath",
+					"value": "$",
+					"metaName": "data",
+					"metaDescription": "The value to apply as the `data` argument to the JavaScript code. For objects and arrays, `data` is passed by reference."
+				},
+				{
+					"name": "code",
+					"type": "string",
+					"value": "\"//only json is supported. \\n  //If param format is skipped automatically json is returned\\n  if(data.params.format != undefined && data.params.format != 'json') {\\n    throw {\\n      name: \\\"unknown format exception\\\",\\n      message: \\\"unknown format\\\"\\n    };\\n  }\"",
+					"metaName": "code",
+					"metaDescription": "A JavaScript function body. Supports `await` and returning promises."
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.result",
+					"routes": [
+						"javascript.2"
+					],
+					"metaName": "Next"
+				},
+				"error": {
+					"context": "$.error",
+					"routes": [
+						"http.3"
+					],
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Execute"
+		},
+		"http.3": {
+			"type": "nodehandler://axway-flow/http",
+			"name": "Set HTTP 400 Response",
+			"method": "setresponse",
+			"parameters": [
+				{
+					"name": "status",
+					"type": "number",
+					"value": "400",
+					"metaName": "Status",
+					"metaDescription": "The HTTP status code"
+				},
+				{
+					"name": "body",
+					"type": "jsonpath",
+					"value": "$.error.message",
+					"metaName": "Body",
+					"metaDescription": "The response payload"
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.response",
+					"routes": [],
+					"metaName": "Next"
+				}
+			},
+			"metaMethod": "Set HTTP Response"
+		},
+		"javascript.4": {
+			"type": "nodehandler://@axway/api-builder-plugin-fn-javascript/javascript",
+			"name": "Define Trace Index",
+			"method": "Execute",
+			"parameters": [
+				{
+					"name": "data",
+					"type": "jsonpath",
+					"value": "$",
+					"metaName": "data",
+					"metaDescription": "The value to apply as the `data` argument to the JavaScript code. For objects and arrays, `data` is passed by reference."
+				},
+				{
+					"name": "code",
+					"type": "string",
+					"value": "\"let index = 'apigw-traffic-trace-*';\\n  if(data.config.testElasticIndex) {\\n    index = data.config.testElasticIndex;\\n  }\\n  return index;\"",
+					"metaName": "code",
+					"metaDescription": "A JavaScript function body. Supports `await` and returning promises."
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.index",
+					"routes": [
+						"javascript.3"
+					],
+					"metaName": "Next"
+				},
+				"error": {
+					"context": "$.error",
+					"routes": [],
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Execute"
+		}
+	}
+}
