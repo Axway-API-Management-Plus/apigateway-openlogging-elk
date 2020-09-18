@@ -98,9 +98,9 @@
         {
           "@timestamp": "2020-07-13T20:07:27.467Z",
           "correlationId": "AAbe0c5f95da03f602a6e587",
+          "finalStatus": "Pass",
           "protocol": "https",
           "protocolSrc": "8065",
-          "status": "success",
           "processInfo": {
             "hostname": "ip-172-31-62-146.ec2.internal",
             "groupId": "group-2",
@@ -176,9 +176,9 @@
         {
           "@timestamp": "2020-07-13T20:07:27.467Z",
           "correlationId": "BBbe0c5f95da03f602a6e587",
+          "finalStatus": "Pass",
           "protocol": "https",
           "protocolSrc": "8065",
-          "status": "success",
           "type": "summaryIndex",
           "serviceContext": {
             "apiDeprecated": "true",
@@ -254,9 +254,9 @@
         {
           "@timestamp": "2020-07-13T20:07:27.467Z",
           "correlationId": "OMG-UNKNOWN-API",
+          "finalStatus": "Pass",
           "protocol": "https",
           "protocolSrc": "8065",
-          "status": "success",
           "serviceContext": {
             "service": "A unknown API",
             "monitor": true,
@@ -337,8 +337,7 @@
               "method": "getUserByName",
               "monitor": true,
               "service": "A unknown API"
-          },
-          "status": "success"
+          }
           },
           "type": "errorEvent"
         }
@@ -353,9 +352,9 @@
         {
           "@timestamp": "2020-07-13T18:40:15.973Z",
           "correlationId": "8faa0c5f4da87df2ad8c394a",
+          "finalStatus": "Pass",
           "protocol": "http",
           "protocolSrc": "8080",
-          "status": "success",
           "serviceContext": null,
           "type": "summaryIndex",
           "processInfo": {
@@ -564,6 +563,7 @@
           "correlationId": "c0df605fa2047bebbOPTIONS",
           "type": "summaryIndex",
           "duration": 2,
+          "finalStatus": "Pass",
           "processInfo": {
             "hostname": "api-env",
             "groupId": "group-2",
@@ -607,7 +607,7 @@
             "leg0": {
               "duration": 2,
               "leg": 0,
-              "finalStatus": "Pass",
+              "finalStatus": null,
               "protocolInfo": {
                 "http": {
                   "uri": "/WebShop.svc",
