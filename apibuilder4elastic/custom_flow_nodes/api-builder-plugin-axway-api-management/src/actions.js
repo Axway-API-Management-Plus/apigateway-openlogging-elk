@@ -48,7 +48,7 @@ async function lookupCurrentUser(params, options) {
 	var permissions = {};
 	var VIDUSR;
 	if (!requestHeaders) {
-		throw new Error('requestHeaders is missing');
+		throw new Error('You need to provide Request-Headers with Cookies or an Authorization header.');
 	}
 	debugger;
 	if(!requestHeaders.cookie && !requestHeaders.authorization) {

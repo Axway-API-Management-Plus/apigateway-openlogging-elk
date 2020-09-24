@@ -36,7 +36,7 @@ describe('Tests User-Lookup with complete configuration parameters', () => {
 			});
 
 			expect(value).to.be.instanceOf(Error)
-				.and.to.have.property('message', 'You must provide the requestHeaders originally sent to the ANM to this method.');
+				.and.to.have.property('message', 'You need to provide Request-Headers with Cookies or an Authorization header.');
 			expect(output).to.equal('error');
 		});
 
@@ -46,7 +46,7 @@ describe('Tests User-Lookup with complete configuration parameters', () => {
 			});
 
 			expect(value).to.be.instanceOf(Error)
-				.and.to.have.property('message', 'The requestHeaders do not contain the cookie header.');
+				.and.to.have.property('message', 'You must provide either the VIDUSR cookie + csrf-token or an HTTP-Basic Authorization header.');
 			expect(output).to.equal('error');
 		});
 
