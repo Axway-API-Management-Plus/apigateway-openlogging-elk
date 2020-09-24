@@ -42,30 +42,42 @@ async function lookupCurrentUser(params, options) {
 	logger = options.logger;
 	cache = options.pluginContext.cache;
 	pluginConfig = options.pluginConfig;
-	if (!requestHeaders) {
-		throw new Error('You must provide the requestHeaders originally sent to the ANM to this method.');
-	}
-	if(!requestHeaders.cookie) {
-		throw new Error('The requestHeaders do not contain the cookie header.');
-	}
-	const VIDUSR = _getCookie(requestHeaders.cookie, "VIDUSR");
-	if(!VIDUSR) {
-		logger.trace(`Received cookies: ${requestHeaders.cookie}`);
-		throw new Error('The requestHeaders do not contain the required cookie VIDUSR');
-	}
-	if(!requestHeaders['csrf-token']) {
-		logger.trace(`Received headers: ${requestHeaders}`);
-		throw new Error('The requestHeaders do not contain the required header csrf-token');
-	}
-	if(cache.has(VIDUSR)) {
-		return cache.get(VIDUSR);
-	}
-	const user = {};
-	logger.trace(`Trying to get current user based on VIDUSR: ${VIDUSR}`);
-	user.loginName = await _getCurrentGWUser(VIDUSR);
-	logger.trace(`Current user is: ${user.loginName}`);
+	var user = {};
+	// default the user to be a Non-Admin user
 	user.gatewayManager = {isAdmin : false};
-	var permissions = await _getCurrentGWPermissions(VIDUSR, requestHeaders['csrf-token'], loginName);
+	var permissions = {};
+	var VIDUSR;
+	if (!requestHeaders) {
+		throw new Error('requestHeaders is missing');
+	}
+	debugger;
+	if(!requestHeaders.cookie && !requestHeaders.authorization) {
+		throw new Error('You must provide either the VIDUSR cookie + csrf-token or an HTTP-Basic Authorization header.');
+	}
+	debugger;
+	if(requestHeaders.authorization) {
+		logger.trace(`Trying to authorize user based on Authorization header.`);
+		user.loginName = await _getCurrentGWUser(headers = {'Authorization': `${requestHeaders.authorization}`});
+		logger.trace(`Authorized user is: ${user.loginName}`);
+		permissions = await _getCurrentGWPermissions(headers = {'Authorization': `${requestHeaders.authorization}`}, loginName);
+	} else {
+		const VIDUSR = _getCookie(requestHeaders.cookie, "VIDUSR");
+		if(!VIDUSR) {
+			logger.trace(`Received cookies: ${requestHeaders.cookie}`);
+			throw new Error('The requestHeaders do not contain the required cookie VIDUSR');
+		}
+		if(!requestHeaders['csrf-token']) {
+			logger.trace(`Received headers: ${requestHeaders}`);
+			throw new Error('The requestHeaders do not contain the required header csrf-token');
+		}
+		if(cache.has(VIDUSR)) {
+			return cache.get(VIDUSR);
+		}
+		logger.trace(`Trying to get current user based on VIDUSR cookie.`);
+		user.loginName = await _getCurrentGWUser(headers = {'Cookie': `VIDUSR=${VIDUSR}`});
+		logger.trace(`Current user is: ${user.loginName}`);
+		permissions = await _getCurrentGWPermissions(headers = {'Cookie': `VIDUSR=${VIDUSR}`, 'csrf-token': requestHeaders['csrf-token']}, loginName);
+	}
 	if(permissions.includes("adminusers_modify")) {
 		user.gatewayManager.isAdmin = true;
 		logger.debug(`Current user is: '${user.loginName}' Is Gateway admin: ${user.gatewayManager.isAdmin}`);
@@ -80,7 +92,9 @@ async function lookupCurrentUser(params, options) {
 	var org = await _getOrganization(user.apiManager.organizationId, groupId);
 	user.apiManager.organizationName = org.name;
 	logger.debug(`User: '${user.loginName}' (Role: ${user.apiManager.role}) found in API-Manager. Organization: '${user.apiManager.organizationName}'`);
-	cache.set( VIDUSR, user);
+	if(VIDUSR!=undefined) {
+		cache.set( VIDUSR, user);
+	}
 	return user;
 }
 
@@ -136,12 +150,10 @@ async function lookupAPIDetails(params, options) {
 	return apiProxy;
 }
 
-async function _getCurrentGWUser(VIDUSR) {
+async function _getCurrentGWUser(requestHeaders) {
 	var options = {
 		path: '/api/rbac/currentuser',
-		headers: {
-			'Cookie': `VIDUSR=${VIDUSR}`
-		},
+		headers: requestHeaders,
 		agent: new https.Agent({ rejectUnauthorized: false })
 	};
 	loginName = await sendRequest(pluginConfig.apigateway.url, options)
@@ -229,13 +241,10 @@ async function _getBackendBasePath(apiProxy, operationId) {
 	throw new Error('_getBackendBasePath with operationId not yet implemented.');
 }
 
-async function _getCurrentGWPermissions(VIDUSR, csrfToken, loginName) {
+async function _getCurrentGWPermissions(requestHeaders, loginName) {
 	var options = {
 		path: '/api/rbac/permissions/currentuser',
-		headers: {
-			'Cookie': `VIDUSR=${VIDUSR}`, 
-			'csrf-token': csrfToken
-		},
+		headers: requestHeaders,
 		agent: new https.Agent({ rejectUnauthorized: false })
 	};
 	result = await sendRequest(pluginConfig.apigateway.url, options)

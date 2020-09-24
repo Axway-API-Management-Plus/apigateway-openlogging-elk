@@ -60,6 +60,24 @@
             "in": "query",
             "name": "op",
             "type": "string"
+          },
+          {
+            "type": "string",
+            "in": "header",
+            "name": "Authorization",
+            "description": "Alternatively to the VIDUSR cookie you can also provide an HTTP Basic Authoritation header for a valid ANM user. \nIf this user is NOT an API-Gateway Admin the user must exists on the API-Manager as well."
+          },
+          {
+            "type": "string",
+            "in": "header",
+            "name": "Cookie",
+            "description": "If using the cookie, it must contain the VIDUSR cookie from the ANM."
+          },
+          {
+            "type": "string",
+            "in": "header",
+            "name": "csrf-token",
+            "description": "This is required if the VIDUSR cookie from the ANM is used."
           }
         ],
         "summary": "Seach requests to build Traffic-Overview table",
