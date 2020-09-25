@@ -107,8 +107,9 @@ As the idea of this project is to use the existing API-Gateway Manager UI (short
 1. Open the ANM configuration in Policy-Studio. 
 You can read [here](https://docs.axway.com/bundle/axway-open-docs/page/docs/apim_administration/apigtw_admin/general_rbac_ad_ldap/index.html#use-the-ldap-policy-to-protect-management-services) how to do that.  
 
-2. Download the required Policy-Fragement (Ver. 7.7.0) here: [policy-use-elasticsearch-api-7.7.0.xml](nodemanager/policy-use-elasticsearch-api-7.7.0.xml)  
-which imports the policy: "Use Elasticsearch API". The imported policy looks like this:  
+2. Import the provided Policy-Fragement (Ver. 7.7.0) `nodemanager/policy-use-elasticsearch-api-7.7.0.xml` from the release package you have downloaded. This imports the policy: "Use Elasticsearch API".  
+:point_right: Don't use the XML-File from the GitHub Project as it may contain a different certificates.  
+The imported policy looks like this:  
 <p align="center"><img src="imgs/node-manager-use-es-api.png" alt="Use Elasticsearch API" width="350" height="237"></p>
 
 3. Update main policy  
