@@ -37,6 +37,10 @@ services:
     ports:
       - 9200:9200
       - 9300:9300
+    logging:
+      options:
+        max-file: "5"
+        max-size: "10m"
 
   # This is optional, but good to have to perform manual queries and create custom dashboards
   kibana:
@@ -69,6 +73,10 @@ services:
     networks:
       - elastic
       - ingress
+    logging:
+      options:
+        max-file: "5"
+        max-size: "10m"
 
   # Is receiving events from Filebeat and does pre-processing
   # https://github.com/elastic/logstash-docker/blob/master/build/logstash/env2yaml/env2yaml.go
@@ -102,6 +110,10 @@ services:
       - memcached
     networks:
       - elastic
+    logging:
+      options:
+        max-file: "3"
+        max-size: "10m"
 
   # Supposed to run side-by-side with the API-Gateway to watch the Open-Traffic Event files and send event to Logstash
   filebeat:
@@ -134,6 +146,10 @@ services:
       - ${PWD}/certificates:/usr/share/filebeat/config/certificates
     networks:
       - elastic
+    logging:
+      options:
+        max-file: "3"
+        max-size: "10m"
 
   # Memcached is used by the Logstash pipeline to cache API-Lookup information that are used to get the API-Organization
   memcached:
@@ -141,6 +157,10 @@ services:
     container_name: memcached
     networks:
       - elastic
+    logging:
+      options:
+        max-file: "2"
+        max-size: "5m"
 
   # This is the API-Builder project exposing the API-Gateway Manager REST-API
   apibuilder4elastic:
@@ -166,6 +186,10 @@ services:
       - elastic
     volumes:
       - ${PWD}/certificates:/app/config/certificates
+    logging:
+      options:
+        max-file: "3"
+        max-size: "10m"
 
 volumes:
   esdata1:
