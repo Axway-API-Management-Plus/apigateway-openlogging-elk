@@ -43,6 +43,7 @@ services:
     image: docker.elastic.co/logstash/logstash:${ELASTIC_VERSION}
     container_name: logstash
     environment:
+      - node.name=Logstash1
       - xpack.monitoring.enabled=true
       - xpack.monitoring.elasticsearch.ssl.certificate_authority=${ELASTICSEARCH_CA}
       - xpack.monitoring.elasticsearch.hosts=${ELASTICSEARCH_HOST}
