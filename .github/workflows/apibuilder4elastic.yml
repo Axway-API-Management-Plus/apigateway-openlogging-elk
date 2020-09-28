@@ -35,7 +35,7 @@ jobs:
     - name: Test API-Builder API
       working-directory: ${{env.workingDirectory}}
       env:
-        ELASTICSEARCH_HOST: 'http://localhost:9200'
+        ELASTICSEARCH_HOSTS: 'http://localhost:9200'
         VALIDATE_CONFIG: false
         LOG_LEVEL: INFO
         CI: true
