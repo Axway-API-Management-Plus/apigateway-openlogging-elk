@@ -14,6 +14,7 @@ jobs:
         env:
           MOCK_LOOKUP_API: true
           ENABLE_HTTP_PORT: true
+          ELASTICSEARCH_HOSTS: http://any.es-host.com:9200
       memcached:
         image: memcached:1.6.6-alpine
         ports: 
