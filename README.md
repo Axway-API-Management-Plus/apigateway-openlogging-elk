@@ -155,7 +155,9 @@ Elasticsearch and Kibana is started with HTTPS enabled. User-Authentication is d
 
 If you encounter issues please see the [Troubleshooting](#troubleshooting) section for help or create an [issue](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues). 
 
-### Configure the Admin-Node-Manager
+## Configure Axway API-Management
+
+### Admin-Node-Manager
 As the idea of this project is to use the existing API-Gateway Manager UI (short: ANM) to render log data now provided by Elasticsearch instead of the individual API-Gateway instances before (the build in behavior), it is required to change the ANM configuration to make use of Elasticsearch instead of the API-Gateway instances (default setup). By default, ANM is listening on port 8090 for administrative traffic. This API is responsible to serve the Traffic-Monitor and needs to be configured to use the API-Builder REST-API instead.
 
 1. Open the ANM configuration in Policy-Studio. 
@@ -189,7 +191,7 @@ This project solves the problem by storing the API transactions in Elasticsearch
 | **Operator**         | Org-Admin     | APIs of its own organization | Such a user will only see the APIs that belong to the same organization as himself. |
 | **Operator**         | User          | APIs of its own organization | The same rules apply as for the Org-Admin |
 
-### Setup API-Manager user in API-Gateway Manager
+#### Setup API-Manager user in API-Gateway Manager
 
 To give API-Manager users a limited access to the API Traffic Monitor, the user must be configured in the API-Gateway manager with the same login name as in the API Manager. Here, for example, an LDAP connection can be a simplification.  
 None of his roles must contain the permission: `adminusers_modify`. A suitable standard role is the `API Gateway Operator role`. 
