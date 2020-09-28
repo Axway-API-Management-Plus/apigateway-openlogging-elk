@@ -1,0 +1,61 @@
+version: '3.7'
+services:
+  # Elasticsearch node 3
+  elasticsearch3:
+    image: docker.elastic.co/elasticsearch/elasticsearch:${ELASTIC_VERSION}
+    container_name: elasticsearch3
+    environment:
+      - "ES_JAVA_OPTS=${ES_JAVA_OPTS}"
+      - cluster.name=${ELASTICSEARCH_CLUSTERNAME}
+      - node.name=elasticsearch3
+      - discovery.seed_hosts=elasticsearch1, elasticsearch2
+      - cluster.initial_master_nodes=elasticsearch1,elasticsearch2,elasticsearch3
+      - xpack.security.enabled=true
+      - xpack.security.http.ssl.enabled=true
+      - xpack.security.http.ssl.key=/usr/share/elasticsearch/${ELASTICSEARCH_KEY}
+      - xpack.security.http.ssl.certificate=/usr/share/elasticsearch/${ELASTICSEARCH_CRT}
+      - xpack.security.http.ssl.certificate_authorities=/usr/share/elasticsearch/${ELASTICSEARCH_CA}
+      - xpack.security.transport.ssl.enabled=true
+      - xpack.security.transport.ssl.verification_mode=certificate
+      - xpack.security.transport.ssl.key=/usr/share/elasticsearch/${ELASTICSEARCH_KEY}
+      - xpack.security.transport.ssl.certificate=/usr/share/elasticsearch/${ELASTICSEARCH_CRT}
+      - xpack.security.transport.ssl.certificate_authorities=/usr/share/elasticsearch/${ELASTICSEARCH_CA}
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    cap_add:
+      - ALL
+    volumes:
+      - type: volume
+        source: logs
+        target: /var/log
+      - type: volume
+        source: esdata3
+        target: /usr/share/elasticsearch/data
+      - ${PWD}/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+      - ${PWD}/certificates:/usr/share/elasticsearch/config/certificates
+    networks:
+      - elastic
+      - ingress
+    ports:
+      - 9202:9202
+    logging:
+      options:
+        max-file: "5"
+        max-size: "10m"
+
+  # Extend Elasticsearch node 1 configuration
+  elasticsearch1:
+    environment:
+      - discovery.seed_hosts=elasticsearch2,elasticsearch3
+      - cluster.initial_master_nodes=elasticsearch1,elasticsearch2,elasticsearch3
+
+  # Extend Elasticsearch node 1 configuration
+  elasticsearch2:
+    environment:
+      - discovery.seed_hosts=elasticsearch1, elasticsearch3
+      - cluster.initial_master_nodes=elasticsearch1,elasticsearch2,elasticsearch3
+
+volumes:
+  esdata3:
