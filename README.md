@@ -131,14 +131,15 @@ API_MANAGER_PASSWORD=<admin-password>
 ```
 That's all for the basic setup. Using docker-compose and having everything on one machine, all remaining parameters can stay unchanged.
 
-### Start components with basic setup
+### Basic setup Start components
 
-Elasticsearch and Kibana:  
+Single Node Elasticsearch and Kibana:  
+
 ```
 docker-compose -f elasticsearch/docker-compose.es01.yml -f elasticsearch/docker-compose.es01init.yml up -d
 docker-compose -f kibana/docker-compose.kibana.yml up -d
 ```
-Remaining components:  
+Remaining components (Logstash, API-Builder, Filebeat and Memcached):  
 ```
 docker-compose up -d
 ```
@@ -147,11 +148,10 @@ To stop the environment and remove the containers run you may use docker-compose
 
 ### Acccess components
 
-Elasticsearch and Kibana is started with HTTPS enabled. User-Authentication is disabled by default. The required ports are already exposed by the docker-compose.yml:
+Elasticsearch and Kibana is started with HTTPS enabled. User-Authentication is disabled by default. Used ports are already exposed by the docker-compose.yml to make it available on your host machine:
 
 - Access Kibana: `https://your.host.com:5601/`
 - Access Elasticsearch: `https://your.host.com:9200`
-- Access the Traffic-Monitor: `https://your.host.com:8090`
 
 If you encounter issues please see the [Troubleshooting](#troubleshooting) section for help or create an [issue](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues). 
 
