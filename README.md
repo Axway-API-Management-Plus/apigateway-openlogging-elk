@@ -35,7 +35,6 @@ This shows a sample dashboard created in Kibana based on the indexed documents:
     - [How it works](#how-it-works)
     - [The Traffic-Monitor](#the-traffic-monitor)
 - [Prerequisites](#prerequisites)
-- [Preparations](#preparations)
 - [Getting started](#getting-started)
 - [Manage the environment](#manage-the-environment)
     - [Using docker-compose](#using-docker-compose)
@@ -96,9 +95,9 @@ It is also possible to use an existing Elasticsearch cluster including Kibana. F
 
 ## Getting started
 
-## Preparations
+### Preparations
 
-### Enable Open-Traffic Event Log
+#### Enable Open-Traffic Event Log
 Obviously, you have to enable Open-Traffic-Event log for your API-Gateway instance(s). [Read here][1] how to enable the Open-Traffic Event-Log.  
 After this configuration has been done, Open-Traffic log-files will be created by default in this location: `apigateway/logs/opentraffic`. This location becomes relevant when configuring Filebeat.
 
