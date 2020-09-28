@@ -41,12 +41,14 @@ services:
   # https://github.com/elastic/logstash-docker/blob/master/build/logstash/env2yaml/env2yaml.go
   logstash:
     image: docker.elastic.co/logstash/logstash:${ELASTIC_VERSION}
+    # This custom entrypoint is required to adjust the variable ELASTICSEARCH_HOSTS from Comma to Space separated
+    entrypoint: /usr/share/logstash/scripts/custom-entrypoint.sh
     container_name: logstash
     environment:
       - node.name=Logstash1
       - xpack.monitoring.enabled=true
       - xpack.monitoring.elasticsearch.ssl.certificate_authority=${ELASTICSEARCH_CA}
-      - xpack.monitoring.elasticsearch.hosts=${ELASTICSEARCH_HOSTS}
+      - xpack.monitoring.elasticsearch.hosts=[${ELASTICSEARCH_HOSTS}]
       - xpack.monitoring.elasticsearch.username=${LOGSTASH_SYSTEM_USERNAME}
       - xpack.monitoring.elasticsearch.password=${LOGSTASH_SYSTEM_PASSWORD}
       - ELASTICSEARCH_CERT=${ELASTICSEARCH_CRT}
@@ -63,6 +65,7 @@ services:
       - ${PWD}/logstash/pipelines:/usr/share/logstash/pipelines
       - ${PWD}/logstash/index_templates:/usr/share/logstash/index_templates
       - ${PWD}/certificates:/usr/share/logstash/config/certificates
+      - ${PWD}/logstash/scripts:/usr/share/logstash/scripts
     #command: logstash --path.config /usr/share/logstash/pipelines/pipelines.yml
     depends_on:
       - apibuilder4elastic
