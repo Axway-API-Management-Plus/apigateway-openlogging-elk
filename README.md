@@ -94,13 +94,13 @@ Versin 7.7-20200130 is required due to some Dateformat changes in the Open-Traff
 The solution is based on the Elastic-Stack (Elasticsearch, Logstash, Beats and Kibana). The solution can run completely based on docker containers, which for example are started on the basis of docker-compose.yaml or run in a Docker Orchestration Framework.  
 It is also possible to use an existing Elasticsearch cluster including Kibana. For example an Elasticsearch service at AWS or Azure or using Filebeat manually installed on the API-Gateway machines. The solution has been tested with Elasticsearch 7.x version.
 
+## Getting started
+
 ## Preparations
 
 ### Enable Open-Traffic Event Log
 Obviously, you have to enable Open-Traffic-Event log for your API-Gateway instance(s). [Read here][1] how to enable the Open-Traffic Event-Log.  
 After this configuration has been done, Open-Traffic log-files will be created by default in this location: `apigateway/logs/opentraffic`. This location becomes relevant when configuring Filebeat.
-
-## Getting started
 
 ### Basic setup
 
@@ -223,6 +223,7 @@ Start the first cluster node with the following statement:
 ```
 docker-compose -f elasticsearch/docker-compose.es01.yml -f elasticsearch/docker-compose.es01init.yml up -d
 ```
+This node automatically becomes the master node.
 
 __3. Add additional nodes__
 
@@ -232,12 +233,10 @@ To add a cluster node, execute the following command:
 ```
 docker-compose -f elasticsearch/docker-compose.es02.yml up -d
 ```
-If a node has successfully joined the cluster you see the following log message in the master node:  
+If a node has successfully joined the cluster you see the following log message logged in the master node:  
 ```
-{"type": "server", "timestamp": "2020-09-28T10:21:23,281Z", "level": "INFO", "component": "o.e.c.s.MasterService", "cluster.name": "axway-apim-elasticsearch", "node.name": "elasticsearch1", "message": "elected-as-master ([1] nodes joined)[{elasticsearch1}{G3yqXfuZQLiwh51xSIGyZw}{UAGV9-niTfKFhSlxFSKhRQ}{ip-172-31-61-143.ec2.internal}{172.31.61.143:9300}{dilmrt}{ml.machine_memory=16818073600, xpack.installed=true, transform.node=true, ml.max_open_jobs=20} elect leader, _BECOME_MASTER_TASK_, _FINISH_ELECTION_], term: 1, version: 1, delta: master node changed {previous [], current [{elasticsearch1}{G3yqXfuZQLiwh51xSIGyZw}{UAGV9-niTfKFhSlxFSKhRQ}{ip-172-31-61-143.ec2.internal}{172.31.61.143:9300}{dilmrt}{ml.machine_memory=16818073600, xpack.installed=true, transform.node=true, ml.max_open_jobs=20}]}" }
+{"ty...": "INFO", "component": "o.e.c.s.MasterService", "cluster.name": "axway-apim-elasticsearch", "node.name": "elasticsearch1", "message": "node-join[{elasticsearch3}{eQaH...w"  }
 ```
-
-The project offers Docker-Compose files up to 3 nodes, more are possible.
 
 ### Activate user authentication
 
@@ -250,7 +249,7 @@ docker exec elasticsearch1 /bin/bash -c "bin/elasticsearch-setup-passwords auto 
 ```
 As a result you will see the randomly generated passwords for the users: `apm_system`, `kibana_system`, `kibana`, `logstash_system`, `beats_system`, `remote_monitoring_user` and `elastic`. These passwords needs to be configured in the provided `.env`. 
 
-__2. Update the .env with the passwords__
+__2. Setup passwords__
 
 Please update the `.env` and setup all passwords as shown above. If you are using an existing Elasticsearch please use the passwords provided to you. The `.env` contains information about each password and for what it is used:  
 ```
@@ -270,7 +269,7 @@ API_BUILDER_USERNAME=elastic
 API_BUILDER_PASSWORD=2x8vxZrvXX9a3KdGuA26
 ```
 
-__3. Disable the anonymous user__
+__3. Disable anonymous user__
 
 Open the configuration file: `elasticsearch/config/elasticsearch.yml` and comment or remove the following two lines:  
 ```
@@ -288,7 +287,7 @@ After restart, Kibana will prompt to login before continue.
 
 __5. Restart services__
 
-After you have configured everything, please all services.  
+After you have configured all passwords, please restart all services.  
 - Filebeat    - It is now using the beats_system user to send monitoring information
 - Logstash    - Using the logstash_system to send monitoring data and logstash user to insert documents
 - Kibana      - Is using the kibana_system to send monitoring data
