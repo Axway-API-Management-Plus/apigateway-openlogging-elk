@@ -107,6 +107,21 @@ API_MANAGER_PASSWORD=changeme
 #API_BUILDER_PASSWORD=
 
 ################################################################################################
+#                            Configure Multi-Node ES-Cluster
+################################################################################################
+ELASTICSEARCH_HOST1=elasticsearch1
+ELASTICSEARCH_HOST2=elasticsearch2
+ELASTICSEARCH_HOST3=elasticsearch3
+
+ELASTICSEARCH_HOST1_HTTP=9200
+ELASTICSEARCH_HOST2_HTTP=9201
+ELASTICSEARCH_HOST3_HTTP=9201
+
+ELASTICSEARCH_HOST1_TRANSPORT=9300
+ELASTICSEARCH_HOST2_TRANSPORT=9301
+ELASTICSEARCH_HOST3_TRANSPORT=9301
+
+################################################################################################
 #                            Optional / Advanced parameters
 ################################################################################################
 # ----------------------------------------------------------------------------------------------

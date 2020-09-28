@@ -1,0 +1,6 @@
+version: '3.7'
+services:
+  # Extend Elasticsearch node 1 configuration with second and third node
+  elasticsearch1:
+    environment:
+      - cluster.initial_master_nodes=elasticsearch1

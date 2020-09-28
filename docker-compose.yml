@@ -1,83 +1,40 @@
 version: '3.7'
 services:
-  # Elasticsearch node 1
-  elasticsearch1:
-    image: docker.elastic.co/elasticsearch/elasticsearch:${ELASTIC_VERSION}
-    container_name: elasticsearch1
+  # Supposed to run side-by-side with the API-Gateway to watch the Open-Traffic Event files and send event to Logstash
+  # You may also use a natively installed Filebeat (7.x) instance as long as it using the same configuration filebeat/filebeat.yml
+  filebeat:
+    image: docker.elastic.co/beats/filebeat:${ELASTIC_VERSION}
+    container_name: filebeat
+    command: --strict.perms=false
     environment:
-      - "ES_JAVA_OPTS=${ES_JAVA_OPTS}"
-      - cluster.name=${ELASTICSEARCH_CLUSTERNAME}
-      - node.name=elasticsearch1
-      - cluster.initial_master_nodes=elasticsearch1
-      - xpack.security.enabled=true
-      - xpack.security.http.ssl.enabled=true
-      - xpack.security.http.ssl.key=/usr/share/elasticsearch/${ELASTICSEARCH_KEY}
-      - xpack.security.http.ssl.certificate=/usr/share/elasticsearch/${ELASTICSEARCH_CRT}
-      - xpack.security.http.ssl.certificate_authorities=/usr/share/elasticsearch/${ELASTICSEARCH_CA}
-      - xpack.security.transport.ssl.enabled=true
-      - xpack.security.transport.ssl.verification_mode=certificate
-      - xpack.security.transport.ssl.key=/usr/share/elasticsearch/${ELASTICSEARCH_KEY}
-      - xpack.security.transport.ssl.certificate=/usr/share/elasticsearch/${ELASTICSEARCH_CRT}
-      - xpack.security.transport.ssl.certificate_authorities=/usr/share/elasticsearch/${ELASTICSEARCH_CA}
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-    cap_add:
-      - ALL
+      - LOGSTASH=${LOGSTASH}
+      - ELASTICSEARCH_HOST=${ELASTICSEARCH_HOST}
+      - ELASTICSEARCH_CLUSTER_UUID=${ELASTICSEARCH_CLUSTER_UUID}
+      - ELASTICSEARCH_CRT=${ELASTICSEARCH_CRT}
+      - BEATS_SYSTEM_USERNAME=${BEATS_SYSTEM_USERNAME}
+      - BEATS_SYSTEM_PASSWORD=${BEATS_SYSTEM_PASSWORD}
+      - GATEWAY_NAME=${GATEWAY_NAME}
+      - GATEWAY_REGION=${GATEWAY_REGION}
+      - FILEBEAT_WORKER=${FILEBEAT_WORKER}
+    ports:
+      - 9000:9000
     volumes:
       - type: volume
-        source: logs
-        target: /var/log
-      - type: volume
-        source: esdata1
-        target: /usr/share/elasticsearch/data
-      - ${PWD}/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
-      - ${PWD}/certificates:/usr/share/elasticsearch/config/certificates
+        source: filebeatdata
+        target: /usr/share/filebeat/data # Required to make sure that Filebeat remembers the last position, even if the container has been removed
+      - /etc/localtime:/etc/localtime:ro # Required to sync timezone of API-Gateway into the Docker-Container
+      - ${PWD}/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml
+      - ${APIGATEWAY_OPENTRAFFIC_FOLDER}:/var/log/opentraffic
+      - ${APIGATEWAY_TRACES_FOLDER}:/var/log/trace
+      - ${APIGATEWAY_EVENTS_FOLDER}:/var/log/events
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${PWD}/certificates:/usr/share/filebeat/config/certificates
     networks:
       - elastic
-      - ingress
-    ports:
-      - 9200:9200
     logging:
       options:
-        max-file: "5"
-        max-size: "10m"
-
-  # This is optional, but good to have to perform manual queries and create custom dashboards
-  kibana:
-    image: docker.elastic.co/kibana/kibana:${ELASTIC_VERSION}
-    container_name: kibana
-    environment:
-      - SERVER_NAME=localhost
-      - ELASTICSEARCH_HOSTS=${ELASTICSEARCH_HOST}
-      - KIBANA_SYSTEM_USERNAME=${KIBANA_SYSTEM_USERNAME}
-      - KIBANA_SYSTEM_PASSWORD=${KIBANA_SYSTEM_PASSWORD}
-      - ELASTICSEARCH_API_KEY=${ELASTICSEARCH_API_KEY}
-      - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=${ELASTICSEARCH_CA}
-      - SERVER_SSL_ENABLED="true"
-      - SERVER_SSL_KEY=${KIBANA_KEY}
-      - SERVER_SSL_CERTIFICATE=${KIBANA_CRT}
-    ports:
-      - 5601:5601
-    volumes:
-      - type: volume
-        source: logs
-        target: /var/log
-      - ${PWD}/kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml
-      - ${PWD}/certificates:/usr/share/kibana/config/certificates
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-    cap_add:
-      - ALL
-    networks:
-      - elastic
-      - ingress
-    logging:
-      options:
-        max-file: "5"
+        max-file: "3"
         max-size: "10m"
 
   # Is receiving events from Filebeat and does pre-processing
@@ -107,45 +64,8 @@ services:
       - ${PWD}/certificates:/usr/share/logstash/config/certificates
     #command: logstash --path.config /usr/share/logstash/pipelines/pipelines.yml
     depends_on:
-      - elasticsearch1
       - apibuilder4elastic
       - memcached
-    networks:
-      - elastic
-    logging:
-      options:
-        max-file: "3"
-        max-size: "10m"
-
-  # Supposed to run side-by-side with the API-Gateway to watch the Open-Traffic Event files and send event to Logstash
-  filebeat:
-    image: docker.elastic.co/beats/filebeat:${ELASTIC_VERSION}
-    container_name: filebeat
-    command: --strict.perms=false
-    environment:
-      - LOGSTASH=${LOGSTASH}
-      - ELASTICSEARCH_HOST=${ELASTICSEARCH_HOST}
-      - ELASTICSEARCH_CLUSTER_UUID=${ELASTICSEARCH_CLUSTER_UUID}
-      - ELASTICSEARCH_CRT=${ELASTICSEARCH_CRT}
-      - BEATS_SYSTEM_USERNAME=${BEATS_SYSTEM_USERNAME}
-      - BEATS_SYSTEM_PASSWORD=${BEATS_SYSTEM_PASSWORD}
-      - GATEWAY_NAME=${GATEWAY_NAME}
-      - GATEWAY_REGION=${GATEWAY_REGION}
-      - FILEBEAT_WORKER=${FILEBEAT_WORKER}
-    ports:
-      - 9000:9000
-    volumes:
-      - type: volume
-        source: filebeatdata
-        target: /usr/share/filebeat/data # Required to make sure that Filebeat remembers the last position, even if the container has been removed
-      - /etc/localtime:/etc/localtime:ro # Required to sync timezone of API-Gateway into the Docker-Container
-      - ${PWD}/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml
-      - ${APIGATEWAY_OPENTRAFFIC_FOLDER}:/var/log/opentraffic
-      - ${APIGATEWAY_TRACES_FOLDER}:/var/log/trace
-      - ${APIGATEWAY_EVENTS_FOLDER}:/var/log/events
-      - /var/lib/docker/containers:/var/lib/docker/containers:ro
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ${PWD}/certificates:/usr/share/filebeat/config/certificates
     networks:
       - elastic
     logging:
@@ -182,8 +102,6 @@ services:
       #- LOG_LEVEL=debug
     ports:
       - 8443:8443
-    depends_on:
-      - elasticsearch1
     networks:
       - elastic
     volumes:
@@ -194,7 +112,6 @@ services:
         max-size: "10m"
 
 volumes:
-  esdata1:
   logs:
   filebeatdata:
 

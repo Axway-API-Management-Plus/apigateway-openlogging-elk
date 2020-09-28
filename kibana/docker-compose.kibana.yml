@@ -1,0 +1,45 @@
+version: '3.7'
+services:
+  # This is optional, but good to have to perform manual queries and create custom dashboards
+  kibana:
+    image: docker.elastic.co/kibana/kibana:${ELASTIC_VERSION}
+    container_name: kibana
+    environment:
+      - SERVER_NAME=axway-apim-kibana
+      - ELASTICSEARCH_HOSTS=${ELASTICSEARCH_HOST}
+      - KIBANA_SYSTEM_USERNAME=${KIBANA_SYSTEM_USERNAME}
+      - KIBANA_SYSTEM_PASSWORD=${KIBANA_SYSTEM_PASSWORD}
+      - ELASTICSEARCH_API_KEY=${ELASTICSEARCH_API_KEY}
+      - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=${ELASTICSEARCH_CA}
+      - SERVER_SSL_ENABLED="true"
+      - SERVER_SSL_KEY=${KIBANA_KEY}
+      - SERVER_SSL_CERTIFICATE=${KIBANA_CRT}
+    ports:
+      - 5601:5601
+    volumes:
+      - type: volume
+        source: logs
+        target: /var/log
+      - ${PWD}/kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml
+      - ${PWD}/certificates:/usr/share/kibana/config/certificates
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    cap_add:
+      - ALL
+    networks:
+      - elastic
+      - ingress
+    logging:
+      options:
+        max-file: "5"
+        max-size: "10m"
+
+volumes:
+  esdata1:
+  logs:
+
+networks:
+  elastic:
+  ingress:

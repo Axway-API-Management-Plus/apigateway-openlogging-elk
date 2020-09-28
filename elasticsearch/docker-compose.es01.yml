@@ -1,15 +1,15 @@
 version: '3.7'
 services:
-  # Elasticsearch node 3
-  elasticsearch3:
+  # Elasticsearch node 1
+  elasticsearch1:
     image: docker.elastic.co/elasticsearch/elasticsearch:${ELASTIC_VERSION}
-    container_name: elasticsearch3
+    container_name: elasticsearch1
     environment:
       - "ES_JAVA_OPTS=${ES_JAVA_OPTS}"
       - cluster.name=${ELASTICSEARCH_CLUSTERNAME}
-      - node.name=elasticsearch3
-      - discovery.seed_hosts=elasticsearch1, elasticsearch2
-      - cluster.initial_master_nodes=elasticsearch1,elasticsearch2,elasticsearch3
+      - node.name=elasticsearch1
+      - network.publish_host=${ELASTICSEARCH_HOST1}
+      - transport.port=${ELASTICSEARCH_HOST1_TRANSPORT}
       - xpack.security.enabled=true
       - xpack.security.http.ssl.enabled=true
       - xpack.security.http.ssl.key=/usr/share/elasticsearch/${ELASTICSEARCH_KEY}
@@ -24,6 +24,9 @@ services:
       memlock:
         soft: -1
         hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
     cap_add:
       - ALL
     volumes:
@@ -31,31 +34,23 @@ services:
         source: logs
         target: /var/log
       - type: volume
-        source: esdata3
+        source: esdata1
         target: /usr/share/elasticsearch/data
       - ${PWD}/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
       - ${PWD}/certificates:/usr/share/elasticsearch/config/certificates
     networks:
       - elastic
-      - ingress
     ports:
-      - 9202:9202
+      - 9200:9200
+      - ${ELASTICSEARCH_HOST1_TRANSPORT}:${ELASTICSEARCH_HOST1_TRANSPORT}
     logging:
       options:
         max-file: "5"
         max-size: "10m"
 
-  # Extend Elasticsearch node 1 configuration
-  elasticsearch1:
-    environment:
-      - discovery.seed_hosts=elasticsearch2,elasticsearch3
-      - cluster.initial_master_nodes=elasticsearch1,elasticsearch2,elasticsearch3
-
-  # Extend Elasticsearch node 1 configuration
-  elasticsearch2:
-    environment:
-      - discovery.seed_hosts=elasticsearch1, elasticsearch3
-      - cluster.initial_master_nodes=elasticsearch1,elasticsearch2,elasticsearch3
-
 volumes:
-  esdata3:
+  esdata1:
+  logs:
+
+networks:
+  elastic:

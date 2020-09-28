@@ -1,0 +1,57 @@
+version: '3.7'
+services:
+  # Elasticsearch node 3
+  elasticsearch3:
+    image: docker.elastic.co/elasticsearch/elasticsearch:${ELASTIC_VERSION}
+    container_name: elasticsearch3
+    environment:
+      - "ES_JAVA_OPTS=${ES_JAVA_OPTS}"
+      - cluster.name=${ELASTICSEARCH_CLUSTERNAME}
+      - node.name=elasticsearch3
+      - network.publish_host=${ELASTICSEARCH_HOST3}
+      - transport.port=${ELASTICSEARCH_HOST3_TRANSPORT}
+      - discovery.seed_hosts=${ELASTICSEARCH_HOST1}:${ELASTICSEARCH_HOST1_TRANSPORT}, ${ELASTICSEARCH_HOST2}:${ELASTICSEARCH_HOST2_TRANSPORT}
+      - xpack.security.enabled=true
+      - xpack.security.http.ssl.enabled=true
+      - xpack.security.http.ssl.key=/usr/share/elasticsearch/${ELASTICSEARCH_KEY}
+      - xpack.security.http.ssl.certificate=/usr/share/elasticsearch/${ELASTICSEARCH_CRT}
+      - xpack.security.http.ssl.certificate_authorities=/usr/share/elasticsearch/${ELASTICSEARCH_CA}
+      - xpack.security.transport.ssl.enabled=true
+      - xpack.security.transport.ssl.verification_mode=certificate
+      - xpack.security.transport.ssl.key=/usr/share/elasticsearch/${ELASTICSEARCH_KEY}
+      - xpack.security.transport.ssl.certificate=/usr/share/elasticsearch/${ELASTICSEARCH_CRT}
+      - xpack.security.transport.ssl.certificate_authorities=/usr/share/elasticsearch/${ELASTICSEARCH_CA}
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    cap_add:
+      - ALL
+    volumes:
+      - type: volume
+        source: logs
+        target: /var/log
+      - type: volume
+        source: esdata3
+        target: /usr/share/elasticsearch/data
+      - ${PWD}/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+      - ${PWD}/certificates:/usr/share/elasticsearch/config/certificates
+    networks:
+      - elastic
+    ports:
+      - 9202:9202
+      - ${ELASTICSEARCH_HOST3_TRANSPORT}:${ELASTICSEARCH_HOST3_TRANSPORT}
+    logging:
+      options:
+        max-file: "5"
+        max-size: "10m"
+
+volumes:
+  esdata3:
+  logs:
+
+networks:
+  elastic:

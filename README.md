@@ -84,6 +84,9 @@ The glue between Elasticsearch and the API-Gateway Traffic-Monitor is an [API-Bu
 
 Components such as the API-Builder project are supposed to run as a Docker-Container. The Elasticsearch stack is using standard Docker-Images which are configured with environment variables and some mount points. With that, you are pretty flexible. You can run them with the provided docker-compose or with a Docker Orchestration platform such a Kubernetes or OpenShift to get elastic scaling & self-healing.  
 
+TODO: sysctl -w vm.max_map_count=262144, ulimit -n 65535
+docker-compose -f elasticsearch/docker-compose.es01.yml -f elasticsearch/docker-compose.es01init.yml up -d elasticsearch1
+
 ### API-Gateway/API-Management
 
 The solution is designed to work with the _Classical_ and the _EMT_ deployment modell. As it is mainly based on events given in the Open-Traffic-Event log, these enabled must be enabled. The Events-Logs are indexed as well and stored in Elasticsearch. This is used for System-Monitoring information and to highlight annotations based on Governance-Alerts in API-Manager.    
