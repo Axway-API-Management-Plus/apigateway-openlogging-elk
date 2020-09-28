@@ -53,7 +53,7 @@ monitoring:
   # This links this filebeat instance to the Cluster with the given ID
   cluster_uuid: ${ELASTICSEARCH_CLUSTER_UUID:ELASTICSEARCH_CLUSTER_UUID-NOT-SET}
   elasticsearch:
-    hosts: ["${ELASTICSEARCH_HOST}"]
+    hosts: ${ELASTICSEARCH_HOSTS}
     ssl.enabled: true
     ssl.certificate_authorities: ["${ELASTICSEARCH_CRT:ELASTICSEARCH_CRT-NOT-SET}"]
     username: "${BEATS_SYSTEM_USERNAME:beats_system}"

@@ -8,7 +8,7 @@ services:
     command: --strict.perms=false
     environment:
       - LOGSTASH=${LOGSTASH}
-      - ELASTICSEARCH_HOST=${ELASTICSEARCH_HOST}
+      - ELASTICSEARCH_HOSTS=${ELASTICSEARCH_HOSTS}
       - ELASTICSEARCH_CLUSTER_UUID=${ELASTICSEARCH_CLUSTER_UUID}
       - ELASTICSEARCH_CRT=${ELASTICSEARCH_CRT}
       - BEATS_SYSTEM_USERNAME=${BEATS_SYSTEM_USERNAME}
@@ -46,11 +46,11 @@ services:
       - node.name=Logstash1
       - xpack.monitoring.enabled=true
       - xpack.monitoring.elasticsearch.ssl.certificate_authority=${ELASTICSEARCH_CA}
-      - xpack.monitoring.elasticsearch.hosts=${ELASTICSEARCH_HOST}
+      - xpack.monitoring.elasticsearch.hosts=${ELASTICSEARCH_HOSTS}
       - xpack.monitoring.elasticsearch.username=${LOGSTASH_SYSTEM_USERNAME}
       - xpack.monitoring.elasticsearch.password=${LOGSTASH_SYSTEM_PASSWORD}
       - ELASTICSEARCH_CERT=${ELASTICSEARCH_CRT}
-      - ELASTICSEARCH_HOST=${ELASTICSEARCH_HOST}
+      - ELASTICSEARCH_HOSTS=${ELASTICSEARCH_HOSTS}
       - LOGSTASH_USERNAME=${LOGSTASH_USERNAME}
       - LOGSTASH_PASSWORD=${LOGSTASH_PASSWORD}
       - API_BUILDER_URL=${API_BUILDER_URL}
@@ -90,7 +90,7 @@ services:
     image: cwiechmann/apibuilder4elastic:v1.0.0-RC2
     container_name: apibuilder4elastic
     environment:
-      - ELASTICSEARCH_HOST=${ELASTICSEARCH_HOST}
+      - ELASTICSEARCH_HOSTS=${ELASTICSEARCH_HOSTS}
       - ADMIN_NODE_MANAGER=${ADMIN_NODE_MANAGER}
       - API_MANAGER_USERNAME=${API_MANAGER_USERNAME}
       - API_MANAGER_PASSWORD=${API_MANAGER_PASSWORD}

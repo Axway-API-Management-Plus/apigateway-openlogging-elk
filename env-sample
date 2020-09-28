@@ -43,8 +43,10 @@ APIGATEWAY_EVENTS_FOLDER=/home/localuser/Axway-x.y.z/apigateway/events
 # the Elasticsearch service is running with this service name.
 # When running the ElasticSearch on a difference host (e.g. existing Elastic-Search cluster)
 # this environment variable is used to locate the ElasticSearch cluster.
+# You may provide a single host or an array of hosts.
+# Example: ELASTICSEARCH_HOSTS=["https://elasticsearch1:9200","https://elasticsearch1:9201"]
 # Used-By: Filebeat, API-Builder, Logstash
-ELASTICSEARCH_HOST=https://elasticsearch1:9200
+ELASTICSEARCH_HOSTS=https://elasticsearch1:9200
 
 # ----------------------------------------------------------------------------------------------
 # Used by Logstash to communicate with the Lookup-API, which is used to 
@@ -109,14 +111,14 @@ API_MANAGER_PASSWORD=changeme
 ################################################################################################
 #                            Configure Multi-Node ES-Cluster
 ################################################################################################
+The following parameters are used by the elaticsearch/docker-compose.es<N>.yml files and only 
+required if you are running Elasticsearch based on Docker-Compose. 
+If you using an external Elasticsearch cluster, these parameters are not used.
 ELASTICSEARCH_HOST1=elasticsearch1
 ELASTICSEARCH_HOST2=elasticsearch2
 ELASTICSEARCH_HOST3=elasticsearch3
 
-ELASTICSEARCH_HOST1_HTTP=9200
-ELASTICSEARCH_HOST2_HTTP=9201
-ELASTICSEARCH_HOST3_HTTP=9201
-
+# Ports are different just to be able to start multiple Elasticsearch containers on one host.
 ELASTICSEARCH_HOST1_TRANSPORT=9300
 ELASTICSEARCH_HOST2_TRANSPORT=9301
 ELASTICSEARCH_HOST3_TRANSPORT=9301

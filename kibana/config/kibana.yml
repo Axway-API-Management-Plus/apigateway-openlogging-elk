@@ -4,7 +4,7 @@ xpack.security.enabled: false
 
 server.name: kibana
 server.host: "0"
-elasticsearch.hosts: [ "https://elasticsearch1:9200" ]
+elasticsearch.hosts: ${ELASTICSEARCH_HOSTS}
 monitoring.ui.container.elasticsearch.enabled: true
 
 elasticsearch.username: "${KIBANA_SYSTEM_USERNAME}"
