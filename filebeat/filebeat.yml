@@ -15,6 +15,7 @@ filebeat.inputs:
     logtype: openlog
     gatewayName: ${GATEWAY_NAME:"API-Gateway"}
     gatewayRegion: ${GATEWAY_REGION:"N/A"}
+    version: "1"
 
 - type: log
   paths: ["/var/log/trace/*.trc"]
@@ -27,6 +28,7 @@ filebeat.inputs:
     logtype: trace
     gatewayName: ${GATEWAY_NAME:"API-Gateway"}
     gatewayRegion: ${GATEWAY_REGION:"N/A"}
+    version: "1"
 
 - type: log
   paths: ["/var/log/events/*.log", "/var/log/events/processed/*.log.PROCESSED"]
@@ -38,6 +40,19 @@ filebeat.inputs:
     logtype: events
     gatewayName: ${GATEWAY_NAME:"API-Gateway"}
     gatewayRegion: ${GATEWAY_REGION:"N/A"}
+    version: "1"
+
+- type: log
+  paths: ["/var/log/audit/*.log"]
+  json.keys_under_root: true
+  json.overwrite_keys: false
+  json.add_error_key: true
+  fields_under_root: true
+  fields:
+    logtype: domainaudit
+    gatewayName: ${GATEWAY_NAME:"API-Gateway"}
+    gatewayRegion: ${GATEWAY_REGION:"N/A"}
+    version: "1"
 
 # Required for Trace-Messages logged by the API-Gateway
 processors:
@@ -49,8 +64,9 @@ output.logstash:
 
 monitoring:
   enabled: true
-  # Get the Cluster-ID (cluster_uuid) with this simple query: http://elasticsearch1:9200/
-  # This links this filebeat instance to the Cluster with the given ID
+  # Get the Cluster-ID (cluster_uuid) with this simple query: https://elasticsearch1:9200/
+  # This links this filebeat instance to the Cluster with the given ID to enable monitoring
+  # It's also required to setup the beats_system user
   cluster_uuid: ${ELASTICSEARCH_CLUSTER_UUID:ELASTICSEARCH_CLUSTER_UUID-NOT-SET}
   elasticsearch:
     hosts: ${ELASTICSEARCH_HOSTS}
