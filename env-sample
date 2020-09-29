@@ -35,6 +35,7 @@ COMPOSE_PROJECT_NAME=axway-apim-elastic
 APIGATEWAY_OPENTRAFFIC_FOLDER=/home/localuser/Axway-x.y.z/apigateway/logs/opentraffic
 APIGATEWAY_TRACES_FOLDER=/home/localuser/Axway-x.y.z/apigateway/groups/group-2/instance-1/trace
 APIGATEWAY_EVENTS_FOLDER=/home/localuser/Axway-x.y.z/apigateway/events
+APIGATEWAY_AUDITLOGS_FOLDER=/home/localuser/Axway-x.y.z/apigateway/logs
 
 # ----------------------------------------------------------------------------------------------
 # Is used by almost all services to communicate with Elasticsearch. Either to send events, 
@@ -44,7 +45,7 @@ APIGATEWAY_EVENTS_FOLDER=/home/localuser/Axway-x.y.z/apigateway/events
 # When running the ElasticSearch on a difference host (e.g. existing Elastic-Search cluster)
 # this environment variable is used to locate the ElasticSearch cluster.
 # You may provide a single host or an array of hosts.
-# Example: ELASTICSEARCH_HOSTS=["https://elasticsearch1:9200","https://elasticsearch1:9201"]
+# Example: ELASTICSEARCH_HOSTS=https://elasticsearch1:9200,https://elasticsearch2:9201
 # Used-By: Filebeat, API-Builder, Logstash
 ELASTICSEARCH_HOSTS=https://elasticsearch1:9200
 
@@ -121,7 +122,7 @@ ELASTICSEARCH_HOST3=elasticsearch3
 # Ports are different just to be able to start multiple Elasticsearch containers on one host.
 ELASTICSEARCH_HOST1_TRANSPORT=9300
 ELASTICSEARCH_HOST2_TRANSPORT=9301
-ELASTICSEARCH_HOST3_TRANSPORT=9301
+ELASTICSEARCH_HOST3_TRANSPORT=9302
 
 ################################################################################################
 #                            Optional / Advanced parameters

@@ -1,0 +1,51 @@
+{
+    "version": "1.0.0",
+    "index_patterns": [
+        "apigw-domainaudit"
+    ],
+    "settings": {
+        "number_of_shards": 1, 
+        "number_of_replicas": 1,
+        "index": {
+            "codec": "best_compression"
+        }
+    },
+    "mappings": {
+        "dynamic": false,
+        "properties": {
+            "@timestamp": {
+                "type" : "date"
+            },
+            "message": {
+                "type": "text"
+            },
+            "additionalInfo": {
+                "type": "text"
+            },
+            "eventId": {
+                "type": "integer"
+            },
+            "user": {
+                "type": "keyword"
+            },
+            "outcome": {
+                "type": "keyword"
+            },
+            "metaData.serviceID": {
+                "type": "keyword"
+            },
+            "metaData.clientAddr": {
+                "type": "keyword"
+            },
+            "metaData.Referer": {
+                "type": "keyword"
+            },
+            "metaData.Host": {
+                "type": "keyword"
+            },
+            "metaData.requestURI": {
+                "type": "text"
+            }
+        }
+    }
+}
