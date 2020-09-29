@@ -42,7 +42,7 @@ services:
     networks:
       - elastic
     ports:
-      - 9202:9202
+      - ${ELASTICSEARCH_HOST3_HTTP}:${ELASTICSEARCH_HOST3_HTTP}
       - ${ELASTICSEARCH_HOST3_TRANSPORT}:${ELASTICSEARCH_HOST3_TRANSPORT}
     logging:
       options:

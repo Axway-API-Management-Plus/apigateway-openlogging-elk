@@ -41,7 +41,7 @@ services:
     networks:
       - elastic
     ports:
-      - 9200:9200
+      - ${ELASTICSEARCH_HOST1_HTTP}:${ELASTICSEARCH_HOST1_HTTP}
       - ${ELASTICSEARCH_HOST1_TRANSPORT}:${ELASTICSEARCH_HOST1_TRANSPORT}
     logging:
       options:
