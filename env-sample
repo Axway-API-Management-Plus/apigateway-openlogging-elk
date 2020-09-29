@@ -112,9 +112,9 @@ API_MANAGER_PASSWORD=changeme
 ################################################################################################
 #                            Configure Multi-Node ES-Cluster
 ################################################################################################
-The following parameters are used by the elaticsearch/docker-compose.es<N>.yml files and only 
-required if you are running Elasticsearch based on Docker-Compose. 
-If you using an external Elasticsearch cluster, these parameters are not used.
+# The following parameters are used by the elaticsearch/docker-compose.es<N>.yml files and only 
+# required if you are running Elasticsearch based on Docker-Compose. 
+# If you using an external Elasticsearch cluster, these parameters are not used.
 ELASTICSEARCH_HOST1=elasticsearch1
 ELASTICSEARCH_HOST2=elasticsearch2
 ELASTICSEARCH_HOST3=elasticsearch3
