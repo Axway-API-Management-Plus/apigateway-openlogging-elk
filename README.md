@@ -96,7 +96,7 @@ Obviously this solution also supports enterprise deployments using a distributed
 
 To get started please download the release package from the GitHub project onto your machine:  
 ```
-wget --no-check-certificate https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v1.0.0-RC2/axway-apim-elk-v1.0.0-RC2.tar.gz -O - | tar -xvz
+wget --no-check-certificate https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v1.0.0-RC3/axway-apim-elk-v1.0.0-RC3.tar.gz -O - | tar -xvz
 ```
 And rename the provided file `env-sample` to `.env`.
 
