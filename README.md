@@ -229,7 +229,7 @@ __4. Setup cluster nodes__
 Since you now have several Elasticsearch Cluster nodes available, they must now be stored in the configuration for failover. Instead of a single cluster node you now specify the configured nodes in your `.env` file as follows:
 
 ```
-ELASTICSEARCH_HOSTS==https://elasticsearch1:9200,https://elasticsearch2:9201
+ELASTICSEARCH_HOSTS=https://elasticsearch1:9200,https://elasticsearch2:9201
 ```
 Ports can be the same depending on your Elasticsearch Cluster-Configuration. 
 
@@ -237,7 +237,7 @@ Ports can be the same depending on your Elasticsearch Cluster-Configuration.
 
 __1. Generate Built-In user passwords__
 
-_This step can be ignored, when it's planned to use an existing Elasticsearch cluster._
+_This step can be ignored, when you are using an existing Elasticsearch cluster._
 Elasticsearch is initially configured with a number of built-in users, that don't have a password by default. So, the first step is to generate passwords for these users.  
 ```
 docker exec elasticsearch1 /bin/bash -c "bin/elasticsearch-setup-passwords auto --batch --url https://localhost:9200"
@@ -307,8 +307,9 @@ To activate these changes the Filebeat service must be restarted.
 
 ### Custom certificates
 
-The project is shipped with long running certificates/keys that should help you to get started with the solution. For a production environment these certificates and keys 
-should be replaced with custom certificates.  
+_If you are using an existing Elasticsearch cluster, you have to provide the required CA to the solution to allow certificate validation._
+
+The project is shipped with long running certificates/keys that should help you to get started with the solution. For a production environment these certificates and keys should be replaced with custom certificates.  
 
 After you have created the corresponding certificates and keys based on your CA, you must save them in the folder: `certificates`. 
 Afterwards these certificates must be configured in the `.env` file.  
@@ -331,11 +332,11 @@ By default the configured Admin Node Manager host is used or the configured API 
 ```
 API_MANAGER=http://my.apimanager.com:443
 ```
-If you have several API Managers within your domain, you have to configure via a mapping which group (groupId) belongs to which API Manager. The following syntax is used for this:  
+If you have several API Managers within your domain, you have to configure a mapping which group (groupId) belongs to which API Manager. The following syntax is used for this:  
 ```
 API_MANAGER=group-2#https://api-manager-1:8075, group-5#https://api-manager-2:8275
 ```
-When the API Builder is started, to validate the configuration, a login to each API-Manager is performed.  Currently the same 
+When the API Builder is started, to validate the configuration, a login to each API-Manager is performed. Currently the same 
 API manager user (API_MANAGER_USERNAME/API_MANAGER_PASSWORD) is used for each API Manager. 
 
 ### Secure API-Builder Traffic-Monitor API
