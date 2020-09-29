@@ -36,24 +36,11 @@ This shows a sample dashboard created in Kibana based on the indexed documents:
     - [The Traffic-Monitor](#the-traffic-monitor)
 - [Prerequisites](#prerequisites)
 - [Getting started](#getting-started)
-- [Manage the environment](#manage-the-environment)
-    - [Using docker-compose](#using-docker-compose)
-    - [Acccess components](#acccess-components)
-- [Advanced setup](#advanced-setup)
-    - [Activate user authentication](#activate-user-authentication)
-    - [Configure cluster UUID](#configure-cluster-uuid)
-    - [Custom certificates](#custom-certificates)
-    - [Multiple API-Manager](#multiple-api-manager)
-    - [Securing API-Builder Traffic-Monitor API](##securing-api-builder-traffic-monitor-api)
+- [Basic setup](#basic-setup)
+- [Configure Axway API-Management](#configure-axway-api-management)
+- [Production Setup](#production-setup)
 - [Infrastructure sizing](#infrastructure-sizing)
-    - [Sizing recommendations](#sizing-recommendations)
-    - [Test infrastructure](#test-infrastructure)
 - [Troubleshooting](#troubleshooting)
-    - [Check processes/containers are running](#test-infrastructure)
-    - [Check Filebeat is picking up data](#test-infrastructure)
-    - [Check Logstash processing](#test-infrastructure)
-    - [Check Elasticsearch processing](#test-infrastructure)
-    - [Check API-Builder processing](#test-infrastructure)
 - [Known issues](#known-issues)
 
 ## Overview
@@ -85,13 +72,13 @@ Components such as the API-Builder project are supposed to run as a Docker-Conta
 
 ### API-Gateway/API-Management
 
-The solution is designed to work with the _Classical_ and the _EMT_ deployment modell. As it is mainly based on events given in the Open-Traffic-Event log, these enabled must be enabled. The Events-Logs are indexed as well and stored in Elasticsearch. This is used for System-Monitoring information and to highlight annotations based on Governance-Alerts in API-Manager.    
+The solution is designed to work with _Classical_ and the _EMT_ deployment model. As it is mainly based on events given in the Open-Traffic-Event log, these must be enabled. Also Events-Logs are indexed and stored in Elasticsearch. This is used for System-Monitoring information and to highlight annotations based on Governance-Alerts in API-Manager.    
 Versin 7.7-20200130 is required due to some Dateformat changes in the Open-Traffic-Format. With older versions of the API-Gateway you will get an error in Logstash processing.
 
 ### Elastic stack
 
-The solution is based on the Elastic-Stack (Elasticsearch, Logstash, Beats and Kibana). The solution can run completely based on docker containers, which for example are started on the basis of docker-compose.yaml or run in a Docker Orchestration Framework.  
-It is also possible to use an existing Elasticsearch cluster including Kibana. For example an Elasticsearch service at AWS or Azure or using Filebeat manually installed on the API-Gateway machines. The solution has been tested with Elasticsearch 7.x version.
+The solution is based on the Elastic-Stack (Elasticsearch, Logstash, Beats and Kibana). It can run completely in docker containers, which for example are started on the basis of docker-compose.yaml or run in a Docker Orchestration Framework.  
+It is also possible to use existing components such as an Elasticsearch cluster or a Kibana instance. With that you have the flexiblity to used for instance an Elasticsearch service at AWS or Azure or use Filebeat manually installed on the API-Gateway machines. The solution has been tested with Elasticsearch 7.x version.
 
 ## Getting started
 
@@ -101,10 +88,10 @@ It is also possible to use an existing Elasticsearch cluster including Kibana. F
 Obviously, you have to enable Open-Traffic-Event log for your API-Gateway instance(s). [Read here][1] how to enable the Open-Traffic Event-Log.  
 After this configuration has been done, Open-Traffic log-files will be created by default in this location: `apigateway/logs/opentraffic`. This location becomes relevant when configuring Filebeat.
 
-### Basic setup
+## Basic setup
 
 The basic setup is supposed that you learn how the solutions works and not for a production environment. It assumes you are running all components configured in the provided docker-compose files on one machine, which is also running the API-Gateway instances using a single node Elasticsearch cluster. _(For instance like the Axway internal API-Management reference environment.)_  
-This machine should have 16 GB RAM or more, Docker and Docker-Compose installed. Everything you need to configure is the provided `.env` file, which is used by `docker-compose` to read environment variables.  
+This machine should have 16 GB RAM or more, Docker and Docker-Compose installed. Everything you need to configure is the `.env` file, which is used by `docker-compose` to setup environment variables.  
 Obviously this solution also supports enterprise deployments using a distributed architecture or existing services, such as an existing Elasticsearch service. This is covered later in the documentation. 
 
 To get started please download the release package from the GitHub project onto your machine:  
@@ -129,21 +116,19 @@ ADMIN_NODE_MANAGER=https://api-env:8090
 API_MANAGER_USERNAME=<admin-user>
 API_MANAGER_PASSWORD=<admin-password>
 ```
-That's all for the basic setup. Using docker-compose and having everything on one machine, all remaining parameters can stay unchanged.
+This is all for the basic setup and you can now start the individual components with the following commands.
 
-### Basic setup Start components
+### Start components
 
-Single Node Elasticsearch and Kibana:  
-
+To start a single Node Elasticsearch server and Kibana:  
 ```
 docker-compose -f elasticsearch/docker-compose.es01.yml -f elasticsearch/docker-compose.es01init.yml up -d
 docker-compose -f kibana/docker-compose.kibana.yml up -d
 ```
-Remaining components (Logstash, API-Builder, Filebeat and Memcached):  
+To start the remaining components (Logstash, API-Builder, Filebeat and Memcached):  
 ```
 docker-compose up -d
 ```
-
 To stop the environment and remove the containers run you may use docker-compose or docker.
 
 ### Acccess components
@@ -191,7 +176,7 @@ This project solves the problem by storing the API transactions in Elasticsearch
 | **Operator**         | Org-Admin     | APIs of its own organization | Such a user will only see the APIs that belong to the same organization as himself. |
 | **Operator**         | User          | APIs of its own organization | The same rules apply as for the Org-Admin |
 
-#### Setup API-Manager user in API-Gateway Manager
+### Setup API-Manager user in API-Gateway Manager
 
 To give API-Manager users a limited access to the API Traffic Monitor, the user must be configured in the API-Gateway manager with the same login name as in the API Manager. Here, for example, an LDAP connection can be a simplification.  
 None of his roles must contain the permission: `adminusers_modify`. A suitable standard role is the `API Gateway Operator role`. 
