@@ -107,7 +107,9 @@ For the basic setup it is expected, that the Filebeat docker container has acces
 APIGATEWAY_LOGS_FOLDER=/opt/Axway/APIM/apigateway/logs/opentraffic
 APIGATEWAY_TRACES_FOLDER=/opt/Axway/APIM/apigateway/groups/group-2/instance-1/trace
 APIGATEWAY_EVENTS_FOLDER=/home/localuser/Axway-x.y.z/apigateway/events
+APIGATEWAY_AUDITLOGS_FOLDER=/home/localuser/Axway-x.y.z/apigateway/logs
 ```
+Audit-Logs are optional. If you don't want them indexed just point to an invalid folder.
 
 ### API-Builder
 The API-Builder container needs to communicate with Elasticsearch it needs to know where Elasticsearch is running:
