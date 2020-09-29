@@ -1,7 +1,7 @@
 {
     "version": "1.0.0",
     "index_patterns": [
-        "apigw-domainaudit"
+        "apigw-domainaudit-*"
     ],
     "settings": {
         "number_of_shards": 1, 
