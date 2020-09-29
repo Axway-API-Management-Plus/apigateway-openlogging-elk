@@ -188,8 +188,8 @@ This section covers advanced configuration topics that are required for a produc
 
 ### Setup Elasticsearch Multi-Node
 
-For a production environment Elasticsearch should run in a multi-node cluster environment. Indexes are configured so that available nodes are automatically used for primary and replica shards. 
-If you are using an external Elasticsearch cluster, you can skip the following instructions.
+For a production environment Elasticsearch should run a multi-node Elasticsearch cluster environment. Indexes are configured so that available nodes are automatically used for primary and replica shards. 
+If you are using an external Elasticsearch cluster, you can skip the following instructions, besides step number 4 to configure your available Elasticsearch cluster nodes.
 
 __1. Setup Cluster-Nodes__
 
@@ -223,6 +223,15 @@ If a node has successfully joined the cluster you see the following log message 
 ```
 {"ty...": "INFO", "component": "o.e.c.s.MasterService", "cluster.name": "axway-apim-elasticsearch", "node.name": "elasticsearch1", "message": "node-join[{elasticsearch3}{eQaH...w"  }
 ```
+
+__4. Setup cluster nodes__
+
+Since you now have several Elasticsearch Cluster nodes available, they must now be stored in the configuration for failover. Instead of a single cluster node you now specify the configured nodes in your `.env` file as follows:
+
+```
+ELASTICSEARCH_HOSTS==https://elasticsearch1:9200,https://elasticsearch2:9201
+```
+Ports can be the same depending on your Elasticsearch Cluster-Configuration. 
 
 ### Activate user authentication
 
