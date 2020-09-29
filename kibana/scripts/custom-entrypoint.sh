@@ -10,5 +10,4 @@ echo "Adjusted given Elasticsearch hosts: ${hostsForKibana} for Kibana"
 export ELASTICSEARCH_HOSTS=[$hostsForKibana]
 
 # Finally call the original Docker-Entrypoint
-#/usr/local/bin/dumb-init "--"
 /usr/local/bin/kibana-docker
