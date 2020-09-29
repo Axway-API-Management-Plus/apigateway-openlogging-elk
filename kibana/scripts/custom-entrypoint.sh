@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
 # This scripts adjusts the configured list of Elasticsearch hosts
-# Kibana requires each host to be double quoted
+# Kibana requires each host to be double quoted 
 
 hostsForKibana=`echo ${ELASTICSEARCH_HOSTS} | awk '{split($0, va, /,/); vl=""; for (v in va) { if (vl =="" ) vl = sprintf("\"%s\"", va[v]); else vl = vl sprintf(",\"%s\"", va[v]); } print(vl) }'`
 
