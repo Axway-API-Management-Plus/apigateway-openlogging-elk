@@ -112,22 +112,25 @@ API_MANAGER_PASSWORD=changeme
 ################################################################################################
 #                            Configure Multi-Node ES-Cluster
 ################################################################################################
-# The following parameters are used by the elaticsearch/docker-compose.es<N>.yml files and only 
-# required if you are running Elasticsearch based on Docker-Compose. 
-# If you using an external Elasticsearch cluster, these parameters are not used.
-ELASTICSEARCH_HOST1=elasticsearch1
-ELASTICSEARCH_HOST2=elasticsearch2
-ELASTICSEARCH_HOST3=elasticsearch3
+# The following parameters are used to build and configure the Elasticsearch cluster. 
+# If you don't set this parameters the cluster is configured based on the configured 
+# ELASTICSEARCH_HOSTS.
+#
+# The publish host is used for internal cluster communication between each node. If must be 
+# set to a host that is reachable from other nodes. 
+# ELASTICSEARCH_PUBLISH_HOST1=elasticsearch1
+# ELASTICSEARCH_PUBLISH_HOST2=elasticsearch2
+# ELASTICSEARCH_PUBLISH_HOST3=elasticsearch3
 
-# Ports are different just to be able to start multiple Elasticsearch containers on one host.
-ELASTICSEARCH_HOST1_HTTP=9200
-ELASTICSEARCH_HOST2_HTTP=9201
-ELASTICSEARCH_HOST3_HTTP=9202
+# The ES REST-API listen socket and used to map the port outside of the docker container.
+# ELASTICSEARCH_HOST1_HTTP=9200
+# ELASTICSEARCH_HOST2_HTTP=9201
+# ELASTICSEARCH_HOST3_HTTP=9202
 
-# Ports are different just to be able to start multiple Elasticsearch containers on one host.
-ELASTICSEARCH_HOST1_TRANSPORT=9300
-ELASTICSEARCH_HOST2_TRANSPORT=9301
-ELASTICSEARCH_HOST3_TRANSPORT=9302
+# The ES Transport protocol listen socket and used to map the port outside of the docker container.
+# ELASTICSEARCH_HOST1_TRANSPORT=9300
+# ELASTICSEARCH_HOST2_TRANSPORT=9301
+# ELASTICSEARCH_HOST3_TRANSPORT=9302
 
 ################################################################################################
 #                            Optional / Advanced parameters
