@@ -1,43 +1,5 @@
 version: '3.7'
 services:
-  # Supposed to run side-by-side with the API-Gateway to watch the Open-Traffic Event files and send event to Logstash
-  # You may also use a natively installed Filebeat (7.x) instance as long as it using the same configuration filebeat/filebeat.yml
-  filebeat:
-    image: docker.elastic.co/beats/filebeat:${ELASTIC_VERSION}
-    container_name: filebeat
-    command: --strict.perms=false
-    environment:
-      - LOGSTASH=${LOGSTASH}
-      - ELASTICSEARCH_HOSTS=${ELASTICSEARCH_HOSTS}
-      - ELASTICSEARCH_CLUSTER_UUID=${ELASTICSEARCH_CLUSTER_UUID}
-      - ELASTICSEARCH_CRT=${ELASTICSEARCH_CRT}
-      - BEATS_SYSTEM_USERNAME=${BEATS_SYSTEM_USERNAME}
-      - BEATS_SYSTEM_PASSWORD=${BEATS_SYSTEM_PASSWORD}
-      - GATEWAY_NAME=${GATEWAY_NAME}
-      - GATEWAY_REGION=${GATEWAY_REGION}
-      - FILEBEAT_WORKER=${FILEBEAT_WORKER}
-    ports:
-      - 9000:9000
-    volumes:
-      - type: volume
-        source: filebeatdata
-        target: /usr/share/filebeat/data # Required to make sure that Filebeat remembers the last position, even if the container is recreated
-      - /etc/localtime:/etc/localtime:ro # Required to sync timezone of API-Gateway into the Filebeat Docker-Container
-      - ${PWD}/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml
-      - ${APIGATEWAY_OPENTRAFFIC_FOLDER}:/var/log/opentraffic
-      - ${APIGATEWAY_TRACES_FOLDER}:/var/log/trace
-      - ${APIGATEWAY_EVENTS_FOLDER}:/var/log/events
-      - ${APIGATEWAY_AUDITLOGS_FOLDER}:/var/log/audit
-      - /var/lib/docker/containers:/var/lib/docker/containers:ro
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ${PWD}/certificates:/usr/share/filebeat/config/certificates
-    networks:
-      - elastic
-    logging:
-      options:
-        max-file: "3"
-        max-size: "10m"
-
   # Is receiving events from Filebeat and does pre-processing
   # https://github.com/elastic/logstash-docker/blob/master/build/logstash/env2yaml/env2yaml.go
   logstash:

@@ -82,63 +82,135 @@ It is also possible to use existing components such as an Elasticsearch cluster 
 
 ## Getting started
 
+## Basic setup
+
+The basic setup explains the individual components, how they can be played and started together. After completing the basic setup you will have a single node Elasticsearch cluster including a Kibana instance running. This cluster receives data from 1 to N API gateways via Filebeat, Logstash, API-Builder and is accessible via the Traffic Monitor. You can also use the sample Kibana Dashboard or create your own visualizations.  
+You can extend this setup, then expand it to a production cluster.
+It is possible to deploy all components on a single machine, which should then have at least 16 GB RAM available. _(For instance like the Axway internal API-Management reference environment.)_
+
 ### Preparations
 
 #### Enable Open-Traffic Event Log
 Obviously, you have to enable Open-Traffic-Event log for your API-Gateway instance(s). [Read here][1] how to enable the Open-Traffic Event-Log.  
 After this configuration has been done, Open-Traffic log-files will be created by default in this location: `apigateway/logs/opentraffic`. This location becomes relevant when configuring Filebeat.
 
-## Basic setup
+#### Download and extract the release package
 
-The basic setup is supposed that you learn how the solutions works and not for a production environment. It assumes you are running all components configured in the provided docker-compose files on one machine, which is also running the API-Gateway instances using a single node Elasticsearch cluster. _(For instance like the Axway internal API-Management reference environment.)_  
-This machine should have 16 GB RAM or more, Docker and Docker-Compose installed. Everything you need to configure is the `.env` file, which is used by `docker-compose` to setup environment variables.  
-Obviously this solution also supports enterprise deployments using a distributed architecture or existing services, such as an existing Elasticsearch service. This is covered later in the documentation. 
-
-To get started please download the release package from the GitHub project onto your machine:  
+Please download the release package from the GitHub project onto your machine:  
 ```
 wget --no-check-certificate https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v1.0.0-RC4/axway-apim-elk-v1.0.0-RC4.tar.gz -O - | tar -xvz
 ```
-And rename the provided file `env-sample` to `.env`.
+And rename the provided file `env-sample` to `.env`.  
+```
+cd axway-apim-elk-v1.0.0-RC4
+mv env-sample .env
+```
+
+From this point on it is assumed that all commands are executed within the unpacked release. It is important that the `.env' can be found by Docker-Compose. 
+If, as recommended, you run the solution on different machines, it is also assumed that you download and unpack the release package on each machine. And then provide the `.env` file.
+
+Even if otherwise possible, it is recommended to deploy the individual components in the following order For each component you can then check if it is functional.
+
+#### Elasticsearch
+
+Open the .env file and configure the ELASTICSEARCH_HOSTS This URL is used by all Elasticsearch clients of the solution to establish communication.
+For single-node deployment, specify a URL, for multi-node deployment please use comma separated. You can also start with a single node and add more nodes later. More about this topic Multi-Node Deployment.
+If you use an external Elasticsearch cluster, please specify the node(s).  
+Please keep in mind that the hostnames must be resolvable within the docker containers. You can also assign the cluster name here if the default: `axway-apim-elasticsearch` is not appropriate. Example:  
+```
+ELASTICSEARCH_HOSTS=https://my-elasticsearch-host.com:9200
+ELASTICSEARCH_CLUSTERNAME=my-special-cluster-name
+```
+With the following command you initialize a new Elasticsearch Cluster which is going through an appropriate bootstrapping. Later you can add more nodes to this single node cluster. Please do not use the init extension to restart the node:  
+```
+docker-compose -f elasticsearch/docker-compose.es01.yml -f elasticsearch/docker-compose.es01init.yml up -d
+```
+Wait until the cluster has started and then call the following URL:
+```
+GET https://my-elasticsearch-host.com:9200
+{
+  "name" : "elasticsearch1",
+  "cluster_name" : "axway-apim-elasticsearch",
+  "cluster_uuid" : "nCFt9WhpQr6JSOVY_h48gg",
+  "version" : {
+    "number" : "7.9.2",
+    "build_flavor" : "default",
+    "build_type" : "docker",
+    "build_hash" : "d34da0ea4a966c4e49417f2da2f244e3e97b4e6e",
+    "build_date" : "2020-09-23T00:45:33.626720Z",
+    "build_snapshot" : false,
+    "lucene_version" : "8.6.2",
+    "minimum_wire_compatibility_version" : "6.8.0",
+    "minimum_index_compatibility_version" : "6.0.0-beta1"
+  },
+  "tagline" : "You Know, for Search"
+}
+```
+At this point you can already add the cluster UUID to the `.env` (`ELASTICSEARCH_CLUSTER_UUID`) file. With that, the Single-Node Elasticsearch Cluster is up & running.
+
+#### Kibana
+
+For Kibana all parameters are already stored in the .env file. Start Kibana with the following command:
+```
+docker-compose -f kibana/docker-compose.kibana.yml up -d
+```
+You can address Kibana at the following URL Currently no user login is required.
+```
+https://my-kibana-host:5601
+```
+If Kibana doesn't start (>3-4 minutes) or doesn't report to be ready, please use docker logs Kibana to check for errors.
+
+#### Logstash / API-Builder / Memcached
+
+It is recommended to deploy these components on one machine, so they are in a common Docker-Compose file and share the same network. This allows you to use the default values for Memcached and API Builder. Therefore you only need to specify where the Admin-Node-Manager or the API manager can be found for this step. If necessary you have to specify an API-Manager admin user.  
+```
+ADMIN_NODE_MANAGER=https://my-admin-node-manager:8090
+API_MANAGER_USERNAME=elkAdmin
+API_MANAGER_PASSWORD=elastic
+```
+Check that the docker containers for Logstash, API Builder and Memached are running. It may take some time (2-3 minutes) until Logstash is finally started. 
+```
+[ec2-user@ip-172-31-61-59 axway-apim-elk-v1.0.0-RC4]$ docker ps
+CONTAINER ID        IMAGE                                       COMMAND                  CREATED             STATUS                 PORTS                              NAMES
+d1fcd2eeab4e        docker.elastic.co/logstash/logstash:7.9.2   "/usr/share/logstash…"   4 hours ago         Up 4 hours             0.0.0.0:5044->5044/tcp, 9600/tcp   logstash
+4ce446cafda1        cwiechmann/apibuilder4elastic:v1.0.0-RC4    "docker-entrypoint.s…"   4 hours ago         Up 4 hours (healthy)   0.0.0.0:8443->8443/tcp             apibuilder4elastic
+d672f2983c86        memcached:1.6.6-alpine                      "docker-entrypoint.s…"   4 hours ago         Up 4 hours             11211/tcp                          memcached
+```
+It may take some time (2-3 minutes) until Logstash is finally started. 
+```
+docker logs logstash
+Pipelines running {:count=>6, :running_pipelines=>[:".monitoring-logstash", :BeatsInput, :Events, :DomainAudit, :TraceMessages, :OpenTraffic], :non_running_pipelines=>[]}
+Successfully started Logstash API endpoint {:port=>9600}
+```
+Please note that the Logstash API endpoint (9600) is not exposed outside of the docker container.  
+
+At startup Logstash installs Index-Templates and creates indexes in Elasticsearch. Please check that they exits with either Kibana or REST API calls. Using Kibana: Menu --> Management --> Stack Management --> Index Management. Check apigw-* indices (7x apigw-*) and index templates (apigw-domainaudit, apigw-monitoring, apigw-traffic-scheduled, trace-messages, traffic-details and traffic-summary) exists.  
 
 ### Filebeat
-:exclamation: __This is an important step, as otherwise Filebeat will not see and send any Open-Traffic Event data!__  
-For the basic setup it is expected, that the Filebeat docker container has access to the API-Gateway Log-Files by using mounts. Setup the paths in the project `.env` file. The variables must point to your running API-Gateway instance. For a typical Linux installation it looks like this (APIM being a symlink to current software version):
+
+Finally Filebeat must be configured and started. You can start Filebeat as Docker-Container using the Docker-Compose files and mount the corresponding directories into the container. 
+Alternatively you can install Filebeat natively on the API gateway and configure it accordingly. It is important that the filebeat/filebeat.yml file is used as base. This file contains instructions which control the logstash pipelines.
+
+The following instructions assume that you set up Filebeat based on filebeat/docker-compose.filebeat.yml. 
+
+:exclamation: __This is an important step, as otherwise Filebeat will not see and send any Event data!__  
+Please add the following configuration. At this point you can already configure the filebeat instances with a name/region if you like.
 ```
 APIGATEWAY_LOGS_FOLDER=/opt/Axway/APIM/apigateway/logs/opentraffic
 APIGATEWAY_TRACES_FOLDER=/opt/Axway/APIM/apigateway/groups/group-2/instance-1/trace
 APIGATEWAY_EVENTS_FOLDER=/home/localuser/Axway-x.y.z/apigateway/events
 APIGATEWAY_AUDITLOGS_FOLDER=/home/localuser/Axway-x.y.z/apigateway/logs
+GATEWAY_NAME=API-Gateway 3
+GATEWAY_REGION=US
 ```
-Audit-Logs are optional. If you don't want them indexed just point to an invalid folder.
+Audit-Logs are optional. If you don't want them indexed just point to an invalid folder.  
 
-### API-Builder
-The API-Builder container needs to communicate with Elasticsearch it needs to know where Elasticsearch is running:
+To start Filebeat: 
 ```
-ADMIN_NODE_MANAGER=https://api-env:8090
-API_MANAGER_USERNAME=<admin-user>
-API_MANAGER_PASSWORD=<admin-password>
+docker-compose -f filebeat/docker-compose.filebeat.yml up -d
 ```
-This is all for the basic setup and you can now start the individual components with the following commands.
-
-### Start components
-
-To start a single Node Elasticsearch server and Kibana:  
-```
-docker-compose -f elasticsearch/docker-compose.es01.yml -f elasticsearch/docker-compose.es01init.yml up -d
-docker-compose -f kibana/docker-compose.kibana.yml up -d
-```
-To start the remaining components (Logstash, API-Builder, Filebeat and Memcached):  
-```
-docker-compose up -d
-```
-To stop the environment and remove the containers run you may use docker-compose or docker.
-
-### Acccess components
-
-Elasticsearch and Kibana is started with HTTPS enabled. User-Authentication is disabled by default. Used ports are already exposed by the docker-compose.yml to make it available on your host machine:
-
-- Access Kibana: `https://your.host.com:5601/`
-- Access Elasticsearch: `https://your.host.com:9200`
+Use docker logs filebeat to check that no error is displayed. If everything is ok, you should not see anything.  
+Check in Kibana (Menu --> Management --> Stack Management --> Index Management) that the indexes are filled with data.
 
 If you encounter issues please see the [Troubleshooting](#troubleshooting) section for help or create an [issue](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues). 
 
