@@ -3,14 +3,14 @@ services:
   # Elasticsearch node 2
   elasticsearch2:
     image: docker.elastic.co/elasticsearch/elasticsearch:${ELASTIC_VERSION}
+    # Custom entrypoint to configured ES based on given ELASTICSEARCH_HOSTS
+    entrypoint: /usr/share/elasticsearch/scripts/custom-entrypoint.sh
     container_name: elasticsearch2
     environment:
       - "ES_JAVA_OPTS=${ES_JAVA_OPTS}"
       - cluster.name=${ELASTICSEARCH_CLUSTERNAME}
       - node.name=elasticsearch2
-      - network.publish_host=${ELASTICSEARCH_HOST2}
-      - transport.port=${ELASTICSEARCH_HOST2_TRANSPORT}
-      - discovery.seed_hosts=${ELASTICSEARCH_HOST1}:${ELASTICSEARCH_HOST1_TRANSPORT}
+      - ELASTICSEARCH_HOSTS=${ELASTICSEARCH_HOSTS}
       - xpack.security.enabled=true
       - xpack.security.http.ssl.enabled=true
       - xpack.security.http.ssl.key=/usr/share/elasticsearch/${ELASTICSEARCH_KEY}
@@ -21,6 +21,10 @@ services:
       - xpack.security.transport.ssl.key=/usr/share/elasticsearch/${ELASTICSEARCH_KEY}
       - xpack.security.transport.ssl.certificate=/usr/share/elasticsearch/${ELASTICSEARCH_CRT}
       - xpack.security.transport.ssl.certificate_authorities=/usr/share/elasticsearch/${ELASTICSEARCH_CA}
+      # Activate the following parameters for advanced setup
+      #- network.publish_host=${ELASTICSEARCH_PUBLISH_HOST2}
+      #- http.port=${ELASTICSEARCH_HOST2_HTTP}
+      #- transport.port=${ELASTICSEARCH_HOST2_TRANSPORT}
     ulimits:
       memlock:
         soft: -1
@@ -39,11 +43,12 @@ services:
         target: /usr/share/elasticsearch/data
       - ${PWD}/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
       - ${PWD}/certificates:/usr/share/elasticsearch/config/certificates
+      - ${PWD}/elasticsearch/scripts:/usr/share/elasticsearch/scripts
     networks:
       - elastic
     ports:
-      - 9201:9201
-      - ${ELASTICSEARCH_HOST2_TRANSPORT}:${ELASTICSEARCH_HOST2_TRANSPORT}
+      - ${ELASTICSEARCH_HOST1_HTTP:-9201}:${ELASTICSEARCH_HOST1_HTTP:-9201}
+      - ${ELASTICSEARCH_HOST1_TRANSPORT:-9301}:${ELASTICSEARCH_HOST1_TRANSPORT:-9301}
     logging:
       options:
         max-file: "5"

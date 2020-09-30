@@ -509,6 +509,20 @@ When Elasticsearch is finally started:
 ```
 Status YELLOW is expected when running Elasticsearch on a single node, as it can achieve the desired replicas. You may use Kibana Development tools or curl to get additional information.
 
+### vm.max_map_count is too low
+```
+ERROR: [1] bootstrap checks failed
+[1]: max virtual memory areas vm.max_map_count [65530] is too low, increase to at least [262144]
+```
+Run the following to set it temporarly:
+`sudo sysctl -w vm.max_map_count=262144`
+Or the following:
+```
+1. sudo vi /etc/sysctl.conf
+2. add vm.max_map_count=262144
+3. sudo service sysctl restart
+```
+
 #### No results from Elasticsearch
 If you don't get any results from ElasticSearch for valid queries it might be a missing template configuration for the logstash-openlog index. Elastic-Search is doing by default a dynamic template mapping that is trying to figure out field types. However, for some of the fields the mapping must be overwritten. Therefore make sure so to include the sample mapping file: `configs/openlog_index_template.json` is used by your Logstash process. See `configs/logstash.conf` as an example.  
 The template mapping is pre-configured when using the docker-compose configuration. 
