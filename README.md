@@ -158,17 +158,21 @@ You can address Kibana at the following URL Currently no user login is required.
 ```
 https://my-kibana-host:5601
 ```
-If Kibana doesn't start (>3-4 minutes) or doesn't report to be ready, please use docker logs Kibana to check for errors.
+If Kibana doesn't start (>3-4 minutes) or doesn't report to be ready, please use docker logs Kibana to check for errors.  
+
+At this point you can already import the sample dashboard: `kibana/Axway-APIM-Daschboard.ndjson` into Kibana. Menu --> Stack Management --> Saved Objects.  
+
+:exclamation: You are welcome to create additional visualizations and dashboards, but do not adapt the existing ones, as they will be overwritten by the update.
 
 #### Logstash / API-Builder / Memcached
 
-It is recommended to deploy these components on one machine, so they are in a common Docker-Compose file and share the same network. This allows you to use the default values for Memcached and API Builder. Therefore you only need to specify where the Admin-Node-Manager or the API manager can be found for this step. If necessary you have to specify an API-Manager admin user.  
+It is recommended to deploy these components on one machine, so they are in a common Docker-Compose file and share the same network. Furthermore, a low latency between these components is beneficial. This allows you to use the default values for Memcached and API Builder. Therefore you only need to specify where the Admin-Node-Manager or the API manager can be found for this step. If necessary you have to specify an API-Manager admin user.  
 ```
 ADMIN_NODE_MANAGER=https://my-admin-node-manager:8090
 API_MANAGER_USERNAME=elkAdmin
 API_MANAGER_PASSWORD=elastic
 ```
-Check that the docker containers for Logstash, API Builder and Memached are running. It may take some time (2-3 minutes) until Logstash is finally started. 
+Check that the docker containers for Logstash, API Builder and Memached are running.  
 ```
 [ec2-user@ip-172-31-61-59 axway-apim-elk-v1.0.0-RC4]$ docker ps
 CONTAINER ID        IMAGE                                       COMMAND                  CREATED             STATUS                 PORTS                              NAMES
@@ -184,7 +188,7 @@ Successfully started Logstash API endpoint {:port=>9600}
 ```
 Please note that the Logstash API endpoint (9600) is not exposed outside of the docker container.  
 
-At startup Logstash installs Index-Templates and creates indexes in Elasticsearch. Please check that they exits with either Kibana or REST API calls. Using Kibana: Menu --> Management --> Stack Management --> Index Management. Check apigw-* indices (7x apigw-*) and index templates (apigw-domainaudit, apigw-monitoring, apigw-traffic-scheduled, trace-messages, traffic-details and traffic-summary) exists.  
+At startup Logstash installs Index-Templates and creates indexes in Elasticsearch. Please check that they exits with either Kibana or REST API calls. Using Kibana: Menu --> Stack Management --> Index Management. Check apigw-* indices (7x apigw-*) and index templates (apigw-domainaudit, apigw-monitoring, apigw-traffic-scheduled, trace-messages, traffic-details and traffic-summary) exists.  
 
 ### Filebeat
 
@@ -265,18 +269,33 @@ This section covers advanced configuration topics that are required for a produc
 For a production environment Elasticsearch should run a multi-node Elasticsearch cluster environment. Indexes are configured so that available nodes are automatically used for primary and replica shards. 
 If you are using an external Elasticsearch cluster, you can skip the following instructions, besides step number 4 to configure your available Elasticsearch cluster nodes.
 
+#### General remarks
+
+The setup of a Multi-Node Elasticsearch Cluster can be done with default settings via the parameter: ELASTICSEARCH_HOSTS. Some hints for this:  
+- The default ports are 9200, 9201, 9202 and 9300, 9301, 9302 for the Elasticsearch instances elasticsearch1, elasticsearch2 and elasticsearch3. 
+  - these ports are exposed by Docker-Compose through the docker containers
+  - please configure ELASTICSEARCH_HOSTS accordingly with 9200, 9201, 9202
+  - based on the HTTP ports, the transport port is derived. (9201 --> 9301, ...)
+  - other ports are possible and can be configured
+- Based on the specified URLs, the necessary Elasticsearch parameters are set when creating or starting the Elasticsearch Docker containers.
+- Multiple Elasticsearch Nodes are only really useful if they actually run on different hosts.
+  - Again, it is assumed that the release package is downloaded on the individual hosts and the `.env` file is provided. 
+- You can always add more nodes to the Elasticsearch cluster to provide additional disk space and computing power.
+  - You can start with two nodes today and add another cluster node in 6 months if needed.
+
 __1. Setup Cluster-Nodes__
 
-Before you initially start the multi-node cluster, you must configure the host names of the Elasticsearch nodes. The following parameters must be set in the `.env` file, depending on the number of nodes you want to configure. 
-The solution is prepared for 3 nodes but can easily be extended to 5 nodes for example.
+The solution is prepared for 3 nodes but can easily be extended to 5 nodes for example. To configure multiple hosts in the `.env`file: 
 ```
-ELASTICSEARCH_HOST1=elasticsearch1
-ELASTICSEARCH_HOST2=elasticsearch2
-ELASTICSEARCH_HOST3=elasticsearch3
+ELASTICSEARCH_HOSTS=https://ip-172-31-61-143.ec2.internal:9200,https://ip-172-31-57-105.ec2.internal:9201
 ```
+If you need special configuration please use the parameters `ELASTICSEARCH_PUBLISH_HOST<n>`, `ELASTICSEARCH_HOST<n>_HTTP` and `ELASTICSEARCH_HOST<n>_TRANSPORT`
+
 You may also change the cluster name if you prefer: `ELASTICSEARCH_CLUSTERNAME=axway-apim-elasticsearch`
 
 __2. Bootstrap the cluster__
+
+You can skip this step if you want to extend the cluster from the basic setup, since the basic setup has already initialized a cluster.
 
 We recommend starting one node after the next. The first node will initially set up the cluster and bootstrap it.
 Start the first cluster node with the following statement:  
@@ -298,14 +317,10 @@ If a node has successfully joined the cluster you see the following log message 
 {"ty...": "INFO", "component": "o.e.c.s.MasterService", "cluster.name": "axway-apim-elasticsearch", "node.name": "elasticsearch1", "message": "node-join[{elasticsearch3}{eQaH...w"  }
 ```
 
-__4. Setup cluster nodes__
+__4. Restart clients__
 
-Since you now have several Elasticsearch Cluster nodes available, they must now be stored in the configuration for failover. Instead of a single cluster node you now specify the configured nodes in your `.env` file as follows:
-
-```
-ELASTICSEARCH_HOSTS=https://elasticsearch1:9200,https://elasticsearch2:9201
-```
-Ports can be the same depending on your Elasticsearch Cluster-Configuration. 
+Do you have changed the list of available Elasticsearch Nodes via the parameter: ELASTICSEARCH_HOSTS. For example from a single-node to a multi-node cluster, then it is strongly recommended to restart the corresponding clients (Kibana, Filebeat, Logstash, API-Builder). Via docker-compose, so that the containers are created with the new ELASTICSEARCH_HOSTS parameter. 
+This ensures that clients can use the available Elasticsearch nodes for a fail-over in case of a node downtime.
 
 ### Activate user authentication
 
