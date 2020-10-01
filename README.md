@@ -130,6 +130,8 @@ Even if otherwise possible, it is recommended to deploy the individual component
 
 ### Elasticsearch
 
+Watch this video for a demonstration: [Setup Single Node Elasticsearch cluster](https://youtu.be/x-OdAdV2N7I)  
+
 Open the `.env` file and configure the ELASTICSEARCH_HOSTS. At this point please configure only one Elasticsearch node. You can start with a single node and add more nodes later. More about this topic [Multi-Node Deployment](#setup-elasticsearch-multi-node) later in the documenation.  
 This URL is used by all Elasticsearch clients (Logstash, API-Builder, Filebeat) of the solution to establish communication.  
 If you use an external Elasticsearch cluster, please specify the node(s) that are given to you.  
@@ -169,6 +171,8 @@ At this point you can already add the cluster UUID to the `.env` (`ELASTICSEARCH
 
 ### Kibana
 
+Watch this video for a demonstration: [Setup Kibana](https://youtu.be/aLODAuXDMzY)  
+
 For Kibana all parameters are already stored in the .env file. Start Kibana with the following command:
 ```
 docker-compose -f kibana/docker-compose.kibana.yml up -d
@@ -186,6 +190,8 @@ At this point you can already import the sample dashboard: `kibana/Axway-APIM-Da
 <p align="right"><a href="#table-of-content">Top</a></p>
 
 ### Logstash / API-Builder / Memcached
+
+Watch this video for a demonstration: [Setup Logstash and API-Builder](https://youtu.be/lnSjF2tUS8Y)  
 
 It is recommended to deploy these components on one machine, so they are in a common Docker-Compose file and share the same network. Furthermore, a low latency between these components is beneficial. This allows you to use the default values for Memcached and API Builder. Therefore you only need to specify where the Admin-Node-Manager or the API manager can be found for this step. If necessary you have to specify an API-Manager admin user.  
 ```
@@ -214,6 +220,8 @@ At startup Logstash installs Index-Templates and creates indexes in Elasticsearc
 <p align="right"><a href="#table-of-content">Top</a></p>
 
 ### Filebeat
+
+Watch this video for a demonstration: [Setup Filebeat](https://youtu.be/h0AdztZ2bSE)  
 
 Finally Filebeat must be configured and started. You can start Filebeat as Docker-Container using the Docker-Compose files and mount the corresponding directories into the container. 
 Alternatively you can install Filebeat natively on the API gateway and configure it accordingly. It is important that the filebeat/filebeat.yml file is used as base. This file contains instructions which control the logstash pipelines.
@@ -245,6 +253,8 @@ If you encounter issues please see the [Troubleshooting](#troubleshooting) secti
 
 ## Configure Axway API-Management
 
+Watch this video for an overview: [Traffic-Monitor & Kibana Dashboard](https://youtu.be/OZ0RNnqE6hs)  
+
 ### Admin-Node-Manager
 As the idea of this project is to use the existing API-Gateway Manager UI (short: ANM) to render log data now provided by Elasticsearch instead of the individual API-Gateway instances before (the build in behavior), it is required to change the ANM configuration to make use of Elasticsearch instead of the API-Gateway instances (default setup). By default, ANM is listening on port 8090 for administrative traffic. This API is responsible to serve the Traffic-Monitor and needs to be configured to use the API-Builder REST-API instead.
 
@@ -270,6 +280,8 @@ It is recommended to disable the audit log for Failure transactions to avoid not
 <p align="right"><a href="#table-of-content">Top</a></p>
 
 ### Traffic-Monitor for API-Manager Users
+
+Watch this video for a demonstration: [Traffic-Monitor for API-Manager users](https://youtu.be/X08bQPC1sc4)  
 
 In larger companies hundreds of API service providers are using the API Manager or the [APIM-CLI](https://github.com/Axway-API-Management-Plus/apim-cli) to register their own services/APIs. And the service providers require access to the traffic monitor to monitor their own APIs independently. During registration, the corresponding APIs are assigned to API Manager organizations, which logically split them up. But, the standard traffic monitor does not know the organization concept and therefore cannot restrict the view for a user based on the organization of an API.  
 This project solves the problem by storing the API transactions in Elasticsearch with the appropriate organization. Then the API organization is used when reading the traffic data from Elasticsearch according to the following rules.
@@ -310,7 +322,9 @@ The setup of a Multi-Node Elasticsearch Cluster can be done with default setting
 - Multiple Elasticsearch Nodes are only really useful if they actually run on different hosts.
   - Again, it is assumed that the release package is downloaded on the individual hosts and the `.env` file is provided. 
 - You can always add more nodes to the Elasticsearch cluster to provide additional disk space and computing power.
-  - You can start with two nodes today and add another cluster node in 6 months if needed.
+  - You can start with two nodes today and add another cluster node in 6 months if needed.  
+  
+Watch this video for a demonstration: [Add Elasticsearch node](https://youtu.be/sM5-0c8aEZk)  
 
 __1. Setup Cluster-Nodes__
 
@@ -354,6 +368,8 @@ This ensures that clients can use the available Elasticsearch nodes for a fail-o
 <p align="right"><a href="#table-of-content">Top</a></p>
 
 ### Activate user authentication
+
+TODO: Watch this video for a demonstration: [Add Elasticsearch node](https://youtu.be/sM5-0c8aEZk)  
 
 __1. Generate Built-In user passwords__
 
