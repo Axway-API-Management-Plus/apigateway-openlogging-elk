@@ -40,6 +40,7 @@ This shows a sample dashboard created in Kibana based on the indexed documents:
 - [Configure Axway API-Management](#configure-axway-api-management)
 - [Production Setup](#production-setup)
 - [Infrastructure sizing](#infrastructure-sizing)
+- [Updates](#updates)
 - [Troubleshooting](#troubleshooting)
 - [Known issues](#known-issues)
 
@@ -376,7 +377,7 @@ After you have configured all passwords and configured security, please restart 
 - Kibana      - Is using the kibana_system to send monitoring data
 - API-Builder - Is using the API-Builder user to query Elasticsearch
   
-It's very likely that you don't use the super-user `elastic` for `LOGSTASH_USERNAME` and `API_BUILDER_USERNAME`. It's recommended to create dedicated accounts for these two users.  
+It's very likely that you don't use the super-user `elastic` for `API_BUILDER_USERNAME`. It's recommended to create dedicated account.  
 The monitoring users are used to send metric information to Elasticsearch to enable stack monitoring, which gives you insight about event processing of the complete platform.
 
 ### Configure cluster UUID
@@ -516,6 +517,24 @@ The recommendation contains only one ElasticSearch node up to a volume of max. 1
 |                            |        |      |      | API-Builder    | 0.0.10  | API-Builder proving Traffic-Monitor & Lookup API |
 | AWS EC2 t2.xlarge instance | 4 vCPUS|16GB  |80GB  | Elasticsearch  | 7.9.0   | Standard Elasticsearch Docker-Container |
 |                            |        |      |      | Kibana         | 7.9.0   | Standard Kibana Docker-Container |
+
+## Updates
+
+It is planned that this solution will be further developed and therefore further releases will be published. 
+With each release the following artifacts may change:  
+- All Docker-Compose files
+- Elasticstack Version
+- Logstash Pipelines
+- Elasticsearch Index Templates
+- Filebeat Configuration
+- API Builder Docker Container Version
+- Kibana Dashboards
+- Scripts, etc. 
+All components of this solution play together and only work if they are from the same release. The solution will check if for example the index templates have the required version. 
+With each update there will be a changelog, release notes and instructions for the update. For each component it will be explained whether there have been changes and how to apply them if necessary.  
+
+:exclamation: It is strongly discouraged to make changes in any files of the project, except the .env file. These will be overwritten with the next release. This is the only way to easily update from one version to the next.
+If you encounter a problem or need a feature, please open an issue that can be integrated directly into the solution. 
 
 ## Troubleshooting
 
