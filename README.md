@@ -276,7 +276,7 @@ This section covers advanced configuration topics that are required for a produc
 ### Setup Elasticsearch Multi-Node
 
 For a production environment Elasticsearch should run a multi-node Elasticsearch cluster environment. Indexes are configured so that available nodes are automatically used for primary and replica shards. 
-If you are using an external Elasticsearch cluster, you can skip the following instructions, besides step number 4 to configure your available Elasticsearch cluster nodes.
+If you are using an external Elasticsearch cluster, you can skip most of the following instructions, besides step number 1 to configure your available Elasticsearch cluster nodes.
 
 #### General remarks
 
