@@ -37,6 +37,11 @@ This shows a sample dashboard created in Kibana based on the indexed documents:
 - [Prerequisites](#prerequisites)
 - [Getting started](#getting-started)
 - [Basic setup](#basic-setup)
+  - [Preparations](#preparations)
+  - [Elasticsearch](#elasticsearch)
+  - [Kibana](#kibana)
+  - [Logstash / API-Builder / Memcached](#logstash--api-builder--memcached)
+  - [Filebeat](#filebeat)
 - [Configure Axway API-Management](#configure-axway-api-management)
 - [Production Setup](#production-setup)
 - [Infrastructure sizing](#infrastructure-sizing)
@@ -108,17 +113,18 @@ cd axway-apim-elk-v1.0.0
 mv env-sample .env
 ```
 
-From this point on it is assumed that all commands are executed within the unpacked release folder. As it is important that the `.env' can be found by Docker-Compose. 
-If, as recommended, you run the solution on different machines, it is also assumed that you download and unpack the release package on each machine. And then provide the `.env` file.  
-Furthermore, it is recommended to store the .env as central configuration file in a version management system.
+- From this point on it is assumed that all commands are executed within the unpacked release folder.  
+- As it is important that the `.env` can be found by Docker-Compose.  
+- If, as recommended, you run the solution on different machines, it is also assumed that you download and unpack the release package on each machine. And then provide the `.env` file.  
+- Furthermore, it is recommended to store the .env as central configuration file in a version management system.
 
 Even if otherwise possible, it is recommended to deploy the individual components in the following order. For each component you can then check if it is functional.
 
-#### Elasticsearch
+### Elasticsearch
 
-Open the `.env` file and configure the ELASTICSEARCH_HOSTS. At this point please configure only one Elasticsearch node. You can start with a single node and add more nodes later. More about this topic [Multi-Node Deployment](#setup-elasticsearch-multi-node) later in the documenation.
-This URL is used by all Elasticsearch clients (Logstash, API-Builder, Filebeat) of the solution to establish communication.
-If you use an external Elasticsearch cluster, please specify which node(s) that are given to you.  
+Open the `.env` file and configure the ELASTICSEARCH_HOSTS. At this point please configure only one Elasticsearch node. You can start with a single node and add more nodes later. More about this topic [Multi-Node Deployment](#setup-elasticsearch-multi-node) later in the documenation.  
+This URL is used by all Elasticsearch clients (Logstash, API-Builder, Filebeat) of the solution to establish communication.  
+If you use an external Elasticsearch cluster, please specify the node(s) that are given to you.  
 Please keep in mind that the hostnames must be resolvable within the docker containers. You can also assign the cluster name here if the default: `axway-apim-elasticsearch` is not appropriate. Example:  
 ```
 ELASTICSEARCH_HOSTS=https://my-elasticsearch-host.com:9200
@@ -151,7 +157,7 @@ GET https://my-elasticsearch-host.com:9200
 ```
 At this point you can already add the cluster UUID to the `.env` (`ELASTICSEARCH_CLUSTER_UUID`) file. With that, the Single-Node Elasticsearch Cluster is up & running.
 
-#### Kibana
+### Kibana
 
 For Kibana all parameters are already stored in the .env file. Start Kibana with the following command:
 ```
@@ -167,7 +173,7 @@ At this point you can already import the sample dashboard: `kibana/Axway-APIM-Da
 
 :exclamation: You are welcome to create additional visualizations and dashboards, but do not adapt the existing ones, as they will be overwritten with the next update.
 
-#### Logstash / API-Builder / Memcached
+### Logstash / API-Builder / Memcached
 
 It is recommended to deploy these components on one machine, so they are in a common Docker-Compose file and share the same network. Furthermore, a low latency between these components is beneficial. This allows you to use the default values for Memcached and API Builder. Therefore you only need to specify where the Admin-Node-Manager or the API manager can be found for this step. If necessary you have to specify an API-Manager admin user.  
 ```
