@@ -2,7 +2,7 @@
 	"name": "apibuilder4elastic",
 	"description": "This API-Builder project provides an ELK-Based Traffic-Monitor API.",
 	"main": "app.js",
-	"version": "v1.0.0-RC2",
+	"version": "v1.0.0",
 	"author": {
 		"email": "cwiechmann@axway.com",
 		"name": "Chris Wiechmann",

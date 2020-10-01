@@ -53,7 +53,7 @@ services:
 
   # This is the API-Builder project exposing the API-Gateway Manager REST-API
   apibuilder4elastic:
-    image: cwiechmann/apibuilder4elastic:v1.0.0-RC4
+    image: cwiechmann/apibuilder4elastic:v1.0.0
     container_name: apibuilder4elastic
     environment:
       - ELASTICSEARCH_HOSTS=${ELASTICSEARCH_HOSTS}

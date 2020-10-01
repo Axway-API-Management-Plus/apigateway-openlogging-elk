@@ -99,12 +99,12 @@ After this configuration has been done, Open-Traffic log-files will be created b
 
 Please download and extract the release package from the GitHub project onto your machine(s):  
 ```
-wget --no-check-certificate https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v1.0.0-RC4/axway-apim-elk-v1.0.0-RC4.tar.gz -O - | tar -xvz
+wget --no-check-certificate https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v1.0.0/axway-apim-elk-v1.0.0.tar.gz -O - | tar -xvz
 ```
 To simplify updates it is recommended to create a Symlink-Folder and finally rename the provided file `env-sample` to `.env`.  
 ```
-ln -s axway-apim-elk-v1.0.0-RC4 axway-apim-elk
-cd axway-apim-elk-v1.0.0-RC4
+ln -s axway-apim-elk-v1.0.0 axway-apim-elk
+cd axway-apim-elk-v1.0.0
 mv env-sample .env
 ```
 
@@ -177,10 +177,10 @@ API_MANAGER_PASSWORD=elastic
 ```
 Check that the docker containers for Logstash, API Builder and Memached are running.  
 ```
-[ec2-user@ip-172-31-61-59 axway-apim-elk-v1.0.0-RC4]$ docker ps
+[ec2-user@ip-172-31-61-59 axway-apim-elk-v1.0.0]$ docker ps
 CONTAINER ID        IMAGE                                       COMMAND                  CREATED             STATUS                 PORTS                              NAMES
 d1fcd2eeab4e        docker.elastic.co/logstash/logstash:7.9.2   "/usr/share/logstash…"   4 hours ago         Up 4 hours             0.0.0.0:5044->5044/tcp, 9600/tcp   logstash
-4ce446cafda1        cwiechmann/apibuilder4elastic:v1.0.0-RC4    "docker-entrypoint.s…"   4 hours ago         Up 4 hours (healthy)   0.0.0.0:8443->8443/tcp             apibuilder4elastic
+4ce446cafda1        cwiechmann/apibuilder4elastic:v1.0.0        "docker-entrypoint.s…"   4 hours ago         Up 4 hours (healthy)   0.0.0.0:8443->8443/tcp             apibuilder4elastic
 d672f2983c86        memcached:1.6.6-alpine                      "docker-entrypoint.s…"   4 hours ago         Up 4 hours             11211/tcp                          memcached
 ```
 It may take some time (2-3 minutes) until Logstash is finally started. 
