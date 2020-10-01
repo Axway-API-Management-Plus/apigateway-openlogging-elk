@@ -97,20 +97,22 @@ After this configuration has been done, Open-Traffic log-files will be created b
 
 #### Download and extract the release package
 
-Please download the release package from the GitHub project onto your machine:  
+Please download and extract the release package from the GitHub project onto your machine(s):  
 ```
 wget --no-check-certificate https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v1.0.0-RC4/axway-apim-elk-v1.0.0-RC4.tar.gz -O - | tar -xvz
 ```
-And rename the provided file `env-sample` to `.env`.  
+To simplify updates it is recommended to create a Symlink-Folder and finally rename the provided file `env-sample` to `.env`.  
 ```
+ln -s axway-apim-elk-v1.0.0-RC4 axway-apim-elk
 cd axway-apim-elk-v1.0.0-RC4
 mv env-sample .env
 ```
 
-From this point on it is assumed that all commands are executed within the unpacked release. It is important that the `.env' can be found by Docker-Compose. 
-If, as recommended, you run the solution on different machines, it is also assumed that you download and unpack the release package on each machine. And then provide the `.env` file.
+From this point on it is assumed that all commands are executed within the unpacked release folder. As it is important that the `.env' can be found by Docker-Compose. 
+If, as recommended, you run the solution on different machines, it is also assumed that you download and unpack the release package on each machine. And then provide the `.env` file.  
+Furthermore, it is recommended to store the .env as central configuration file in a version management system.
 
-Even if otherwise possible, it is recommended to deploy the individual components in the following order For each component you can then check if it is functional.
+Even if otherwise possible, it is recommended to deploy the individual components in the following order. For each component you can then check if it is functional.
 
 #### Elasticsearch
 
@@ -535,9 +537,10 @@ With each release the following artifacts may change:
 All components of this solution play together and only work if they are from the same release. The solution will check if for example the index templates have the required version. 
 With each update there will be a changelog, release notes and instructions for the update. For each component it will be explained whether there have been changes and how to apply them if necessary.  
 
-:exclamation: It is strongly discouraged to make changes in any files of the project, except the .env file. These will be overwritten with the next release. This is the only way to easily update from one version to the next.
+:exclamation: It is strongly discouraged to make changes in any files of the project, except the `.env` file. These will be overwritten with the next release. This is the only way to easily update from one version to the next.
 If you encounter a problem or need a feature, please open an issue that can be integrated directly into the solution.  
-Of course you are welcome to create your own Kibana dashboards or clone and customize existing ones.
+Of course you are welcome to create your own Kibana dashboards or clone and customize existing ones.  
+However, if you need to change files, it is recommended to make this change automatically and repeatable (e.g. https://www.ansible.com). 
 
 ## Troubleshooting
 
@@ -579,27 +582,15 @@ ls -l /var/log/work
 ```
 
 ### Check Logstash processing
-Logstash write to Stdout, hence you can view information just with:
+Logstash writes to Stdout, hence you can view information just with:
 ```
-docker logs apigateway-openlogging-elk_logstash_1_c6227859a9a4 --follow
+docker logs logstash -f
 ```
 When Logstash is successfully started you should see the following:
 ```
-[INFO ][logstash.javapipeline    ] Starting pipeline {:pipeline_id=>"main", "pipeline.workers"=>1, "pipeline.batch.size"=>20, "pipeline.batch.delay"=>50, "pipeline.max_inflight"=>20, :thread=>"#<Thread:0x7d34e839 run>"}
-[INFO ][logstash.inputs.beats    ] Beats inputs: Starting input listener {:address=>"0.0.0.0:5044"}
-[INFO ][logstash.javapipeline    ] Pipeline started {"pipeline.id"=>"main"}
-[INFO ][org.logstash.beats.Server] Starting server on port: 5044
-[INFO ][logstash.agent           ] Pipelines running {:count=>1, :running_pipelines=>[:main], :non_running_pipelines=>[]}
-...
-......
-...
-[INFO ][logstash.outputs.elasticsearch] Elasticsearch pool URLs updated {:changes=>{:removed=>[], :added=>[https://elasticsearch1:9200/]}}
-[INFO ][logstash.outputs.elasticsearch] ES Output version determined {:es_version=>7}
-[INFO ][logstash.outputs.elasticsearch] New Elasticsearch output {:class=>"LogStash::Outputs::ElasticSearch", :hosts=>["//elasticsearch1:9200"]}
-[INFO ][logstash.javapipeline    ] Starting pipeline {:pipeline_id=>".monitoring-logstash", "pipeline.workers"=>1, "pipeline.batch.size"=>2, "pipeline.batch.delay"=>50, "pipeline.max_inflight"=>2, :thread=>"#<Thread:0x147f9919 run>"}
-[INFO ][logstash.javapipeline    ] Pipeline started {"pipeline.id"=>".monitoring-logstash"}
-[INFO ][logstash.agent           ] Pipelines running {:count=>2, :running_pipelines=>[:main, :".monitoring-logstash"], :non_running_pipelines=>[]}
-[INFO ][logstash.agent           ] Successfully started Logstash API endpoint {:port=>9600}
+docker logs logstash
+Pipelines running {:count=>6, :running_pipelines=>[:".monitoring-logstash", :BeatsInput, :Events, :DomainAudit, :TraceMessages, :OpenTraffic], :non_running_pipelines=>[]}
+Successfully started Logstash API endpoint {:port=>9600}
 ```
 If you see the following or similar error message during processing of events the API-Builder Lookup-API cannot be reached. In case, please make sure the environment variable: `API_BUILDER_URL`is set correctly.
 ```
