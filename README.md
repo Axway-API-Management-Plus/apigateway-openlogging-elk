@@ -163,9 +163,9 @@ https://my-kibana-host:5601
 ```
 If Kibana doesn't start (>3-4 minutes) or doesn't report to be ready, please use docker logs Kibana to check for errors.  
 
-At this point you can already import the sample dashboard: `kibana/Axway-APIM-Daschboard.ndjson` into Kibana. Menu --> Stack Management --> Saved Objects.  
+At this point you can already import the sample dashboard: `kibana/Axway-APIM-Daschboards.ndjson` into Kibana. Menu --> Stack Management --> Saved Objects.  
 
-:exclamation: You are welcome to create additional visualizations and dashboards, but do not adapt the existing ones, as they will be overwritten by the update.
+:exclamation: You are welcome to create additional visualizations and dashboards, but do not adapt the existing ones, as they will be overwritten with the next update.
 
 #### Logstash / API-Builder / Memcached
 
