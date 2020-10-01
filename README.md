@@ -120,6 +120,8 @@ mv env-sample .env
 
 Even if otherwise possible, it is recommended to deploy the individual components in the following order. For each component you can then check if it is functional.
 
+<p align="right"><a href="#table-of-content">Top</a></p>
+
 ### Elasticsearch
 
 Open the `.env` file and configure the ELASTICSEARCH_HOSTS. At this point please configure only one Elasticsearch node. You can start with a single node and add more nodes later. More about this topic [Multi-Node Deployment](#setup-elasticsearch-multi-node) later in the documenation.  
@@ -157,6 +159,8 @@ GET https://my-elasticsearch-host.com:9200
 ```
 At this point you can already add the cluster UUID to the `.env` (`ELASTICSEARCH_CLUSTER_UUID`) file. With that, the Single-Node Elasticsearch Cluster is up & running.
 
+<p align="right"><a href="#table-of-content">Top</a></p>
+
 ### Kibana
 
 For Kibana all parameters are already stored in the .env file. Start Kibana with the following command:
@@ -172,6 +176,8 @@ If Kibana doesn't start (>3-4 minutes) or doesn't report to be ready, please use
 At this point you can already import the sample dashboard: `kibana/Axway-APIM-Daschboards.ndjson` into Kibana. Menu --> Stack Management --> Saved Objects.  
 
 :exclamation: You are welcome to create additional visualizations and dashboards, but do not adapt the existing ones, as they will be overwritten with the next update.
+
+<p align="right"><a href="#table-of-content">Top</a></p>
 
 ### Logstash / API-Builder / Memcached
 
@@ -198,6 +204,8 @@ Successfully started Logstash API endpoint {:port=>9600}
 Please note that the Logstash API endpoint (9600) is not exposed outside of the docker container.  
 
 At startup Logstash installs Index-Templates and creates indexes in Elasticsearch. Please check that they exits with either Kibana or REST API calls. Using Kibana: Menu --> Stack Management --> Index Management. Check apigw-* indices (7x apigw-*) and index templates (apigw-domainaudit, apigw-monitoring, apigw-traffic-scheduled, trace-messages, traffic-details and traffic-summary) exists.  
+
+<p align="right"><a href="#table-of-content">Top</a></p>
 
 ### Filebeat
 
@@ -227,6 +235,8 @@ Check in Kibana (Menu --> Management --> Stack Management --> Index Management) 
 
 If you encounter issues please see the [Troubleshooting](#troubleshooting) section for help or create an [issue](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues). 
 
+<p align="right"><a href="#table-of-content">Top</a></p>
+
 ## Configure Axway API-Management
 
 ### Admin-Node-Manager
@@ -251,6 +261,8 @@ It is recommended to disable the audit log for Failure transactions to avoid not
 - :point_right: Before you restart the Admin-Node-Manager process, please open the file: `<apigateway-install-dir>/apigateway/conf/envSettings.props` and add the following new environment variable: `API_BUILDER_URL=https://apibuilder4elastic:8443`. 
 - :point_right: Please remember to copy the changed Admin-Node-Manager configuration from the Policy-Studio project folder (path on Linux: `/home/<user>/apiprojects/\<project-name\>`) back to the ANM folder (`\<install-dir\>/apigateway/conf/fed`). Then restart the ANM.
 
+<p align="right"><a href="#table-of-content">Top</a></p>
+
 ### Traffic-Monitor for API-Manager Users
 
 In larger companies hundreds of API service providers are using the API Manager or the [APIM-CLI](https://github.com/Axway-API-Management-Plus/apim-cli) to register their own services/APIs. And the service providers require access to the traffic monitor to monitor their own APIs independently. During registration, the corresponding APIs are assigned to API Manager organizations, which logically split them up. But, the standard traffic monitor does not know the organization concept and therefore cannot restrict the view for a user based on the organization of an API.  
@@ -268,6 +280,8 @@ This project solves the problem by storing the API transactions in Elasticsearch
 To give API-Manager users a limited access to the API Traffic Monitor, the user must be configured in the API-Gateway manager with the same login name as in the API Manager. Here, for example, an LDAP connection can be a simplification.  
 None of his roles must contain the permission: `adminusers_modify`. A suitable standard role is the `API Gateway Operator role`. 
 You can, of course, create additional roles in the API Gateway Manager to adjust the user's rights according to your needs.
+
+<p align="right"><a href="#table-of-content">Top</a></p>
 
 ## Production Setup
 
@@ -331,6 +345,8 @@ __4. Restart clients__
 Do you have changed the list of available Elasticsearch Nodes via the parameter: ELASTICSEARCH_HOSTS. For example from a single-node to a multi-node cluster, then it is strongly recommended to restart the corresponding clients (Kibana, Filebeat, Logstash, API-Builder). Via docker-compose, so that the containers are created with the new ELASTICSEARCH_HOSTS parameter. 
 This ensures that clients can use the available Elasticsearch nodes for a fail-over in case of a node downtime.
 
+<p align="right"><a href="#table-of-content">Top</a></p>
+
 ### Activate user authentication
 
 __1. Generate Built-In user passwords__
@@ -388,6 +404,8 @@ After you have configured all passwords and configured security, please restart 
 It's very likely that you don't use the super-user `elastic` for `API_BUILDER_USERNAME`. It's recommended to create dedicated account.  
 The monitoring users are used to send metric information to Elasticsearch to enable stack monitoring, which gives you insight about event processing of the complete platform.
 
+<p align="right"><a href="#table-of-content">Top</a></p>
+
 ### Configure cluster UUID
 
 This step is optional, but required to monitor your Filebeat instances as part of the stack monitoring. To obtain the Cluster UUID run the following in your browser:  
@@ -401,6 +419,8 @@ You may also configure the following parameters: `GATEWAY_NAME` & `GATEWAY_REGIO
 ![Monitoring-Overview][Monitoring-Overview]  
 
 To activate these changes the Filebeat service must be restarted. 
+
+<p align="right"><a href="#table-of-content">Top</a></p>
 
 ### Custom certificates
 
@@ -422,6 +442,8 @@ KIBANA_CRT=config/certificates/corporate-kibana.crt
 ```
 You can find more information about the individual certificates in the `.env` file.
 
+<p align="right"><a href="#table-of-content">Top</a></p>
+
 ### Multiple API-Manager
 
 During Logstash event processing, additional information is loaded from the API Manager through an API lookup. This lookup is performed by the API builder against the API Manager.  
@@ -436,11 +458,15 @@ API_MANAGER=group-2#https://api-manager-1:8075, group-5#https://api-manager-2:82
 When the API Builder is started, to validate the configuration, a login to each API-Manager is performed. Currently the same 
 API manager user (API_MANAGER_USERNAME/API_MANAGER_PASSWORD) is used for each API Manager. 
 
+<p align="right"><a href="#table-of-content">Top</a></p>
+
 ### Secure API-Builder Traffic-Monitor API
 The API-Builder project for providing access to Elasticsearch data has no access restrictions right now. To ensure only API-Gateway Manager users (topology administrators with proper RBAC role) or other users with appropriate access rights can query the log data, one can expose this API via API-Manager and add security here.
 
 To import the API Builder project REST-API into your API-Manager, you can access the Swagger/OpenAPI definition here (replace docker-host and port appropriately for the container that is hosting the API-Builder project):  
 https://docker-host:8443/apidoc/swagger.json?endpoints/trafficMonitorApi
+
+<p align="right"><a href="#table-of-content">Top</a></p>
 
 ## Sizing your infrastructure
 
@@ -526,6 +552,8 @@ The recommendation contains only one ElasticSearch node up to a volume of max. 1
 | AWS EC2 t2.xlarge instance | 4 vCPUS|16GB  |80GB  | Elasticsearch  | 7.9.0   | Standard Elasticsearch Docker-Container |
 |                            |        |      |      | Kibana         | 7.9.0   | Standard Kibana Docker-Container |
 
+<p align="right"><a href="#table-of-content">Top</a></p>
+
 ## Updates
 
 It is planned that this solution will be further developed and therefore further releases will be published. 
@@ -547,6 +575,8 @@ With each update there will be a changelog, release notes and instructions for t
 If you encounter a problem or need a feature, please open an issue that can be integrated directly into the solution.  
 Of course you are welcome to create your own Kibana dashboards or clone and customize existing ones.  
 However, if you need to change files, it is recommended to make this change automatically and repeatable (e.g. https://www.ansible.com). 
+
+<p align="right"><a href="#table-of-content">Top</a></p>
 
 ## Troubleshooting
 
@@ -661,10 +691,14 @@ Using elastic search query body: {"index":"logstash-openlog","body":{"query":{"b
 This helps you to further analyze if ElasticSearch is returning the correct information for instance using the Kibana development console. Example sending the same request using the Kibana Development console:  
 ![Kibana Dev-Console][img8]
 
+<p align="right"><a href="#table-of-content">Top</a></p>
+
 ## Known issues
 
 - __Trace messages not shown in correct order__  
   See issue https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/37
+  
+<p align="right"><a href="#table-of-content">Top</a></p>
 
 
 [img1]: imgs/component-overview.png
