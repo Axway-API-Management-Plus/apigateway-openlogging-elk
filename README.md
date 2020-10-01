@@ -1,4 +1,4 @@
-# API-Management Traffic-Monitor based ELK stack
+# API-Management Traffic-Monitor based on the Elastic-Stack
 
 This project has 3 main objectives in relation to the Axway API management solution.
 
@@ -450,7 +450,7 @@ You can find more information about the individual certificates in the `.env` fi
 
 <p align="right"><a href="#table-of-content">Top</a></p>
 
-### Multiple API-Manager
+### Multiple API-Managers
 
 During Logstash event processing, additional information is loaded from the API Manager through an API lookup. This lookup is performed by the API builder against the API Manager.  
 By default the configured Admin Node Manager host is used or the configured API Manager URL:
