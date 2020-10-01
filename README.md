@@ -369,7 +369,7 @@ This ensures that clients can use the available Elasticsearch nodes for a fail-o
 
 ### Activate user authentication
 
-TODO: Watch this video for a demonstration: [Add Elasticsearch node](https://youtu.be/sM5-0c8aEZk)  
+Watch this video for a demonstration: [Authentication for Elasticsearch](https://youtu.be/4xxqV7PyBRQ)  
 
 __1. Generate Built-In user passwords__
 
