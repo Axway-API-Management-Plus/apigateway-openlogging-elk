@@ -522,6 +522,7 @@ The recommendation contains only one ElasticSearch node up to a volume of max. 1
 
 It is planned that this solution will be further developed and therefore further releases will be published. 
 With each release the following artifacts may change:  
+
 - All Docker-Compose files
 - Elasticstack Version
 - Logstash Pipelines
@@ -530,6 +531,7 @@ With each release the following artifacts may change:
 - API Builder Docker Container Version
 - Kibana Dashboards
 - Scripts, etc. 
+
 All components of this solution play together and only work if they are from the same release. The solution will check if for example the index templates have the required version. 
 With each update there will be a changelog, release notes and instructions for the update. For each component it will be explained whether there have been changes and how to apply them if necessary.  
 
