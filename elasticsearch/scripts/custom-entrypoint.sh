@@ -74,5 +74,11 @@ do
     count=`expr $count + 1`    
 done
 
+# Check if the ELASTICSEARCH_ANONYMOUS_ENABLED status
+if [ "${ELASTICSEARCH_ANONYMOUS_ENABLED}" = "true" ]; then
+    anonymousUsername="-E xpack.security.authc.anonymous.roles=kibana_admin,superuser,beats_system,logstash_system"
+    anonymousRoles="-E xpack.security.authc.anonymous.username=anonymous"
+fi
+
 # Finally call the original Docker-Entrypoint
-/usr/local/bin/docker-entrypoint.sh elasticsearch ${params} ${seedHosts} ${initialMasterNodes}
+/usr/local/bin/docker-entrypoint.sh elasticsearch ${params} ${seedHosts} ${initialMasterNodes} ${anonymousUsername} ${anonymousRoles}

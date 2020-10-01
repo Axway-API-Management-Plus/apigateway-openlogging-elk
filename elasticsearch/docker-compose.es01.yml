@@ -11,6 +11,7 @@ services:
       - cluster.name=${ELASTICSEARCH_CLUSTERNAME}
       - node.name=elasticsearch1
       - ELASTICSEARCH_HOSTS=${ELASTICSEARCH_HOSTS}
+      - ELASTICSEARCH_ANONYMOUS_ENABLED=${ELASTICSEARCH_ANONYMOUS_ENABLED:-true}
       - xpack.security.enabled=true
       - xpack.security.http.ssl.enabled=true
       - xpack.security.http.ssl.key=/usr/share/elasticsearch/${ELASTICSEARCH_KEY}

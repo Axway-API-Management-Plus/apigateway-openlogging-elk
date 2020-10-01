@@ -1,6 +1,6 @@
 # Disable security by default to fallback to anonymous user
 # Enable this parameter to activate security for Kibana
-xpack.security.enabled: false
+xpack.security.enabled: ${KIBANA_SECURITY_ENABLED}
 
 server.name: kibana
 server.host: "0"

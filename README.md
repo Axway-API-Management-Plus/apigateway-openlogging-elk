@@ -113,8 +113,8 @@ Even if otherwise possible, it is recommended to deploy the individual component
 
 #### Elasticsearch
 
-Open the .env file and configure the ELASTICSEARCH_HOSTS This URL is used by all Elasticsearch clients of the solution to establish communication.
-For single-node deployment, specify a URL, for multi-node deployment please use comma separated. You can also start with a single node and add more nodes later. More about this topic Multi-Node Deployment.
+Open the .env file and configure the ELASTICSEARCH_HOSTS. At this point please configured only one Elasticsearch node. You can start with a single node and add more nodes later. More about this topic Multi-Node Deployment later in the documenation.
+This URL is used by all Elasticsearch clients of the solution to establish communication.
 If you use an external Elasticsearch cluster, please specify the node(s).  
 Please keep in mind that the hostnames must be resolvable within the docker containers. You can also assign the cluster name here if the default: `axway-apim-elasticsearch` is not appropriate. Example:  
 ```
@@ -327,7 +327,7 @@ This ensures that clients can use the available Elasticsearch nodes for a fail-o
 __1. Generate Built-In user passwords__
 
 _This step can be ignored, when you are using an existing Elasticsearch cluster._
-Elasticsearch is initially configured with a number of built-in users, that don't have a password by default. So, the first step is to generate passwords for these users.  
+Elasticsearch is initially configured with a number of built-in users, that don't have a password by default. So, the first step is to generate passwords for these users. It is assumed that the following command is executed on the first elasticsearch1 node:  
 ```
 docker exec elasticsearch1 /bin/bash -c "bin/elasticsearch-setup-passwords auto --batch --url https://localhost:9200"
 ```
@@ -355,23 +355,22 @@ API_BUILDER_PASSWORD=2x8vxZrvXX9a3KdGuA26
 
 __3. Disable anonymous user__
 
-Open the configuration file: `elasticsearch/config/elasticsearch.yml` and comment or remove the following two lines:  
+In the `.env` file uncomment the following line:  
 ```
-#xpack.security.authc.anonymous.roles: kibana_admin,  superuser, beats_system, logstash_system
-#xpack.security.authc.anonymous.username: anonymous
+ELASTICSEARCH_ANONYMOUS_ENABLED=false
 ```
 With that, anonymous access to the Elasticsearch cluster is not possible anymore, which also includes Kibana.  
 
 __4. Enable user autentication in Kibana__
-Open the configuration file: `kibana/config/kibana.yml` and set the parameter:
+In the `.env` file also uncomment the following line to enable user authentication in Kibana:  
 ```
-xpack.security.enabled: true
+KIBANA_SECURITY_ENABLED=true
 ```
-After restart, Kibana will prompt to login before continue. 
+After restart, Kibana will prompt to login before continue. Intially you may use the `elastic` user account to login and then create individual users and permissions.  
 
 __5. Restart services__
 
-After you have configured all passwords, please restart all services.  
+After you have configured all passwords and configured security, please restart all services.  
 - Filebeat    - It is now using the beats_system user to send monitoring information
 - Logstash    - Using the logstash_system to send monitoring data and logstash user to insert documents
 - Kibana      - Is using the kibana_system to send monitoring data

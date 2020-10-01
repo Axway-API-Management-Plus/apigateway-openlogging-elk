@@ -15,7 +15,7 @@ bootstrap.memory_lock: true
 xpack.security.enabled: true
 
 # Initially provide anonymous access, which can be changed to user based AuthN.
-xpack.security.authc.anonymous.roles: kibana_admin,  superuser, beats_system, logstash_system
-xpack.security.authc.anonymous.username: anonymous
+#xpack.security.authc.anonymous.roles: kibana_admin,  superuser, beats_system, logstash_system
+#xpack.security.authc.anonymous.username: anonymous
 
 xpack.monitoring.collection.enabled: true

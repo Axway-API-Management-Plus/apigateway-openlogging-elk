@@ -109,6 +109,18 @@ API_MANAGER_PASSWORD=changeme
 #API_BUILDER_USERNAME=elastic
 #API_BUILDER_PASSWORD=
 
+# With this parameter set to false, anonymous access to Elasticsearch is no longer possible. 
+# All clients needs to send username and password. 
+# This toggle is internally used to set the parameter: xpack.security.authc.anonymous.username
+# and xpack.security.authc.anonymous.roles
+# Used-By: Elasticsearch
+# ELASTICSEARCH_ANONYMOUS_ENABLED=false
+
+# This parameter controls if Kibana is forcing users to authenticate. Activate this parameter 
+# once you have disabled anonymous access to Elasticsearch
+# Used-By: Kibana
+# KIBANA_SECURITY_ENABLED=true
+
 ################################################################################################
 #                            Configure Multi-Node ES-Cluster
 ################################################################################################
