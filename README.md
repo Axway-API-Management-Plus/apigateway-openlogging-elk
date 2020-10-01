@@ -114,15 +114,15 @@ Even if otherwise possible, it is recommended to deploy the individual component
 
 #### Elasticsearch
 
-Open the .env file and configure the ELASTICSEARCH_HOSTS. At this point please configured only one Elasticsearch node. You can start with a single node and add more nodes later. More about this topic Multi-Node Deployment later in the documenation.
-This URL is used by all Elasticsearch clients of the solution to establish communication.
-If you use an external Elasticsearch cluster, please specify the node(s).  
+Open the `.env` file and configure the ELASTICSEARCH_HOSTS. At this point please configure only one Elasticsearch node. You can start with a single node and add more nodes later. More about this topic [Multi-Node Deployment](#setup-elasticsearch-multi-node) later in the documenation.
+This URL is used by all Elasticsearch clients (Logstash, API-Builder, Filebeat) of the solution to establish communication.
+If you use an external Elasticsearch cluster, please specify which node(s) that are given to you.  
 Please keep in mind that the hostnames must be resolvable within the docker containers. You can also assign the cluster name here if the default: `axway-apim-elasticsearch` is not appropriate. Example:  
 ```
 ELASTICSEARCH_HOSTS=https://my-elasticsearch-host.com:9200
-ELASTICSEARCH_CLUSTERNAME=my-special-cluster-name
+ELASTICSEARCH_CLUSTERNAME=axway-apim-elasticsearch-prod
 ```
-With the following command you initialize a new Elasticsearch Cluster which is going through an appropriate bootstrapping. Later you can add more nodes to this single node cluster. Please do not use the init extension to restart the node:  
+With the following command you initialize a new Elasticsearch Cluster which is going through an appropriate bootstrapping. Later you can add more nodes to this single node cluster. Please do not use the init extension when restarting the node:  
 ```
 docker-compose -f elasticsearch/docker-compose.es01.yml -f elasticsearch/docker-compose.es01init.yml up -d
 ```
