@@ -116,7 +116,7 @@ To simplify updates it is recommended to create a Symlink-Folder and finally ren
 ```
 ln -s axway-apim-elk-v1.0.0 axway-apim-elk
 cd axway-apim-elk-v1.0.0
-mv env-sample .env
+cp env-sample .env
 ```
 
 - From this point on it is assumed that all commands are executed within the unpacked release folder.  
@@ -199,6 +199,12 @@ ADMIN_NODE_MANAGER=https://my-admin-node-manager:8090
 API_MANAGER_USERNAME=elkAdmin
 API_MANAGER_PASSWORD=elastic
 ```
+
+To start all three components the main Docker-Compose file is used:
+```
+docker-compose up -d
+```
+
 Check that the docker containers for Logstash, API Builder and Memached are running.  
 ```
 [ec2-user@ip-172-31-61-59 axway-apim-elk-v1.0.0]$ docker ps
