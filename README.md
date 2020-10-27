@@ -65,6 +65,8 @@ The overall architecture this project provides looks like this:
 With that architecture it is possible to collect data from API-Gateways running all over the world into a centralized Elasticsearch instance to have it available with the best possible performance indendent from the network performance.  
 It also helps, when running the Axway API-Gateway in Docker-Orchestration-Environment where containers are started and stopped as it avoids to loose data, when an API-Gateway container is stopped.  
 
+Click [here](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/tree/develop/imgs/architecture-examples) to find more detailed architecture examples. *Currently classic deployment only - Will be extended based on requirements*
+
 ### How it works  
 Each API-Gateway instance is writing, [if configured](#enable-open-traffic-event-log), Open-Traffic Event-Log-Files, which are streamed by [Filebeat](https://www.elastic.co/beats/filebeat) into a Logstash-Instance. [Logstash](https://www.elastic.co/logstash) performs data pre-processing, combines different events and finally forwards these so called documents into an Elasticsearch cluster.  
 
