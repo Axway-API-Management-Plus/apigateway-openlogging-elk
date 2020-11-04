@@ -75,7 +75,7 @@ describe('Traffic Monitor API', function () {
 			});
 		});
 
-		it.only('[anm-basic-0002] Should also work, when some cookies are provided', () => {
+		it('[anm-basic-0002] Should also work, when some cookies are provided', () => {
 			return requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/stream/4e645e5e4600bb590c881179/*/circuitpath`,

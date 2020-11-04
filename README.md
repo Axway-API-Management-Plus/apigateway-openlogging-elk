@@ -672,7 +672,7 @@ When Elasticsearch is finally started:
 ```
 "level": "INFO", "component": "o.e.c.r.a.AllocationService", "cluster.name": "elasticsearch", "node.name": "elasticsearch1", "message": "Cluster health status changed from [RED] to [YELLOW] (reason: [shards started [[.kibana_1][0]]]).", "cluster.uuid": "k22kMiq4R12I7BSTD87n5Q", "node.id": "6TVkdA-YR7epgV39dZNG2g"  }
 ```
-Status YELLOW is expected when running Elasticsearch on a single node, as it can achieve the desired replicas. You may use Kibana Development tools or curl to get additional information.
+Status YELLOW is expected when running Elasticsearch on a single node, as it cannot achieve the desired replicas. You may use Kibana Development tools or curl to get additional information.
 
 ### vm.max_map_count is too low
 ```
