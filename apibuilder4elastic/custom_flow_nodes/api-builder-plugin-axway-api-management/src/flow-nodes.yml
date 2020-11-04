@@ -38,7 +38,7 @@ flow-nodes:
               type: object
       lookupAPIDetails:
         name: Lookup API
-        description: Looks up the details of an API based on the given API-Name and API-Path
+        description: Looks up the details of an API based on the given API-Name and API-Path. Additionally, it returns the configured custom properties for that API.
         parameters:
           apiName:
             name: API-Name
@@ -68,10 +68,18 @@ flow-nodes:
             initialType: string
             schema:
               type: string
+          mapCustomProperties:
+            name: Map custom properties
+            description: Turn this on to validate custom properties against the API-Manager configuration. Additionally, all found custom properties will be mapped into the properties customProperties
+            required: false
+            initialType: boolean
+            schema:
+              default: true
+              type: boolean
         outputs:
           next:
             name: Next
-            description: The API-Proxy
+            description: The API-Proxy how it's configured in the API-Manager incl. custom properties.
             context: $.api
             schema:
               type: object

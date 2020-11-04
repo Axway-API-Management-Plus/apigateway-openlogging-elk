@@ -14,6 +14,10 @@ describe('Test API-Lookup endpoint', function () {
 		nock.cleanAll();
 	});
 
+	beforeEach(() => {
+		nock('https://mocked-api-gateway:8075').get(`/api/portal/v1.3/config/customproperties`).replyWithFile(200, './test/mockedReplies/apimanager/customPropertiesConfig.json');
+	});
+
 	/**
 	 * Start API Builder.
 	 */
@@ -163,6 +167,25 @@ describe('Test API-Lookup endpoint', function () {
 				expect(body).to.be.an('Object');
 				expect(body.version).to.equal('N/A');
 				
+				nock.cleanAll();
+			});
+		});
+
+		it.only('[apilookup-0008] should return API incl. customProperties object', () => {
+			nock('https://mocked-api-gateway:8075').get('/api/portal/v1.3/proxies?field=name&op=eq&value=Petstore HTTPS').replyWithFile(200, './test/mockedReplies/apimanager/apiProxyWithCustomProperties.json');
+			nock('https://mocked-api-gateway:8075').get('/api/portal/v1.3/organizations/2bfaa1c2-49ab-4059-832d-CHRIS').replyWithFile(200, './test/mockedReplies/apimanager/organizationChris.json');
+			return requestAsync({
+				method: 'GET',
+				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/lookup/api?apiName=Petstore%20HTTPS&apiPath=/my/api/with/custom/properties&groupId=XXXX`, // The groupd doesn't matter for this test
+				auth: auth,
+				json: true
+			}).then(({ response, body }) => {
+				expect(response.statusCode).to.equal(200);
+				expect(body).to.be.an('Object');
+				expect(body.path).to.equal('/my/api/with/custom/properties');
+				expect(body.customProperties.customProperty1).to.equal('Test-Input 1');
+				expect(body.customProperties.customProperty2).to.equal('1');
+				expect(body.customProperties.customProperty3).to.equal('true');
 				nock.cleanAll();
 			});
 		});

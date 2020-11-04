@@ -58,6 +58,13 @@
 					"value": "$.params.groupId",
 					"metaName": "The API-Gateway Group-ID",
 					"metaDescription": "The ID of the Domain-Group where this event was created. If given, it's used to determined which API-Manager to use. For that, the parameter: API_MANAGER must be configured like so: API_MANAGER=group-5#https://manager-1:8075, group-2#https://manager-2:8075, ...."
+				},
+				{
+					"name": "mapCustomProperties",
+					"type": "boolean",
+					"value": "true",
+					"metaName": "Map custom properties",
+					"metaDescription": "Turn this on to validate custom properties against the API-Manager configuration. Additionally, all found custom properties will be mapped into the properties customProperties"
 				}
 			],
 			"outputs": {

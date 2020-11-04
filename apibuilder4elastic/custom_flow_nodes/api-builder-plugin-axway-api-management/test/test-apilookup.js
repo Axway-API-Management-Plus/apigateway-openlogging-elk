@@ -19,12 +19,14 @@ describe('Test API Lookup', () => {
 	}
 	// Delete the cached module 
 	decache('../config/axway-api-utils.default.js');
+	decache('../../../conf/elasticsearch.default.js');
 	var pluginConfig = require('../config/axway-api-utils.default.js').pluginConfig['api-builder-plugin-axway-api-management'];
 
 	beforeEach(async () => {
 		plugin = await MockRuntime.loadPlugin(getPlugin,pluginConfig);
 		plugin.setOptions({ validateOutputs: true });
 		flowNode = plugin.getFlowNode('axway-api-management');
+		nock('https://mocked-api-gateway:8175').get(`/api/portal/v1.3/config/customproperties`).replyWithFile(200, './test/testReplies/apimanager/customPropertiesConfig.json');
 	});
 
 	describe('#constructor', () => {
@@ -71,6 +73,7 @@ describe('Test API Lookup', () => {
 		});
 
 		it('should follow the Error path if the API-Manager host cannot be reached/communicated', async () => {
+			nock.cleanAll();
 			// We just have NO mock to make this test
 			const { value, output } = await flowNode.lookupAPIDetails({
 				apiName: 'Unknown API', apiPath: '/v1/unkownAPI'
@@ -236,6 +239,23 @@ describe('Test API Lookup', () => {
 			expect(value.name).to.equal(`Petstore without security`);
 			expect(value.path).to.equal(`/without/security`);
 			expect(value.apiSecurity).to.equal(`Pass Through`);
+			nock.cleanAll();
+		});
+
+		it('should return API incl. defined custom properties', async () => {
+			nock('https://mocked-api-gateway:8175').get('/api/portal/v1.3/proxies?field=name&op=eq&value=API Custom-Properties Test').replyWithFile(200, './test/testReplies/apimanager/apiProxyWithCustomProps.json');
+			nock('https://mocked-api-gateway:8175').get(`/api/portal/v1.3/organizations/439ec2bd-0350-459c-8df3-bb6d14da6bc8`).replyWithFile(200, './test/testReplies/apimanager/organizationAPIDevelopment.json');
+			
+			const { value, output } = await flowNode.lookupAPIDetails({ 
+				apiName: 'API Custom-Properties Test', apiPath: '/api-custom-prop-test', mapCustomProperties: true
+			});
+			expect(output).to.equal('next');
+			expect(value.organizationName).to.equal(`API Development`);
+			expect(value.name).to.equal(`API Custom-Properties Test`);
+			expect(value.path).to.equal(`/api-custom-prop-test`);
+			expect(value.customProperties.customProperty1).to.equal(`Test-Input 1`);
+			expect(value.customProperties.customProperty2).to.equal(`1`);
+			expect(value.customProperties.customProperty3).to.equal(`true`);
 			nock.cleanAll();
 		});
 	});

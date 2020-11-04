@@ -50,11 +50,9 @@ async function lookupCurrentUser(params, options) {
 	if (!requestHeaders) {
 		throw new Error('You need to provide Request-Headers with Cookies or an Authorization header.');
 	}
-	debugger;
 	if(!requestHeaders.cookie && !requestHeaders.authorization) {
 		throw new Error('You must provide either the VIDUSR cookie + csrf-token or an HTTP-Basic Authorization header.');
 	}
-	debugger;
 	if(requestHeaders.authorization) {
 		logger.trace(`Trying to authorize user based on Authorization header.`);
 		user.loginName = await _getCurrentGWUser(headers = {'Authorization': `${requestHeaders.authorization}`});
@@ -99,7 +97,7 @@ async function lookupCurrentUser(params, options) {
 }
 
 async function lookupAPIDetails(params, options) {
-	const { apiName, apiPath, operationId, groupId } = params;
+	const { apiName, apiPath, operationId, groupId, mapCustomProperties } = params;
 	logger = options.logger;
 	cache = options.pluginContext.cache;
 	pluginConfig = options.pluginConfig;
@@ -147,6 +145,9 @@ async function lookupAPIDetails(params, options) {
 	delete apiProxy.outboundProfiles;
 	delete apiProxy.serviceProfiles;
 	delete apiProxy.caCerts;
+	if(mapCustomProperties) {
+		apiProxy = await _addCustomProperties(apiProxy, groupId);
+	}
 	return apiProxy;
 }
 
@@ -165,6 +166,22 @@ async function _getCurrentGWUser(requestHeaders) {
 		});
 	return loginName;
 }
+
+async function _addCustomProperties(apiProxy, groupId) {
+	var apiCustomProperties = await _getConfiguredCustomProperties(groupId);
+	apiProxy.customProperties = {};
+	for (var prop in apiCustomProperties) {
+		if (Object.prototype.hasOwnProperty.call(apiCustomProperties, prop)) {
+			if(apiProxy[prop]!=undefined) {
+				apiProxy.customProperties[prop] = apiProxy[prop];
+				delete apiProxy[prop];
+			}
+		}
+	}
+	return apiProxy;
+}
+
+
 
 async function _getAPISecurity(apiProxy, operationId) {
 	if(!operationId) {
@@ -331,6 +348,35 @@ async function _getOrganization(orgId, groupId) {
 	}
 	cache.set(orgCacheKey, org)
 	return org;
+}
+
+async function _getConfiguredCustomProperties(groupId) {
+	const apiManagerConfig = getManagerConfig(pluginConfig.apimanager, groupId);
+	const customPropCacheKey = `CUSTOM_PROPERTIES###${groupId}`
+	if(cache.has(customPropCacheKey)) {
+		var propertiesConfig = cache.get(customPropCacheKey);
+		logger.debug(`Custom properties found in cache with groupId: ${groupId}.`);
+		return propertiesConfig;
+	}
+	var options = {
+		path: `/api/portal/v1.3/config/customproperties`,
+		headers: {
+			'Authorization': 'Basic ' + Buffer.from(apiManagerConfig.username + ':' + apiManagerConfig.password).toString('base64')
+		},
+		agent: new https.Agent({ rejectUnauthorized: false })
+	};
+	propertiesConfig = await sendRequest(apiManagerConfig.url, options)
+		.then(response => {
+			if(!response.body) {
+				throw new Error(`Error getting custom properties from API-Manager: ${apiManagerConfig.ur}`);
+			}
+			return response.body.api;
+		})
+		.catch(err => {
+			throw new Error(err);
+		});
+	cache.set(customPropCacheKey, propertiesConfig)
+	return propertiesConfig;
 }
 
 module.exports = {
