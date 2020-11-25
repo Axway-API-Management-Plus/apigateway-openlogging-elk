@@ -331,6 +331,9 @@ The setup of a Multi-Node Elasticsearch Cluster can be done with default setting
   - Again, it is assumed that the release package is downloaded on the individual hosts and the `.env` file is provided. 
 - You can always add more nodes to the Elasticsearch cluster to provide additional disk space and computing power.
   - You can start with two nodes today and add another cluster node in 6 months if needed.  
+- Also all clients (Filebeat, Logstash, API-Builder and Kibana are using the multiple Elasticsearch hosts
+  - that means, you don't need a loadbalancer in front of the Elasticsearch-Cluster to achive high availability
+  - make sure, that all clients are configured with the available Elasticsearch hosts
   
 Watch this video for a demonstration: [Add Elasticsearch node](https://youtu.be/sM5-0c8aEZk)  
 
