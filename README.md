@@ -44,6 +44,7 @@ This shows a sample dashboard created in Kibana based on the indexed documents:
   - [Filebeat](#filebeat)
 - [Configure Axway API-Management](#configure-axway-api-management)
 - [Production Setup](#production-setup)
+  - [Architecture examples](#architecture-examples)
   - [Setup Elasticsearch Multi-Node](#setup-elasticsearch-multi-node)
   - [Activate user authentication](#activate-user-authentication)
   - [Configure cluster UUID](#configure-cluster-uuid)
@@ -312,6 +313,10 @@ You can, of course, create additional roles in the API Gateway Manager to adjust
 ## Production Setup
 
 This section covers advanced configuration topics that are required for a production environment. It is assumed that you have already familiarized yourself with the solution using the Basic setup.  
+
+### Architecture examples
+
+We have started to make [architectural examples](architecture) directly available here. These should help to deploy the solution in different environments. The area is currently under construction.
 
 ### Setup Elasticsearch Multi-Node
 
