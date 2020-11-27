@@ -1,0 +1,44 @@
+{
+    "version": 1,
+    "index_patterns": [
+        "apigw-trace-*", 
+        "apigw-traffic-trace-*"
+    ],
+    "settings": {
+        "number_of_shards": 5, 
+        "number_of_replicas": 1,
+        "index": {
+            "codec": "best_compression"
+        }
+    },
+    "mappings": {
+        "dynamic": false,
+        "properties": {
+            "@timestamp": {
+                "type" : "date"
+            },
+            "correlationId": {
+                "type": "keyword"
+            },
+            "level": {
+                "type": "keyword"
+            },
+            "message": {
+                "type": "text", 
+                "norms": false
+            },
+            "processInfo.gatewayRegion": {
+                "type": "keyword"
+            },
+            "processInfo.gatewayName": {
+                "type": "text",
+                "fields": {
+                    "keyword": {
+                        "type": "keyword"
+                    }
+                },
+                "norms": false
+            }
+        }
+    }
+}

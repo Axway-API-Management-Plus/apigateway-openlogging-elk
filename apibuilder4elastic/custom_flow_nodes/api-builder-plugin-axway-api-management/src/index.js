@@ -1,6 +1,7 @@
 const path = require('path');
 const { SDK } = require('@axway/api-builder-sdk');
-const actions = require('./actions');
+const { lookupCurrentUser, lookupAPIDetails, getCustomPropertiesConfig } = require('./actions');
+const { mergeCustomProperties } = require('./customProperties');
 const NodeCache = require( "node-cache" );
 const { sendRequest, _getSession, getManagerConfig } = require('./utils');
 const https = require('https');
@@ -63,7 +64,8 @@ async function getPlugin(pluginConfig, options) {
 			options.logger.warn("Config validation is skipped, as parameter: pluginConfig.validateConfig=true");
 		}
 	}
-	sdk.load(path.resolve(__dirname, 'flow-nodes.yml'), actions, { pluginContext: { cache: cache }, pluginConfig});
+
+	sdk.load(path.resolve(__dirname, 'flow-nodes.yml'), {lookupCurrentUser, lookupAPIDetails, getCustomPropertiesConfig, mergeCustomProperties }, { pluginContext: { cache: cache }, pluginConfig});
 	return sdk.getPlugin();
 }
 

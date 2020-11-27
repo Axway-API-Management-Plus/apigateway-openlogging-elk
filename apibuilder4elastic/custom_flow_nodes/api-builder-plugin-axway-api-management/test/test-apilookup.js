@@ -40,10 +40,6 @@ describe('Test API Lookup', () => {
 			// Ensure the flow-node matches the spec
 			expect(flowNode.name).to.equal('Axway API-Management Utils');
 			expect(flowNode.icon).to.be.a('string');
-			expect(flowNode.getMethods()).to.deep.equal([
-				'lookupAPIDetails', 
-				'lookupCurrentUser'
-			]);
 		});
 
 		it('should define valid flow-nodes', () => {

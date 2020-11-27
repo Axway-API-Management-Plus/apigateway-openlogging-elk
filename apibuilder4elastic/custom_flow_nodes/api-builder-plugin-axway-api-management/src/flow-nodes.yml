@@ -89,3 +89,79 @@ flow-nodes:
             context: $.error
             schema:
               type: object
+      getCustomPropertiesConfig:
+        name: Get custom properties
+        description: Returns configured custom properties configured on the API-Manager. The information is cached within the API-Builder process for 30 minutes.
+        parameters:
+          groupId:
+            name: Group-ID
+            description: Optional group-id that is used to determine the API-Manager URL. If given, the API-Manager URL must be configured in the format group-id#URL
+            required: false
+            initialType: string
+            schema:
+              type: string
+        outputs:
+          next:
+            name: Next
+            description: The configured custom properties on that API-Manager.
+            context: $.customProperties
+            schema:
+              type: object
+          error:
+            name: Error
+            description: An unexpected error happened
+            context: $.error
+            schema:
+              type: object
+
+      mergeCustomProperties:
+        name: Merge custom properties
+        description: Merges the given custom properties into desired index template mapping and compares it with the actual index-template to determine if an update of the index template is required.
+        parameters:
+          customProperties:
+            name: Custom properties
+            description: The custom properties as they have been loaded from the API-Manager
+            required: true
+            initialType: object
+            schema:
+              type: object
+          desiredIndexTemplate:
+            name: Desired Index template
+            description: The desired Elasticsearch index template containing the mappings.
+            required: true
+            initialType: object
+            schema:
+              type: object
+          actualIndexTemplate:
+            name: Actual Index template
+            description: The actual Index-Template mapping loaded from Elasticsearch used to compare if new custom properties have been added. If all custom properties are already part of the mapping, the noUpdate exit is used.
+            required: false
+            initialType: object
+            schema:
+              type: object
+          mergeCustomProperties:
+            name: Merge custom properties
+            description: Convience flag which basically turns off this flow now. This helps to simplify the flow.
+            required: false
+            initialType: string
+            schema:
+              type: string
+        outputs:
+          next:
+            name: Next
+            description: Returns the index template mapping incl. custom properties
+            context: $.mappingConfig
+            schema:
+              type: object
+          noUpdate:
+            name: No update
+            description: No update required as all custom properties are already configured in the actual index template mapping. The returned object is the index-template including custom-properties.
+            context: $.mappingConfig
+            schema:
+              type: object
+          error:
+            name: Error
+            description: An unexpected error happened
+            context: $.error
+            schema:
+              type: object

@@ -151,6 +151,15 @@ async function lookupAPIDetails(params, options) {
 	return apiProxy;
 }
 
+async function getCustomPropertiesConfig(params, options) {
+	const { groupId } = params;
+	pluginConfig = options.pluginConfig;
+	logger = options.logger;
+	cache = options.pluginContext.cache;
+	return await _getConfiguredCustomProperties(groupId);
+}
+
+
 async function _getCurrentGWUser(requestHeaders) {
 	var options = {
 		path: '/api/rbac/currentuser',
@@ -375,11 +384,12 @@ async function _getConfiguredCustomProperties(groupId) {
 		.catch(err => {
 			throw new Error(err);
 		});
-	cache.set(customPropCacheKey, propertiesConfig)
+	cache.set(customPropCacheKey, propertiesConfig, 1800);
 	return propertiesConfig;
 }
 
 module.exports = {
 	lookupCurrentUser, 
-	lookupAPIDetails
+	lookupAPIDetails,
+	getCustomPropertiesConfig
 };

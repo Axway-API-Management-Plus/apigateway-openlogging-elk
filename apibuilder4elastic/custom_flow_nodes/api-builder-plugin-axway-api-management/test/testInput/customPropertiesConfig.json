@@ -1,0 +1,95 @@
+{
+    "customProperty1": {
+      "label": "Custom Property #1",
+      "type": "custom",
+      "disabled": false,
+      "required": false,
+      "permissions": {
+        "user": {
+          "read": true,
+          "write": true,
+          "visible": true
+        },
+        "admin": {
+          "read": true,
+          "write": true,
+          "visible": true
+        },
+        "oadmin": {
+          "read": true,
+          "write": true,
+          "visible": true
+        }
+      }
+    },
+    "customProperty2": {
+      "label": "Custom Property #2",
+      "type": "select",
+      "disabled": false,
+      "required": false,
+      "permissions": {
+        "user": {
+          "read": true,
+          "write": true,
+          "visible": true
+        },
+        "admin": {
+          "read": true,
+          "write": true,
+          "visible": true
+        },
+        "oadmin": {
+          "read": true,
+          "write": true,
+          "visible": true
+        }
+      },
+      "options": [
+        {
+          "value": "1",
+          "label": "Value 1"
+        },
+        {
+          "value": "2",
+          "label": "Value 2"
+        },
+        {
+          "value": "3",
+          "label": "Value 3"
+        }
+      ]
+    },
+    "customProperty3": {
+      "label": "Custom Property #3",
+      "type": "switch",
+      "disabled": false,
+      "required": false,
+      "permissions": {
+        "user": {
+          "read": true,
+          "write": true,
+          "visible": true
+        },
+        "admin": {
+          "read": true,
+          "write": true,
+          "visible": true
+        },
+        "oadmin": {
+          "read": true,
+          "write": true,
+          "visible": true
+        }
+      },
+      "options": [
+        {
+          "value": true,
+          "label": "ON"
+        },
+        {
+          "value": false,
+          "label": "OFF"
+        }
+      ]
+    }
+  }

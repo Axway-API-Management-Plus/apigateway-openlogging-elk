@@ -1,0 +1,741 @@
+{
+	"schemaVersion": "4",
+	"info": {
+		"name": "Setup Elasticsearch Index",
+		"description": "Flow configures Elasticsearch Index (Mappings, ILM and Rollup)",
+		"author": "support@axway.com",
+		"license": "ISC"
+	},
+	"parameter": {
+		"properties": {
+			"config": {
+				"type": "object",
+				"description": "The service's configuration."
+			},
+			"env": {
+				"type": "object",
+				"description": "The host OS environment."
+			},
+			"indexName": {
+				"type": "string",
+				"description": "The name of the index used as a prefix to name required ES config assets."
+			},
+			"templateConfig": {
+				"type": "string",
+				"description": "The path to the config file containing the Mapping-Configuration."
+			},
+			"mergeCustomProperties": {
+				"type": "string",
+				"description": "Wether custom properties should be merged into this template."
+			},
+			"ilmConfig": {
+				"type": "string",
+				"description": "Contains the ILM Policy configuration for that index."
+			},
+			"rollupConfig": {
+				"type": "string",
+				"description": "Contains the Rollup job for that index."
+			}
+		},
+		"additionalProperties": false
+	},
+	"start": "file.4",
+	"nodes": {
+		"axway-api-management.1": {
+			"type": "nodehandler://api-builder-plugin-axway-api-management/axway-api-management",
+			"name": "Get custom properties",
+			"method": "getCustomPropertiesConfig",
+			"parameters": [],
+			"outputs": {
+				"next": {
+					"routes": [
+						"file.1"
+					],
+					"context": "$.customProperties",
+					"metaName": "Next"
+				},
+				"error": {
+					"routes": [],
+					"context": "$.error",
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Get custom properties"
+		},
+		"elasticsearch.1": {
+			"type": "nodehandler://@axway-api-builder-ext/api-builder-plugin-fn-elasticsearch/elasticsearch",
+			"name": "Get index template",
+			"method": "getTemplate",
+			"parameters": [
+				{
+					"name": "name",
+					"type": "jsonpath",
+					"value": "$.indexName",
+					"metaName": "Index template name",
+					"metaDescription": "Name of the legacy index template."
+				}
+			],
+			"outputs": {
+				"next": {
+					"routes": [
+						"axway-api-management.2"
+					],
+					"context": "$.actualIndexTemplate",
+					"metaName": "Next"
+				},
+				"notFound": {
+					"routes": [
+						"axway-api-management.2"
+					],
+					"context": "$.actualIndexTemplate",
+					"metaName": "Not found"
+				},
+				"error": {
+					"routes": [],
+					"context": "$.error",
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Get Index Template"
+		},
+		"axway-api-management.2": {
+			"type": "nodehandler://api-builder-plugin-axway-api-management/axway-api-management",
+			"name": "Merge custom properties",
+			"method": "mergeCustomProperties",
+			"parameters": [
+				{
+					"name": "customProperties",
+					"type": "jsonpath",
+					"value": "$.customProperties",
+					"metaName": "Custom properties",
+					"metaDescription": "The custom properties as they have been loaded from the API-Manager"
+				},
+				{
+					"name": "mergeCustomProperties",
+					"type": "jsonpath",
+					"value": "$.mergeCustomProperties",
+					"metaName": "Merge custom properties",
+					"metaDescription": "Convience flag which basically turns off this flow now. This helps to simplify the flow."
+				},
+				{
+					"name": "desiredIndexTemplate",
+					"type": "jsonpath",
+					"value": "$.desiredIndexTemplate",
+					"metaName": "Desired Index template",
+					"metaDescription": "The desired Elasticsearch index template containing the mappings."
+				},
+				{
+					"name": "actualIndexTemplate",
+					"type": "jsonpath",
+					"value": "$.actualIndexTemplate",
+					"metaName": "Actual Index template",
+					"metaDescription": "The actual Index-Template mapping loaded from Elasticsearch used to compare if new custom properties have been added. If all custom properties are already part of the mapping, the noUpdate exit is used."
+				}
+			],
+			"outputs": {
+				"next": {
+					"routes": [
+						"setcontext.1"
+					],
+					"context": "$.desiredIndexTemplateBody",
+					"metaName": "Next"
+				},
+				"noUpdate": {
+					"routes": [
+						"elasticsearch.2"
+					],
+					"context": "$.desiredIndexTemplateBody",
+					"metaName": "No update"
+				},
+				"error": {
+					"routes": [],
+					"context": "$.error",
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Merge custom properties"
+		},
+		"elasticsearch.2": {
+			"type": "nodehandler://@axway-api-builder-ext/api-builder-plugin-fn-elasticsearch/elasticsearch",
+			"name": "Update index template",
+			"method": "putTemplate",
+			"parameters": [
+				{
+					"name": "updateWhenChanged",
+					"type": "boolean",
+					"value": "true",
+					"metaName": "Update when changed",
+					"metaDescription": "If true, the flow-node load the existing template and if present, the version is compared. Only if the version of the given template is higher, the existing template will be updated. If there is no existing template a new template is created."
+				},
+				{
+					"name": "recreate",
+					"type": "jsonpath",
+					"value": "$.updateIndexTemplate",
+					"metaName": "Recreate index template",
+					"metaDescription": "If true, the index template is always updated."
+				},
+				{
+					"name": "body",
+					"type": "jsonpath",
+					"value": "$.desiredIndexTemplateBody",
+					"metaName": "Template",
+					"metaDescription": "The template definition."
+				},
+				{
+					"name": "name",
+					"type": "jsonpath",
+					"value": "$.indexConfig.template.name",
+					"metaName": "Index template name",
+					"metaDescription": "Name of the legacy index template."
+				}
+			],
+			"outputs": {
+				"next": {
+					"routes": [
+						"elasticsearch.3"
+					],
+					"context": "$.indexTemplate",
+					"metaName": "Next"
+				},
+				"noUpdate": {
+					"routes": [],
+					"context": "$.message",
+					"metaName": "No update"
+				},
+				"error": {
+					"routes": [],
+					"context": "$.error",
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Put Index Template"
+		},
+		"file.1": {
+			"type": "nodehandler://@axway-api-builder-ext/api-builder-plugin-fn-file/file",
+			"name": "Read index template",
+			"method": "readFile",
+			"parameters": [
+				{
+					"name": "parseJson",
+					"type": "boolean",
+					"value": "true",
+					"metaName": "Parse JSON",
+					"metaDescription": "Turn this option if you are reading s JSON-File and would like to parse it into a JS-Object."
+				},
+				{
+					"name": "filename",
+					"type": "jsonpath",
+					"value": "$.indexConfig.template.config",
+					"metaName": "Source filename",
+					"metaDescription": "The filename to read."
+				}
+			],
+			"outputs": {
+				"next": {
+					"routes": [
+						"elasticsearch.1"
+					],
+					"context": "$.desiredIndexTemplate",
+					"metaName": "Next"
+				},
+				"notFound": {
+					"routes": [],
+					"context": "$.result",
+					"metaName": "Not found"
+				},
+				"error": {
+					"routes": [],
+					"context": "$.error",
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Read file"
+		},
+		"file.2": {
+			"type": "nodehandler://@axway-api-builder-ext/api-builder-plugin-fn-file/file",
+			"name": "Read ILM Config",
+			"method": "readFile",
+			"parameters": [
+				{
+					"name": "parseJson",
+					"type": "boolean",
+					"value": "true",
+					"metaName": "Parse JSON",
+					"metaDescription": "Turn this option if you are reading s JSON-File and would like to parse it into a JS-Object."
+				},
+				{
+					"name": "filename",
+					"type": "jsonpath",
+					"value": "$.indexConfig.ilm.config",
+					"metaName": "Source filename",
+					"metaDescription": "The filename to read."
+				}
+			],
+			"outputs": {
+				"next": {
+					"routes": [
+						"mustache.1"
+					],
+					"context": "$.ilmPolicyBody",
+					"metaName": "Next"
+				},
+				"notFound": {
+					"routes": [],
+					"context": "$.result",
+					"metaName": "Not found"
+				},
+				"error": {
+					"routes": [],
+					"context": "$.error",
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Read file"
+		},
+		"file.3": {
+			"type": "nodehandler://@axway-api-builder-ext/api-builder-plugin-fn-file/file",
+			"name": "Read Rollup job",
+			"method": "readFile",
+			"parameters": [
+				{
+					"name": "parseJson",
+					"type": "boolean",
+					"value": "true",
+					"metaName": "Parse JSON",
+					"metaDescription": "Turn this option if you are reading s JSON-File and would like to parse it into a JS-Object."
+				},
+				{
+					"name": "filename",
+					"type": "jsonpath",
+					"value": "$.indexConfig.rollup.config",
+					"metaName": "Source filename",
+					"metaDescription": "The filename to read."
+				}
+			],
+			"outputs": {
+				"next": {
+					"routes": [
+						"elasticsearch.5"
+					],
+					"context": "$.rollupJobBody",
+					"metaName": "Next"
+				},
+				"notFound": {
+					"routes": [],
+					"context": "$.result",
+					"metaName": "Not found"
+				},
+				"error": {
+					"routes": [],
+					"context": "$.error",
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Read file"
+		},
+		"elasticsearch.5": {
+			"type": "nodehandler://@axway-api-builder-ext/api-builder-plugin-fn-elasticsearch/elasticsearch",
+			"name": "Put Rollup job",
+			"method": "putRollupJob",
+			"parameters": [
+				{
+					"name": "body",
+					"type": "jsonpath",
+					"value": "$.rollupJobBody",
+					"metaName": "Job configuration",
+					"metaDescription": "The rollup job configuration"
+				},
+				{
+					"name": "replaceWhenChanged",
+					"type": "boolean",
+					"value": "true",
+					"metaName": "Recreate only when changed",
+					"metaDescription": "If set, a possibly existing roll-up job is only replaced if the configuration is different. For this purpose, the entire job configuration is compared. If no roll-up job exists, this parameter is ignored and a new job is created."
+				},
+				{
+					"name": "id",
+					"type": "jsonpath",
+					"value": "$.indexConfig.rollup.id",
+					"metaName": "Job-ID",
+					"metaDescription": "Identifier for the rollup job. This can be any alphanumeric string and uniquely identifies the data that is associated with the rollup job. The ID is persistent; it is stored with the rolled up data. If you create a job, let it run for a while, then delete the job, the data that the job rolled up is still be associated with this job ID. You cannot create a new job with the same ID since that could lead to problems with mismatched job configurations."
+				},
+				{
+					"name": "idSuffix",
+					"type": "jsonpath",
+					"value": "$.indexConfig.rollup.idSuffix",
+					"metaName": "Job-ID Suffix",
+					"metaDescription": "Mandatory if an existing job is to be replaced. The Job-ID suffix is used to generate the final Job-ID, which is used to create the job.  This suffix is especially necessary if an existing job is to be replaced. Existing jobs with the primary job ID are searched for, stopped/deleted and a new job with job ID + suffix is created."
+				}
+			],
+			"outputs": {
+				"next": {
+					"routes": [],
+					"context": "$.rollupJob",
+					"metaName": "Next"
+				},
+				"noUpdate": {
+					"routes": [],
+					"context": "$.message",
+					"metaName": "No update"
+				},
+				"error": {
+					"routes": [],
+					"context": "$.error",
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Put Rollup job"
+		},
+		"elasticsearch.6": {
+			"type": "nodehandler://@axway-api-builder-ext/api-builder-plugin-fn-elasticsearch/elasticsearch",
+			"name": "Put ILM policy",
+			"method": "putILMPolicy",
+			"parameters": [
+				{
+					"name": "body",
+					"type": "jsonpath",
+					"value": "$.ilmPolicyBody",
+					"metaName": "Policy-Body",
+					"metaDescription": "The lifecycle policy definition to register"
+				},
+				{
+					"name": "updateWhenChanged",
+					"type": "boolean",
+					"value": "true",
+					"metaName": "Update when changed",
+					"metaDescription": "If set, the specified ILM policy and the ILM policy in Elasticsearch are compared and only updated if they are different. If the ILM policy does not exist in Elasticsearch, the ILM policy is created."
+				},
+				{
+					"name": "policy",
+					"type": "jsonpath",
+					"value": "$.indexConfig.ilm.name",
+					"metaName": "Policy-Name",
+					"metaDescription": "The name of the index lifecycle policy"
+				},
+				{
+					"name": "attachToIndexTemplate",
+					"type": "jsonpath",
+					"value": "$.templateNameWithAlias",
+					"metaName": "Attach Policy to template",
+					"metaDescription": "If specified, the created/updated ILM policy is assigned to one more index templates. Index template names specified as a comma-separated list, each may contain an rollover alias. E.g. template1:aliasName1, template2"
+				}
+			],
+			"outputs": {
+				"next": {
+					"routes": [
+						"elasticsearch.7"
+					],
+					"context": "$.ilmPolicy",
+					"metaName": "Next"
+				},
+				"noUpdate": {
+					"routes": [
+						"elasticsearch.7"
+					],
+					"context": "$.message",
+					"metaName": "No update"
+				},
+				"error": {
+					"routes": [],
+					"context": "$.error",
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Put ILM policy"
+		},
+		"setcontext.1": {
+			"type": "nodehandler://axway-flow/setcontext",
+			"name": "Set update required",
+			"method": "setcontext",
+			"parameters": [
+				{
+					"name": "value",
+					"type": "boolean",
+					"value": "true",
+					"metaName": "Value"
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.updateIndexTemplate",
+					"routes": [
+						"elasticsearch.2"
+					],
+					"metaName": "Next"
+				}
+			},
+			"metaMethod": "Set Context"
+		},
+		"file.4": {
+			"type": "nodehandler://@axway-api-builder-ext/api-builder-plugin-fn-file/file",
+			"name": "Read Index-Config",
+			"method": "readFile",
+			"parameters": [
+				{
+					"name": "parseJson",
+					"type": "boolean",
+					"value": "true",
+					"metaName": "Parse JSON",
+					"metaDescription": "Turn this option if you are reading s JSON-File and would like to parse it into a JS-Object."
+				},
+				{
+					"name": "filename",
+					"type": "string",
+					"value": "\"elasticsearch_config/index_config.json\"",
+					"metaName": "Source filename",
+					"metaDescription": "The filename to read."
+				}
+			],
+			"outputs": {
+				"next": {
+					"routes": [
+						"javascript.1"
+					],
+					"context": "$.configFile",
+					"metaName": "Next"
+				},
+				"notFound": {
+					"routes": [],
+					"context": "$.result",
+					"metaName": "Not found"
+				},
+				"error": {
+					"routes": [],
+					"context": "$.error",
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Read file"
+		},
+		"javascript.1": {
+			"type": "nodehandler://@axway/api-builder-plugin-fn-javascript/javascript",
+			"name": "Execute",
+			"method": "Execute",
+			"parameters": [
+				{
+					"name": "data",
+					"type": "jsonpath",
+					"value": "$",
+					"metaName": "data",
+					"metaDescription": "The value to apply as the `data` argument to the JavaScript code. For objects and arrays, `data` is passed by reference."
+				},
+				{
+					"name": "code",
+					"type": "string",
+					"value": "\"console.log(`Index-Name ${data.indexName}`);\\n  return data.configFile[data.indexName];\"",
+					"metaName": "code",
+					"metaDescription": "A JavaScript function body. Supports `await` and returning promises."
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.indexConfig",
+					"routes": [
+						"axway-api-management.1",
+						"delay.1"
+					],
+					"metaName": "Next"
+				},
+				"error": {
+					"context": "$.error",
+					"routes": [],
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Execute"
+		},
+		"delay.1": {
+			"type": "nodehandler://axway-flow/delay",
+			"name": "Wait for template",
+			"method": "delay",
+			"parameters": [
+				{
+					"name": "delay",
+					"type": "number",
+					"value": "2000",
+					"metaName": "Delay",
+					"metaDescription": "The length of delay, in milliseconds."
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.delayed",
+					"routes": [
+						"file.3",
+						"file.2",
+						"elasticsearch.4"
+					],
+					"metaName": "Next"
+				}
+			},
+			"metaMethod": "Delay"
+		},
+		"elasticsearch.3": {
+			"type": "nodehandler://@axway-api-builder-ext/api-builder-plugin-fn-elasticsearch/elasticsearch",
+			"name": "Rollover index",
+			"method": "indicesRollover",
+			"parameters": [
+				{
+					"name": "alias",
+					"type": "jsonpath",
+					"value": "$.indexConfig.alias",
+					"metaName": "Alias",
+					"metaDescription": "Name of the existing index alias or data stream on which to the perform the rollover. Can be a string or an object. (e.g. { \"my-rollover-alias\": {} }). Only one alias is supported."
+				}
+			],
+			"outputs": {
+				"next": {
+					"routes": [],
+					"context": "$.result",
+					"metaName": "Next"
+				},
+				"error": {
+					"routes": [],
+					"context": "$.error",
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Rollover index"
+		},
+		"mustache.1": {
+			"type": "nodehandler://@axway/api-builder-plugin-fn-mustache/mustache",
+			"name": "Rollover-Alias",
+			"method": "format",
+			"parameters": [
+				{
+					"name": "data",
+					"type": "jsonpath",
+					"value": "$",
+					"metaName": "Data",
+					"metaDescription": "The value to assign to the \"data\" variable in the template."
+				},
+				{
+					"name": "template",
+					"type": "string",
+					"value": "\"{{data.indexConfig.template.name}}:{{data.indexConfig.alias}}\"",
+					"metaName": "Template",
+					"metaDescription": "The Mustache template. e.g. `Hi {{data.user}}`."
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.templateNameWithAlias",
+					"routes": [
+						"elasticsearch.6"
+					],
+					"metaName": "Next"
+				},
+				"error": {
+					"context": "$.error",
+					"routes": [],
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Format string"
+		},
+		"elasticsearch.4": {
+			"type": "nodehandler://@axway-api-builder-ext/api-builder-plugin-fn-elasticsearch/elasticsearch",
+			"name": "Index exists",
+			"method": "indicesExists",
+			"parameters": [
+				{
+					"name": "name",
+					"type": "jsonpath",
+					"value": "$.indexConfig.alias",
+					"metaName": "Alias",
+					"metaDescription": "Comma-separated list or wildcard expression of index alias names used to limit the request"
+				}
+			],
+			"outputs": {
+				"next": {
+					"routes": [],
+					"context": "$.result",
+					"metaName": "Next"
+				},
+				"notFound": {
+					"routes": [
+						"mustache.2"
+					],
+					"context": "$.result",
+					"metaName": "Not found"
+				},
+				"error": {
+					"routes": [],
+					"context": "$.error",
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Index exists"
+		},
+		"elasticsearch.7": {
+			"type": "nodehandler://@axway-api-builder-ext/api-builder-plugin-fn-elasticsearch/elasticsearch",
+			"name": "Create index",
+			"method": "indicesCreate",
+			"parameters": [
+				{
+					"name": "index",
+					"type": "jsonpath",
+					"value": "$.initialIndexName",
+					"metaName": "Index",
+					"metaDescription": "The name of the index"
+				},
+				{
+					"name": "alias",
+					"type": "jsonpath",
+					"value": "$.indexConfig.alias",
+					"metaName": "Alias name",
+					"metaDescription": "The alias for the index. If an index configuration is given, this alias name is merged into it."
+				}
+			],
+			"outputs": {
+				"next": {
+					"routes": [],
+					"context": "$.result",
+					"metaName": "Next"
+				},
+				"error": {
+					"routes": [],
+					"context": "$.error",
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Create index"
+		},
+		"mustache.2": {
+			"type": "nodehandler://@axway/api-builder-plugin-fn-mustache/mustache",
+			"name": "Define index name",
+			"method": "format",
+			"parameters": [
+				{
+					"name": "template",
+					"type": "string",
+					"value": "\"{{data.indexConfig.alias}}-000001\"",
+					"metaName": "Template",
+					"metaDescription": "The Mustache template. e.g. `Hi {{data.user}}`."
+				},
+				{
+					"name": "data",
+					"type": "jsonpath",
+					"value": "$",
+					"metaName": "Data",
+					"metaDescription": "The value to assign to the \"data\" variable in the template."
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.initialIndexName",
+					"routes": [
+						"elasticsearch.7"
+					],
+					"metaName": "Next"
+				},
+				"error": {
+					"context": "$.error",
+					"routes": [],
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Format string"
+		}
+	}
+}

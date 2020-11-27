@@ -1,0 +1,206 @@
+{
+    "order": 0,
+    "version": 1,
+    "index_patterns": [
+      "apigw-traffic-summary-*"
+    ],
+    "settings": {
+      "index": {
+        "lifecycle": {
+          "name": "logstash-policy",
+          "rollover_alias": "apigw-traffic-summary"
+        },
+        "codec": "best_compression",
+        "number_of_shards": "5",
+        "number_of_replicas": "1"
+      }
+    },
+    "mappings": {
+      "dynamic": false,
+      "_source": {
+        "enabled": true
+      },
+      "properties": {
+        "processInfo.serviceId": {
+          "type": "keyword"
+        },
+        "processInfo.version": {
+          "norms": false,
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword"
+            }
+          }
+        },
+        "http.wafStatus": {
+          "type": "integer"
+        },
+        "serviceContext.routingPolicy": {
+          "type": "keyword"
+        },
+        "serviceContext.faulthandlerPolicy": {
+          "type": "keyword"
+        },
+        "processInfo.gatewayName": {
+          "norms": false,
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword"
+            }
+          }
+        },
+        "serviceContext.requestPolicy": {
+          "type": "keyword"
+        },
+        "finalStatus": {
+          "type": "keyword"
+        },
+        "http.uri": {
+          "norms": false,
+          "type": "text"
+        },
+        "http.localPort": {
+          "type": "integer"
+        },
+        "serviceContext.apiVersion": {
+          "type": "keyword"
+        },
+        "serviceContext.responsePolicy": {
+          "type": "keyword"
+        },
+        "serviceContext.appOrg": {
+          "type": "keyword"
+        },
+        "http.bytesReceived": {
+          "type": "integer"
+        },
+        "serviceContext.method": {
+          "norms": false,
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword"
+            }
+          }
+        },
+        "http.localAddr": {
+          "type": "keyword"
+        },
+        "duration": {
+          "type": "integer"
+        },
+        "processInfo.groupName": {
+          "norms": false,
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword"
+            }
+          }
+        },
+        "protocol": {
+          "type": "keyword"
+        },
+        "fileTransfer.serviceType": {
+          "type": "keyword"
+        },
+        "serviceContext.apiDeprecated": {
+          "type": "boolean"
+        },
+        "serviceContext.apiSecurity": {
+          "type": "keyword"
+        },
+        "correlationId": {
+          "type": "keyword",
+          "doc_values": false
+        },
+        "http.method": {
+          "type": "keyword"
+        },
+        "serviceContext.service": {
+          "norms": false,
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword"
+            }
+          }
+        },
+        "serviceContext.apiState": {
+          "type": "keyword"
+        },
+        "serviceContext.apiOrg": {
+          "type": "keyword"
+        },
+        "protocolSrc": {
+          "norms": false,
+          "type": "text"
+        },
+        "processInfo.groupId": {
+          "type": "keyword"
+        },
+        "http.remoteAddr": {
+          "type": "keyword"
+        },
+        "serviceContext.monitor": {
+          "type": "boolean"
+        },
+        "http.remotePort": {
+          "type": "integer"
+        },
+        "serviceContext.backendBasePath": {
+          "type": "keyword"
+        },
+        "http.authSubjectId": {
+          "type": "keyword"
+        },
+        "processInfo.hostname": {
+          "norms": false,
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword"
+            }
+          }
+        },
+        "processInfo.gatewayRegion": {
+          "type": "keyword"
+        },
+        "http.vhost": {
+          "type": "keyword"
+        },
+        "fileTransfer.direction": {
+          "type": "keyword"
+        },
+        "@timestamp": {
+          "type": "date"
+        },
+        "http.remoteName": {
+          "type": "keyword"
+        },
+        "serviceContext.app": {
+          "norms": false,
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword"
+            }
+          }
+        },
+        "http.status": {
+          "type": "integer"
+        },
+        "http.bytesSent": {
+          "type": "integer"
+        },
+        "http.statusText": {
+          "type": "keyword"
+        }
+      }
+    },
+    "aliases": {
+      
+    }
+  }

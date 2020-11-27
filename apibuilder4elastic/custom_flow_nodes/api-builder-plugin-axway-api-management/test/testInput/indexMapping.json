@@ -1,0 +1,200 @@
+{
+    "mappings": {
+      "dynamic": "false",
+      "properties": {
+        "@timestamp": {
+          "type": "date"
+        },
+        "correlationId": {
+          "type": "keyword",
+          "doc_values": false
+        },
+        "duration": {
+          "type": "integer"
+        },
+        "fileTransfer": {
+          "properties": {
+            "direction": {
+              "type": "keyword"
+            },
+            "serviceType": {
+              "type": "keyword"
+            }
+          }
+        },
+        "finalStatus": {
+          "type": "keyword"
+        },
+        "http": {
+          "properties": {
+            "authSubjectId": {
+              "type": "keyword"
+            },
+            "bytesReceived": {
+              "type": "integer"
+            },
+            "bytesSent": {
+              "type": "integer"
+            },
+            "localAddr": {
+              "type": "keyword"
+            },
+            "localPort": {
+              "type": "integer"
+            },
+            "method": {
+              "type": "keyword"
+            },
+            "remoteAddr": {
+              "type": "keyword"
+            },
+            "remoteName": {
+              "type": "keyword"
+            },
+            "remotePort": {
+              "type": "integer"
+            },
+            "status": {
+              "type": "integer"
+            },
+            "statusText": {
+              "type": "keyword"
+            },
+            "uri": {
+              "type": "text",
+              "norms": false
+            },
+            "vhost": {
+              "type": "keyword"
+            },
+            "wafStatus": {
+              "type": "integer"
+            }
+          }
+        },
+        "processInfo": {
+          "properties": {
+            "gatewayName": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword"
+                }
+              },
+              "norms": false
+            },
+            "gatewayRegion": {
+              "type": "keyword"
+            },
+            "groupId": {
+              "type": "keyword"
+            },
+            "groupName": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword"
+                }
+              },
+              "norms": false
+            },
+            "hostname": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword"
+                }
+              },
+              "norms": false
+            },
+            "serviceId": {
+              "type": "keyword"
+            },
+            "version": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword"
+                }
+              },
+              "norms": false
+            }
+          }
+        },
+        "protocol": {
+          "type": "keyword"
+        },
+        "protocolSrc": {
+          "type": "text",
+          "norms": false
+        },
+        "serviceContext": {
+          "properties": {
+            "apiDeprecated": {
+              "type": "boolean"
+            },
+            "apiOrg": {
+              "type": "keyword"
+            },
+            "apiSecurity": {
+              "type": "keyword"
+            },
+            "apiState": {
+              "type": "keyword"
+            },
+            "apiVersion": {
+              "type": "keyword"
+            },
+            "app": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword"
+                }
+              },
+              "norms": false
+            },
+            "appOrg": {
+              "type": "keyword"
+            },
+            "backendBasePath": {
+              "type": "keyword"
+            },
+            "faulthandlerPolicy": {
+              "type": "keyword"
+            },
+            "method": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword"
+                }
+              },
+              "norms": false
+            },
+            "monitor": {
+              "type": "boolean"
+            },
+            "requestPolicy": {
+              "type": "keyword"
+            },
+            "responsePolicy": {
+              "type": "keyword"
+            },
+            "routingPolicy": {
+              "type": "keyword"
+            },
+            "service": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword"
+                }
+              },
+              "norms": false
+            }
+          }
+        }
+      }
+    }
+  }
