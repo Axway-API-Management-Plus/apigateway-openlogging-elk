@@ -1,0 +1,1 @@
+# AWS-Deployment in one region - 2 availbility zones
