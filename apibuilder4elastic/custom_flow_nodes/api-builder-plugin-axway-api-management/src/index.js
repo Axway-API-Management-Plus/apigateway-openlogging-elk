@@ -144,7 +144,8 @@ async function addLookupAPIMocks(cache) {
 		responsePolicy: "N/A", 
 		faulthandlerPolicy: "N/A", 
 		apiSecurity: "API-Key", 
-		backendBasePath:"https://petstore.swagger.io"
+		backendBasePath:"https://petstore.swagger.io", 
+		custom: {}
 	});
 	cache.set( "/healthcheck###group-2", {organizationName: "Mocked Org B", version: "Z.Z.Z", deprecated: true, state: "unpublished"});
 	cache.set( "/api/with/policies/backend/and/oauth###group-2", {
@@ -157,7 +158,8 @@ async function addLookupAPIMocks(cache) {
 		responsePolicy: "I take care abouth the response", 
 		faulthandlerPolicy: "OMG Errors",
 		apiSecurity: "OAuth", 
-		backendBasePath:"https://im.a.special.backend.host:7788"
+		backendBasePath:"https://im.a.special.backend.host:7788", 
+		custom: {}
 	});
 }
 

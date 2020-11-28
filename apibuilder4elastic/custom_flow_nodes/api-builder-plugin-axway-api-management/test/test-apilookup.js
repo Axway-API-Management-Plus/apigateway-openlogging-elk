@@ -255,5 +255,20 @@ describe('Test API Lookup', () => {
 			expect(value.custom.customProperty3).to.equal(`true`);
 			nock.cleanAll();
 		});
+
+		// Empty custom properties object make life easier in the Logstash pipeline
+		it('should return an empty custom properties object, even if there are no custom properties configured', async () => {
+			nock('https://mocked-api-gateway:8175').get('/api/portal/v1.3/proxies?field=name&op=eq&value=No custom properties').replyWithFile(200, './test/testReplies/apimanager/apiProxyPassthrough.json');
+			nock('https://mocked-api-gateway:8175').get(`/api/portal/v1.3/organizations/439ec2bd-0350-459c-8df3-bb6d14da6bc8`).replyWithFile(200, './test/testReplies/apimanager/organizationAPIDevelopment.json');
+			
+			const { value, output } = await flowNode.lookupAPIDetails({ 
+				apiName: 'No custom properties', apiPath: '/without/security', mapCustomProperties: true
+			});
+			console.log(`value: ${value}`);
+			expect(output).to.equal('next');
+			expect(value.organizationName).to.equal(`API Development`);
+			expect(value.custom).to.be.a('object');
+			nock.cleanAll();
+		});
 	});
 });
