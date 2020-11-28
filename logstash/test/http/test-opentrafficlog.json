@@ -125,7 +125,8 @@
             "routingPolicy": "N/A", 
             "responsePolicy": "N/A", 
             "faulthandlerPolicy": "N/A", 
-            "backendBasePath": "https://petstore.swagger.io"
+            "backendBasePath": "https://petstore.swagger.io",
+            "custom": "{}"
           },
           "type": "summaryIndex"
         },
@@ -161,7 +162,8 @@
               "routingPolicy": "N/A", 
               "responsePolicy": "N/A", 
               "faulthandlerPolicy": "N/A", 
-              "backendBasePath": "https://petstore.swagger.io"
+              "backendBasePath": "https://petstore.swagger.io",
+              "custom": "{}"
             }
           }
         }
@@ -195,7 +197,8 @@
             "routingPolicy": "I do the routing", 
             "responsePolicy": "I take care abouth the response", 
             "faulthandlerPolicy": "OMG Errors", 
-            "backendBasePath": "https://im.a.special.backend.host:7788"
+            "backendBasePath": "https://im.a.special.backend.host:7788",
+            "custom":"{}"
           },
           "processInfo": {
             "hostname": "ip-172-31-62-146.ec2.internal",
@@ -239,7 +242,8 @@
               "routingPolicy": "I do the routing", 
               "responsePolicy": "I take care abouth the response", 
               "faulthandlerPolicy": "OMG Errors", 
-              "backendBasePath": "https://im.a.special.backend.host:7788"
+              "backendBasePath": "https://im.a.special.backend.host:7788",
+              "custom":"{}"
             }
           }
         }
