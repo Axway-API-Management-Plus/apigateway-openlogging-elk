@@ -249,9 +249,10 @@ describe('Test API Lookup', () => {
 			expect(value.organizationName).to.equal(`API Development`);
 			expect(value.name).to.equal(`API Custom-Properties Test`);
 			expect(value.path).to.equal(`/api-custom-prop-test`);
-			expect(value.customProperties.customProperty1).to.equal(`Test-Input 1`);
-			expect(value.customProperties.customProperty2).to.equal(`1`);
-			expect(value.customProperties.customProperty3).to.equal(`true`);
+			expect(value.custom).to.be.a('object');
+			expect(value.custom.customProperty1).to.equal(`Test-Input 1`);
+			expect(value.custom.customProperty2).to.equal(`1`);
+			expect(value.custom.customProperty3).to.equal(`true`);
 			nock.cleanAll();
 		});
 	});

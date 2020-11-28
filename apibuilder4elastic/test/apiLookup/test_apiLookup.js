@@ -171,7 +171,7 @@ describe('Test API-Lookup endpoint', function () {
 			});
 		});
 
-		it.only('[apilookup-0008] should return API incl. customProperties object', () => {
+		it('[apilookup-0008] should return API incl. customProperties object', () => {
 			nock('https://mocked-api-gateway:8075').get('/api/portal/v1.3/proxies?field=name&op=eq&value=Petstore HTTPS').replyWithFile(200, './test/mockedReplies/apimanager/apiProxyWithCustomProperties.json');
 			nock('https://mocked-api-gateway:8075').get('/api/portal/v1.3/organizations/2bfaa1c2-49ab-4059-832d-CHRIS').replyWithFile(200, './test/mockedReplies/apimanager/organizationChris.json');
 			return requestAsync({
