@@ -147,7 +147,13 @@ async function addLookupAPIMocks(cache) {
 		backendBasePath:"https://petstore.swagger.io", 
 		custom: {}
 	});
-	cache.set( "/healthcheck###group-2", {organizationName: "Mocked Org B", version: "Z.Z.Z", deprecated: true, state: "unpublished"});
+	cache.set( "/healthcheck###group-2", {
+		organizationName: "Mocked Org B", 
+		version: "Z.Z.Z", 
+		deprecated: true, 
+		state: "unpublished",
+		custom: {}
+	});
 	cache.set( "/api/with/policies/backend/and/oauth###group-2", {
 		organizationName: "Mocked Org B", 
 		version: "Z.Z.Z", 
