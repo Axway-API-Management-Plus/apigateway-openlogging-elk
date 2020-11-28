@@ -183,9 +183,9 @@ describe('Test API-Lookup endpoint', function () {
 				expect(response.statusCode).to.equal(200);
 				expect(body).to.be.an('Object');
 				expect(body.path).to.equal('/my/api/with/custom/properties');
-				expect(body.customProperties.customProperty1).to.equal('Test-Input 1');
-				expect(body.customProperties.customProperty2).to.equal('1');
-				expect(body.customProperties.customProperty3).to.equal('true');
+				expect(body.custom.customProperty1).to.equal('Test-Input 1');
+				expect(body.custom.customProperty2).to.equal('1');
+				expect(body.custom.customProperty3).to.equal('true');
 				nock.cleanAll();
 			});
 		});
