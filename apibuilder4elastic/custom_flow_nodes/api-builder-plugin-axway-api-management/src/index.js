@@ -131,7 +131,7 @@ async function isAPIManagerUserAdmin(apiManagerConfig, logger) {
 /**
  * This adds a number of Keys into the cache that are triggered 
  * by the Logstash-Pipeline tests. 
- * This avoids to have an API-Manager Up&Running 
+ * This avoids to have an API-Manager Up&Running when Logstash pipelines are tested. 
  */
 async function addLookupAPIMocks(cache) {
 	cache.set( "/petstore/v2/user/Chris###group-2", {
@@ -166,6 +166,23 @@ async function addLookupAPIMocks(cache) {
 		apiSecurity: "OAuth", 
 		backendBasePath:"https://im.a.special.backend.host:7788", 
 		custom: {}
+	});
+	cache.set( "/api/with/custom/properties###group-2", {
+		organizationName: "Mocked Org C", 
+		version: "Z.Z.Z", 
+		deprecated: true, 
+		state: "pupublished", 
+		routingPolicy: "N/A", 
+		requestPolicy: "N/A", 
+		responsePolicy: "N/A", 
+		faulthandlerPolicy: "N/A", 
+		apiSecurity: "OAPI-KeyAuth", 
+		backendBasePath:"https://im.a.special.backend.host:7788", 
+		custom: {
+			customProperty1: "value 1",
+			customProperty2: "value 2",
+			customProperty3: "value 3"
+		}
 	});
 }
 
