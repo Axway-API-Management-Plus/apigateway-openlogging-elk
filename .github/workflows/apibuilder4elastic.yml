@@ -27,7 +27,7 @@ jobs:
     - name: Starting Elasticsearch instance
       uses: nyaruka/elasticsearch-action@v1
       with:
-        elastic version: '7.9.0' 
+        elastic version: '7.10.0' 
     - name: Sleep 15 seconds to make sure ES is ready
       uses: jakejarvis/wait-action@master
       with:
