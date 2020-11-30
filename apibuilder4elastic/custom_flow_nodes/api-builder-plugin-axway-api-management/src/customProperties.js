@@ -51,8 +51,11 @@ async function mergeCustomProperties(params, options) {
 		if(desiredTemplate == undefined) return false;
 		if(actualTemplate != undefined && actualTemplate.mappings != undefined && actualTemplate.mappings.properties[`custom.${customPropertyName}`] != undefined) {
 			options.logger.info(`Mapping for custom property: ${customPropertyName} already exists. No update required.`);
+			// Take over the actual custom properties mapping!
+			desiredTemplate.mappings.properties[`custom.${customPropertyName}`] = actualTemplate.mappings.properties[`custom.${customPropertyName}`];
 			return false;
 		} else {
+			options.logger.info(`Update required for custom property: ${customPropertyName}.`);
 			if(type == "custom") {
 				desiredTemplate.mappings.properties[`custom.${customPropertyName}`] = { type: "text", norms: false};
 			} else {

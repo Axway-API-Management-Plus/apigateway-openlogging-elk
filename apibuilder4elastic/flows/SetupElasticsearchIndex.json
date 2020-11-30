@@ -423,14 +423,14 @@
 			"outputs": {
 				"next": {
 					"routes": [
-						"elasticsearch.7"
+						"elasticsearch.4"
 					],
 					"context": "$.ilmPolicy",
 					"metaName": "Next"
 				},
 				"noUpdate": {
 					"routes": [
-						"elasticsearch.7"
+						"elasticsearch.4"
 					],
 					"context": "$.message",
 					"metaName": "No update"

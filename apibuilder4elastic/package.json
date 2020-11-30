@@ -3,11 +3,9 @@
 	"description": "This API-Builder project provides an ELK-Based Traffic-Monitor API.",
 	"main": "app.js",
 	"version": "v1.0.0",
-	"author": {
-		"email": "cwiechmann@axway.com",
-		"name": "Chris Wiechmann",
-		"url": "https://axway.com"
-	},
+	"author": "Chris Wiechmann",
+	"email": "cwiechmann@axway.com",
+	"url": "https://axway.com",
 	"license": "Apache-2.0",
 	"keywords": [
 		"api-builder",

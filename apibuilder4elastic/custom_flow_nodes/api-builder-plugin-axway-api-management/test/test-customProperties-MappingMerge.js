@@ -88,7 +88,7 @@ describe('Merge custom properties tests', () => {
 		it('should result in an update as some of the required custom properties are missing', async () => {
 			const { value, output } = await flowNode.mergeCustomProperties({ 
 				customProperties: JSON.parse(fs.readFileSync('./test/testInput/customPropertiesConfig.json'), null), 
-				desiredIndexTemplate: JSON.parse(fs.readFileSync('./test/testInput/desiredIndexTemplateWithCustomProps.json'), null),
+				desiredIndexTemplate: JSON.parse(fs.readFileSync('./test/testInput/desiredIndexTemplate.json'), null),
 				actualIndexTemplate: JSON.parse(fs.readFileSync('./test/testInput/actualIndexTemplateWithLessCustomProps.json'), null)
 			});
 			expect(output).to.equal('next');
