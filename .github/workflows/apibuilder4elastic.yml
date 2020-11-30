@@ -31,10 +31,10 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - name: Sleep 30 seconds to make sure ES is ready
+    - name: Sleep 15 seconds to make sure ES is ready
       uses: jakejarvis/wait-action@master
       with:
-        time: '30s'
+        time: '15s'
     - name: Show ES Logs
       run: |
         echo "Logs of ES-Service container: ${{ job.services.elasticsearch.id }}"
