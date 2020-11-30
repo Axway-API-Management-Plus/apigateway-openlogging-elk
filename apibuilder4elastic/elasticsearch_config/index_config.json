@@ -9,11 +9,6 @@
         "ilm" : {
             "config": "elasticsearch_config/traffic-summary/ilm_policy.json",
             "name": "traffic-summary-ilm"
-        }, 
-        "rollup": {
-            "config": "elasticsearch_config/traffic-summary/rollup_job.json", 
-            "id": "traffic-summary-rollup", 
-            "idSuffix": "v1"
         }
     }, 
     "traffic-details": {
