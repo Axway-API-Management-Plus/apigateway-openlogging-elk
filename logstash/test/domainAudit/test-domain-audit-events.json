@@ -1,0 +1,23 @@
+{
+  "fields": {
+    "gatewayName": "API-Gateway 3",
+    "gatewayRegion": "US"
+  },
+  "codec": "json_lines",
+  "testcases": [
+    {
+      "description": "Make sure simple 'Deployment data read by user ...' is dropped - As it is created constantly for each logged in API-Gateway Monitor",
+      "input": [
+        "{\"message\":\"Deployment data read by user 'admin'\",\"eventId\":1037,\"user\":\"admin\",\"outcome\":\"success\",\"additionalInfo\":\"\",\"metaData\":{},\"timeStamp\":1606742244720}"
+      ],
+      "expected": [ ]
+    },
+    {
+      "description": "Make sure simple 'Deployment data with pending read by user ...' is dropped - As it is created constantly for each logged in API-Gateway Monitor",
+      "input": [
+        "{\"message\":\"Deployment data with pending read by user 'admin'\",\"eventId\":1041,\"user\":\"admin\",\"outcome\":\"success\",\"additionalInfo\":\"\",\"metaData\":{},\"timeStamp\":1606742273624}"
+      ],
+      "expected": [ ]
+    }
+  ]
+}
