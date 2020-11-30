@@ -13,6 +13,12 @@ jobs:
       workingDirectory: 'apibuilder4elastic'
 
     runs-on: ubuntu-latest
+    services:
+      elasticsearch:
+        image: docker.elastic.co/elasticsearch/elasticsearch:7.10.0
+        ports: 
+          - 9200:9200
+          - 9300:9300
 
     strategy:
       matrix:
@@ -24,14 +30,6 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - name: Starting Elasticsearch instance
-      uses: nyaruka/elasticsearch-action@v1
-      with:
-        elastic version: '7.10.0' 
-    - name: Sleep 15 seconds to make sure ES is ready
-      uses: jakejarvis/wait-action@master
-      with:
-        time: '15s'
     - name: Test API-Builder API
       working-directory: ${{env.workingDirectory}}
       env:
