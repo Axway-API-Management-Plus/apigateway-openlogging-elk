@@ -240,7 +240,7 @@ ELASTICSEARCH_CLUSTERNAME=axway-apim-elasticsearch
 # ----------------------------------------------------------------------------------------------
 # Define the version of the Elastic-Stack to use. Based on this version Docker images are pulled
 # Used-By: Elasticsearch, Filebeat, Kibana, Logstash
-ELASTIC_VERSION=7.9.2
+ELASTIC_VERSION=7.10.0
 
 ################################################################################################
 #                         Certificates and Certificate authorities
