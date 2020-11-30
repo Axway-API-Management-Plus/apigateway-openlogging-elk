@@ -17,7 +17,10 @@
         "min_age": "15d",
         "actions": {
           "allocate": {
-            "number_of_replicas": 1
+            "number_of_replicas": 1,
+            "include": { },
+            "exclude": { },
+            "require": { }
           },
           "shrink": {
             "number_of_shards": 1
@@ -38,7 +41,9 @@
       "delete": {
         "min_age": "10d",
         "actions": {
-          "delete": {}
+          "delete": {
+            "delete_searchable_snapshot": true
+          }
         }
       }
     }

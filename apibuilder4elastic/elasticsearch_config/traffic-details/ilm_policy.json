@@ -20,7 +20,10 @@
             "number_of_replicas": 1
           },
           "shrink": {
-            "number_of_shards": 1
+            "number_of_shards": 1,
+            "include": { },
+            "exclude": { },
+            "require": { }
           },
           "set_priority": {
             "priority": 50
@@ -38,7 +41,9 @@
       "delete": {
         "min_age": "5d",
         "actions": {
-          "delete": {}
+          "delete": {
+            "delete_searchable_snapshot": true
+          }
         }
       }
     }
