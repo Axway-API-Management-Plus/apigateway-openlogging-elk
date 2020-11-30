@@ -20,7 +20,11 @@
  */
 async function mergeCustomProperties(params, options) {
 	const { logger } = options;
-	if (params.mergeCustomProperties != undefined && params.mergeCustomProperties == "false") {
+	debugger;
+	if (params.mergeCustomProperties == undefined) {
+		params.mergeCustomProperties = false;
+	}
+	if (!params.mergeCustomProperties) {
 		return options.setOutput('noUpdate', {message: 'Custom-Properties not merged as mergeCustomProperties is false'});
 	}
 	if (!params.customProperties) {

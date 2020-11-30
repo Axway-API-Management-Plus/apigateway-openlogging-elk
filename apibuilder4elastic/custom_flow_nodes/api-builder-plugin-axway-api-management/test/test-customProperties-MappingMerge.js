@@ -33,6 +33,18 @@ describe('Merge custom properties tests', () => {
 			expect(output).to.equal('error');
 		});
 
+		it('should return noUpdate if mergeCustomProperties is false', async () => {
+			var desiredIndexTemplate = JSON.parse(fs.readFileSync('./test/testInput/desiredIndexTemplate.json'), null);
+			const { value, output } = await flowNode.mergeCustomProperties({ 
+				customProperties: JSON.parse(fs.readFileSync('./test/testInput/customPropertiesConfig.json'), null), 
+				desiredIndexTemplate: desiredIndexTemplate, 
+				mergeCustomProperties: false
+			});
+
+			expect(output).to.equal('next');
+			expect(value).to.deep.equal(desiredIndexTemplate);
+		});
+
 		it('should NOT error when actualIndexTemplate is missing', async () => {
 			const { value, output } = await flowNode.mergeCustomProperties({ 
 				customProperties: JSON.parse(fs.readFileSync('./test/testInput/customPropertiesConfig.json'), null), 

@@ -111,13 +111,6 @@
 					"metaDescription": "The custom properties as they have been loaded from the API-Manager"
 				},
 				{
-					"name": "mergeCustomProperties",
-					"type": "jsonpath",
-					"value": "$.mergeCustomProperties",
-					"metaName": "Merge custom properties",
-					"metaDescription": "Convience flag which basically turns off this flow now. This helps to simplify the flow."
-				},
-				{
 					"name": "desiredIndexTemplate",
 					"type": "jsonpath",
 					"value": "$.desiredIndexTemplate",
@@ -130,6 +123,13 @@
 					"value": "$.actualIndexTemplate",
 					"metaName": "Actual Index template",
 					"metaDescription": "The actual Index-Template mapping loaded from Elasticsearch used to compare if new custom properties have been added. If all custom properties are already part of the mapping, the noUpdate exit is used."
+				},
+				{
+					"name": "mergeCustomProperties",
+					"type": "jsonpath",
+					"value": "$.indexConfig.template.mergeCustomProperties",
+					"metaName": "Merge custom properties",
+					"metaDescription": "Convience flag which basically turns off this flow now. This helps to simplify the flow."
 				}
 			],
 			"outputs": {
