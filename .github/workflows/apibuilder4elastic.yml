@@ -30,10 +30,14 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
+    - name: Sleep 15 seconds to make sure ES is ready
+      uses: jakejarvis/wait-action@master
+      with:
+        time: '15s'
     - name: Test API-Builder API
       working-directory: ${{env.workingDirectory}}
       env:
-        ELASTICSEARCH_HOSTS: 'http://elasticsearch:9200'
+        ELASTICSEARCH_HOSTS: 'http://localhost:9200'
         VALIDATE_CONFIG: false
         LOG_LEVEL: INFO
         CI: true
