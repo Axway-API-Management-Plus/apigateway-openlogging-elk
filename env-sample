@@ -217,7 +217,7 @@ MEMCACHED=memcached:11211
 # It should not be bigger than 31GB. Defaults to 1GB by ES default which is in most cases not 
 # correct.
 # Used-By: Elasticsearch
-# ES_JAVA_OPTS="-Xms4g -Xmx8g"
+# ES_JAVA_OPTS="-Xms8g -Xmx8g"
 
 # ----------------------------------------------------------------------------------------------
 # The number of Filebeat worker threads sending data to Logstash. This should be sufficient in 

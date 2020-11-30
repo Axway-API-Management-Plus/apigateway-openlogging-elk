@@ -70,7 +70,7 @@
 				{
 					"name": "name",
 					"type": "jsonpath",
-					"value": "$.indexName",
+					"value": "$.indexConfig.template.name",
 					"metaName": "Index template name",
 					"metaDescription": "Name of the legacy index template."
 				}
@@ -403,7 +403,7 @@
 					"type": "boolean",
 					"value": "true",
 					"metaName": "Update when changed",
-					"metaDescription": "If set, the specified ILM policy and the ILM policy in Elasticsearch are compared and only updated if they are different. If the ILM policy does not exist in Elasticsearch, the ILM policy is created."
+					"metaDescription": "If set, the specified ILM policy and the ILM policy in Elasticsearch are compared and only updated if they are different. Note, that the ILM-Policy returned from Elasticsearch may contain default values. These defaults must be part of you desired ILM Policy. If the ILM policy does not exist in Elasticsearch, the ILM policy is created."
 				},
 				{
 					"name": "policy",
