@@ -27,7 +27,7 @@
         "alias": "apigw-traffic-trace", 
         "template": {
             "config": "elasticsearch_config/trace-messages/index_template.json",
-            "name": "trace-messages", 
+            "name": "traffic-trace-messages", 
             "mergeCustomProperties": false
         }, 
         "ilm" : {
