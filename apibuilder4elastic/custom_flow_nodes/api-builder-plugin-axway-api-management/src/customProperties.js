@@ -21,12 +21,6 @@
 async function mergeCustomProperties(params, options) {
 	const { logger } = options;
 	debugger;
-	if (params.mergeCustomProperties == undefined) {
-		params.mergeCustomProperties = false;
-	}
-	if (!params.mergeCustomProperties) {
-		return options.setOutput('noUpdate', {message: 'Custom-Properties not merged as mergeCustomProperties is false'});
-	}
 	if (!params.customProperties) {
 		throw new Error('Missing required parameter: customProperties');
 	}
@@ -35,6 +29,12 @@ async function mergeCustomProperties(params, options) {
 	}
 	if (!params.desiredIndexTemplate.mappings) {
 		throw new Error('Missing mappings properties in desiredIndexTemplate.mappings');
+	}
+	if (params.mergeCustomProperties == undefined) {
+		params.mergeCustomProperties = false;
+	}
+	if (!params.mergeCustomProperties) {
+		return options.setOutput('noUpdate', params.desiredIndexTemplate);
 	}
 	var updateRequired = false;
 	for (var prop in params.customProperties) {
