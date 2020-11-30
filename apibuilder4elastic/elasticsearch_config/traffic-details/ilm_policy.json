@@ -17,13 +17,13 @@
         "min_age": "7d",
         "actions": {
           "allocate": {
-            "number_of_replicas": 1
-          },
-          "shrink": {
-            "number_of_shards": 1,
+            "number_of_replicas": 1,
             "include": { },
             "exclude": { },
             "require": { }
+          },
+          "shrink": {
+            "number_of_shards": 1
           },
           "set_priority": {
             "priority": 50
