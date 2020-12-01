@@ -46,7 +46,8 @@ describe('Test Setup Indices endpoint', function () {
 	});
 
 	function generateRandomConfig(configFile) {
-		var tempDir = fs.mkdtempSync(path.join(os.tmpdir()));
+		var tempDir = path.join(os.tmpdir(), `/elk-test-${randomId}`);
+		fs.mkdirSync(tempDir);
 		var testConfig = path.join(tempDir, 'index_config.json');
 		console.log(`Using test-config: ${testConfig}`);
 		var data = { id: randomId };
