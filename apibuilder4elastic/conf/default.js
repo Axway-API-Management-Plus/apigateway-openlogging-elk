@@ -18,6 +18,9 @@ const path = require('path');
  * variables or perform logic in this file if needed.
  */
 module.exports = {
+	// The main configuration to configure required Elasticsearch indicies/mappings/etc.
+	indexConfigFile: process.env.INDEX_CONFIG_FILE || 'elasticsearch_config/index_config.json',
+
 	// This is your generated API key.  It was generated uniquely when you
 	// created this project. DO NOT SHARE this key with other services and be
 	// careful with this key since it controls access to your API using the

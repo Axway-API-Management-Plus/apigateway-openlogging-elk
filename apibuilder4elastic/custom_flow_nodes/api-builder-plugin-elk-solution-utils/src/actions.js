@@ -43,6 +43,10 @@ async function getIndexConfig(params, options) {
 	if(indexConfig == undefined) {
 	  throw new Error(`No index configuration found with name: ${indexName}`);
 	}
+	// Add some default to avoid file read to fail
+	if(indexConfig.rollup == undefined || indexConfig.rollup.config == undefined) {
+		indexConfig.rollup = { config: "NotSet" } ;
+	}
 	return indexConfig;
 }
 

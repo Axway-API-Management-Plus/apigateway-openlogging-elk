@@ -73,6 +73,7 @@ describe('flow-node elk-solution-utils', () => {
 			var expectedConfig = indexConfigs['test-index-name'];
 			const { value, output } = await flowNode.getIndexConfig({ data: {params: {indexName: 'test-index-name'} }, indexConfigs: indexConfigs });
 
+			expectedConfig.rollup = { config: "NotSet" } ;
 			expect(value).to.deep.equal(expectedConfig);
 			expect(output).to.equal('next');
 		});
@@ -82,6 +83,17 @@ describe('flow-node elk-solution-utils', () => {
 			var expectedConfig = indexConfigs['test-index-name'];
 			const { value, output } = await flowNode.getIndexConfig({ data: {indexName: 'test-index-name'}, indexConfigs: indexConfigs });
 
+			expectedConfig.rollup = { config: "NotSet" } ;
+			expect(value).to.deep.equal(expectedConfig);
+			expect(output).to.equal('next');
+		});
+
+		it('should add defaults for rollup jobs', async () => {
+			var indexConfigs = JSON.parse(fs.readFileSync('./test/test_index_config.json'), null);
+			var expectedConfig = indexConfigs['test-index-name'];
+			const { value, output } = await flowNode.getIndexConfig({ data: {indexName: 'test-index-name'}, indexConfigs: indexConfigs });
+
+			expectedConfig.rollup = { config: "NotSet" } ;
 			expect(value).to.deep.equal(expectedConfig);
 			expect(output).to.equal('next');
 		});

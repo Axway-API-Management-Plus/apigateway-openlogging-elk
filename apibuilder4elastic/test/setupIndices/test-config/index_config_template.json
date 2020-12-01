@@ -1,0 +1,14 @@
+{
+    "traffic-summary-{{ id }}": {
+        "alias": "apigw-traffic-summary-{{ id }}",
+        "template": {
+            "config": "test/setupIndices/test-config/traffic-summary/index_template.json",
+            "name": "traffic-summary-{{ id }}", 
+            "mergeCustomProperties": true
+        }, 
+        "ilm" : {
+            "config": "test/setupIndices/test-config/traffic-summary/ilm_policy.json",
+            "name": "traffic-summary-ilm-{{ id }}"
+        }
+    }
+}

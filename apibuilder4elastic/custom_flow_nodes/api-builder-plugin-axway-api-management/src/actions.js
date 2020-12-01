@@ -367,6 +367,7 @@ async function _getConfiguredCustomProperties(groupId) {
 		logger.debug(`Custom properties found in cache with groupId: ${groupId}.`);
 		return propertiesConfig;
 	}
+	logger.debug(`Reading custom properties for groupId: ${groupId}. from API-Manager: ${apiManagerConfig.url}`);
 	var options = {
 		path: `/api/portal/v1.3/config/customproperties`,
 		headers: {

@@ -1,0 +1,199 @@
+{
+    "version": 16,
+    "index_patterns": [
+        "apigw-traffic-summary-*"
+    ],
+    "settings": {
+        "number_of_shards": 5, 
+        "number_of_replicas": 1,
+        "index": {
+            "codec": "best_compression"
+        }
+    },
+    "aliases": { },
+    "mappings": {
+        "dynamic": false,
+        "_source": {
+            "enabled": true
+        },
+        "properties": {
+            "@timestamp": {
+                "type" : "date"
+            },
+            "correlationId": {
+                "type": "keyword",
+                "doc_values": false
+            },
+            "processInfo.serviceId": {
+                "type": "keyword"
+            },
+            "processInfo.groupId": {
+                "type": "keyword"
+            },
+            "processInfo.groupName": {
+                "type": "text",
+                "fields": {
+                    "keyword": {
+                        "type": "keyword"
+                    }
+                },
+                "norms": false
+            },
+            "processInfo.hostname": {
+                "type": "text",
+                "fields": {
+                    "keyword": {
+                        "type": "keyword"
+                    }
+                },
+                "norms": false
+            },
+            "processInfo.gatewayRegion": {
+                "type": "keyword"
+            },
+            "processInfo.gatewayName": {
+                "type": "text",
+                "fields": {
+                    "keyword": {
+                        "type": "keyword"
+                    }
+                },
+                "norms": false
+            },
+            "processInfo.version": {
+                "type": "text",
+                "fields": {
+                    "keyword": {
+                        "type": "keyword"
+                    }
+                },
+                "norms": false
+            },
+            "http.uri": {
+                "type": "text", 
+                "norms": false
+            },
+            "http.method": {
+                "type": "keyword"
+            },
+            "http.statusText": {
+                "type": "keyword"
+            },
+            "http.status": {
+                "type": "integer"
+            },
+            "http.bytesSent": {
+                "type": "integer"
+            },
+            "http.bytesReceived": {
+                "type": "integer"
+            },
+            "http.localPort": {
+                "type": "integer"
+            },
+            "http.localAddr": {
+                "type": "keyword"
+            },
+            "http.remotePort": {
+                "type": "integer"
+            },
+            "http.remoteName": {
+                "type": "keyword"
+            },
+            "http.remoteAddr": {
+                "type": "keyword"
+            },
+            "http.vhost": {
+                "type": "keyword"
+            },
+            "http.authSubjectId": {
+                "type": "keyword"
+            },
+            "protocol": {
+                "type": "keyword"
+            },
+            "finalStatus": {
+                "type": "keyword"
+            },
+            "protocolSrc": {
+                "type": "text",
+                "norms": false
+            },
+            "http.wafStatus": {
+                "type": "integer"
+            },
+            "serviceContext.service": {
+                "type": "text",
+                "fields": {
+                    "keyword": {
+                        "type": "keyword"
+                    }
+                },
+                "norms": false
+            },
+            "duration": {
+                "type": "integer"
+            },
+            "serviceContext.method": {
+                "type": "text",
+                "fields": {
+                    "keyword": {
+                        "type": "keyword"
+                    }
+                },
+                "norms": false
+            },
+            "serviceContext.app": {
+                "type": "text",
+                "fields": {
+                    "keyword": {
+                        "type": "keyword"
+                    }
+                },
+                "norms": false
+            },
+            "serviceContext.appOrg": {
+                "type": "keyword"
+            },
+            "serviceContext.apiOrg": {
+                "type": "keyword"
+            },
+            "serviceContext.apiVersion": {
+                "type": "keyword"
+            },
+            "serviceContext.apiDeprecated": {
+                "type": "boolean"
+            },
+            "serviceContext.monitor": {
+                "type": "boolean"
+            },
+            "serviceContext.apiState": {
+                "type": "keyword"
+            },
+            "serviceContext.apiSecurity": {
+                "type": "keyword"
+            },
+            "serviceContext.requestPolicy": {
+                "type": "keyword"
+            },
+            "serviceContext.routingPolicy": {
+                "type": "keyword"
+            },
+            "serviceContext.responsePolicy": {
+                "type": "keyword"
+            },
+            "serviceContext.faulthandlerPolicy": {
+                "type": "keyword"
+            },
+            "serviceContext.backendBasePath": {
+                "type": "keyword"
+            }, 
+            "fileTransfer.direction": {
+                "type": "keyword"
+            },
+            "fileTransfer.serviceType": {
+                "type": "keyword"
+            }
+        }
+    }
+}

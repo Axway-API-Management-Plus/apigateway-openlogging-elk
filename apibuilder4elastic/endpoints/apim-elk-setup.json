@@ -25,7 +25,7 @@
   ],
   "paths": {
     "/setup/index/{indexName}": {
-      "post": {
+      "get": {
         "summary": "",
         "operationId": "run-setup",
         "responses": {
