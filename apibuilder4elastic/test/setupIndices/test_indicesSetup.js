@@ -18,7 +18,12 @@ describe('Test Setup Indices endpoint', function () {
 	var randomId = getRandomInt(999);
 
 	// Init elasticsearch client, which is a singleton
-	var client = new ElasticsearchClient({node:'http://api-env:9200'}).client;
+	const envFilePath = path.join(__dirname, '../.env');
+	if (fs.existsSync(envFilePath)) {
+		envLoader.config({ path: envFilePath });
+	}
+	
+	var client = new ElasticsearchClient({node: process.env.ELASTICSEARCH_HOSTS}).client;
 
 	afterEach(() => {
 		nock.cleanAll();
@@ -32,10 +37,6 @@ describe('Test Setup Indices endpoint', function () {
 	 * Start API Builder.
 	 */
 	before(() => {
-		const envFilePath = path.join(__dirname, '../.env');
-		if (fs.existsSync(envFilePath)) {
-			envLoader.config({ path: envFilePath });
-		}
 		generateRandomConfig(process.env.INDEX_CONFIG_FILE);
 		server = startApiBuilder();
 		auth = {
@@ -79,7 +80,7 @@ describe('Test Setup Indices endpoint', function () {
 			});
 		});
 
-		it.only('[setup-index-0002] Testing initial configuration without custom properties with an empty Elasticsearch', () => {
+		it('[setup-index-0002] Testing initial configuration without custom properties with an empty Elasticsearch', () => {
 			const spyGetTemplate = 		spyElasticSearchMethod(client, 'indices.getTemplate');
 			const spyPutTemplate = 		spyElasticSearchMethod(client, 'indices.putTemplate');
 			const spyIndicesRollover = 	spyElasticSearchMethod(client, 'indices.rollover');
