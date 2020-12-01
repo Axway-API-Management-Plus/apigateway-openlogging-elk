@@ -87,7 +87,6 @@ describe('Test Setup Indices endpoint', function () {
 			const spyIndicesExists = 	spyElasticSearchMethod(client, 'indices.existsAlias'); // As the alias is given this method is used
 			const spyIndicesCreate = 	spyElasticSearchMethod(client, 'indices.create');
 
-			debugger;
 			return requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/setup/index/traffic-summary-${randomId}`,
