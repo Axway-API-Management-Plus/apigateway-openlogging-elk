@@ -20,21 +20,13 @@
 				"type": "string",
 				"description": "The name of the index used as a prefix to name required ES config assets."
 			},
-			"templateConfig": {
-				"type": "string",
-				"description": "The path to the config file containing the Mapping-Configuration."
+			"params": {
+				"type": "object",
+				"description": "The parameters from the endpoint."
 			},
-			"mergeCustomProperties": {
-				"type": "string",
-				"description": "Wether custom properties should be merged into this template."
-			},
-			"ilmConfig": {
-				"type": "string",
-				"description": "Contains the ILM Policy configuration for that index."
-			},
-			"rollupConfig": {
-				"type": "string",
-				"description": "Contains the Rollup job for that index."
+			"request": {
+				"type": "object",
+				"description": "The HTTP request."
 			}
 		},
 		"additionalProperties": false
@@ -484,12 +476,19 @@
 					"value": "\"elasticsearch_config/index_config.json\"",
 					"metaName": "Source filename",
 					"metaDescription": "The filename to read."
+				},
+				{
+					"name": "notFoundFails",
+					"type": "boolean",
+					"value": "true",
+					"metaName": "Not found fails",
+					"metaDescription": "Set this flag, if you would like to have this flow node failed (Error) if the file cannot be found."
 				}
 			],
 			"outputs": {
 				"next": {
 					"routes": [
-						"javascript.1"
+						"elk-solution-utils.1"
 					],
 					"context": "$.configFile",
 					"metaName": "Next"
@@ -509,7 +508,7 @@
 		},
 		"javascript.1": {
 			"type": "nodehandler://@axway/api-builder-plugin-fn-javascript/javascript",
-			"name": "Execute",
+			"name": "Get Index configuration",
 			"method": "Execute",
 			"parameters": [
 				{
@@ -522,7 +521,7 @@
 				{
 					"name": "code",
 					"type": "string",
-					"value": "\"console.log(`Index-Name ${data.indexName}`);\\n  return data.configFile[data.indexName];\"",
+					"value": "\"var indexConfig;\\n  var indexName;\\n  if(data.indexName != undefined) {\\n    console.log(`Index-Name: ${data.indexName} taken from variable: data.indexName`);\\n    indexName = data.indexName;\\n  } else if (data.params.indexName != undefined) {\\n    console.log(`Index-Name: ${data.params.indexName} taken from variable: data.params.indexName`);\\n    indexName = data.params.indexName;\\n  } else {\\n    throw new Error(\\\"No indexname given. You must either give it a params.indexName or indexName\\\");\\n  }\\n  indexConfig = data.configFile[indexName];\\n  if(indexConfig == undefined) {\\n    throw new Error(`No index configuration found with name: ${indexName}`);\\n  }\\n  return indexConfig;\"",
 					"metaName": "code",
 					"metaDescription": "A JavaScript function body. Supports `await` and returning promises."
 				}
@@ -530,10 +529,7 @@
 			"outputs": {
 				"next": {
 					"context": "$.indexConfig",
-					"routes": [
-						"axway-api-management.1",
-						"delay.1"
-					],
+					"routes": [],
 					"metaName": "Next"
 				},
 				"error": {
@@ -736,6 +732,43 @@
 				}
 			},
 			"metaMethod": "Format string"
+		},
+		"elk-solution-utils.1": {
+			"type": "nodehandler://api-builder-plugin-elk-solution-utils/elk-solution-utils",
+			"name": "Get index config",
+			"method": "getIndexConfig",
+			"parameters": [
+				{
+					"name": "data",
+					"type": "jsonpath",
+					"value": "$",
+					"metaName": "Data",
+					"metaDescription": "Object that contains either the property indexName or params.indexName."
+				},
+				{
+					"name": "indexConfigs",
+					"type": "jsonpath",
+					"value": "$.configFile",
+					"metaName": "Index configs",
+					"metaDescription": "Object that contains all index configurations"
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.indexConfig",
+					"routes": [
+						"axway-api-management.1",
+						"delay.1"
+					],
+					"metaName": "Next"
+				},
+				"error": {
+					"context": "$.error",
+					"routes": [],
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Get index config"
 		}
 	}
 }

@@ -1,0 +1,33 @@
+{
+	"name": "api-builder-plugin-elk-solution-utils",
+	"version": "1.0.0",
+	"description": "Helper plugin for the APIM-ELKsolution",
+	"author": "",
+	"license": "ISC",
+	"keywords": [
+		"amplify",
+		"api-builder"
+	],
+	"engines": {
+		"node": ">= 12.15"
+	},
+	"main": "src/index.js",
+	"files": [
+		"src",
+		"README.md"
+	],
+	"dependencies": {
+		"@axway/api-builder-sdk": "^1.0.0"
+	},
+	"peerDependencies": {
+		"@axway/api-builder-runtime": "^4.5.0"
+	},
+	"devDependencies": {
+		"@axway/api-builder-test-utils": "^1.1.0",
+		"chai": "^4.1.2",
+		"mocha": "^7.1.1"
+	},
+	"scripts": {
+		"test": "mocha ./test --recursive -R spec"
+	}
+}

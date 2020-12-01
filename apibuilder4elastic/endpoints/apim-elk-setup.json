@@ -1,0 +1,61 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Axway-APIM-ELK Setup-API",
+    "version": "1.0",
+    "description": "This API can optionally be called to call the setup of the Elasticsearch solution manually. The API calls a flow, which is also started automatically with a defined interval. The main purpose of the endpoint as of now is to test the flow implementation/logic.",
+    "contact": {
+      "name": "Chris Wiechmann",
+      "url": "https://www.axway.com",
+      "email": "cwiechmann@axway.com"
+    },
+    "license": {
+      "name": "Apache 2.0"
+    }
+  },
+  "host": "example.com",
+  "schemes": [
+    "https"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "paths": {
+    "/setup/index/{indexName}": {
+      "post": {
+        "summary": "",
+        "operationId": "run-setup",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "Triggers the setup for the given index.",
+        "parameters": [],
+        "tags": [
+          "setup"
+        ],
+        "x-flow": "SetupElasticsearchIndex"
+      },
+      "parameters": [
+        {
+          "type": "string",
+          "name": "indexName",
+          "in": "path",
+          "required": true,
+          "description": "The name of the index to be configured in ES"
+        }
+      ]
+    }
+  },
+  "definitions": {},
+  "basePath": "/elk/v1/api",
+  "tags": [
+    {
+      "name": "setup"
+    }
+  ]
+}

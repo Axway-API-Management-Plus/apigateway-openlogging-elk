@@ -36,7 +36,8 @@
 		"@axway/api-builder-plugin-fn-swagger": "^2.9.1",
 		"@axway/api-builder-plugin-ft-timer": "^0.2.0",
 		"@axway/api-builder-runtime": "^4.44.0",
-		"api-builder-plugin-axway-api-management": "file:custom_flow_nodes/api-builder-plugin-axway-api-management"
+		"api-builder-plugin-axway-api-management": "file:custom_flow_nodes/api-builder-plugin-axway-api-management",
+		"api-builder-plugin-elk-solution-utils": "file:custom_flow_nodes/api-builder-plugin-elk-solution-utils"
 	},
 	"devDependencies": {
 		"@axway/api-builder-admin": "^1.29.2",

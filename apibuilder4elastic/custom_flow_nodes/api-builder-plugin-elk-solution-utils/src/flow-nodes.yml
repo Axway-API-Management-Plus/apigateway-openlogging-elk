@@ -1,0 +1,38 @@
+flow-nodes:
+  elk-solution-utils:
+    name: APIM-ELK Solution utils
+    icon: icon.svg
+    description: Helper flow node for APIM-ELK solution
+    category: general
+    methods:
+      getIndexConfig:
+        name: Get index config
+        description: Gets the index configuration
+        parameters:
+          data:
+            name: Data
+            description: Object that contains either the property indexName or params.indexName.
+            required: true
+            schema:
+              type: string
+          indexConfigs:
+            name: Index configs
+            description: Object that contains all index configurations
+            required: true
+            schema:
+              type: object
+        returns:
+          name: Next
+          description: Returns the loaded index configuration object.
+          context: $.indexConfig
+          schema:
+            type: object
+        throws:
+          name: Error
+          description: An unexpected error was encountered.
+          context: $.error
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
