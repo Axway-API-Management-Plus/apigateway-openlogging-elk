@@ -165,7 +165,11 @@ async function addLookupAPIMocks(cache) {
 		faulthandlerPolicy: "OMG Errors",
 		apiSecurity: "OAuth", 
 		backendBasePath:"https://im.a.special.backend.host:7788", 
-		customProperties: {}
+		customProperties: {
+			customProperty1: "value 1",
+			customProperty2: "value 2",
+			customProperty3: "value 3"
+		}
 	});
 	cache.set( "/api/with/custom/properties###group-2", {
 		organizationName: "Mocked Org C", 

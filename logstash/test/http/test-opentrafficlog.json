@@ -98,6 +98,7 @@
         {
           "@timestamp": "2020-07-13T20:07:27.467Z",
           "correlationId": "AAbe0c5f95da03f602a6e587",
+          "customProperties": "{}",
           "finalStatus": "Pass",
           "protocol": "https",
           "protocolSrc": "8065",
@@ -125,14 +126,14 @@
             "routingPolicy": "N/A", 
             "responsePolicy": "N/A", 
             "faulthandlerPolicy": "N/A", 
-            "backendBasePath": "https://petstore.swagger.io",
-            "customProperties": "{}"
+            "backendBasePath": "https://petstore.swagger.io"
           },
           "type": "summaryIndex"
         },
         {
           "@timestamp": "2020-07-13T20:07:27.467Z",
           "correlationId": "AAbe0c5f95da03f602a6e587",
+          "customProperties": "{}",
           "processInfo": {
             "hostname": "ip-172-31-62-146.ec2.internal",
             "groupId": "group-2",
@@ -162,8 +163,7 @@
               "routingPolicy": "N/A", 
               "responsePolicy": "N/A", 
               "faulthandlerPolicy": "N/A", 
-              "backendBasePath": "https://petstore.swagger.io",
-              "customProperties": "{}"
+              "backendBasePath": "https://petstore.swagger.io"
             }
           }
         }
@@ -178,6 +178,11 @@
         {
           "@timestamp": "2020-07-13T20:07:27.467Z",
           "correlationId": "BBbe0c5f95da03f602a6e587",
+          "customProperties": {
+            "customProperty1": "value 1",
+            "customProperty2": "value 2",
+            "customProperty3": "value 3"
+          },
           "finalStatus": "Pass",
           "protocol": "https",
           "protocolSrc": "8065",
@@ -197,8 +202,7 @@
             "routingPolicy": "I do the routing", 
             "responsePolicy": "I take care abouth the response", 
             "faulthandlerPolicy": "OMG Errors", 
-            "backendBasePath": "https://im.a.special.backend.host:7788",
-            "customProperties":"{}"
+            "backendBasePath": "https://im.a.special.backend.host:7788"
           },
           "processInfo": {
             "hostname": "ip-172-31-62-146.ec2.internal",
@@ -213,6 +217,7 @@
         {
           "@timestamp": "2020-07-13T20:07:27.467Z",
           "correlationId": "BBbe0c5f95da03f602a6e587",
+          "customProperties":"{}",
           "processInfo": {
             "hostname": "ip-172-31-62-146.ec2.internal",
             "groupId": "group-2",
@@ -242,8 +247,7 @@
               "routingPolicy": "I do the routing", 
               "responsePolicy": "I take care abouth the response", 
               "faulthandlerPolicy": "OMG Errors", 
-              "backendBasePath": "https://im.a.special.backend.host:7788",
-              "Properties":"{}"
+              "backendBasePath": "https://im.a.special.backend.host:7788"
             }
           }
         }
