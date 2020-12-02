@@ -231,7 +231,11 @@
             "protocol": "https",
             "protocolSrc": "8065",
             "status": "success",
-            "customProperties": {},
+            "customProperties": {
+              "customProperty1": "value 1",
+              "customProperty2": "value 2",
+              "customProperty3": "value 3"
+            },
             "serviceContext": {
               "apiDeprecated": "true",
               "apiOrg": "Mocked Org B",
