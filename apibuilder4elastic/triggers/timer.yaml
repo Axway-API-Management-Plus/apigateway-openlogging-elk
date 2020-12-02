@@ -1,10 +1,10 @@
 # timer
 triggers:
   setup-traffic-summary-index:
-    enabled: false
+    enabled: true
     name: Setup Traffic-Summary Index
     parameters:
-      interval: "10000"
+      interval: "100000"
     invoke:
       flow: SetupElasticsearchIndex
       parameters:
@@ -13,10 +13,10 @@ triggers:
         indexName: "traffic-summary"
 
   setup-traffic-details-index:
-    enabled: false
+    enabled: true
     name: Setup Traffic-Details Index
     parameters:
-      interval: "10000"
+      interval: "100000"
     invoke:
       flow: SetupElasticsearchIndex
       parameters:
@@ -25,10 +25,10 @@ triggers:
         indexName: "traffic-details"
 
   setup-traffic-trace-index:
-    enabled: false
+    enabled: true
     name: Setup Traffic-Trace message index
     parameters:
-      interval: "10000"
+      interval: "100000"
     invoke:
       flow: SetupElasticsearchIndex
       parameters:
@@ -37,10 +37,10 @@ triggers:
         indexName: "traffic-trace"
 
   setup-trace-messages-index:
-    enabled: false
+    enabled: true
     name: Setup Trace-Messages Index
     parameters:
-      interval: "10000"
+      interval: "100000"
     invoke:
       flow: SetupElasticsearchIndex
       parameters:
@@ -49,10 +49,10 @@ triggers:
         indexName: "trace-messages"
 
   setup-apigw-monitoring-index:
-    enabled: false
+    enabled: true
     name: Setup API-GW Monitoring Index
     parameters:
-      interval: "10000"
+      interval: "100000"
     invoke:
       flow: SetupElasticsearchIndex
       parameters:
@@ -61,10 +61,10 @@ triggers:
         indexName: "apigw-monitoring"
 
   setup-domainaudit-index:
-    enabled: false
+    enabled: true
     name: Setup Domain-Audit Index
     parameters:
-      interval: "10000"
+      interval: "100000"
     invoke:
       flow: SetupElasticsearchIndex
       parameters:
