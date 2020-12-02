@@ -178,11 +178,11 @@ async function _getCurrentGWUser(requestHeaders) {
 
 async function _addCustomProperties(apiProxy, groupId) {
 	var apiCustomProperties = await _getConfiguredCustomProperties(groupId);
-	apiProxy.custom = {};
+	apiProxy.customProperties = {};
 	for (var prop in apiCustomProperties) {
 		if (Object.prototype.hasOwnProperty.call(apiCustomProperties, prop)) {
 			if(apiProxy[prop]!=undefined) {
-				apiProxy.custom[prop] = apiProxy[prop];
+				apiProxy.customProperties[prop] = apiProxy[prop];
 				delete apiProxy[prop];
 			}
 		}

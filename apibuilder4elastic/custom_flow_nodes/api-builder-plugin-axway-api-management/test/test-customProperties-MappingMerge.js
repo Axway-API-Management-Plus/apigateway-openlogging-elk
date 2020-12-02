@@ -53,12 +53,12 @@ describe('Merge custom properties tests', () => {
 			});
 
 			expect(output).to.equal('next');
-			expect(value.mappings.properties['custom.customProperty1']).to.be.an('Object');
-			expect(value.mappings.properties['custom.customProperty1'].type).to.equal('text');
-			expect(value.mappings.properties['custom.customProperty2']).to.be.an('Object');
-			expect(value.mappings.properties['custom.customProperty2'].type).to.equal('keyword');
-			expect(value.mappings.properties['custom.customProperty3']).to.be.an('Object');
-			expect(value.mappings.properties['custom.customProperty3'].type).to.equal('keyword');
+			expect(value.mappings.properties['customProperties.customProperty1']).to.be.an('Object');
+			expect(value.mappings.properties['customProperties.customProperty1'].type).to.equal('text');
+			expect(value.mappings.properties['customProperties.customProperty2']).to.be.an('Object');
+			expect(value.mappings.properties['customProperties.customProperty2'].type).to.equal('keyword');
+			expect(value.mappings.properties['customProperties.customProperty3']).to.be.an('Object');
+			expect(value.mappings.properties['customProperties.customProperty3'].type).to.equal('keyword');
 		});
 
 		it('should merge into indexMappingTemplate as custom properties are missing', async () => {
@@ -69,12 +69,12 @@ describe('Merge custom properties tests', () => {
 				mergeCustomProperties: true
 			});
 			expect(output).to.equal('next');
-			expect(value.mappings.properties['custom.customProperty1']).to.be.an('Object');
-			expect(value.mappings.properties['custom.customProperty1'].type).to.equal('text');
-			expect(value.mappings.properties['custom.customProperty2']).to.be.an('Object');
-			expect(value.mappings.properties['custom.customProperty2'].type).to.equal('keyword');
-			expect(value.mappings.properties['custom.customProperty3']).to.be.an('Object');
-			expect(value.mappings.properties['custom.customProperty3'].type).to.equal('keyword');
+			expect(value.mappings.properties['customProperties.customProperty1']).to.be.an('Object');
+			expect(value.mappings.properties['customProperties.customProperty1'].type).to.equal('text');
+			expect(value.mappings.properties['customProperties.customProperty2']).to.be.an('Object');
+			expect(value.mappings.properties['customProperties.customProperty2'].type).to.equal('keyword');
+			expect(value.mappings.properties['customProperties.customProperty3']).to.be.an('Object');
+			expect(value.mappings.properties['customProperties.customProperty3'].type).to.equal('keyword');
 		});
 
 		it('should result in no update required as custom properties already part of the mapping', async () => {
@@ -85,12 +85,12 @@ describe('Merge custom properties tests', () => {
 				mergeCustomProperties: true
 			});
 			expect(output).to.equal('noUpdate');
-			expect(value.mappings.properties['custom.customProperty1']).to.be.an('Object');
-			expect(value.mappings.properties['custom.customProperty1'].type).to.equal('text');
-			expect(value.mappings.properties['custom.customProperty2']).to.be.an('Object');
-			expect(value.mappings.properties['custom.customProperty2'].type).to.equal('keyword');
-			expect(value.mappings.properties['custom.customProperty3']).to.be.an('Object');
-			expect(value.mappings.properties['custom.customProperty3'].type).to.equal('keyword');
+			expect(value.mappings.properties['customProperties.customProperty1']).to.be.an('Object');
+			expect(value.mappings.properties['customProperties.customProperty1'].type).to.equal('text');
+			expect(value.mappings.properties['customProperties.customProperty2']).to.be.an('Object');
+			expect(value.mappings.properties['customProperties.customProperty2'].type).to.equal('keyword');
+			expect(value.mappings.properties['customProperties.customProperty3']).to.be.an('Object');
+			expect(value.mappings.properties['customProperties.customProperty3'].type).to.equal('keyword');
 		});
 
 		it('should result in an update as some of the required custom properties are missing', async () => {
@@ -101,12 +101,12 @@ describe('Merge custom properties tests', () => {
 				mergeCustomProperties: true
 			});
 			expect(output).to.equal('next');
-			expect(value.mappings.properties['custom.customProperty1']).to.be.an('Object');
-			expect(value.mappings.properties['custom.customProperty1'].type).to.equal('text');
-			expect(value.mappings.properties['custom.customProperty2']).to.be.an('Object');
-			expect(value.mappings.properties['custom.customProperty2'].type).to.equal('keyword');
-			expect(value.mappings.properties['custom.customProperty3']).to.be.an('Object');
-			expect(value.mappings.properties['custom.customProperty3'].type).to.equal('keyword');
+			expect(value.mappings.properties['customProperties.customProperty1']).to.be.an('Object');
+			expect(value.mappings.properties['customProperties.customProperty1'].type).to.equal('text');
+			expect(value.mappings.properties['customProperties.customProperty2']).to.be.an('Object');
+			expect(value.mappings.properties['customProperties.customProperty2'].type).to.equal('keyword');
+			expect(value.mappings.properties['customProperties.customProperty3']).to.be.an('Object');
+			expect(value.mappings.properties['customProperties.customProperty3'].type).to.equal('keyword');
 		});
 	});
 });
