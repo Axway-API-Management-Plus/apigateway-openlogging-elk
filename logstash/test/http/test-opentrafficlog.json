@@ -126,7 +126,7 @@
             "responsePolicy": "N/A", 
             "faulthandlerPolicy": "N/A", 
             "backendBasePath": "https://petstore.swagger.io",
-            "custom": "{}"
+            "customProperties": "{}"
           },
           "type": "summaryIndex"
         },
@@ -163,7 +163,7 @@
               "responsePolicy": "N/A", 
               "faulthandlerPolicy": "N/A", 
               "backendBasePath": "https://petstore.swagger.io",
-              "custom": "{}"
+              "customProperties": "{}"
             }
           }
         }
