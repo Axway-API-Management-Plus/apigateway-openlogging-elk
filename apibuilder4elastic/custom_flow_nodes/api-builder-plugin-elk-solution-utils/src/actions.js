@@ -47,6 +47,9 @@ async function getIndexConfig(params, options) {
 	if(indexConfig.rollup == undefined || indexConfig.rollup.config == undefined) {
 		indexConfig.rollup = { config: "NotSet" } ;
 	}
+	if(indexConfig.ilm == undefined || indexConfig.ilm.config == undefined) {
+		indexConfig.ilm = { config: "NotSet" } ;
+	}
 	return indexConfig;
 }
 

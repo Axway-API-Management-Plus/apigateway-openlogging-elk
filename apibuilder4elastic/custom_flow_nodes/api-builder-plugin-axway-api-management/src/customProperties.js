@@ -20,7 +20,6 @@
  */
 async function mergeCustomProperties(params, options) {
 	const { logger } = options;
-	debugger;
 	if (!params.customProperties) {
 		throw new Error('Missing required parameter: customProperties');
 	}
@@ -34,6 +33,7 @@ async function mergeCustomProperties(params, options) {
 		params.mergeCustomProperties = false;
 	}
 	if (!params.mergeCustomProperties) {
+		logger.info(`Custom properties are ignore for this template.`);
 		return options.setOutput('noUpdate', params.desiredIndexTemplate);
 	}
 	var updateRequired = false;

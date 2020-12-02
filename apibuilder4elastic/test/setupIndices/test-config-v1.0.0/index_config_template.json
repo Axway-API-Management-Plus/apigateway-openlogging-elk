@@ -1,0 +1,47 @@
+{
+    "traffic-summary-{{ id }}": {
+        "alias": "apigw-traffic-summary-{{ id }}",
+        "template": {
+            "config": "test/setupIndices/test-config-v1.0.0/traffic-summary/index_template.json",
+            "name": "traffic-summary-{{ id }}", 
+            "mergeCustomProperties": false
+        }
+    }, 
+    "traffic-details-{{ id }}": {
+        "alias": "apigw-traffic-details-{{ id }}", 
+        "template": {
+            "config": "test/setupIndices/test-config-v1.0.0/traffic-details/index_template.json",
+            "name": "traffic-details-{{ id }}", 
+            "mergeCustomProperties": false
+        }
+    }, 
+    "traffic-trace-{{ id }}": {
+        "alias": "apigw-traffic-trace-{{ id }}", 
+        "template": {
+            "config": "test/setupIndices/test-config-v1.0.0/trace-messages/index_template.json",
+            "name": "trace-messages-{{ id }}", 
+            "mergeCustomProperties": false
+        }
+    },
+    "trace-messages-{{ id }}": {
+        "alias": "apigw-trace-messages-{{ id }}", 
+        "template": {
+            "config": "test/setupIndices/test-config-v1.0.0/trace-messages/index_template.json",
+            "name": "trace-messages-{{ id }}"
+        }
+    },
+    "apigw-domainaudit-{{ id }}": {
+        "alias": "apigw-domainaudit-{{ id }}", 
+        "template": {
+            "config": "test/setupIndices/test-config-v1.0.0/apigw-domainaudit/index_template.json",
+            "name": "apigw-domainaudit-{{ id }}"
+        }
+    },
+    "apigw-monitoring-{{ id }}": {
+        "alias": "apigw-monitoring-{{ id }}", 
+        "template": {
+            "config": "test/setupIndices/test-config-v1.0.0/apigw-monitoring/index_template.json",
+            "name": "apigw-monitoring-{{ id }}"
+        }
+    }
+}
