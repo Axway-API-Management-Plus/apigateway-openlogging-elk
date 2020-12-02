@@ -98,7 +98,7 @@
         {
           "@timestamp": "2020-07-13T20:07:27.467Z",
           "correlationId": "AAbe0c5f95da03f602a6e587",
-          "customProperties": "{}",
+          "customProperties": {},
           "finalStatus": "Pass",
           "protocol": "https",
           "protocolSrc": "8065",
@@ -133,7 +133,6 @@
         {
           "@timestamp": "2020-07-13T20:07:27.467Z",
           "correlationId": "AAbe0c5f95da03f602a6e587",
-          "customProperties": "{}",
           "processInfo": {
             "hostname": "ip-172-31-62-146.ec2.internal",
             "groupId": "group-2",
@@ -148,6 +147,7 @@
             "protocol": "https",
             "protocolSrc": "8065",
             "status": "success",
+            "customProperties": {},
             "serviceContext": {
               "apiDeprecated": "false",
               "apiOrg": "Mocked Org A",
@@ -217,7 +217,6 @@
         {
           "@timestamp": "2020-07-13T20:07:27.467Z",
           "correlationId": "BBbe0c5f95da03f602a6e587",
-          "customProperties":"{}",
           "processInfo": {
             "hostname": "ip-172-31-62-146.ec2.internal",
             "groupId": "group-2",
@@ -232,6 +231,7 @@
             "protocol": "https",
             "protocolSrc": "8065",
             "status": "success",
+            "customProperties": {},
             "serviceContext": {
               "apiDeprecated": "true",
               "apiOrg": "Mocked Org B",
