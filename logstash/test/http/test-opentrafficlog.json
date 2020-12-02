@@ -198,7 +198,7 @@
             "responsePolicy": "I take care abouth the response", 
             "faulthandlerPolicy": "OMG Errors", 
             "backendBasePath": "https://im.a.special.backend.host:7788",
-            "custom":"{}"
+            "customProperties":"{}"
           },
           "processInfo": {
             "hostname": "ip-172-31-62-146.ec2.internal",
@@ -243,7 +243,7 @@
               "responsePolicy": "I take care abouth the response", 
               "faulthandlerPolicy": "OMG Errors", 
               "backendBasePath": "https://im.a.special.backend.host:7788",
-              "custom":"{}"
+              "Properties":"{}"
             }
           }
         }
