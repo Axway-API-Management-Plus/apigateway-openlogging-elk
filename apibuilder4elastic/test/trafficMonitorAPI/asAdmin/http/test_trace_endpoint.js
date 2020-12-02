@@ -40,7 +40,7 @@ describe('Traffic Monitor API', function () {
 			server.started
 			.then(() => {
 				const entryset = require('../../../documents/http/trace_test_documents');
-				sendToElasticsearch(elasticConfig, indexName, 'trace_messages_index_template.json', entryset)
+				sendToElasticsearch(elasticConfig, indexName, 'trace-messages/index_template.json', entryset)
 				.then(() => {
 					resolve();
 				})

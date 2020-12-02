@@ -30,7 +30,7 @@ describe('Endpoints', function () {
 			server.started
 			.then(() => {
 				const entryset = require('../../../documents/http/search_count_documents');
-				sendToElasticsearch(elasticConfig, indexName, 'traffic_summary_index_template.json', entryset)
+				sendToElasticsearch(elasticConfig, indexName, 'traffic-summary/index_template.json', entryset)
 				.then(() => {
 					resolve();
 				})
