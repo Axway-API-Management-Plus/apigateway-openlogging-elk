@@ -190,5 +190,56 @@ module.exports = [
             "remoteName" : "192.168.65.1",
             "remotePort" : 50982
         }
+      },
+      // Slightly different API
+      {
+
+        "correlationId" : "11111111111111111111111111",
+        "processInfo" : {
+            "hostname" : "api-env",
+            "groupName" : "QuickStart Group",
+            "serviceName" : "QuickStart Server",
+            "version" : "7.7.20200130",
+            "groupId" : "group-2",
+            "domainId" : "ed992442-c363-4d36-963a-9e6314b0f421",
+            "serviceId" : "instance-1"
+          },
+        "@timestamp" : getDate('5m'),
+        "logtype" : "openlog",
+        "finalStatus" : "Pass",
+        "path" : "/petstore/v2/pet/findByTag",
+        "protocol" : "https",
+        "duration" : 102,
+        "status" : "success",
+        "serviceContext" : {
+            "duration" : 897,
+            "app" : "Client App",
+            "method" : "findPetsByTag",
+            "org" : "API Development",
+            "service" : "Petstore",
+            "client" : "4e8634ba-6762-45ca-bbe5-7ca4e99192ac",
+            "monitor" : true,
+            "status" : "success",
+            "apiOrg": "API Development", 
+            "apiVersion": "1.0.5", 
+            "apiDeprecated": false, 
+            "apiState": "published"
+        },
+        "http": {
+            "protocolSrc" : "8065",
+            "uri" : "/petstore/v2/pet/findByTag",
+            "wafStatus" : 0,
+            "authSubjectId" : "4e8634ba-6762-45ca-bbe5-7ca4e99192ac",
+            "wafStatus" : 0,
+            "statusText": "OK",
+            "status": 200,
+            "method": "GET", 
+            "bytesSent": 47925, 
+            "bytesReceived": 437,
+            "localPort": 8065,
+            "localAddr" : "192.168.65.129",
+            "remoteName" : "192.168.65.1",
+            "remotePort" : 50982
+        }
       }
 ];

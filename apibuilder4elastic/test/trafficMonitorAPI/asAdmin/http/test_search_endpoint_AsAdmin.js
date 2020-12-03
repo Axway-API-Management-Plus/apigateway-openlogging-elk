@@ -70,7 +70,7 @@ describe('Endpoints', function () {
 				expect(response.statusCode).to.equal(200);
 				expect(body).to.be.an('Object');
 				expect(body).to.have.property('data');
-				expect(body.data).to.have.lengthOf(4);
+				expect(body.data).to.have.lengthOf(5);
 				// Validate the default ordering is working
 				expect(body.data[0].timestamp).gt(body.data[1].timestamp);
 				expect(body.data[1].timestamp).gt(body.data[2].timestamp);
@@ -144,7 +144,7 @@ describe('Endpoints', function () {
 				expect(response.statusCode).to.equal(200);
 				expect(body).to.be.an('Object');
 				expect(body).to.have.property('data');
-				expect(body.data).to.have.lengthOf(1);
+				expect(body.data).to.have.lengthOf(2);
 				checkFields(body.data, true);
 			});
 		});
@@ -258,10 +258,11 @@ describe('Endpoints', function () {
 				expect(response.statusCode).to.equal(200);
 				expect(body).to.be.an('Object');
 				expect(body).to.have.property('data');
-				expect(body.data).to.have.lengthOf(3);
-				expect(body.data[0].correlationId).to.equal("682c0f5fbe23dc8e1d80efe2");
-				expect(body.data[1].correlationId).to.equal("7a240f5f0e21555d2d343482");
-				expect(body.data[2].correlationId).to.equal("19250f5f4321b5ba2a4de364");
+				expect(body.data).to.have.lengthOf(4);
+				expect(body.data[0].correlationId).to.equal("11111111111111111111111111");
+				expect(body.data[1].correlationId).to.equal("682c0f5fbe23dc8e1d80efe2");
+				expect(body.data[2].correlationId).to.equal("7a240f5f0e21555d2d343482");
+				expect(body.data[3].correlationId).to.equal("19250f5f4321b5ba2a4de364");
 			});
 		});
 		it('[Endpoint-0009] should return two entries with localport 8080', () => {
@@ -420,9 +421,10 @@ describe('Endpoints', function () {
 				expect(response.statusCode).to.equal(200);
 				expect(body).to.be.an('Object');
 				expect(body).to.have.property('data');
-				expect(body.data).to.have.lengthOf(1);
+				expect(body.data).to.have.lengthOf(2);
 				expect(body.data[0].status).to.equals(200);
-				expect(body.data[0].uri).to.equals('/petstore/v2/pet/findByStatus');
+				expect(body.data[0].uri).to.equals('/petstore/v2/pet/findByTag');
+				expect(body.data[1].uri).to.equals('/petstore/v2/pet/findByStatus');
 			});
 		});
 		it('[Endpoint-0016] should return one entry WAF-Status 1', () => {
@@ -511,8 +513,9 @@ describe('Endpoints', function () {
 				expect(response.statusCode).to.equal(200);
 				expect(body).to.be.an('Object');
 				expect(body).to.have.property('data');
-				expect(body.data).to.have.lengthOf(1);
-				expect(body.data[0].uri).to.equals('/petstore/v2/pet/findByStatus');
+				expect(body.data).to.have.lengthOf(2);
+				expect(body.data[0].uri).to.equals('/petstore/v2/pet/findByTag');
+				expect(body.data[1].uri).to.equals('/petstore/v2/pet/findByStatus');
 			});
 		});
 		it('[Endpoint-0020] Should return 1 entry in the last 10 minutes (ago=10m)', () => {
@@ -533,8 +536,8 @@ describe('Endpoints', function () {
 				expect(response.statusCode).to.equal(200);
 				expect(body).to.be.an('Object');
 				expect(body).to.have.property('data');
-				expect(body.data).to.have.lengthOf(1);
-				expect(body.data[0].uri).to.equals('/petstore/v2/pet/findByStatus');
+				expect(body.data).to.have.lengthOf(2);
+				expect(body.data[0].uri).to.equals('/petstore/v2/pet/findByTag');
 			});
 		});
 		it('[Endpoint-0021] Should return 2 entries in the last 30 minutes (ago=30m)', () => {
@@ -555,11 +558,11 @@ describe('Endpoints', function () {
 				expect(response.statusCode).to.equal(200);
 				expect(body).to.be.an('Object');
 				expect(body).to.have.property('data');
-				expect(body.data).to.have.lengthOf(2);
-				expect(body.data[0].uri).to.equals('/petstore/v2/pet/findByStatus');
+				expect(body.data).to.have.lengthOf(3);
+				expect(body.data[0].uri).to.equals('/petstore/v2/pet/findByTag');
 			});
 		});
-		it('[Endpoint-0022] Should only 2 entries in the last 2 hours (ago=120h)', () => {
+		it('[Endpoint-0022] Should return 4 entries in the last 2 hours (ago=120h)', () => {
 			const auth = {
 				user: server.apibuilder.config.apikey || 'test',
 				password: ''
@@ -577,8 +580,8 @@ describe('Endpoints', function () {
 				expect(response.statusCode).to.equal(200);
 				expect(body).to.be.an('Object');
 				expect(body).to.have.property('data');
-				expect(body.data).to.have.lengthOf(3);
-				expect(body.data[0].uri).to.equals('/petstore/v2/pet/findByStatus');
+				expect(body.data).to.have.lengthOf(4);
+				expect(body.data[0].uri).to.equals('/petstore/v2/pet/findByTag');
 			});
 		});
 		it('[Endpoint-0023] Should include the V-Host value', () => {
@@ -642,6 +645,27 @@ describe('Endpoints', function () {
 				expect(body).to.have.property('data');
 				expect(body.data).to.have.lengthOf(1);
 				checkFields(body.data, false);
+			});
+		});
+
+		// See issue #52
+		it('[Endpoint-0026] With query on v2/pet/findByTag should return only ONE API.', () => {
+			return requestAsync({
+				method: 'GET',
+				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?field=uri&value=%2Fpetstore%2Fv2%2Fpet%2FfindByTag&field=method&value=GET`,
+				headers: {
+					'cookie': 'VIDUSR=Search-0022-DAVID-1597468226-Z+qdRW4rGZnwzQ==', 
+					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
+				},
+				auth: auth,
+				json: true
+			}).then(({ response, body }) => {
+				expect(response.statusCode).to.equal(200);
+				expect(body).to.be.an('Object');
+				expect(body).to.have.property('data');
+				expect(body.data).to.have.lengthOf(1); // We expect ONE API as a result
+				expect(body.data[0].uri).to.equals('/petstore/v2/pet/findByTag');
+				expect(body.data[0].correlationId).to.equals('11111111111111111111111111');
 			});
 		});
 	});
