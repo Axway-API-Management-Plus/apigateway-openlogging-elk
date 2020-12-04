@@ -1,0 +1,38 @@
+flow-nodes:
+  traffic-monitor-api-utils:
+    name: Traffic-Monitor Utils
+    icon: icon.svg
+    description: Utility flow node that supports the implementation of the Traffic-Monitor API. For instance creating the required search queries for Elasticsearch.
+    category: general
+    methods:
+      handleFilterFields:
+        name: Handle filter fields
+        description: Parses the given filter fields in the request (e.g. http.uri) and creates the required Elasticsearch query.
+        parameters:
+          params:
+            name: Params
+            description: The object must contain the given request parameters.
+            required: true
+            schema:
+              type: object
+          serviceID:
+            name: ServiceId
+            description: The serviceId which is part of the request and given as a path parameter (r/service/instance-2/ops/)
+            required: true
+            schema:
+              type: string
+        returns:
+          name: Next
+          description: Returns the created search query for elastic search
+          context: $.query
+          schema:
+            type: object
+        throws:
+          name: Error
+          description: An unexpected error was encountered.
+          context: $.error
+          schema:
+            type: object
+            properties:
+              message:
+                type: string

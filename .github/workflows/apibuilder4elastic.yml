@@ -45,6 +45,7 @@ jobs:
         ELASTICSEARCH_HOSTS: 'http://localhost:9200'
         VALIDATE_CONFIG: false
         LOG_LEVEL: INFO
+        ENABLE_SETUP_FLOWS: false # Disable Elasticsearch tests for the tests.
         CI: true
       run: | 
         npm ci

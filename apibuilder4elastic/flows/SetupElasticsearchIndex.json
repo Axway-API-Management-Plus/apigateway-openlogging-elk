@@ -31,7 +31,7 @@
 		},
 		"additionalProperties": false
 	},
-	"start": "file.4",
+	"start": "condition.1",
 	"nodes": {
 		"axway-api-management.1": {
 			"type": "nodehandler://api-builder-plugin-axway-api-management/axway-api-management",
@@ -926,6 +926,42 @@
 				}
 			},
 			"metaMethod": "Index exists"
+		},
+		"condition.1": {
+			"type": "nodehandler://axway-flow/condition",
+			"name": "Is enabled?",
+			"method": "equals",
+			"parameters": [
+				{
+					"name": "source",
+					"type": "jsonpath",
+					"value": "$.env.ENABLE_SETUP_FLOWS",
+					"metaName": "Source",
+					"metaDescription": "The input to test."
+				},
+				{
+					"name": "value",
+					"type": "string",
+					"value": "\"true\"",
+					"metaName": "Value",
+					"metaDescription": "The value to test input against."
+				}
+			],
+			"outputs": {
+				"true": {
+					"routes": [
+						"file.4"
+					],
+					"context": "$.equals",
+					"metaName": "True"
+				},
+				"false": {
+					"routes": [],
+					"context": "$.equals",
+					"metaName": "False"
+				}
+			},
+			"metaMethod": "Equals"
 		}
 	}
 }
