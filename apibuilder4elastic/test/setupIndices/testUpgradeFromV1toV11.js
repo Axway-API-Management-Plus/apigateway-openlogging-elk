@@ -53,14 +53,15 @@ describe('Test Setup Indices endpoint', function () {
 			});
 		// This tells the API-Builder process, which config to use before it starts
 		process.env.INDEX_CONFIG_FILE = testConfig;
+		process.env.ENABLE_SETUP_FLOWS = true;
 	}
 
 	/**
 	 * Stop API Builder after the tests.
 	 */
 	after(() => {
-		stopApiBuilder(server);
-		nock.cleanAll();
+		stopApiBuilder(server)
+		process.env.ENABLE_SETUP_FLOWS = false;
 	});
 
 	describe('Setup index tests', () => {

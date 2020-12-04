@@ -57,12 +57,16 @@ describe('Test Setup Indices endpoint', function () {
 				fs.writeFileSync(testConfig, renderedString);
 			});
 		process.env.INDEX_CONFIG_FILE = testConfig;
+		process.env.ENABLE_SETUP_FLOWS = true;
 	}
 
 	/**
 	 * Stop API Builder after the tests.
 	 */
-	after(() => stopApiBuilder(server));
+	after(() => {
+		stopApiBuilder(server)
+		process.env.ENABLE_SETUP_FLOWS = false;
+	});
 
 	describe('Setup index tests', () => {
 		it('[setup-index-0001] Should fail if the indexName is unknown', () => {
