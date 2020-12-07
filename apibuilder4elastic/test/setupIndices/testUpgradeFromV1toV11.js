@@ -53,7 +53,7 @@ describe('Test Setup Indices endpoint', function () {
 			});
 		// This tells the API-Builder process, which config to use before it starts
 		process.env.INDEX_CONFIG_FILE = testConfig;
-		process.env.ENABLE_SETUP_FLOWS = true;
+		process.env.DISABLE_SETUP_FLOWS = false;
 	}
 
 	/**
@@ -61,7 +61,7 @@ describe('Test Setup Indices endpoint', function () {
 	 */
 	after(() => {
 		stopApiBuilder(server)
-		process.env.ENABLE_SETUP_FLOWS = false;
+		process.env.DISABLE_SETUP_FLOWS = true;
 	});
 
 	describe('Setup index tests', () => {
