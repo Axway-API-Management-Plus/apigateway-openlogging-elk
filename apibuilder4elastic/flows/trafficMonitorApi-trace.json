@@ -91,7 +91,7 @@
 				{
 					"name": "sort",
 					"type": "string",
-					"value": "\"@timestamp:asc\"",
+					"value": "\"@timestamp:asc,log.offset:asc\"",
 					"metaName": "Sort",
 					"metaDescription": "A comma-separated list of <field>:<direction> pairs."
 				}
