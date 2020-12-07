@@ -671,6 +671,15 @@ If you see the following or similar error message during processing of events th
 [2020-08-19T10:51:05,671][ERROR][logstash.filters.http    ][main][......] error during HTTP request {:url=>"/api/elk/v1/api/lookup/api", :body=>nil, :client_error=>"Target host is not specified"}
 ```
 
+### Check ANM 
+If the admin node manager, i.e. the traffic monitor UI, does not fetch the data from Elasticsearch via API builder, it is recommended to check the ANM trace file.
+Possibly errors like the following are logged there:
+```
+ERROR   07/Dec/2020:01:43:19.769 [262e:27ebcd5f0601b4bda7f620b5]         java exception: 
+java.lang.RuntimeException: java.net.URISyntaxException: Illegal character in path at index 0: [invalid field]/api/elk/v1/api/router/service/instance-1/ops/search?format=json&field=leg&value=0&count=1000&ago=24h&protocol=http
+```
+In this case, the environment variable: [API_BUILDER_URL](#admin-node-manager) is not set for the ANM process.
+
 ### Check Elasticsearch processing
 It takes a while until Elasticsearch is finally started and reports it with the following line: 
 ```
