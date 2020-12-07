@@ -31,7 +31,7 @@
 			"env"
 		]
 	},
-	"start": "axway-api-management.1",
+	"start": "utils.1",
 	"nodes": {
 		"axway-api-management.1": {
 			"type": "nodehandler://api-builder-plugin-axway-api-management/axway-api-management",
@@ -142,6 +142,44 @@
 				}
 			},
 			"metaMethod": "Set HTTP Response"
+		},
+		"utils.1": {
+			"type": "nodehandler://@axway-api-builder-ext/api-builder-plugin-utils/utils",
+			"name": "Trace Message",
+			"method": "traceMessage",
+			"parameters": [
+				{
+					"name": "level",
+					"type": "string",
+					"value": "\"info\"",
+					"metaName": "Log level",
+					"metaDescription": "Trace the message on the configured level."
+				},
+				{
+					"name": "message",
+					"type": "string",
+					"value": "\"Log API-Name: ${apiName}\"",
+					"metaName": "Trace Message",
+					"metaDescription": "The message to trace. It might contain variables in the following format: ${name}, ${name.sub} or ${name[0][1]}"
+				},
+				{
+					"name": "data",
+					"type": "jsonpath",
+					"value": "$.params",
+					"metaName": "Replacement data",
+					"metaDescription": "Data used to replace variables in your trace message. Examples: ${a}, ${a[0]}, ${a.b}"
+				}
+			],
+			"outputs": {
+				"next": {
+					"routes": [
+						"axway-api-management.1"
+					],
+					"context": "$.message",
+					"metaName": "Next"
+				}
+			},
+			"metaMethod": "Trace Message"
 		}
 	}
 }

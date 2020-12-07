@@ -929,34 +929,34 @@
 		},
 		"condition.1": {
 			"type": "nodehandler://axway-flow/condition",
-			"name": "Is enabled?",
+			"name": "Is disabled?",
 			"method": "equals",
 			"parameters": [
-				{
-					"name": "source",
-					"type": "jsonpath",
-					"value": "$.env.ENABLE_SETUP_FLOWS",
-					"metaName": "Source",
-					"metaDescription": "The input to test."
-				},
 				{
 					"name": "value",
 					"type": "string",
 					"value": "\"true\"",
 					"metaName": "Value",
 					"metaDescription": "The value to test input against."
+				},
+				{
+					"name": "source",
+					"type": "jsonpath",
+					"value": "$.env.DISABLE_SETUP_FLOWS",
+					"metaName": "Source",
+					"metaDescription": "The input to test."
 				}
 			],
 			"outputs": {
 				"true": {
-					"routes": [
-						"file.4"
-					],
+					"routes": [],
 					"context": "$.equals",
 					"metaName": "True"
 				},
 				"false": {
-					"routes": [],
+					"routes": [
+						"file.4"
+					],
 					"context": "$.equals",
 					"metaName": "False"
 				}
