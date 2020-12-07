@@ -7,7 +7,7 @@ module.exports = [
 			"version": "1.1.0"
 		},
 		"log": {
-			"offset": 713446,
+			"offset": 80,
 			"file": {
 				"path": "/var/log/trace/quickstartserver_20200702015317.trc"
 			}
@@ -25,7 +25,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "TRACE-TEST-DEPTH",
 		"message": "             Trace Filter {",
-		"@timestamp": "2020-07-02T10:37:49.790Z",
+		"@timestamp": "2020-07-02T10:37:55.790Z",
 
 		"tags": [
 			"beats_input_codec_plain_applied",
@@ -41,7 +41,7 @@ module.exports = [
 			"version": "1.1.0"
 		},
 		"log": {
-			"offset": 713446,
+			"offset": 10,
 			"file": {
 				"path": "/var/log/trace/quickstartserver_20200702015317.trc"
 			}
@@ -59,7 +59,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "TRACE-TEST-DEPTH",
 		"message": "                     Value:     {customProperty3=false}",
-		"@timestamp": "2020-07-02T10:37:50.790Z",
+		"@timestamp": "2020-07-02T10:37:55.790Z",
 
 		"tags": [
 			"beats_input_codec_plain_applied",
@@ -75,7 +75,7 @@ module.exports = [
 			"version": "1.1.0"
 		},
 		"log": {
-			"offset": 713446,
+			"offset": 30,
 			"file": {
 				"path": "/var/log/trace/quickstartserver_20200702015317.trc"
 			}
@@ -109,7 +109,7 @@ module.exports = [
 			"version": "1.1.0"
 		},
 		"log": {
-			"offset": 713446,
+			"offset": 150,
 			"file": {
 				"path": "/var/log/trace/quickstartserver_20200702015317.trc"
 			}
@@ -127,7 +127,7 @@ module.exports = [
 		"month_field": "7",
 		"correlationId": "TRACE-TEST-DEPTH",
 		"message": "        connection timed out after 30000ms",
-		"@timestamp": "2020-07-02T10:37:56.790Z",
+		"@timestamp": "2020-07-02T10:37:55.790Z",
 
 		"tags": [
 			"beats_input_codec_plain_applied",

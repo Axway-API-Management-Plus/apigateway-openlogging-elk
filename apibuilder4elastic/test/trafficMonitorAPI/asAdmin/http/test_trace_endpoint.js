@@ -107,7 +107,7 @@ describe('Traffic Monitor API', function () {
 			});
 		});
 
-		it('[trace-0004] Should return the selected trace message with the correct depth', () => {
+		it('[trace-0004] Should return the selected trace message with the correct depth and ordering based on timestamp and offset', () => {
 			return requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/trace/TRACE-TEST-DEPTH`,
@@ -121,22 +121,26 @@ describe('Traffic Monitor API', function () {
 				expect(response.statusCode).to.equal(200);
 				expect(body).to.be.an('Array');
 				expect(body).to.have.lengthOf(4);
+
 				expect(body[0].level).to.equal('INFO');
-				expect(body[0].text).to.equal('Trace Filter {');
-				expect(body[0].time).to.equal(1593686269790);
-				expect(body[0].type).to.equal('trace');
-				expect(body[0].depth).to.equal(3);
-				expect(body[1].level).to.equal('INFO');
-				expect(body[1].text).to.equal('Value:     {customProperty3=false}');
-				expect(body[1].time).to.equal(1593686270790);
-				expect(body[1].depth).to.equal(5);
-				expect(body[2].level).to.equal('WARN');
-				expect(body[2].text).to.equal('No leading spaces for this message');
+				expect(body[0].text).to.equal('Value:     {customProperty3=false}');
+				expect(body[0].time).to.equal(1593686275790);
+				expect(body[0].depth).to.equal(5);
+
+				expect(body[1].level).to.equal('WARN');
+				expect(body[1].text).to.equal('No leading spaces for this message');
+				expect(body[1].time).to.equal(1593686275790);
+				expect(body[1].depth).to.equal(0);
+
+				expect(body[2].level).to.equal('INFO');
+				expect(body[2].text).to.equal('Trace Filter {');
 				expect(body[2].time).to.equal(1593686275790);
-				expect(body[2].depth).to.equal(0);
+				expect(body[2].type).to.equal('trace');
+				expect(body[2].depth).to.equal(3);
+
 				expect(body[3].level).to.equal('ERROR');
 				expect(body[3].text).to.equal('connection timed out after 30000ms');
-				expect(body[3].time).to.equal(1593686276790);
+				expect(body[3].time).to.equal(1593686275790);
 				expect(body[3].depth).to.equal(2);
 			});
 		});
