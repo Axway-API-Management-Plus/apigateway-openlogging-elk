@@ -17,7 +17,7 @@
             "@timestamp": {
                 "type" : "date"
             },
-            "offset": {
+            "log.offset": {
                 "type": "integer"
             },
             "correlationId": {
