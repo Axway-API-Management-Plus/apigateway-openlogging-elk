@@ -1,5 +1,5 @@
 {
-    "version": 1,
+    "version": 2,
     "index_patterns": [
         "apigw-trace-*", 
         "apigw-traffic-trace-*"
@@ -16,6 +16,9 @@
         "properties": {
             "@timestamp": {
                 "type" : "date"
+            },
+            "offset": {
+                "type": "integer"
             },
             "correlationId": {
                 "type": "keyword"

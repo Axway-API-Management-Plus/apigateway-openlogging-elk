@@ -24,6 +24,8 @@ filebeat.inputs:
   # any line that does not match the above pattern belongs to the previous line
   multiline.match: after
   fields_under_root: true
+  # The offset is used to sort the trace messages additionally to the timestamp
+  offset: true
   fields:
     logtype: trace
     gatewayName: ${GATEWAY_NAME:"API-Gateway"}
