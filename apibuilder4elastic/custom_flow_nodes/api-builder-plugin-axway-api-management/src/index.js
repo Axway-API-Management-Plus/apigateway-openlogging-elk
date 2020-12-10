@@ -147,7 +147,7 @@ async function isAPIManagerUserAdmin(apiManagerConfig, logger) {
  * This avoids to have an API-Manager Up&Running when Logstash pipelines are tested. 
  */
 async function addLookupAPIMocks(cache) {
-	cache.set( "/petstore/v2/user/Chris###group-2###", {
+	cache.set( "/petstore/v2/user/chris###group-2###", {
 		organizationName: "Mocked Org A", 
 		version: "X.X.X", 
 		deprecated: false, 
