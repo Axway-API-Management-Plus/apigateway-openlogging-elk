@@ -100,7 +100,7 @@ async function lookupCurrentUser(params, options) {
 
 async function lookupAPIDetails(params, options) {
 	debugger;
-	const { apiName, apiPath, operationId, groupId, region, mapCustomProperties } = params;
+	var { apiName, apiPath, operationId, groupId, region, mapCustomProperties } = params;
 	logger = options.logger;
 	cache = options.pluginContext.cache;
 	pluginConfig = options.pluginConfig;

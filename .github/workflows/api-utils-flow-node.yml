@@ -4,7 +4,14 @@
 
 name: Flow-Node API-Utils tests
 
-on: [push, pull_request]
+on: 
+  push:
+    paths: 
+    - "**/api-builder-plugin-axway-api-management"
+  
+  pull_request:
+    paths: 
+    - "**/api-builder-plugin-axway-api-management"
 
 jobs:
   apim-util-flow-node:

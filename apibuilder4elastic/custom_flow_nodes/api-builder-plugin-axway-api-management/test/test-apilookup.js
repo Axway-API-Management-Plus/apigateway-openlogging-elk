@@ -62,7 +62,7 @@ describe('Test API Lookup', () => {
 			});
 
 			expect(value).to.be.instanceOf(Error)
-				.and.to.have.property('message', 'API not found locally, based on path: /v1/unkownAPI. To perform a query against an API-Manager you must provide the apiName.');
+				.and.to.have.property('message', 'API not found locally, based on path: /v1/unkownapi. To perform a query against an API-Manager you must provide the apiName.');
 			expect(output).to.equal('error');
 		});
 
