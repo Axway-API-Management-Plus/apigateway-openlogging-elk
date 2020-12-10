@@ -91,5 +91,25 @@ describe('flow-node elk-solution-utils', () => {
 			expect(mockedIndexCreateFn.callCount).to.equal(0);
 			expect(value).to.deep.equal({}); // We expect no index to be created
 		});
+
+		it('should create indices without region suffix for region N/A', async () => {
+			var mockedIndexExistsFn = mockElasticsearchMethod(client, 'indices.existsAlias', './test/mock/indexNotFoundResponse.json', false);
+			var mockedIndexCreateFn = mockElasticsearchMethod(client, 'indices.create', './test/mock/indexCreatedResponse.json', false);
+			var indexConfig = JSON.parse(fs.readFileSync('./test/testConfig/test_index_config.json'), null);
+
+			var indices = {};
+			indices['apigw-traffic-summary'] = indexConfig['apigw-traffic-summary'];
+			indices['apigw-traffic-details'] = indexConfig['apigw-traffic-details'];
+			var { value, output } = await flowNode.createIndices({ indices: indices, region: "N/A" });
+
+			var createdIndices = { 
+				"apigw-traffic-details-000001": { alias: "apigw-traffic-details" },
+				"apigw-traffic-summary-000001": { alias: "apigw-traffic-summary" },
+			}
+			expect(value).to.deep.equal(createdIndices);
+			expect(mockedIndexExistsFn.callCount).to.equal(2);
+			expect(mockedIndexCreateFn.callCount).to.equal(2);
+			expect(output).to.equal('next');
+		});
 	});
 });
