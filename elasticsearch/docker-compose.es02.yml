@@ -43,7 +43,7 @@ services:
         source: esdata2
         target: /usr/share/elasticsearch/data
       - ${PWD}/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
-      - ${PWD}/certificates:/usr/share/elasticsearch/config/certificates
+      - ${PWD}/config/certificates:/usr/share/elasticsearch/config/certificates
       - ${PWD}/elasticsearch/scripts:/usr/share/elasticsearch/scripts
     networks:
       - elastic

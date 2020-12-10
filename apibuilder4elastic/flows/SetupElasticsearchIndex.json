@@ -437,16 +437,12 @@
 			],
 			"outputs": {
 				"next": {
-					"routes": [
-						"elasticsearch.4"
-					],
+					"routes": [],
 					"context": "$.ilmPolicy",
 					"metaName": "Next"
 				},
 				"noUpdate": {
-					"routes": [
-						"elasticsearch.4"
-					],
+					"routes": [],
 					"context": "$.message",
 					"metaName": "No update"
 				},
@@ -551,8 +547,7 @@
 					"context": "$.delayed",
 					"routes": [
 						"file.3",
-						"file.2",
-						"elasticsearch.4"
+						"file.2"
 					],
 					"metaName": "Next"
 				}
@@ -620,116 +615,6 @@
 					"context": "$.error",
 					"routes": [
 						"http.3"
-					],
-					"metaName": "Error"
-				}
-			},
-			"metaMethod": "Format string"
-		},
-		"elasticsearch.4": {
-			"type": "nodehandler://@axway-api-builder-ext/api-builder-plugin-fn-elasticsearch/elasticsearch",
-			"name": "Index exists",
-			"method": "indicesExists",
-			"parameters": [
-				{
-					"name": "name",
-					"type": "jsonpath",
-					"value": "$.indexConfig.alias",
-					"metaName": "Alias",
-					"metaDescription": "Comma-separated list or wildcard expression of index alias names used to limit the request"
-				}
-			],
-			"outputs": {
-				"next": {
-					"routes": [],
-					"context": "$.result",
-					"metaName": "Next"
-				},
-				"notFound": {
-					"routes": [
-						"mustache.2"
-					],
-					"context": "$.result",
-					"metaName": "Not found"
-				},
-				"error": {
-					"routes": [
-						"http.5"
-					],
-					"context": "$.error",
-					"metaName": "Error"
-				}
-			},
-			"metaMethod": "Index exists"
-		},
-		"elasticsearch.7": {
-			"type": "nodehandler://@axway-api-builder-ext/api-builder-plugin-fn-elasticsearch/elasticsearch",
-			"name": "Create index",
-			"method": "indicesCreate",
-			"parameters": [
-				{
-					"name": "index",
-					"type": "jsonpath",
-					"value": "$.initialIndexName",
-					"metaName": "Index",
-					"metaDescription": "The name of the index"
-				},
-				{
-					"name": "alias",
-					"type": "jsonpath",
-					"value": "$.indexConfig.alias",
-					"metaName": "Alias name",
-					"metaDescription": "The alias for the index. If an index configuration is given, this alias name is merged into it."
-				}
-			],
-			"outputs": {
-				"next": {
-					"routes": [],
-					"context": "$.result",
-					"metaName": "Next"
-				},
-				"error": {
-					"routes": [
-						"http.5"
-					],
-					"context": "$.error",
-					"metaName": "Error"
-				}
-			},
-			"metaMethod": "Create index"
-		},
-		"mustache.2": {
-			"type": "nodehandler://@axway/api-builder-plugin-fn-mustache/mustache",
-			"name": "Define index name",
-			"method": "format",
-			"parameters": [
-				{
-					"name": "template",
-					"type": "string",
-					"value": "\"{{data.indexConfig.alias}}-000001\"",
-					"metaName": "Template",
-					"metaDescription": "The Mustache template. e.g. `Hi {{data.user}}`."
-				},
-				{
-					"name": "data",
-					"type": "jsonpath",
-					"value": "$",
-					"metaName": "Data",
-					"metaDescription": "The value to assign to the \"data\" variable in the template."
-				}
-			],
-			"outputs": {
-				"next": {
-					"context": "$.initialIndexName",
-					"routes": [
-						"elasticsearch.7"
-					],
-					"metaName": "Next"
-				},
-				"error": {
-					"context": "$.error",
-					"routes": [
-						"http.5"
 					],
 					"metaName": "Error"
 				}

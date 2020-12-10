@@ -24,7 +24,7 @@ services:
         source: logs
         target: /var/log
       - ${PWD}/kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml
-      - ${PWD}/certificates:/usr/share/kibana/config/certificates
+      - ${PWD}/config/certificates:/usr/share/kibana/config/certificates
       - ${PWD}/kibana/scripts:/usr/share/kibana/scripts
     ulimits:
       memlock:

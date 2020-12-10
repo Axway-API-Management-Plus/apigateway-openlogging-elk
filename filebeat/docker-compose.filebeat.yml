@@ -30,7 +30,7 @@ services:
       - ${APIGATEWAY_AUDITLOGS_FOLDER}:/var/log/audit
       - /var/lib/docker/containers:/var/lib/docker/containers:ro
       - /var/run/docker.sock:/var/run/docker.sock
-      - ${PWD}/certificates:/usr/share/filebeat/config/certificates
+      - ${PWD}/config/certificates:/usr/share/filebeat/config/certificates
     networks:
       - elastic
     logging:
