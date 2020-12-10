@@ -104,8 +104,8 @@ describe('Test Setup Indices endpoint', function () {
 				expect(spyPutTemplate.callCount).to.equals(2, "indices.putTemplate was not called 2 times"); // The template should be inserted
 				expect(spyPutILMPolicyFn.callCount).to.equals(1, "ilm.putLifecycle was not called"); // Expected to setup the ILM-Policy
 				expect(spyGetILMPolicyFn.callCount).to.equals(1, "ilm.getLifecycle was not called"); // Is called as part of the ilm.putLifecycle
-				expect(spyIndicesExists.callCount).to.equals(2, "indices.exists was not called"); //
-				expect(spyIndicesCreate.callCount).to.equals(1, "indices.create was not called"); // 
+				expect(spyIndicesExists.callCount).to.equals(1, "indices.exists should be called one"); //
+				expect(spyIndicesCreate.callCount).to.equals(0, "indices.create should not be called"); // 
 				expect(spyIndicesRollover.callCount).to.equals(0, "indices.rollover should not be called"); // As the index has just been created
 				
 				expect(response.statusCode).to.equal(200);
