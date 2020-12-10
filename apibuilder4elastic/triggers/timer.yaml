@@ -10,7 +10,7 @@ triggers:
       parameters:
         config: $.config
         env: $.env
-        indexName: traffic-summary
+        indexName: apigw-traffic-summary
   setup-traffic-details-index:
     enabled: true
     name: Setup Traffic-Details Index
@@ -22,7 +22,7 @@ triggers:
       parameters:
         config: $.config
         env: $.env
-        indexName: traffic-details
+        indexName: apigw-traffic-details
   setup-traffic-trace-index:
     enabled: true
     name: Setup Traffic-Trace message index
@@ -34,7 +34,7 @@ triggers:
       parameters:
         config: $.config
         env: $.env
-        indexName: traffic-trace
+        indexName: apigw-traffic-trace
   setup-trace-messages-index:
     enabled: true
     name: Setup Trace-Messages Index
@@ -46,7 +46,7 @@ triggers:
       parameters:
         config: $.config
         env: $.env
-        indexName: trace-messages
+        indexName: apigw-trace-messages
   setup-apigw-monitoring-index:
     enabled: true
     name: Setup API-GW Monitoring Index
