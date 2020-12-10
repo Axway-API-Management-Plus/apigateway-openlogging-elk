@@ -107,6 +107,9 @@ async function lookupAPIDetails(params, options) {
 	if (!apiPath) {
 		throw new Error('You must provide the apiPath that should be used to lookup the API.');
 	}
+	apiPath = apiPath.toLowerCase();
+	if(region) region = region.toLowerCase();
+	if(groupId) groupId = groupId.toLowerCase();
 	const cacheKey = `${apiPath}###${groupId}###${region}`;
 	logger.debug(`Trying to lookup API-Details from cache using key: '${cacheKey}'`);
 	if(cache.has(cacheKey)) {
