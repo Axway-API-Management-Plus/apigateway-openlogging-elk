@@ -4,7 +4,14 @@
 
 name: Flow-Node APIM-ELK Solution utils tests
 
-on: [push, pull_request]
+on: 
+  push:
+    paths: 
+    - "**/api-builder-plugin-elk-solution-utils"
+  
+  pull_request:
+    paths: 
+    - "**/api-builder-plugin-elk-solution-utils"
 
 jobs:
   apim-util-flow-node:
