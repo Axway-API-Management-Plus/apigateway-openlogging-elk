@@ -118,7 +118,7 @@ describe('Test Setup Indices endpoint', function () {
 				expect(spyGetILMPolicyFn.callCount).to.equals(1, "ilm.getLifecycle was not called"); // Is called as part of the ilm.putLifecycle
 				expect(spyIndicesExists.callCount).to.equals(1, "indices.exists was not called"); //
 				expect(spyIndicesCreate.callCount).to.equals(0, "indices.create was called"); // but the index already exists
-				expect(spyIndicesRollover.callCount).to.equals(1, "indices.rollover was not called"); // but it should, as the V1.0.0 index should be rolled over
+				expect(spyIndicesRollover.callCount).to.equals(0, "indices.rollover was not called"); // but it should, as the V1.0.0 index should be rolled over
 				
 				expect(response.statusCode).to.equal(200);
 				nock.cleanAll();
