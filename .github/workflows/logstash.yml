@@ -1,4 +1,4 @@
-name: Test Logstash pipeline
+name: Logstash pipeline tests
 
 on: [push, pull_request]
 

@@ -2,7 +2,7 @@
 # For that an Elasticsearch instance is started, test-data inserted and the 
 # API-Builder Traffic-Monitor API is executed with all possible parameters.
 
-name: APIM-ELK utils Flow-Node tests
+name: Flow-Node APIM-ELK Solution utils tests
 
 on: [push, pull_request]
 

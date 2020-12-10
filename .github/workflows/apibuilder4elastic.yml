@@ -2,7 +2,7 @@
 # For that an Elasticsearch instance is started, test-data inserted and the 
 # API-Builder Traffic-Monitor API is executed with all possible parameters.
 
-name: Test API-Builder4Elastic
+name: API-Builder4Elastic tests
 
 on: [push, pull_request]
 
