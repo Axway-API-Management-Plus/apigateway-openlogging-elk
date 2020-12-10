@@ -7,11 +7,11 @@ name: Flow-Node Traffic-Monitor Utils tests
 on: 
   push:
     paths: 
-    - "**/api-builder-plugin-traffic-monitor-api-utils"
+    - "**/api-builder-plugin-traffic-monitor-api-utils/**"
   
   pull_request:
     paths: 
-    - "**/api-builder-plugin-traffic-monitor-api-utils"
+    - "**/api-builder-plugin-traffic-monitor-api-utils/**"
 
 jobs:
   apim-util-flow-node:
