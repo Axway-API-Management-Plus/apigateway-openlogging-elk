@@ -8,7 +8,7 @@ Howevery, if you like to setup the policy you find the details here.
 - Create a new policy and name it `Use Elasticsearch API` - *This Policy will decide on what API calls can be routed to Elasticsearch*
 - The configured Policy should look like this:
 
-  ![use ES API][img3]  
+  ![use ES API](../imgs/node-manager-use-es-api.png)  
 
     - The `Compare Attribute` filter named `Is managed by Elasticsearch API?` checks for each endpoint based on the attribute: `http.request.path` if the requested API can be handled by the API-Builder ElasticSearch-Traffic-Monitor API.    
     As a basis for decision-making a criteria for each endpoint needs to be added to the filter configuration.  
