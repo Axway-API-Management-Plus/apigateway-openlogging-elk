@@ -47,5 +47,5 @@ jobs:
         # But it's required by Logstash to be a valid certificate
         API_BUILDER_SSL_CERT: "./config/certificates/apibuilder4elastic.crt"
     - name: API-Builder Logs
-        run: |
-          docker logs "${{ job.services.api-builder.id }}"
+      run: |
+        docker logs "${{ job.services.api-builder.id }}"
