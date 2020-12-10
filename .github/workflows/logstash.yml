@@ -13,6 +13,8 @@ jobs:
           - 8080:8080
         env:
           MOCK_LOOKUP_API: true
+          # The API-Builder doesn't need an Elasticsearch server
+          VALIDATE_ELASTIC_CONNECTION: false
           ENABLE_HTTP_PORT: true
           ELASTICSEARCH_HOSTS: http://any.es-host.com:9200
       memcached:
