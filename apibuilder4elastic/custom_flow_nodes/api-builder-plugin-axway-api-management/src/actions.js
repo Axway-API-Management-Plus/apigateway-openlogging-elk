@@ -108,15 +108,19 @@ async function lookupAPIDetails(params, options) {
 		throw new Error('You must provide the apiPath that should be used to lookup the API.');
 	}
 	const cacheKey = `${apiPath}###${groupId}###${region}`;
+	logger.debug(`Trying to lookup API-Details from cache using key: '${cacheKey}'`);
 	if(cache.has(cacheKey)) {
+		logger.debug(`Found API-Details in cache with key: '${cacheKey}'`);
 		return cache.get(cacheKey);
 	}
+	logger.debug(`No API-Details found in cache using key: '${cacheKey}'`);
 	var proxies = await _getAPILocalProxies(apiPath, groupId, region, options);
 	if(proxies == undefined) {
 		// To lookup the API in API-Manager the API-Name is required
 		if (!apiName) {
 			throw new Error(`API not found locally, based on path: ${apiPath}. To perform a query against an API-Manager you must provide the apiName.`);
 		}
+		logger.debug(`API not configured locally, trying to get details from API-Manager.`);
 		proxies = await _getAPIProxy(apiName, groupId, region);
 	}
 	if(!proxies || proxies.length == 0) {
