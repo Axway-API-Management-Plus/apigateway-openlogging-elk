@@ -38,12 +38,25 @@ async function getPlugin(pluginConfig, options) {
 			managerURL.port = 8075;
 			pluginConfig.apimanager.url = managerURL.toString();
 		} else {
-			// Check, if multiple API-Manager URLs based on the groupId are given (Format: groupId#managerUrl)
-			if(pluginConfig.apimanager.url.indexOf('#')!=-1) {
-				// Looks like manager URLs are given based on groupIds
-				pluginConfig.apimanager.url.split(',').forEach(groupAndURL => {
-					groupAndURL = groupAndURL.trim().split('#');
-					pluginConfig.apimanager[groupAndURL[0]] = { url: groupAndURL[1] };
+			// Check, if multiple API-Manager URLs based on the groupId and regions are given (Format: groupId|managerUrl or groupId|region|managerUrl)
+			if(pluginConfig.apimanager.url.indexOf('|')!=-1) {
+				pluginConfig.apimanager.perGroupAndRegion = true;
+				// Looks like manager URLs are given based on groupIds and regions
+				pluginConfig.apimanager.url.split(',').forEach(groupRegionAndURL => {
+					groupRegionAndURL = groupRegionAndURL.trim().toLowerCase().split('|');
+					if(groupRegionAndURL.length == 1) {
+						// The default API-Manager
+						pluginConfig.apimanager.url = groupRegionAndURL[0]
+					} else if(groupRegionAndURL.length == 2) {
+						// Just the Group-ID is given
+						pluginConfig.apimanager[groupRegionAndURL[0]] = { url: groupRegionAndURL[1] };
+					} else if(groupRegionAndURL.length == 3) {
+						// Group-ID and region is given (Just create a map with a special key)
+						pluginConfig.apimanager[`${groupRegionAndURL[0]}###${groupRegionAndURL[1]}`] = { url: groupRegionAndURL[2] };
+					} else {
+						return Promise.reject(`Unexpected API-Manager format: ${groupRegionAndURL}`);
+
+					}
 				});
 			}
 		}

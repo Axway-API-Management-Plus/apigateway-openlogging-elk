@@ -85,16 +85,24 @@ function isDeveloperMode() {
 	}
 }
 
-function getManagerConfig(apiManagerConfig, groupId) {
-	if (apiManagerConfig[groupId]) {
-		if (!apiManagerConfig[groupId].password) {
-			apiManagerConfig[groupId].password = apiManagerConfig.password;
-			apiManagerConfig[groupId].username = apiManagerConfig.username;
+function getManagerConfig(apiManagerConfig, groupId, region) {
+	debugger;
+	if(groupId == undefined && region == undefined) {
+		return apiManagerConfig;
+	}
+	var key = groupId;
+	if(region != undefined) {
+		key = `${groupId}###${region}`.toLowerCase();
+	}
+	if (apiManagerConfig[key]) {
+		if (!apiManagerConfig[key].password) {
+			apiManagerConfig[key].password = apiManagerConfig.password;
+			apiManagerConfig[key].username = apiManagerConfig.username;
 		}
-		return apiManagerConfig[groupId];
+		return apiManagerConfig[key];
 	} else {
-		if (apiManagerConfig.url.indexOf('#') != -1) {
-			throw new Error(`You have configured API-Manager URLs based on groupIds (e.g. group-a#https://manager-host.com:8075), but the groupId: ${groupId} ist NOT configured. Please check the configuration parameter: API_MANAGER`);
+		if (apiManagerConfig.perGroupAndRegion) {
+			throw new Error(`You have configured API-Manager URLs based on groupIds (e.g. group-a|https://manager-host.com:8075), but the groupId: ${groupId} is NOT configured. Please check the configuration parameter: API_MANAGER`);
 		}
 		return apiManagerConfig;
 	}

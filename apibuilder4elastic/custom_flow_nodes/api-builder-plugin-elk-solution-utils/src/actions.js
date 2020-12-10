@@ -1,3 +1,4 @@
+const { ElasticsearchClient } = require('@axway-api-builder-ext/api-builder-plugin-fn-elasticsearch/src/actions/ElasticsearchClient.js');
 /**
  * Action method.
  *
@@ -53,6 +54,74 @@ async function getIndexConfig(params, options) {
 	return indexConfig;
 }
 
+async function getIndicesForLogtype(params, options) {
+	const { logtype, indexConfigs } = params;
+	const { logger } = options;
+	if (!logtype) {
+		throw new Error('Missing required parameter: logtype');
+	}
+	if (!indexConfigs) {
+		throw new Error('Missing required parameter: indexConfigs');
+	}
+
+	var indicesForLogType = {};
+	for (const [indexName, indexConfig] of Object.entries(indexConfigs)) {
+		if(indexConfig.logType!=undefined && indexConfig.logType==logtype) {
+			indicesForLogType[indexName] = indexConfig;
+		}
+	}
+	if(Object.values(indicesForLogType).length==0) {
+		throw new Error(`No indices configured for logtype: ${logtype}`);
+	}
+	return indicesForLogType;
+}
+
+async function createIndices(params, options) {
+	const { indices, region } = params;
+	const { logger } = options;
+	if (!indices) {
+		throw new Error('Missing required parameter: indices');
+	}
+	var client = new ElasticsearchClient().client;
+	if(!client) {
+		throw new Error('Elasticsearch client not present. Is Elasticsearch connection working?');
+	}
+	var regionSuffix = "";
+	if(region != undefined && region!="N/A") {
+		regionSuffix = `-${region.toLowerCase()}`
+	}
+	var intialCounter = "000001";
+	var createdIndices = {};
+	for (const [indexName, indexConfig] of Object.entries(indices)) {
+		var aliasName = `${indexConfig.alias}${regionSuffix}`;
+		var myIndexName = `${indexName}${regionSuffix}-${intialCounter}`;
+		var indexExists = await client.indices.existsAlias({index: myIndexName, name: aliasName});
+		if(indexExists.body) {
+			logger.info(`Index: ${myIndexName} for region: ${region} with alias: ${aliasName} already exists.`);
+			continue;
+		}
+		logger.info(`Creating index: ${myIndexName} for region: ${region} with alias: ${aliasName}`);
+		var requestParams = { index: myIndexName, body: { aliases: { } } };
+		requestParams.body.aliases[aliasName] = {};
+		try {
+			var result = await client.indices.create( requestParams, { ignore: [404], maxRetries: 3 });
+		} catch(ex) {
+			throw new Error(`Error creating index: ${myIndexName}. ${JSON.stringify(ex)}`);
+		}
+		if(result.statusCode != 200) {
+			logger.error(`Error creating index: ${myIndexName}. ${JSON.stringify(result)}`);
+		} else {
+			createdIndices[myIndexName] = { alias: aliasName };
+			logger.info(`Successfully created index: ${myIndexName} for region: ${region} with alias: ${aliasName}`);
+		}
+	}
+	return createdIndices;
+}
+
+
+
 module.exports = {
-	getIndexConfig
+	getIndexConfig,
+	getIndicesForLogtype,
+	createIndices
 };

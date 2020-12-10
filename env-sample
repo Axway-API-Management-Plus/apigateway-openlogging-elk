@@ -161,6 +161,15 @@ API_MANAGER_PASSWORD=changeme
 # API_MANAGER=https://172.17.0.1:8075
 # API_MANAGER=group-2#https://api-manager-1:8075, group-5#https://api-manager-2:8275
 
+# Additionally to the API-Manager itself, the API-Builder can perform an API-Lookup against 
+# a local configuration file. This is useful if you would like to map natively exposed APIs
+# (e.g. http://api-gateway:8080/healthcheck) to a real API-Name and Method. 
+# Additionally you can use this configuration file to configure, which APIs should not be 
+# indexed. 
+# This file contains the API-Details normally given by the API-Manager.
+# Example:
+# API_BUILDER_LOCAL_API_LOOKUP_FILE=/app/config/api-lookup.json
+
 # ----------------------------------------------------------------------------------------------
 # Recommended to configure to see Filebeat statistics in the Elastic Stack monitoring.
 # You can get your Cluster UUID with the following request: https://elasticsearch1:9200/

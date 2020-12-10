@@ -1,0 +1,430 @@
+{
+	"schemaVersion": "4",
+	"info": {
+		"name": "Create index",
+		"description": "Creates the initial index."
+	},
+	"parameter": {
+		"properties": {
+			"params": {
+				"type": "object",
+				"description": "The parameters from the endpoint."
+			},
+			"request": {
+				"type": "object",
+				"description": "The HTTP request."
+			},
+			"config": {
+				"type": "object",
+				"description": "The service's configuration"
+			},
+			"env": {
+				"type": "object",
+				"description": "The host OS environment"
+			}
+		},
+		"additionalProperties": false,
+		"required": [
+			"request",
+			"config",
+			"env",
+			"params"
+		]
+	},
+	"start": "file.1",
+	"nodes": {
+		"file.1": {
+			"type": "nodehandler://@axway-api-builder-ext/api-builder-plugin-fn-file/file",
+			"name": "Read Index-Config",
+			"method": "readFile",
+			"parameters": [
+				{
+					"name": "filename",
+					"type": "jsonpath",
+					"value": "$.config.indexConfigFile",
+					"metaName": "Source filename",
+					"metaDescription": "The filename to read."
+				},
+				{
+					"name": "notFoundFails",
+					"type": "boolean",
+					"value": "true",
+					"metaName": "Not found fails",
+					"metaDescription": "Set this flag, if you would like to have this flow node failed (Error) if the file cannot be found."
+				},
+				{
+					"name": "parseJson",
+					"type": "boolean",
+					"value": "true",
+					"metaName": "Parse JSON",
+					"metaDescription": "Turn this option if you are reading s JSON-File and would like to parse it into a JS-Object."
+				}
+			],
+			"outputs": {
+				"next": {
+					"routes": [
+						"elk-solution-utils.2"
+					],
+					"context": "$.configFile",
+					"metaName": "Next"
+				},
+				"notFound": {
+					"routes": [],
+					"context": "$.result",
+					"metaName": "Not found"
+				},
+				"error": {
+					"routes": [],
+					"context": "$.error",
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Read file"
+		},
+		"elk-solution-utils.1": {
+			"type": "nodehandler://api-builder-plugin-elk-solution-utils/elk-solution-utils",
+			"name": "Get index config",
+			"method": "getIndexConfig",
+			"parameters": [
+				{
+					"name": "indexConfigs",
+					"type": "jsonpath",
+					"value": "$.configFile",
+					"metaName": "Index configs",
+					"metaDescription": "Object that contains all index configurations"
+				},
+				{
+					"name": "data",
+					"type": "jsonpath",
+					"value": "$",
+					"metaName": "Data",
+					"metaDescription": "Object that contains either the property indexName or params.indexName."
+				}
+			],
+			"outputs": {
+				"next": {
+					"routes": [
+						"javascript.1"
+					],
+					"context": "$.indexConfig",
+					"metaName": "Next"
+				},
+				"error": {
+					"routes": [
+						"http.2"
+					],
+					"context": "$.error",
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Get index config"
+		},
+		"elasticsearch.1": {
+			"type": "nodehandler://@axway-api-builder-ext/api-builder-plugin-fn-elasticsearch/elasticsearch",
+			"name": "Index exists",
+			"method": "indicesExists",
+			"parameters": [
+				{
+					"name": "name",
+					"type": "jsonpath",
+					"value": "$.indexConfig.alias",
+					"metaName": "Alias",
+					"metaDescription": "Comma-separated list or wildcard expression of index alias names used to limit the request"
+				}
+			],
+			"outputs": {
+				"next": {
+					"routes": [
+						"http.1"
+					],
+					"context": "$.result",
+					"metaName": "Next"
+				},
+				"error": {
+					"routes": [
+						"http.2"
+					],
+					"context": "$.error",
+					"metaName": "Error"
+				},
+				"notFound": {
+					"routes": [
+						"mustache.1"
+					],
+					"context": "$.result",
+					"metaName": "Not found"
+				}
+			},
+			"metaMethod": "Index exists"
+		},
+		"javascript.1": {
+			"type": "nodehandler://@axway/api-builder-plugin-fn-javascript/javascript",
+			"name": "Set Alias-Name",
+			"method": "Execute",
+			"parameters": [
+				{
+					"name": "data",
+					"type": "jsonpath",
+					"value": "$",
+					"metaName": "data",
+					"metaDescription": "The value to apply as the `data` argument to the JavaScript code. For objects and arrays, `data` is passed by reference."
+				},
+				{
+					"name": "code",
+					"type": "string",
+					"value": "\"var baseAlias = data.indexConfig.alias;\\n  // Define the Index-Alias name\\n  if(data.params.region) {\\n    // If a region is given\\n    return `${baseAlias}-${data.params.region.toLowerCase()}`;\\n  } else {\\n    // Otherwise use the alias as configured\\n    return `${baseAlias}`;\\n  }\"",
+					"metaName": "code",
+					"metaDescription": "A JavaScript function body. Supports `await` and returning promises."
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.indexConfig.alias",
+					"routes": [
+						"elasticsearch.1"
+					],
+					"metaName": "Next"
+				},
+				"error": {
+					"context": "$.error",
+					"routes": [],
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Execute"
+		},
+		"http.1": {
+			"type": "nodehandler://axway-flow/http",
+			"name": "Index already exists",
+			"method": "setresponse",
+			"parameters": [
+				{
+					"name": "status",
+					"type": "number",
+					"value": "200",
+					"metaName": "Status",
+					"metaDescription": "The HTTP status code"
+				},
+				{
+					"name": "body",
+					"type": "jsonpath",
+					"value": "$.result",
+					"metaName": "Body",
+					"metaDescription": "The response payload"
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.response",
+					"routes": [],
+					"metaName": "Next"
+				}
+			},
+			"metaMethod": "Set HTTP Response"
+		},
+		"elasticsearch.2": {
+			"type": "nodehandler://@axway-api-builder-ext/api-builder-plugin-fn-elasticsearch/elasticsearch",
+			"name": "Create index",
+			"method": "indicesCreate",
+			"parameters": [
+				{
+					"name": "index",
+					"type": "jsonpath",
+					"value": "$.initialIndexName",
+					"metaName": "Index",
+					"metaDescription": "The name of the index"
+				},
+				{
+					"name": "alias",
+					"type": "jsonpath",
+					"value": "$.indexConfig.alias",
+					"metaName": "Alias name",
+					"metaDescription": "The alias for the index. If an index configuration is given, this alias name is merged into it."
+				}
+			],
+			"outputs": {
+				"next": {
+					"routes": [
+						"http.3"
+					],
+					"context": "$.result",
+					"metaName": "Next"
+				},
+				"error": {
+					"routes": [
+						"http.2"
+					],
+					"context": "$.error",
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Create index"
+		},
+		"mustache.1": {
+			"type": "nodehandler://@axway/api-builder-plugin-fn-mustache/mustache",
+			"name": "Define index name",
+			"method": "format",
+			"parameters": [
+				{
+					"name": "data",
+					"type": "jsonpath",
+					"value": "$",
+					"metaName": "Data",
+					"metaDescription": "The value to assign to the \"data\" variable in the template."
+				},
+				{
+					"name": "template",
+					"type": "string",
+					"value": "\"{{data.indexConfig.alias}}-000001\"",
+					"metaName": "Template",
+					"metaDescription": "The Mustache template. e.g. `Hi {{data.user}}`."
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.initialIndexName",
+					"routes": [
+						"elasticsearch.2"
+					],
+					"metaName": "Next"
+				},
+				"error": {
+					"context": "$.error",
+					"routes": [
+						"http.2"
+					],
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Format string"
+		},
+		"http.2": {
+			"type": "nodehandler://axway-flow/http",
+			"name": "Set HTTP Response",
+			"method": "setresponse",
+			"parameters": [
+				{
+					"name": "status",
+					"type": "number",
+					"value": "500",
+					"metaName": "Status",
+					"metaDescription": "The HTTP status code"
+				},
+				{
+					"name": "body",
+					"type": "jsonpath",
+					"value": "$.error",
+					"metaName": "Body",
+					"metaDescription": "The response payload"
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.response",
+					"routes": [],
+					"metaName": "Next"
+				}
+			},
+			"metaMethod": "Set HTTP Response"
+		},
+		"http.3": {
+			"type": "nodehandler://axway-flow/http",
+			"name": "Index created",
+			"method": "setresponse",
+			"parameters": [
+				{
+					"name": "status",
+					"type": "number",
+					"value": "201",
+					"metaName": "Status",
+					"metaDescription": "The HTTP status code"
+				},
+				{
+					"name": "body",
+					"type": "jsonpath",
+					"value": "$.result",
+					"metaName": "Body",
+					"metaDescription": "The response payload"
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.response",
+					"routes": [],
+					"metaName": "Next"
+				}
+			},
+			"metaMethod": "Set HTTP Response"
+		},
+		"elk-solution-utils.2": {
+			"type": "nodehandler://api-builder-plugin-elk-solution-utils/elk-solution-utils",
+			"name": "Get indices for Logtype",
+			"method": "getIndicesForLogtype",
+			"parameters": [
+				{
+					"name": "logtype",
+					"type": "jsonpath",
+					"value": "$.params.logtype",
+					"metaName": "Log-Type",
+					"metaDescription": "The LogType given by Filebeat."
+				},
+				{
+					"name": "indexConfigs",
+					"type": "jsonpath",
+					"value": "$.configFile",
+					"metaName": "Index configs",
+					"metaDescription": "Object that contains all index configurations"
+				}
+			],
+			"outputs": {
+				"next": {
+					"routes": [
+						"elk-solution-utils.3"
+					],
+					"context": "$.indices",
+					"metaName": "Next"
+				},
+				"error": {
+					"routes": [],
+					"context": "$.error",
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Get indices for Logtype"
+		},
+		"elk-solution-utils.3": {
+			"type": "nodehandler://api-builder-plugin-elk-solution-utils/elk-solution-utils",
+			"name": "Create indices",
+			"method": "createIndices",
+			"parameters": [
+				{
+					"name": "indices",
+					"type": "jsonpath",
+					"value": "$.indices",
+					"metaName": "Indices",
+					"metaDescription": "Array of indexConfiguration objects"
+				},
+				{
+					"name": "region",
+					"type": "jsonpath",
+					"value": "$.params.region",
+					"metaName": "Region",
+					"metaDescription": "Region the index should be created for"
+				}
+			],
+			"outputs": {
+				"next": {
+					"routes": [],
+					"context": "$.indexConfig",
+					"metaName": "Next"
+				},
+				"error": {
+					"routes": [],
+					"context": "$.error",
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Create indices"
+		}
+	}
+}

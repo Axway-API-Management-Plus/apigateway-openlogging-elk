@@ -17,6 +17,7 @@
 		"README.md"
 	],
 	"dependencies": {
+		"@axway-api-builder-ext/api-builder-plugin-fn-elasticsearch": "^1.0.14",
 		"@axway/api-builder-sdk": "^1.0.0"
 	},
 	"peerDependencies": {
@@ -24,6 +25,7 @@
 	},
 	"devDependencies": {
 		"@axway/api-builder-test-utils": "^1.1.0",
+		"@elastic/elasticsearch-mock": "^0.3.0",
 		"chai": "^4.1.2",
 		"mocha": "^7.1.1"
 	},

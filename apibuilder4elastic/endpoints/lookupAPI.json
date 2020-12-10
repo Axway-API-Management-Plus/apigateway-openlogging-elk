@@ -29,14 +29,12 @@
             "type": "string",
             "in": "query",
             "name": "apiPath",
-            "description": "The exposed path of the API to be looked up",
-            "required": true
+            "description": "The exposed path of the API to be looked up"
           },
           {
             "type": "string",
             "in": "query",
             "name": "apiName",
-            "required": true,
             "description": "The name of the API to look up"
           },
           {
@@ -49,12 +47,17 @@
             "type": "string",
             "in": "query",
             "name": "groupId",
-            "description": "The ID of the Domain-Group where this event was created. It's used to determined which API-Manager to use for the API-Details Lookup.\nIf the parameter: API_MANAGER is configured with multiple groupIds this groupId is used to determine which API-Manager to use.\nAPI_MANAGER=group-5#https://manager-1:8075, group-2#https://manager-2:8075, ....",
-            "required": true
+            "description": "The ID of the Domain-Group where this event was created. It's used to determined which API-Manager to use for the API-Details Lookup.\nIf the parameter: API_MANAGER is configured with multiple groupIds this groupId is used to determine which API-Manager to use.\nAPI_MANAGER=group-5#https://manager-1:8075, group-2#https://manager-2:8075, ...."
+          },
+          {
+            "type": "string",
+            "in": "query",
+            "name": "region",
+            "description": "The region can be specified optionally. Based on the region, together with the Group-ID, the correct API manager for the lookup is determined. This must be specified in the API_MANAGER parameter."
           }
         ],
         "summary": "Looks up an API based on the API-Path",
-        "description": "This endpoint is taking in the API-Path (e.g. /v1/my/api) and tries to find this API in the Axway API-Management system. If successful it returns the API-Details.",
+        "description": "This endpoint returns based on parameters such as the API name, API path, and other additional API details. These are either based on the API manager and in a locally configured file. \nThe locally configured file takes precedence over using the API manager to retrieve the details.\nFirst, the specified API path is used to look up the API details locally, and if the API is not found there, then the API name is also needed, since the specified API path (e.g. /v1/my/api/some/data/hello) does not necessarily have to match the API registered in the API manager. Then all APIs with the name are searched for and additionally it is checked that the start of the API path matches the API found and searched for.",
         "operationId": "search",
         "x-flow": "lookupAPI-search"
       },

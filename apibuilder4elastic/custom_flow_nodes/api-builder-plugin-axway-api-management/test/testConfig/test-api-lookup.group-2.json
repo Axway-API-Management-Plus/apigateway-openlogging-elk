@@ -1,0 +1,11 @@
+{
+    "groupId": "group-2",
+    "/api/configured/locally": {
+        "index": true,
+        "organizationName": "Group 2 Org",
+        "name": "Group 2 API-Name",
+        "version": "1.0.1",
+        "deprecated": false,
+        "state": "published"
+    }
+}

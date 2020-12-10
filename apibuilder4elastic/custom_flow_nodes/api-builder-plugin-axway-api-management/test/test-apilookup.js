@@ -48,32 +48,28 @@ describe('Test API Lookup', () => {
 	});
 
 	describe('#lookupAPIDetails', () => {
-		it('should error when API-Name is not set', async () => {
-			const { value, output } = await flowNode.lookupAPIDetails({
-				apiName: null
-			});
-
-			expect(value).to.be.instanceOf(Error)
-				.and.to.have.property('message', 'You must provide the apiName that should be used to lookup the API.');
-			expect(output).to.equal('error');
-		});
-
-		it('should error when API-Path is not set', async () => {
-			const { value, output } = await flowNode.lookupAPIDetails({
-				apiName: 'My great API', apiPath: null
-			});
+		it('should error when API-Path is not set, which is used for local and online lookup', async () => {
+			const { value, output } = await flowNode.lookupAPIDetails({ apiPath: null});
 
 			expect(value).to.be.instanceOf(Error)
 				.and.to.have.property('message', 'You must provide the apiPath that should be used to lookup the API.');
 			expect(output).to.equal('error');
 		});
 
+		it('should error when API-Name is not set', async () => {
+			const { value, output } = await flowNode.lookupAPIDetails({
+				apiPath: '/v1/unkownAPI', apiName: null
+			});
+
+			expect(value).to.be.instanceOf(Error)
+				.and.to.have.property('message', 'API not found locally, based on path: /v1/unkownAPI. To perform a query against an API-Manager you must provide the apiName.');
+			expect(output).to.equal('error');
+		});
+
 		it('should follow the Error path if the API-Manager host cannot be reached/communicated', async () => {
 			nock.cleanAll();
 			// We just have NO mock to make this test
-			const { value, output } = await flowNode.lookupAPIDetails({
-				apiName: 'Unknown API', apiPath: '/v1/unkownAPI'
-			});
+			const { value, output } = await flowNode.lookupAPIDetails({ apiName: 'Unknown API', apiPath: '/v1/unkownAPI' });
 
 			expect(value).to.be.instanceOf(Error);
 			expect(value.message).to.have.string(`Error getting APIs with API-Name: Unknown API. Request sent to: 'https://mocked-api-gateway:8175'. Error: getaddrinfo`);

@@ -1,0 +1,12 @@
+{
+    "groupId": "group-2",
+    "region": "us",
+    "/api/configured/locally": {
+        "index": true,
+        "organizationName": "Group 2 US Org",
+        "name": "Group 2 US API-Name",
+        "version": "1.0.1",
+        "deprecated": false,
+        "state": "published"
+    }
+}

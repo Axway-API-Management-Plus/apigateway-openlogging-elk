@@ -36,6 +36,7 @@ flow-nodes:
             context: $.error
             schema:
               type: object
+
       lookupAPIDetails:
         name: Lookup API
         description: Looks up the details of an API based on the given API-Name and API-Path. Additionally, it returns the configured custom properties for that API.
@@ -43,21 +44,28 @@ flow-nodes:
           apiName:
             name: API-Name
             description: Name of the API is primary used to lookup the API
-            required: true
+            required: false
             initialType: string
             schema:
               type: string
           apiPath:
             name: Path of the API
             description: This request path is used to double check that the API found is correct.
-            required: true
+            required: false
+            initialType: string
+            schema:
+              type: string
+          region:
+            name: API-Gateway region
+            description: "The region is optionally configured for each filebeat. If configured it is used in combination with the group-id to lookup the API at the correct API-Manager. API_MANAGER must be configured like so: API_MANAGER=https://default-manager-1:8075,us|group1|https://manager-1:8075,group-2|https://manager-2:8075, ...."
+            required: false
             initialType: string
             schema:
               type: string
           groupId:
             name: The API-Gateway Group-ID
-            description: "The ID of the Domain-Group where this event was created. If given, it's used to determined which API-Manager to use. For that, the parameter: API_MANAGER must be configured like so: API_MANAGER=group-5#https://manager-1:8075, group-2#https://manager-2:8075, ...."
-            required: true
+            description: "The ID of the Domain-Group where this event was created. If given, it's used to determined which API-Manager to use for the lookup. Optionally, the region can be used to select the API-Manager in the correct region. For that, the parameter: API_MANAGER must be configured like so: API_MANAGER=http://default-api-manager:8075,regiona|group-1|https://manager-1:8075,group-2|https://manager-2:8075, ...."
+            required: false
             initialType: string
             schema:
               type: string
@@ -89,13 +97,21 @@ flow-nodes:
             context: $.error
             schema:
               type: object
+
       getCustomPropertiesConfig:
         name: Get custom properties
         description: Returns configured custom properties configured on the API-Manager. The information is cached within the API-Builder process for 30 minutes.
         parameters:
+          region:
+            name: API-Gateway region
+            description: "The region is optionally configured for each filebeat. If configured it is used in combination with the group-id to lookup the API at the correct API-Manager. API_MANAGER must be configured like so: API_MANAGER=https://default-manager-1:8075,us|group1|https://manager-1:8075,group-2|https://manager-2:8075, ...."
+            required: false
+            initialType: string
+            schema:
+              type: string
           groupId:
-            name: Group-ID
-            description: Optional group-id that is used to determine the API-Manager URL. If given, the API-Manager URL must be configured in the format group-id#URL
+            name: The API-Gateway Group-ID
+            description: "The ID of the Domain-Group where this event was created. If given, it's used to determined which API-Manager to use for the lookup. Optionally, the region can be used to select the API-Manager in the correct region. For that, the parameter: API_MANAGER must be configured like so: API_MANAGER=http://default-api-manager:8075,regiona|group-1|https://manager-1:8075,group-2|https://manager-2:8075, ...."
             required: false
             initialType: string
             schema:

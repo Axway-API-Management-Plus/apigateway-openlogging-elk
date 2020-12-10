@@ -1,0 +1,35 @@
+{
+    "/loccally/configured/api": {
+        "index": true,
+        "organizationName": "Local Org",
+        "version": "1.0.0",
+        "deprecated": false,
+        "state": "published",
+        "apiSecurity": "API-Key",
+        "requestPolicy": "A custom policy",
+        "routingPolicy": "N/A", 
+        "responsePolicy": "N/A",
+        "faulthandlerPolicy": "N/A",
+        "backendBasePath": "http://i.can.give.any.host.i.want.com",
+        "customProperties": {
+            "customProperty1": "My custom property value"
+        }
+    },
+    "/loccally/configured/api/per/region": {
+        "index": false,
+        "regionName": "US",
+        "organizationName": "Local Org",
+        "version": "2.0.0",
+        "deprecated": false,
+        "state": "published",
+        "apiSecurity": "OAuth",
+        "requestPolicy": "Another policy",
+        "routingPolicy": "N/A", 
+        "responsePolicy": "N/A",
+        "faulthandlerPolicy": "N/A",
+        "backendBasePath": "http://i.can.give.any.host.i.want.com",
+        "customProperties": {
+            "customProperty1": "My custom property value"
+        }
+    }
+}

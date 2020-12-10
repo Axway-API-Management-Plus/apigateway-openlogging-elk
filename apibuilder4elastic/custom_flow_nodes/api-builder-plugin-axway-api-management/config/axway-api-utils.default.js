@@ -14,6 +14,8 @@ module.exports = {
 			// This is true, when running as part of the CI-Pipeline (GitHub Actions)
 			// If true, some test API-Requests are then mocked
 			MOCK_LOOKUP_API: process.env.MOCK_LOOKUP_API,
+			// Optionally, the API-Builder is looking up APIs first the local configuration file
+			localLookupFile: process.env.API_BUILDER_LOCAL_API_LOOKUP_FILE,
 			// This optionally disables the validation of the configuration on API-Builder startup
 			validateConfig: (process.env.VALIDATE_CONFIG) ? process.env.VALIDATE_CONFIG : true,
 			// For how long should looked up entities (API, User) stay in the cached

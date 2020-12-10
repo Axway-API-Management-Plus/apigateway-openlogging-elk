@@ -27,7 +27,7 @@ services:
       - ${PWD}/logstash/config/pipelines.yml:/usr/share/logstash/config/pipelines.yml
       - ${PWD}/logstash/pipelines:/usr/share/logstash/pipelines
       - ${PWD}/logstash/index_templates:/usr/share/logstash/index_templates
-      - ${PWD}/certificates:/usr/share/logstash/config/certificates
+      - ${PWD}/config/certificates:/usr/share/logstash/config/certificates
       - ${PWD}/logstash/scripts:/usr/share/logstash/scripts
     #command: logstash --path.config /usr/share/logstash/pipelines/pipelines.yml
     depends_on:
@@ -65,6 +65,7 @@ services:
       - API_BUILDER_SSL_KEY=${API_BUILDER_SSL_KEY}
       - API_BUILDER_SSL_CERT=${API_BUILDER_SSL_CERT}
       - API_BUILDER_SSL_KEY_PASSWORD=${API_BUILDER_SSL_KEY_PASSWORD}
+      - API_BUILDER_LOCAL_API_LOOKUP_FILE=${API_BUILDER_LOCAL_API_LOOKUP_FILE}
       - ENABLE_HTTP_PORT=false
       - DISABLE_SETUP_FLOWS=${DISABLE_SETUP_FLOWS}
       #- LOG_LEVEL=debug
@@ -73,7 +74,7 @@ services:
     networks:
       - elastic
     volumes:
-      - ${PWD}/certificates:/app/config/certificates
+      - ${PWD}/config:/app/config
     logging:
       options:
         max-file: "3"

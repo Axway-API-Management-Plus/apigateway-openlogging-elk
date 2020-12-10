@@ -35,19 +35,27 @@ describe('Test group based API lookup', () => {
 			});
 
 			expect(value).to.be.instanceOf(Error)
-				.and.to.have.property('message', 'You have configured API-Manager URLs based on groupIds (e.g. group-a#https://manager-host.com:8075), but the groupId: group-unknown ist NOT configured. Please check the configuration parameter: API_MANAGER');
+				.and.to.have.property('message', 'You have configured API-Manager URLs based on groupIds (e.g. group-a|https://manager-host.com:8075), but the groupId: group-unknown is NOT configured. Please check the configuration parameter: API_MANAGER');
 			expect(output).to.equal('error');
 		});
 
 		it('should return the API-Details from the correct API-Manager based on the given groupId', async () => {
+			// group-1
 			nock('https://mocked-api-manager-1:8175').get('/api/portal/v1.3/proxies?field=name&op=eq&value=Petstore HTTPS').replyWithFile(200, './test/testReplies/apimanager/manager-1/apiProxyManager1.json');
 			nock('https://mocked-api-manager-1:8175').get(`/api/portal/v1.3/organizations/2bfaa1c2-49ab-4059-832d-team-a`).replyWithFile(200, './test/testReplies/apimanager/manager-1/orgTeamA.json');
 
+			// group-5
 			nock('https://mocked-api-manager-2:8275').get('/api/portal/v1.3/proxies?field=name&op=eq&value=Petstore HTTPS').replyWithFile(200, './test/testReplies/apimanager/manager-2/apiProxyManager2.json');
 			nock('https://mocked-api-manager-2:8275').get(`/api/portal/v1.3/organizations/2bfaa1c2-49ab-4059-832d-team-b`).replyWithFile(200, './test/testReplies/apimanager/manager-2/orgTeamB.json');
+			// group-6|us
+			nock('https://mocked-api-manager-3:8375').get('/api/portal/v1.3/proxies?field=name&op=eq&value=Petstore HTTPS').replyWithFile(200, './test/testReplies/apimanager/manager-3/apiProxyManager3.json');
+			nock('https://mocked-api-manager-3:8375').get(`/api/portal/v1.3/organizations/2bfaa1c2-49ab-4059-832d-team-c`).replyWithFile(200, './test/testReplies/apimanager/manager-3/orgTeamC.json');
+			// group-6|eu
+			nock('https://mocked-api-manager-4:8475').get('/api/portal/v1.3/proxies?field=name&op=eq&value=Petstore HTTPS').replyWithFile(200, './test/testReplies/apimanager/manager-4/apiProxyManager4.json');
+			nock('https://mocked-api-manager-4:8475').get(`/api/portal/v1.3/organizations/2bfaa1c2-49ab-4059-832d-team-d`).replyWithFile(200, './test/testReplies/apimanager/manager-4/orgTeamD.json');
 			// This API exists with the same criterias on both API-Managers, but the organization and version different
 			// This tests makes sure, the correct API-Manager has returned the API-Details based on the groupId
-			let { value, output } = await flowNode.lookupAPIDetails({ 
+			var { value, output } = await flowNode.lookupAPIDetails({ 
 				apiName: 'Petstore HTTPS', apiPath: '/v1/petstore', groupId: 'group-5'
 			});
 			expect(value.organizationName).to.equal(`Team B`);
@@ -56,14 +64,34 @@ describe('Test group based API lookup', () => {
 			expect(value.version).to.equal(`1.0.5 Manager 2`);
 			expect(output).to.equal('next');
 
-			let { value: value2, output: output2 } = await flowNode.lookupAPIDetails({ 
+			var { value, output } = await flowNode.lookupAPIDetails({ 
 				apiName: 'Petstore HTTPS', apiPath: '/v1/petstore', groupId: 'group-1'
 			});
-			expect(value2.organizationName).to.equal(`Team A`);
-			expect(value2.name).to.equal(`Petstore HTTPS`);
-			expect(value2.path).to.equal(`/v1/petstore`);
-			expect(value2.version).to.equal(`1.0.5 Manager 1`);
-			expect(output2).to.equal('next');
+			expect(value.organizationName).to.equal(`Team A`);
+			expect(value.name).to.equal(`Petstore HTTPS`);
+			expect(value.path).to.equal(`/v1/petstore`);
+			expect(value.version).to.equal(`1.0.5 Manager 1`);
+			expect(output).to.equal('next');
+
+			var { value, output } = await flowNode.lookupAPIDetails({ 
+				apiName: 'Petstore HTTPS', apiPath: '/v1/petstore', groupId: 'group-6', region: 'EU'
+			});
+
+			expect(value.organizationName).to.equal(`Team D`);
+			expect(value.name).to.equal(`Petstore HTTPS`);
+			expect(value.path).to.equal(`/v1/petstore`);
+			expect(value.version).to.equal(`1.0.5 Manager 4`);
+			expect(output).to.equal('next');
+
+			var { value, output } = await flowNode.lookupAPIDetails({ 
+				apiName: 'Petstore HTTPS', apiPath: '/v1/petstore', groupId: 'group-6', region: 'US'
+			});
+
+			expect(value.organizationName).to.equal(`Team C`);
+			expect(value.name).to.equal(`Petstore HTTPS`);
+			expect(value.path).to.equal(`/v1/petstore`);
+			expect(value.version).to.equal(`1.0.5 Manager 3`);
+			expect(output).to.equal('next');
 			nock.cleanAll();
 		});
 	});

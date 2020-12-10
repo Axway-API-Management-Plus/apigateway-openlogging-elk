@@ -1,0 +1,18 @@
+{
+    "id": "2bfaa1c2-49ab-4059-832d-team-d",
+    "name": "Team D",
+    "description": null,
+    "email": null,
+    "image": null,
+    "restricted": false,
+    "virtualHost": null,
+    "phone": null,
+    "enabled": true,
+    "development": true,
+    "dn": "o=Team B,ou=organizations,ou=APIPortal",
+    "createdOn": 1597326913559,
+    "startTrialDate": null,
+    "endTrialDate": null,
+    "trialDuration": null,
+    "isTrial": null
+}

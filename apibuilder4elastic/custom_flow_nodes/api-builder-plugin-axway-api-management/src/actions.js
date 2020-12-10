@@ -1,5 +1,7 @@
 const https = require('https');
 const { sendRequest, _getCookie, getManagerConfig } = require('./utils');
+const fs = require('fs');
+const path = require('path');
 
 var pluginConfig = {};
 var cache = {};
@@ -97,21 +99,26 @@ async function lookupCurrentUser(params, options) {
 }
 
 async function lookupAPIDetails(params, options) {
-	const { apiName, apiPath, operationId, groupId, mapCustomProperties } = params;
+	debugger;
+	const { apiName, apiPath, operationId, groupId, region, mapCustomProperties } = params;
 	logger = options.logger;
 	cache = options.pluginContext.cache;
 	pluginConfig = options.pluginConfig;
-	if (!apiName) {
-		throw new Error('You must provide the apiName that should be used to lookup the API.');
-	}
 	if (!apiPath) {
 		throw new Error('You must provide the apiPath that should be used to lookup the API.');
 	}
-	const cacheKey = `${apiPath}###${groupId}`;
+	const cacheKey = `${apiPath}###${groupId}###${region}`;
 	if(cache.has(cacheKey)) {
 		return cache.get(cacheKey);
 	}
-	const proxies = await _getAPIProxy(apiName, groupId);
+	var proxies = await _getAPILocalProxies(apiPath, groupId, region, options);
+	if(proxies == undefined) {
+		// To lookup the API in API-Manager the API-Name is required
+		if (!apiName) {
+			throw new Error(`API not found locally, based on path: ${apiPath}. To perform a query against an API-Manager you must provide the apiName.`);
+		}
+		proxies = await _getAPIProxy(apiName, groupId, region);
+	}
 	if(!proxies || proxies.length == 0) {
 		throw new Error(`No APIs found with name: '${apiName}'`);
 	}
@@ -126,39 +133,113 @@ async function lookupAPIDetails(params, options) {
 	if(!apiProxy) {
 		throw new Error(`No APIs found with name: '${apiName}' and apiPath: '${apiPath}'`);
 	}
-	var org = await _getOrganization(apiProxy.organizationId, groupId);
-	apiProxy.organizationName = org.name;
-	apiProxy.apiSecurity = await _getAPISecurity(apiProxy, operationId);
-	apiProxy.requestPolicy = await _getRequestPolicy(apiProxy, operationId);
-	apiProxy.routingPolicy = await _getRoutingPolicy(apiProxy, operationId);
-	apiProxy.responsePolicy = await _getResponsePolicy(apiProxy, operationId);
-	apiProxy.backendBasePath = await _getBackendBasePath(apiProxy, operationId);
-	apiProxy.faulthandlerPolicy = await _getFaulthandlerPolicy(apiProxy, operationId);
-	if(!apiProxy.version) apiProxy.version = 'N/A';
-	if(cache.set(cacheKey, apiProxy));
-	// Remove a few properties we don't really need in the response
-	delete apiProxy.id;
-	delete apiProxy.corsProfiles;
-	delete apiProxy.securityProfiles;
-	delete apiProxy.authenticationProfiles;
-	delete apiProxy.inboundProfiles;
-	delete apiProxy.outboundProfiles;
-	delete apiProxy.serviceProfiles;
-	delete apiProxy.caCerts;
-	if(mapCustomProperties) {
-		apiProxy = await _addCustomProperties(apiProxy, groupId);
+	// Skip all the lookups if the API is locally configured and just take it as it is
+	if(!apiProxy.locallyConfigured) {
+		var org = await _getOrganization(apiProxy.organizationId, groupId, region);
+		apiProxy.organizationName = org.name;
+		apiProxy.apiSecurity = await _getAPISecurity(apiProxy, operationId);
+		apiProxy.requestPolicy = await _getRequestPolicy(apiProxy, operationId);
+		apiProxy.routingPolicy = await _getRoutingPolicy(apiProxy, operationId);
+		apiProxy.responsePolicy = await _getResponsePolicy(apiProxy, operationId);
+		apiProxy.backendBasePath = await _getBackendBasePath(apiProxy, operationId);
+		apiProxy.faulthandlerPolicy = await _getFaulthandlerPolicy(apiProxy, operationId);
+		if(!apiProxy.version) apiProxy.version = 'N/A';
+		// Remove a few properties we don't really need in the response
+		delete apiProxy.id;
+		delete apiProxy.corsProfiles;
+		delete apiProxy.securityProfiles;
+		delete apiProxy.authenticationProfiles;
+		delete apiProxy.inboundProfiles;
+		delete apiProxy.outboundProfiles;
+		delete apiProxy.serviceProfiles;
+		delete apiProxy.caCerts;
+		if(mapCustomProperties) {
+			apiProxy = await _addCustomProperties(apiProxy, groupId, region);
+		}
 	}
+	if(cache.set(cacheKey, apiProxy));
 	return apiProxy;
 }
 
 async function getCustomPropertiesConfig(params, options) {
-	const { groupId } = params;
+	const { groupId, region } = params;
 	pluginConfig = options.pluginConfig;
 	logger = options.logger;
 	cache = options.pluginContext.cache;
-	return await _getConfiguredCustomProperties(groupId);
+	return await _getConfiguredCustomProperties(groupId, region);
 }
 
+async function _getAPILocalProxies(apiPath, groupId, region, options) {
+	if(options.pluginConfig.localLookupFile != undefined)  {
+		debugger;
+		var localAPIConfig = {};
+		// File is given, try to read it
+		var localProxies = JSON.parse(fs.readFileSync(options.pluginConfig.localLookupFile), null);
+		localAPIConfig = { ...localProxies };
+		var filenames = await _getGroupRegionFilename(options.pluginConfig.localLookupFile, groupId, region);
+		if(filenames.groupFilename) {
+			var groupProxies = JSON.parse(fs.readFileSync(filenames.groupFilename), null);
+			localAPIConfig[groupId] = groupProxies;
+		}
+		if(filenames.regionFilename) {
+			var regionProxies = JSON.parse(fs.readFileSync(filenames.regionFilename), null);
+			localAPIConfig[`${groupId}###${region}`] = regionProxies;
+		}
+		if(localAPIConfig == undefined) {
+			return;
+		} else {
+			var proxy = await _getLocalProxy(regionProxies, apiPath);
+			if(proxy!=undefined) return proxy;
+			proxy = await _getLocalProxy(groupProxies, apiPath);
+			if(proxy!=undefined) return proxy;
+			proxy = await _getLocalProxy(localProxies, apiPath);
+			return proxy;
+		}
+	} else {
+		options.logger.debug(`No local API-Lookup file configured.`);
+		return;
+	}
+}
+
+async function _getLocalProxy(localProxies, apiPath) {
+	if(localProxies == undefined) return;
+	//options.logger.debug(`Trying to read API-Details for path: ${apiPath} from local config file`);
+	// Try a direct hit with the given apiPath
+	var proxy;
+	if(localProxies[apiPath]) {
+		proxy = localProxies[apiPath];
+	} else {
+		// Iterate over all configured APIs
+		for (const [key, val] of Object.entries(localProxies)) { 
+			if(apiPath.startsWith(key)) {
+				var currentProxy = val;
+			}
+			// Use the last proxy as the last must be the most precise
+			proxy = currentProxy;	
+		}
+	}
+	if(proxy==undefined) return;
+	var proxies = [];
+	proxy.path = apiPath; // Copy the path, as it's normally returned by the API-Manager
+	proxies.push(proxy);
+	proxy.locallyConfigured = true;
+	return proxies;
+}
+
+async function _getGroupRegionFilename(basefilename, groupId, region) {
+	debugger;
+	var baseFile = path.parse(basefilename);
+	var groupFilename = `${baseFile.dir}${path.sep}${baseFile.name}.${groupId}${baseFile.ext}`;
+	var regionFilename = `${baseFile.dir}${path.sep}${baseFile.name}.${groupId}.${region}${baseFile.ext}`;
+	var result = {};
+	if(fs.existsSync(groupFilename)) {
+		result["groupFilename"] = groupFilename;
+	}
+	if(fs.existsSync(regionFilename)) {
+		result["regionFilename"] = regionFilename;
+	}
+	return result;
+}
 
 async function _getCurrentGWUser(requestHeaders) {
 	var options = {
@@ -305,8 +386,8 @@ async function _getManagerUser(user, groupId) {
 	return managerUser;
 }
 
-async function _getAPIProxy(apiName, groupId) {
-	const apiManagerConfig = getManagerConfig(pluginConfig.apimanager, groupId);
+async function _getAPIProxy(apiName, groupId, region) {
+	const apiManagerConfig = getManagerConfig(pluginConfig.apimanager, groupId, region);
 	var options = {
 		path: `/api/portal/v1.3/proxies?field=name&op=eq&value=${apiName}`,
 		headers: {
@@ -324,12 +405,12 @@ async function _getAPIProxy(apiName, groupId) {
 	return apiProxy;
 }
 
-async function _getOrganization(orgId, groupId) {
-	const apiManagerConfig = getManagerConfig(pluginConfig.apimanager, groupId);
-	const orgCacheKey = `ORG-${orgId}###${groupId}`
+async function _getOrganization(orgId, groupId, region) {
+	const apiManagerConfig = getManagerConfig(pluginConfig.apimanager, groupId, region);
+	const orgCacheKey = `ORG-${orgId}###${groupId}###${region}`
 	if(cache.has(orgCacheKey)) {
 		var org = cache.get(orgCacheKey);
-		logger.debug(`Organization: '${org.name}' (ID: ${orgId}) found in cache for groupId: ${groupId}.`);
+		logger.debug(`Organization: '${org.name}' (ID: ${orgId}) found in cache for groupId: ${groupId} in region: ${region}.`);
 		return org;
 	}
 	var options = {
@@ -359,8 +440,8 @@ async function _getOrganization(orgId, groupId) {
 	return org;
 }
 
-async function _getConfiguredCustomProperties(groupId) {
-	const apiManagerConfig = getManagerConfig(pluginConfig.apimanager, groupId);
+async function _getConfiguredCustomProperties(groupId, region) {
+	const apiManagerConfig = getManagerConfig(pluginConfig.apimanager, groupId, region);
 	const customPropCacheKey = `CUSTOM_PROPERTIES###${groupId}`
 	if(cache.has(customPropCacheKey)) {
 		var propertiesConfig = cache.get(customPropCacheKey);

@@ -36,3 +36,67 @@ flow-nodes:
             properties:
               message:
                 type: string
+
+      getIndicesForLogtype:
+        name: Get indices for Logtype
+        description: Get configured indicies for the given log type
+        parameters:
+          logtype:
+            name: Log-Type
+            description: The LogType given by Filebeat.
+            required: true
+            schema:
+              type: string
+          indexConfigs:
+            name: Index configs
+            description: Object that contains all index configurations
+            required: true
+            schema:
+              type: object
+        returns:
+          name: Next
+          description: Returns the loaded index configuration object.
+          context: $.indexConfig
+          schema:
+            type: object
+        throws:
+          name: Error
+          description: An unexpected error was encountered.
+          context: $.error
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+
+      createIndices:
+        name: Create indices
+        description: Creates a multiple indices based on the given indices array.
+        parameters:
+          indices:
+            name: Indices
+            description: Array of indexConfiguration objects
+            required: true
+            schema:
+              type: object
+          region:
+            name: Region
+            description: Region the index should be created for
+            required: false
+            schema:
+              type: string
+        returns:
+          name: Next
+          description: Returns the loaded index configuration object.
+          context: $.indexConfig
+          schema:
+            type: object
+        throws:
+          name: Error
+          description: An unexpected error was encountered.
+          context: $.error
+          schema:
+            type: object
+            properties:
+              message:
+                type: string

@@ -33,7 +33,7 @@
             "description": "OK"
           }
         },
-        "description": "Triggers the setup for the given index.",
+        "description": "Triggers the setup and update (Index-Template, ILM and Rollup-Job) for the given indexName.",
         "parameters": [],
         "tags": [
           "setup"
@@ -49,6 +49,36 @@
           "description": "The name of the index to be configured in ES"
         }
       ]
+    },
+    "/index/{logtype}": {
+      "parameters": [
+        {
+          "type": "string",
+          "name": "logtype",
+          "in": "path",
+          "required": true,
+          "description": "The log-type as it's given by Filebeat."
+        }
+      ],
+      "post": {
+        "summary": "",
+        "operationId": "Create index",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "Creates all required indices for a given Log-Type and optionally the region. Based on the LogType the required indices are looked up in the index-config-file. If a region is given, the indices are created based on the region.",
+        "parameters": [
+          {
+            "type": "string",
+            "in": "query",
+            "name": "region",
+            "description": "If given, the index is created based on the given region. Region: N/A is considered as no region."
+          }
+        ],
+        "x-flow": "apim-elk-setup-Create indicies"
+      }
     }
   },
   "definitions": {},

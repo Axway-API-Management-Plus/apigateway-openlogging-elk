@@ -1,0 +1,27 @@
+{
+    "/api/configured/locally": {
+        "index": true,
+        "organizationName": "General Org",
+        "name": "General API-Name",
+        "version": "1.0.1",
+        "deprecated": false,
+        "state": "published"
+    },
+    "/api/configured/locally/longest/match": {
+        "index": true,
+        "organizationName": "Local Org",
+        "name": "Locally configured API",
+        "version": "1.0.0",
+        "deprecated": false,
+        "state": "published",
+        "apiSecurity": "API-Key",
+        "requestPolicy": "A custom policy",
+        "routingPolicy": "N/A", 
+        "responsePolicy": "N/A",
+        "faulthandlerPolicy": "N/A",
+        "backendBasePath": "http://i.can.give.any.host.i.want.com",
+        "customProperties": {
+            "customProperty1": "My custom property value"
+        }
+    }
+}

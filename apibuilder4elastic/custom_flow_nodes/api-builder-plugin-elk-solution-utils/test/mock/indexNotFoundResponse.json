@@ -1,0 +1,47 @@
+{
+    "body": false,
+    "statusCode": 404,
+    "headers": {
+      "content-type": "application/json; charset=UTF-8",
+      "content-length": "515"
+    },
+    "meta": {
+      "context": null,
+      "request": {
+        "params": {
+          "method": "HEAD",
+          "path": "/apigw-traffic-summary-us-000001/_alias/apigw-traffic-summary-us",
+          "body": null,
+          "querystring": "",
+          "headers": {
+            "user-agent": "elasticsearch-js/7.10.0 (win32 10.0.19041-x64; Node.js v12.13.1)"
+          },
+          "timeout": 30000
+        },
+        "options": {
+          
+        },
+        "id": 1
+      },
+      "name": "elasticsearch-js",
+      "connection": {
+        "url": "https://api-env:9200/",
+        "id": "https://api-env:9200/",
+        "headers": {
+          
+        },
+        "deadCount": 0,
+        "resurrectTimeout": 0,
+        "_openRequests": 0,
+        "status": "alive",
+        "roles": {
+          "master": true,
+          "data": true,
+          "ingest": true,
+          "ml": false
+        }
+      },
+      "attempts": 0,
+      "aborted": false
+    }
+  }

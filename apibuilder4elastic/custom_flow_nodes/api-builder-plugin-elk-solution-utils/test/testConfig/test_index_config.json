@@ -25,7 +25,7 @@
             "name": "traffic-details-ilm"
         }
     }, 
-    "apigw-traffic-trace": {
+    "traffic-trace": {
         "logType": "trace",
         "alias": "apigw-traffic-trace", 
         "template": {
@@ -38,7 +38,7 @@
             "name": "traffic-trace-messages-ilm"
         }
     },
-    "apigw-trace-messages": {
+    "trace-messages": {
         "logType": "trace",
         "alias": "apigw-trace-messages", 
         "template": {
