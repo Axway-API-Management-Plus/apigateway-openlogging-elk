@@ -368,7 +368,13 @@
           "finalStatus": "Pass",
           "protocol": "http",
           "protocolSrc": "8080",
-          "serviceContext": null,
+          "serviceContext": {
+            "apiDeprecated": true,
+            "apiOrg": "Mocked Org B",
+            "apiState": "unpublished",
+            "apiVersion": "Z.Z.Z"
+          },
+          "customProperties": {},
           "type": "summaryIndex",
           "processInfo": {
             "hostname": "ip-172-31-48-17.ec2.internal",
