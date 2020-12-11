@@ -35,7 +35,7 @@
         }, 
         "ilm" : {
             "config": "elasticsearch_config/trace-messages/ilm_policy.json",
-            "name": "traffic-trace-messages-ilm"
+            "name": "apigw-traffic-trace-messages-ilm"
         }
     },
     "apigw-trace-messages": {
@@ -53,10 +53,10 @@
     },
     "apigw-domainaudit": {
         "logType": "domainaudit",
-        "alias": "apigw-domainaudit", 
+        "alias": "apigw-domainaudit",
         "template": {
             "config": "elasticsearch_config/apigw-domainaudit/index_template.json",
-            "name": "apigw-domainaudit", 
+            "name": "apigw-apigw-domainaudit", 
             "mergeCustomProperties": false
         }, 
         "ilm" : {

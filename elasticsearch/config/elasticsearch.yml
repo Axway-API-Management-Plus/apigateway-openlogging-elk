@@ -10,7 +10,7 @@ http.cors.allow-methods: OPTIONS, HEAD, GET, POST, PUT, DELETE
 http.cors.allow-headers: X-Requested-With, X-Auth-Token, Content-Type, Content-Length, Authorization. Access-Control-Allow-Headers, Accept
 
 # Don't allow (e.g. Logstash) to auto-create indices that should be created by API-Builder
-action.auto_create_index: "-apigw-*, *"
+action.auto_create_index: "-apigw-*,+*"
 
 bootstrap.memory_lock: true
 

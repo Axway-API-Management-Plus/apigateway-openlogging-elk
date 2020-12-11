@@ -113,8 +113,12 @@ async function lookupAPIDetails(params, options) {
 		logger.debug(`Found API-Details in cache with key: '${cacheKey}'`);
 		return cache.get(cacheKey);
 	}
-	logger.debug(`No API-Details found in cache using key: '${cacheKey}'`);
-	var proxies = await _getAPILocalProxies(apiPath, groupId, region, options);
+	logger.debug(`No API-Details found in cache using key: '${cacheKey}'. Trying to lookup API locally.`);
+	try {
+		var proxies = await _getAPILocalProxies(apiPath, groupId, region, options);
+	} catch (ex) {
+		logger.warn(`Error looking up API locally. ${JSON.stringify(ex)}`);
+	}
 	if(proxies == undefined) {
 		// To lookup the API in API-Manager the API-Name is required
 		if (!apiName) {
