@@ -1,7 +1,8 @@
 {
-    "/loccally/configured/api": {
+    "/healthcheck": {
         "index": true,
-        "organizationName": "Local Org",
+        "name": "Healthcheck API",
+        "organizationName": "Native API",
         "version": "1.0.0",
         "deprecated": false,
         "state": "published",
@@ -10,10 +11,7 @@
         "routingPolicy": "N/A", 
         "responsePolicy": "N/A",
         "faulthandlerPolicy": "N/A",
-        "backendBasePath": "http://i.can.give.any.host.i.want.com",
-        "customProperties": {
-            "customProperty1": "My custom property value"
-        }
+        "backendBasePath": "http://i.can.give.any.host.i.want.com"
     },
     "/loccally/configured/api/per/region": {
         "index": false,

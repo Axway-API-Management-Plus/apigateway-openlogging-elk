@@ -11,10 +11,11 @@ module.exports = {
 				username: process.env.API_MANAGER_USERNAME, // User with Admin-Privileges required
 				password: process.env.API_MANAGER_PASSWORD
 			}, 
+			// Which file to use for the local API-Lookup
+			localLookupFile: process.env.API_BUILDER_LOCAL_API_LOOKUP_FILE,
 			// This is true, when running as part of the CI-Pipeline (GitHub Actions)
 			// If true, some test API-Requests are then mocked
 			MOCK_LOOKUP_API: process.env.MOCK_LOOKUP_API,
-			localLookupFile: process.env.API_BUILDER_LOCAL_API_LOOKUP_FILE,
 			// This optionally disables the validation of the configuration on API-Builder startup
 			validateConfig: (process.env.VALIDATE_CONFIG) ? process.env.VALIDATE_CONFIG : true
 		}

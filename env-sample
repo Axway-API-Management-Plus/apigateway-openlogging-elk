@@ -148,20 +148,29 @@ API_MANAGER_PASSWORD=changeme
 #                            Optional / Advanced parameters
 ################################################################################################
 # ----------------------------------------------------------------------------------------------
-# The Connection to the API-Manager. If not given, is the same as the Admin-Node-Manager URL  
-# with port 8075. 
-# If you are running the API-Manager somewhere else, you can configure it here.
-# If you are running multiple API-Manager groups within one API-Gateway Management domain, 
-# you should declare which group-id belongs to which API-Manager like in the example below. This 
-# makes sure, that the API- and User-Lookups are performt against the correct API-Manager.
+# API requests are made in a specific group (e.g. group-2) and possibly in a specific region. 
+# With this parameter you can control which API manager to use for lookup for which traffic 
+# origin.
+# If the parameter is not specified, then it is assumed that the API manager is reached on the 
+# node manager. In this case, the same URL is used, but with port: 8075.
 # IMPORTANT NOTES: These URLs must be reachable/resolveable from within the API-Builder 
 #                  Docker-Container!
 #                  The same API-Manager credentials are used for all API-Managers.
 # Used-By: API-Builder
+# Examples:
+# Use a single API-Manager for all kind of traffic no matter of the origin
 # API_MANAGER=https://172.17.0.1:8075
-# API_MANAGER=group-2#https://api-manager-1:8075, group-5#https://api-manager-2:8275
+# The API-Manager used is based on group-id of the traffic (e.g. when having 
+# multiple API-Manager in a single topology)
+# API_MANAGER=group-2|https://api-manager-1:8075, group-5|https://api-manager-2:8275
+# If a region is configured, perform the lookup on the API-Manager based on the region and group
+# API_MANAGER=group-2|us|https://api-manager-1:8075, group-5|eu|https://api-manager-2:8275
+# The same as before, but with a fallback API-Manager if region / group is not configured
+# API_MANAGER=https://172.17.0.1:8075, group-2|us|https://api-manager-1:8075, group-2|eu|https://api-manager-2:8275
+# Another way of fallback based on the group not having the region configured
+# API_MANAGER=https://172.17.0.1:8075, group-2|https://api-manager-1:8075, group-2|eu|https://api-manager-2:8275
 
-# Additionally to the API-Manager itself, the API-Builder can perform an API-Lookup against 
+# Additionally to the API-Manager(s) itself, the API-Builder can perform an API-Lookup against 
 # a local configuration file. This is useful if you would like to map natively exposed APIs
 # (e.g. http://api-gateway:8080/healthcheck) to a real API-Name and Method. 
 # Additionally you can use this configuration file to configure, which APIs should not be 
