@@ -31,7 +31,7 @@
 			"params"
 		]
 	},
-	"start": "file.1",
+	"start": "condition.1",
 	"nodes": {
 		"file.1": {
 			"type": "nodehandler://@axway-api-builder-ext/api-builder-plugin-fn-file/file",
@@ -98,7 +98,7 @@
 				{
 					"name": "body",
 					"type": "jsonpath",
-					"value": "$.result",
+					"value": "$.indexConfig",
 					"metaName": "Body",
 					"metaDescription": "The response payload"
 				}
@@ -204,6 +204,73 @@
 					"name": "body",
 					"type": "jsonpath",
 					"value": "$.error",
+					"metaName": "Body",
+					"metaDescription": "The response payload"
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.response",
+					"routes": [],
+					"metaName": "Next"
+				}
+			},
+			"metaMethod": "Set HTTP Response"
+		},
+		"condition.1": {
+			"type": "nodehandler://axway-flow/condition",
+			"name": "Is mocked?",
+			"method": "equals",
+			"parameters": [
+				{
+					"name": "source",
+					"type": "jsonpath",
+					"value": "$.config.mockIndexCreation",
+					"metaName": "Source",
+					"metaDescription": "The input to test."
+				},
+				{
+					"name": "value",
+					"type": "boolean",
+					"value": "true",
+					"metaName": "Value",
+					"metaDescription": "The value to test input against."
+				}
+			],
+			"outputs": {
+				"true": {
+					"routes": [
+						"http.1"
+					],
+					"context": "$.equals",
+					"metaName": "True"
+				},
+				"false": {
+					"routes": [
+						"file.1"
+					],
+					"context": "$.equals",
+					"metaName": "False"
+				}
+			},
+			"metaMethod": "Equals"
+		},
+		"http.1": {
+			"type": "nodehandler://axway-flow/http",
+			"name": "Return mocked response",
+			"method": "setresponse",
+			"parameters": [
+				{
+					"name": "status",
+					"type": "number",
+					"value": "201",
+					"metaName": "Status",
+					"metaDescription": "The HTTP status code"
+				},
+				{
+					"name": "body",
+					"type": "object",
+					"value": "{\n  \"mocked\":\"index-created\"\n}",
 					"metaName": "Body",
 					"metaDescription": "The response payload"
 				}

@@ -13,6 +13,7 @@ jobs:
           - 8080:8080
         env:
           MOCK_LOOKUP_API: true
+          MOCK_API_CREATION: true
           DISABLE_SETUP_FLOWS: true
           LOG_LEVEL: debug
           # The API-Builder doesn't need an Elasticsearch server
