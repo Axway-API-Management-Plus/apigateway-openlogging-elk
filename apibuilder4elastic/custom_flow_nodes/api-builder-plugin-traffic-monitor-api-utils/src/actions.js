@@ -21,7 +21,6 @@
 async function handleFilterFields(parameters, options) {
 	const { params, serviceID } = parameters;
 	const { logger } = options;
-	debugger;
 	if (!params) {
 		throw new Error('Missing required parameter: params');
 	}

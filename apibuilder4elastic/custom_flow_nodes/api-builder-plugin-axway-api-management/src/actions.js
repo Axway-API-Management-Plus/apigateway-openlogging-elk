@@ -99,7 +99,6 @@ async function lookupCurrentUser(params, options) {
 }
 
 async function lookupAPIDetails(params, options) {
-	debugger;
 	var { apiName, apiPath, operationId, groupId, region, mapCustomProperties } = params;
 	logger = options.logger;
 	cache = options.pluginContext.cache;
@@ -176,7 +175,6 @@ async function getCustomPropertiesConfig(params, options) {
 
 async function _getAPILocalProxies(apiPath, groupId, region, options) {
 	if(options.pluginConfig.localLookupFile != undefined)  {
-		debugger;
 		var localAPIConfig = {};
 		// File is given, try to read it
 		var localProxies = JSON.parse(fs.readFileSync(options.pluginConfig.localLookupFile), null);
@@ -232,7 +230,6 @@ async function _getLocalProxy(localProxies, apiPath) {
 }
 
 async function _getGroupRegionFilename(basefilename, groupId, region) {
-	debugger;
 	var baseFile = path.parse(basefilename);
 	var groupFilename = `${baseFile.dir}${path.sep}${baseFile.name}.${groupId}${baseFile.ext}`;
 	var regionFilename = `${baseFile.dir}${path.sep}${baseFile.name}.${groupId}.${region}${baseFile.ext}`;

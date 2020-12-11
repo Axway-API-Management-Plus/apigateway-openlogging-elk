@@ -86,7 +86,6 @@ function isDeveloperMode() {
 }
 
 function getManagerConfig(apiManagerConfig, groupId, region) {
-	debugger;
 	if(groupId == undefined && region == undefined) {
 		return apiManagerConfig;
 	}

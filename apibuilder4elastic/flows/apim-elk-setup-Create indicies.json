@@ -74,258 +74,14 @@
 					"metaName": "Not found"
 				},
 				"error": {
-					"routes": [],
+					"routes": [
+						"http.4"
+					],
 					"context": "$.error",
 					"metaName": "Error"
 				}
 			},
 			"metaMethod": "Read file"
-		},
-		"elk-solution-utils.1": {
-			"type": "nodehandler://api-builder-plugin-elk-solution-utils/elk-solution-utils",
-			"name": "Get index config",
-			"method": "getIndexConfig",
-			"parameters": [
-				{
-					"name": "indexConfigs",
-					"type": "jsonpath",
-					"value": "$.configFile",
-					"metaName": "Index configs",
-					"metaDescription": "Object that contains all index configurations"
-				},
-				{
-					"name": "data",
-					"type": "jsonpath",
-					"value": "$",
-					"metaName": "Data",
-					"metaDescription": "Object that contains either the property indexName or params.indexName."
-				}
-			],
-			"outputs": {
-				"next": {
-					"routes": [
-						"javascript.1"
-					],
-					"context": "$.indexConfig",
-					"metaName": "Next"
-				},
-				"error": {
-					"routes": [
-						"http.2"
-					],
-					"context": "$.error",
-					"metaName": "Error"
-				}
-			},
-			"metaMethod": "Get index config"
-		},
-		"elasticsearch.1": {
-			"type": "nodehandler://@axway-api-builder-ext/api-builder-plugin-fn-elasticsearch/elasticsearch",
-			"name": "Index exists",
-			"method": "indicesExists",
-			"parameters": [
-				{
-					"name": "name",
-					"type": "jsonpath",
-					"value": "$.indexConfig.alias",
-					"metaName": "Alias",
-					"metaDescription": "Comma-separated list or wildcard expression of index alias names used to limit the request"
-				}
-			],
-			"outputs": {
-				"next": {
-					"routes": [
-						"http.1"
-					],
-					"context": "$.result",
-					"metaName": "Next"
-				},
-				"error": {
-					"routes": [
-						"http.2"
-					],
-					"context": "$.error",
-					"metaName": "Error"
-				},
-				"notFound": {
-					"routes": [
-						"mustache.1"
-					],
-					"context": "$.result",
-					"metaName": "Not found"
-				}
-			},
-			"metaMethod": "Index exists"
-		},
-		"javascript.1": {
-			"type": "nodehandler://@axway/api-builder-plugin-fn-javascript/javascript",
-			"name": "Set Alias-Name",
-			"method": "Execute",
-			"parameters": [
-				{
-					"name": "data",
-					"type": "jsonpath",
-					"value": "$",
-					"metaName": "data",
-					"metaDescription": "The value to apply as the `data` argument to the JavaScript code. For objects and arrays, `data` is passed by reference."
-				},
-				{
-					"name": "code",
-					"type": "string",
-					"value": "\"var baseAlias = data.indexConfig.alias;\\n  // Define the Index-Alias name\\n  if(data.params.region) {\\n    // If a region is given\\n    return `${baseAlias}-${data.params.region.toLowerCase()}`;\\n  } else {\\n    // Otherwise use the alias as configured\\n    return `${baseAlias}`;\\n  }\"",
-					"metaName": "code",
-					"metaDescription": "A JavaScript function body. Supports `await` and returning promises."
-				}
-			],
-			"outputs": {
-				"next": {
-					"context": "$.indexConfig.alias",
-					"routes": [
-						"elasticsearch.1"
-					],
-					"metaName": "Next"
-				},
-				"error": {
-					"context": "$.error",
-					"routes": [],
-					"metaName": "Error"
-				}
-			},
-			"metaMethod": "Execute"
-		},
-		"http.1": {
-			"type": "nodehandler://axway-flow/http",
-			"name": "Index already exists",
-			"method": "setresponse",
-			"parameters": [
-				{
-					"name": "status",
-					"type": "number",
-					"value": "200",
-					"metaName": "Status",
-					"metaDescription": "The HTTP status code"
-				},
-				{
-					"name": "body",
-					"type": "jsonpath",
-					"value": "$.result",
-					"metaName": "Body",
-					"metaDescription": "The response payload"
-				}
-			],
-			"outputs": {
-				"next": {
-					"context": "$.response",
-					"routes": [],
-					"metaName": "Next"
-				}
-			},
-			"metaMethod": "Set HTTP Response"
-		},
-		"elasticsearch.2": {
-			"type": "nodehandler://@axway-api-builder-ext/api-builder-plugin-fn-elasticsearch/elasticsearch",
-			"name": "Create index",
-			"method": "indicesCreate",
-			"parameters": [
-				{
-					"name": "index",
-					"type": "jsonpath",
-					"value": "$.initialIndexName",
-					"metaName": "Index",
-					"metaDescription": "The name of the index"
-				},
-				{
-					"name": "alias",
-					"type": "jsonpath",
-					"value": "$.indexConfig.alias",
-					"metaName": "Alias name",
-					"metaDescription": "The alias for the index. If an index configuration is given, this alias name is merged into it."
-				}
-			],
-			"outputs": {
-				"next": {
-					"routes": [
-						"http.3"
-					],
-					"context": "$.result",
-					"metaName": "Next"
-				},
-				"error": {
-					"routes": [
-						"http.2"
-					],
-					"context": "$.error",
-					"metaName": "Error"
-				}
-			},
-			"metaMethod": "Create index"
-		},
-		"mustache.1": {
-			"type": "nodehandler://@axway/api-builder-plugin-fn-mustache/mustache",
-			"name": "Define index name",
-			"method": "format",
-			"parameters": [
-				{
-					"name": "data",
-					"type": "jsonpath",
-					"value": "$",
-					"metaName": "Data",
-					"metaDescription": "The value to assign to the \"data\" variable in the template."
-				},
-				{
-					"name": "template",
-					"type": "string",
-					"value": "\"{{data.indexConfig.alias}}-000001\"",
-					"metaName": "Template",
-					"metaDescription": "The Mustache template. e.g. `Hi {{data.user}}`."
-				}
-			],
-			"outputs": {
-				"next": {
-					"context": "$.initialIndexName",
-					"routes": [
-						"elasticsearch.2"
-					],
-					"metaName": "Next"
-				},
-				"error": {
-					"context": "$.error",
-					"routes": [
-						"http.2"
-					],
-					"metaName": "Error"
-				}
-			},
-			"metaMethod": "Format string"
-		},
-		"http.2": {
-			"type": "nodehandler://axway-flow/http",
-			"name": "Set HTTP Response",
-			"method": "setresponse",
-			"parameters": [
-				{
-					"name": "status",
-					"type": "number",
-					"value": "500",
-					"metaName": "Status",
-					"metaDescription": "The HTTP status code"
-				},
-				{
-					"name": "body",
-					"type": "jsonpath",
-					"value": "$.error",
-					"metaName": "Body",
-					"metaDescription": "The response payload"
-				}
-			],
-			"outputs": {
-				"next": {
-					"context": "$.response",
-					"routes": [],
-					"metaName": "Next"
-				}
-			},
-			"metaMethod": "Set HTTP Response"
 		},
 		"http.3": {
 			"type": "nodehandler://axway-flow/http",
@@ -385,7 +141,9 @@
 					"metaName": "Next"
 				},
 				"error": {
-					"routes": [],
+					"routes": [
+						"http.4"
+					],
 					"context": "$.error",
 					"metaName": "Error"
 				}
@@ -414,17 +172,50 @@
 			],
 			"outputs": {
 				"next": {
-					"routes": [],
+					"routes": [
+						"http.3"
+					],
 					"context": "$.indexConfig",
 					"metaName": "Next"
 				},
 				"error": {
-					"routes": [],
+					"routes": [
+						"http.4"
+					],
 					"context": "$.error",
 					"metaName": "Error"
 				}
 			},
 			"metaMethod": "Create indices"
+		},
+		"http.4": {
+			"type": "nodehandler://axway-flow/http",
+			"name": "Set HTTP Response",
+			"method": "setresponse",
+			"parameters": [
+				{
+					"name": "status",
+					"type": "number",
+					"value": "500",
+					"metaName": "Status",
+					"metaDescription": "The HTTP status code"
+				},
+				{
+					"name": "body",
+					"type": "jsonpath",
+					"value": "$.error",
+					"metaName": "Body",
+					"metaDescription": "The response payload"
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.response",
+					"routes": [],
+					"metaName": "Next"
+				}
+			},
+			"metaMethod": "Set HTTP Response"
 		}
 	}
 }
