@@ -448,10 +448,10 @@ async function _getOrganization(orgId, groupId, region) {
 
 async function _getConfiguredCustomProperties(groupId, region) {
 	const apiManagerConfig = getManagerConfig(pluginConfig.apimanager, groupId, region);
-	const customPropCacheKey = `CUSTOM_PROPERTIES###${groupId}`
+	const customPropCacheKey = `CUSTOM_PROPERTIES###${groupId}###${region}`
 	if(cache.has(customPropCacheKey)) {
 		var propertiesConfig = cache.get(customPropCacheKey);
-		logger.debug(`Custom properties found in cache with groupId: ${groupId}.`);
+		logger.debug(`Custom properties found in cache with groupId: ${groupId} and region ${region}.`);
 		return propertiesConfig;
 	}
 	logger.debug(`Reading custom properties for groupId: ${groupId}. from API-Manager: ${apiManagerConfig.url}`);
