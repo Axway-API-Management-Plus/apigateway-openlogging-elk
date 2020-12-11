@@ -1,7 +1,8 @@
 {
   "fields": {
     "gatewayName": "API-Gateway 1",
-    "gatewayRegion": "EU"
+    "gatewayRegion": "EU", 
+    "logtype": "trace"
   },
   "codec": "json_lines",
   "testcases": [
