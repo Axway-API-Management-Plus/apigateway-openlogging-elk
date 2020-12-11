@@ -17,7 +17,6 @@
           "finalStatus": "Pass",
           "protocol": "ftp-local",
           "protocolSrc": "10021//opt/Axway/APIM-7.7.0/apigateway/groups/group-2/instance-1/file-transfer/in/persistent/abc",
-          "serviceContext": null,
           "processInfo": {
             "hostname": "api-env",
             "groupId": "group-2",
@@ -45,8 +44,7 @@
             "path": null,
             "protocol": "ftp-local",
             "protocolSrc": "10021//opt/Axway/APIM-7.7.0/apigateway/groups/group-2/instance-1/file-transfer/in/persistent/abc",
-            "status": "success",
-            "serviceContext": null
+            "status": "success"
           }
         }
       ]
