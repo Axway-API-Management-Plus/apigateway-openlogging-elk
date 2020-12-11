@@ -112,7 +112,7 @@
             "gatewayRegion": "US"
           },
           "serviceContext": {
-            "apiDeprecated": "false",
+            "apiDeprecated": false,
             "apiOrg": "Mocked Org A",
             "apiState": "published",
             "apiVersion": "X.X.X",
@@ -149,7 +149,7 @@
             "status": "success",
             "customProperties": {},
             "serviceContext": {
-              "apiDeprecated": "false",
+              "apiDeprecated": false,
               "apiOrg": "Mocked Org A",
               "apiState": "published",
               "apiVersion": "X.X.X",
@@ -188,7 +188,7 @@
           "protocolSrc": "8065",
           "type": "summaryIndex",
           "serviceContext": {
-            "apiDeprecated": "true",
+            "apiDeprecated": true,
             "apiOrg": "Mocked Org B",
             "apiState": "unpublished",
             "apiVersion": "Z.Z.Z",
@@ -237,7 +237,7 @@
               "customProperty3": "value 3"
             },
             "serviceContext": {
-              "apiDeprecated": "true",
+              "apiDeprecated": true,
               "apiOrg": "Mocked Org B",
               "apiState": "unpublished",
               "apiVersion": "Z.Z.Z",
@@ -397,7 +397,13 @@
             "protocol": "http",
             "protocolSrc": "8080",
             "status": "success",
-            "serviceContext": null
+            "serviceContext": {
+              "apiDeprecated": true,
+              "apiOrg": "Mocked Org B",
+              "apiState": "unpublished",
+              "apiVersion": "Z.Z.Z"
+            },
+            "customProperties": {}
           }
         }
       ]
