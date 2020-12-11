@@ -1,0 +1,31 @@
+{
+  "fields": {
+    "gatewayName": "API-Gateway 1",
+    "gatewayRegion": "EU"
+  },
+  "codec": "json_lines",
+  "testcases": [
+    {
+      "description": "This should trigger the index creation",
+      "input": [
+        "{\"message\":\"This should create an index\"}"
+      ],
+      "expected": [ 
+        {
+          "message": "This should create an index"
+        }
+      ]
+    },
+    {
+      "description": "A second run should not create the index anymore as it's cached by memcache",
+      "input": [
+        "{\"message\":\"This should create an index\"}"
+      ],
+      "expected": [ 
+        {
+          "message": "This should create an index"
+        }
+      ]
+    }
+  ]
+}

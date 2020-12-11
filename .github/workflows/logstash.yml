@@ -42,6 +42,7 @@ jobs:
       run: |
         echo Using API_BUILDER_URL: $API_BUILDER_URL
         echo Using MEMCACHED: $MEMCACHED
+        ./logstash-filter-verifier --diff-command="diff -y" --keep-env=API_BUILDER_SSL_CERT --keep-env=API_BUILDER_URL --keep-env=MEMCACHED ./logstash/test/mainBeats/test-index-creation-lookup.json ./logstash/pipelines/BeatsInputPipeline.conf
         ./logstash-filter-verifier --diff-command="diff -y" --keep-env=API_BUILDER_SSL_CERT --keep-env=API_BUILDER_URL --keep-env=MEMCACHED ./logstash/test/http/test-tracemessages.json ./logstash/pipelines/TraceMessagesPipeline.conf
         ./logstash-filter-verifier --diff-command="diff -y" --keep-env=API_BUILDER_SSL_CERT --keep-env=API_BUILDER_URL --keep-env=MEMCACHED ./logstash/test/http/test-tracemessages-gmt-4.json ./logstash/pipelines/TraceMessagesPipeline.conf
         ./logstash-filter-verifier --diff-command="diff -y" --keep-env=API_BUILDER_SSL_CERT --keep-env=API_BUILDER_URL --keep-env=MEMCACHED ./logstash/test/http/test-events.json ./logstash/pipelines/EventsPipeline.conf
