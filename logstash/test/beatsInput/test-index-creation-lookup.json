@@ -9,28 +9,36 @@
     {
       "description": "This should trigger the index creation",
       "input": [
-        "{\"timestamp\":1594673918042,\"message\":\"This should create an index\"}"
+        "{\"@timestamp\": \"2020-12-11T10:50:52.896Z\",\"message\":\"This should create an index\", \"host\": \"test-host\"}"
       ],
       "expected": [ 
         {
+          "logtype": "trace",
           "message": "This should create an index",
           "gatewayName": "API-Gateway 1",
           "gatewayRegion": "EU",
-          "host": "fv-az176-282"
+          "host": "test-host", 
+          "indexExists": {
+            "mocked": "index-created"
+          }
         }
       ]
     },
     {
       "description": "A second run should not create the index anymore as it's cached by memcache",
       "input": [
-        "{\"timestamp\":1594673918042,\"message\":\"This should create an index\"}"
+        "{\"@timestamp\": \"2020-12-11T10:50:52.896Z\",\"message\":\"This should create an index\", \"host\": \"test-host\"}"
       ],
       "expected": [ 
         {
+          "logtype": "trace",
           "message": "This should create an index",
           "gatewayName": "API-Gateway 1",
           "gatewayRegion": "EU",
-          "host": "fv-az176-282"
+          "host": "test-host",
+          "indexExists": {
+            "mocked": "index-created"
+          }
         }
       ]
     }
