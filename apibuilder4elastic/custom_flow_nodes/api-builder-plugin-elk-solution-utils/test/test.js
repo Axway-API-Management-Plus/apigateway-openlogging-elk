@@ -2,12 +2,15 @@ const { expect } = require('chai');
 const { MockRuntime } = require('@axway/api-builder-test-utils');
 const getPlugin = require('../src');
 const fs = require('fs');
+const path = require('path');
 
 describe('flow-node elk-solution-utils', () => {
 	let plugin;
 	let flowNode;
 	beforeEach(async () => {
-		plugin = await MockRuntime.loadPlugin(getPlugin);
+		// We have to simulate the plugin is called from the main API-Builder project, hence we defined the API-Builder root directory as appDir
+		process.env.ELASTICSEARCH_HOSTS = "http://any.host.com:9200";
+		plugin = await MockRuntime.loadPlugin(getPlugin, {}, {appDir: path.resolve("../..")});
 		plugin.setOptions({ validateOutputs: true });
 		flowNode = plugin.getFlowNode('elk-solution-utils');
 	});

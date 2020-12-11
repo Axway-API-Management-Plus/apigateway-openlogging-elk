@@ -14,7 +14,7 @@ on:
     - "**/api-builder-plugin-elk-solution-utils/**"
 
 jobs:
-  apim-util-flow-node:
+  elk-util-flow-node:
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     env:
       workingDirectory: 'apibuilder4elastic/custom_flow_nodes/api-builder-plugin-elk-solution-utils'
