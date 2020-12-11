@@ -22,7 +22,8 @@
           "host": "test-host", 
           "indexExists": {
             "mocked": "index-created"
-          }
+          }, 
+          "integrationTest": "true"
         }
       ]
     },
@@ -41,7 +42,9 @@
           "host": "test-host",
           "indexExists": {
             "mocked": "index-created"
-          }
+          }, 
+          "integrationTest": "true", 
+          "cachedResponse": "true"
         }
       ]
     }
