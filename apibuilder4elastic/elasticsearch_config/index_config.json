@@ -61,7 +61,7 @@
         }, 
         "ilm" : {
             "config": "elasticsearch_config/apigw-domainaudit/ilm_policy.json",
-            "name": "domainaudit-ilm"
+            "name": "apigw-domainaudit-ilm"
         }
     },
     "apigw-monitoring": {
