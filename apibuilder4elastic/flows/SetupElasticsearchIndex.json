@@ -190,7 +190,7 @@
 			"outputs": {
 				"next": {
 					"routes": [
-						"elasticsearch.8"
+						"elasticsearch.3"
 					],
 					"context": "$.indexTemplate",
 					"metaName": "Next"
@@ -565,6 +565,13 @@
 					"value": "$.indexConfig.alias",
 					"metaName": "Alias",
 					"metaDescription": "Name of the existing index alias or data stream on which to the perform the rollover. Can be a string or an object. (e.g. { \"my-rollover-alias\": {} }). Only one alias is supported."
+				},
+				{
+					"name": "wildcardAlias",
+					"type": "boolean",
+					"value": "true",
+					"metaName": "Wildcard alias",
+					"metaDescription": "Given alias is considered as a prefix. All indicies starting with the alias, will be rolled up."
 				}
 			],
 			"outputs": {
@@ -575,7 +582,7 @@
 				},
 				"error": {
 					"routes": [
-						"http.2"
+						"javascript.1"
 					],
 					"context": "$.error",
 					"metaName": "Error"
@@ -776,42 +783,6 @@
 			},
 			"metaMethod": "Set HTTP Response"
 		},
-		"elasticsearch.8": {
-			"type": "nodehandler://@axway-api-builder-ext/api-builder-plugin-fn-elasticsearch/elasticsearch",
-			"name": "Index exists",
-			"method": "indicesExists",
-			"parameters": [
-				{
-					"name": "name",
-					"type": "jsonpath",
-					"value": "$.indexConfig.alias",
-					"metaName": "Alias",
-					"metaDescription": "Comma-separated list or wildcard expression of index alias names used to limit the request"
-				}
-			],
-			"outputs": {
-				"next": {
-					"routes": [
-						"elasticsearch.3"
-					],
-					"context": "$.result",
-					"metaName": "Next"
-				},
-				"notFound": {
-					"routes": [],
-					"context": "$.result",
-					"metaName": "Not found"
-				},
-				"error": {
-					"routes": [
-						"http.2"
-					],
-					"context": "$.error",
-					"metaName": "Error"
-				}
-			},
-			"metaMethod": "Index exists"
-		},
 		"condition.1": {
 			"type": "nodehandler://axway-flow/condition",
 			"name": "Is disabled?",
@@ -847,6 +818,42 @@
 				}
 			},
 			"metaMethod": "Equals"
+		},
+		"javascript.1": {
+			"type": "nodehandler://@axway/api-builder-plugin-fn-javascript/javascript",
+			"name": "Handle Index not found error",
+			"method": "Execute",
+			"parameters": [
+				{
+					"name": "data",
+					"type": "jsonpath",
+					"value": "$",
+					"metaName": "data",
+					"metaDescription": "The value to apply as the `data` argument to the JavaScript code. For objects and arrays, `data` is passed by reference."
+				},
+				{
+					"name": "code",
+					"type": "string",
+					"value": "\"if(!data.error.message.startsWith(\\\"No index found to rollover for alias:\\\")) {\\n    throw new Error(data.error);\\n  } else {\\n    return;\\n  }\"",
+					"metaName": "code",
+					"metaDescription": "A JavaScript function body. Supports `await` and returning promises."
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.result",
+					"routes": [],
+					"metaName": "Next"
+				},
+				"error": {
+					"context": "$.error",
+					"routes": [
+						"http.2"
+					],
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Execute"
 		}
 	}
 }

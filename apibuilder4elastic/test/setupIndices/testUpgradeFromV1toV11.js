@@ -65,7 +65,7 @@ describe('Test Setup Indices endpoint', function () {
 	});
 
 	describe('Setup index tests', () => {
-		it('[upgrade-setup-0001] Validate an existing configuration can be updated', async () => {
+		it.only('[upgrade-setup-0001] Validate an existing configuration can be updated', async () => {
 			console.log('Going to configure test index as in version 1.0.0');
 			// Contains the configuration as it was in version 1.0.0
 			var testConfigFileV1 = 'test/setupIndices/test-config-v1.0.0/index_config_template.json';
@@ -83,9 +83,9 @@ describe('Test Setup Indices endpoint', function () {
 			}).then(({ response, body }) => {				
 				expect(response.statusCode).to.equal(200);
 			});
+			console.log('Elasticsearch index configured as in version 1.0.0');
 			// Stop API-Builder after it has been configured as in V1.0.0
 			await stopApiBuilder(server);
-			console.log('Elasticsearch index configured as in version 1.0.0');
 
 			// Setup to the updated configuration
 			var testConfigFileV1_1 = 'test/setupIndices/test-config/index_config_template.json';
@@ -115,9 +115,9 @@ describe('Test Setup Indices endpoint', function () {
 				expect(spyGetTemplate.callCount).to.equals(3, "indices.getTemplate was not called 3 times");
 				expect(spyPutTemplate.callCount).to.equals(2, "indices.putTemplate was not called 2 times"); // The template should be inserted
 				expect(spyPutILMPolicyFn.callCount).to.equals(1, "ilm.putLifecycle was not called"); // Expected to setup the ILM-Policy
-				expect(spyGetILMPolicyFn.callCount).to.equals(1, "ilm.getLifecycle was not called"); // Is called as part of the ilm.putLifecycle
-				expect(spyIndicesExists.callCount).to.equals(1, "indices.exists was not called"); //
-				expect(spyIndicesCreate.callCount).to.equals(0, "indices.create was called"); // but the index already exists
+				//expect(spyGetILMPolicyFn.callCount).to.equals(1, "ilm.getLifecycle was not called"); // Is called as part of the ilm.putLifecycle
+				expect(spyIndicesExists.callCount).to.equals(0, "indices.exists was called, but it should not"); // As indices are managed/created on-demand
+				expect(spyIndicesCreate.callCount).to.equals(0, "indices.create was called, but it should not"); // As indices itself are created on deman
 				expect(spyIndicesRollover.callCount).to.equals(0, "indices.rollover was not called"); // but it should, as the V1.0.0 index should be rolled over
 				
 				expect(response.statusCode).to.equal(200);
