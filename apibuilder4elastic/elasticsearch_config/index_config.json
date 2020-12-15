@@ -22,7 +22,7 @@
         }, 
         "ilm" : {
             "config": "elasticsearch_config/traffic-details/ilm_policy.json",
-            "name": "traffic-details-ilm"
+            "name": "apigw-trace-messages-ilm"
         }
     }, 
     "apigw-traffic-trace": {
