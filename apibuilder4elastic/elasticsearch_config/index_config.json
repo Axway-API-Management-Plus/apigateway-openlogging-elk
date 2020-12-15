@@ -9,7 +9,7 @@
         }, 
         "ilm" : {
             "config": "elasticsearch_config/traffic-summary/ilm_policy.json",
-            "name": "traffic-summary-ilm"
+            "name": "apigw-traffic-summary-ilm"
         }
     }, 
     "apigw-traffic-details": {
@@ -22,7 +22,7 @@
         }, 
         "ilm" : {
             "config": "elasticsearch_config/traffic-details/ilm_policy.json",
-            "name": "traffic-details-ilm"
+            "name": "apigw-traffic-details-ilm"
         }
     }, 
     "apigw-traffic-trace": {
