@@ -100,3 +100,29 @@ flow-nodes:
             properties:
               message:
                 type: string
+
+      updateRolloverAlias:
+        name: Update Rollover Alias
+        description: "Purpose of this method is to the update the static rollover-over according to the region of the index. See here for more information: https://discuss.elastic.co/t/manage-multiple-indicies-with-one-ilm-policy/258733"
+        parameters:
+          indices:
+            name: Indices
+            description: Array of indexConfiguration objects
+            required: true
+            schema:
+              type: object
+        returns:
+          name: Next
+          description: Returns the loaded index configuration object.
+          context: $.indexConfig
+          schema:
+            type: object
+        throws:
+          name: Error
+          description: An unexpected error was encountered.
+          context: $.error
+          schema:
+            type: object
+            properties:
+              message:
+                type: string

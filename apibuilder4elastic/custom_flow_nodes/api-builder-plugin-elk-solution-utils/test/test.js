@@ -54,7 +54,7 @@ describe('flow-node elk-solution-utils', () => {
 		});
 
 		it('should fail if indexName && params.indexName is not given in data', async () => {
-			var indexConfigs = JSON.parse(fs.readFileSync('./test/test_index_config.json'), null);
+			var indexConfigs = JSON.parse(fs.readFileSync('./test/testConfig/test_index_config.json'), null);
 			const { value, output } = await flowNode.getIndexConfig({ data: { anyProp: 'anyValue'}, indexConfigs: indexConfigs });
 
 			expect(value).to.be.instanceOf(Error)
@@ -63,7 +63,7 @@ describe('flow-node elk-solution-utils', () => {
 		});
 
 		it('should fail if the indexName is unknown with valid argument', async () => {
-			var indexConfigs = JSON.parse(fs.readFileSync('./test/test_index_config.json'), null);
+			var indexConfigs = JSON.parse(fs.readFileSync('./test/testConfig/test_index_config.json'), null);
 			const { value, output } = await flowNode.getIndexConfig({ data: {params: {indexName: 'Unknown'} }, indexConfigs: indexConfigs });
 
 			expect(value).to.be.instanceOf(Error)
@@ -72,7 +72,7 @@ describe('flow-node elk-solution-utils', () => {
 		});
 
 		it('should succeed with a valid index name given in params.indexName', async () => {
-			var indexConfigs = JSON.parse(fs.readFileSync('./test/test_index_config.json'), null);
+			var indexConfigs = JSON.parse(fs.readFileSync('./test/testConfig/test_index_config.json'), null);
 			var expectedConfig = indexConfigs['test-index-name'];
 			const { value, output } = await flowNode.getIndexConfig({ data: {params: {indexName: 'test-index-name'} }, indexConfigs: indexConfigs });
 
@@ -82,7 +82,7 @@ describe('flow-node elk-solution-utils', () => {
 		});
 
 		it('should succeed with a valid index name given in indexName', async () => {
-			var indexConfigs = JSON.parse(fs.readFileSync('./test/test_index_config.json'), null);
+			var indexConfigs = JSON.parse(fs.readFileSync('./test/testConfig/test_index_config.json'), null);
 			var expectedConfig = indexConfigs['test-index-name'];
 			const { value, output } = await flowNode.getIndexConfig({ data: {indexName: 'test-index-name'}, indexConfigs: indexConfigs });
 
@@ -92,7 +92,7 @@ describe('flow-node elk-solution-utils', () => {
 		});
 
 		it('should add defaults for rollup jobs', async () => {
-			var indexConfigs = JSON.parse(fs.readFileSync('./test/test_index_config.json'), null);
+			var indexConfigs = JSON.parse(fs.readFileSync('./test/testConfig/test_index_config.json'), null);
 			var expectedConfig = indexConfigs['test-index-name'];
 			const { value, output } = await flowNode.getIndexConfig({ data: {indexName: 'test-index-name'}, indexConfigs: indexConfigs });
 

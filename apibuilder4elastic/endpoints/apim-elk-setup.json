@@ -79,6 +79,25 @@
         ],
         "x-flow": "apim-elk-setup-Create indicies"
       }
+    },
+    "/setup/index/rolloverAlias": {
+      "get": {
+        "summary": "Update Rollover Alias",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          }
+        },
+        "operationId": "update-rollover-alias",
+        "description": "Triggers the ILM Rollover-Alias update for all regional indicies manually.",
+        "x-flow": "apim-elk-setup-update-rollover-alias"
+      },
+      "parameters": []
     }
   },
   "definitions": {},

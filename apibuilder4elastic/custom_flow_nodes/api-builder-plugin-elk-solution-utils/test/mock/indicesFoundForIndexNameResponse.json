@@ -1,0 +1,200 @@
+{
+  "body": {
+    "apigw-trace-messages-eu-dc1-000001": {
+      "aliases": {
+        "apigw-trace-messages-eu-dc1": {
+          "is_write_index": true
+        },
+        "apigw-trace-messages-eu-dc1-000001-alias": {
+          
+        }
+      },
+      "mappings": {
+        "dynamic": "false",
+        "properties": {
+          "@timestamp": {
+            "type": "date"
+          },
+          "correlationId": {
+            "type": "keyword"
+          },
+          "level": {
+            "type": "keyword"
+          },
+          "log": {
+            "properties": {
+              "offset": {
+                "type": "integer"
+              }
+            }
+          },
+          "message": {
+            "type": "text",
+            "norms": false
+          },
+          "processInfo": {
+            "properties": {
+              "gatewayName": {
+                "type": "text",
+                "fields": {
+                  "keyword": {
+                    "type": "keyword"
+                  }
+                },
+                "norms": false
+              },
+              "gatewayRegion": {
+                "type": "keyword"
+              }
+            }
+          }
+        }
+      },
+      "settings": {
+        "index": {
+          "lifecycle": {
+            "name": "apigw-traffic-trace-messages-ilm",
+            "rollover_alias": "apigw-trace-messages-eu-dc1"
+          },
+          "codec": "best_compression",
+          "routing": {
+            "allocation": {
+              "include": {
+                "_tier_preference": "data_content"
+              }
+            }
+          },
+          "number_of_shards": "5",
+          "provided_name": "apigw-trace-messages-eu-dc1-000001",
+          "creation_date": "1608046185553",
+          "priority": "100",
+          "number_of_replicas": "1",
+          "uuid": "6dOIQ1_ZScmX5z_8crHQZg",
+          "version": {
+            "created": "7100099"
+          }
+        }
+      }
+    },
+    "apigw-trace-messages-us-dc1-000001": {
+      "aliases": {
+        "apigw-trace-messages-us-dc1": {
+          "is_write_index": true
+        },
+        "apigw-trace-messages-us-dc1-000001-alias": {
+          
+        }
+      },
+      "mappings": {
+        "dynamic": "false",
+        "properties": {
+          "@timestamp": {
+            "type": "date"
+          },
+          "correlationId": {
+            "type": "keyword"
+          },
+          "level": {
+            "type": "keyword"
+          },
+          "log": {
+            "properties": {
+              "offset": {
+                "type": "integer"
+              }
+            }
+          },
+          "message": {
+            "type": "text",
+            "norms": false
+          },
+          "processInfo": {
+            "properties": {
+              "gatewayName": {
+                "type": "text",
+                "fields": {
+                  "keyword": {
+                    "type": "keyword"
+                  }
+                },
+                "norms": false
+              },
+              "gatewayRegion": {
+                "type": "keyword"
+              }
+            }
+          }
+        }
+      },
+      "settings": {
+        "index": {
+          "lifecycle": {
+            "name": "apigw-traffic-trace-messages-ilm",
+            "rollover_alias": "apigw-traffic-trace-*"
+          },
+          "codec": "best_compression",
+          "routing": {
+            "allocation": {
+              "include": {
+                "_tier_preference": "data_content"
+              }
+            }
+          },
+          "number_of_shards": "5",
+          "provided_name": "apigw-trace-messages-us-dc1-000001",
+          "creation_date": "1608068352577",
+          "priority": "100",
+          "number_of_replicas": "1",
+          "uuid": "TRebQs-QQFyArQa2KDh9iQ",
+          "version": {
+            "created": "7100099"
+          }
+        }
+      }
+    }
+  },
+  "statusCode": 200,
+  "headers": {
+    "content-type": "application/json; charset=UTF-8",
+    "content-length": "1933"
+  },
+  "meta": {
+    "context": null,
+    "request": {
+      "params": {
+        "method": "GET",
+        "path": "/apigw-trace-messages-*-000001",
+        "body": null,
+        "querystring": "",
+        "headers": {
+          "user-agent": "elasticsearch-js/7.10.0 (win32 10.0.19041-x64; Node.js v12.13.1)"
+        },
+        "timeout": 30000
+      },
+      "options": {
+        "maxRetries": 3
+      },
+      "id": 1
+    },
+    "name": "elasticsearch-js",
+    "connection": {
+      "url": "https://api-env:9200/",
+      "id": "https://api-env:9200/",
+      "headers": {
+        
+      },
+      "deadCount": 0,
+      "resurrectTimeout": 0,
+      "_openRequests": 0,
+      "status": "alive",
+      "roles": {
+        "master": true,
+        "data": true,
+        "ingest": true,
+        "ml": false
+      }
+    },
+    "attempts": 0,
+    "aborted": false
+  }
+}

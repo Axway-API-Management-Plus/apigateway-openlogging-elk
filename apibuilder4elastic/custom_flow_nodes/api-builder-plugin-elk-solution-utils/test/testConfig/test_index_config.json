@@ -9,7 +9,7 @@
         }, 
         "ilm" : {
             "config": "elasticsearch_config/traffic-summary/ilm_policy.json",
-            "name": "traffic-summary-ilm"
+            "name": "apigw-traffic-summary-ilm"
         }
     }, 
     "apigw-traffic-details": {
@@ -22,10 +22,10 @@
         }, 
         "ilm" : {
             "config": "elasticsearch_config/traffic-details/ilm_policy.json",
-            "name": "traffic-details-ilm"
+            "name": "apigw-traffic-details-ilm"
         }
     }, 
-    "traffic-trace": {
+    "apigw-traffic-trace": {
         "logType": "trace",
         "alias": "apigw-traffic-trace", 
         "template": {
@@ -35,10 +35,10 @@
         }, 
         "ilm" : {
             "config": "elasticsearch_config/trace-messages/ilm_policy.json",
-            "name": "traffic-trace-messages-ilm"
+            "name": "apigw-traffic-trace-messages-ilm"
         }
     },
-    "trace-messages": {
+    "apigw-trace-messages": {
         "logType": "trace",
         "alias": "apigw-trace-messages", 
         "template": {
@@ -51,17 +51,17 @@
             "name": "apigw-trace-messages-ilm"
         }
     },
-    "apigw-domainaudit": {
+    "test-index-name": {
         "logType": "domainaudit",
-        "alias": "apigw-domainaudit", 
+        "alias": "apigw-domainaudit",
         "template": {
             "config": "elasticsearch_config/apigw-domainaudit/index_template.json",
-            "name": "apigw-domainaudit", 
+            "name": "apigw-apigw-domainaudit", 
             "mergeCustomProperties": false
         }, 
         "ilm" : {
             "config": "elasticsearch_config/apigw-domainaudit/ilm_policy.json",
-            "name": "domainaudit-ilm"
+            "name": "apigw-domainaudit-ilm"
         }
     },
     "apigw-monitoring": {
