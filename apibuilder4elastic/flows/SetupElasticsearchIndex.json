@@ -605,7 +605,7 @@
 				{
 					"name": "template",
 					"type": "string",
-					"value": "\"{{data.indexConfig.template.name}}:{{data.indexConfig.alias}}-*\"",
+					"value": "\"{{data.indexConfig.template.name}}:{{data.indexConfig.alias}}\"",
 					"metaName": "Template",
 					"metaDescription": "The Mustache template. e.g. `Hi {{data.user}}`."
 				}
