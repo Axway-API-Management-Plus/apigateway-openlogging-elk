@@ -102,7 +102,7 @@ async function createIndices(params, options) {
 		}
 		logger.info(`Creating index: ${myIndexName} for region: ${region} with alias: ${aliasName}`);
 		var requestParams = { index: myIndexName, body: { aliases: { } } };
-		requestParams.body.aliases[aliasName] = {};
+		requestParams.body.aliases[aliasName] = { "is_write_index": true };
 		try {
 			var result = await client.indices.create( requestParams, { ignore: [404], maxRetries: 3 });
 		} catch(ex) {
