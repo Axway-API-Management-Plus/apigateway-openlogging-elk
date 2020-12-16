@@ -740,6 +740,22 @@ This helps you to further analyze if ElasticSearch is returning the correct info
 
 <p align="right"><a href="#table-of-content">Top</a></p>
 
+#### ILM Rollover alias error
+If the solution is configured with different regions, you may see the following error in Kibana or in the Elasticsearch logs:
+```
+index.lifecycle.rollover_alias [apigw-traffic-summary] does not point to index [apigw-traffic-summary-us-dc1-000002]
+```
+When an index is rolled, for example because the configured size, time has been reached or due to an update, a new index is created based on the corresponding index template. In this template the ILM rollover alias is configured, which does not match the index if it is regional. 
+The API Builder checks periodically (every 10 minutes) if the ILM rollover alias is correct and adjusts it if necessary. 
+You can also start this modification manually:
+```
+docker exec apibuilder4elastic wget --no-check-certificate https://localhost:8443/api/elk/v1/api/setup/index/rolloverAlias
+```
+
+Translated with www.DeepL.com/Translator (free version)
+
+docker exec apibuilder4elastic wget --no-check-certificate https://localhost:8443/api/elk/v1/api/setup/index/rolloverAlias
+
 ## Known issues
 
 - __Trace messages not shown in correct order__  
