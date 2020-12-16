@@ -131,8 +131,8 @@ async function updateRolloverAlias(params, options) {
 	}
 	// For each configured index do
 	for (const [indexName, indexConfig] of Object.entries(indices)) {
-		// Get all initial indices with given index name (having a region)
-		var indicesForName = await client.indices.get({index: `${indexName}-*-000001`}, { maxRetries: 3 });
+		// Get all regional indices
+		var indicesForName = await client.indices.get({index: `${indexName}-*-0*`}, { maxRetries: 3 });
 		for (const [key, val] of Object.entries(indicesForName.body)) {
 			logger.debug(`Check rollover alias for index: ${key}`);
 			var writeIndexAliasName;
@@ -142,8 +142,12 @@ async function updateRolloverAlias(params, options) {
 					break;
 				}
 			}
+			if(writeIndexAliasName == undefined) {
+				logger.debug(`Index ${key} is not the write index. Skipping ...`);
+				continue;
+			}
 			// Check, if the rollover alias is still the default alias 
-			if(writeIndexAliasName && writeIndexAliasName != val.settings.index.lifecycle.rollover_alias) {
+			if(writeIndexAliasName != val.settings.index.lifecycle.rollover_alias) {
 				logger.info(`Going to change existing ILM rollover alias: ${val.settings.index.lifecycle.rollover_alias}  to: ${writeIndexAliasName} for index: ${key}`);
 				// Update the Index ILM-Rollover-Alias to the WriteIndexAlias
 				var updatedRolloverAliasResponse = await client.indices.putSettings({
