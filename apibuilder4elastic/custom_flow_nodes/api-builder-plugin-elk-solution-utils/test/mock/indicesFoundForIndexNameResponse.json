@@ -54,7 +54,7 @@
         "index": {
           "lifecycle": {
             "name": "apigw-traffic-trace-messages-ilm",
-            "rollover_alias": "apigw-trace-messages-eu-dc1"
+            "rollover_alias": "apigw-trace-messages"
           },
           "codec": "best_compression",
           "routing": {

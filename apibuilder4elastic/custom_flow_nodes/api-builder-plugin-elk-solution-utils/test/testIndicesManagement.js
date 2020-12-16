@@ -126,16 +126,15 @@ describe('flow-node elk-solution-utils indexManagement', () => {
 		});
 
 		it('should succeed with valid parameters', async () => {
-			var mockedIndexExistsFn = mockElasticsearchMethod(client, 'indices.get', './test/mock/indicesFoundForIndexNameResponse.json', false);
+			var mockedIndexGetFn = mockElasticsearchMethod(client, 'indices.get', './test/mock/indicesFoundForIndexNameResponse.json', false);
 			var mockedIndexSettingsUpdatedFn = mockElasticsearchMethod(client, 'indices.putSettings', './test/mock/rolloverAliasUpdatedResponse.json', false);
 			var indexConfig = JSON.parse(fs.readFileSync('./test/testConfig/test_index_config.json'), null);
 			var indices = {};
 			indices['apigw-trace-messages'] = indexConfig['apigw-trace-messages'];
-			indices['apigw-monitoring'] = indexConfig['apigw-monitoring'];
 			var { value, output } = await flowNode.updateRolloverAlias({ indices: indices });
 
-			expect(mockedIndexExistsFn.callCount).to.equal(2);
-			expect(mockedIndexSettingsUpdatedFn.callCount).to.equal(4);
+			expect(mockedIndexGetFn.callCount).to.equal(1);
+			expect(mockedIndexSettingsUpdatedFn.callCount).to.equal(2);
 			expect(output).to.equal('next');
 		});
 	});
