@@ -71,3 +71,15 @@ triggers:
         config: $.config
         env: $.env
         indexName: apigw-domainaudit
+
+  update-rollover-alias:
+    enabled: true
+    name: Update Index Rollover-Alias
+    parameters:
+      interval: '600000' # Run every 10 minutes
+      startImmediately: 'false'
+    invoke:
+      flow: apim-elk-setup-update-rollover-alias
+      parameters:
+        config: $.config
+        env: $.env

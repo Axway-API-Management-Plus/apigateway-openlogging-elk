@@ -14,7 +14,6 @@ const { ElasticsearchClient } = require('@axway-api-builder-ext/api-builder-plug
  * @returns {object} An API Builder plugin.
  */
 async function getPlugin(pluginConfig, options) {
-	debugger;
 	var elasticSearchConfig = require(path.resolve(options.appDir, "conf", "elasticsearch.default.js"));
 	var pluginConfig = elasticSearchConfig.pluginConfig["@axway-api-builder-ext/api-builder-plugin-fn-elasticsearch"]
 

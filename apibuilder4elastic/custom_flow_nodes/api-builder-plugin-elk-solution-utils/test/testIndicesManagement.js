@@ -125,30 +125,18 @@ describe('flow-node elk-solution-utils indexManagement', () => {
 			expect(output).to.equal('error');
 		});
 
-		it.only('should succeed with valid parameters', async () => {
-			// To be completed!!
-			//var mockedIndexExistsFn = mockElasticsearchMethod(client, 'indices.existsAlias', './test/mock/indexNotFoundResponse.json', false);
-			//var mockedIndexCreateFn = mockElasticsearchMethod(client, 'indices.create', './test/mock/indexCreatedResponse.json', false);
+		it('should succeed with valid parameters', async () => {
+			var mockedIndexExistsFn = mockElasticsearchMethod(client, 'indices.get', './test/mock/indicesFoundForIndexNameResponse.json', false);
+			var mockedIndexSettingsUpdatedFn = mockElasticsearchMethod(client, 'indices.putSettings', './test/mock/rolloverAliasUpdatedResponse.json', false);
 			var indexConfig = JSON.parse(fs.readFileSync('./test/testConfig/test_index_config.json'), null);
 			var indices = {};
-			debugger;
 			indices['apigw-trace-messages'] = indexConfig['apigw-trace-messages'];
 			indices['apigw-monitoring'] = indexConfig['apigw-monitoring'];
 			var { value, output } = await flowNode.updateRolloverAlias({ indices: indices });
 
-			expect(value).to.deep.equal(createdIndices);
 			expect(mockedIndexExistsFn.callCount).to.equal(2);
-			expect(mockedIndexCreateFn.callCount).to.equal(2);
+			expect(mockedIndexSettingsUpdatedFn.callCount).to.equal(4);
 			expect(output).to.equal('next');
-
-			mockedIndexExistsFn = mockElasticsearchMethod(client, 'indices.existsAlias', './test/mock/indexAlreadyExistsResponse.json', false);
-			mockedIndexCreateFn = mockElasticsearchMethod(client, 'indices.create', './test/mock/indexCreatedResponse.json', false);
-			// Call it again and it should not fail, as it should check if indices already exists
-			var { value, output } = await flowNode.createIndices({ indices: indices, region: "US" });
-			expect(output).to.equal('next');
-			expect(mockedIndexExistsFn.callCount).to.equal(2);
-			expect(mockedIndexCreateFn.callCount).to.equal(0);
-			expect(value).to.deep.equal({}); // We expect no index to be created
 		});
 	});
 });
