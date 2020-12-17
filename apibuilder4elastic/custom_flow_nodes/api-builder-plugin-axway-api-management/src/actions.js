@@ -113,7 +113,7 @@ async function lookupAPIDetails(params, options) {
 		logger.debug(`Found API-Details in cache with key: '${cacheKey}'`);
 		return cache.get(cacheKey);
 	}
-	logger.debug(`No API-Details found in cache using key: '${cacheKey}'. Trying to lookup API locally.`);
+	logger.info(`No API-Details found in cache using key: '${cacheKey}'. Trying to lookup API locally.`);
 	try {
 		var proxies = await _getAPILocalProxies(apiPath, groupId, region, options);
 	} catch (ex) {
@@ -122,7 +122,7 @@ async function lookupAPIDetails(params, options) {
 	if(proxies == undefined) {
 		// To lookup the API in API-Manager the API-Name is required
 		if (!apiName) {
-			throw new Error(`API not found locally, based on path: ${apiPath}. To perform a query against an API-Manager you must provide the apiName.`);
+			throw new Error(`API not configured locally, based on path: ${apiPath}. The API cannot be queried at the API Manager as no API name is given. Please configure this API path locally.`);
 		}
 		logger.debug(`API not configured locally, trying to get details from API-Manager.`);
 		proxies = await _getAPIProxy(apiName, groupId, region);
