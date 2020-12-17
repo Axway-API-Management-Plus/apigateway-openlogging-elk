@@ -185,7 +185,7 @@ async function _getAPILocalProxies(apiPath, groupId, region, options) {
 		try {
 			var localProxies = JSON.parse(fs.readFileSync(lookupFile), null);
 		} catch (ex) {
-			logger.error(`Error reading API-Lookup file: ${lookupFile}. Error: ${ex}`);
+			logger.error(`Error reading API-Lookup file: '${lookupFile}'. Error: ${ex}`);
 			return;
 		}
 		localAPIConfig = { ...localProxies };
