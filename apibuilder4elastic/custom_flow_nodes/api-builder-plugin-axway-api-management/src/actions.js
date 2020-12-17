@@ -181,7 +181,12 @@ async function _getAPILocalProxies(apiPath, groupId, region, options) {
 	if(options.pluginConfig.localLookupFile != undefined)  {
 		var localAPIConfig = {};
 		// File is given, try to read it
-		var localProxies = JSON.parse(fs.readFileSync(options.pluginConfig.localLookupFile), null);
+		try {
+			var localProxies = JSON.parse(fs.readFileSync(options.pluginConfig.localLookupFile), null);
+		} catch (ex) {
+			logger.error(`Error reading API-Lookup file: ${options.pluginConfig.localLookupFile}. Error: ${ex}`);
+			return;
+		}
 		localAPIConfig = { ...localProxies };
 		var filenames = await _getGroupRegionFilename(options.pluginConfig.localLookupFile, groupId, region);
 		if(filenames.groupFilename) {
