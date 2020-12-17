@@ -173,11 +173,24 @@ API_MANAGER_PASSWORD=changeme
 # Additionally to the API-Manager(s) itself, the API-Builder can perform an API-Lookup against 
 # a local configuration file. This is useful if you would like to map natively exposed APIs
 # (e.g. http://api-gateway:8080/healthcheck) to a real API-Name and Method. 
-# Additionally you can use this configuration file to configure, which APIs should not be 
-# indexed. 
+# Additionally to the general lookup-file, it is also possible to create one lookup file per 
+# group or group/region. This makes it possible to define different information per group or region.
+# The name of the groups or group-region file is derived from the main lookup file.
+# The files are used in the following order:
+# 1. the group/region
+#   - will not be used if no region is defined
+#   - Example: api-lookup.group-2.us.json
+# 2. The group
+#   - in which the API call was made
+#   - Example: api-lookup.group-2.json
+# 3. general lookup file
+# - is always used if no match in 1 or 2.
+#   - Example: api-lookup.json
+# If no file matches the API manager of the group/region is requested.
 # This file contains the API-Details normally given by the API-Manager.
+# The file must be relative to the API-Builder process within the container.
 # Example:
-# API_BUILDER_LOCAL_API_LOOKUP_FILE=/app/config/api-lookup.json
+# API_BUILDER_LOCAL_API_LOOKUP_FILE=./config/api-lookup.json
 
 # ----------------------------------------------------------------------------------------------
 # Recommended to configure to see Filebeat statistics in the Elastic Stack monitoring.

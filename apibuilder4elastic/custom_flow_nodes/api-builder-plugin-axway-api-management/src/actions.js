@@ -126,6 +126,8 @@ async function lookupAPIDetails(params, options) {
 		}
 		logger.debug(`API not configured locally, trying to get details from API-Manager.`);
 		proxies = await _getAPIProxy(apiName, groupId, region);
+	} else {
+		logger.info(`API-Details for API with path: '${apiPath}' looked up locally.`);
 	}
 	if(!proxies || proxies.length == 0) {
 		throw new Error(`No APIs found with name: '${apiName}'`);

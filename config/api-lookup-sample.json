@@ -1,6 +1,5 @@
 {
     "/healthcheck": {
-        "index": true,
         "name": "Healthcheck API",
         "organizationName": "Native API",
         "version": "1.0.0",
@@ -14,8 +13,7 @@
         "backendBasePath": "http://i.can.give.any.host.i.want.com"
     },
     "/loccally/configured/api/per/region": {
-        "index": false,
-        "regionName": "US",
+        "name": "API in US-Region",
         "organizationName": "Local Org",
         "version": "2.0.0",
         "deprecated": false,
