@@ -192,4 +192,21 @@ describe('Test API Lookup', () => {
 			expect(output).to.equal('next');
 		});
 	});
+
+	describe('#localLookupAPIIndexFalse', () => {
+
+		it('[local-apilookup-dont-index-0001] should return RC: 200, index:false for /api/path', async () => {
+			const { value, output } = await flowNode.lookupAPIDetails({ apiPath: "/do/not/index/api"  });
+
+			expect(value.indexAPI).to.equal(false);
+			expect(output).to.equal('next');
+		});
+
+		it('[local-apilookup-dont-index-0002] should return RC: 200, index:false for Policy-Name ', async () => {
+			const { value, output } = await flowNode.lookupAPIDetails({ apiPath: "/do/not/index/api", policy: "Do not index this policy"  });
+
+			expect(value.indexAPI).to.equal(false);
+			expect(output).to.equal('next');
+		});
+	});
 });

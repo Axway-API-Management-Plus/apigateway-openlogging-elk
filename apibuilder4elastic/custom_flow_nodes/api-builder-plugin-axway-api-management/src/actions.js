@@ -99,7 +99,7 @@ async function lookupCurrentUser(params, options) {
 }
 
 async function lookupAPIDetails(params, options) {
-	var { apiName, apiPath, operationId, groupId, region, mapCustomProperties } = params;
+	var { apiName, apiPath, operationId, groupId, region, policy, verb, mapCustomProperties } = params;
 	logger = options.logger;
 	cache = options.pluginContext.cache;
 	pluginConfig = options.pluginConfig;
@@ -107,7 +107,7 @@ async function lookupAPIDetails(params, options) {
 		throw new Error('You must provide the apiPath that should be used to lookup the API.');
 	}
 	if(region) region = region.toLowerCase();
-	const cacheKey = `${apiPath}###${groupId}###${region}`;
+	const cacheKey = `${apiPath}###${groupId}###${region}###${policy}`;
 	logger.debug(`Trying to lookup API-Details from cache using key: '${cacheKey}'`);
 	if(cache.has(cacheKey)) {
 		logger.debug(`Found API-Details in cache with key: '${cacheKey}'`);
@@ -115,7 +115,7 @@ async function lookupAPIDetails(params, options) {
 	}
 	logger.info(`No API-Details found in cache using key: '${cacheKey}'. Trying to lookup API locally.`);
 	try {
-		var proxies = await _getAPILocalProxies(apiPath, groupId, region, options);
+		var proxies = await _getAPILocalProxies(apiPath, groupId, region, policy, verb, options);
 	} catch (ex) {
 		logger.warn(`Error looking up API locally. ${JSON.stringify(ex)}`);
 	}
@@ -179,7 +179,7 @@ async function getCustomPropertiesConfig(params, options) {
 	return await _getConfiguredCustomProperties(groupId, region);
 }
 
-async function _getAPILocalProxies(apiPath, groupId, region, options) {
+async function _getAPILocalProxies(apiPath, groupId, region, policy, verb, options) {
 	const lookupFile = options.pluginConfig.localLookupFile;
 	if(lookupFile != undefined && lookupFile != "")  {
 		var localAPIConfig = {};
@@ -203,11 +203,11 @@ async function _getAPILocalProxies(apiPath, groupId, region, options) {
 		if(localAPIConfig == undefined) {
 			return;
 		} else {
-			var proxy = await _getLocalProxy(regionProxies, apiPath);
+			var proxy = await _getLocalProxy(regionProxies, apiPath, policy, verb, options);
 			if(proxy!=undefined) return proxy;
-			proxy = await _getLocalProxy(groupProxies, apiPath);
+			proxy = await _getLocalProxy(groupProxies, apiPath, policy, verb, options);
 			if(proxy!=undefined) return proxy;
-			proxy = await _getLocalProxy(localProxies, apiPath);
+			proxy = await _getLocalProxy(localProxies, apiPath, policy, verb, options);
 			return proxy;
 		}
 	} else {
@@ -216,32 +216,37 @@ async function _getAPILocalProxies(apiPath, groupId, region, options) {
 	}
 }
 
-async function _getLocalProxy(localProxies, apiPath) {
+async function _getLocalProxy(localProxies, apiPath, policy, verb) {
 	if(localProxies == undefined) return;
-	//options.logger.debug(`Trying to read API-Details for path: ${apiPath} from local config file`);
-	// Try a direct hit with the given apiPath
-	debugger;
-	var proxy = {
-		method: "N/A", 
-		organizationName: "N/A", 
-		apiVersion: "N/A", 
-		apiState: "N/A",
-		apiSecurity: "N/A", 
-		requestPolicy: "N/A", 
-		routingPolicy: "N/A", 
-		responsePolicy: "N/A", 
-		faulthandlerPolicy: "N/A", 
-		backendBasePath: "N/A"
-	};
 	var foundProxy;
-	// Perhaps, we have direct hit with the API-Path
-	if(localProxies[apiPath]) {
-		foundProxy = localProxies[apiPath];
+	// If a policy is given, it is used separately for the lookup
+	if(policy != undefined) {
+		options.logger.debug(`Looking up information based on policy name: ${policy}`);
+		if(localProxies[`Policy: ${policy}`]) {
+			foundProxy =  localProxies[`Policy: ${policy}`];
+		}
 	} else {
-		// Iterate over all configured API-Proxies
-		for (const [key, val] of Object.entries(localProxies)) { 
-			if(apiPath.startsWith(key)) {
-				var foundProxy = val;
+		var proxy = {
+			method: "N/A", 
+			organizationName: "N/A", 
+			apiVersion: "N/A", 
+			apiState: "N/A",
+			apiSecurity: "N/A", 
+			requestPolicy: "N/A", 
+			routingPolicy: "N/A", 
+			responsePolicy: "N/A", 
+			faulthandlerPolicy: "N/A", 
+			backendBasePath: "N/A"
+		};
+		// Perhaps, we have direct hit with the API-Path
+		if(localProxies[apiPath]) {
+			foundProxy = localProxies[apiPath];
+		} else {
+			// Iterate over all configured API-Proxies
+			for (const [key, val] of Object.entries(localProxies)) { 
+				if(apiPath.startsWith(key)) {
+					var foundProxy = val;
+				}
 			}
 		}
 	}

@@ -12,8 +12,14 @@
         "faulthandlerPolicy": "N/A",
         "backendBasePath": "http://i.can.give.any.host.i.want.com"
     },
-    "/loccally/configured/api/per/region": {
-        "name": "API in US-Region",
+    "/favicon.ico": {
+        "index": false
+    },
+    "Policy: My policy name not to index": {
+        "index": false
+    },
+    "/another/api/base/path": {
+        "name": "Can match longer paths",
         "organizationName": "Local Org",
         "version": "2.0.0",
         "deprecated": false,

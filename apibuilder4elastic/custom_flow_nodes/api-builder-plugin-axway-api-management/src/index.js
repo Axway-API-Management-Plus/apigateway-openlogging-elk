@@ -147,7 +147,7 @@ async function isAPIManagerUserAdmin(apiManagerConfig, logger) {
  * This avoids to have an API-Manager Up&Running when Logstash pipelines are tested. 
  */
 async function addLookupAPIMocks(cache) {
-	cache.set( "/petstore/v2/user/chris###group-2###us", {
+	cache.set( "/petstore/v2/user/chris###group-2###us###", {
 		organizationName: "Mocked Org A", 
 		version: "X.X.X", 
 		deprecated: false, 
@@ -160,14 +160,14 @@ async function addLookupAPIMocks(cache) {
 		backendBasePath:"https://petstore.swagger.io", 
 		customProperties: {}
 	});
-	cache.set( "/healthcheck###group-2###us", {
+	cache.set( "/healthcheck###group-2###us###", {
 		organizationName: "Mocked Org B", 
 		version: "Z.Z.Z", 
 		deprecated: true, 
 		state: "unpublished",
 		customProperties: {}
 	});
-	cache.set( "/api/with/policies/backend/and/oauth###group-2###us", {
+	cache.set( "/api/with/policies/backend/and/oauth###group-2###us###", {
 		organizationName: "Mocked Org B", 
 		version: "Z.Z.Z", 
 		deprecated: true, 
@@ -184,7 +184,7 @@ async function addLookupAPIMocks(cache) {
 			customProperty3: "value 3"
 		}
 	});
-	cache.set( "/api/with/custom/properties###group-2###us", {
+	cache.set( "/api/with/custom/properties###group-2###us###", {
 		organizationName: "Mocked Org C", 
 		version: "Z.Z.Z", 
 		deprecated: true, 
@@ -200,6 +200,12 @@ async function addLookupAPIMocks(cache) {
 			customProperty2: "value 2",
 			customProperty3: "value 3"
 		}
+	});
+	cache.set( "/favicon.ico###group-2###us###", {
+		index: false
+	});
+	cache.set( "/not/relevant###group-2###us###Do not index this Policy", {
+		index: false
 	});
 }
 

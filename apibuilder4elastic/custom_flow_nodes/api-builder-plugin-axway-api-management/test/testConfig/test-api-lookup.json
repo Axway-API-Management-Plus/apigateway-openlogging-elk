@@ -24,5 +24,20 @@
     },
     "/minimal/config": {
         "name": "The name is a MUST"
+    }, 
+    "/do/not/index/api": {
+        "indexAPI": false
+    },
+    "Policy: Do not index this policy": {
+        "indexAPI": false
+    },
+    "/NOT-YET-SUPPORTED/do/not/index/api|Policy: My policy ABC": {
+        "indexAPI": false
+    },
+    "/NOT-YET-SUPPORTED/do/not/index/POST/api/with/my/policy|Verb: POST|Policy: My policy ABC": {
+        "indexAPI": false
+    }, 
+    "/NOT-YET-SUPPORTED/do/not/index/options/api|Verb: OPTIONS": {
+        "indexAPI": false
     }
 }

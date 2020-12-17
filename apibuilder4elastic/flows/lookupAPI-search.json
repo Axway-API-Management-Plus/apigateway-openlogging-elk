@@ -31,7 +31,7 @@
 			"env"
 		]
 	},
-	"start": "utils.1",
+	"start": "axway-api-management.1",
 	"nodes": {
 		"axway-api-management.1": {
 			"type": "nodehandler://api-builder-plugin-axway-api-management/axway-api-management",
@@ -72,6 +72,13 @@
 					"value": "$.params.region",
 					"metaName": "API-Gateway region",
 					"metaDescription": "The region is optionally configured for each filebeat. If configured it is used in combination with the group-id to lookup the API at the correct API-Manager. API_MANAGER must be configured like so: API_MANAGER=https://default-manager-1:8075,us|group1|https://manager-1:8075,group-2|https://manager-2:8075, ...."
+				},
+				{
+					"name": "policy",
+					"type": "jsonpath",
+					"value": "$.params.policy",
+					"metaName": "Policy",
+					"metaDescription": "Used during local search only to figure out if Policy-Event should be indexed or not."
 				}
 			],
 			"outputs": {
@@ -149,44 +156,6 @@
 				}
 			},
 			"metaMethod": "Set HTTP Response"
-		},
-		"utils.1": {
-			"type": "nodehandler://@axway-api-builder-ext/api-builder-plugin-utils/utils",
-			"name": "Trace Message",
-			"method": "traceMessage",
-			"parameters": [
-				{
-					"name": "level",
-					"type": "string",
-					"value": "\"info\"",
-					"metaName": "Log level",
-					"metaDescription": "Trace the message on the configured level."
-				},
-				{
-					"name": "message",
-					"type": "string",
-					"value": "\"Log API-Name: ${apiName}\"",
-					"metaName": "Trace Message",
-					"metaDescription": "The message to trace. It might contain variables in the following format: ${name}, ${name.sub} or ${name[0][1]}"
-				},
-				{
-					"name": "data",
-					"type": "jsonpath",
-					"value": "$.params",
-					"metaName": "Replacement data",
-					"metaDescription": "Data used to replace variables in your trace message. Examples: ${a}, ${a[0]}, ${a.b}"
-				}
-			],
-			"outputs": {
-				"next": {
-					"routes": [
-						"axway-api-management.1"
-					],
-					"context": "$.message",
-					"metaName": "Next"
-				}
-			},
-			"metaMethod": "Trace Message"
 		}
 	}
 }

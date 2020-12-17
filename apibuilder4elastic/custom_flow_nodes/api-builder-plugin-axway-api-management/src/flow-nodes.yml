@@ -76,6 +76,20 @@ flow-nodes:
             initialType: string
             schema:
               type: string
+          policy:
+            name: Policy
+            description: Used during local search only to figure out if Policy-Event should be indexed or not.
+            required: false
+            initialType: string
+            schema:
+              type: string
+          verb:
+            name: HTTP Verb
+            description: Used during local search only to figure out if event should be indexed or not.
+            required: false
+            initialType: string
+            schema:
+              type: string
           mapCustomProperties:
             name: Map custom properties
             description: Turn this on to validate custom properties against the API-Manager configuration. Additionally, all found custom properties will be mapped into the properties customProperties
