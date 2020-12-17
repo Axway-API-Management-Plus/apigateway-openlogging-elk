@@ -178,17 +178,18 @@ async function getCustomPropertiesConfig(params, options) {
 }
 
 async function _getAPILocalProxies(apiPath, groupId, region, options) {
-	if(options.pluginConfig.localLookupFile != undefined)  {
+	const lookupFile = options.pluginConfig.localLookupFile;
+	if(lookupFile != undefined && lookupFile != "")  {
 		var localAPIConfig = {};
 		// File is given, try to read it
 		try {
-			var localProxies = JSON.parse(fs.readFileSync(options.pluginConfig.localLookupFile), null);
+			var localProxies = JSON.parse(fs.readFileSync(lookupFile), null);
 		} catch (ex) {
-			logger.error(`Error reading API-Lookup file: ${options.pluginConfig.localLookupFile}. Error: ${ex}`);
+			logger.error(`Error reading API-Lookup file: ${lookupFile}. Error: ${ex}`);
 			return;
 		}
 		localAPIConfig = { ...localProxies };
-		var filenames = await _getGroupRegionFilename(options.pluginConfig.localLookupFile, groupId, region);
+		var filenames = await _getGroupRegionFilename(lookupFile, groupId, region);
 		if(filenames.groupFilename) {
 			var groupProxies = JSON.parse(fs.readFileSync(filenames.groupFilename), null);
 			localAPIConfig[groupId] = groupProxies;
