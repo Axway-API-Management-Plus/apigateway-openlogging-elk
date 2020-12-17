@@ -89,7 +89,7 @@ async function lookupCurrentUser(params, options) {
 		throw new Error(`User: '${user.loginName}' not found in API-Manager.`);
 	}
 	user.apiManager = users[0];
-	var org = await _getOrganization(user.apiManager.organizationId, groupId);
+	var org = await _getOrganization(user.apiManager, groupId);
 	user.apiManager.organizationName = org.name;
 	logger.debug(`User: '${user.loginName}' (Role: ${user.apiManager.role}) found in API-Manager. Organization: '${user.apiManager.organizationName}'`);
 	if(VIDUSR!=undefined) {
@@ -143,9 +143,9 @@ async function lookupAPIDetails(params, options) {
 	if(!apiProxy) {
 		throw new Error(`No APIs found with name: '${apiName}' and apiPath: '${apiPath}'`);
 	}
-	// Skip all the lookups if the API is locally configured and just take it as it is
+	// Skip  the lookups if the API is locally configured and just take it as it is
 	if(!apiProxy.locallyConfigured) {
-		var org = await _getOrganization(apiProxy.organizationId, groupId, region);
+		var org = await _getOrganization(apiProxy, groupId, region);
 		apiProxy.organizationName = org.name;
 		apiProxy.apiSecurity = await _getAPISecurity(apiProxy, operationId);
 		apiProxy.requestPolicy = await _getRequestPolicy(apiProxy, operationId);
@@ -220,22 +220,37 @@ async function _getLocalProxy(localProxies, apiPath) {
 	if(localProxies == undefined) return;
 	//options.logger.debug(`Trying to read API-Details for path: ${apiPath} from local config file`);
 	// Try a direct hit with the given apiPath
-	var proxy;
+	debugger;
+	var proxy = {
+		method: "N/A", 
+		organizationName: "N/A", 
+		apiVersion: "N/A", 
+		apiState: "N/A",
+		apiSecurity: "N/A", 
+		requestPolicy: "N/A", 
+		routingPolicy: "N/A", 
+		responsePolicy: "N/A", 
+		faulthandlerPolicy: "N/A", 
+		backendBasePath: "N/A"
+	};
+	var foundProxy;
+	// Perhaps, we have direct hit with the API-Path
 	if(localProxies[apiPath]) {
-		proxy = localProxies[apiPath];
+		foundProxy = localProxies[apiPath];
 	} else {
-		// Iterate over all configured APIs
+		// Iterate over all configured API-Proxies
 		for (const [key, val] of Object.entries(localProxies)) { 
 			if(apiPath.startsWith(key)) {
-				var currentProxy = val;
+				var foundProxy = val;
 			}
-			// Use the last proxy as the last must be the most precise
-			proxy = currentProxy;	
 		}
 	}
-	if(proxy==undefined) return;
+	// If we don't have a match return nothing
+	if(foundProxy==undefined) return;
+	// Take over the configuration, preserve the default values
+	proxy = {...proxy, ...foundProxy};
 	var proxies = [];
-	proxy.path = apiPath; // Copy the path, as it's normally returned by the API-Manager
+	proxy.path = apiPath; // Copy the path, as it's normally returned by the API-Manager and used for caching
 	proxies.push(proxy);
 	proxy.locallyConfigured = true;
 	return proxies;
@@ -419,7 +434,12 @@ async function _getAPIProxy(apiName, groupId, region) {
 	return apiProxy;
 }
 
-async function _getOrganization(orgId, groupId, region) {
+async function _getOrganization(apiProxy, groupId, region) {
+	if(apiProxy.locallyConfigured) {
+		if(apiProxy.organizationName == undefined) apiProxy.organizationName = "N/A";
+		return apiProxy;
+	}
+	const orgId = apiProxy.organizationId;
 	const apiManagerConfig = getManagerConfig(pluginConfig.apimanager, groupId, region);
 	const orgCacheKey = `ORG-${orgId}###${groupId}###${region}`
 	if(cache.has(orgCacheKey)) {

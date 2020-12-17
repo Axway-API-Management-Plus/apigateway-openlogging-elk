@@ -87,6 +87,23 @@ describe('Test API Lookup', () => {
 			expect(value.path).to.equal(`/api/configured/locally/something`);
 			expect(output).to.equal('next');
 		});
+
+		it('[local-apilookup-0005] should return defaults for all fields.', async () => {
+			const { value, output } = await flowNode.lookupAPIDetails({ apiPath: "/minimal/config" });
+
+			expect(value.name).to.equal(`The name is a MUST`);
+			expect(value.path).to.equal(`/minimal/config`);
+			expect(value.organizationName).to.equal(`N/A`);
+			expect(value.apiVersion).to.equal(`N/A`);
+			expect(value.apiSecurity).to.equal(`N/A`);
+			expect(value.apiState).to.equal(`N/A`);
+			expect(value.backendBasePath).to.equal(`N/A`);
+			expect(value.faulthandlerPolicy).to.equal(`N/A`);
+			expect(value.requestPolicy).to.equal(`N/A`);
+			expect(value.responsePolicy).to.equal(`N/A`);
+			expect(value.routingPolicy).to.equal(`N/A`);
+			expect(output).to.equal('next');
+		});
 	});
 
 	describe('#localLookupAPIDetailsIncludingGroupOnly', () => {
@@ -157,7 +174,7 @@ describe('Test API Lookup', () => {
 			expect(output).to.equal('next');
 		});
 
-		it('[local-region-apilookup-0003] should fallback to the most generic API-Config', async () => {
+		it('[local-region-apilookup-0004] should fallback to the most generic API-Config', async () => {
 			const { value, output } = await flowNode.lookupAPIDetails({ apiPath: "/api/configured/locally", groupId: "group-2", region: "US"  });
 
 			expect(value.organizationName).to.equal(`General Org`);
@@ -166,7 +183,7 @@ describe('Test API Lookup', () => {
 			expect(output).to.equal('next');
 		});
 
-		it('[local-region-apilookup-0003] should fallback to the most generic API-Config - Best match', async () => {
+		it('[local-region-apilookup-0005] should fallback to the most generic API-Config - Best match', async () => {
 			const { value, output } = await flowNode.lookupAPIDetails({ apiPath: "/api/configured/locally/and/another/stuff", groupId: "group-2", region: "US"  });
 
 			expect(value.organizationName).to.equal(`General Org`);

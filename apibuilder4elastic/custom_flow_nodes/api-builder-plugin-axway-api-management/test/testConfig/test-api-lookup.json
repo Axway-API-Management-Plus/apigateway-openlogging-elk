@@ -1,6 +1,5 @@
 {
     "/api/configured/locally": {
-        "index": true,
         "organizationName": "General Org",
         "name": "General API-Name",
         "version": "1.0.1",
@@ -8,7 +7,6 @@
         "state": "published"
     },
     "/api/configured/locally/longest/match": {
-        "index": true,
         "organizationName": "Longest match Org",
         "name": "Locally configured API longest match",
         "version": "1.0.0",
@@ -23,5 +21,8 @@
         "customProperties": {
             "customProperty1": "My custom property value"
         }
+    },
+    "/minimal/config": {
+        "name": "The name is a MUST"
     }
 }
