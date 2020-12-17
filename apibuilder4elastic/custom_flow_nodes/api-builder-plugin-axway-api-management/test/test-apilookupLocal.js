@@ -64,13 +64,13 @@ describe('Test API Lookup', () => {
 		it('[local-apilookup-0002] should return API-Name, Org from local config file', async () => {
 			const { value, output } = await flowNode.lookupAPIDetails({ apiPath: "/api/configured/locally/longest/match" });
 
-			expect(value.organizationName).to.equal(`Local Org`);
-			expect(value.name).to.equal(`Locally configured API`);
+			expect(value.organizationName).to.equal(`Longest match Org`);
+			expect(value.name).to.equal(`Locally configured API longest match`);
 			expect(value.path).to.equal(`/api/configured/locally/longest/match`);
 			expect(output).to.equal('next');
 		});
 
-		it('[local-apilookup-0003] should return API-Name the generic API', async () => {
+		it('[local-apilookup-0003] should return API-Name of the generic API', async () => {
 			const { value, output } = await flowNode.lookupAPIDetails({ apiPath: "/api/configured/locally" });
 
 			expect(value.organizationName).to.equal(`General Org`);
@@ -79,7 +79,7 @@ describe('Test API Lookup', () => {
 			expect(output).to.equal('next');
 		});
 
-		it('[local-apilookup-0004] should return API-Name with the best match', async () => {
+		it('[local-apilookup-0004] should return API-Name with the best match (/api/configured/locally)', async () => {
 			const { value, output } = await flowNode.lookupAPIDetails({ apiPath: "/api/configured/locally/something" });
 
 			expect(value.organizationName).to.equal(`General Org`);
@@ -87,13 +87,91 @@ describe('Test API Lookup', () => {
 			expect(value.path).to.equal(`/api/configured/locally/something`);
 			expect(output).to.equal('next');
 		});
+	});
 
-		it('[local-apilookup-0005] should return API based on the group', async () => {
-			const { value, output } = await flowNode.lookupAPIDetails({ apiPath: "/api/configured/locally/longest/match", groupId: "group-2"  });
+	describe('#localLookupAPIDetailsIncludingGroupOnly', () => {
+
+		it('[local-group-apilookup-0001] should return specific API based on the group', async () => {
+			const { value, output } = await flowNode.lookupAPIDetails({ apiPath: "/api/configured/for/group", groupId: "group-2"  });
 
 			expect(value.organizationName).to.equal(`Group 2 Org`);
 			expect(value.name).to.equal(`Group 2 API-Name`);
-			expect(value.path).to.equal(`/api/configured/locally/longest/match`);
+			expect(value.path).to.equal(`/api/configured/for/group`);
+			expect(output).to.equal('next');
+		});
+
+		it('[local-group-apilookup-0002] should return longest match API based on the group', async () => {
+			const { value, output } = await flowNode.lookupAPIDetails({ apiPath: "/api/configured/for/group/some/longer/path", groupId: "group-2"  });
+
+			expect(value.organizationName).to.equal(`Group 2 Org Long path`);
+			expect(value.name).to.equal(`Group 2 API-Name Long Path`);
+			expect(value.path).to.equal(`/api/configured/for/group/some/longer/path`);
+			expect(output).to.equal('next');
+		});
+
+		it('[local-group-apilookup-0003] should return best match API based on the group', async () => {
+			const { value, output } = await flowNode.lookupAPIDetails({ apiPath: "/api/configured/for/group/some/other/path", groupId: "group-2"  });
+
+			expect(value.organizationName).to.equal(`Group 2 Org`);
+			expect(value.name).to.equal(`Group 2 API-Name`);
+			expect(value.path).to.equal(`/api/configured/for/group/some/other/path`);
+			expect(output).to.equal('next');
+		});
+
+		it('[local-group-apilookup-0004] should fall back to Non-Group based configuration', async () => {
+			const { value, output } = await flowNode.lookupAPIDetails({ apiPath: "/api/configured/locally", groupId: "group-2"  });
+
+			expect(value.organizationName).to.equal(`General Org`);
+			expect(value.name).to.equal(`General API-Name`);
+			expect(value.path).to.equal(`/api/configured/locally`);
+			expect(output).to.equal('next');
+		});
+	});
+
+	describe('#localLookupAPIDetailsIncludingGroupAndRegion', () => {
+
+		it('[local-region-apilookup-0001] should return specific API based on the group and region', async () => {
+			const { value, output } = await flowNode.lookupAPIDetails({ apiPath: "/us/api/configured/for/group/and/region/with/a/path", groupId: "group-2", region: "US"  });
+
+			expect(value.organizationName).to.equal(`Group 2 US Org with a path`);
+			expect(value.name).to.equal(`Group 2 US API-Name with a path`);
+			expect(value.path).to.equal(`/us/api/configured/for/group/and/region/with/a/path`);
+			expect(output).to.equal('next');
+		});
+
+		it('[local-region-apilookup-0002] should return best match API based on the group and region', async () => {
+			const { value, output } = await flowNode.lookupAPIDetails({ apiPath: "/us/api/configured/for/group/and/region/another/path", groupId: "group-2", region: "US"  });
+
+			expect(value.organizationName).to.equal(`Group 2 US Org`);
+			expect(value.name).to.equal(`Group 2 US API-Name`);
+			expect(value.path).to.equal(`/us/api/configured/for/group/and/region/another/path`);
+			expect(output).to.equal('next');
+		});
+
+		it('[local-region-apilookup-0003] should fallback to a group based API-COnfig', async () => {
+			const { value, output } = await flowNode.lookupAPIDetails({ apiPath: "/api/configured/for/group/and/some/stuff", groupId: "group-2", region: "US"  });
+
+			expect(value.organizationName).to.equal(`Group 2 Org`);
+			expect(value.name).to.equal(`Group 2 API-Name`);
+			expect(value.path).to.equal(`/api/configured/for/group/and/some/stuff`);
+			expect(output).to.equal('next');
+		});
+
+		it('[local-region-apilookup-0003] should fallback to the most generic API-Config', async () => {
+			const { value, output } = await flowNode.lookupAPIDetails({ apiPath: "/api/configured/locally", groupId: "group-2", region: "US"  });
+
+			expect(value.organizationName).to.equal(`General Org`);
+			expect(value.name).to.equal(`General API-Name`);
+			expect(value.path).to.equal(`/api/configured/locally`);
+			expect(output).to.equal('next');
+		});
+
+		it('[local-region-apilookup-0003] should fallback to the most generic API-Config - Best match', async () => {
+			const { value, output } = await flowNode.lookupAPIDetails({ apiPath: "/api/configured/locally/and/another/stuff", groupId: "group-2", region: "US"  });
+
+			expect(value.organizationName).to.equal(`General Org`);
+			expect(value.name).to.equal(`General API-Name`);
+			expect(value.path).to.equal(`/api/configured/locally/and/another/stuff`);
 			expect(output).to.equal('next');
 		});
 	});

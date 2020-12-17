@@ -9,8 +9,8 @@
     },
     "/api/configured/locally/longest/match": {
         "index": true,
-        "organizationName": "Local Org",
-        "name": "Locally configured API",
+        "organizationName": "Longest match Org",
+        "name": "Locally configured API longest match",
         "version": "1.0.0",
         "deprecated": false,
         "state": "published",

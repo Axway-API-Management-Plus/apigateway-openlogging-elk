@@ -1,9 +1,17 @@
 {
     "groupId": "group-2",
-    "/api/configured/locally": {
+    "/api/configured/for/group": {
         "index": true,
         "organizationName": "Group 2 Org",
         "name": "Group 2 API-Name",
+        "version": "1.0.1",
+        "deprecated": false,
+        "state": "published"
+    },
+    "/api/configured/for/group/some/longer/path": {
+        "index": true,
+        "organizationName": "Group 2 Org Long path",
+        "name": "Group 2 API-Name Long Path",
         "version": "1.0.1",
         "deprecated": false,
         "state": "published"

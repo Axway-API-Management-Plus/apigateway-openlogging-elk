@@ -1,10 +1,18 @@
 {
     "groupId": "group-2",
     "region": "us",
-    "/api/configured/locally": {
+    "/us/api/configured/for/group/and/region": {
         "index": true,
         "organizationName": "Group 2 US Org",
         "name": "Group 2 US API-Name",
+        "version": "1.0.1",
+        "deprecated": false,
+        "state": "published"
+    },
+    "/us/api/configured/for/group/and/region/with/a/path": {
+        "index": true,
+        "organizationName": "Group 2 US Org with a path",
+        "name": "Group 2 US API-Name with a path",
         "version": "1.0.1",
         "deprecated": false,
         "state": "published"
