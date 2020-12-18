@@ -222,8 +222,11 @@ async function _getAPILocalProxies(params, options) {
 			var groupProxies = JSON.parse(fs.readFileSync(filenames.groupFilename), null);
 			localAPIConfig[groupId] = groupProxies;
 		}
+		console.log(`filenames.regionFilename: ${filenames.regionFilename}`);
 		if(filenames.regionFilename) {
+			console.log(`filenames.regionFilename 2: ${filenames.regionFilename}`);
 			var regionProxies = JSON.parse(fs.readFileSync(filenames.regionFilename), null);
+			console.log(`filenames.regionFilename 3: ${JSON.stringify(regionProxies)}`);
 			localAPIConfig[`${groupId}###${region}`] = regionProxies;
 		}
 		if(localAPIConfig == undefined) {
