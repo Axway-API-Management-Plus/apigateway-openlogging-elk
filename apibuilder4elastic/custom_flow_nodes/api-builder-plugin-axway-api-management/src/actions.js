@@ -274,7 +274,7 @@ async function _getLocalProxy(localProxies, apiPath, policyName, options) {
 			console.log(`_getLocalProxy 4`);
 			// Iterate over all configured API-Proxies
 			for (const [key, val] of Object.entries(localProxies)) { 
-				console.log(`_getLocalProxy 5`);
+				console.log(`_getLocalProxy 5 apiPath: '${apiPath}, key: ${key}`);
 				if(apiPath.startsWith(key)) {
 					console.log(`_getLocalProxy 6`);
 					var foundProxy = val;
