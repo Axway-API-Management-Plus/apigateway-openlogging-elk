@@ -51,38 +51,38 @@ describe('Test is Index-API', () => {
 
 	describe('#isIndexAPITests', () => {
 		it('[is-index-api-0001] should error when API-Path and PolicyName is not set', async () => {
-			const { value, output } = await flowNode.isIndexAPI({ apiPath: null, policyName: null });
+			const { value, output } = await flowNode.isIgnoreAPI({ apiPath: null, policyName: null });
 
 			expect(value).to.be.instanceOf(Error)
 				.and.to.have.property('message', 'You must either provide the apiPath or the policyName used to read the configuration.');
 			expect(output).to.equal('error');
 		});
 
-		it('[local-apilookup-0002] should return index false based on the apiPath', async () => {
-			const { value, output } = await flowNode.isIndexAPI({ apiPath: "/do/not/index/api" });
+		it('[local-apilookup-0002] should return ignore true based on the apiPath', async () => {
+			const { value, output } = await flowNode.isIgnoreAPI({ apiPath: "/do/not/index/api" });
 
-			expect(value.indexAPI).to.equal(false);
+			expect(value.ignore).to.equal(true);
 			expect(output).to.equal('next');
 		});
 
-		it('[local-apilookup-0003] should return default index true if API-Path is not configured', async () => {
-			const { value, output } = await flowNode.isIndexAPI({ apiPath: "/not/configured/api" });
+		it('[local-apilookup-0003] should return default ignore false if API-Path is not configured', async () => {
+			const { value, output } = await flowNode.isIgnoreAPI({ apiPath: "/not/configured/api" });
 
-			expect(value.indexAPI).to.equal(true);
+			expect(value.ignore).to.equal(true);
 			expect(output).to.equal('next');
 		});
 
-		it('[local-apilookup-0004] should return default index true if Policy-Name is not configured', async () => {
-			const { value, output } = await flowNode.isIndexAPI({ policyName: "Not configured policy" });
+		it('[local-apilookup-0004] should return default ignore false if Policy-Name is not configured', async () => {
+			const { value, output } = await flowNode.isIgnoreAPI({ policyName: "Not configured policy" });
 
-			expect(value.indexAPI).to.equal(true);
+			expect(value.ignore).to.equal(true);
 			expect(output).to.equal('next');
 		});
 
-		it('[local-apilookup-0005] should return index false if Policy-Name is configured to false', async () => {
-			const { value, output } = await flowNode.isIndexAPI({ policyName: "Do not index this policy" });
+		it('[local-apilookup-0005] should return ignore true if Policy-Name is configured to ignore this policy', async () => {
+			const { value, output } = await flowNode.isIgnoreAPI({ policyName: "Do not index this policy" });
 
-			expect(value.indexAPI).to.equal(false);
+			expect(value.ignore).to.equal(true);
 			expect(output).to.equal('next');
 		});
 	});

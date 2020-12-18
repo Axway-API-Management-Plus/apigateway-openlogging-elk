@@ -174,7 +174,7 @@ async function lookupAPIDetails(params, options) {
 	return apiProxy;
 }
 
-async function isIndexAPI(params, options) {
+async function isIgnoreAPI(params, options) {
 	debugger;
 	var { apiPath, policyName } = params;
 	logger = options.logger;
@@ -190,11 +190,11 @@ async function isIndexAPI(params, options) {
 	}
 	// No config found - Return the default index:true
 	if(proxies==undefined || proxies.length == 0) {
-		return {"indexAPI": true};
+		return {"ignore": true};
 	}
 	if(proxies.length > 1) {
 		logger.warn(`No unique result for path: '${apiPath}' or policy name: '${policyName}'. Return default index true`);
-		return {"indexAPI": true};
+		return {"ignore": true};
 	}
 	return proxies[0];
 }
@@ -542,5 +542,5 @@ module.exports = {
 	lookupCurrentUser, 
 	lookupAPIDetails,
 	getCustomPropertiesConfig,
-	isIndexAPI
+	isIgnoreAPI
 };

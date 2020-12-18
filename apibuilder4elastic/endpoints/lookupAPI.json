@@ -63,33 +63,10 @@
       },
       "parameters": []
     },
-    "/lookup/api/index": {
+    "/lookup/api/ignore": {
       "get": {
-        "summary": "Index API?",
+        "summary": "Ignore this API/Document?",
         "tags": [],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "description": "",
-              "type": "object",
-              "properties": {
-                "index": {
-                  "type": "string",
-                  "minLength": 1
-                }
-              },
-              "required": [
-                "index"
-              ]
-            },
-            "examples": {
-              "Example": {
-                "index": "false"
-              }
-            }
-          }
-        },
         "operationId": "index-api",
         "description": "Provides information if the API should be indexed or not.",
         "parameters": [
@@ -118,8 +95,18 @@
             "description": "The API-Path used to lookup the configuration of this API."
           }
         ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          }
+        },
         "x-flow": "lookupAPI-index-api"
-      }
+      },
+      "parameters": []
     }
   },
   "basePath": "/elk/v1/api"

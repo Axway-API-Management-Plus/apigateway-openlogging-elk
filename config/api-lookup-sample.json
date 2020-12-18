@@ -16,9 +16,13 @@
         "index": false
     },
     "Policy: My policy name not to index": {
-        "index": false
+        "toBeIndexed": false
+    },
+    "Policy: My policy name not to index2": {
+        "ignore": false
     },
     "/another/api/base/path": {
+        "ignore": true,
         "name": "Can match longer paths",
         "organizationName": "Local Org",
         "version": "2.0.0",

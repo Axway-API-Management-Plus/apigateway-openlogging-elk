@@ -1,7 +1,7 @@
 {
 	"schemaVersion": "4",
 	"info": {
-		"name": "lookupAPI - get /lookup/api/index"
+		"name": "lookupAPI - get /lookup/api/ignore"
 	},
 	"parameter": {
 		"properties": {
@@ -34,8 +34,8 @@
 	"nodes": {
 		"axway-api-management.1": {
 			"type": "nodehandler://api-builder-plugin-axway-api-management/axway-api-management",
-			"name": "Index API",
-			"method": "isIndexAPI",
+			"name": "Is ignore API",
+			"method": "isIgnoreAPI",
 			"parameters": [
 				{
 					"name": "region",
@@ -71,7 +71,7 @@
 					"routes": [
 						"http.1"
 					],
-					"context": "$.isIndexAPI",
+					"context": "$.ignoreFileResult",
 					"metaName": "Next"
 				},
 				"error": {
@@ -82,11 +82,11 @@
 					"metaName": "Error"
 				}
 			},
-			"metaMethod": "Is Index API"
+			"metaMethod": "Is ignore API"
 		},
 		"http.1": {
 			"type": "nodehandler://axway-flow/http",
-			"name": "Set HTTP Response",
+			"name": "Return Is ignore API",
 			"method": "setresponse",
 			"parameters": [
 				{
@@ -99,7 +99,7 @@
 				{
 					"name": "body",
 					"type": "jsonpath",
-					"value": "$.isIndexAPI",
+					"value": "$.ignoreFileResult",
 					"metaName": "Body",
 					"metaDescription": "The response payload"
 				}
@@ -115,7 +115,7 @@
 		},
 		"http.2": {
 			"type": "nodehandler://axway-flow/http",
-			"name": "Set HTTP Response",
+			"name": "Return error",
 			"method": "setresponse",
 			"parameters": [
 				{

@@ -1,6 +1,6 @@
 const path = require('path');
 const { SDK } = require('@axway/api-builder-sdk');
-const { lookupCurrentUser, lookupAPIDetails, getCustomPropertiesConfig, isIndexAPI } = require('./actions');
+const { lookupCurrentUser, lookupAPIDetails, getCustomPropertiesConfig, isIgnoreAPI } = require('./actions');
 const { mergeCustomProperties } = require('./customProperties');
 const NodeCache = require( "node-cache" );
 const { sendRequest, _getSession, getManagerConfig } = require('./utils');
@@ -78,7 +78,7 @@ async function getPlugin(pluginConfig, options) {
 		}
 	}
 
-	sdk.load(path.resolve(__dirname, 'flow-nodes.yml'), {lookupCurrentUser, lookupAPIDetails, getCustomPropertiesConfig, mergeCustomProperties, isIndexAPI }, { pluginContext: { cache: cache }, pluginConfig});
+	sdk.load(path.resolve(__dirname, 'flow-nodes.yml'), {lookupCurrentUser, lookupAPIDetails, getCustomPropertiesConfig, mergeCustomProperties, isIgnoreAPI }, { pluginContext: { cache: cache }, pluginConfig});
 	return sdk.getPlugin();
 }
 

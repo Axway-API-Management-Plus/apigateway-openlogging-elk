@@ -112,9 +112,9 @@ flow-nodes:
             schema:
               type: object
 
-      isIndexAPI:
-        name: Is Index API
-        description: Is using the configuration file to determine if the API should be index or not.
+      isIgnoreAPI:
+        name: Is ignore API
+        description: Is using the configuration file to determine if the API should be ignored or not.
         parameters:
           apiPath:
             name: Path of the API
@@ -147,7 +147,7 @@ flow-nodes:
         outputs:
           next:
             name: Next
-            description: Return index true or false. Defaults to true.
+            description: Returns if the API should be ignored or not. Defaults to false.
             context: $.
             schema:
               type: object

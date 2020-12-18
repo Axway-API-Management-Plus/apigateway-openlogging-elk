@@ -146,18 +146,18 @@ describe('Test API Lookup', () => {
 
 	describe('#localLookupAPIDetailsIncludingGroupAndRegion', () => {
 
-		it.only('[local-group-and-region-apilookup-0001] should return specific API based on the group and region', async () => {
+		it('[local-group-and-region-apilookup-0001] should return specific API based on the group and region', async () => {
 			const { value, output } = await flowNode.lookupAPIDetails({ apiPath: "/us/api/configured/for/group/and/region/with/a/path", groupId: "group-2", region: "US"  });
-			console.log(`AAAAA: ${JSON.stringify(value)}`);
+
 			expect(value.organizationName).to.equal(`Group 2 US Org with a path`);
 			expect(value.name).to.equal(`Group 2 US API-Name with a path`);
 			expect(value.path).to.equal(`/us/api/configured/for/group/and/region/with/a/path`);
 			expect(output).to.equal('next');
 		});
 
-		it.only('[local-group-and-region-apilookup-0002] should return best match API based on the group and region', async () => {
+		it('[local-group-and-region-apilookup-0002] should return best match API based on the group and region', async () => {
 			const { value, output } = await flowNode.lookupAPIDetails({ apiPath: "/us/api/configured/for/group/and/region/another/path", groupId: "group-2", region: "US"  });
-			console.log(`CCCCC: ${JSON.stringify(value)}`);
+
 			expect(value.organizationName).to.equal(`Group 2 US Org`);
 			expect(value.name).to.equal(`Group 2 US API-Name`);
 			expect(value.path).to.equal(`/us/api/configured/for/group/and/region/another/path`);
