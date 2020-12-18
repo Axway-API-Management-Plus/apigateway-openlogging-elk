@@ -302,11 +302,13 @@ async function _getGroupRegionFilename(basefilename, groupId, region) {
 	var baseFile = path.parse(basefilename);
 	var groupFilename = `${baseFile.dir}${path.sep}${baseFile.name}.${groupId}${baseFile.ext}`;
 	var regionFilename = `${baseFile.dir}${path.sep}${baseFile.name}.${groupId}.${region}${baseFile.ext}`;
+	console.log(`regionFilename: ${regionFilename}`);
 	var result = {};
 	if(fs.existsSync(groupFilename)) {
 		result["groupFilename"] = groupFilename;
 	}
 	if(fs.existsSync(regionFilename)) {
+		console.log(`existsSync regionFilename: ${regionFilename}`);
 		result["regionFilename"] = regionFilename;
 	}
 	return result;
