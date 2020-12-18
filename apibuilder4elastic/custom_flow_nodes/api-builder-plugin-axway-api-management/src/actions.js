@@ -213,7 +213,7 @@ async function _getAPILocalProxies(params, options) {
 		try {
 			var localProxies = JSON.parse(fs.readFileSync(lookupFile), null);
 		} catch (ex) {
-			logger.error(`Error reading API-Lookup file: '${lookupFile}'. Error: ${ex}`);
+			console.log(`Error reading API-Lookup file: '${lookupFile}'. Error: ${ex}`);
 			return;
 		}
 		localAPIConfig = { ...localProxies };
@@ -237,7 +237,7 @@ async function _getAPILocalProxies(params, options) {
 			return proxy;
 		}
 	} else {
-		options.console.log(`No local API-Lookup file configured.`);
+		console.log(`No local API-Lookup file configured.`);
 		return;
 	}
 }
@@ -247,7 +247,7 @@ async function _getLocalProxy(localProxies, apiPath, policyName, options) {
 	var foundProxy;
 	// If a policy is given, it is used separately for the lookup
 	if(policyName != undefined) {
-		options.console.log(`Looking up information based on policy name: ${policyName}`);
+		console.log(`Looking up information based on policy name: ${policyName}`);
 		if(localProxies[`Policy: ${policyName}`]) {
 			foundProxy =  localProxies[`Policy: ${policyName}`];
 		}
