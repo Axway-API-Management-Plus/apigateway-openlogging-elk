@@ -80,7 +80,7 @@ async function lookupCurrentUser(params, options) {
 	}
 	if(permissions.includes("adminusers_modify")) {
 		user.gatewayManager.isAdmin = true;
-		logger.debug(`Current user is: '${user.loginName}' Is Gateway admin: ${user.gatewayManager.isAdmin}`);
+		console.log(`Current user is: '${user.loginName}' Is Gateway admin: ${user.gatewayManager.isAdmin}`);
 		return user;
 	}
 	logger.trace(`Trying to load API-Manager user using Login-Name: '${user.loginName}'`);
@@ -91,7 +91,7 @@ async function lookupCurrentUser(params, options) {
 	user.apiManager = users[0];
 	var org = await _getOrganization(user.apiManager, groupId);
 	user.apiManager.organizationName = org.name;
-	logger.debug(`User: '${user.loginName}' (Role: ${user.apiManager.role}) found in API-Manager. Organization: '${user.apiManager.organizationName}'`);
+	console.log(`User: '${user.loginName}' (Role: ${user.apiManager.role}) found in API-Manager. Organization: '${user.apiManager.organizationName}'`);
 	if(VIDUSR!=undefined) {
 		cache.set( VIDUSR, user);
 	}
@@ -108,9 +108,9 @@ async function lookupAPIDetails(params, options) {
 	}
 	if(region) region = region.toLowerCase();
 	const cacheKey = `${apiPath}###${groupId}###${region}`;
-	logger.debug(`Trying to lookup API-Details from cache using key: '${cacheKey}'`);
+	console.log(`Trying to lookup API-Details from cache using key: '${cacheKey}'`);
 	if(cache.has(cacheKey)) {
-		logger.debug(`Found API-Details in cache with key: '${cacheKey}'`);
+		console.log(`Found API-Details in cache with key: '${cacheKey}'`);
 		return cache.get(cacheKey);
 	}
 	logger.info(`No API-Details found in cache using key: '${cacheKey}'. Trying to lookup API locally.`);
@@ -124,7 +124,7 @@ async function lookupAPIDetails(params, options) {
 		if (!apiName) {
 			throw new Error(`API not configured locally, based on path: ${apiPath}. The API cannot be queried at the API Manager as no API name is given. Please configure this API path locally.`);
 		}
-		logger.debug(`API not configured locally, trying to get details from API-Manager.`);
+		console.log(`API not configured locally, trying to get details from API-Manager.`);
 		proxies = await _getAPIProxy(apiName, groupId, region);
 	} else {
 		logger.info(`API-Details for API with path: '${apiPath}' looked up locally.`);
@@ -237,7 +237,7 @@ async function _getAPILocalProxies(params, options) {
 			return proxy;
 		}
 	} else {
-		options.logger.debug(`No local API-Lookup file configured.`);
+		options.console.log(`No local API-Lookup file configured.`);
 		return;
 	}
 }
@@ -247,7 +247,7 @@ async function _getLocalProxy(localProxies, apiPath, policyName, options) {
 	var foundProxy;
 	// If a policy is given, it is used separately for the lookup
 	if(policyName != undefined) {
-		options.logger.debug(`Looking up information based on policy name: ${policyName}`);
+		options.console.log(`Looking up information based on policy name: ${policyName}`);
 		if(localProxies[`Policy: ${policyName}`]) {
 			foundProxy =  localProxies[`Policy: ${policyName}`];
 		}
@@ -475,7 +475,7 @@ async function _getOrganization(apiProxy, groupId, region) {
 	const orgCacheKey = `ORG-${orgId}###${groupId}###${region}`
 	if(cache.has(orgCacheKey)) {
 		var org = cache.get(orgCacheKey);
-		logger.debug(`Organization: '${org.name}' (ID: ${orgId}) found in cache for groupId: ${groupId} in region: ${region}.`);
+		console.log(`Organization: '${org.name}' (ID: ${orgId}) found in cache for groupId: ${groupId} in region: ${region}.`);
 		return org;
 	}
 	var options = {
@@ -510,10 +510,10 @@ async function _getConfiguredCustomProperties(groupId, region) {
 	const customPropCacheKey = `CUSTOM_PROPERTIES###${groupId}###${region}`
 	if(cache.has(customPropCacheKey)) {
 		var propertiesConfig = cache.get(customPropCacheKey);
-		logger.debug(`Custom properties found in cache with groupId: ${groupId} and region ${region}.`);
+		console.log(`Custom properties found in cache with groupId: ${groupId} and region ${region}.`);
 		return propertiesConfig;
 	}
-	logger.debug(`Reading custom properties for groupId: ${groupId}. from API-Manager: ${apiManagerConfig.url}`);
+	console.log(`Reading custom properties for groupId: ${groupId}. from API-Manager: ${apiManagerConfig.url}`);
 	var options = {
 		path: `/api/portal/v1.3/config/customproperties`,
 		headers: {
