@@ -216,7 +216,7 @@ async function _getAPILocalProxies(apiPath, groupId, region, policy, verb, optio
 	}
 }
 
-async function _getLocalProxy(localProxies, apiPath, policy, verb) {
+async function _getLocalProxy(localProxies, apiPath, policy, verb, options) {
 	if(localProxies == undefined) return;
 	var foundProxy;
 	// If a policy is given, it is used separately for the lookup
