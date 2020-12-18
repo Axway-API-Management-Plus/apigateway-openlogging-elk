@@ -202,10 +202,10 @@ async function addLookupAPIMocks(cache) {
 		}
 	});
 	cache.set( "/favicon.ico###group-2###us###", {
-		index: false
+		ignore: true
 	});
 	cache.set( "/not/relevant###group-2###us###Do not index this Policy", {
-		index: false
+		ignore: true
 	});
 }
 
