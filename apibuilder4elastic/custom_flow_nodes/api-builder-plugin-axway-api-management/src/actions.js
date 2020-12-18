@@ -183,6 +183,10 @@ async function isIgnoreAPI(params, options) {
 	if (!apiPath && !policyName) {
 		throw new Error('You must either provide the apiPath or the policyName used to read the configuration.');
 	}
+	if(region) {
+		region = region.toLowerCase();
+		params.region = region;
+	}
 	const cacheKey = `isIgnore###${groupId}###${region}###${apiPath}###${policyName}`;
 	logger.debug(`Trying to lookup ignore status from cache using key: '${cacheKey}'`);
 	if(cache.has(cacheKey)) {
