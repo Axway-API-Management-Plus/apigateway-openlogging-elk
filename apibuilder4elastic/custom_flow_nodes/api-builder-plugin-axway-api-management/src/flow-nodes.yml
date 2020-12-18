@@ -112,6 +112,52 @@ flow-nodes:
             schema:
               type: object
 
+      isIndexAPI:
+        name: Is Index API
+        description: Is using the configuration file to determine if the API should be index or not.
+        parameters:
+          apiPath:
+            name: Path of the API
+            description: This request path is used to double check that the API found is correct.
+            required: false
+            initialType: string
+            schema:
+              type: string
+          region:
+            name: API-Gateway region
+            description: "The region is optionally configured for each filebeat. If configured it is used in combination with the group-id to lookup the API at the correct API-Manager. API_MANAGER must be configured like so: API_MANAGER=https://default-manager-1:8075,us|group1|https://manager-1:8075,group-2|https://manager-2:8075, ...."
+            required: false
+            initialType: string
+            schema:
+              type: string
+          groupId:
+            name: The API-Gateway Group-ID
+            description: "The ID of the Domain-Group where this event was created. If given, it's used to determined which API-Manager to use for the lookup. Optionally, the region can be used to select the API-Manager in the correct region. For that, the parameter: API_MANAGER must be configured like so: API_MANAGER=http://default-api-manager:8075,regiona|group-1|https://manager-1:8075,group-2|https://manager-2:8075, ...."
+            required: false
+            initialType: string
+            schema:
+              type: string
+          policyName:
+            name: Policy Name
+            description: Used during local search only to figure out if Policy-Event should be indexed or not.
+            required: false
+            initialType: string
+            schema:
+              type: string
+        outputs:
+          next:
+            name: Next
+            description: Return index true or false. Defaults to true.
+            context: $.
+            schema:
+              type: object
+          error:
+            name: Error
+            description: An unexpected error happened
+            context: $.error
+            schema:
+              type: object
+
       getCustomPropertiesConfig:
         name: Get custom properties
         description: Returns configured custom properties configured on the API-Manager. The information is cached within the API-Builder process for 30 minutes.

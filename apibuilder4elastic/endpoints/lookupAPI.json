@@ -54,12 +54,6 @@
             "in": "query",
             "name": "region",
             "description": "The region can be specified optionally. Based on the region, together with the Group-ID, the correct API manager for the lookup is determined. This must be specified in the API_MANAGER parameter."
-          },
-          {
-            "type": "string",
-            "in": "query",
-            "name": "policy",
-            "description": "Policy-Name part of the event used to determine if a policy-event should be indexed or not."
           }
         ],
         "summary": "Looks up an API based on the API-Path",
@@ -68,6 +62,64 @@
         "x-flow": "lookupAPI-search"
       },
       "parameters": []
+    },
+    "/lookup/api/index": {
+      "get": {
+        "summary": "Index API?",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "description": "",
+              "type": "object",
+              "properties": {
+                "index": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "index"
+              ]
+            },
+            "examples": {
+              "Example": {
+                "index": "false"
+              }
+            }
+          }
+        },
+        "operationId": "index-api",
+        "description": "Provides information if the API should be indexed or not.",
+        "parameters": [
+          {
+            "type": "string",
+            "in": "query",
+            "name": "region",
+            "description": "The region this API was executed. Depending on the region different configuration files are used."
+          },
+          {
+            "type": "string",
+            "in": "query",
+            "name": "groupId",
+            "description": "The ID of the Domain-Group where this event was created. It's used to determined which API-Manager to use for the API-Details Lookup.If the parameter: API_MANAGER is configured with multiple groupIds this groupId is used to determine which API-Manager to use.API_MANAGER=group-5#https://manager-1:8075, group-2#https://manager-2:8075, ...."
+          },
+          {
+            "type": "string",
+            "in": "query",
+            "description": "Policy-Name part of the event used to determine if a policy-event should be indexed or not.",
+            "name": "policyName"
+          },
+          {
+            "type": "string",
+            "in": "query",
+            "name": "apiPath",
+            "description": "The API-Path used to lookup the configuration of this API."
+          }
+        ],
+        "x-flow": "lookupAPI-index-api"
+      }
     }
   },
   "basePath": "/elk/v1/api"

@@ -99,7 +99,7 @@ async function lookupCurrentUser(params, options) {
 }
 
 async function lookupAPIDetails(params, options) {
-	var { apiName, apiPath, operationId, groupId, region, policy, verb, mapCustomProperties } = params;
+	var { apiName, apiPath, operationId, groupId, region, mapCustomProperties } = params;
 	logger = options.logger;
 	cache = options.pluginContext.cache;
 	pluginConfig = options.pluginConfig;
@@ -107,7 +107,7 @@ async function lookupAPIDetails(params, options) {
 		throw new Error('You must provide the apiPath that should be used to lookup the API.');
 	}
 	if(region) region = region.toLowerCase();
-	const cacheKey = `${apiPath}###${groupId}###${region}###${policy}`;
+	const cacheKey = `${apiPath}###${groupId}###${region}`;
 	logger.debug(`Trying to lookup API-Details from cache using key: '${cacheKey}'`);
 	if(cache.has(cacheKey)) {
 		logger.debug(`Found API-Details in cache with key: '${cacheKey}'`);
@@ -115,7 +115,7 @@ async function lookupAPIDetails(params, options) {
 	}
 	logger.info(`No API-Details found in cache using key: '${cacheKey}'. Trying to lookup API locally.`);
 	try {
-		var proxies = await _getAPILocalProxies(apiPath, groupId, region, policy, verb, options);
+		var proxies = await _getAPILocalProxies(params, options);
 	} catch (ex) {
 		logger.warn(`Error looking up API locally. ${JSON.stringify(ex)}`);
 	}
@@ -171,6 +171,31 @@ async function lookupAPIDetails(params, options) {
 	return apiProxy;
 }
 
+async function isIndexAPI(params, options) {
+	debugger;
+	var { apiPath, policyName } = params;
+	logger = options.logger;
+	cache = options.pluginContext.cache;
+	pluginConfig = options.pluginConfig;
+	if (!apiPath && !policyName) {
+		throw new Error('You must either provide the apiPath or the policyName used to read the configuration.');
+	}
+	try {
+		var proxies = await _getAPILocalProxies(params, options);
+	} catch (ex) {
+		logger.warn(`Error looking up API locally. ${JSON.stringify(ex)}`);
+	}
+	// No config found - Return the default index:true
+	if(proxies==undefined || proxies.length == 0) {
+		return {"indexAPI": true};
+	}
+	if(proxies.length > 1) {
+		logger.warn(`No unique result for path: '${apiPath}' or policy name: '${policyName}'. Return default index true`);
+		return {"indexAPI": true};
+	}
+	return proxies[0];
+}
+
 async function getCustomPropertiesConfig(params, options) {
 	const { groupId, region } = params;
 	pluginConfig = options.pluginConfig;
@@ -179,7 +204,8 @@ async function getCustomPropertiesConfig(params, options) {
 	return await _getConfiguredCustomProperties(groupId, region);
 }
 
-async function _getAPILocalProxies(apiPath, groupId, region, policy, verb, options) {
+async function _getAPILocalProxies(params, options) {
+	var { apiPath, groupId, region, policyName } = params;
 	const lookupFile = options.pluginConfig.localLookupFile;
 	if(lookupFile != undefined && lookupFile != "")  {
 		var localAPIConfig = {};
@@ -203,11 +229,11 @@ async function _getAPILocalProxies(apiPath, groupId, region, policy, verb, optio
 		if(localAPIConfig == undefined) {
 			return;
 		} else {
-			var proxy = await _getLocalProxy(regionProxies, apiPath, policy, verb, options);
+			var proxy = await _getLocalProxy(regionProxies, apiPath, policyName, options);
 			if(proxy!=undefined) return proxy;
-			proxy = await _getLocalProxy(groupProxies, apiPath, policy, verb, options);
+			proxy = await _getLocalProxy(groupProxies, apiPath, policyName, options);
 			if(proxy!=undefined) return proxy;
-			proxy = await _getLocalProxy(localProxies, apiPath, policy, verb, options);
+			proxy = await _getLocalProxy(localProxies, apiPath, policyName, options);
 			return proxy;
 		}
 	} else {
@@ -216,14 +242,14 @@ async function _getAPILocalProxies(apiPath, groupId, region, policy, verb, optio
 	}
 }
 
-async function _getLocalProxy(localProxies, apiPath, policy, verb, options) {
+async function _getLocalProxy(localProxies, apiPath, policyName, options) {
 	if(localProxies == undefined) return;
 	var foundProxy;
 	// If a policy is given, it is used separately for the lookup
-	if(policy != undefined) {
-		options.logger.debug(`Looking up information based on policy name: ${policy}`);
-		if(localProxies[`Policy: ${policy}`]) {
-			foundProxy =  localProxies[`Policy: ${policy}`];
+	if(policyName != undefined) {
+		options.logger.debug(`Looking up information based on policy name: ${policyName}`);
+		if(localProxies[`Policy: ${policyName}`]) {
+			foundProxy =  localProxies[`Policy: ${policyName}`];
 		}
 	} else {
 		var proxy = {
@@ -512,5 +538,6 @@ async function _getConfiguredCustomProperties(groupId, region) {
 module.exports = {
 	lookupCurrentUser, 
 	lookupAPIDetails,
-	getCustomPropertiesConfig
+	getCustomPropertiesConfig,
+	isIndexAPI
 };

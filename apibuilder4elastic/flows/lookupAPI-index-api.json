@@ -1,0 +1,146 @@
+{
+	"schemaVersion": "4",
+	"info": {
+		"name": "lookupAPI - get /lookup/api/index"
+	},
+	"parameter": {
+		"properties": {
+			"params": {
+				"type": "object",
+				"description": "The parameters from the endpoint."
+			},
+			"request": {
+				"type": "object",
+				"description": "The HTTP request."
+			},
+			"config": {
+				"type": "object",
+				"description": "The service's configuration"
+			},
+			"env": {
+				"type": "object",
+				"description": "The host OS environment"
+			}
+		},
+		"additionalProperties": false,
+		"required": [
+			"request",
+			"config",
+			"env",
+			"params"
+		]
+	},
+	"start": "axway-api-management.1",
+	"nodes": {
+		"axway-api-management.1": {
+			"type": "nodehandler://api-builder-plugin-axway-api-management/axway-api-management",
+			"name": "Index API",
+			"method": "isIndexAPI",
+			"parameters": [
+				{
+					"name": "region",
+					"type": "jsonpath",
+					"value": "$.params.region",
+					"metaName": "API-Gateway region",
+					"metaDescription": "The region is optionally configured for each filebeat. If configured it is used in combination with the group-id to lookup the API at the correct API-Manager. API_MANAGER must be configured like so: API_MANAGER=https://default-manager-1:8075,us|group1|https://manager-1:8075,group-2|https://manager-2:8075, ...."
+				},
+				{
+					"name": "apiPath",
+					"type": "jsonpath",
+					"value": "$.params.apiPath",
+					"metaName": "Path of the API",
+					"metaDescription": "This request path is used to double check that the API found is correct."
+				},
+				{
+					"name": "policyName",
+					"type": "jsonpath",
+					"value": "$.params.policyName",
+					"metaName": "Policy Name",
+					"metaDescription": "Used during local search only to figure out if Policy-Event should be indexed or not."
+				},
+				{
+					"name": "groupId",
+					"type": "jsonpath",
+					"value": "$.params.groupId",
+					"metaName": "The API-Gateway Group-ID",
+					"metaDescription": "The ID of the Domain-Group where this event was created. If given, it's used to determined which API-Manager to use for the lookup. Optionally, the region can be used to select the API-Manager in the correct region. For that, the parameter: API_MANAGER must be configured like so: API_MANAGER=http://default-api-manager:8075,regiona|group-1|https://manager-1:8075,group-2|https://manager-2:8075, ...."
+				}
+			],
+			"outputs": {
+				"next": {
+					"routes": [
+						"http.1"
+					],
+					"context": "$.isIndexAPI",
+					"metaName": "Next"
+				},
+				"error": {
+					"routes": [
+						"http.2"
+					],
+					"context": "$.error",
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Is Index API"
+		},
+		"http.1": {
+			"type": "nodehandler://axway-flow/http",
+			"name": "Set HTTP Response",
+			"method": "setresponse",
+			"parameters": [
+				{
+					"name": "status",
+					"type": "number",
+					"value": "200",
+					"metaName": "Status",
+					"metaDescription": "The HTTP status code"
+				},
+				{
+					"name": "body",
+					"type": "jsonpath",
+					"value": "$.isIndexAPI",
+					"metaName": "Body",
+					"metaDescription": "The response payload"
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.response",
+					"routes": [],
+					"metaName": "Next"
+				}
+			},
+			"metaMethod": "Set HTTP Response"
+		},
+		"http.2": {
+			"type": "nodehandler://axway-flow/http",
+			"name": "Set HTTP Response",
+			"method": "setresponse",
+			"parameters": [
+				{
+					"name": "status",
+					"type": "number",
+					"value": "500",
+					"metaName": "Status",
+					"metaDescription": "The HTTP status code"
+				},
+				{
+					"name": "body",
+					"type": "jsonpath",
+					"value": "$.error",
+					"metaName": "Body",
+					"metaDescription": "The response payload"
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.response",
+					"routes": [],
+					"metaName": "Next"
+				}
+			},
+			"metaMethod": "Set HTTP Response"
+		}
+	}
+}
