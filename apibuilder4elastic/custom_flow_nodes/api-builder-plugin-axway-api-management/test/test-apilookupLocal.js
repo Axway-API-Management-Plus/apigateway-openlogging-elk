@@ -110,7 +110,7 @@ describe('Test API Lookup', () => {
 
 		it('[local-group-apilookup-0001] should return specific API based on the group', async () => {
 			const { value, output } = await flowNode.lookupAPIDetails({ apiPath: "/api/configured/for/group", groupId: "group-2"  });
-
+			console.log(`AAAAA: ${JSON.stringify(value)}`);
 			expect(value.organizationName).to.equal(`Group 2 Org`);
 			expect(value.name).to.equal(`Group 2 API-Name`);
 			expect(value.path).to.equal(`/api/configured/for/group`);
@@ -119,7 +119,7 @@ describe('Test API Lookup', () => {
 
 		it('[local-group-apilookup-0002] should return longest match API based on the group', async () => {
 			const { value, output } = await flowNode.lookupAPIDetails({ apiPath: "/api/configured/for/group/some/longer/path", groupId: "group-2"  });
-
+			console.log(`BBBBB: ${JSON.stringify(value)}`);
 			expect(value.organizationName).to.equal(`Group 2 Org Long path`);
 			expect(value.name).to.equal(`Group 2 API-Name Long Path`);
 			expect(value.path).to.equal(`/api/configured/for/group/some/longer/path`);
