@@ -59,7 +59,7 @@ describe('Test is Index-API', () => {
 		});
 
 		it('[local-apilookup-0002] should return ignore true based on the apiPath', async () => {
-			const { value, output } = await flowNode.isIgnoreAPI({ apiPath: "/do/not/index/api" });
+			const { value, output } = await flowNode.isIgnoreAPI({ apiPath: "/do/not/index/api", policyName: "" });
 
 			expect(value.ignore).to.equal(true);
 			expect(output).to.equal('next');

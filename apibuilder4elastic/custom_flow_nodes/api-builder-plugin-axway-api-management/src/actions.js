@@ -197,7 +197,7 @@ async function isIgnoreAPI(params, options) {
 		logger.warn(`No unique result for path: '${apiPath}', policy name: '${policyName}'. Return default ingore: false`);
 		return {"ignore": false};
 	}
-	logger.info(`API with apiPath: '${apiPath}', policyName: '${policyName}' to be ignored: ${proxies[0].ignore}`);
+	logger.info(`Return API with apiPath: '${apiPath}', policyName: '${policyName}' as to be ignored: ${proxies[0].ignore}`);
 	return proxies[0];
 }
 
@@ -251,7 +251,7 @@ async function _getLocalProxy(localProxies, apiPath, policyName, options) {
 	if(localProxies == undefined) return;
 	var foundProxy;
 	// If a policy is given, it is used separately for the lookup
-	if(policyName != undefined) {
+	if(policyName != undefined && policyName != "") {
 		options.logger.debug(`Looking up information based on policy name: ${policyName}`);
 		if(localProxies[`Policy: ${policyName}`]) {
 			foundProxy =  localProxies[`Policy: ${policyName}`];
