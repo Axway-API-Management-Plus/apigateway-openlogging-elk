@@ -190,12 +190,14 @@ async function isIgnoreAPI(params, options) {
 	}
 	// No config found - Return the default index:true
 	if(proxies==undefined || proxies.length == 0) {
-		return {"ignore": true};
+		logger.debug(`API with apiPath: '${apiPath}', policyName: '${policyName}' not configured. Return default ingore: false.`);
+		return {"ignore": false};
 	}
 	if(proxies.length > 1) {
-		logger.warn(`No unique result for path: '${apiPath}' or policy name: '${policyName}'. Return default index true`);
-		return {"ignore": true};
+		logger.warn(`No unique result for path: '${apiPath}', policy name: '${policyName}'. Return default ingore: false`);
+		return {"ignore": false};
 	}
+	logger.info(`API with apiPath: '${apiPath}', policyName: '${policyName}' to be ignored: ${proxies[0].ignore}`);
 	return proxies[0];
 }
 

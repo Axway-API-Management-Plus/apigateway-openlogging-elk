@@ -68,14 +68,14 @@ describe('Test is Index-API', () => {
 		it('[local-apilookup-0003] should return default ignore false if API-Path is not configured', async () => {
 			const { value, output } = await flowNode.isIgnoreAPI({ apiPath: "/not/configured/api" });
 
-			expect(value.ignore).to.equal(true);
+			expect(value.ignore).to.equal(false);
 			expect(output).to.equal('next');
 		});
 
 		it('[local-apilookup-0004] should return default ignore false if Policy-Name is not configured', async () => {
 			const { value, output } = await flowNode.isIgnoreAPI({ policyName: "Not configured policy" });
 
-			expect(value.ignore).to.equal(true);
+			expect(value.ignore).to.equal(false);
 			expect(output).to.equal('next');
 		});
 
