@@ -243,6 +243,7 @@ async function _getAPILocalProxies(params, options) {
 }
 
 async function _getLocalProxy(localProxies, apiPath, policyName, options) {
+	console.log(`_getLocalProxy 1: ${policyName}`);
 	if(localProxies == undefined) return;
 	var foundProxy;
 	// If a policy is given, it is used separately for the lookup
@@ -252,6 +253,7 @@ async function _getLocalProxy(localProxies, apiPath, policyName, options) {
 			foundProxy =  localProxies[`Policy: ${policyName}`];
 		}
 	} else {
+		console.log(`_getLocalProxy 2`);
 		var proxy = {
 			method: "N/A", 
 			organizationName: "N/A", 
@@ -266,18 +268,24 @@ async function _getLocalProxy(localProxies, apiPath, policyName, options) {
 		};
 		// Perhaps, we have direct hit with the API-Path
 		if(localProxies[apiPath]) {
+			console.log(`_getLocalProxy 3`);
 			foundProxy = localProxies[apiPath];
 		} else {
+			console.log(`_getLocalProxy 4`);
 			// Iterate over all configured API-Proxies
 			for (const [key, val] of Object.entries(localProxies)) { 
+				console.log(`_getLocalProxy 5`);
 				if(apiPath.startsWith(key)) {
+					console.log(`_getLocalProxy 6`);
 					var foundProxy = val;
 				}
 			}
 		}
 	}
+	console.log(`_getLocalProxy 7`);
 	// If we don't have a match return nothing
 	if(foundProxy==undefined) return;
+	console.log(`_getLocalProxy 8`);
 	// Take over the configuration, preserve the default values
 	proxy = {...proxy, ...foundProxy};
 	var proxies = [];
