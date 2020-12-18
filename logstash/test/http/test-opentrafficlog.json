@@ -623,16 +623,23 @@
       ]
     },
     {
-      "description": "Validate favicon.ico request is not indexed (index: false)",
+      "description": "Validate favicon.ico request (TransactionElement) is ignored (ignore: true)",
       "input": [
         "{\"timestamp\":1608229479164,\"correlationId\":\"67a2db5ff1bec8251e3f67af\",\"processInfo\":{\"hostname\":\"api-env\",\"domainId\":\"ed992442-c363-4d36-963a-9e6314b0f421\",\"groupId\":\"group-2\",\"groupName\":\"QuickStart Group\",\"serviceId\":\"instance-1\",\"serviceName\":\"QuickStart Server\",\"version\":\"7.7.20200930\"},\"transactionElement\":{\"leg\":0,\"duration\":1,\"serviceName\":null,\"operation\":null,\"finalStatus\":null,\"protocolInfo\":{\"http\":{\"uri\":\"/favicon.ico\",\"status\":200,\"statusText\":\"OK\",\"method\":\"GET\",\"vhost\":null,\"wafStatus\":0,\"bytesSent\":5570,\"bytesReceived\":523,\"remoteName\":\"192.168.65.1\",\"remoteAddr\":\"192.168.65.1\",\"localAddr\":\"192.168.65.134\",\"remotePort\":\"63726\",\"localPort\":\"8080\",\"sslSubject\":null,\"authSubjectId\":null},\"recvHeader\":\"GET \/favicon.ico HTTP\/1.1\\r\\nHost: api-env:8080\\r\\nUser-Agent: Mozilla\/5.0 (Windows NT 10.0; Win64; x64; rv:84.0) Gecko\/20100101 Firefox\/84.0\\r\\nAccept: text\/html,application\/xhtml+xml,application\/xml;q=0.9,image\/webp,*\/*;q=0.8\\r\\nAccept-Language: en-US,en;q=0.5\\r\\nAccept-Encoding: gzip, deflate\\r\\nConnection: keep-alive\\r\\nCookie: _ga=GA1.1.177509375.1593442001; cookie_pressed_153=false; _rdt_uuid=1605268895083.5433b245-3b02-4dc3-b82f-1460ef4cccbb; _fbp=fb.0.1605268896590.263596046; iconSize=16x16\\r\\nUpgrade-Insecure-Requests: 1\\r\\n\\r\\n\",\"sentHeader\":\"HTTP\/1.1 200 OK\\r\\nDate: Thu, 17 Dec 2020 18:24:39 GMT\\r\\nServer: Gateway\\r\\nConnection: close\\r\\nX-CorrelationID: Id-67a2db5ff1bec8251e3f67af 0\\r\\n\\r\\n\",\"recvPayload\":null,\"sentPayload\":null}}}"
       ],
       "expected": []
     },
     {
-      "description": "Validate specific CircuitPath(Policy)-Document is not indexed (index: false)",
+      "description": "Validate specific CircuitPath(Policy)-Document is ignored (ignore: true)",
       "input": [
         "{\"timestamp\":1608241621366,\"correlationId\":\"d5d1db5ff6be30289e509467\",\"processInfo\":{\"hostname\":\"api-env\",\"domainId\":\"ed992442-c363-4d36-963a-9e6314b0f421\",\"groupId\":\"group-2\",\"groupName\":\"QuickStart Group\",\"serviceId\":\"instance-1\",\"serviceName\":\"QuickStart Server\",\"version\":\"7.7.20200930\"},\"circuitPath\":[ { \"policy\": \"Do not index this Policy\", \"execTime\": 0, \"filters\": [  { \"espk\": \"PrimaryStore-d1fbf001-919b-4ebe-b389-4b341936e408:-5392028379814661683\", \"name\": \"Set Message\", \"type\": \"ChangeMessageFilter\", \"class\": \"com.vordel.circuit.conversion.ChangeMessageFilter\", \"status\": \"Pass\", \"filterTime\": 1608241621359, \"execTime\": 0 } , { \"espk\": \"PrimaryStore-d1fbf001-919b-4ebe-b389-4b341936e408:1862930145894356902\", \"name\": \"Reflect\", \"type\": \"ReflectFilter\", \"class\": \"com.vordel.circuit.net.ReflectFilter\", \"status\": \"Pass\", \"filterTime\": 1608241621359, \"execTime\": 0 }  ] } ]}"
+      ],
+      "expected": []
+    },
+    {
+      "description": "Validate TransactionSummary event with specific path is ignored (ignore: true)",
+      "input": [
+        "{\"timestamp\":1608318768751,\"correlationId\":\"30ffdc5f2ec9f0c26e65fce2\",\"processInfo\":{\"hostname\":\"api-env\",\"domainId\":\"ed992442-c363-4d36-963a-9e6314b0f421\",\"groupId\":\"group-2\",\"groupName\":\"QuickStart Group\",\"serviceId\":\"instance-1\",\"serviceName\":\"QuickStart Server\",\"version\":\"7.7.20200930\"},\"transactionSummary\":{\"path\":\"/favicon.ico\", \"protocol\":\"http\", \"protocolSrc\":\"8080\", \"status\":\"success\", \"serviceContexts\":[]}}"
       ],
       "expected": []
     }
