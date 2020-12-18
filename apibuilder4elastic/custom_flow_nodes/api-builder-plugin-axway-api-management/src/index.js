@@ -201,10 +201,11 @@ async function addLookupAPIMocks(cache) {
 			customProperty3: "value 3"
 		}
 	});
-	cache.set( "/favicon.ico###group-2###us###", {
+	
+	cache.set( "isIgnore###group-2###us###/favicon.ico###", {
 		ignore: true
 	});
-	cache.set( "/not/relevant###group-2###us###Do not index this Policy", {
+	cache.set( "isIgnore###group-2###us######Do not index this Policy", {
 		ignore: true
 	});
 }

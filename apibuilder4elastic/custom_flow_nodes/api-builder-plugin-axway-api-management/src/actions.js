@@ -170,18 +170,24 @@ async function lookupAPIDetails(params, options) {
 			apiProxy = await _addCustomProperties(apiProxy, groupId, region);
 		}
 	}
-	if(cache.set(cacheKey, apiProxy));
+	cache.set(cacheKey, apiProxy);
 	return apiProxy;
 }
 
 async function isIgnoreAPI(params, options) {
 	debugger;
-	var { apiPath, policyName } = params;
+	var { apiPath, policyName, region, groupId } = params;
 	logger = options.logger;
 	cache = options.pluginContext.cache;
 	pluginConfig = options.pluginConfig;
 	if (!apiPath && !policyName) {
 		throw new Error('You must either provide the apiPath or the policyName used to read the configuration.');
+	}
+	const cacheKey = `isIgnore###${groupId}###${region}###${apiPath}###${policyName}`;
+	logger.debug(`Trying to lookup ignore status from cache using key: '${cacheKey}'`);
+	if(cache.has(cacheKey)) {
+		logger.debug(`Found ignore status in cache with key: '${cacheKey}'`);
+		return cache.get(cacheKey);
 	}
 	try {
 		var proxies = await _getAPILocalProxies(params, options);
@@ -198,6 +204,7 @@ async function isIgnoreAPI(params, options) {
 		return {"ignore": false};
 	}
 	logger.info(`Return API with apiPath: '${apiPath}', policyName: '${policyName}' as to be ignored: ${proxies[0].ignore}`);
+	cache.set(cacheKey, proxies[0]);
 	return proxies[0];
 }
 
