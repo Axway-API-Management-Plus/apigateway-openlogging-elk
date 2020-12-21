@@ -43,13 +43,14 @@ This shows a sample dashboard created in Kibana based on the indexed documents:
   - [Logstash / API-Builder / Memcached](#logstash--api-builder--memcached)
   - [Filebeat](#filebeat)
 - [Configure Axway API-Management](#configure-axway-api-management)
-- [Production Setup](#production-setup)
+- [Advanced and production Setup](#advanced-and-production-setup)
   - [Architecture examples](#architecture-examples)
   - [Setup Elasticsearch Multi-Node](#setup-elasticsearch-multi-node)
+  - [Multiple API-Managers](#multiple-api-managers)
+  - [Setup local lookup](#setup-local-lookup)
   - [Activate user authentication](#activate-user-authentication)
   - [Configure cluster UUID](#configure-cluster-uuid)
   - [Custom certificates](#custom-certificates)
-  - [Multiple API-Managers](#multiple-api-managers)
   - [Secure API-Builder Traffic-Monitor API](#secure-api-builder-traffic-monitor-api)
 - [Infrastructure sizing](#infrastructure-sizing)
 - [Updates](#updates)
@@ -310,7 +311,7 @@ You can, of course, create additional roles in the API Gateway Manager to adjust
 
 <p align="right"><a href="#table-of-content">Top</a></p>
 
-## Production Setup
+## Advanced and production Setup
 
 This section covers advanced configuration topics that are required for a production environment. It is assumed that you have already familiarized yourself with the solution using the Basic setup.  
 
@@ -380,6 +381,115 @@ __4. Restart clients__
 
 Do you have changed the list of available Elasticsearch Nodes via the parameter: ELASTICSEARCH_HOSTS. For example from a single-node to a multi-node cluster, then it is strongly recommended to restart the corresponding clients (Kibana, Filebeat, Logstash, API-Builder). Via docker-compose, so that the containers are created with the new ELASTICSEARCH_HOSTS parameter. 
 This ensures that clients can use the available Elasticsearch nodes for a fail-over in case of a node downtime.
+
+<p align="right"><a href="#table-of-content">Top</a></p>
+
+### Setup API-Managers
+
+During Logstash event processing, additional information is loaded from the API Manager through an API lookup. This lookup is performed by the API builder against the API Manager.  
+By default the configured Admin Node Manager host is used or the configured API Manager URL:
+```
+API_MANAGER=http://my.apimanager.com:443
+```
+
+#### Multiple API-Managers
+
+If you have several API Managers within your domain, you have to configure a mapping which group (groupId) belongs to which API Manager. The following syntax is used for this:  
+```
+API_MANAGER=group-2|https://api-manager-1:8075, group-5|https://api-manager-2:8275
+```
+
+From version 2.0.0 it is additionally possible to use the solution with different domains/topologies. An example are different hubs (e.g. US, EMEA, APAC) each having their own Admin-Node-Manager, but still all API-Events should be stored in a central Elasticsearch instance.  
+
+For this purpose the configurable `GATEWAY_REGION` in Filebeat is used. If this region is configured (e.g. US-DC1), all documents from this region are stored in separate indices, which nevertheless enable global analytics in the Kibana dashboards.  
+
+![Index per region](imgs/index_per_region.png)  
+
+Again, the API-Managers must or can be configured according to the region & group ID. Example:  
+```
+API_MANAGER=https://my-apimanager-0:8075, group-1|https://my-api-manager-1:8175, group-5|https://my-api-manager-2:8275, group-6|US|https://my-api-manager-3:8375, group-6|eu|https://my-api-manager-4:8475
+```
+In this example, API-Managers are configured per Region & Group-ID. So if an event is processed which has a Region and Group-ID matching the configuration, then the configured API-Manager is used. This includes the lookup for the API details as well as the user lookup for the authorization.  
+If the region does not fit, a fallback is made to a group and last but not least to the generally stored API manager.  
+A configuration only per region is not possible!
+
+When the API Builder is started, to validate the configuration, a login to each API-Manager is performed. Currently the same 
+API manager user (API_MANAGER_USERNAME/API_MANAGER_PASSWORD) is used for each API Manager. 
+
+<p align="right"><a href="#table-of-content">Top</a></p>
+
+### Setup local lookup
+
+Starting with version 2.0.0 of the solution, it is optionally possible to use local configuration files for the API lookup in addition to the API Manager. This makes it possible to:
+1. Enrich native APIs 
+  - APIs that have been exposed natively through the API-Gateway policies
+  - you can configure all information that would normally come from the API manager via the lookup file
+    - Organization, API-Name, API-Method-Name, Custom-Properties, ...
+  - for example display a `/healthcheck` as `Healthcheck API` in Kibana dashboards
+2. Ignore events  
+  - You can ignore OpenTraffc events so that they are not indexed or stored in Elasticsearch.   
+  - For example, the path: `/favicon.ico`, as this event does not add value.   
+
+Please note that the local configuration file is used before the API manager lookup. If there is a match, no lookup to the API Manager is performed.  
+
+To enable the local lookup, you must perform the following steps:
+
+__1. Add your config file__
+It is best to copy the delivered template: config/api-lookup-sample.json to your config/api-lookup.json. 
+
+```
+cp config/api-lookup-sample.json config/api-lookup.json
+```
+
+__2. Activate the config file__
+In your .env file you must then enable the configuration file to be used by the API-Builder. To do this, configure or enable the following environment variable:  
+ 
+```
+API_BUILDER_LOCAL_API_LOOKUP_FILE=./config/api-lookup.json
+```
+
+__3. API-Builder restart__
+
+```
+docker stop apibuilder4elastic
+docker-compose up -d
+```
+
+If an event is to be indexed, the API builder will try to read this file and will acknowledge this with the following error if the file cannot be found:
+
+```
+Error reading API-Lookup file: './config/api-lookup.json'
+```
+
+At this point, we intentionally refer to events and not APIs, because different events (TransactionSummy, CircuitPath, TransactionElement) are created in the OpenTraffic log for each API call, which are also processed separately by the Logstash and stored in Elasticsearch with the same Correlation-ID. Most of these events contain the path of the called API, but not all.  
+This is especially important when ignoring events that they are not stored in Elasticsearch. Since all events are processed individually, it must also be decided individually to ignore an event.
+Therefore, to ignore the Healthcheck API entirely, for example, the following must be stored in the lookup file:
+```json
+{
+    "/healthcheck": {
+        "ignore": true,
+        "name": "Healthcheck API",
+        "organizationName": "Native API"
+    },
+    "Policy: Health Check": {
+        "ignore": true
+    }
+}
+```
+This will ignore events based on the path (TransactionSummary & TransactionElement) and the policy name (CircuitPath). 
+You can see the result in the API builder log with the following lines:  
+`Return API with apiPath: '/healthcheck', policyName: '' as to be ignored: true`   
+or:  
+`Return API with apiPath: '', policyName: 'Health Check' as to be ignored: true`  
+
+The information is cached in Logstash via memcached for 1 hour, so you will not see the loglines in the API-Builder for each request. You can of course force a reload of updated configuration via `docker restart memcached`.  
+
+It is additionally possible to overlay the local lookup file per group and region. This allows you, for example, to return different information per region for the same native API or to ignore an API only in a specific region. To do this, create files with the same base name and then a qualifier for the group and/or for the group plus region. Examples:  
+```
+api-lookup.group-2.json
+api-lookup.group-2.us.json
+```
+Again, it is not possible to specify only the region, but only in combination with the appropriate group.   
 
 <p align="right"><a href="#table-of-content">Top</a></p>
 
@@ -479,22 +589,6 @@ KIBANA_KEY=config/certificates/corporate-kibana.key
 KIBANA_CRT=config/certificates/corporate-kibana.crt
 ```
 You can find more information about the individual certificates in the `.env` file.
-
-<p align="right"><a href="#table-of-content">Top</a></p>
-
-### Multiple API-Managers
-
-During Logstash event processing, additional information is loaded from the API Manager through an API lookup. This lookup is performed by the API builder against the API Manager.  
-By default the configured Admin Node Manager host is used or the configured API Manager URL:
-```
-API_MANAGER=http://my.apimanager.com:443
-```
-If you have several API Managers within your domain, you have to configure a mapping which group (groupId) belongs to which API Manager. The following syntax is used for this:  
-```
-API_MANAGER=group-2#https://api-manager-1:8075, group-5#https://api-manager-2:8275
-```
-When the API Builder is started, to validate the configuration, a login to each API-Manager is performed. Currently the same 
-API manager user (API_MANAGER_USERNAME/API_MANAGER_PASSWORD) is used for each API Manager. 
 
 <p align="right"><a href="#table-of-content">Top</a></p>
 
