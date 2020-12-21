@@ -1,5 +1,5 @@
 {
-    "version": 16,
+    "version": 2,
     "index_patterns": [
         "apigw-traffic-summary-*"
     ],
