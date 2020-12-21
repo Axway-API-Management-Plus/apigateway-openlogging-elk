@@ -65,7 +65,7 @@ describe('Test Setup Indices endpoint', function () {
 	});
 
 	describe('Setup index tests', () => {
-		it.only('[upgrade-setup-0001] Validate an existing configuration can be updated', async () => {
+		it('[upgrade-setup-0001] Validate an existing configuration can be updated', async () => {
 			console.log('Going to configure test index as in version 1.0.0');
 			// Contains the configuration as it was in version 1.0.0
 			var testConfigFileV1 = 'test/setupIndices/test-config-v1.0.0/index_config_template.json';
