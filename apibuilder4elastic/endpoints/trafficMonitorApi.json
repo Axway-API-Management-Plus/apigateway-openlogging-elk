@@ -78,6 +78,12 @@
             "in": "header",
             "name": "csrf-token",
             "description": "This is required if the VIDUSR cookie from the ANM is used."
+          },
+          {
+            "type": "string",
+            "in": "query",
+            "name": "region",
+            "description": "If given, the search will be performed on regional index."
           }
         ],
         "summary": "Seach requests to build Traffic-Overview table",
@@ -116,7 +122,15 @@
         },
         "operationId": "circuitpath",
         "description": "Retrieves information about the executed policies and filters associated to a transaction identified by its correlationID and serviceID",
-        "x-flow": "trafficMonitorApi-circuitpath"
+        "x-flow": "trafficMonitorApi-circuitpath",
+        "parameters": [
+          {
+            "type": "string",
+            "in": "query",
+            "name": "region",
+            "description": "If given, the search will be performed on regional index."
+          }
+        ]
       },
       "parameters": [
         {
@@ -170,6 +184,12 @@
             "type": "string",
             "in": "query",
             "name": "sheaders"
+          },
+          {
+            "type": "string",
+            "in": "query",
+            "name": "region",
+            "description": "If given, the search will be performed on regional index."
           }
         ],
         "description": "Retrieves information about events associated with the specified correlationID and legID"
@@ -255,6 +275,12 @@
             "type": "string",
             "in": "query",
             "name": "receivedData"
+          },
+          {
+            "type": "string",
+            "in": "query",
+            "name": "region",
+            "description": "If given, the search will be performed on regional index."
           }
         ],
         "x-flow": "trafficMonitorApi-trace"

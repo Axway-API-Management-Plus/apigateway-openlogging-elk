@@ -517,7 +517,7 @@
 				{
 					"name": "code",
 					"type": "string",
-					"value": "\"// Overview screen (Traffic-Details table) \\n  // should also include the apigw-traffic-errors documents\\n  let index = 'apigw-traffic-summary-*';\\n  // Check, if there is an index name to test configured (this is set by the tests)\\n  if(data.config.testElasticIndex) {\\n    index = data.config.testElasticIndex;\\n  }\\n  // Define the protocol default (mainly for tests, as they are not sending the default)\\n  if(data.params.protocol == undefined) {\\n    data.params.protocol = 'http';\\n  }\\n  return index;\"",
+					"value": "\"// Perhaps there is a region given\\n  let region = data.params.region;\\n  // Overview screen (Traffic-Details table) \\n  // should also include the apigw-traffic-errors documents\\n  let index = 'apigw-traffic-summary';\\n  // Atach the region if given\\n  if(region) {\\n    index = `${index}-${region.toLowerCase()}`;\\n  }\\n  index = `${index}-*`;\\n  // Check, if there is an index name to test configured (this is set by the tests)\\n  if(data.config.testElasticIndex) {\\n    index = data.config.testElasticIndex;\\n    if(region) {\\n      index = index.replace(\\\"%REGION%\\\", region.toLowerCase());\\n    }\\n  }\\n  // Define the protocol default (mainly for tests, as they are not sending the default)\\n  if(data.params.protocol == undefined) {\\n    data.params.protocol = 'http';\\n  }\\n  return index;\"",
 					"metaName": "code",
 					"metaDescription": "A JavaScript function body. Supports `await` and returning promises."
 				}
