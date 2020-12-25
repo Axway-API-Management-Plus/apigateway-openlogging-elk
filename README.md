@@ -249,6 +249,7 @@ GATEWAY_NAME=API-Gateway 3
 GATEWAY_REGION=US
 ```
 Audit-Logs are optional. If you don't want them indexed just point to an invalid folder.  
+You can find more information for each parameter in the env-sample.  
 
 To start Filebeat: 
 ```
@@ -272,7 +273,7 @@ As the idea of this project is to use the existing API-Gateway Manager UI (short
 You can read [here](https://docs.axway.com/bundle/axway-open-docs/page/docs/apim_administration/apigtw_admin/general_rbac_ad_ldap/index.html#use-the-ldap-policy-to-protect-management-services) how to do that.  
 
 2. Import the provided Policy-Fragement (Ver. 7.7.0) `nodemanager/policy-use-elasticsearch-api-7.7.0.xml` from the release package you have downloaded. This imports the policy: "Use Elasticsearch API".  
-:point_right: Don't use the XML-File from the GitHub Project as it may contain a different certificates.  
+:point_right: Don't use the XML-File directly from the GitHub Project as it may contain a different certificates.  
 The imported policy looks like this:  
 <p align="center"><img src="imgs/node-manager-use-es-api.png" alt="Use Elasticsearch API" width="350" height="237"></p>
 
@@ -284,7 +285,8 @@ into the main policy: `Protect Management Interfaces` and wire it like shown her
 It is recommended to disable the audit log for Failure transactions to avoid not needed log messages in the ANM trace file:  
 <p align="center"><img src="imgs/policy-shortcut-disable-failure.png" alt="Use Elasticsearch API" width="300" height="123"></p>
 
-- :point_right: Before you restart the Admin-Node-Manager process, please open the file: `<apigateway-install-dir>/apigateway/conf/envSettings.props` and add the following new environment variable: `API_BUILDER_URL=https://apibuilder4elastic:8443`. 
+- :point_right: Before you restart the Admin-Node-Manager process, please open the file: `<apigateway-install-dir>/apigateway/conf/envSettings.props` and add the following new environment variable: `API_BUILDER_URL=https://apibuilder4elastic:8443`.  
+- :point_right: If you are using [multiple regions](#different-topologies-domains) you may also configure the appropriate region to restrict the data of the Admin-Node-Manager to the correct regional data. E.g.: `REGION=US`.  
 - :point_right: Please remember to copy the changed Admin-Node-Manager configuration from the Policy-Studio project folder (path on Linux: `/home/<user>/apiprojects/\<project-name\>`) back to the ANM folder (`\<install-dir\>/apigateway/conf/fed`). Then restart the ANM.
 
 <p align="right"><a href="#table-of-content">Top</a></p>
@@ -398,14 +400,17 @@ If you have several API Managers within your domain, you have to configure a map
 ```
 API_MANAGER=group-2|https://api-manager-1:8075, group-5|https://api-manager-2:8275
 ```
+In this example, all events of `group-2` are enriched with the help of the API manager: `https://api-manager-1:8075` and of `group-5` accordingly with `https://api-manager-2:8275`.
 
-From version 2.0.0 it is additionally possible to use the solution with different domains/topologies. An example are different hubs (e.g. US, EMEA, APAC) each having their own Admin-Node-Manager, but still all API-Events should be stored in a central Elasticsearch instance.  
+#### Different Topologies/Domains
 
-For this purpose the configurable `GATEWAY_REGION` in Filebeat is used. If this region is configured (e.g. US-DC1), all documents from this region are stored in separate indices, which nevertheless enable global analytics in the Kibana dashboards.  
+From version 2.0.0 it is additionally possible to use the solution with different domains/topologies. An example are different hubs (e.g. US, EMEA, APAC) each having their own Admin-Node-Manager & API-Manager, but still all API-Events should be stored in a central Elasticsearch instance.  
+
+For this purpose the configurable `GATEWAY_REGION` in [Filebeat](#filebeat) is used. If this region is configured (e.g. US-DC1), all documents from this region are stored in separate indices, which nevertheless enable global analytics in the Kibana dashboards.  
 
 ![Index per region](imgs/index_per_region.png)  
 
-Again, the API-Managers must or can be configured according to the region & group ID. Example:  
+Also in this case, the API-Managers must or can be configured according to the Region & Group-ID of the event. Example:  
 ```
 API_MANAGER=https://my-apimanager-0:8075, group-1|https://my-api-manager-1:8175, group-5|https://my-api-manager-2:8275, group-6|US|https://my-api-manager-3:8375, group-6|eu|https://my-api-manager-4:8475
 ```
@@ -415,6 +420,13 @@ A configuration only per region is not possible!
 
 When the API Builder is started, to validate the configuration, a login to each API-Manager is performed. Currently the same 
 API manager user (API_MANAGER_USERNAME/API_MANAGER_PASSWORD) is used for each API Manager. 
+
+#### Admin-Node-Manager per Region
+
+If you use the solution with multiple regions and different domains, all events/documents are stored in ONE Elasticsearch. Therefore you also need to tell the Admin-Node-Manager in each region, which data (indices) to use. If you don't do that, the Admin-Node-Manager will show the entire traffic from all regions which may not be desired but is also possible.  
+To do this, you need to store the appropriate region, which is also specified in the [Filebeats](#filebeat) for the API gateways, in the `conf/envSettings.props` file and restart the node manager. Example:  
+`REGION=US`
+This way the Admin-Node-Manager will only select data from these regional indexes. Learn more about the [Admin-Node-Manager configuration](#admin-node-manager).
 
 <p align="right"><a href="#table-of-content">Top</a></p>
 
