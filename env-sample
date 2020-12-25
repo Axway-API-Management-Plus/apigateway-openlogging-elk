@@ -208,9 +208,12 @@ ELASTICSEARCH_CLUSTER_UUID=
 # ----------------------------------------------------------------------------------------------
 # This parameter can be used to support multiple regions or datacenters. The key you give here 
 # is stored along with all the documents/transactions created by this Filebeat instance. 
+# In addition, based on this parameter, additional indices per region are created in Elastisearch, 
+# which stores the data of the region.
 # It helps for instance to filter information on a specific region.
 # If not given, all data is stored with the default value: All
-# Used-By: Filebeat
+# Whitespaces and special characters are not allowed
+# Used-By: Filebeat, Elasticsearch
 # REGION=US
 # or 
 # GATEWAY_REGION=US-DC1
