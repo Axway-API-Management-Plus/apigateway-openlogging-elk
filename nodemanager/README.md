@@ -5,14 +5,16 @@ Howevery, if you like to setup the policy you find the details here.
 
 ## How to create the policy manually
 
-- Create a new policy and name it `Use Elasticsearch API` - *This Policy will decide on what API calls can be routed to Elasticsearch*
-- The configured Policy should look like this:
+1. Create a new policy and name it `Use Elasticsearch API` - *This Policy will decide on what API calls can be routed to Elasticsearch*
+- Finally, the configured Policy should look like this:
 
   ![use ES API](../imgs/node-manager-use-es-api.png)  
 
-    - The `Compare Attribute` filter named `Is managed by Elasticsearch API?` checks for each endpoint based on the attribute: `http.request.path` if the requested API can be handled by the API-Builder ElasticSearch-Traffic-Monitor API.    
-    As a basis for decision-making a criteria for each endpoint needs to be added to the filter configuration.  
-    _The following endpoints are currently supported by the API Builder based Traffic-Monitor API._  
+### Is managed by Elasticsearch API?
+
+The `Compare Attribute` filter named `Is managed by Elasticsearch API?` checks for each endpoint based on the attribute: `http.request.path` if the requested API can be handled by the API-Builder ElasticSearch-Traffic-Monitor API.  
+As a basis for decision-making a criteria for each endpoint needs to be added to the filter configuration.  
+_The following endpoints are currently supported by the API Builder based Traffic-Monitor API._  
 
 | Endpoint       | Expression               | Comment | 
 | :---          | :---                 | :---  |
@@ -22,8 +24,23 @@ Howevery, if you like to setup the policy you find the details here.
 | **GetInfo**     | `^\/api\/router\/service\/[A-Za-z0-9-.]+\/ops\/[A-Za-z0-9]+\/[A-Za-z0-9]+\/[\*0-9]{1}\/getinfo[\?]?.*$` |Endpoint provides information for the Requesr- Response-Details|
 
 The compare attribute filter should look like this:   
-![Is API Managed][img6]  
-- Adjust the URL of the Connect to URL filter to your running API-Builder docker container and port - **default is 8889**. Sample: `https://api-env:8443/api/elk/v1${http.request.rawURI}`  
-![Connect to ES API][img7]
-- Is not implemented is a compare attribute filter configured like so:  
-![Is not implemented](imgs/is_not_implemented.png)  
+![Is API Managed](../imgs/IsmanagedbyElasticsearchAPI.png)  
+
+### Set region filter
+
+This `Set Attribute` filter: `Set region filter` creates a new attribute: `regionFilter`, which is used during the connect to restrict the result based on the region of the Admin-Node-Manager. It's using the environment variable: `env.REGION`. This is optional.  
+
+![Set region filter](../imgs/setRegionFilter.png)  
+
+Sample:  `&region=${env.REGION == '[invalid field]' ? "" : env.REGION}`
+
+### Connect to Elasticsearch API
+
+The URL of the Connect to URL filter points to your running API-Builder docker container and port - **default is 8889** using the environment variable: `API_BUILDER_URL`.  
+Additionally the URL is forwarding the optional region filter based on the configured `REGION` to make sure, the Admin-Node-Manager loads the correct regional data.  
+Sample: `${env.API_BUILDER_URL}/api/elk/v1${http.request.rawURI}${regionFilter}`  
+![Connect to ES API](../imgs/connect-to-elasticsearch-api.png)  
+
+### Is not implemented
+Is not implemented is a `Compare attribute` filter configured like so:  
+![Is not implemented](../imgs/is_not_implemented.png)  
