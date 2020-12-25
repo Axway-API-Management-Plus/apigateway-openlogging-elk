@@ -289,6 +289,8 @@ It is recommended to disable the audit log for Failure transactions to avoid not
 - :point_right: If you are using [multiple regions](#different-topologiesdomains) you may also configure the appropriate region to restrict the data of the Admin-Node-Manager to the correct regional data. E.g.: `REGION=US`.  
 - :point_right: Please remember to copy the changed Admin-Node-Manager configuration from the Policy-Studio project folder (path on Linux: `/home/<user>/apiprojects/\<project-name\>`) back to the ANM folder (`\<install-dir\>/apigateway/conf/fed`). Then restart the ANM.
 
+If you would like to learn more about the imported policy, please [click here](nodemanager).
+
 <p align="right"><a href="#table-of-content">Top</a></p>
 
 ### Traffic-Monitor for API-Manager Users
@@ -424,8 +426,7 @@ API manager user (API_MANAGER_USERNAME/API_MANAGER_PASSWORD) is used for each AP
 #### Admin-Node-Manager per Region
 
 If you use the solution with multiple regions and different domains, all events/documents are stored in ONE Elasticsearch. Therefore you also need to tell the Admin-Node-Manager in each region, which data (indices) to use. If you don't do that, the Admin-Node-Manager will show the entire traffic from all regions which may not be desired but is also possible.  
-To do this, you need to store the appropriate region, which is also specified in the [Filebeats](#filebeat) for the API gateways, in the `conf/envSettings.props` file and restart the node manager. Example:  
-`REGION=US`
+To do this, you need to store the appropriate region, which is also specified in the [Filebeats](#filebeat) for the API gateways, in the `conf/envSettings.props` file and restart the node manager. Example: `REGION=US`  
 This way the Admin-Node-Manager will only select data from these regional indexes. Learn more about the [Admin-Node-Manager configuration](#admin-node-manager).
 
 <p align="right"><a href="#table-of-content">Top</a></p>
