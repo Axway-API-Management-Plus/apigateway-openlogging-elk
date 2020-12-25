@@ -286,7 +286,7 @@ It is recommended to disable the audit log for Failure transactions to avoid not
 <p align="center"><img src="imgs/policy-shortcut-disable-failure.png" alt="Use Elasticsearch API" width="300" height="123"></p>
 
 - :point_right: Before you restart the Admin-Node-Manager process, please open the file: `<apigateway-install-dir>/apigateway/conf/envSettings.props` and add the following new environment variable: `API_BUILDER_URL=https://apibuilder4elastic:8443`.  
-- :point_right: If you are using [multiple regions](#different-topologies-domains) you may also configure the appropriate region to restrict the data of the Admin-Node-Manager to the correct regional data. E.g.: `REGION=US`.  
+- :point_right: If you are using [multiple regions](#different-topologiesdomains) you may also configure the appropriate region to restrict the data of the Admin-Node-Manager to the correct regional data. E.g.: `REGION=US`.  
 - :point_right: Please remember to copy the changed Admin-Node-Manager configuration from the Policy-Studio project folder (path on Linux: `/home/<user>/apiprojects/\<project-name\>`) back to the ANM folder (`\<install-dir\>/apigateway/conf/fed`). Then restart the ANM.
 
 <p align="right"><a href="#table-of-content">Top</a></p>
