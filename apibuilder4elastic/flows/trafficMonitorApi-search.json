@@ -193,44 +193,6 @@
 			},
 			"metaMethod": "Lookup current user"
 		},
-		"javascript.4": {
-			"type": "nodehandler://@axway/api-builder-plugin-fn-javascript/javascript",
-			"name": "Org-Admin filter",
-			"method": "Execute",
-			"parameters": [
-				{
-					"name": "data",
-					"type": "jsonpath",
-					"value": "$",
-					"metaName": "data",
-					"metaDescription": "The value to apply as the `data` argument to the JavaScript code. For objects and arrays, `data` is passed by reference."
-				},
-				{
-					"name": "code",
-					"type": "string",
-					"value": "\"var elasticSearchQuery = data.elasticsearch.query;\\n  // The actual array of filters to apply\\n  var filters = elasticSearchQuery.bool.must;\\n  if(!data.user.gatewayManager.isAdmin) {\\n    var filter;\\n    if(data.user.apiManager.role == \\\"admin\\\") {\\n      filter = {\\n        exists: {\\n          \\\"field\\\" : \\\"serviceContext\\\"\\n        }\\n      };\\n    } else {\\n      filter = {\\n        term: {\\n          \\\"serviceContext.apiOrg\\\" : data.user.apiManager.organizationName\\n        }\\n      };\\n    }\\n    filters.push(filter);\\n  }\\n  return elasticSearchQuery;\"",
-					"metaName": "code",
-					"metaDescription": "A JavaScript function body. Supports `await` and returning promises."
-				}
-			],
-			"outputs": {
-				"next": {
-					"context": "$.elasticsearch.query",
-					"routes": [
-						"elasticsearch.1"
-					],
-					"metaName": "Next"
-				},
-				"error": {
-					"context": "$.error",
-					"routes": [
-						"http.5"
-					],
-					"metaName": "Error"
-				}
-			},
-			"metaMethod": "Execute"
-		},
 		"condition.1": {
 			"type": "nodehandler://axway-flow/condition",
 			"name": "Is Gateway Admin?",
@@ -488,7 +450,7 @@
 				"next": {
 					"context": "$.elasticsearch.query",
 					"routes": [
-						"javascript.4"
+						"authorization.1"
 					],
 					"metaName": "Next"
 				},
@@ -575,6 +537,44 @@
 				}
 			},
 			"metaMethod": "Equals"
+		},
+		"authorization.1": {
+			"type": "nodehandler://api-builder-plugin-authorization/authorization",
+			"name": "Add Org-Filter",
+			"method": "addApiManagerOrganizationFilter",
+			"parameters": [
+				{
+					"name": "elasticQuery",
+					"type": "jsonpath",
+					"value": "$.elasticsearch.query",
+					"metaName": "Elasticsearch query",
+					"metaDescription": "The Elasticsearch query that should be enhanced with a filter."
+				},
+				{
+					"name": "user",
+					"type": "jsonpath",
+					"value": "$.user",
+					"metaName": "API-Manager user",
+					"metaDescription": "User object looked up at the API-Manager"
+				}
+			],
+			"outputs": {
+				"next": {
+					"routes": [
+						"elasticsearch.1"
+					],
+					"context": "$.elasticsearch.query",
+					"metaName": "Next"
+				},
+				"error": {
+					"routes": [
+						"http.5"
+					],
+					"context": "$.error",
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "API-Manager-Org Authorization"
 		}
 	}
 }

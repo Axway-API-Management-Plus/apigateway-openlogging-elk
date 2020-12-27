@@ -6,7 +6,7 @@ flow-nodes:
     category: general
     methods:
       addApiManagerOrganizationFilter:
-        name: Adds API-Manager Organization filter
+        name: API-Manager-Org Authorization
         description: Handles the user authorization based on the API-Manager organization. For now only ONE organization is considered.
         parameters:
           user:
@@ -38,7 +38,7 @@ flow-nodes:
                 type: string
 
       addExternalAuthzFilter1:
-        name: Add external AuthZ filter 1
+        name: External Authorization filter 1
         description: Option 1 to add a filter based on an external HTTP-Endpoint.
         parameters:
           user:
