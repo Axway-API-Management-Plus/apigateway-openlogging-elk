@@ -1,0 +1,23 @@
+{
+    "bool": {
+      "must": [
+        {
+          "exists": {
+            "field": "http"
+          }
+        },
+        {
+          "term": {
+            "processInfo.serviceId": "instance-1"
+          }
+        },
+        {
+          "range": {
+            "@timestamp": {
+              "gt": 1608598868466
+            }
+          }
+        }
+      ]
+    }
+}

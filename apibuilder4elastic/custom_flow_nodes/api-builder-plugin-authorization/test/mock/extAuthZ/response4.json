@@ -1,0 +1,19 @@
+{
+  "status": 200,
+  "data": [
+    "CHR-GP-SV-APG-P-DGP-Approver",
+    "CHR-GP-SV-APG-P-UIF-Developer",
+    "CHR-GP-SV-APG-P-UIF-Approver",
+    "CHR-GP-SV-APG-P-CSPARTINT-Approver",
+    "CHR-GP-SV-APG-P-CORSOEDMS-Approver",
+    "CHR-GP-SV-APG-P-CORSOLMS-Approver",
+    "CHR-GP-SV-APG-P-TCL-Approver",
+    "CHR-DP-SV-APG-P-UIF-Developer",
+    "CHR-DP-SV-APG-P-DGP-Approver",
+    "CHR-DP-SV-APG-P-UIF-Approver",
+    "CHR-DP-SV-APG-P-CSPARTINT-Approver",
+    "CHR-DP-SV-APG-P-CORSOEDMS-Approver",
+    "CHR-DP-SV-APG-P-CORSOLMS-Approver",
+    "CHR-DP-SV-APG-P-TCL-Approver"
+  ]
+}

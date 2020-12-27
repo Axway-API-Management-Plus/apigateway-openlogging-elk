@@ -1,0 +1,22 @@
+{
+    "gatewayManager": {
+      "isAdmin": true
+    },
+    "loginName": "admin",
+    "apiManager": {
+      "id": "0dded6b7-98da-4af0-b4c7-799fbadb7e8d",
+      "organizationId": "f5e79a5a-eadf-48ce-a8c2-c23f7b111f85",
+      "name": "API-Admin",
+      "description": "Anna is the Application Owner",
+      "loginName": "anna",
+      "email": "anna@demo.axway.com",
+      "role": "oadmin",
+      "image": "/api/portal/v1.3/users/0dded6b7-98da-4af0-b4c7-799fbadb7e8d/image",
+      "enabled": true,
+      "createdOn": 1557135802934,
+      "state": "approved",
+      "type": "external",
+      "dn": "cn=anna,o=API Development,ou=organizations,ou=APIPortal",
+      "organizationName": "API Development"
+    }
+}

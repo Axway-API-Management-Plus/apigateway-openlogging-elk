@@ -1,0 +1,74 @@
+flow-nodes:
+  authorization:
+    name: Authorization
+    icon: authz-icon.png
+    description: Handles the authorization part of the ELK-Based Traffic-Monitor based on different criterias.
+    category: general
+    methods:
+      addApiManagerOrganizationFilter:
+        name: Adds API-Manager Organization filter
+        description: Handles the user authorization based on the API-Manager organization. For now only ONE organization is considered.
+        parameters:
+          user:
+            name: API-Manager user
+            description: User object looked up at the API-Manager
+            required: true
+            schema:
+              type: object
+          elasticQuery:
+            name: Elasticsearch query
+            description: The Elasticsearch query that should be enhanced with a filter.
+            required: true
+            schema:
+              type: object
+        returns:
+          name: Next
+          description: Returns the enhanced Elasticsearch query
+          context: $.elasticsearch.query
+          schema:
+            type: object
+        throws:
+          name: Error
+          description: An unexpected error was encountered.
+          context: $.error
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+
+      addExternalAuthzFilter1:
+        name: Add external AuthZ filter 1
+        description: Option 1 to add a filter based on an external HTTP-Endpoint.
+        parameters:
+          user:
+            name: API-Manager user
+            description: User object that contains the loginName property
+            required: true
+            schema:
+              type: object
+          elasticQuery:
+            name: Elasticsearch query
+            description: The Elasticsearch query that should be enhanced with a filter.
+            required: true
+            schema:
+              type: object
+        outputs:
+          next:
+            name: Next
+            description: Returns the enhanced Elasticsearch query
+            context: $.elasticsearch.query
+            schema:
+              type: object
+          noAccess:
+            name: No access
+            description: User has no access at all
+            context: $.noAccess
+            schema:
+              type: string
+          error:
+            name: Error
+            description: An unexpected error happened
+            context: $.error
+            schema:
+              type: object
