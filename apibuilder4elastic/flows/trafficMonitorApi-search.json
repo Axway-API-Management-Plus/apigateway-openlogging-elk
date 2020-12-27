@@ -450,7 +450,7 @@
 				"next": {
 					"context": "$.elasticsearch.query",
 					"routes": [
-						"authorization.1"
+						"condition.3"
 					],
 					"metaName": "Next"
 				},
@@ -575,6 +575,87 @@
 				}
 			},
 			"metaMethod": "API-Manager-Org Authorization"
+		},
+		"condition.3": {
+			"type": "nodehandler://axway-flow/condition",
+			"name": "Is ManagerOrg AuthZ?",
+			"method": "equals",
+			"parameters": [
+				{
+					"name": "source",
+					"type": "jsonpath",
+					"value": "$.config.authorizationMode",
+					"metaName": "Source",
+					"metaDescription": "The input to test."
+				},
+				{
+					"name": "value",
+					"type": "string",
+					"value": "\"ManagerOrganization\"",
+					"metaName": "Value",
+					"metaDescription": "The value to test input against."
+				}
+			],
+			"outputs": {
+				"true": {
+					"routes": [
+						"authorization.1"
+					],
+					"context": "$.equals",
+					"metaName": "True"
+				},
+				"false": {
+					"routes": [
+						"authorization.2"
+					],
+					"context": "$.equals",
+					"metaName": "False"
+				}
+			},
+			"metaMethod": "Equals"
+		},
+		"authorization.2": {
+			"type": "nodehandler://api-builder-plugin-authorization/authorization",
+			"name": "External Authorization filter 1",
+			"method": "addExternalAuthzFilter1",
+			"parameters": [
+				{
+					"name": "user",
+					"type": "jsonpath",
+					"value": "$.user",
+					"metaName": "API-Manager user",
+					"metaDescription": "User object that contains the loginName property"
+				},
+				{
+					"name": "elasticQuery",
+					"type": "jsonpath",
+					"value": "$.elasticsearch.query",
+					"metaName": "Elasticsearch query",
+					"metaDescription": "The Elasticsearch query that should be enhanced with a filter."
+				}
+			],
+			"outputs": {
+				"next": {
+					"routes": [
+						"elasticsearch.1"
+					],
+					"context": "$.elasticsearch.query",
+					"metaName": "Next"
+				},
+				"noAccess": {
+					"routes": [],
+					"context": "$.noAccess",
+					"metaName": "No access"
+				},
+				"error": {
+					"routes": [
+						"http.5"
+					],
+					"context": "$.error",
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "External Authorization filter 1"
 		}
 	}
 }

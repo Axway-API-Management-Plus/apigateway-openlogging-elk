@@ -14,7 +14,8 @@
 	"main": "src/index.js",
 	"files": [
 		"src",
-		"README.md"
+		"README.md", 
+		"scripts"
 	],
 	"dependencies": {
 		"@axway/api-builder-sdk": "^1.0.0",
@@ -31,6 +32,7 @@
 		"dotenv": "^8.2.0"
 	},
 	"scripts": {
-		"test": "mocha ./test --recursive -R spec"
+		"test": "mocha ./test --recursive -R spec",
+		"postinstall": "node scripts/copyconf.js"
 	}
 }

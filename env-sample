@@ -276,6 +276,11 @@ ELASTICSEARCH_CLUSTERNAME=axway-apim-elasticsearch
 # Used-By: Elasticsearch, Filebeat, Kibana, Logstash
 ELASTIC_VERSION=7.10.0
 
+# ----------------------------------------------------------------------------------------------
+# 
+# USER_AUTHORIZATION_MODE=ManagerOrganization
+USER_AUTHORIZATION_MODE=externalHTTPAuthorization1
+
 ################################################################################################
 #                         Certificates and Certificate authorities
 ################################################################################################

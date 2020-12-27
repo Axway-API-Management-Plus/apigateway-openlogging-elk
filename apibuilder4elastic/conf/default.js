@@ -21,6 +21,9 @@ module.exports = {
 	// The main configuration to configure required Elasticsearch indicies/mappings/etc.
 	indexConfigFile: process.env.INDEX_CONFIG_FILE || 'elasticsearch_config/index_config.json',
 
+	authorizationMode: process.env.USER_AUTHORIZATION_MODE || 'ManagerOrganization',
+	
+
 	// Mock the API-Creation endpoint, which is required for the Logstash pipeline tests
 	mockIndexCreation: ("true" == process.env.MOCK_API_CREATION) ? true : false,
 
