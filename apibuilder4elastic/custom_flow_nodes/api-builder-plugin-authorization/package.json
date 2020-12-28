@@ -14,12 +14,13 @@
 	"main": "src/index.js",
 	"files": [
 		"src",
-		"README.md", 
+		"README.md",
 		"scripts"
 	],
 	"dependencies": {
 		"@axway/api-builder-sdk": "^1.0.0",
-		"@axway/requester": "4.0.5"
+		"@axway/requester": "4.0.5",
+		"node-cache": "^5.1.2"
 	},
 	"peerDependencies": {
 		"@axway/api-builder-runtime": "^4.5.0"

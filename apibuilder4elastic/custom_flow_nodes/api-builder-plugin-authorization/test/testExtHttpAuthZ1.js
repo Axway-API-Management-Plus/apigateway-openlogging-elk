@@ -19,7 +19,6 @@ describe('flow-node Authorization', () => {
 	let flowNode;
 	beforeEach(async () => {
 		plugin = await MockRuntime.loadPlugin(getPlugin, pluginConfig);
-		// const runtime = await MockRuntime.loadPlugin(getPluginSpy, pluginConfig, options);
 		plugin.setOptions({ validateOutputs: true });
 		flowNode = plugin.getFlowNode('authorization');
 	});
@@ -122,18 +121,25 @@ describe('flow-node Authorization', () => {
 			expect(output).to.equal('next');
 		});
 
-		it('should result in No-Access if no groups are returned', async () => { 
+		it('should result in No-Access if no groups are returned and it should be cached', async () => { 
 			var user = JSON.parse(fs.readFileSync('./test/mock/noAdminUserObject.json'), null);
 			var elasticQuery = JSON.parse(fs.readFileSync('./test/mock/givenElasticQuery.json'), null);
-			let expectedQuery = JSON.parse(JSON.stringify(elasticQuery));
 			nock('https://external-http:8180').defaultReplyHeaders({'Content-Type': 'application/json; charset=utf-8'})
 				.get(`/api/v1/users/anna/groups?registry=AD&caching=false&filter=apg-t`)
 				.replyWithFile(200, './test/mock/extAuthZ/noGroupResponse.json');
 
-			const { value, output } = await flowNode.addExternalAuthzFilter1({
+			var { value, output } = await flowNode.addExternalAuthzFilter1({
 				user: user, elasticQuery: elasticQuery
 			});
 
+			expect(output).to.equal('noAccess');
+			expect(value).to.equal('User: anna has no access');
+			// Clear the mock, it should not matter as the result must be cached
+			nock.cleanAll();
+
+			var { value, output } = await flowNode.addExternalAuthzFilter1({
+				user: user, elasticQuery: elasticQuery
+			});
 			expect(output).to.equal('noAccess');
 			expect(value).to.equal('User: anna has no access');
 		});

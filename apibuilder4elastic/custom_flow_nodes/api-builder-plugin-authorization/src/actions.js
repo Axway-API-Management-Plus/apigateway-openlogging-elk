@@ -1,5 +1,8 @@
 const https = require('https');
 const requester = require('@axway/requester');
+
+var cache = {};
+
 /**
  * Action method.
  *
@@ -59,7 +62,8 @@ async function addApiManagerOrganizationFilter(params, options) {
 async function addExternalAuthzFilter1(params, options) {
 	const { user, elasticQuery } = params;
 	const { logger, pluginConfig } = options;
-	debugger;
+	cache = options.pluginContext.cache;
+	
 	if (!user) {
 		throw new Error('Missing required parameter: user');
 	}
@@ -76,23 +80,32 @@ async function addExternalAuthzFilter1(params, options) {
 		throw new Error('Missing configuration: externalHTTPAuthorization1');
 	}
 	var filters = elasticQuery.bool.must;
-	var cfg = pluginConfig.externalHTTPAuthorization1;
-	var field = cfg.restrictionField;
-	// Replace the loginName which is part of the URI
-	cfg.uri = cfg.uri.replace("${loginName}", user.loginName);
-	const response = await requester(cfg.uri, cfg.headers, cfg.method, cfg.body, { ...options, logger });
+	const cacheKey = `ExtAuthZ###${user.loginName}`;
+	if(!cache.has(cacheKey)) {	
+		var cfg = pluginConfig.externalHTTPAuthorization1;
+		// Replace the loginName which is part of the URI
+		cfg.uri = cfg.uri.replace("${loginName}", user.loginName);
+		logger.info(`External groups NOT found in cache with key: '${cacheKey}'. Request information from ${cfg.uri}`);
+		const resp = await requester(cfg.uri, cfg.headers, cfg.method, cfg.body, { logger });
+		cache.set(cacheKey, resp);
+	} else {
+		logger.debug(`External groups found in cache with key: '${cacheKey}'.`);
+	}
+	var response = cache.get(cacheKey);
 	if(!response.body.data || response.body.data.length == 0) {
 		return options.setOutput('noAccess', `User: ${user.loginName} has no access`);
 	}
 	var regex = /.{3}-.{2}-.{2}-.{3}-.{1}-(.*)-.*/;
 	var apimIds = [];
 	for (const value of Object.values(response.body.data)) {
+		logger.debug(`Try to parse result: '${value}'`);
 		var match = regex.exec(value);
 		if(match == null) {
 			throw new Error(`Unexpected response format. Cannot parse: '${value}'`);
 		}
 		var apimId = match[1];
 		if(apimIds.indexOf(apimId) == -1) {
+			logger.debug(`Adding APIM-ID: ${apimId} to the list of allowed groups`);
 			apimIds.push(apimId);
 		}
 	}

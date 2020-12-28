@@ -1,6 +1,7 @@
 const path = require('path');
 const { SDK } = require('@axway/api-builder-sdk');
 const actions = require('./actions');
+const NodeCache = require( "node-cache" );
 
 /**
  * Resolves the API Builder plugin.
@@ -13,8 +14,9 @@ const actions = require('./actions');
  * @returns {object} An API Builder plugin.
  */
 async function getPlugin(pluginConfig, options) {
+	const cache = new NodeCache({ stdTTL: pluginConfig.externalHTTPAuthorization1.cacheTTL, useClones: false });
 	const sdk = new SDK({ pluginConfig });
-	sdk.load(path.resolve(__dirname, 'flow-nodes.yml'), actions);
+	sdk.load(path.resolve(__dirname, 'flow-nodes.yml'), actions, { pluginContext: { cache: cache }, pluginConfig });
 	return sdk.getPlugin();
 }
 

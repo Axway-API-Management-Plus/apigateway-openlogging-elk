@@ -2,13 +2,22 @@ const { expect } = require('chai');
 const { MockRuntime } = require('@axway/api-builder-test-utils');
 const getPlugin = require('../src');
 const fs = require('fs');
-const nock = require('nock');
+const path = require('path');
+const envLoader = require('dotenv');
+
+// Loads environment variables from .env if the file exists
+const envFilePath = path.join(__dirname, '.env-test');
+if (fs.existsSync(envFilePath)) {
+	envLoader.config({ path: envFilePath });
+}
+
+const pluginConfig = require('../config/authorization-config.default.js').pluginConfig['api-builder-plugin-authorization'];
 
 describe('flow-node Authorization', () => {
 	let plugin;
 	let flowNode;
 	beforeEach(async () => {
-		plugin = await MockRuntime.loadPlugin(getPlugin);
+		plugin = await MockRuntime.loadPlugin(getPlugin, pluginConfig);
 		plugin.setOptions({ validateOutputs: true });
 		flowNode = plugin.getFlowNode('authorization');
 	});

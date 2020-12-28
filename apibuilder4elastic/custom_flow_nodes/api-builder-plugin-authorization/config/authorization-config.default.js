@@ -11,7 +11,7 @@ module.exports = {
 				// e.g.: customProperty1.apimId
 				restrictionField: process.env.EXT_AUTHZ_RESTRICTION_FIELD,
 				// For how long should the information being cached by the API-Builder process
-				lookupCacheTTL: parseInt(process.env.EXT_AUTHZ_CACHE_TTL) ? process.env.EXT_AUTHZ_CACHE_TTL : 600
+				cacheTTL: parseInt(process.env.EXT_AUTHZ_CACHE_TTL) ? process.env.EXT_AUTHZ_CACHE_TTL : 600
 			}
 		}
 	}

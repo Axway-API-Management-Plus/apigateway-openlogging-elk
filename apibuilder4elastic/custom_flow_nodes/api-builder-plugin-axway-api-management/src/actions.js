@@ -175,7 +175,6 @@ async function lookupAPIDetails(params, options) {
 }
 
 async function isIgnoreAPI(params, options) {
-	debugger;
 	var { apiPath, policyName, region, groupId } = params;
 	logger = options.logger;
 	cache = options.pluginContext.cache;

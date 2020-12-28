@@ -25,7 +25,6 @@ describe('Test is Index-API', () => {
 	var pluginConfig = require('../config/axway-api-utils.default.js').pluginConfig['api-builder-plugin-axway-api-management'];
 
 	beforeEach(async () => {
-		debugger;
 		plugin = await MockRuntime.loadPlugin(getPlugin,pluginConfig);
 		plugin.setOptions({ validateOutputs: true });
 		flowNode = plugin.getFlowNode('axway-api-management');
