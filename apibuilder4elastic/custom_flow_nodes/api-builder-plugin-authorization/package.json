@@ -33,7 +33,6 @@
 		"dotenv": "^8.2.0"
 	},
 	"scripts": {
-		"test": "mocha ./test --recursive -R spec",
-		"postinstall": "node scripts/copyconf.js"
+		"test": "mocha ./test --recursive -R spec"
 	}
 }

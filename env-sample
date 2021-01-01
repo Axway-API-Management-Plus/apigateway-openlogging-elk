@@ -277,9 +277,13 @@ ELASTICSEARCH_CLUSTERNAME=axway-apim-elasticsearch
 ELASTIC_VERSION=7.10.0
 
 # ----------------------------------------------------------------------------------------------
-# 
-# USER_AUTHORIZATION_MODE=ManagerOrganization
-USER_AUTHORIZATION_MODE=externalHTTPAuthorization1
+# With these parameters you can change the way the authorization for the traffic monitor is 
+# performed. 
+# By default, users who are not API gateway administrators are authorized to see traffic in 
+# the traffic monitor based on their API manager organization. 
+# Set the USER_AUTHORIZATION_MODE parameter to: externalHTTPAuthorization1 to use an 
+# external API. The is unfortunately a custom solution solution customized to this API.
+# AUTHZ_CONFIG=./config/authorization-config.js
 
 ################################################################################################
 #                         Certificates and Certificate authorities

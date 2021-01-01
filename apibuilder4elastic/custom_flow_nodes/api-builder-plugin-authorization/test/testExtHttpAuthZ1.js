@@ -12,18 +12,27 @@ if (fs.existsSync(envFilePath)) {
 	envLoader.config({ path: envFilePath });
 }
 
-const pluginConfig = require('../config/authorization-config.default.js').pluginConfig['api-builder-plugin-authorization'];
-
 describe('flow-node Authorization', () => {
 	let plugin;
 	let flowNode;
 	beforeEach(async () => {
-		plugin = await MockRuntime.loadPlugin(getPlugin, pluginConfig);
+		process.env.AUTHZ_CONFIG = '../test/testConfig/authorization-config-extAuthZ.js';
+		plugin = await MockRuntime.loadPlugin(getPlugin);
 		plugin.setOptions({ validateOutputs: true });
 		flowNode = plugin.getFlowNode('authorization');
 	});
 
+	after(async () => {
+		delete process.env.AUTHZ_CONFIG;
+	});
+
 	describe('#externalHTTPAuthZFilter1', () => {
+		it('should return with HTTP1 output', async () => {
+			const { value, output } = await flowNode.switchOnAuthZ({ });
+
+			expect(output).to.equal('http1');
+		});
+
 		it('should error when missing required parameter', async () => {
 			const { value, output } = await flowNode.addExternalAuthzFilter1({
 				user: null

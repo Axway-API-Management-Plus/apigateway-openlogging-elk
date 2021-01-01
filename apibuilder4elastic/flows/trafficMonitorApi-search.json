@@ -450,7 +450,7 @@
 				"next": {
 					"context": "$.elasticsearch.query",
 					"routes": [
-						"condition.3"
+						"authorization.3"
 					],
 					"metaName": "Next"
 				},
@@ -576,44 +576,6 @@
 			},
 			"metaMethod": "API-Manager-Org Authorization"
 		},
-		"condition.3": {
-			"type": "nodehandler://axway-flow/condition",
-			"name": "Is ManagerOrg AuthZ?",
-			"method": "equals",
-			"parameters": [
-				{
-					"name": "source",
-					"type": "jsonpath",
-					"value": "$.config.authorizationMode",
-					"metaName": "Source",
-					"metaDescription": "The input to test."
-				},
-				{
-					"name": "value",
-					"type": "string",
-					"value": "\"ManagerOrganization\"",
-					"metaName": "Value",
-					"metaDescription": "The value to test input against."
-				}
-			],
-			"outputs": {
-				"true": {
-					"routes": [
-						"authorization.1"
-					],
-					"context": "$.equals",
-					"metaName": "True"
-				},
-				"false": {
-					"routes": [
-						"authorization.2"
-					],
-					"context": "$.equals",
-					"metaName": "False"
-				}
-			},
-			"metaMethod": "Equals"
-		},
 		"authorization.2": {
 			"type": "nodehandler://api-builder-plugin-authorization/authorization",
 			"name": "External Authorization filter 1",
@@ -656,6 +618,36 @@
 				}
 			},
 			"metaMethod": "External Authorization filter 1"
+		},
+		"authorization.3": {
+			"type": "nodehandler://api-builder-plugin-authorization/authorization",
+			"name": "Switch on Authorization",
+			"method": "switchOnAuthZ",
+			"parameters": [],
+			"outputs": {
+				"org": {
+					"routes": [
+						"authorization.1"
+					],
+					"context": "$.authzConfig",
+					"metaName": "Organization"
+				},
+				"http1": {
+					"routes": [
+						"authorization.2"
+					],
+					"context": "$.authzConfig",
+					"metaName": "HTTP-1"
+				},
+				"error": {
+					"routes": [
+						"http.5"
+					],
+					"context": "$.error",
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Switch on Authorization"
 		}
 	}
 }

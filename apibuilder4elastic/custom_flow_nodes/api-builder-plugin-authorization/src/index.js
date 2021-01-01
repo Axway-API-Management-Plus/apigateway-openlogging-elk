@@ -14,9 +14,18 @@ const NodeCache = require( "node-cache" );
  * @returns {object} An API Builder plugin.
  */
 async function getPlugin(pluginConfig, options) {
-	const cache = new NodeCache({ stdTTL: pluginConfig.externalHTTPAuthorization1.cacheTTL, useClones: false });
+	var cacheTTL = 600;
+	var authZConfig = {};
+	if(process.env.AUTHZ_CONFIG) {
+		authZConfig = require(process.env.AUTHZ_CONFIG);
+		if(authZConfig.userAuthorization.cacheTTL) {
+			cacheTTL = authZConfig.userAuthorization.cacheTTL;
+			options.logger.debug(`Using configured cache TTL: ${cacheTTL}`);
+		}
+	}
+	const cache = new NodeCache({ stdTTL: cacheTTL, useClones: false });
 	const sdk = new SDK({ pluginConfig });
-	sdk.load(path.resolve(__dirname, 'flow-nodes.yml'), actions, { pluginContext: { cache: cache }, pluginConfig });
+	sdk.load(path.resolve(__dirname, 'flow-nodes.yml'), actions, { pluginContext: { cache: cache, authZConfig: authZConfig.userAuthorization }, pluginConfig });
 	return sdk.getPlugin();
 }
 

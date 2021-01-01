@@ -5,6 +5,29 @@ flow-nodes:
     description: Handles the authorization part of the ELK-Based Traffic-Monitor based on different criterias.
     category: general
     methods:
+      switchOnAuthZ:
+        name: Switch on Authorization
+        description: Helper method to control the flow based on the configured authorization.
+        outputs:
+          org:
+            name: Organization
+            description: Exit used if API-Manager organization is used for authorization.
+            context: $.authzConfig
+            schema:
+              type: object
+          http1:
+            name: HTTP-1 
+            description: Exit used if HTTP1 is used for authorization.
+            context: $.authzConfig
+            schema:
+              type: object
+          error:
+            name: Error
+            description: An unexpected error happened
+            context: $.error
+            schema:
+              type: object
+
       addApiManagerOrganizationFilter:
         name: API-Manager-Org Authorization
         description: Handles the user authorization based on the API-Manager organization. For now only ONE organization is considered.

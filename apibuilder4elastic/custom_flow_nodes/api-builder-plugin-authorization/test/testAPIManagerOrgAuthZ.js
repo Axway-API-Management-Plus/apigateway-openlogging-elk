@@ -11,13 +11,12 @@ if (fs.existsSync(envFilePath)) {
 	envLoader.config({ path: envFilePath });
 }
 
-const pluginConfig = require('../config/authorization-config.default.js').pluginConfig['api-builder-plugin-authorization'];
-
 describe('flow-node Authorization', () => {
 	let plugin;
 	let flowNode;
 	beforeEach(async () => {
-		plugin = await MockRuntime.loadPlugin(getPlugin, pluginConfig);
+		delete process.env.AUTHZ_CONFIG;
+		plugin = await MockRuntime.loadPlugin(getPlugin);
 		plugin.setOptions({ validateOutputs: true });
 		flowNode = plugin.getFlowNode('authorization');
 	});
@@ -41,6 +40,12 @@ describe('flow-node Authorization', () => {
 	});
 
 	describe('#apiManagerAuthZFilter', () => {
+		it('should return with API-Manager Org output', async () => {
+			const { value, output } = await flowNode.switchOnAuthZ({ });
+
+			expect(output).to.equal('org');
+		});
+
 		it('should error when missing required parameter', async () => {
 			const { value, output } = await flowNode.addApiManagerOrganizationFilter({
 				user: null

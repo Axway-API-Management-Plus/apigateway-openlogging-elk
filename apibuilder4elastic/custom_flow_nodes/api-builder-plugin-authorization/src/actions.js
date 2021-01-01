@@ -23,6 +23,17 @@ var cache = {};
  * @return {*} The response value (resolves to "next" output, or if the method
  *	 does not define "next", the first defined output).
  */
+async function switchOnAuthZ(params, options) {
+	const { logger } = options;
+	var authZConfig = options.pluginContext.authZConfig;
+	if(!authZConfig) {
+		return options.setOutput('org', {});
+	} else if(authZConfig.externalHTTP1) {
+		return options.setOutput('http1', authZConfig.externalHTTP1);
+	}
+	return options.setOutput('org', {});
+}
+
 async function addApiManagerOrganizationFilter(params, options) {
 	const { user, elasticQuery } = params;
 	const { logger } = options;
@@ -63,6 +74,7 @@ async function addExternalAuthzFilter1(params, options) {
 	const { user, elasticQuery } = params;
 	const { logger, pluginConfig } = options;
 	cache = options.pluginContext.cache;
+	var authZConfig = options.pluginContext.authZConfig;
 	
 	if (!user) {
 		throw new Error('Missing required parameter: user');
@@ -76,13 +88,13 @@ async function addExternalAuthzFilter1(params, options) {
 	if (!(elasticQuery instanceof Object)) {
 		throw new Error('Parameter: elasticQuery must be an object');
 	}
-	if(!pluginConfig.externalHTTPAuthorization1) {
-		throw new Error('Missing configuration: externalHTTPAuthorization1');
+	if(!authZConfig.externalHTTP1.uri) {
+		throw new Error('Missing configuration: externalHTTP1.uri');
 	}
 	var filters = elasticQuery.bool.must;
 	const cacheKey = `ExtAuthZ###${user.loginName}`;
+	var cfg = authZConfig.externalHTTP1;
 	if(!cache.has(cacheKey)) {	
-		var cfg = pluginConfig.externalHTTPAuthorization1;
 		// Replace the loginName which is part of the URI
 		cfg.uri = cfg.uri.replace("${loginName}", user.loginName);
 		logger.info(`External groups NOT found in cache with key: '${cacheKey}'. Request information from ${cfg.uri}`);
@@ -117,5 +129,6 @@ async function addExternalAuthzFilter1(params, options) {
 
 module.exports = {
 	addApiManagerOrganizationFilter, 
-	addExternalAuthzFilter1
+	addExternalAuthzFilter1,
+	switchOnAuthZ
 };
