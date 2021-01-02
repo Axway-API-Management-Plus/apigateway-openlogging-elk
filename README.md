@@ -46,7 +46,7 @@ This shows a sample dashboard created in Kibana based on the indexed documents:
 - [Advanced and production Setup](#advanced-and-production-setup)
   - [Architecture examples](#architecture-examples)
   - [Setup Elasticsearch Multi-Node](#setup-elasticsearch-multi-node)
-  - [Multiple API-Managers](#multiple-api-managers)
+  - [Setup API-Manager](#setup-api-manager)
   - [Setup local lookup](#setup-local-lookup)
   - [Activate user authentication](#activate-user-authentication)
   - [Configure cluster UUID](#configure-cluster-uuid)
@@ -388,17 +388,18 @@ This ensures that clients can use the available Elasticsearch nodes for a fail-o
 
 <p align="right"><a href="#table-of-content">Top</a></p>
 
-### Setup API-Managers
+### Setup API-Manager
 
-During Logstash event processing, additional information is loaded from the API Manager through an API lookup. This lookup is performed by the API builder against the API Manager.  
-By default the configured Admin Node Manager host is used or the configured API Manager URL:
+Before a document is send to Elasticsearch, additional information for the processed API is requested by Logstash from the API-Manager through an API lookup. This lookup is handled by the API-Builder and performed against the configured API-Manager.  
+By default the configured Admin Node Manager host is also used for the API-Manager or the configured API-Manager URL:
 ```
 API_MANAGER=https://my.apimanager.com:8075
 ```
 
 #### Multiple API-Managers
 
-If you have several API Managers within your domain, you have to configure a mapping which group (groupId) belongs to which API Manager. The following syntax is used for this:  
+If you have several API-Managers within your domain, you have to configure a mapping of which group (groupId) belongs to which API Manager. The group-id represents the Domain-Group and is attached to each Open-Traffic- or Metric-Event. It's used by Logstash to send the request to the API-Builder Lookup-API and is used there to perform the lookup against the belonging API-Manager.  
+The following syntax is used for this:  
 ```
 API_MANAGER=group-2|https://api-manager-1:8075, group-5|https://api-manager-2:8275
 ```
