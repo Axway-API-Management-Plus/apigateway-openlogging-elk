@@ -393,7 +393,7 @@ This ensures that clients can use the available Elasticsearch nodes for a fail-o
 During Logstash event processing, additional information is loaded from the API Manager through an API lookup. This lookup is performed by the API builder against the API Manager.  
 By default the configured Admin Node Manager host is used or the configured API Manager URL:
 ```
-API_MANAGER=http://my.apimanager.com:443
+API_MANAGER=https://my.apimanager.com:8075
 ```
 
 #### Multiple API-Managers
