@@ -462,7 +462,7 @@ In your .env file you must then enable the configuration file to be used by the 
 API_BUILDER_LOCAL_API_LOOKUP_FILE=./config/api-lookup.json
 ```
 
-__3. API-Builder restart__
+__3. Restart API-Builder__
 
 ```
 docker stop apibuilder4elastic
@@ -475,9 +475,11 @@ If an event is to be indexed, the API builder will try to read this file and wil
 Error reading API-Lookup file: './config/api-lookup.json'
 ```
 
-At this point, we intentionally refer to events and not APIs, because different events (TransactionSummy, CircuitPath, TransactionElement) are created in the OpenTraffic log for each API call, which are also processed separately by the Logstash and stored in Elasticsearch with the same Correlation-ID. Most of these events contain the path of the called API, but not all.  
-This is especially important when ignoring events that they are not stored in Elasticsearch. Since all events are processed individually, it must also be decided individually to ignore an event.
-Therefore, to ignore the Healthcheck API entirely, for example, the following must be stored in the lookup file:
+#### Ignore APIs/Events
+
+At this point, we intentionally refer to events and not APIs, because different events (TransactionSummy, CircuitPath, TransactionElement) are created in the OpenTraffic log for each API call. Each is processed separately by Logstash and stored using an upsert in Elasticsearch with the same Correlation-ID. Most of these events contain the path of the called API, but unfortunately not all.  
+This is especially important when ignoring events so that they are not stored in Elasticsearch. Since all events are processed individually, it must also be decided individually to ignore an event.
+Therefore, to ignore for example the Healthcheck API entirely, the following must be configured in the lookup file:
 ```json
 {
     "/healthcheck": {
