@@ -67,10 +67,11 @@ function requestAsync(uri, options, cb) {
 }
 
 async function sendToElasticsearch(elasticConfig, index, template, dataset) {
+	debugger;
 	console.log(`Creating connection to ElasticSearch cluster: ${elasticConfig.nodes}`);
 	const client = new Client(elasticConfig);
 	var mappingConfig = template;
-	if(!template instanceof Object) {
+	if(typeof template === 'string') {
 		mappingConfig = JSON.parse(fs.readFileSync(`elasticsearch_config/${template}`));
 	}
 	var createdIndexTemplate = await client.indices.putTemplate( { name: index, body: mappingConfig}, { ignore: [404], maxRetries: 3 });
