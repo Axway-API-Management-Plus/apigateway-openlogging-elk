@@ -17,7 +17,13 @@ async function getPlugin(pluginConfig, options) {
 	var cacheTTL = 600;
 	var authZConfig = {};
 	if(process.env.AUTHZ_CONFIG) {
-		authZConfig = require(process.env.AUTHZ_CONFIG);
+		var configFile = process.env.AUTHZ_CONFIG;
+		// The config is expected in the main API-Builder conf folder and should be configured that way
+		if(configFile.startsWith('conf') || configFile.startsWith('/conf')) {
+			configFile = `../../../${configFile}`;
+		}
+		options.logger.debug(`Trying to load authorization config file: ${configFile}`);
+		authZConfig = require(configFile);
 		if(authZConfig.userAuthorization.cacheTTL) {
 			cacheTTL = authZConfig.userAuthorization.cacheTTL;
 			options.logger.debug(`Using configured cache TTL: ${cacheTTL}`);

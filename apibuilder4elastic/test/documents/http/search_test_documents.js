@@ -34,7 +34,10 @@ module.exports = [
             "remotePort" : 59641,
             "wafStatus": 1,
             "vhost": "api.customer.com:443"
-        }        
+        },
+        "customProperties": {
+            "field1": "CORSOLMS"
+        }
     },
     // Find Pets by status on instance-2 - OPTIONS Call - 120 hours ago - Instance-2
     {
@@ -103,6 +106,9 @@ module.exports = [
             "remoteName" : "TestHost",
             "remotePort" : 78786,
             "wafStatus" : 0
+        },
+        "customProperties": {
+            "field1": "DGP"
         }
     },
     // Another healthcheck - 30000 hours ago
@@ -138,6 +144,9 @@ module.exports = [
             "remoteName" : "192.168.65.1",
             "remotePort" : 65392,
             "wafStatus" : 0 
+        },
+        "customProperties": {
+            "field1": "MAAS"
         }
     },
     // Get Pet by ID GET Call - 8 minutes ago

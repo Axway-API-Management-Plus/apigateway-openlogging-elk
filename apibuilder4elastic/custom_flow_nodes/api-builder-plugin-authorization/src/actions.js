@@ -27,10 +27,13 @@ async function switchOnAuthZ(params, options) {
 	const { logger } = options;
 	var authZConfig = options.pluginContext.authZConfig;
 	if(!authZConfig) {
+		logger.debug(`Using organization based authorization.`);
 		return options.setOutput('org', {});
 	} else if(authZConfig.externalHTTP1) {
+		logger.debug(`Using external HTTP-1 based authorization.`);
 		return options.setOutput('http1', authZConfig.externalHTTP1);
 	}
+	logger.debug(`Using organization based authorization. (Default)`);
 	return options.setOutput('org', {});
 }
 
@@ -91,14 +94,25 @@ async function addExternalAuthzFilter1(params, options) {
 	if(!authZConfig.externalHTTP1.uri) {
 		throw new Error('Missing configuration: externalHTTP1.uri');
 	}
+	if(!authZConfig.externalHTTP1.restrictionField) {
+		throw new Error('Missing configuration: externalHTTP1.restrictionField');
+	}
+	if(!authZConfig.externalHTTP1.restrictionFieldType) {
+		throw new Error('Missing configuration: externalHTTP1.restrictionFieldType');
+	}
+	if(authZConfig.externalHTTP1.restrictionFieldType!="custom" && 
+		authZConfig.externalHTTP1.restrictionFieldType!="select" && 
+		authZConfig.externalHTTP1.restrictionFieldType!="switch") {
+		throw new Error(`Invalid configuration: externalHTTP1.restrictionFieldType: ${authZConfig.externalHTTP1.restrictionFieldType}`);
+	}
 	var filters = elasticQuery.bool.must;
 	const cacheKey = `ExtAuthZ###${user.loginName}`;
 	var cfg = authZConfig.externalHTTP1;
-	if(!cache.has(cacheKey)) {	
+	if(!cache.has(cacheKey)) {
 		// Replace the loginName which is part of the URI
-		cfg.uri = cfg.uri.replace("${loginName}", user.loginName);
-		logger.info(`External groups NOT found in cache with key: '${cacheKey}'. Request information from ${cfg.uri}`);
-		const resp = await requester(cfg.uri, cfg.headers, cfg.method, cfg.body, { logger });
+		cfg.replacedUri = cfg.uri.replace("${loginName}", user.loginName);
+		logger.info(`External groups NOT found in cache with key: '${cacheKey}'. Request information from ${cfg.replacedUri}`);
+		const resp = await requester(cfg.replacedUri, cfg.headers, cfg.method, cfg.body, { logger });
 		cache.set(cacheKey, resp);
 	} else {
 		logger.debug(`External groups found in cache with key: '${cacheKey}'.`);
@@ -122,8 +136,13 @@ async function addExternalAuthzFilter1(params, options) {
 		}
 	}
 	var filter = {};
-	filter[cfg.restrictionField] = apimIds;
-	filters.push({terms: filter });
+	if(cfg.restrictionFieldType == "custom") {
+		filter[cfg.restrictionField] = apimIds.join(' ');
+		filters.push({match: filter });
+	} else {
+		filter[cfg.restrictionField] = apimIds;
+		filters.push({terms: filter });
+	}
 	return elasticQuery;
 }
 

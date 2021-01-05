@@ -1,0 +1,9 @@
+{
+    "status": 200,
+    "data": [
+      "CHR-GP-SV-APG-T-MAAS-Developer",
+      "CHR-GP-SV-APG-T-MAAS-Approver",
+      "CHR-DP-SV-APG-T-MAAS-Developer",
+      "CHR-DP-SV-APG-T-MAAS-Approver"
+    ]
+}

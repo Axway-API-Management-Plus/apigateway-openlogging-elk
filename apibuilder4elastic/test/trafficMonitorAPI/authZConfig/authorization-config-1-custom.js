@@ -6,9 +6,8 @@ module.exports = {
 			// e.g.: https://authz.ac.customer.com/api/v1/users/${loginName}/groups?registry=AD&caching=false&filter=apg-t
 			uri: process.env.EXT_AUTHZ_URI, 
 			// e.g.: customProperty1.apimId
-			restrictionField: "customProperties.field1",
-			// The type of the customProperty as it's configured in the API-Manager (custom, select, switch)
-			restrictionFieldType: "select"
+			restrictionField: "customProperties.field1", 
+			restrictionFieldType: "custom" // Simulates a custom property configured as clear text
 		}
 	}
 };

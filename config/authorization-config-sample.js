@@ -7,6 +7,8 @@ module.exports = {
 			uri: process.env.EXT_AUTHZ_URI, 
 			// e.g.: customProperty1.apimId
 			restrictionField: process.env.EXT_AUTHZ_RESTRICTION_FIELD,
+			// The type of the customProperty as it's configured in the API-Manager (custom, select, switch)
+			restrictionFieldType: "select"
 		}
 	}
 };

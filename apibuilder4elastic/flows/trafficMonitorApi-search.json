@@ -605,7 +605,9 @@
 					"metaName": "Next"
 				},
 				"noAccess": {
-					"routes": [],
+					"routes": [
+						"http.6"
+					],
 					"context": "$.noAccess",
 					"metaName": "No access"
 				},
@@ -648,6 +650,35 @@
 				}
 			},
 			"metaMethod": "Switch on Authorization"
+		},
+		"http.6": {
+			"type": "nodehandler://axway-flow/http",
+			"name": "No Access",
+			"method": "setresponse",
+			"parameters": [
+				{
+					"name": "status",
+					"type": "number",
+					"value": "403",
+					"metaName": "Status",
+					"metaDescription": "The HTTP status code"
+				},
+				{
+					"name": "body",
+					"type": "object",
+					"value": "{\"processId\":\"\", \"data\":[ \n]}",
+					"metaName": "Body",
+					"metaDescription": "The response payload"
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.response",
+					"routes": [],
+					"metaName": "Next"
+				}
+			},
+			"metaMethod": "Set HTTP Response"
 		}
 	}
 }
