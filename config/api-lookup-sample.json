@@ -13,13 +13,10 @@
         "backendBasePath": "http://i.can.give.any.host.i.want.com"
     },
     "/favicon.ico": {
-        "index": false
+        "ignore": true
     },
     "Policy: My policy name not to index": {
-        "toBeIndexed": false
-    },
-    "Policy: My policy name not to index2": {
-        "ignore": false
+        "ignore": true
     },
     "/another/api/base/path": {
         "ignore": true,
