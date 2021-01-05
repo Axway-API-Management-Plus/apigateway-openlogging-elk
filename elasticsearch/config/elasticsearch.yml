@@ -22,3 +22,7 @@ xpack.security.enabled: true
 #xpack.security.authc.anonymous.username: anonymous
 
 xpack.monitoring.collection.enabled: true
+
+# Don't enable this - This is just for testing!
+#cluster.routing.allocation.disk.watermark.high: "94%"
+#cluster.routing.allocation.disk.watermark.low: "93%"
