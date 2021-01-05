@@ -449,7 +449,7 @@ Please note that the local configuration file is used before the API manager loo
 To enable the local lookup, you must perform the following steps:
 
 __1. Add your config file__
-It is best to copy the delivered template: config/api-lookup-sample.json to your config/api-lookup.json. 
+It is best to copy the delivered template: [config/api-lookup-sample.json](config/api-lookup-sample.json) to your config/api-lookup.json. 
 
 ```
 cp config/api-lookup-sample.json config/api-lookup.json
