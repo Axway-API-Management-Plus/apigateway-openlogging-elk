@@ -67,7 +67,6 @@ function requestAsync(uri, options, cb) {
 }
 
 async function sendToElasticsearch(elasticConfig, index, template, dataset) {
-	debugger;
 	console.log(`Creating connection to ElasticSearch cluster: ${elasticConfig.nodes}`);
 	const client = new Client(elasticConfig);
 	var mappingConfig = template;

@@ -49,6 +49,7 @@ describe('Endpoints', function () {
 	 */
 	after(() => {
 		stopApiBuilder(server);
+		delete process.env.AUTHZ_CONFIG;
 	});
 
 	describe('Search', () => {

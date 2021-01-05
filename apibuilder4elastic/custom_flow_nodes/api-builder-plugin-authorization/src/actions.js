@@ -26,11 +26,12 @@ var cache = {};
 async function switchOnAuthZ(params, options) {
 	const { logger } = options;
 	var authZConfig = options.pluginContext.authZConfig;
+	console.log(`XXXXXXXXXXXXXXXXX: ${JSON.stringify(authZConfig)}`);
 	if(!authZConfig) {
 		logger.debug(`Using organization based authorization.`);
 		return options.setOutput('org', {});
 	} else if(authZConfig.externalHTTP1) {
-		logger.debug(`Using external HTTP-1 based authorization.`);
+		logger.debug(`Using external HTTP based authorization.`);
 		return options.setOutput('http1', authZConfig.externalHTTP1);
 	}
 	logger.debug(`Using organization based authorization. (Default)`);
