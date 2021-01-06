@@ -55,6 +55,7 @@ This shows a sample dashboard created in Kibana based on the indexed documents:
 - [Infrastructure sizing](#infrastructure-sizing)
 - [Updates](#updates)
 - [Troubleshooting](#troubleshooting)
+- [FAQ](#faq)
 - [Known issues](#known-issues)
 
 ## Overview
@@ -862,14 +863,18 @@ You can also start this modification manually:
 docker exec apibuilder4elastic wget --no-check-certificate https://localhost:8443/api/elk/v1/api/setup/index/rolloverAlias
 ```
 
-Translated with www.DeepL.com/Translator (free version)
+## FAQ
 
-docker exec apibuilder4elastic wget --no-check-certificate https://localhost:8443/api/elk/v1/api/setup/index/rolloverAlias
+### Do I need an API-Builder subscription?
+
+No, the delivered API builder Docker image includes the community version and is supported as part of this project.
+
+### Will indexed data be deleted automatically?
+
+Yes, as of version 2.0.0, each index created in Elasticsearch is assigned an Index Lifecycle Policy ([ILM](https://www.elastic.co/guide/en/elasticsearch/reference/current/index-lifecycle-management.html)). This controls how long data is retained for each data type.
 
 ## Known issues
-
-- __Trace messages not shown in correct order__  
-  See issue https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/37
+N/A
   
 <p align="right"><a href="#table-of-content">Top</a></p>
 
