@@ -19,7 +19,7 @@ async function getPlugin(pluginConfig, options) {
 	if(process.env.AUTHZ_CONFIG) {
 		var configFile = process.env.AUTHZ_CONFIG;
 		// The config is expected in the main API-Builder conf folder and should be configured that way
-		if(configFile.startsWith('conf') || configFile.startsWith('/conf')) {
+		if(configFile.startsWith('config') || configFile.startsWith('./config')) {
 			configFile = `../../../${configFile}`;
 		}
 		options.logger.debug(`Trying to load authorization config file: ${configFile}`);
