@@ -34,7 +34,7 @@ describe('flow-node Authorization', () => {
 				.get(`/api/v1/users/anna/groups?registry=AD&caching=false&filter=apg-t`)
 				.replyWithFile(200, './test/mock/extAuthZ/response1.json');
 			
-			const { value, output } = await flowNode.addExternalAuthzFilter1({
+			const { value, output } = await flowNode.addExtHTTPAuthzFilter({
 				user: user, elasticQuery: elasticQuery
 			});
 			

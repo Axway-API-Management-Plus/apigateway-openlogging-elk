@@ -16,6 +16,7 @@ describe('flow-node Authorization', () => {
 	let plugin;
 	let flowNode;
 	beforeEach(async () => {
+		debugger;
 		process.env.AUTHZ_CONFIG = '../test/testConfig/authorization-config-extAuthZ.js';
 		plugin = await MockRuntime.loadPlugin(getPlugin);
 		plugin.setOptions({ validateOutputs: true });
@@ -26,15 +27,15 @@ describe('flow-node Authorization', () => {
 		delete process.env.AUTHZ_CONFIG;
 	});
 
-	describe('#externalHTTPAuthZFilter1', () => {
-		it('should return with HTTP1 output', async () => {
+	describe('#externalHTTPAuthZFilter', () => {
+		it('should return with HTTP output', async () => {
 			const { value, output } = await flowNode.switchOnAuthZ({ });
 
-			expect(output).to.equal('http1');
+			expect(output).to.equal('extHttp');
 		});
 
-		it('should error when missing required parameter', async () => {
-			const { value, output } = await flowNode.addExternalAuthzFilter1({
+		it('should error when missing required parameter user', async () => {
+			const { value, output } = await flowNode.addExtHTTPAuthzFilter({
 				user: null
 			});
 
@@ -43,8 +44,8 @@ describe('flow-node Authorization', () => {
 			expect(output).to.equal('error');
 		});
 
-		it('should error when missing required parameter', async () => {
-			const { value, output } = await flowNode.addExternalAuthzFilter1({
+		it('should error when missing required parameter elasticQuery', async () => {
+			const { value, output } = await flowNode.addExtHTTPAuthzFilter({
 				user: { "user": "MyUser"}, elasticQuery: null
 			});
 
@@ -54,7 +55,7 @@ describe('flow-node Authorization', () => {
 		});
 
 		it('should error when parameter user is not an object', async () => {
-			const { value, output } = await flowNode.addExternalAuthzFilter1({
+			const { value, output } = await flowNode.addExtHTTPAuthzFilter({
 				user: "A String", elasticQuery: {}
 			});
 
@@ -64,7 +65,7 @@ describe('flow-node Authorization', () => {
 		});
 
 		it('should error when parameter filters is not an array', async () => {
-			const { value, output } = await flowNode.addExternalAuthzFilter1({
+			const { value, output } = await flowNode.addExtHTTPAuthzFilter({
 				user: { user: "my user"}, elasticQuery: "A String"
 			});
 
@@ -79,7 +80,7 @@ describe('flow-node Authorization', () => {
 				.get(`/api/v1/users/anna/groups?registry=AD&caching=false&filter=apg-t`)
 				.replyWithFile(200, './test/mock/extAuthZ/unexpectedResponse.json');
 
-			const { value, output } = await flowNode.addExternalAuthzFilter1({
+			const { value, output } = await flowNode.addExtHTTPAuthzFilter({
 				user: { loginName: "anna" }, elasticQuery: elasticQuery
 			});
 			
@@ -96,7 +97,7 @@ describe('flow-node Authorization', () => {
 				.get(`/api/v1/users/anna/groups?registry=AD&caching=false&filter=apg-t`)
 				.replyWithFile(200, './test/mock/extAuthZ/response2.json');
 			
-			const { value, output } = await flowNode.addExternalAuthzFilter1({
+			const { value, output } = await flowNode.addExtHTTPAuthzFilter({
 				user: user, elasticQuery: elasticQuery
 			});
 			
@@ -117,7 +118,7 @@ describe('flow-node Authorization', () => {
 				.get(`/api/v1/users/anna/groups?registry=AD&caching=false&filter=apg-t`)
 				.replyWithFile(200, './test/mock/extAuthZ/response1.json');
 			
-			const { value, output } = await flowNode.addExternalAuthzFilter1({
+			const { value, output } = await flowNode.addExtHTTPAuthzFilter({
 				user: user, elasticQuery: elasticQuery
 			});
 			
@@ -137,7 +138,7 @@ describe('flow-node Authorization', () => {
 				.get(`/api/v1/users/anna/groups?registry=AD&caching=false&filter=apg-t`)
 				.replyWithFile(200, './test/mock/extAuthZ/noGroupResponse.json');
 
-			var { value, output } = await flowNode.addExternalAuthzFilter1({
+			var { value, output } = await flowNode.addExtHTTPAuthzFilter({
 				user: user, elasticQuery: elasticQuery
 			});
 
@@ -146,7 +147,7 @@ describe('flow-node Authorization', () => {
 			// Clear the mock, it should not matter as the result must be cached
 			nock.cleanAll();
 
-			var { value, output } = await flowNode.addExternalAuthzFilter1({
+			var { value, output } = await flowNode.addExtHTTPAuthzFilter({
 				user: user, elasticQuery: elasticQuery
 			});
 			expect(output).to.equal('noAccess');

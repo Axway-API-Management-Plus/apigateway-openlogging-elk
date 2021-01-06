@@ -26,13 +26,12 @@ var cache = {};
 async function switchOnAuthZ(params, options) {
 	const { logger } = options;
 	var authZConfig = options.pluginContext.authZConfig;
-	console.log(`XXXXXXXXXXXXXXXXX: ${JSON.stringify(authZConfig)}`);
 	if(!authZConfig) {
 		logger.debug(`Using organization based authorization.`);
 		return options.setOutput('org', {});
-	} else if(authZConfig.externalHTTP1) {
+	} else if(authZConfig.externalHTTP) {
 		logger.debug(`Using external HTTP based authorization.`);
-		return options.setOutput('http1', authZConfig.externalHTTP1);
+		return options.setOutput('extHttp', authZConfig.externalHTTP);
 	}
 	logger.debug(`Using organization based authorization. (Default)`);
 	return options.setOutput('org', {});
@@ -74,11 +73,12 @@ async function addApiManagerOrganizationFilter(params, options) {
 	return elasticQuery;
 }
 
-async function addExternalAuthzFilter1(params, options) {
-	const { user, elasticQuery } = params;
+async function addExtHTTPAuthzFilter(params, options) {
+	var { user, elasticQuery } = params;
 	const { logger, pluginConfig } = options;
 	cache = options.pluginContext.cache;
 	var authZConfig = options.pluginContext.authZConfig;
+	var responseHandler = options.pluginContext.responseHandler;
 	
 	if (!user) {
 		throw new Error('Missing required parameter: user');
@@ -92,23 +92,22 @@ async function addExternalAuthzFilter1(params, options) {
 	if (!(elasticQuery instanceof Object)) {
 		throw new Error('Parameter: elasticQuery must be an object');
 	}
-	if(!authZConfig.externalHTTP1.uri) {
-		throw new Error('Missing configuration: externalHTTP1.uri');
+	if(!authZConfig.externalHTTP.uri) {
+		throw new Error('Missing configuration: externalHTTP.uri');
 	}
-	if(!authZConfig.externalHTTP1.restrictionField) {
-		throw new Error('Missing configuration: externalHTTP1.restrictionField');
+	if(!authZConfig.externalHTTP.restrictionField) {
+		throw new Error('Missing configuration: externalHTTP.restrictionField');
 	}
-	if(!authZConfig.externalHTTP1.restrictionFieldType) {
-		throw new Error('Missing configuration: externalHTTP1.restrictionFieldType');
+	if(!authZConfig.externalHTTP.restrictionFieldType) {
+		throw new Error('Missing configuration: externalHTTP.restrictionFieldType');
 	}
-	if(authZConfig.externalHTTP1.restrictionFieldType!="custom" && 
-		authZConfig.externalHTTP1.restrictionFieldType!="select" && 
-		authZConfig.externalHTTP1.restrictionFieldType!="switch") {
-		throw new Error(`Invalid configuration: externalHTTP1.restrictionFieldType: ${authZConfig.externalHTTP1.restrictionFieldType}`);
+	if(authZConfig.externalHTTP.restrictionFieldType!="custom" && 
+		authZConfig.externalHTTP.restrictionFieldType!="select" && 
+		authZConfig.externalHTTP.restrictionFieldType!="switch") {
+		throw new Error(`Invalid configuration: externalHTTP.restrictionFieldType: ${authZConfig.externalHTTP.restrictionFieldType}`);
 	}
-	var filters = elasticQuery.bool.must;
 	const cacheKey = `ExtAuthZ###${user.loginName}`;
-	var cfg = authZConfig.externalHTTP1;
+	var cfg = authZConfig.externalHTTP;
 	if(!cache.has(cacheKey)) {
 		// Replace the loginName which is part of the URI
 		cfg.replacedUri = cfg.uri.replace("${loginName}", user.loginName);
@@ -122,33 +121,16 @@ async function addExternalAuthzFilter1(params, options) {
 	if(!response.body.data || response.body.data.length == 0) {
 		return options.setOutput('noAccess', `User: ${user.loginName} has no access`);
 	}
-	var regex = /.{3}-.{2}-.{2}-.{3}-.{1}-(.*)-.*/;
-	var apimIds = [];
-	for (const value of Object.values(response.body.data)) {
-		logger.debug(`Try to parse result: '${value}'`);
-		var match = regex.exec(value);
-		if(match == null) {
-			throw new Error(`Unexpected response format. Cannot parse: '${value}'`);
-		}
-		var apimId = match[1];
-		if(apimIds.indexOf(apimId) == -1) {
-			logger.debug(`Adding APIM-ID: ${apimId} to the list of allowed groups`);
-			apimIds.push(apimId);
-		}
-	}
-	var filter = {};
-	if(cfg.restrictionFieldType == "custom") {
-		filter[cfg.restrictionField] = apimIds.join(' ');
-		filters.push({match: filter });
+	if(responseHandler) {
+		elasticQuery = responseHandler(response, elasticQuery, cfg, options);
 	} else {
-		filter[cfg.restrictionField] = apimIds;
-		filters.push({terms: filter });
+		logger.error(`Missing responseHandler method: handleResponse`);
 	}
 	return elasticQuery;
 }
 
 module.exports = {
 	addApiManagerOrganizationFilter, 
-	addExternalAuthzFilter1,
+	addExtHTTPAuthzFilter,
 	switchOnAuthZ
 };

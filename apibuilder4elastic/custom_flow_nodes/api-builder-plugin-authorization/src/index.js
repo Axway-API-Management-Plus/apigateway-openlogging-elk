@@ -24,14 +24,18 @@ async function getPlugin(pluginConfig, options) {
 		}
 		options.logger.debug(`Trying to load authorization config file: ${configFile}`);
 		authZConfig = require(configFile);
-		if(authZConfig.userAuthorization.cacheTTL) {
-			cacheTTL = authZConfig.userAuthorization.cacheTTL;
+		if(authZConfig.authorizationConfig.cacheTTL) {
+			cacheTTL = authZConfig.authorizationConfig.cacheTTL;
 			options.logger.debug(`Using configured cache TTL: ${cacheTTL}`);
 		}
 	}
 	const cache = new NodeCache({ stdTTL: cacheTTL, useClones: false });
 	const sdk = new SDK({ pluginConfig });
-	sdk.load(path.resolve(__dirname, 'flow-nodes.yml'), actions, { pluginContext: { cache: cache, authZConfig: authZConfig.userAuthorization }, pluginConfig });
+	sdk.load(path.resolve(__dirname, 'flow-nodes.yml'), actions, { pluginContext: { 
+		cache: cache, 
+		authZConfig: authZConfig.authorizationConfig, 
+		responseHandler: authZConfig.handleResponse 
+	}, pluginConfig });
 	return sdk.getPlugin();
 }
 

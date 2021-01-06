@@ -579,7 +579,7 @@
 		"authorization.2": {
 			"type": "nodehandler://api-builder-plugin-authorization/authorization",
 			"name": "External Authorization filter 1",
-			"method": "addExternalAuthzFilter1",
+			"method": "addExtHTTPAuthzFilter",
 			"parameters": [
 				{
 					"name": "user",
@@ -619,7 +619,7 @@
 					"metaName": "Error"
 				}
 			},
-			"metaMethod": "External Authorization filter 1"
+			"metaMethod": "External HTTP-Based Authorization"
 		},
 		"authorization.3": {
 			"type": "nodehandler://api-builder-plugin-authorization/authorization",
@@ -634,12 +634,12 @@
 					"context": "$.authzConfig",
 					"metaName": "Organization"
 				},
-				"http1": {
+				"extHttp": {
 					"routes": [
 						"authorization.2"
 					],
 					"context": "$.authzConfig",
-					"metaName": "HTTP-1"
+					"metaName": "Ext-HTTP"
 				},
 				"error": {
 					"routes": [

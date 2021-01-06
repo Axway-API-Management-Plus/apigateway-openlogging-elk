@@ -15,9 +15,9 @@ flow-nodes:
             context: $.authzConfig
             schema:
               type: object
-          http1:
-            name: HTTP-1 
-            description: Exit used if HTTP1 is used for authorization.
+          extHttp:
+            name: Ext-HTTP
+            description: Exit used if an external HTTP-Servie should be used for authorization.
             context: $.authzConfig
             schema:
               type: object
@@ -60,9 +60,9 @@ flow-nodes:
               message:
                 type: string
 
-      addExternalAuthzFilter1:
-        name: External Authorization filter 1
-        description: Option 1 to add a filter based on an external HTTP-Endpoint.
+      addExtHTTPAuthzFilter:
+        name: External HTTP-Based Authorization
+        description: This method is using an external HTTP-Service to perform the user authorization.
         parameters:
           user:
             name: API-Manager user
