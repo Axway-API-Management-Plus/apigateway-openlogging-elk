@@ -279,11 +279,13 @@ ELASTIC_VERSION=7.10.0
 # ----------------------------------------------------------------------------------------------
 # With these parameters you can change the way the authorization for the traffic monitor is 
 # performed. 
-# By default, users who are not API gateway administrators are authorized to see traffic in 
-# the traffic monitor based on their API manager organization. 
-# Set the USER_AUTHORIZATION_MODE parameter to: externalHTTPAuthorization1 to use an 
-# external API. The is unfortunately a custom solution solution customized to this API.
-# AUTHZ_CONFIG=./config/authorization-config.js
+# By default, users who are not API-Gateway administrators are authorized to see traffic in 
+# the traffic monitor based on their API-Manager organization. 
+# You may configure another option as of today to perform an external HTTP-Call, which is used 
+# to adjust the Elastic-Query. For more details please see: config/authorization-config-sample.js
+# It's recommended to rename this file and configure it with the following parameter:
+# For example:
+# AUTHZ_CONFIG=./config/authorization-config-ext-http.js
 
 ################################################################################################
 #                         Certificates and Certificate authorities
