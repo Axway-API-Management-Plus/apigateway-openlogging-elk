@@ -816,9 +816,13 @@ Or the following:
 3. sudo service sysctl restart
 ```
 
-#### No results from Elasticsearch
-If you don't get any results from ElasticSearch for valid queries it might be a missing template configuration for the logstash-openlog index. Elastic-Search is doing by default a dynamic template mapping that is trying to figure out field types. However, for some of the fields the mapping must be overwritten. Therefore make sure so to include the sample mapping file: `configs/openlog_index_template.json` is used by your Logstash process. See `configs/logstash.conf` as an example.  
-The template mapping is pre-configured when using the docker-compose configuration. 
+### No results from Elasticsearch
+If you don't get any results from Elasticsearch for valid queries the template might not be used correctly during index creation. Elasticsearch does not execute queries on the original document, rather on the indexed fields. How these were indexed is defined by an index mapping.  
+For this purpose, the solution delivers an index template for each index, which is used when the index is created.  
+You can find the index mapping in the API-Builder container: `elasticsearch_config/<index-name>/index_template.json` or you can review them [here](apibuilder4elastic/elasticsearch_config).  
+To check if the index mapping was applied correctly to an index execute the following request. For example the Traffic-Summary index:  
+`http://elasticsearch:9200/apigw-traffic-summary/_mapping`  
+then check if individual properties have the mapping from the template.
 
 ### Check API-Builder processing
 The API-Builder docker container is running 
