@@ -44,6 +44,8 @@ services:
   memcached:
     image: memcached:1.6.6-alpine
     container_name: memcached
+    ports:
+      - 11211:11211
     networks:
       - elastic
     logging:
