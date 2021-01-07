@@ -902,6 +902,18 @@ Yes, as of version 2.0.0, each index created in Elasticsearch is assigned an Ind
 Technically this would certainly be possible, but definitely not recommended, as you would be mixing data from different stages, such as Prod, Test, Dev. You could certainly separate these with regions in individual indexes, but it still complicates the setup and data management. 
 Another reason are updates of the solution which should certainly be done on a test environment before updating the production environment.
 
+### Can I use my own existing Elasticsearch cluster?
+
+Yes, you can use your own Elasticsearch cluster or a managed instance at AWS/Azure/etc. As long as it's a 7.x version it's supported.
+
+### Can I use the Filebeat version shipped with the API-Gateway?
+
+No, as it is not a 7.x version and not tested with this solution at all.
+
+### Can I run Filebeat as a native process?
+
+Yes, you can run Filebeat natively instead of a Docker-Container if you prefer. As long as you are using the filebeat.yml and correct configuration that is supported.
+
 ## Known issues
 N/A
   
