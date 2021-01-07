@@ -832,7 +832,7 @@ docker logs apigateway-openlogging-elk_elk-traffic-monitor-api_1_3fbba4deea37 --
 ```
 server started on port 8080
 ```
-#### Check requests from Admin-Node-Manager
+### Check requests from Admin-Node-Manager
 When using the API-Gateway Traffic-Monitor to monitor requests and having the Admin-Node-Manager re-configured you should see how API-Builder is processing the requests:
 ```
 Request {"method":"GET","url":"/api/elk/v1/api/router/service/instance-1/ops/search?format=json&field=leg&value=0&count=1000&ago=10m&protocol=http","headers":{"host":"localhost:8889","max-forwards":"20","via":"1.0 api-env (Gateway)","accept":"application/json","accept-language":"en-US,en;q=0.5","cookie":"cookie_pressed_153=false; t3-admin-tour-firstshow=1; VIDUSR=1584691147-TE1M3vI9BFWgkA%3d%3d; layout_type=table; portal.logintypesso=false; portal.demo=off; portal.isgridSortIgnoreCase=on; 6e7e1bb1dd446d4cd36889414ccb4cb7=8g9p3kh27t1se22lu6avkmu0a1; joomla_user_state=logged_in; 220b750abfbc8d2f2f878161bab0ab65=62gr71dkre858nc0gjldri18gt","csrf-token":"8E96374767C47BFADC9C606FF969D7CF56FB3F9523E41B34F3B3B269F7302646","referer":"https://api-env:8090/","user-agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:74.0) Gecko/20100101 Firefox/74.0","x-requested-with":"XMLHttpRequest","connection":"close","x-correlationid":"Id-fd7c745ebfaed039b2155481 1"},"remoteAddress":"::ffff:172.25.0.1","remotePort":55916}
@@ -845,7 +845,7 @@ It is important to know that traffic information will still appear in this case,
 tail -f /opt/Axway/APIM/apigateway/trace/nodemanageronapi-env_20200813000000.trc
 ```
 
-#### Check queries send to ElasticSearch
+### Check queries send to ElasticSearch
 In oder to see queries that are send to ElasticSearch by API-Builder you need to run the Docker-Container with `LOG_LEVEL=debug`. You can activate debug in the docker-compose.yml. This gives you in the console of the API-Builder the following output:  
 ```
 Using elastic search query body: {"index":"logstash-openlog","body":{"query":{"bool":{"must":[{"range":{"timestampOriginal":{"gt":1587541496568}}},{"term":{"processInfo.serviceId":"instance-1"}}]}}},"size":"1000","sort":""}
@@ -855,7 +855,7 @@ This helps you to further analyze if ElasticSearch is returning the correct info
 
 <p align="right"><a href="#table-of-content">Top</a></p>
 
-#### ILM Rollover alias error
+### ILM Rollover alias error
 If the solution is configured with different regions, you may see the following error in Kibana or in the Elasticsearch logs:
 ```
 index.lifecycle.rollover_alias [apigw-traffic-summary] does not point to index [apigw-traffic-summary-us-dc1-000002]
@@ -866,6 +866,26 @@ You can also start this modification manually:
 ```
 docker exec apibuilder4elastic wget --no-check-certificate https://localhost:8443/api/elk/v1/api/setup/index/rolloverAlias
 ```
+
+### Check Caching
+
+The solution uses Memcache in API Builder & Logstash to avoid unnecessary duplicate queries for APIs and users. To check if entries are cached correctly, you can connect to the memcached via telnet. Some examples:  
+```
+stats cachedump 2 0
+ITEM ignoredAPIs:###Health Check [19 b; 1609979360 s]
+ITEM ignoredAPIs:/favicon.ico### [19 b; 1609979360 s]
+END
+```
+The example shows in the namespace ignoredAPIs that two entries are contained. So these are not queried again until they have expired.  
+```
+stats cachedump 1 0
+ITEM index_status:openlog###N/A [4 b; 1609980429 s]
+ITEM index_status:trace###N/A [4 b; 1609980396 s]
+END
+```
+This holds the index creation status used by API-Builder & Logstash to determine if an indicies needs to be created or not.  
+
+You can find additional information here: https://techleader.pro/a/90-Accessing-Memcached-from-the-command-line
 
 ## FAQ
 
