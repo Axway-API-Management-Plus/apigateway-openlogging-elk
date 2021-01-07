@@ -885,7 +885,7 @@ END
 ```
 This holds the index creation status used by API-Builder & Logstash to determine if an indicies needs to be created or not.  
 
-You can find additional information here: https://techleader.pro/a/90-Accessing-Memcached-from-the-command-line
+You can find additional information here: https://techleader.pro/a/90-Accessing-Memcached-from-the-command-line. You may also use [PHPMemcachedAdmin](https://github.com/elijaa/phpmemcachedadmin) to get insights about the Memcache instance.
 
 ## FAQ
 
