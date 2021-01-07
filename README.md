@@ -877,6 +877,11 @@ No, the delivered API builder Docker image includes the community version and is
 
 Yes, as of version 2.0.0, each index created in Elasticsearch is assigned an Index Lifecycle Policy ([ILM](https://www.elastic.co/guide/en/elasticsearch/reference/current/index-lifecycle-management.html)). This controls how long data is retained for each data type.
 
+### Can I use this solution for multiple stages?
+
+Technically this would certainly be possible, but definitely not recommended, as you would be mixing data from different stages, such as Prod, Test, Dev. You could certainly separate these with regions in individual indexes, but it still complicates the setup and data management. 
+Another reason are updates of the solution which should certainly be done on a test environment before updating the production environment.
+
 ## Known issues
 N/A
   
