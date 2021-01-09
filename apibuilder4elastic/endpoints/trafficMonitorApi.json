@@ -302,7 +302,15 @@
           }
         },
         "operationId": "payload",
-        "description": "Endpoint triggered to load the transaction payload"
+        "description": "Endpoint triggered to load the transaction payload",
+        "parameters": [
+          {
+            "type": "string",
+            "in": "query",
+            "description": "If given, the payload is taken from the region folder",
+            "name": "region"
+          }
+        ]
       },
       "parameters": [
         {

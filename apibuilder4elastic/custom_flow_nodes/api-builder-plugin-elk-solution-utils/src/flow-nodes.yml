@@ -158,6 +158,12 @@ flow-nodes:
               enum:
                 - sent
                 - received
+          region:
+            name: Region
+            description: Returns the filename including the region prefix
+            required: false
+            schema:
+              type: string
         outputs:
           next:
             name: Next

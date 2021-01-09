@@ -166,7 +166,7 @@ async function updateRolloverAlias(params, options) {
 }
 
 async function getPayloadFilename(params, options) {
-	const { trafficDetails, correlationId, legNo, direction } = params;
+	const { trafficDetails, correlationId, legNo, direction, region } = params;
 	const { logger } = options;
 	if (!trafficDetails) {
 		throw new Error('Missing required parameter: trafficDetails');
@@ -219,6 +219,9 @@ async function getPayloadFilename(params, options) {
 	}
 	// 2020-07-03/08.55/0455ff5e82267be8182a553d-1-received
 	var extractedFileName = match[1];
+	if(region) {
+		extractedFileName = region.toLowerCase() + "/" + extractedFileName;
+	}
 	return extractedFileName;
 }
 
