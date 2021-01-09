@@ -48,9 +48,16 @@
 				{
 					"name": "filename",
 					"type": "string",
-					"value": "\"${config.payloadFolder}/${payloadFilename}\"",
+					"value": "\"${config.payload.folder}/${payloadFilename}\"",
 					"metaName": "Source filename",
 					"metaDescription": "The filename to read."
+				},
+				{
+					"name": "limit",
+					"type": "jsonpath",
+					"value": "$.config.payload.limit",
+					"metaName": "Max read limit",
+					"metaDescription": "Read the file up to a certain limit given in Bytes."
 				}
 			],
 			"outputs": {
@@ -73,58 +80,6 @@
 				}
 			},
 			"metaMethod": "Read file"
-		},
-		"setcontext.1": {
-			"type": "nodehandler://axway-flow/setcontext",
-			"name": "Mock response",
-			"method": "setcontext",
-			"parameters": [
-				{
-					"name": "value",
-					"type": "string",
-					"value": "\"SFRUUC8xLjEgMjAwIE9LDQpEYXRlOiBUaHUsIDA3IEphbiAyMDIxIDIxOjIxOjMzIEdNVA0KU2VydmVyOiBHYXRld2F5DQpDb25uZWN0aW9uOiBjbG9zZQ0KWC1Db3JyZWxhdGlvbklEOiBJZC01ZDdiZjc1ZmFlMDBlNjRhMDI0NWZkMjUgMA0KQWNjZXB0OiB0ZXh0L2h0bWwsYXBwbGljYXRpb24veGh0bWwreG1sLGFwcGxpY2F0aW9uL3htbDtxPTAuOSxpbWFnZS93ZWJwLCovKjtxPTAuOA0KQWNjZXB0LUxhbmd1YWdlOiBlbi1VUyxlbjtxPTAuNQ0KQ29va2llOiBfZ2E9R0ExLjEuMTc3NTA5Mzc1LjE1OTM0NDIwMDE7IGNvb2tpZV9wcmVzc2VkXzE1Mz1mYWxzZTsgX3JkdF91dWlkPTE2MDUyNjg4OTUwODMuNTQzM2IyNDUtM2IwMi00ZGMzLWI4MmYtMTQ2MGVmNGNjY2JiOyBfZmJwPWZiLjAuMTYwNTI2ODg5NjU5MC4yNjM1OTYwNDY7IGljb25TaXplPTE2eDE2DQpIb3N0OiBhcGktZW52OjgwODANClVwZ3JhZGUtSW5zZWN1cmUtUmVxdWVzdHM6IDENClVzZXItQWdlbnQ6IE1vemlsbGEvNS4wIChXaW5kb3dzIE5UIDEwLjA7IFdpbjY0OyB4NjQ7IHJ2Ojg0LjApIEdlY2tvLzIwMTAwMTAxIEZpcmVmb3gvODQuMA0KQ29udGVudC1UeXBlOiB0ZXh0L3htbA0KDQo8c3RhdHVzPm9rPC9zdGF0dXM+\"",
-					"metaName": "Value"
-				}
-			],
-			"outputs": {
-				"next": {
-					"context": "$.response.body",
-					"routes": [
-						"http.1"
-					],
-					"metaName": "Next"
-				}
-			},
-			"metaMethod": "Set Context"
-		},
-		"http.1": {
-			"type": "nodehandler://axway-flow/http",
-			"name": "Set HTTP Response",
-			"method": "setresponse",
-			"parameters": [
-				{
-					"name": "status",
-					"type": "number",
-					"value": "200",
-					"metaName": "Status",
-					"metaDescription": "The HTTP status code"
-				},
-				{
-					"name": "body",
-					"type": "jsonpath",
-					"value": "$.response.body",
-					"metaName": "Body",
-					"metaDescription": "The response payload"
-				}
-			],
-			"outputs": {
-				"next": {
-					"context": "$.response",
-					"routes": [],
-					"metaName": "Next"
-				}
-			},
-			"metaMethod": "Set HTTP Response"
 		},
 		"elasticsearch.1": {
 			"type": "nodehandler://@axway-api-builder-ext/api-builder-plugin-fn-elasticsearch/elasticsearch",

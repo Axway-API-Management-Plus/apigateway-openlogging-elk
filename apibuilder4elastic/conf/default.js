@@ -23,9 +23,13 @@ module.exports = {
 
 	authorizationMode: process.env.USER_AUTHORIZATION_MODE || 'ManagerOrganization',
 
-	// This mainly used for tests point the project to test payloads
-	payloadFolder: process.env.PAYLOAD_FOLDER || '/var/log/payloads',
-	
+	// Payload configuration settings
+	payload: {
+		// Mainly used for tests as normally the folder to payload should be fixed
+		folder: process.env.PAYLOAD_FOLDER || '/var/log/payloads', 
+		// Limit the payload to a certain size (in Byte)
+		limit: process.env.PAYLOAD_LIMIT || 50000
+	},
 
 	// Mock the API-Creation endpoint, which is required for the Logstash pipeline tests
 	mockIndexCreation: ("true" == process.env.MOCK_API_CREATION) ? true : false,
