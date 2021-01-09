@@ -79,6 +79,7 @@ services:
       - elastic
     volumes:
       - ${PWD}/config:/app/config
+      - ${APIGATEWAY_PAYLOADS_FOLDER}:/var/log/payloads
     logging:
       options:
         max-file: "3"

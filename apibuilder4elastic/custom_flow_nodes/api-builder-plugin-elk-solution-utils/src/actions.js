@@ -165,9 +165,67 @@ async function updateRolloverAlias(params, options) {
 	return updatedRolloverAliasResponse;
 }
 
+async function getPayloadFilename(params, options) {
+	const { trafficDetails, correlationId, legNo, direction } = params;
+	const { logger } = options;
+	if (!trafficDetails) {
+		throw new Error('Missing required parameter: trafficDetails');
+	}
+	if (typeof(trafficDetails) != 'object') {
+		throw new Error('TrafficDetails must be an object');
+	}
+	if (!correlationId) {
+		throw new Error('Missing required parameter: correlationId');
+	}
+	if (!legNo) {
+		throw new Error('Missing required parameter: legNo');
+	}
+	if (!direction) {
+		throw new Error('Missing required parameter: direction');
+	}
+	if(direction != "sent" && direction != "received") {
+		throw new Error('Parameter: direction must be either sent or received.');
+	}
+	if(trafficDetails.body.hits.hits.length != 1) {
+		throw new Error(`Traffic-Details must have one hit. Got: ${trafficDetails.hits}`);
+	}
+	if(!trafficDetails.body.hits.hits[0]._source.transactionElements) {
+		throw new Error(`Traffic-Details source must contain transactionElements.`);
+	}
+	if(!trafficDetails.body.hits.hits[0]._source.transactionElements[`leg${legNo}`]) {
+		throw new Error(`No TransactionElement found with legNo: ${legNo}`);
+	}
+	var details = trafficDetails.body.hits.hits[0]._source;
+	if(details.correlationId != correlationId) {
+		throw new Error(`Traffic-Details correlationID: ${details.correlationId} does not match to correlationId: ${correlationId}`);
+	}
+	var transactionElement = details.transactionElements[`leg${legNo}`];
+	var protocolInfo = transactionElement.protocolInfo;
+	var filename;
+	if(direction == "received") {
+		filename = protocolInfo["recvPayload"]
+	} else {
+		filename = protocolInfo["sentPayload"]
+	}
+	if(!filename) {
+		return options.setOutput('notFound', `No ${direction} payload for transaction: ${correlationId} on legNo: ${legNo}`);
+	}
+	// Example:
+	// file:///opt/Axway/APIM/apigateway/logs/payloads/2020-07-03/08.55/0455ff5e82267be8182a553d-1-received
+	var regex = /.*\/(\d{4}-\d{2}-\d{2}\/\d{2}\.\d{2}\/.*-\d+-(?:sent|received))/;
+	var match = regex.exec(filename);
+	if(match == null) {
+		throw new Error(`Cannot parse given filename: '${filename}'`);
+	}
+	// 2020-07-03/08.55/0455ff5e82267be8182a553d-1-received
+	var extractedFileName = match[1];
+	return extractedFileName;
+}
+
 module.exports = {
 	getIndexConfig,
 	getIndicesForLogtype,
 	createIndices, 
-	updateRolloverAlias
+	updateRolloverAlias,
+	getPayloadFilename
 };

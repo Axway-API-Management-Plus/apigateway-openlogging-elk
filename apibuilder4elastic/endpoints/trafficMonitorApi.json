@@ -145,7 +145,7 @@
           "name": "correlationID",
           "in": "path",
           "required": true,
-          "description": "identifies the transaction"
+          "description": "Transaction ID"
         }
       ]
     },
@@ -199,7 +199,8 @@
           "type": "string",
           "name": "serviceID",
           "in": "path",
-          "required": true
+          "required": true,
+          "description": "instance of the API Gateway e.g.instance-1"
         },
         {
           "type": "string",
@@ -285,6 +286,54 @@
         ],
         "x-flow": "trafficMonitorApi-trace"
       }
+    },
+    "/router/service/{serviceID}/ops/stream/{correlationID}/{legID}/{direction}": {
+      "get": {
+        "summary": "Payload API",
+        "tags": [],
+        "x-flow": "trafficMonitorApi-payload",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          }
+        },
+        "operationId": "payload",
+        "description": "Endpoint triggered to load the transaction payload"
+      },
+      "parameters": [
+        {
+          "type": "string",
+          "name": "serviceID",
+          "in": "path",
+          "required": true,
+          "description": "instance of the API Gateway e.g.instance-1"
+        },
+        {
+          "type": "string",
+          "name": "correlationID",
+          "in": "path",
+          "required": true,
+          "description": "Transaction ID"
+        },
+        {
+          "type": "string",
+          "name": "legID",
+          "in": "path",
+          "required": true,
+          "description": "Leg number"
+        },
+        {
+          "type": "string",
+          "name": "direction",
+          "in": "path",
+          "required": true,
+          "description": "sent or received"
+        }
+      ]
     }
   },
   "basePath": "/elk/v1/api"

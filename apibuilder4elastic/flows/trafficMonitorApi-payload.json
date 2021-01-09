@@ -1,0 +1,346 @@
+{
+	"schemaVersion": "4",
+	"info": {
+		"name": "Payload API",
+		"description": "Triggered when payload is requested"
+	},
+	"parameter": {
+		"properties": {
+			"params": {
+				"type": "object",
+				"description": "The parameters from the endpoint."
+			},
+			"request": {
+				"type": "object",
+				"description": "The HTTP request."
+			},
+			"config": {
+				"type": "object",
+				"description": "The service's configuration"
+			},
+			"env": {
+				"type": "object",
+				"description": "The host OS environment"
+			}
+		},
+		"additionalProperties": false,
+		"required": [
+			"request",
+			"config",
+			"env",
+			"params"
+		]
+	},
+	"start": "javascript.1",
+	"nodes": {
+		"file.1": {
+			"type": "nodehandler://@axway-api-builder-ext/api-builder-plugin-fn-file/file",
+			"name": "Read payload file",
+			"method": "readFile",
+			"parameters": [
+				{
+					"name": "data",
+					"type": "jsonpath",
+					"value": "$",
+					"metaName": "Data",
+					"metaDescription": "If you are using a dynamic filename that contains variables, you need to provide this data object, which is used to replace your variables. Example: ${conf.myFolder}/some/static/${filename}"
+				},
+				{
+					"name": "filename",
+					"type": "string",
+					"value": "\"${config.payloadFolder}/${payloadFilename}\"",
+					"metaName": "Source filename",
+					"metaDescription": "The filename to read."
+				}
+			],
+			"outputs": {
+				"next": {
+					"routes": [
+						"base64.1"
+					],
+					"context": "$.fileContent",
+					"metaName": "Next"
+				},
+				"notFound": {
+					"routes": [],
+					"context": "$.result",
+					"metaName": "Not found"
+				},
+				"error": {
+					"routes": [],
+					"context": "$.error",
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Read file"
+		},
+		"setcontext.1": {
+			"type": "nodehandler://axway-flow/setcontext",
+			"name": "Mock response",
+			"method": "setcontext",
+			"parameters": [
+				{
+					"name": "value",
+					"type": "string",
+					"value": "\"SFRUUC8xLjEgMjAwIE9LDQpEYXRlOiBUaHUsIDA3IEphbiAyMDIxIDIxOjIxOjMzIEdNVA0KU2VydmVyOiBHYXRld2F5DQpDb25uZWN0aW9uOiBjbG9zZQ0KWC1Db3JyZWxhdGlvbklEOiBJZC01ZDdiZjc1ZmFlMDBlNjRhMDI0NWZkMjUgMA0KQWNjZXB0OiB0ZXh0L2h0bWwsYXBwbGljYXRpb24veGh0bWwreG1sLGFwcGxpY2F0aW9uL3htbDtxPTAuOSxpbWFnZS93ZWJwLCovKjtxPTAuOA0KQWNjZXB0LUxhbmd1YWdlOiBlbi1VUyxlbjtxPTAuNQ0KQ29va2llOiBfZ2E9R0ExLjEuMTc3NTA5Mzc1LjE1OTM0NDIwMDE7IGNvb2tpZV9wcmVzc2VkXzE1Mz1mYWxzZTsgX3JkdF91dWlkPTE2MDUyNjg4OTUwODMuNTQzM2IyNDUtM2IwMi00ZGMzLWI4MmYtMTQ2MGVmNGNjY2JiOyBfZmJwPWZiLjAuMTYwNTI2ODg5NjU5MC4yNjM1OTYwNDY7IGljb25TaXplPTE2eDE2DQpIb3N0OiBhcGktZW52OjgwODANClVwZ3JhZGUtSW5zZWN1cmUtUmVxdWVzdHM6IDENClVzZXItQWdlbnQ6IE1vemlsbGEvNS4wIChXaW5kb3dzIE5UIDEwLjA7IFdpbjY0OyB4NjQ7IHJ2Ojg0LjApIEdlY2tvLzIwMTAwMTAxIEZpcmVmb3gvODQuMA0KQ29udGVudC1UeXBlOiB0ZXh0L3htbA0KDQo8c3RhdHVzPm9rPC9zdGF0dXM+\"",
+					"metaName": "Value"
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.response.body",
+					"routes": [
+						"http.1"
+					],
+					"metaName": "Next"
+				}
+			},
+			"metaMethod": "Set Context"
+		},
+		"http.1": {
+			"type": "nodehandler://axway-flow/http",
+			"name": "Set HTTP Response",
+			"method": "setresponse",
+			"parameters": [
+				{
+					"name": "status",
+					"type": "number",
+					"value": "200",
+					"metaName": "Status",
+					"metaDescription": "The HTTP status code"
+				},
+				{
+					"name": "body",
+					"type": "jsonpath",
+					"value": "$.response.body",
+					"metaName": "Body",
+					"metaDescription": "The response payload"
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.response",
+					"routes": [],
+					"metaName": "Next"
+				}
+			},
+			"metaMethod": "Set HTTP Response"
+		},
+		"elasticsearch.1": {
+			"type": "nodehandler://@axway-api-builder-ext/api-builder-plugin-fn-elasticsearch/elasticsearch",
+			"name": "Search details",
+			"method": "search",
+			"parameters": [
+				{
+					"name": "index",
+					"type": "jsonpath",
+					"value": "$.index",
+					"metaName": "Index",
+					"metaDescription": "Comma-separated list or wildcard expression of index names used to limit the request."
+				},
+				{
+					"name": "query",
+					"type": "jsonpath",
+					"value": "$.elasticsearch.query",
+					"metaName": "Query",
+					"metaDescription": "Defines the search definition using the Query DSL. Learn more: https://www.elastic.co/guide/en/elasticsearch/reference/7.x/query-dsl.html"
+				}
+			],
+			"outputs": {
+				"next": {
+					"routes": [
+						"elk-solution-utils.1"
+					],
+					"context": "$.transactionDetails",
+					"metaName": "Next"
+				},
+				"error": {
+					"routes": [],
+					"context": "$.error",
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Search"
+		},
+		"javascript.1": {
+			"type": "nodehandler://@axway/api-builder-plugin-fn-javascript/javascript",
+			"name": "Get Details Index",
+			"method": "Execute",
+			"parameters": [
+				{
+					"name": "data",
+					"type": "jsonpath",
+					"value": "$",
+					"metaName": "data",
+					"metaDescription": "The value to apply as the `data` argument to the JavaScript code. For objects and arrays, `data` is passed by reference."
+				},
+				{
+					"name": "code",
+					"type": "string",
+					"value": "\"// Perhaps there is a region given\\n  let region = data.params.region;\\n  \\n  let index = 'apigw-traffic-details';\\n  // Atach the region if given\\n  if(region) {\\n    index = `${index}-${region.toLowerCase()}`;\\n  }\\n  index = `${index}-*`;\\n  \\n  if(data.config.testElasticIndex) {\\n    index = data.config.testElasticIndex;\\n  }\\n  \\n  return index;\"",
+					"metaName": "code",
+					"metaDescription": "A JavaScript function body. Supports `await` and returning promises."
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.index",
+					"routes": [
+						"javascript.2"
+					],
+					"metaName": "Next"
+				},
+				"error": {
+					"context": "$.error",
+					"routes": [],
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Execute"
+		},
+		"javascript.2": {
+			"type": "nodehandler://@axway/api-builder-plugin-fn-javascript/javascript",
+			"name": "Create query",
+			"method": "Execute",
+			"parameters": [
+				{
+					"name": "code",
+					"type": "string",
+					"value": "\"let elasticQuery = ({\\n    \\\"bool\\\": {\\n      \\\"must\\\": [\\n        {\\\"term\\\": {\\\"correlationId\\\": data.params.correlationID}},\\n          {\\\"term\\\": {\\\"processInfo.serviceId\\\": data.params.serviceID}}\\n      ]\\n    }\\n  });\\n  return elasticQuery;\"",
+					"metaName": "code",
+					"metaDescription": "A JavaScript function body. Supports `await` and returning promises."
+				},
+				{
+					"name": "data",
+					"type": "jsonpath",
+					"value": "$",
+					"metaName": "data",
+					"metaDescription": "The value to apply as the `data` argument to the JavaScript code. For objects and arrays, `data` is passed by reference."
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.elasticsearch.query",
+					"routes": [
+						"elasticsearch.1"
+					],
+					"metaName": "Next"
+				},
+				"error": {
+					"context": "$.error",
+					"routes": [],
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Execute"
+		},
+		"http.2": {
+			"type": "nodehandler://axway-flow/http",
+			"name": "Set HTTP Response",
+			"method": "setresponse",
+			"parameters": [
+				{
+					"name": "status",
+					"type": "number",
+					"value": "200",
+					"metaName": "Status",
+					"metaDescription": "The HTTP status code"
+				},
+				{
+					"name": "body",
+					"type": "jsonpath",
+					"value": "$.b64data",
+					"metaName": "Body",
+					"metaDescription": "The response payload"
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.response",
+					"routes": [],
+					"metaName": "Next"
+				}
+			},
+			"metaMethod": "Set HTTP Response"
+		},
+		"elk-solution-utils.1": {
+			"type": "nodehandler://api-builder-plugin-elk-solution-utils/elk-solution-utils",
+			"name": "Get payload filename",
+			"method": "getPayloadFilename",
+			"parameters": [
+				{
+					"name": "correlationId",
+					"type": "jsonpath",
+					"value": "$.params.correlationID",
+					"metaName": "CorrelationId",
+					"metaDescription": "The correlation ID of the transaction."
+				},
+				{
+					"name": "direction",
+					"type": "jsonpath",
+					"value": "$.params.direction",
+					"metaName": "Direction",
+					"metaDescription": "The direction. Either sent or received"
+				},
+				{
+					"name": "trafficDetails",
+					"type": "jsonpath",
+					"value": "$.transactionDetails",
+					"metaName": "Traffic-Details",
+					"metaDescription": "Traffic details returned from Elasticsearch for the selected correlationID"
+				},
+				{
+					"name": "legNo",
+					"type": "jsonpath",
+					"value": "$.params.legID",
+					"metaName": "Leg-Number",
+					"metaDescription": "The Leg-Number"
+				}
+			],
+			"outputs": {
+				"next": {
+					"routes": [
+						"file.1"
+					],
+					"context": "$.payloadFilename",
+					"metaName": "Next"
+				},
+				"notFound": {
+					"routes": [],
+					"context": "$.notFoundMessage",
+					"metaName": "Not found"
+				},
+				"error": {
+					"routes": [],
+					"context": "$.error",
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Get payload filename"
+		},
+		"base64.1": {
+			"type": "nodehandler://@axway/api-builder-plugin-fn-base64/base64",
+			"name": "Encode",
+			"method": "encode",
+			"parameters": [
+				{
+					"name": "data",
+					"type": "jsonpath",
+					"value": "$.fileContent",
+					"metaName": "Data",
+					"metaDescription": "The data to encode."
+				}
+			],
+			"outputs": {
+				"encoded": {
+					"routes": [
+						"http.2"
+					],
+					"context": "$.b64data",
+					"metaName": "Next"
+				}
+			},
+			"metaMethod": "Encode"
+		}
+	}
+}

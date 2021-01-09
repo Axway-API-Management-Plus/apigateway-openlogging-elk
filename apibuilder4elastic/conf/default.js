@@ -22,6 +22,9 @@ module.exports = {
 	indexConfigFile: process.env.INDEX_CONFIG_FILE || 'elasticsearch_config/index_config.json',
 
 	authorizationMode: process.env.USER_AUTHORIZATION_MODE || 'ManagerOrganization',
+
+	// This mainly used for tests point the project to test payloads
+	payloadFolder: process.env.PAYLOAD_FOLDER || '/var/log/payloads',
 	
 
 	// Mock the API-Creation endpoint, which is required for the Logstash pipeline tests

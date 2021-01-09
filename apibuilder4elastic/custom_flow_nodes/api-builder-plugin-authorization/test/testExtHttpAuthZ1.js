@@ -16,7 +16,6 @@ describe('flow-node Authorization', () => {
 	let plugin;
 	let flowNode;
 	beforeEach(async () => {
-		debugger;
 		process.env.AUTHZ_CONFIG = '../test/testConfig/authorization-config-extAuthZ.js';
 		plugin = await MockRuntime.loadPlugin(getPlugin);
 		plugin.setOptions({ validateOutputs: true });

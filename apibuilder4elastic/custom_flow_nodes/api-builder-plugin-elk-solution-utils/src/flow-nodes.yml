@@ -126,3 +126,54 @@ flow-nodes:
             properties:
               message:
                 type: string
+
+      getPayloadFilename:
+        name: Get payload filename
+        description: Returns the filename of the payload based on the given Traffic-Details returned from Elasticsearch, the correlationId, Leg-Number and direction.
+        parameters:
+          correlationId:
+            name: CorrelationId
+            description: "The correlation ID of the transaction."
+            required: true
+            schema:
+              type: string
+          trafficDetails:
+            name: Traffic-Details
+            description: "Traffic details returned from Elasticsearch for the selected correlationID"
+            required: true
+            schema:
+              type: object
+          legNo:
+            name: Leg-Number
+            description: "The Leg-Number"
+            required: true
+            schema:
+              type: string
+          direction:
+            name: Direction
+            description: "The direction. Either sent or received"
+            required: true
+            schema:
+              type: string
+              enum:
+                - sent
+                - received
+        outputs:
+          next:
+            name: Next
+            description: Returns the payload filename based on the given Traffic-Details.
+            context: $.payloadFilename
+            schema:
+              type: string
+          notFound:
+            name: Not found
+            description: Exit used if no payload is given in the traffic details for the given parameters.
+            context: $.notFoundMessage
+            schema:
+              type: string
+          error:
+            name: Error
+            description: An unexpected error happened
+            context: $.error
+            schema:
+              type: object

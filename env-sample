@@ -36,6 +36,7 @@ APIGATEWAY_OPENTRAFFIC_FOLDER=/home/localuser/Axway-x.y.z/apigateway/logs/opentr
 APIGATEWAY_TRACES_FOLDER=/home/localuser/Axway-x.y.z/apigateway/groups/group-2/instance-1/trace
 APIGATEWAY_EVENTS_FOLDER=/home/localuser/Axway-x.y.z/apigateway/events
 APIGATEWAY_AUDITLOGS_FOLDER=/home/localuser/Axway-x.y.z/apigateway/logs
+APIGATEWAY_PAYLOADS_FOLDER=/home/localuser/Axway-x.y.z/apigateway/logs/payloads
 
 # ----------------------------------------------------------------------------------------------
 # Is used by almost all services to communicate with Elasticsearch. Either to send events, 
