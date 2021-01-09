@@ -55,7 +55,7 @@
 				{
 					"name": "limit",
 					"type": "jsonpath",
-					"value": "$.config.payload.limit",
+					"value": "$.payloadLimit",
 					"metaName": "Max read limit",
 					"metaDescription": "Read the file up to a certain limit given in Bytes."
 				}
@@ -255,7 +255,8 @@
 			"outputs": {
 				"next": {
 					"routes": [
-						"file.1"
+						"file.1",
+						"condition.1"
 					],
 					"context": "$.payloadFilename",
 					"metaName": "Next"
@@ -296,6 +297,67 @@
 				}
 			},
 			"metaMethod": "Encode"
+		},
+		"condition.1": {
+			"type": "nodehandler://axway-flow/condition",
+			"name": "Is show request?",
+			"method": "equals",
+			"parameters": [
+				{
+					"name": "value",
+					"type": "string",
+					"value": "\"*/*\"",
+					"metaName": "Value",
+					"metaDescription": "The value to test input against."
+				},
+				{
+					"name": "source",
+					"type": "jsonpath",
+					"value": "$.request.headers.accept",
+					"metaName": "Source",
+					"metaDescription": "The input to test."
+				}
+			],
+			"outputs": {
+				"true": {
+					"routes": [
+						"setcontext.1"
+					],
+					"context": "$.equals",
+					"metaName": "True"
+				},
+				"false": {
+					"routes": [
+						"file.1"
+					],
+					"context": "$.equals",
+					"metaName": "False"
+				}
+			},
+			"metaMethod": "Equals"
+		},
+		"setcontext.1": {
+			"type": "nodehandler://axway-flow/setcontext",
+			"name": "Limit payload size",
+			"method": "setcontext",
+			"parameters": [
+				{
+					"name": "value",
+					"type": "jsonpath",
+					"value": "$.config.payload.limit",
+					"metaName": "Value"
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.payloadLimit",
+					"routes": [
+						"file.1"
+					],
+					"metaName": "Next"
+				}
+			},
+			"metaMethod": "Set Context"
 		}
 	}
 }

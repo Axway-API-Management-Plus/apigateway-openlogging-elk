@@ -32,6 +32,8 @@ describe('Payload', function () {
 				envLoader.config({ path: envFilePath });
 			}
 			process.env.PAYLOAD_FOLDER = payloadFolder;
+			// Should be limited to bytes => This is a large payload, that should be limited.
+			process.env.PAYLOAD_LIMIT = 48;
 			server = startApiBuilder();
 			auth = {
 				user: server.apibuilder.config.apikey || 'test',
@@ -78,7 +80,7 @@ describe('Payload', function () {
 			});
 		});
 
-		it.only('[Payload-0002] Should return the received payload from leg 1', () => {
+		it('[Payload-0002] Should return the received payload from leg 1', () => {
 			const testPayload = fs.readFileSync(`${payloadFolder}/2020-07-03/08.55/0455ff5e82267be8182a553d-1-received`);
 			return requestAsync({
 				method: 'GET',
@@ -100,16 +102,37 @@ describe('Payload', function () {
 			});
 		});
 
-		it('[Payload-0003] Payload should be limited to a certain size', () => {
-			const testPayload = fs.readFileSync(`${payloadFolder}/2021-01-09/10.00/LargePayloadTest-1-received`);
-			// Should be limited to 2 KB
-			PAYLOAD_LIMIT = 2;
+		it('[Payload-0003] Payload should shown and is limited to a certain size', () => {
 			return requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/stream/LargePayloadTest/1/received`,
 				headers: {
 					'cookie': 'VIDUSR=Getinfo-0002-DAVID-1597762865-iUI5a8+v+zLkNA%3d%3d; APIMANAGERSTATIC=92122e5c-6bb3-4fd1-ad2f-08b65554d116', 
-					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
+					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC', 
+					'Accept': '*/*' // That is the way the SHOW request is triggered
+				},
+				auth: auth,
+				json: true
+			}).then(({ response, body }) => {
+				expect(response.statusCode).to.equal(200);
+				expect(body).to.be.an('String');
+				const bodyBase64Encoded = Buffer.from(body, 'base64');
+				let decodedDody = bodyBase64Encoded.toString('ascii');
+				expect(decodedDody).to.equal("This is a large payload, that should be limited.");
+				//expect(decodedDody).to.include('X-CorrelationID: Id-5d7bf75fae00e64a0245fd25');
+				//expect(decodedDody).to.include('Server: Gateway');
+			});
+		});
+
+		it('[Payload-0004] Payload should be SAVED and is NOT limited to a certain size', () => {
+			const testPayload = fs.readFileSync(`${payloadFolder}/2021-01-09/10.00/LargePayloadTest-1-received`);
+			return requestAsync({
+				method: 'GET',
+				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/stream/LargePayloadTest/1/received`,
+				headers: {
+					'cookie': 'VIDUSR=Getinfo-0002-DAVID-1597762865-iUI5a8+v+zLkNA%3d%3d; APIMANAGERSTATIC=92122e5c-6bb3-4fd1-ad2f-08b65554d116', 
+					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC', 
+					'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' // Payload requested for SAVE
 				},
 				auth: auth,
 				json: true
