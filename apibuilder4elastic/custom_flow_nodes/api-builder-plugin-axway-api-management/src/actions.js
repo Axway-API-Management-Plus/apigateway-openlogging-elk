@@ -56,9 +56,9 @@ async function lookupCurrentUser(params, options) {
 		throw new Error('You must provide either the VIDUSR cookie + csrf-token or an HTTP-Basic Authorization header.');
 	}
 	if(requestHeaders.authorization) {
-		logger.trace(`Trying to authorize user based on Authorization header.`);
+		logger.debug(`Trying to authorize user based on Authorization header.`);
 		user.loginName = await _getCurrentGWUser(headers = {'Authorization': `${requestHeaders.authorization}`});
-		logger.trace(`Authorized user is: ${user.loginName}`);
+		logger.debug(`Authorized user is: ${user.loginName}`);
 		permissions = await _getCurrentGWPermissions(headers = {'Authorization': `${requestHeaders.authorization}`}, loginName);
 	} else {
 		const VIDUSR = _getCookie(requestHeaders.cookie, "VIDUSR");

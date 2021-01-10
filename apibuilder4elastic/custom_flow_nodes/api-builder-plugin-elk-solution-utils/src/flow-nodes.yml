@@ -177,6 +177,12 @@ flow-nodes:
             context: $.notFoundMessage
             schema:
               type: string
+          noAccess:
+            name: No access
+            description: Exit used if transactionDetails hit is 0. Means, that the query returns no result, which is very likely because the user has no access.
+            context: $.noAccessMessage
+            schema:
+              type: string
           error:
             name: Error
             description: An unexpected error happened

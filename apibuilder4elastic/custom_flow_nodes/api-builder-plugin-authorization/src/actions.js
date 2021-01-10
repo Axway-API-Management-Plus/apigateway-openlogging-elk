@@ -49,7 +49,7 @@ async function addApiManagerOrganizationFilter(params, options) {
 	if (!(user instanceof Object)) {
 		throw new Error('Parameter: user must be an object');
 	}
-	if (!(elasticQuery instanceof Object)) {
+	if (typeof elasticQuery != 'object') {
 		throw new Error('Parameter: elasticQuery must be an object');
 	}
 	var filters = elasticQuery.bool.must;

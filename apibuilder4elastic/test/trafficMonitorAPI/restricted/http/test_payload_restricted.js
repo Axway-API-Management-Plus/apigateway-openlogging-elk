@@ -5,22 +5,23 @@ const fs = require('fs');
 const nock = require('nock');
 const envLoader = require('dotenv');
 
-describe('Endpoints', function () {
+describe('Payload restricted', function () {
 	this.timeout(30000);
 	let server;
 	let auth;
-	const indexName = `apigw-traffic-summary-search_count_test_${getRandomInt(9999)}`;
+	const indexName = `apigw-traffic-details-payload_test_${getRandomInt(9999)}`;
+	const payloadFolder = `./test/mockedReplies/payloads`;
 
 	/**
 	 * Start API Builder.
 	 */
 	before(() => {
 		return new Promise(function(resolve, reject){
-			delete process.env.AUTHZ_CONFIG; // Make sure, it is not using from a previous test
 			const envFilePath = path.join(__dirname, '../../../.env');
 			if (fs.existsSync(envFilePath)) {
 				envLoader.config({ path: envFilePath });
 			}
+			process.env.PAYLOAD_FOLDER = payloadFolder;
 			server = startApiBuilder();
 			auth = {
 				user: server.apibuilder.config.apikey || 'test',
@@ -30,8 +31,8 @@ describe('Endpoints', function () {
 			elasticConfig = server.apibuilder.config.pluginConfig['@axway-api-builder-ext/api-builder-plugin-fn-elasticsearch'].elastic;
 			server.started
 			.then(() => {
-				const entryset = require('../../../documents/http/search_count_documents');
-				sendToElasticsearch(elasticConfig, indexName, 'traffic-summary/index_template.json', entryset)
+				const entryset = require('../../../documents/http/getinfo_test_documents');
+				sendToElasticsearch(elasticConfig, indexName, 'traffic-details/index_template.json', entryset)
 				.then(() => {
 					resolve();
 				})
@@ -47,8 +48,8 @@ describe('Endpoints', function () {
 		stopApiBuilder(server);
 	});
 
-	describe('Search', () => {
-		it('[Restricted-Search-0001] Execute a search as Org-Admin without any filter - Only two of them belong to Chris-Org', () => {
+	describe('Payload restricted', () => {
+		it('[Restricted-Payload-0001] Should return 403 as payload belongs to different organization', () => {
 			nock('https://mocked-api-gateway:8090').get('/api/rbac/currentuser').reply(200, { "result": "chris" });
 			nock('https://mocked-api-gateway:8090').get('/api/rbac/permissions/currentuser').replyWithFile(200, './test/mockedReplies/apigateway/operatorChris.json');
 			nock('https://mocked-api-gateway:8075').get(`/api/portal/v1.3/users?field=loginName&op=eq&value=chris&field=enabled&op=eq&value=enabled`).replyWithFile(200, './test/mockedReplies/apimanager/apiManagerUserChris.json');		
@@ -71,7 +72,7 @@ describe('Endpoints', function () {
 			});
 		});
 
-		it('[Restricted-Search-0002] Execute a search - NOT being an API-GW-Admin - But admin in API-Manager', () => {
+		it('[Restricted-Payload-0002] Execute a search - NOT being an API-GW-Admin - But admin in API-Manager', () => {
 			// For that kind of user all APIs having a service-context should be returned
 			nock('https://mocked-api-gateway:8090').get('/api/rbac/currentuser').reply(200, { "result": "max" });
 			nock('https://mocked-api-gateway:8090').get('/api/rbac/permissions/currentuser').replyWithFile(200, './test/mockedReplies/apigateway/operatorMax.json');
@@ -95,15 +96,15 @@ describe('Endpoints', function () {
 			});
 		});
 
-		it('[Restricted-Search-0003] Execute a search - NOT being an API-GW-Admin - Normal user in API-Manager', () => {
-			// For this user, the result-set is limited to users organization
+		it('[Restricted-Payload-0003] Execute a search - NOT being an API-GW-Admin - Normal user in API-Manager - Should return 403', () => {
+			// For that kind of user all APIs having a service-context should be returned
 			nock('https://mocked-api-gateway:8090').get('/api/rbac/currentuser').reply(200, { "result": "rene" });
 			nock('https://mocked-api-gateway:8090').get('/api/rbac/permissions/currentuser').replyWithFile(200, './test/mockedReplies/apigateway/operatorRene.json');
 			nock('https://mocked-api-gateway:8075').get(`/api/portal/v1.3/users?field=loginName&op=eq&value=rene&field=enabled&op=eq&value=enabled`).replyWithFile(200, './test/mockedReplies/apimanager/apiManagerUserRene.json');		
 			nock('https://mocked-api-gateway:8075').get(`/api/portal/v1.3/organizations/2bfaa1c2-49ab-4059-832d-MAX`).replyWithFile(200, './test/mockedReplies/apimanager/organizationMax.json');
 			return requestAsync({
 				method: 'GET',
-				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search`,
+				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/stream/0455ff5e82267be8182a553d/0/sent`,
 				headers: {
 					'cookie': '_ga=GA1.1.177509375.1593442001; iconSize=16x16; cookie_pressed_153=false; portal.logintypesso=false; portal.demo=off; portal.isgridSortIgnoreCase=on; VIDUSR=Restricted-Search-0003-RENE-1597762865-iUI5a8+v+zLkNA%3d%3d; APIMANAGERSTATIC=92122e5c-6bb3-4fd1-ad2f-08b65554d116', 
 					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
@@ -111,10 +112,7 @@ describe('Endpoints', function () {
 				auth: auth,
 				json: true
 			}).then(({ response, body }) => {
-				expect(response.statusCode).to.equal(200);
-				expect(body).to.be.an('Object');
-				expect(body).to.have.property('data');
-				expect(body.data).to.have.lengthOf(2);
+				expect(response.statusCode).to.equal(403);
 				nock.cleanAll();
 			});
 		});

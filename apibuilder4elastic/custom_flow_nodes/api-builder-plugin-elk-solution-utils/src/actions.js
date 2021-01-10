@@ -187,7 +187,7 @@ async function getPayloadFilename(params, options) {
 		throw new Error('Parameter: direction must be either sent or received.');
 	}
 	if(trafficDetails.body.hits.hits.length != 1) {
-		throw new Error(`Traffic-Details must have one hit. Got: ${trafficDetails.hits}`);
+		return options.setOutput('noAccess', `No access as traffic details contains no hit.`);
 	}
 	if(!trafficDetails.body.hits.hits[0]._source.transactionElements) {
 		throw new Error(`Traffic-Details source must contain transactionElements.`);

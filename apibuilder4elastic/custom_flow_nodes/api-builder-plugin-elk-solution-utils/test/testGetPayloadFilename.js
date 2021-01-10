@@ -110,7 +110,7 @@ describe('flow-node elk-solution-utils PayloadFilename', () => {
 				.and.to.have.property('message', 'Traffic-Details correlationID: 0455ff5e82267be8182a553d does not match to correlationId: WRONG-ID');
 			expect(output).to.equal('error');
 		});
-		it('should return received payload for leg 1 based on  the region', async () => {
+		it('should return received payload for leg 1 based on the region', async () => {
 			var trafficDetails = JSON.parse(fs.readFileSync('./test/trafficDetails/trafficDetails-1.json'), null);
 			const { value, output } = await flowNode.getPayloadFilename({ 
 				trafficDetails: trafficDetails, 
@@ -121,6 +121,18 @@ describe('flow-node elk-solution-utils PayloadFilename', () => {
 			});
 			expect(value).to.equal("us-dc/2020-07-03/08.55/0455ff5e82267be8182a553d-1-received");
 			expect(output).to.equal('next');
+		});
+
+		it('should return no access if no hits given in the transactionDetails', async () => {
+			var trafficDetails = JSON.parse(fs.readFileSync('./test/trafficDetails/trafficDetailsNoHit.json'), null);
+			const { value, output } = await flowNode.getPayloadFilename({ 
+				trafficDetails: trafficDetails, 
+				correlationId: "0455ff5e82267be8182a553d", 
+				legNo: "1", 
+				direction: "received", 
+				region: "US-DC"
+			});
+			expect(output).to.equal('noAccess');
 		});
 	});
 });

@@ -1,0 +1,71 @@
+{
+    "body": {
+      "took": 5,
+      "timed_out": false,
+      "_shards": {
+        "total": 5,
+        "successful": 5,
+        "skipped": 0,
+        "failed": 0
+      },
+      "hits": {
+        "total": {
+          "value": 0,
+          "relation": "eq"
+        },
+        "max_score": null,
+        "hits": [
+          
+        ]
+      }
+    },
+    "statusCode": 200,
+    "headers": {
+      "content-type": "application/json; charset=UTF-8",
+      "content-length": "160"
+    },
+    "meta": {
+      "context": null,
+      "request": {
+        "params": {
+          "method": "POST",
+          "path": "/apigw-traffic-details-payload_test_9914/_search",
+          "body": "{\"query\":{\"bool\":{\"must\":[{\"term\":{\"correlationId\":\"0455ff5e82267be8182a553d\"}},{\"term\":{\"processInfo.serviceId\":\"instance-1\"}},{\"term\":{\"serviceContext.apiOrg\":\"Max Org\"}}]}}}",
+          "querystring": "",
+          "headers": {
+            "user-agent": "elasticsearch-js/7.10.0 (win32 10.0.19041-x64; Node.js v12.13.1)",
+            "content-type": "application/json",
+            "content-length": "176"
+          },
+          "timeout": 30000
+        },
+        "options": {
+          "ignore": [
+            404
+          ],
+          "maxRetries": 3
+        },
+        "id": 1
+      },
+      "name": "elasticsearch-js",
+      "connection": {
+        "url": "http://api-env:9200/",
+        "id": "http://api-env:9200/",
+        "headers": {
+          
+        },
+        "deadCount": 0,
+        "resurrectTimeout": 0,
+        "_openRequests": 0,
+        "status": "alive",
+        "roles": {
+          "master": true,
+          "data": true,
+          "ingest": true,
+          "ml": false
+        }
+      },
+      "attempts": 0,
+      "aborted": false
+    }
+  }

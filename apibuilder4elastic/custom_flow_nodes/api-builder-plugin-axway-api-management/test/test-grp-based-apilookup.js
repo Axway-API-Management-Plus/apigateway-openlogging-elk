@@ -53,7 +53,7 @@ describe('Test group based API lookup', () => {
 			// group-6|eu
 			nock('https://mocked-api-manager-4:8475').get('/api/portal/v1.3/proxies?field=name&op=eq&value=Petstore HTTPS').replyWithFile(200, './test/testReplies/apimanager/manager-4/apiProxyManager4.json');
 			nock('https://mocked-api-manager-4:8475').get(`/api/portal/v1.3/organizations/2bfaa1c2-49ab-4059-832d-team-d`).replyWithFile(200, './test/testReplies/apimanager/manager-4/orgTeamD.json');
-			// This API exists with the same criterias on both API-Managers, but the organization and version different
+			// This API exists with the same criterias on both API-Managers, but the organization and versions are different
 			// This tests makes sure, the correct API-Manager has returned the API-Details based on the groupId
 			var { value, output } = await flowNode.lookupAPIDetails({ 
 				apiName: 'Petstore HTTPS', apiPath: '/v1/petstore', groupId: 'group-5'
