@@ -40,7 +40,7 @@ const securityDeviceTypes = {
  *	 does not define "next", the first defined output).
  */
 async function lookupCurrentUser(params, options) {
-	const { requestHeaders, apiManagerUserRequired, groupId } = params;
+	const { requestHeaders, apiManagerUserRequired } = params;
 	logger = options.logger;
 	cache = options.pluginContext.cache;
 	pluginConfig = options.pluginConfig;
@@ -84,12 +84,12 @@ async function lookupCurrentUser(params, options) {
 		return user;
 	}
 	logger.trace(`Trying to load API-Manager user using Login-Name: '${user.loginName}'`);
-	const users = await _getManagerUser(user, groupId);
+	const users = await _getManagerUser(user);
 	if(!users || users.length == 0) {
 		throw new Error(`User: '${user.loginName}' not found in API-Manager.`);
 	}
 	user.apiManager = users[0];
-	var org = await _getOrganization(user.apiManager, groupId);
+	var org = await _getOrganization(user.apiManager);
 	user.apiManager.organizationName = org.name;
 	logger.debug(`User: '${user.loginName}' (Role: ${user.apiManager.role}) found in API-Manager. Organization: '${user.apiManager.organizationName}'`);
 	if(VIDUSR!=undefined) {
