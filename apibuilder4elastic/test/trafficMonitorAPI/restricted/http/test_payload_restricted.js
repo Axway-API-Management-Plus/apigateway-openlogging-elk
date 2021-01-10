@@ -49,14 +49,14 @@ describe('Payload restricted', function () {
 	});
 
 	describe('Payload restricted', () => {
-		it('[Restricted-Payload-0001] Should return 403 as payload belongs to different organization', () => {
+		it('[Restricted-Payload-0001] Should return payload - API belongs to User-Organization', () => {
 			nock('https://mocked-api-gateway:8090').get('/api/rbac/currentuser').reply(200, { "result": "chris" });
 			nock('https://mocked-api-gateway:8090').get('/api/rbac/permissions/currentuser').replyWithFile(200, './test/mockedReplies/apigateway/operatorChris.json');
 			nock('https://mocked-api-gateway:8075').get(`/api/portal/v1.3/users?field=loginName&op=eq&value=chris&field=enabled&op=eq&value=enabled`).replyWithFile(200, './test/mockedReplies/apimanager/apiManagerUserChris.json');		
 			nock('https://mocked-api-gateway:8075').get(`/api/portal/v1.3/organizations/2bfaa1c2-49ab-4059-832d-CHRIS`).replyWithFile(200, './test/mockedReplies/apimanager/organizationChris.json');
 			return requestAsync({
 				method: 'GET',
-				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search`,
+				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/stream/0455ff5e82267be8182a553d/1/received`,
 				headers: {
 					'cookie': 'VIDUSR=Restricted-Search-0001-CHRIS-1597468226-Z+qdRW4rGZnwzQ==', 
 					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
@@ -64,23 +64,20 @@ describe('Payload restricted', function () {
 				auth: auth,
 				json: true
 			}).then(({ response, body }) => {
-				expect(response.statusCode).to.equal(200);
-				expect(body).to.be.an('Object');
-				expect(body).to.have.property('data');
-				expect(body.data).to.have.lengthOf(2);
+				expect(response.statusCode).to.equal(403);
 				nock.cleanAll();
 			});
 		});
 
-		it('[Restricted-Payload-0002] Execute a search - NOT being an API-GW-Admin - But admin in API-Manager', () => {
-			// For that kind of user all APIs having a service-context should be returned
+		it('[Restricted-Payload-0002] Get Payload - NOT being an API-GW-Admin - But admin in API-Manager', () => {
+			// For that kind of users payload of all APIs having a service-context should be returned
 			nock('https://mocked-api-gateway:8090').get('/api/rbac/currentuser').reply(200, { "result": "max" });
 			nock('https://mocked-api-gateway:8090').get('/api/rbac/permissions/currentuser').replyWithFile(200, './test/mockedReplies/apigateway/operatorMax.json');
 			nock('https://mocked-api-gateway:8075').get(`/api/portal/v1.3/users?field=loginName&op=eq&value=max&field=enabled&op=eq&value=enabled`).replyWithFile(200, './test/mockedReplies/apimanager/apiManagerUserMax.json');		
 			nock('https://mocked-api-gateway:8075').get(`/api/portal/v1.3/organizations/2bfaa1c2-49ab-4059-832d-MAX`).replyWithFile(200, './test/mockedReplies/apimanager/organizationMax.json');
 			return requestAsync({
 				method: 'GET',
-				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search`,
+				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/stream/0455ff5e82267be8182a553d/1/received`,
 				headers: {
 					'cookie': 'VIDUSR=Restricted-Search-0002-MAX-1597468226-Z+qdRW4rGZnwzQ==', 
 					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
@@ -89,15 +86,12 @@ describe('Payload restricted', function () {
 				json: true
 			}).then(({ response, body }) => {
 				expect(response.statusCode).to.equal(200);
-				expect(body).to.be.an('Object');
-				expect(body).to.have.property('data');
-				expect(body.data).to.have.lengthOf(9); // Nine entries have any kind of serviceContext
+				expect(body).to.be.equal('UkVDRUlWRUQtUEFZTE9BRC1MRUctMQ==');
 				nock.cleanAll();
 			});
 		});
 
-		it('[Restricted-Payload-0003] Execute a search - NOT being an API-GW-Admin - Normal user in API-Manager - Should return 403', () => {
-			// For that kind of user all APIs having a service-context should be returned
+		it('[Restricted-Payload-0003] Get payload - NOT being an API-GW-Admin - Normal user in API-Manager - Different Org - Should return 403', () => {
 			nock('https://mocked-api-gateway:8090').get('/api/rbac/currentuser').reply(200, { "result": "rene" });
 			nock('https://mocked-api-gateway:8090').get('/api/rbac/permissions/currentuser').replyWithFile(200, './test/mockedReplies/apigateway/operatorRene.json');
 			nock('https://mocked-api-gateway:8075').get(`/api/portal/v1.3/users?field=loginName&op=eq&value=rene&field=enabled&op=eq&value=enabled`).replyWithFile(200, './test/mockedReplies/apimanager/apiManagerUserRene.json');		

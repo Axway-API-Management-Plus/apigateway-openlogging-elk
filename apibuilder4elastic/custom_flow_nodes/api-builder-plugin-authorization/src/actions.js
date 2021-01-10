@@ -53,12 +53,18 @@ async function addApiManagerOrganizationFilter(params, options) {
 		throw new Error('Parameter: elasticQuery must be an object');
 	}
 	var filters = elasticQuery.bool.must;
+	// Skip, if the user an API-Gateway Admin
 	if (!user.gatewayManager.isAdmin) {
 		var filter;
+		// If the user is an API-Manager Admin, he should see all traffic passed API-Manager (has a ServiceContext)
 		if (user.apiManager.role == "admin") {
+			// The serviceContext may be at different places depending on the queried index
 			filter = {
-				exists: {
-					"field": "serviceContext"
+				bool: {
+					should: [
+						{ exists: {  "field" : "transactionSummary.serviceContext" } },
+						{ exists: {  "field" : "serviceContext" } }
+					]
 				}
 			};
 		} else {

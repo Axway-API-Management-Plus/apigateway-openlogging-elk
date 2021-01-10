@@ -118,7 +118,7 @@ describe('flow-node Authorization', () => {
 			expect(output).to.equal('next');
 		});
 
-		it('should add the serviceContext only filter for API-Manager Admin-Users', async () => { 
+		it('should add the transactionSummary.serviceContext filter for an API-Manager Admin-Users', async () => { 
 			var adminUser = JSON.parse(fs.readFileSync('./test/mock/adminUserObject.json'), null);
 			var elasticQuery = JSON.parse(fs.readFileSync('./test/mock/givenElasticQuery.json'), null);
 			let expectedQuery = JSON.parse(JSON.stringify(elasticQuery));
@@ -128,7 +128,12 @@ describe('flow-node Authorization', () => {
 			});
 			
 			expectedQuery.bool.must.push({
-				exists: {  "field" : "serviceContext" }
+				bool: {
+					should: [
+						{ exists: {  "field" : "transactionSummary.serviceContext" } },
+						{ exists: {  "field" : "serviceContext" } }
+					]
+				}
 			});
 
 			expect(value).to.be.instanceOf(Object);
