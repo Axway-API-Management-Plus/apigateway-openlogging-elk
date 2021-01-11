@@ -53,7 +53,8 @@ This shows a sample dashboard created in Kibana based on the indexed documents:
   - [Configure cluster UUID](#configure-cluster-uuid)
   - [Custom certificates](#custom-certificates)
   - [Secure API-Builder Traffic-Monitor API](#secure-api-builder-traffic-monitor-api)
-- [Infrastructure sizing](#infrastructure-sizing)
+  - [Lifecycle Management](#lifecycle-management)
+- [Infrastructure sizing](#sizing-your-infrastructure)
 - [Updates](#updates)
 - [Troubleshooting](#troubleshooting)
 - [FAQ](#faq)
@@ -309,11 +310,25 @@ This project solves the problem by storing the API transactions in Elasticsearch
 | **Operator**         | Org-Admin     | APIs of its own organization | Such a user will only see the APIs that belong to the same organization as himself. |
 | **Operator**         | User          | APIs of its own organization | The same rules apply as for the Org-Admin |
 
-### Setup API-Manager user in API-Gateway Manager
+#### Setup API-Manager user in API-Gateway Manager
 
 To give API-Manager users a limited access to the API Traffic Monitor, the user must be configured in the API-Gateway manager with the same login name as in the API Manager. Here, for example, an LDAP connection can be a simplification.  
-None of his roles must contain the permission: `adminusers_modify`. A suitable standard role is the `API Gateway Operator role`. 
+None of his roles must contain the permission: `adminusers_modify` otherwise he is considered as admin and will see all traffic. A suitable standard role is the `API Gateway Operator role`. 
 You can, of course, create additional roles in the API Gateway Manager to adjust the user's rights according to your needs.
+
+#### Customize user authorization
+
+By default, the organization of the API-Manager user is used for authorization to the Traffic-Monitor. This means that the user only sees traffic from his own organization (multi-organization is not yet supported). From a technical point of view, an additional filter clause is added to the Elasticsearch query, which results in a restricted result set. An example:  
+`{ term: { "serviceContext.apiOrg": "Org-A" }}`  
+Since version 2.0.0, it is alternatively possible to use an external HTTP service for authorization instead of the API Manager organizations, to restrict the Elasticsearch result based on other criterias.  
+To customize user authorization, you need to configure an appropriate configuration file as in the following example:  
+`AUTHZ_CONFIG=./config/my-authorization-config-ext-http.js`  
+
+In this configuration, which also contains corresponding Javascript code, necessary parameters and code are stored, for example to parse the response and to adjust the Elasticsearch query. You can find an example in the folder: [config/authorization-config-sample.js](config/authorization-config-sample.js)  
+
+Once this configuration is stored, the API Manager Organization based authorization will be replaced.  
+
+Please note: Besides the API-Manager Organization autorization only `externalHTTP` is currently supported. If you have further use-cases please create an issue describing the use-case/requirements.  
 
 <p align="right"><a href="#table-of-content">Top</a></p>
 
@@ -356,9 +371,10 @@ All traffic payload from these API-Gateways must be made available to the API-Bu
 `/var/log/payloads/us-dc1/<YYY-MM-DD>/<HH.MI>/<payloadfile>`  
 So you need to make the existing structure available in a regional folder. For this, the region must be in lower case.  
 
-Please take into account that payload handling is enabled by default for the solution by the API builder. So it is assumed that you provide the payload to the API Builder container. Set the parameter:  
-`SKIP_PAYLOAD_HANDLING=true`  
-if you do not need this.  
+Please note:  
+:point_right: Payload handling is enabled by default for the solution by the API builder. So it is assumed that you provide the payload to the API Builder container. Set the parameter: `SKIP_PAYLOAD_HANDLING=true` if you do not need this.  
+:point_right: Payload details returned by the API-Builder doesn't contain the headers as they are shonw anyway in the previous screen  
+:point_right: Payload shown in the Traffic-Monitor UI is limited to 20 KB by default. If required the payload can be downloaded completely using the `Save` option. 
 
 <p align="right"><a href="#table-of-content">Top</a></p>
 
@@ -652,6 +668,32 @@ The API-Builder project for providing access to Elasticsearch data has no access
 
 To import the API Builder project REST-API into your API-Manager, you can access the Swagger/OpenAPI definition here (replace docker-host and port appropriately for the container that is hosting the API-Builder project):  
 https://docker-host:8443/apidoc/swagger.json?endpoints/trafficMonitorApi
+
+<p align="right"><a href="#table-of-content">Top</a></p>
+
+### Lifecycle Management
+
+Since new data is continuously stored in Elasticsearch in various indexes, these must of course be removed after a certain period of time.  
+The solution uses the Elasticsearch [ILM](https://www.elastic.co/guide/en/elasticsearch/reference/current/index-lifecycle-management.html) for this purpose, which defines different lifecycle stages per index. The so-called ILM policies are automatically configured by the solution using [configuration files](apibuilder4elastic/elasticsearch_config) and can be reviewed in Kibana.  
+The indices pass through stages such as Hot, Warm, Cold which can be used to deploy different performance hardware per stage. This means that traffic details from two weeks ago no longer have to be stored on high-performance machines.  
+
+The configuration is defined here per data type (e.g. Summary, Details, Audit, ...). The following table gives an overview.  
+
+
+| Data-Type              | Description                                                            | Hot (Size/Days) | Warm    | Cold    | Delete  | Total   |
+| :---                   |:---                                                                    | :---            | :---    | :---    | :---    | :---    |
+| **Traffic-Summary**    | Main index for traffic-monitor overview and primary dashboard          | 30GB / 7 days   | 15 days | 30 days | 10 days | 62 days |
+| **Traffic-Details**    | Details in Traffic-Monitor for Policy, Headers and Payload reference   | 30GB / 7 days   | 7 days  | 10 days | 5 days  | 29 days |
+| **Traffic-Details**    | Details in Traffic-Monitor for Policy, Headers and Payload reference   | 30GB / 7 days   | 7 days  | 10 days | 5 days  | 29 days |
+| **Traffic-Trace**      | Trace-Messages belonging to an API-Request shown in Traffic-Monitor    | 30GB / 7 days   | 7 days  | 10 days | 5 days  | 29 days |
+| **General-Trace**      | General trace messages, like Start- & Stop-Messages                    | 30GB / 7 days   | 7 days  | 10 days | 5 days  | 29 days |
+| **Gateway-Monitoring** | System status information (CPU, HDD, etc.) from Event-Files            | 30GB / 15 days  | 15 days | 15 days | 15 days | 60 days |
+| **Domain-Audit**       | Domain Audit-Information as configured in Admin-Node-Manager           | 30GB / 270 days | 270 days| 720 days| 15 days | >3 years|
+
+Please note:  
+:point_right: It's optional to use different hardware per stage  
+:point_right: Do not change the ILM/Modify the ILM-Policies manually, as they are configured automatically. In a later version, the solution will provide options to customize the time range as needed without breaking updates.  
+:point_right: To support long term analytics (e.g. 5 years) it's planned to use Elasticsearch [Rollup-Jobs](https://www.elastic.co/guide/en/kibana/current/data-rollups.html) in a future release of this solution  
 
 <p align="right"><a href="#table-of-content">Top</a></p>
 
