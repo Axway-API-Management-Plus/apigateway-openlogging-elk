@@ -692,7 +692,7 @@ The configuration is defined here per data type (e.g. Summary, Details, Audit, .
 Please note:
 - It's optional to use different hardware per stage
 - Do not change the ILM/Modify the ILM-Policies manually, as they are configured automatically. In a later version, the solution will provide options to customize the time range as needed without breaking updates.
-- To support realy long term analytics (e.g. 5 years) it's planned to use Elasticsearch [Rollup-Jobs](https://www.elastic.co/guide/en/kibana/current/data-rollups.html) in a future release of this solution
+- To support long term analytics (e.g. 5 years) it's planned to use Elasticsearch [Rollup-Jobs](https://www.elastic.co/guide/en/kibana/current/data-rollups.html) in a future release of this solution
 
 <p align="right"><a href="#table-of-content">Top</a></p>
 
