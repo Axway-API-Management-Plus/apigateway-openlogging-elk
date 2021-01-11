@@ -76,18 +76,18 @@
 			"method": "setresponse",
 			"parameters": [
 				{
-					"name": "status",
-					"type": "number",
-					"value": "500",
-					"metaName": "Status",
-					"metaDescription": "The HTTP status code"
-				},
-				{
 					"name": "body",
 					"type": "object",
 					"value": "{\"message\":\"Filebeat version does not match to API-Builder release\", \"versionStatus\":\"error\"}",
 					"metaName": "Body",
 					"metaDescription": "The response payload"
+				},
+				{
+					"name": "status",
+					"type": "number",
+					"value": "200",
+					"metaName": "Status",
+					"metaDescription": "The HTTP status code"
 				}
 			],
 			"outputs": {
@@ -143,18 +143,18 @@
 			"method": "setresponse",
 			"parameters": [
 				{
-					"name": "status",
-					"type": "number",
-					"value": "500",
-					"metaName": "Status",
-					"metaDescription": "The HTTP status code"
-				},
-				{
 					"name": "body",
 					"type": "object",
 					"value": "{\"message\":\"Logstash version does not match to API-Builder release\", \"versionStatus\":\"error\"}",
 					"metaName": "Body",
 					"metaDescription": "The response payload"
+				},
+				{
+					"name": "status",
+					"type": "number",
+					"value": "200",
+					"metaName": "Status",
+					"metaDescription": "The HTTP status code"
 				}
 			],
 			"outputs": {

@@ -27,7 +27,7 @@ describe('Endpoints', function () {
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/version/check?filebeatVersion=${filebeatVersion}&logstashVersion=${logstashVersion}`,
 				json: true
 			}).then(({ response, body }) => {
-				expect(response.statusCode).to.equal(500);
+				expect(response.statusCode).to.equal(200);
                 expect(body.message).to.equal(`Filebeat version does not match to API-Builder release`);
                 expect(body.versionStatus).to.equal(`error`);
 			});
@@ -41,7 +41,7 @@ describe('Endpoints', function () {
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/version/check?filebeatVersion=${filebeatVersion}&logstashVersion=${logstashVersion}`,
 				json: true
 			}).then(({ response, body }) => {
-				expect(response.statusCode).to.equal(500);
+				expect(response.statusCode).to.equal(200);
                 expect(body.message).to.equal(`Logstash version does not match to API-Builder release`);
                 expect(body.versionStatus).to.equal(`error`);
 			});
