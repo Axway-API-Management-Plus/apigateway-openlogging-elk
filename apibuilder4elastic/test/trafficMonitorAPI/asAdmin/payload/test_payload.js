@@ -33,7 +33,7 @@ describe('Payload', function () {
 			}
 			process.env.PAYLOAD_FOLDER = payloadFolder;
 			// Should be limited to bytes => This is a large payload, that should be limited.
-			process.env.PAYLOAD_LIMIT = 48;
+			process.env.PAYLOAD_SIZE_LIMIT = 48;
 			server = startApiBuilder();
 			server.apibuilder.config.testElasticIndex = indexName;
 			elasticConfig = server.apibuilder.config.pluginConfig['@axway-api-builder-ext/api-builder-plugin-fn-elasticsearch'].elastic;

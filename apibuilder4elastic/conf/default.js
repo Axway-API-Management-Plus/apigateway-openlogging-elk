@@ -30,7 +30,7 @@ module.exports = {
 		// Mainly used for tests as normally the folder to payload should be fixed
 		folder: process.env.PAYLOAD_FOLDER || '/var/log/payloads', 
 		// Limit the payload to a certain size (in Byte)
-		limit: process.env.PAYLOAD_LIMIT || 10000
+		sizeLimit: process.env.PAYLOAD_SIZE_LIMIT || 20000
 	},
 
 	// Mock the API-Creation endpoint, which is required for the Logstash pipeline tests
