@@ -690,7 +690,7 @@ The configuration is defined here per data type (e.g. Summary, Details, Audit, .
 | **Gateway-Monitoring** | System status information (CPU, HDD, etc.) from Event-Files            | 30GB / 15 days  | 15 days | 15 days | 15 days | 60 days |
 | **Domain-Audit**       | Domain Audit-Information as configured in Admin-Node-Manager           | 30GB / 270 days | 270 days| 720 days| 15 days | >3 years|
 
-Please note:
+Please note:  
 :point_right: It's optional to use different hardware per stage  
 :point_right: Do not change the ILM/Modify the ILM-Policies manually, as they are configured automatically. In a later version, the solution will provide options to customize the time range as needed without breaking updates.  
 :point_right: To support long term analytics (e.g. 5 years) it's planned to use Elasticsearch [Rollup-Jobs](https://www.elastic.co/guide/en/kibana/current/data-rollups.html) in a future release of this solution  
