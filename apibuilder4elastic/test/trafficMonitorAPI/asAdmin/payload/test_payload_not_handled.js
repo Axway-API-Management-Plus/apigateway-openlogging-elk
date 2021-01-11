@@ -25,7 +25,10 @@ describe('Skip Payload', function () {
 	/**
 	 * Stop API Builder after the tests.
 	 */
-	after(() => stopApiBuilder(server));
+	after(() => {
+		stopApiBuilder(server);
+		delete process.env.SKIP_PAYLOAD_HANDLING;
+	});
 
 	describe('Payload handling tests', () => {
 		it('[Not-Handled-Payload-0001] Should return 501 as the payload handling is skipped', () => {
