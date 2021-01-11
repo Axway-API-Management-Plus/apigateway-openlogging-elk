@@ -373,7 +373,7 @@ So you need to make the existing structure available in a regional folder. For t
 
 Please note:  
 :point_right: Payload handling is enabled by default for the solution by the API builder. So it is assumed that you provide the payload to the API Builder container. Set the parameter: `SKIP_PAYLOAD_HANDLING=true` if you do not need this.  
-:point_right: Payload details returned by the API-Builder doesn't contain the headers as they are shonw anyway in the previous screen
+:point_right: Payload details returned by the API-Builder doesn't contain the headers as they are shonw anyway in the previous screen  
 :point_right: Payload shown in the Traffic-Monitor UI is limited to 20 KB by default. If required the payload can be downloaded completely using the `Save` option. 
 
 <p align="right"><a href="#table-of-content">Top</a></p>
