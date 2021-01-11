@@ -133,7 +133,7 @@ jobs:
       env:
         ELASTICSEARCH_HOSTS: 'http://localhost:9200'
         VALIDATE_CONFIG: false
-        LOG_LEVEL: INFO
+        LOG_LEVEL: DEBUG
         DISABLE_SETUP_FLOWS: true # Disable Elasticsearch tests for the tests.
         CI: true
       run: | 

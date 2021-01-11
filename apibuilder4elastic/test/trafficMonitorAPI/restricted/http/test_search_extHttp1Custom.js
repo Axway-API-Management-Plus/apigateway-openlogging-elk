@@ -52,8 +52,8 @@ describe('Endpoints', function () {
 		delete process.env.AUTHZ_CONFIG;
 	});
 
-	describe('Search', () => {
-		it('[Restricted-Search-ExtHttp1-Custom-0001] Execute ', async () => {
+	describe('Search Ext. HTTP Custom', () => {
+		it.only('[Restricted-Search-ExtHttp1-Custom-0001] Execute ', async () => {
 			nock('https://mocked-api-gateway:8090').get('/api/rbac/currentuser').reply(200, { "result": "chris" });
 			nock('https://mocked-api-gateway:8090').get('/api/rbac/permissions/currentuser').replyWithFile(200, './test/mockedReplies/apigateway/operatorChris.json');
 			nock('https://mocked-api-gateway:8075').get(`/api/portal/v1.3/users?field=loginName&op=eq&value=chris&field=enabled&op=eq&value=enabled`).replyWithFile(200, './test/mockedReplies/apimanager/apiManagerUserChris.json');		
