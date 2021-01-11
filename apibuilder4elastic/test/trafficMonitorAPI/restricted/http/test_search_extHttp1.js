@@ -49,7 +49,7 @@ describe('Endpoints', function () {
 	});
 
 	describe('Restricted search external HTTP Service', () => {
-		it('[Restricted-Search-ExtHttp1-0001] Execute ', () => {
+		it('[Restricted-Search-ExtHttp1-0001] Execute a search for user: chris should get back 2 entries', () => {
 			nock('https://mocked-api-gateway:8090').get('/api/rbac/currentuser').reply(200, { "result": "chris" });
 			nock('https://mocked-api-gateway:8090').get('/api/rbac/permissions/currentuser').replyWithFile(200, './test/mockedReplies/apigateway/operatorChris.json');
 			nock('https://mocked-api-gateway:8075').get(`/api/portal/v1.3/users?field=loginName&op=eq&value=chris&field=enabled&op=eq&value=enabled`).replyWithFile(200, './test/mockedReplies/apimanager/apiManagerUserChris.json');		
@@ -63,7 +63,7 @@ describe('Endpoints', function () {
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search`,
 				headers: {
-					'cookie': 'VIDUSR=Restricted-Search-0001-CHRIS-1597468226-Z+qdRW4rGZnwzQ==', 
+					'cookie': 'VIDUSR=Restricted-Search-ExtHTTP-0001-CHRIS-1597468226-Z+qdRW4rGZnwzQ==', 
 					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
 				},
 				json: true
@@ -76,7 +76,7 @@ describe('Endpoints', function () {
 			});
 		});
 
-		it('[Restricted-Search-ExtHttp1-0002] Should return only ONE entry', () => {
+		it('[Restricted-Search-ExtHttp1-0002] Should return only ONE entry for user: rene', () => {
 			// For that kind of user all APIs having a service-context should be returned
 			nock('https://mocked-api-gateway:8090').get('/api/rbac/currentuser').reply(200, { "result": "rene" });
 			nock('https://mocked-api-gateway:8090').get('/api/rbac/permissions/currentuser').replyWithFile(200, './test/mockedReplies/apigateway/operatorRene.json');
@@ -91,7 +91,7 @@ describe('Endpoints', function () {
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search`,
 				headers: {
-					'cookie': 'VIDUSR=Restricted-Search-0002-MAX-1597468226-Z+qdRW4rGZnwzQ==', 
+					'cookie': 'VIDUSR=Restricted-Search-ExtHTTP-0002-MAX-1597468226-Z+qdRW4rGZnwzQ==', 
 					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
 				},
 				json: true
@@ -104,7 +104,7 @@ describe('Endpoints', function () {
 			});
 		});
 
-		it('[Restricted-Search-ExtHttp1-0003] Should return NO entries as user has NO group', () => {
+		it('[Restricted-Search-ExtHttp1-0003] Should return NO entry as user: max has NO groups', () => {
 			nock('https://mocked-api-gateway:8090').get('/api/rbac/currentuser').reply(200, { "result": "max" });
 			nock('https://mocked-api-gateway:8090').get('/api/rbac/permissions/currentuser').replyWithFile(200, './test/mockedReplies/apigateway/operatorMax.json');
 			nock('https://mocked-api-gateway:8075').get(`/api/portal/v1.3/users?field=loginName&op=eq&value=max&field=enabled&op=eq&value=enabled`).replyWithFile(200, './test/mockedReplies/apimanager/apiManagerUserMax.json');		
@@ -118,7 +118,7 @@ describe('Endpoints', function () {
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search`,
 				headers: {
-					'cookie': 'VIDUSR=Restricted-Search-0002-MAX-1597468226-Z+qdRW4rGZnwzQ==', 
+					'cookie': 'VIDUSR=Restricted-Search-ExtHTTP-0003-MAX-1597468226-Z+qdRW4rGZnwzQ==', 
 					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
 				},
 				json: true

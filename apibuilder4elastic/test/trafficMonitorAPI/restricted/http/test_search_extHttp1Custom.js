@@ -67,7 +67,7 @@ describe('Endpoints', function () {
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search`,
 				headers: {
-					'cookie': 'VIDUSR=Restricted-Search-0001-CHRIS-1597468226-Z+qdRW4rGZnwzQ==', 
+					'cookie': 'VIDUSR=Restricted-Search-ExtHTTP-Custom-0001-CHRIS-1597468226-Z+qdRW4rGZnwzQ==', 
 					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
 				},
 				json: true
@@ -94,7 +94,7 @@ describe('Endpoints', function () {
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search`,
 				headers: {
-					'cookie': 'VIDUSR=restricted-circuitpath-0002-RENE-1597762865-iUI5a8+v+zLkNA%3d%3d;', 
+					'cookie': 'VIDUSR=restricted-circuitpath-ExtHTTP-Custom-0002-RENE-1597762865-iUI5a8+v+zLkNA%3d%3d;', 
 					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
 				},
 				json: true
@@ -121,7 +121,7 @@ describe('Endpoints', function () {
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search`,
 				headers: {
-					'cookie': 'VIDUSR=Restricted-Search-0002-MAX-1597468226-Z+qdRW4rGZnwzQ==', 
+					'cookie': 'VIDUSR=Restricted-Search-ExtHTTP-Custom-0002-MAX-1597468226-Z+qdRW4rGZnwzQ==', 
 					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
 				},
 				json: true
