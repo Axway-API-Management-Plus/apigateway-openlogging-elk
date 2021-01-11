@@ -45,6 +45,7 @@ This shows a sample dashboard created in Kibana based on the indexed documents:
 - [Configure Axway API-Management](#configure-axway-api-management)
 - [Advanced and production Setup](#advanced-and-production-setup)
   - [Architecture examples](#architecture-examples)
+  - [Traffic-Payload](#traffic-payload)
   - [Setup Elasticsearch Multi-Node](#setup-elasticsearch-multi-node)
   - [Setup API-Manager](#setup-api-manager)
   - [Setup local lookup](#setup-local-lookup)
@@ -323,6 +324,39 @@ This section covers advanced configuration topics that are required for a produc
 ### Architecture examples
 
 We have started to make [architectural examples](architecture) directly available here. These should help to deploy the solution in different environments. The area is currently under construction.
+
+### Traffic-Payload
+
+The payload belonging to an API request is not written directly to the open traffic event log and therefore not stored in Elasticsearch.  
+To clarify what is meant by payload at this point the following example screenshot.  
+![Payload sample view](imgs/payload-sample-view.png)  
+This payload, if not configured as explained below, will only be displayed as long as it is in the OBSDB. After that NO DATA is displayed instead of the payload.  
+
+__1. Payload Export__  
+
+In order to also make the payload available in the Traffic Monitor via the solution, this must also be exported from the API gateway to the runtime.  
+To do this, go to the Server Settings Open Traffic Event Log configuration and enable the payload export:  
+![Payload sample view](imgs/open-traffic-payload-settings.png)  
+You need to repeat this step for each API gateway group for which you want to make the payload available. You can change the export path if necessary, for example to write the payload to an NFS volume.  
+
+__2. Payload in API-Builder__  
+
+Finally, the saved payload must be made available to the API-Builder Docker container as a mount under: `/var/log/payloads`. You can find an example in the docker-compose.yml:  
+`${APIGATEWAY_PAYLOADS_FOLDER}:/var/log/payloads`  
+So if the API gateways are running remotely to the API-Builder, as is very likely in production, you will need to either copy/move the payload or mount the network drive to the API-Builder container.  
+
+__3. Regional Payload__  
+
+If you are using the [region feature](#different-topologiesdomains), that is, collecting API-Gateways of different Admin-Node-Manager domains into a central Elasticsearch instance, then you also need to make the payload available to the API builder regionally separated.  
+
+Example:  
+You have defined the region as follows:   
+`REGION=US-DC1`  
+All traffic payload from these API-Gateways must be made available to the API-Builder as follows:  
+`/var/log/payloads/us-dc1/<YYY-MM-DD>/<HH.MI>/<payloadfile>`  
+So you need to make the existing structure available in a regional folder. For this, the region must be in lower case.  
+
+<p align="right"><a href="#table-of-content">Top</a></p>
 
 ### Setup Elasticsearch Multi-Node
 
