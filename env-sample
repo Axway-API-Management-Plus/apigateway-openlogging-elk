@@ -288,6 +288,20 @@ ELASTIC_VERSION=7.10.0
 # For example:
 # AUTHZ_CONFIG=./config/authorization-config-ext-http.js
 
+# ----------------------------------------------------------------------------------------------
+# By default, the solution also provides the payload to the API gateway traffic monitor based on 
+# the exported payload.
+# In other words, if the traffic monitor is first connected to the API Builder/Elasticsearch via 
+# the policy, then it will also try to obtain the payload via it. For this, of course, it is 
+# necessary to export the payload accordingly and make it available. More details about this:
+# https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk#traffic-payload
+# If it is not necessary for your use cases, then you can disable this feature in the API Builder 
+# process with this parameter. The traffic monitor will then retrieve the payload from the OBSDB 
+# as long as it is available.
+# Used-By: API-Builder
+# Defaults to false.
+# SKIP_PAYLOAD_HANDLING=true
+
 ################################################################################################
 #                         Certificates and Certificate authorities
 ################################################################################################

@@ -25,6 +25,8 @@ module.exports = {
 
 	// Payload configuration settings
 	payload: {
+		// Parameter is used, if the payload handling should skip or not (defaults to false, if skipped a 501 is returned)
+		skip: Boolean(process.env.SKIP_PAYLOAD_HANDLING) ? true:  false, 
 		// Mainly used for tests as normally the folder to payload should be fixed
 		folder: process.env.PAYLOAD_FOLDER || '/var/log/payloads', 
 		// Limit the payload to a certain size (in Byte)
