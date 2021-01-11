@@ -94,7 +94,7 @@ describe('Endpoints', function () {
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search`,
 				headers: {
-					'cookie': 'VIDUSR=Restricted-Search-0002-MAX-1597468226-Z+qdRW4rGZnwzQ==', 
+					'cookie': 'VIDUSR=restricted-circuitpath-0002-RENE-1597762865-iUI5a8+v+zLkNA%3d%3d;', 
 					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
 				},
 				json: true
@@ -107,7 +107,7 @@ describe('Endpoints', function () {
 			});
 		});
 
-		it('[Restricted-Search-ExtHttp1-Custom-0003] Should return only NO entry as user has NO group', async () => {
+		it.only('[Restricted-Search-ExtHttp1-Custom-0003] Should return only NO entry as user has NO group', async () => {
 			nock('https://mocked-api-gateway:8090').get('/api/rbac/currentuser').reply(200, { "result": "max" });
 			nock('https://mocked-api-gateway:8090').get('/api/rbac/permissions/currentuser').replyWithFile(200, './test/mockedReplies/apigateway/operatorMax.json');
 			nock('https://mocked-api-gateway:8075').get(`/api/portal/v1.3/users?field=loginName&op=eq&value=max&field=enabled&op=eq&value=enabled`).replyWithFile(200, './test/mockedReplies/apimanager/apiManagerUserMax.json');		
