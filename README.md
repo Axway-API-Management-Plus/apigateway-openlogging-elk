@@ -53,7 +53,7 @@ This shows a sample dashboard created in Kibana based on the indexed documents:
   - [Configure cluster UUID](#configure-cluster-uuid)
   - [Custom certificates](#custom-certificates)
   - [Secure API-Builder Traffic-Monitor API](#secure-api-builder-traffic-monitor-api)
-- [Infrastructure sizing](#infrastructure-sizing)
+- [Infrastructure sizing](#sizing-your-infrastructure)
 - [Updates](#updates)
 - [Troubleshooting](#troubleshooting)
 - [FAQ](#faq)
@@ -309,11 +309,25 @@ This project solves the problem by storing the API transactions in Elasticsearch
 | **Operator**         | Org-Admin     | APIs of its own organization | Such a user will only see the APIs that belong to the same organization as himself. |
 | **Operator**         | User          | APIs of its own organization | The same rules apply as for the Org-Admin |
 
-### Setup API-Manager user in API-Gateway Manager
+#### Setup API-Manager user in API-Gateway Manager
 
 To give API-Manager users a limited access to the API Traffic Monitor, the user must be configured in the API-Gateway manager with the same login name as in the API Manager. Here, for example, an LDAP connection can be a simplification.  
-None of his roles must contain the permission: `adminusers_modify`. A suitable standard role is the `API Gateway Operator role`. 
+None of his roles must contain the permission: `adminusers_modify` otherwise he is considered as admin and will see all traffic. A suitable standard role is the `API Gateway Operator role`. 
 You can, of course, create additional roles in the API Gateway Manager to adjust the user's rights according to your needs.
+
+#### Customize user authorization
+
+By default, the organization of the API-Manager user is used for authorization to the Traffic-Monitor. This means that the user only sees traffic from his own organization (multi-organization is not yet supported). From a technical point of view, an additional filter clause is added to the Elasticsearch query, which results in a restricted result set. An example:  
+`{ term: { "serviceContext.apiOrg": "Org-A" }}`  
+Since version 2.0.0, it is alternatively possible to use an external HTTP service for authorization instead of the API Manager organizations, to restrict the Elasticsearch result based on other criterias.  
+To customize user authorization, you need to configure an appropriate configuration file as in the following example:  
+`AUTHZ_CONFIG=./config/my-authorization-config-ext-http.js`  
+
+In this configuration, which also contains corresponding Javascript code, necessary parameters and code are stored, for example to parse the response and to adjust the Elasticsearch query. You can find an example in the folder: [config/authorization-config-sample.js](config/authorization-config-sample.js)  
+
+Once this configuration is stored, the API Manager Organization based authorization will be replaced.  
+
+Please note: Besides the API-Manager Organization autorization only `externalHTTP` is currently supported. If you have further use-cases please create an issue describing the use-case/requirements.  
 
 <p align="right"><a href="#table-of-content">Top</a></p>
 
