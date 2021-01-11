@@ -26,7 +26,7 @@
 	},
 	"homepage": "https://github.com/cwiechmann/apigateway-openlogging-elk",
 	"dependencies": {
-		"@axway-api-builder-ext/api-builder-plugin-fn-elasticsearch": "^1.0.16",
+		"@axway-api-builder-ext/api-builder-plugin-fn-elasticsearch": "^1.0.18",
 		"@axway-api-builder-ext/api-builder-plugin-fn-file": "^0.0.7",
 		"@axway-api-builder-ext/api-builder-plugin-utils": "^1.0.1",
 		"@axway/api-builder-plugin-fn-base64": "^2.1.5",
@@ -36,14 +36,14 @@
 		"@axway/api-builder-plugin-fn-restclient": "^2.0.22",
 		"@axway/api-builder-plugin-fn-swagger": "^2.9.1",
 		"@axway/api-builder-plugin-ft-timer": "^0.2.1",
-		"@axway/api-builder-runtime": "^4.45.0",
+		"@axway/api-builder-runtime": "^4.49.2",
 		"api-builder-plugin-authorization": "file:custom_flow_nodes/api-builder-plugin-authorization",
 		"api-builder-plugin-axway-api-management": "file:custom_flow_nodes/api-builder-plugin-axway-api-management",
 		"api-builder-plugin-elk-solution-utils": "file:custom_flow_nodes/api-builder-plugin-elk-solution-utils",
 		"api-builder-plugin-traffic-monitor-api-utils": "file:custom_flow_nodes/api-builder-plugin-traffic-monitor-api-utils"
 	},
 	"devDependencies": {
-		"@axway/api-builder-admin": "^1.30.0",
+		"@axway/api-builder-admin": "^1.34.1",
 		"chai": "^4.2.0",
 		"dotenv": "^8.2.0",
 		"mocha": "^7.2.0",
