@@ -129,6 +129,24 @@
             "in": "query",
             "name": "region",
             "description": "If given, the search will be performed on regional index."
+          },
+          {
+            "type": "string",
+            "in": "header",
+            "name": "cookie",
+            "description": "If using the cookie, it must contain the VIDUSR cookie from the ANM."
+          },
+          {
+            "type": "string",
+            "in": "header",
+            "name": "csrf-token",
+            "description": "This is required if the VIDUSR cookie from the ANM is used."
+          },
+          {
+            "type": "string",
+            "in": "header",
+            "name": "Authorization",
+            "description": "Alternatively to the VIDUSR cookie you can also provide an HTTP Basic Authoritation header for a valid ANM user. If this user is NOT an API-Gateway Admin the user must exists on the API-Manager as well."
           }
         ]
       },
@@ -190,6 +208,24 @@
             "in": "query",
             "name": "region",
             "description": "If given, the search will be performed on regional index."
+          },
+          {
+            "type": "string",
+            "in": "header",
+            "name": "cookie",
+            "description": "If using the cookie, it must contain the VIDUSR cookie from the ANM."
+          },
+          {
+            "type": "string",
+            "in": "header",
+            "name": "csrf-token",
+            "description": "This is required if the VIDUSR cookie from the ANM is used."
+          },
+          {
+            "type": "string",
+            "in": "header",
+            "name": "Authorization",
+            "description": "Alternatively to the VIDUSR cookie you can also provide an HTTP Basic Authoritation header for a valid ANM user. If this user is NOT an API-Gateway Admin the user must exists on the API-Manager as well."
           }
         ],
         "description": "Retrieves information about events associated with the specified correlationID and legID"
@@ -282,6 +318,24 @@
             "in": "query",
             "name": "region",
             "description": "If given, the search will be performed on regional index."
+          },
+          {
+            "type": "string",
+            "in": "header",
+            "name": "cookie",
+            "description": "If using the cookie, it must contain the VIDUSR cookie from the ANM."
+          },
+          {
+            "type": "string",
+            "in": "header",
+            "name": "csrf-token",
+            "description": "This is required if the VIDUSR cookie from the ANM is used."
+          },
+          {
+            "type": "string",
+            "in": "header",
+            "name": "Authorization",
+            "description": "Alternatively to the VIDUSR cookie you can also provide an HTTP Basic Authoritation header for a valid ANM user. If this user is NOT an API-Gateway Admin the user must exists on the API-Manager as well."
           }
         ],
         "x-flow": "trafficMonitorApi-trace"
@@ -309,6 +363,24 @@
             "in": "query",
             "description": "If given, the payload is taken from the region folder",
             "name": "region"
+          },
+          {
+            "type": "string",
+            "in": "header",
+            "name": "cookie",
+            "description": "If using the cookie, it must contain the VIDUSR cookie from the ANM."
+          },
+          {
+            "type": "string",
+            "in": "header",
+            "name": "csrf-token",
+            "description": "This is required if the VIDUSR cookie from the ANM is used."
+          },
+          {
+            "type": "string",
+            "in": "header",
+            "name": "Authorization",
+            "description": "Alternatively to the VIDUSR cookie you can also provide an HTTP Basic Authoritation header for a valid ANM user. If this user is NOT an API-Gateway Admin the user must exists on the API-Manager as well."
           }
         ]
       },
