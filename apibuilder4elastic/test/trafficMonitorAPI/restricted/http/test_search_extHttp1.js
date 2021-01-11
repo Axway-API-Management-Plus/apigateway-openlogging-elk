@@ -104,7 +104,7 @@ describe('Endpoints', function () {
 			});
 		});
 
-		it.only('[Restricted-Search-ExtHttp1-0003] Should return NO entries as user has NO group', () => {
+		it('[Restricted-Search-ExtHttp1-0003] Should return NO entries as user has NO group', () => {
 			nock('https://mocked-api-gateway:8090').get('/api/rbac/currentuser').reply(200, { "result": "max" });
 			nock('https://mocked-api-gateway:8090').get('/api/rbac/permissions/currentuser').replyWithFile(200, './test/mockedReplies/apigateway/operatorMax.json');
 			nock('https://mocked-api-gateway:8075').get(`/api/portal/v1.3/users?field=loginName&op=eq&value=max&field=enabled&op=eq&value=enabled`).replyWithFile(200, './test/mockedReplies/apimanager/apiManagerUserMax.json');		
