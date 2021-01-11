@@ -356,6 +356,10 @@ All traffic payload from these API-Gateways must be made available to the API-Bu
 `/var/log/payloads/us-dc1/<YYY-MM-DD>/<HH.MI>/<payloadfile>`  
 So you need to make the existing structure available in a regional folder. For this, the region must be in lower case.  
 
+Please take into account that payload handling is enabled by default for the solution by the API builder. So it is assumed that you provide the payload to the API Builder container. Set the parameter:  
+`SKIP_PAYLOAD_HANDLING=true`  
+if you do not need this.  
+
 <p align="right"><a href="#table-of-content">Top</a></p>
 
 ### Setup Elasticsearch Multi-Node
