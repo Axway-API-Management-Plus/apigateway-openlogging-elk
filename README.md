@@ -53,6 +53,7 @@ This shows a sample dashboard created in Kibana based on the indexed documents:
   - [Configure cluster UUID](#configure-cluster-uuid)
   - [Custom certificates](#custom-certificates)
   - [Secure API-Builder Traffic-Monitor API](#secure-api-builder-traffic-monitor-api)
+  - [Lifecycle Management](#lifecycle-management)
 - [Infrastructure sizing](#sizing-your-infrastructure)
 - [Updates](#updates)
 - [Troubleshooting](#troubleshooting)
@@ -666,6 +667,32 @@ The API-Builder project for providing access to Elasticsearch data has no access
 
 To import the API Builder project REST-API into your API-Manager, you can access the Swagger/OpenAPI definition here (replace docker-host and port appropriately for the container that is hosting the API-Builder project):  
 https://docker-host:8443/apidoc/swagger.json?endpoints/trafficMonitorApi
+
+<p align="right"><a href="#table-of-content">Top</a></p>
+
+### Lifecycle Management
+
+Since new data is continuously stored in Elasticsearch in various indexes, these must of course be removed after a certain period of time.  
+The solution uses the Elasticsearch [ILM](https://www.elastic.co/guide/en/elasticsearch/reference/current/index-lifecycle-management.html) for this purpose, which defines different lifecycle stages per index. The so-called ILM policies are automatically configured by the solution using [configuration files](apibuilder4elastic/elasticsearch_config) and can be reviewed in Kibana.  
+The indices pass through stages such as Hot, Warm, Cold which can be used to deploy different performance hardware per stage. This means that traffic details from two weeks ago no longer have to be stored on high-performance machines.  
+
+The configuration is defined here per data type (e.g. Summary, Details, Audit, ...). The following table gives an overview.  
+
+
+| Data-Type              | Description                                                            | Hot (Size/Days) | Warm    | Cold    | Delete  | Total   |
+| :---                   |:---                                                                    | :---            | :---    | :---    | :---    | :---    |
+| **Traffic-Summary**    | Main index for traffic-monitor overview and primary dashboard          | 30GB / 7 days   | 15 days | 30 days | 10 days | 62 days |
+| **Traffic-Details**    | Details in Traffic-Monitor for Policy, Headers and Payload reference   | 30GB / 7 days   | 7 days  | 10 days | 5 days  | 29 days |
+| **Traffic-Details**    | Details in Traffic-Monitor for Policy, Headers and Payload reference   | 30GB / 7 days   | 7 days  | 10 days | 5 days  | 29 days |
+| **Traffic-Trace**      | Trace-Messages belonging to an API-Request shown in Traffic-Monitor    | 30GB / 7 days   | 7 days  | 10 days | 5 days  | 29 days |
+| **General-Trace**      | General trace messages, like Start- & Stop-Messages                    | 30GB / 7 days   | 7 days  | 10 days | 5 days  | 29 days |
+| **Gateway-Monitoring** | System status information (CPU, HDD, etc.) from Event-Files            | 30GB / 15 days  | 15 days | 15 days | 15 days | 60 days |
+| **Domain-Audit**       | Domain Audit-Information as configured in Admin-Node-Manager           | 30GB / 270 days | 270 days| 720 days| 15 days | >3 years|
+
+Please note:
+- It's optional to use different hardware per stage
+- Do not change the ILM/Modify the ILM-Policies manually, as they are configured automatically. In a later version, the solution will provide options to customize the time range as needed without breaking updates.
+
 
 <p align="right"><a href="#table-of-content">Top</a></p>
 
