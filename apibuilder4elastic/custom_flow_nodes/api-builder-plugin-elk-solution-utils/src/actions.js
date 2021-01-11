@@ -208,7 +208,8 @@ async function getPayloadFilename(params, options) {
 		filename = protocolInfo["sentPayload"]
 	}
 	if(!filename) {
-		return options.setOutput('notFound', `No ${direction} payload for transaction: ${correlationId} on legNo: ${legNo}`);
+		options.logger.debug(`No filename found for direction: ${direction} in protocolInfo: ${JSON.stringify(protocolInfo)}`);
+		return options.setOutput('notFound', `No payload ${direction} for transaction: ${correlationId} on legNo: ${legNo}`);
 	}
 	// Example:
 	// file:///opt/Axway/APIM/apigateway/logs/payloads/2020-07-03/08.55/0455ff5e82267be8182a553d-1-received

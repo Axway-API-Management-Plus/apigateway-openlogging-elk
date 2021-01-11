@@ -61,17 +61,17 @@ async function lookupCurrentUser(params, options) {
 		logger.debug(`Authorized user is: ${user.loginName}`);
 		permissions = await _getCurrentGWPermissions(headers = {'Authorization': `${requestHeaders.authorization}`}, loginName);
 	} else {
-		const VIDUSR = _getCookie(requestHeaders.cookie, "VIDUSR");
+		VIDUSR = _getCookie(requestHeaders.cookie, "VIDUSR");
 		if(!VIDUSR) {
 			logger.trace(`Received cookies: ${requestHeaders.cookie}`);
 			throw new Error('The requestHeaders do not contain the required cookie VIDUSR');
 		}
+		if(cache.has(VIDUSR)) {
+			return cache.get(VIDUSR);
+		}
 		if(!requestHeaders['csrf-token']) {
 			logger.trace(`Received headers: ${requestHeaders}`);
 			throw new Error('The requestHeaders do not contain the required header csrf-token');
-		}
-		if(cache.has(VIDUSR)) {
-			return cache.get(VIDUSR);
 		}
 		logger.trace(`Trying to get current user based on VIDUSR cookie.`);
 		user.loginName = await _getCurrentGWUser(headers = {'Cookie': `VIDUSR=${VIDUSR}`});
@@ -81,6 +81,7 @@ async function lookupCurrentUser(params, options) {
 	if(permissions.includes("adminusers_modify")) {
 		user.gatewayManager.isAdmin = true;
 		logger.debug(`Current user is: '${user.loginName}' Is Gateway admin: ${user.gatewayManager.isAdmin}`);
+		cache.set( VIDUSR, user);
 		return user;
 	}
 	logger.trace(`Trying to load API-Manager user using Login-Name: '${user.loginName}'`);
@@ -92,7 +93,8 @@ async function lookupCurrentUser(params, options) {
 	var org = await _getOrganization(user.apiManager);
 	user.apiManager.organizationName = org.name;
 	logger.debug(`User: '${user.loginName}' (Role: ${user.apiManager.role}) found in API-Manager. Organization: '${user.apiManager.organizationName}'`);
-	if(VIDUSR!=undefined) {
+	if(VIDUSR) {
+		console.log(`----------------------------------- Adding user to cache base on VIDUSR: ${VIDUSR}`);
 		cache.set( VIDUSR, user);
 	}
 	return user;

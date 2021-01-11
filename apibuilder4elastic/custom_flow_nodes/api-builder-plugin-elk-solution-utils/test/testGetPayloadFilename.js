@@ -82,7 +82,7 @@ describe('flow-node elk-solution-utils PayloadFilename', () => {
 				legNo: "0", 
 				direction: "received"
 			});
-			expect(value).to.equal("No received payload for transaction: 0455ff5e82267be8182a553d on legNo: 0");
+			expect(value).to.equal("No payload received for transaction: 0455ff5e82267be8182a553d on legNo: 0");
 			expect(output).to.equal('notFound');
 		});
 
