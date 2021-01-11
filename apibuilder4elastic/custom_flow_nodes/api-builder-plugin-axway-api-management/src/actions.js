@@ -40,7 +40,6 @@ const securityDeviceTypes = {
  *	 does not define "next", the first defined output).
  */
 async function lookupCurrentUser(params, options) {
-	debugger;
 	const { requestHeaders, apiManagerUserRequired } = params;
 	logger = options.logger;
 	cache = options.pluginContext.cache;
@@ -82,7 +81,9 @@ async function lookupCurrentUser(params, options) {
 	if(permissions.includes("adminusers_modify")) {
 		user.gatewayManager.isAdmin = true;
 		logger.debug(`Current user is: '${user.loginName}' Is Gateway admin: ${user.gatewayManager.isAdmin}`);
-		cache.set( VIDUSR, user);
+		if(VIDUSR) {
+			cache.set( VIDUSR, user);
+		}
 		return user;
 	}
 	logger.trace(`Trying to load API-Manager user using Login-Name: '${user.loginName}'`);
@@ -95,7 +96,6 @@ async function lookupCurrentUser(params, options) {
 	user.apiManager.organizationName = org.name;
 	logger.debug(`User: '${user.loginName}' (Role: ${user.apiManager.role}) found in API-Manager. Organization: '${user.apiManager.organizationName}'`);
 	if(VIDUSR) {
-		console.log(`----------------------------------- Adding user to cache base on VIDUSR: ${VIDUSR}`);
 		cache.set( VIDUSR, user);
 	}
 	return user;
