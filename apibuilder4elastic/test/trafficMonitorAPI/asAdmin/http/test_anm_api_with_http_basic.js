@@ -32,10 +32,6 @@ describe('Traffic Monitor API', function () {
 				envLoader.config({ path: envFilePath });
 			}
 			server = startApiBuilder();
-			auth = {
-				user: server.apibuilder.config.apikey || 'test',
-				password: ''
-			};
 			server.apibuilder.config.testElasticIndex = indexName;
 			elasticConfig = server.apibuilder.config.pluginConfig['@axway-api-builder-ext/api-builder-plugin-fn-elasticsearch'].elastic;
 			server.started
@@ -64,7 +60,6 @@ describe('Traffic Monitor API', function () {
 				headers: {
 					'Authorization': 'Basic YWRtaW46Y2hhbmdlbWU='
 				},
-				auth: auth,
 				json: true
 			}).then(({ response, body }) => {
 				expect(response.statusCode).to.equal(200);
@@ -83,7 +78,6 @@ describe('Traffic Monitor API', function () {
 					'Authorization': 'Basic YWRtaW46Y2hhbmdlbWU=', 
 					'Cookie': 'AnyCooke=11231231231'
 				},
-				auth: auth,
 				json: true
 			}).then(({ response, body }) => {
 				expect(response.statusCode).to.equal(200);

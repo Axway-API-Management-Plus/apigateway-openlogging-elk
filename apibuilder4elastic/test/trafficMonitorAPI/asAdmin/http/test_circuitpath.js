@@ -32,10 +32,6 @@ describe('Traffic Monitor API', function () {
 				envLoader.config({ path: envFilePath });
 			}
 			server = startApiBuilder();
-			auth = {
-				user: server.apibuilder.config.apikey || 'test',
-				password: ''
-			};
 			server.apibuilder.config.testElasticIndex = indexName;
 			elasticConfig = server.apibuilder.config.pluginConfig['@axway-api-builder-ext/api-builder-plugin-fn-elasticsearch'].elastic;
 			server.started
@@ -65,7 +61,6 @@ describe('Traffic Monitor API', function () {
 					'cookie': 'VIDUSR=circuitpath-0001-DAVID-1597762865-iUI5a8+v+zLkNA%3d%3d; APIMANAGERSTATIC=92122e5c-6bb3-4fd1-ad2f-08b65554d116', 
 					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
 				},
-				auth: auth,
 				json: true
 			}).then(({ response, body }) => {
 				expect(response.statusCode).to.equal(200);
@@ -87,7 +82,6 @@ describe('Traffic Monitor API', function () {
 					'cookie': 'VIDUSR=circuitpath-0002-DAVID-1597762865-iUI5a8+v+zLkNA%3d%3d; APIMANAGERSTATIC=92122e5c-6bb3-4fd1-ad2f-08b65554d116', 
 					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
 				},
-				auth: auth,
 				json: true
 			}).then(({ response, body }) => {
 				expect(response.statusCode).to.equal(200);
@@ -115,7 +109,6 @@ describe('Traffic Monitor API', function () {
 					'cookie': 'VIDUSR=circuitpath-0003-DAVID-1597762865-iUI5a8+v+zLkNA%3d%3d; APIMANAGERSTATIC=92122e5c-6bb3-4fd1-ad2f-08b65554d116', 
 					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
 				},
-				auth: auth,
 				json: true
 			}).then(({ response, body }) => {
 				expect(response.statusCode).to.equal(200);
@@ -131,7 +124,6 @@ describe('Traffic Monitor API', function () {
 					'cookie': 'VIDUSR=circuitpath-0004-DAVID-1597762865-iUI5a8+v+zLkNA%3d%3d; APIMANAGERSTATIC=92122e5c-6bb3-4fd1-ad2f-08b65554d116', 
 					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
 				},
-				auth: auth,
 				json: true
 			}).then(({ response, body }) => {
 				expect(response.statusCode).to.equal(200);
@@ -147,7 +139,6 @@ describe('Traffic Monitor API', function () {
 					'cookie': 'VIDUSR=circuitpath-0005-DAVID-1597762865-iUI5a8+v+zLkNA%3d%3d; APIMANAGERSTATIC=92122e5c-6bb3-4fd1-ad2f-08b65554d116', 
 					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
 				},
-				auth: auth,
 				json: true
 			}).then(({ response, body }) => {
 				expect(response.statusCode).to.equal(200);

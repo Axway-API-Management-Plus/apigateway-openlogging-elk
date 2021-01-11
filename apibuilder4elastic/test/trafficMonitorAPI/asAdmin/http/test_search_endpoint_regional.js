@@ -34,10 +34,6 @@ describe('Endpoints', function () {
 				envLoader.config({ path: envFilePath });
 			}
 			server = startApiBuilder();
-			auth = {
-				user: server.apibuilder.config.apikey || 'test',
-				password: ''
-			};
 			server.apibuilder.config.testElasticIndex = indexName;
 			elasticConfig = server.apibuilder.config.pluginConfig['@axway-api-builder-ext/api-builder-plugin-fn-elasticsearch'].elastic;
 			server.started
@@ -70,7 +66,6 @@ describe('Endpoints', function () {
 					'cookie': 'VIDUSR=Search-Count-0001-DAVID-1597468226-Z+qdRW4rGZnwzQ==', 
 					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
 				},
-				auth: auth,
 				json: true
 			}).then(({ response, body }) => {
 				expect(response.statusCode).to.equal(200);
@@ -93,7 +88,6 @@ describe('Endpoints', function () {
 					'cookie': 'VIDUSR=Search-Count-0002-DAVID-1597468226-Z+qdRW4rGZnwzQ==', 
 					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
 				},
-				auth: auth,
 				json: true
 			}).then(({ response, body }) => {
 				expect(response.statusCode).to.equal(200);

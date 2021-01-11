@@ -32,10 +32,6 @@ describe('Endpoints', function () {
 				envLoader.config({ path: envFilePath });
 			}
 			server = startApiBuilder();
-			auth = {
-				user: server.apibuilder.config.apikey || 'test',
-				password: ''
-			};
 			server.apibuilder.config.testElasticIndex = indexName;
 			elasticConfig = server.apibuilder.config.pluginConfig['@axway-api-builder-ext/api-builder-plugin-fn-elasticsearch'].elastic;
 			server.started
@@ -64,7 +60,6 @@ describe('Endpoints', function () {
 					'cookie': 'VIDUSR=Search-0001-DAVID-1597468226-Z+qdRW4rGZnwzQ==', 
 					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
 				},
-				auth: auth,
 				json: true
 			}).then(({ response, body }) => {
 				expect(response.statusCode).to.equal(200);
@@ -91,7 +86,6 @@ describe('Endpoints', function () {
 					'cookie': 'VIDUSR=Search-0002-DAVID-1597468226-Z+qdRW4rGZnwzQ==', 
 					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
 				},
-				auth: auth,
 				json: true
 			}).then(({ response, body }) => {
 				expect(response.statusCode).to.equal(200);
@@ -114,7 +108,6 @@ describe('Endpoints', function () {
 					'cookie': 'VIDUSR=Search-0003-DAVID-1597468226-Z+qdRW4rGZnwzQ==', 
 					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
 				},
-				auth: auth,
 				json: true
 			}).then(({ response, body }) => {
 				expect(response.statusCode).to.equal(200);
@@ -138,7 +131,6 @@ describe('Endpoints', function () {
 					'cookie': 'VIDUSR=Search-0004-DAVID-1597468226-Z+qdRW4rGZnwzQ==', 
 					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
 				},
-				auth: auth,
 				json: true
 			}).then(({ response, body }) => {
 				expect(response.statusCode).to.equal(200);
@@ -160,7 +152,6 @@ describe('Endpoints', function () {
 					'cookie': 'VIDUSR=Search-0005-DAVID-1597468226-Z+qdRW4rGZnwzQ==', 
 					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
 				},
-				auth: auth,
 				json: true
 			}).then(({ response, body }) => {
 				expect(response.statusCode).to.equal(200);
@@ -183,7 +174,6 @@ describe('Endpoints', function () {
 					'cookie': 'VIDUSR=Search-0006-DAVID-1597468226-Z+qdRW4rGZnwzQ==', 
 					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
 				},
-				auth: auth,
 				json: true
 			}).then(({ response, body }) => {
 				expect(response.statusCode).to.equal(200);
@@ -193,10 +183,6 @@ describe('Endpoints', function () {
 			});
 		});
 		it('[Endpoint-0007] should return 2 when using a custom time-range', () => {
-			const auth = {
-				user: server.apibuilder.config.apikey || 'test',
-				password: ''
-			};
 			// 
 			/**
 			 * The dates given here must be aligned with dates in search_test_documents.js. Currently configured like so:
@@ -216,7 +202,6 @@ describe('Endpoints', function () {
 					'cookie': 'VIDUSR=Search-0007-DAVID-1597468226-Z+qdRW4rGZnwzQ==', 
 					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
 				},
-				auth: auth,
 				json: true
 			}).then(({ response, body }) => {
 				expect(response.statusCode).to.equal(200);
@@ -228,10 +213,6 @@ describe('Endpoints', function () {
 			});
 		});
 		it('[Endpoint-0008] should return 3 when using a wider custom time-range', () => {
-			const auth = {
-				user: server.apibuilder.config.apikey || 'test',
-				password: ''
-			};
 			// 
 			/**
 			 * The dates given here must be aligned with dates in search_test_documents.js. Currently configured like so:
@@ -252,7 +233,6 @@ describe('Endpoints', function () {
 					'cookie': 'VIDUSR=Search-0008-DAVID-1597468226-Z+qdRW4rGZnwzQ==', 
 					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
 				},
-				auth: auth,
 				json: true
 			}).then(({ response, body }) => {
 				expect(response.statusCode).to.equal(200);
@@ -266,10 +246,6 @@ describe('Endpoints', function () {
 			});
 		});
 		it('[Endpoint-0009] should return two entries with localport 8080', () => {
-			const auth = {
-				user: server.apibuilder.config.apikey || 'test',
-				password: ''
-			};
 			return requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?field=localPort&value=8080`,
@@ -277,7 +253,6 @@ describe('Endpoints', function () {
 					'cookie': 'VIDUSR=Search-0009-DAVID-1597468226-Z+qdRW4rGZnwzQ==', 
 					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
 				},
-				auth: auth,
 				json: true
 			}).then(({ response, body }) => {
 				expect(response.statusCode).to.equal(200);
@@ -289,10 +264,6 @@ describe('Endpoints', function () {
 		});
 
 		it('[Endpoint-0010] should return one entry with localport 8080 and given subject-id', () => {
-			const auth = {
-				user: server.apibuilder.config.apikey || 'test',
-				password: ''
-			};
 			return requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?field=localPort&value=8080&field=subject&value=Chris-Test`,
@@ -300,7 +271,6 @@ describe('Endpoints', function () {
 					'cookie': 'VIDUSR=Search-0010-DAVID-1597468226-Z+qdRW4rGZnwzQ==', 
 					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
 				},
-				auth: auth,
 				json: true
 			}).then(({ response, body }) => {
 				expect(response.statusCode).to.equal(200);
@@ -312,10 +282,6 @@ describe('Endpoints', function () {
 			});
 		});
 		it('[Endpoint-0011] should return one entry with localport 8080 and given subject-id', () => {
-			const auth = {
-				user: server.apibuilder.config.apikey || 'test',
-				password: ''
-			};
 			return requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?field=status&value=404`,
@@ -323,7 +289,6 @@ describe('Endpoints', function () {
 					'cookie': 'VIDUSR=Search-0011-DAVID-1597468226-Z+qdRW4rGZnwzQ==', 
 					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
 				},
-				auth: auth,
 				json: true
 			}).then(({ response, body }) => {
 				expect(response.statusCode).to.equal(200);
@@ -335,10 +300,6 @@ describe('Endpoints', function () {
 			});
 		});
 		it('[Endpoint-0012] should return one entry with localadr 1.1.1.1', () => {
-			const auth = {
-				user: server.apibuilder.config.apikey || 'test',
-				password: ''
-			};
 			return requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?field=localAddr&value=1.1.1.1`,
@@ -346,7 +307,6 @@ describe('Endpoints', function () {
 					'cookie': 'VIDUSR=Search-0012-DAVID-1597468226-Z+qdRW4rGZnwzQ==', 
 					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
 				},
-				auth: auth,
 				json: true
 			}).then(({ response, body }) => {
 				expect(response.statusCode).to.equal(200);
@@ -358,10 +318,6 @@ describe('Endpoints', function () {
 			});
 		});
 		it('[Endpoint-0013] should return one entry with remoteName (remoteHost) TestHost', () => {
-			const auth = {
-				user: server.apibuilder.config.apikey || 'test',
-				password: ''
-			};
 			return requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?field=remoteName&value=TestHost`,
@@ -369,7 +325,6 @@ describe('Endpoints', function () {
 					'cookie': 'VIDUSR=Search-0013-DAVID-1597468226-Z+qdRW4rGZnwzQ==', 
 					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
 				},
-				auth: auth,
 				json: true
 			}).then(({ response, body }) => {
 				expect(response.statusCode).to.equal(200);
@@ -381,10 +336,6 @@ describe('Endpoints', function () {
 			});
 		});
 		it('[Endpoint-0014] should return one entry with remotePort 59641', () => {
-			const auth = {
-				user: server.apibuilder.config.apikey || 'test',
-				password: ''
-			};
 			return requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?field=remotePort&value=59641`,
@@ -392,7 +343,6 @@ describe('Endpoints', function () {
 					'cookie': 'VIDUSR=Search-0014-DAVID-1597468226-Z+qdRW4rGZnwzQ==', 
 					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
 				},
-				auth: auth,
 				json: true
 			}).then(({ response, body }) => {
 				expect(response.statusCode).to.equal(200);
@@ -404,10 +354,6 @@ describe('Endpoints', function () {
 			});
 		});
 		it('[Endpoint-0015] should return one entry with service name Petstore HTTP', () => {
-			const auth = {
-				user: server.apibuilder.config.apikey || 'test',
-				password: ''
-			};
 			return requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?field=serviceName&value=Petstore%20HTTP`,
@@ -415,7 +361,6 @@ describe('Endpoints', function () {
 					'cookie': 'VIDUSR=Search-0015-DAVID-1597468226-Z+qdRW4rGZnwzQ==', 
 					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
 				},
-				auth: auth,
 				json: true
 			}).then(({ response, body }) => {
 				expect(response.statusCode).to.equal(200);
@@ -428,10 +373,6 @@ describe('Endpoints', function () {
 			});
 		});
 		it('[Endpoint-0016] should return one entry WAF-Status 1', () => {
-			const auth = {
-				user: server.apibuilder.config.apikey || 'test',
-				password: ''
-			};
 			return requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?field=wafStatus&value=1`,
@@ -439,7 +380,6 @@ describe('Endpoints', function () {
 					'cookie': 'VIDUSR=Search-0016-DAVID-1597468226-Z+qdRW4rGZnwzQ==', 
 					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
 				},
-				auth: auth,
 				json: true
 			}).then(({ response, body }) => {
 				expect(response.statusCode).to.equal(200);
@@ -451,10 +391,6 @@ describe('Endpoints', function () {
 			});
 		});
 		it('[Endpoint-0017] should return one entry with the given correlation id', () => {
-			const auth = {
-				user: server.apibuilder.config.apikey || 'test',
-				password: ''
-			};
 			return requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?field=correlationId&value=682c0f5fbe23dc8e1d80efe2`,
@@ -462,7 +398,6 @@ describe('Endpoints', function () {
 					'cookie': 'VIDUSR=Search-0017-DAVID-1597468226-Z+qdRW4rGZnwzQ==', 
 					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
 				},
-				auth: auth,
 				json: true
 			}).then(({ response, body }) => {
 				expect(response.statusCode).to.equal(200);
@@ -474,10 +409,6 @@ describe('Endpoints', function () {
 			});
 		});
 		it('[Endpoint-0018] should return one entry with final status Error', () => {
-			const auth = {
-				user: server.apibuilder.config.apikey || 'test',
-				password: ''
-			};
 			return requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?field=finalStatus&value=Error`,
@@ -485,7 +416,6 @@ describe('Endpoints', function () {
 					'cookie': 'VIDUSR=Search-0018-DAVID-1597468226-Z+qdRW4rGZnwzQ==', 
 					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
 				},
-				auth: auth,
 				json: true
 			}).then(({ response, body }) => {
 				expect(response.statusCode).to.equal(200);
@@ -496,10 +426,6 @@ describe('Endpoints', function () {
 			});
 		});
 		it('[Endpoint-0019] should return results with a wildcard path.', () => {
-			const auth = {
-				user: server.apibuilder.config.apikey || 'test',
-				password: ''
-			};
 			return requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?field=uri&value=%2Fv2%2Fpet`,
@@ -507,7 +433,6 @@ describe('Endpoints', function () {
 					'cookie': 'VIDUSR=Search-0019-DAVID-1597468226-Z+qdRW4rGZnwzQ==', 
 					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
 				},
-				auth: auth,
 				json: true
 			}).then(({ response, body }) => {
 				expect(response.statusCode).to.equal(200);
@@ -519,10 +444,6 @@ describe('Endpoints', function () {
 			});
 		});
 		it('[Endpoint-0020] Should return 1 entry in the last 10 minutes (ago=10m)', () => {
-			const auth = {
-				user: server.apibuilder.config.apikey || 'test',
-				password: ''
-			};
 			return requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?ago=10m`,
@@ -530,7 +451,6 @@ describe('Endpoints', function () {
 					'cookie': 'VIDUSR=Search-0020-DAVID-1597468226-Z+qdRW4rGZnwzQ==', 
 					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
 				},
-				auth: auth,
 				json: true
 			}).then(({ response, body }) => {
 				expect(response.statusCode).to.equal(200);
@@ -541,10 +461,6 @@ describe('Endpoints', function () {
 			});
 		});
 		it('[Endpoint-0021] Should return 2 entries in the last 30 minutes (ago=30m)', () => {
-			const auth = {
-				user: server.apibuilder.config.apikey || 'test',
-				password: ''
-			};
 			return requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?ago=30m`,
@@ -552,7 +468,6 @@ describe('Endpoints', function () {
 					'cookie': 'VIDUSR=Search-0021-DAVID-1597468226-Z+qdRW4rGZnwzQ==', 
 					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
 				},
-				auth: auth,
 				json: true
 			}).then(({ response, body }) => {
 				expect(response.statusCode).to.equal(200);
@@ -563,10 +478,6 @@ describe('Endpoints', function () {
 			});
 		});
 		it('[Endpoint-0022] Should return 4 entries in the last 2 hours (ago=120h)', () => {
-			const auth = {
-				user: server.apibuilder.config.apikey || 'test',
-				password: ''
-			};
 			return requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?ago=2h`,
@@ -574,7 +485,6 @@ describe('Endpoints', function () {
 					'cookie': 'VIDUSR=Search-0022-DAVID-1597468226-Z+qdRW4rGZnwzQ==', 
 					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
 				},
-				auth: auth,
 				json: true
 			}).then(({ response, body }) => {
 				expect(response.statusCode).to.equal(200);
@@ -585,10 +495,6 @@ describe('Endpoints', function () {
 			});
 		});
 		it('[Endpoint-0023] Should include the V-Host value', () => {
-			const auth = {
-				user: server.apibuilder.config.apikey || 'test',
-				password: ''
-			};
 			return requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?field=correlationId&value=7a240f5f0e21555d2d343482`,
@@ -596,7 +502,6 @@ describe('Endpoints', function () {
 					'cookie': 'VIDUSR=Search-0022-DAVID-1597468226-Z+qdRW4rGZnwzQ==', 
 					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
 				},
-				auth: auth,
 				json: true
 			}).then(({ response, body }) => {
 				expect(response.statusCode).to.equal(200);
@@ -605,10 +510,6 @@ describe('Endpoints', function () {
 			});
 		});
 		it('[Endpoint-0024] Should not return anything when using the wrong request protocol.', () => {
-			const auth = {
-				user: server.apibuilder.config.apikey || 'test',
-				password: ''
-			};
 			return requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?protocol=filetransfer`,
@@ -616,7 +517,6 @@ describe('Endpoints', function () {
 					'cookie': 'VIDUSR=Search-0022-DAVID-1597468226-Z+qdRW4rGZnwzQ==', 
 					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
 				},
-				auth: auth,
 				json: true
 			}).then(({ response, body }) => {
 				expect(response.statusCode).to.equal(200);
@@ -626,10 +526,6 @@ describe('Endpoints', function () {
 			});
 		});
 		it('[Endpoint-0025] Should return the OPTIONS request including the URI', () => {
-			const auth = {
-				user: server.apibuilder.config.apikey || 'test',
-				password: ''
-			};
 			return requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-2/ops/search?protocol=http&field=method&value=OPTIONS`,
@@ -637,7 +533,6 @@ describe('Endpoints', function () {
 					'cookie': 'VIDUSR=Search-0022-DAVID-1597468226-Z+qdRW4rGZnwzQ==', 
 					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
 				},
-				auth: auth,
 				json: true
 			}).then(({ response, body }) => {
 				expect(response.statusCode).to.equal(200);
@@ -657,7 +552,6 @@ describe('Endpoints', function () {
 					'cookie': 'VIDUSR=Search-0022-DAVID-1597468226-Z+qdRW4rGZnwzQ==', 
 					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
 				},
-				auth: auth,
 				json: true
 			}).then(({ response, body }) => {
 				expect(response.statusCode).to.equal(200);
@@ -677,7 +571,6 @@ describe('Endpoints', function () {
 					'cookie': 'VIDUSR=Search-0022-DAVID-1597468226-Z+qdRW4rGZnwzQ==', 
 					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
 				},
-				auth: auth,
 				json: true
 			}).then(({ response, body }) => {
 				expect(response.statusCode).to.equal(200);
