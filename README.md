@@ -949,7 +949,7 @@ docker exec apibuilder4elastic wget --no-check-certificate https://localhost:844
 
 ### Check Caching
 
-The solution uses Memcache in API Builder & Logstash to avoid unnecessary duplicate queries for APIs and users. To check if entries are cached correctly, you can connect to the memcached via telnet. Some examples:  
+The solution uses Memcache in API Builder & Logstash to avoid unnecessary duplicate queries for APIs and users. To check if entries are cached correctly, you can connect to the memcached via `telnet localhost 11211`. Some examples:  
 ```
 stats cachedump 2 0
 ITEM ignoredAPIs:###Health Check [19 b; 1609979360 s]
@@ -964,6 +964,14 @@ ITEM index_status:trace###N/A [4 b; 1609980396 s]
 END
 ```
 This holds the index creation status used by API-Builder & Logstash to determine if an indicies needs to be created or not.  
+
+To get a key, for instance the version check status:
+```
+get version_status:versionCheck
+VALUE version_status:versionCheck 1 89
+{I"
+   message:ETI"'Filebeat and Logstash version okay;TI"versionStatus;TI"ok;T
+END
 
 You can find additional information here: https://techleader.pro/a/90-Accessing-Memcached-from-the-command-line. You may also use [PHPMemcachedAdmin](https://github.com/elijaa/phpmemcachedadmin) to get insights about the Memcache instance.
 
