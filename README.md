@@ -371,9 +371,10 @@ All traffic payload from these API-Gateways must be made available to the API-Bu
 `/var/log/payloads/us-dc1/<YYY-MM-DD>/<HH.MI>/<payloadfile>`  
 So you need to make the existing structure available in a regional folder. For this, the region must be in lower case.  
 
-Please take into account that payload handling is enabled by default for the solution by the API builder. So it is assumed that you provide the payload to the API Builder container. Set the parameter:  
-`SKIP_PAYLOAD_HANDLING=true`  
-if you do not need this.  
+Please note:  
+:point_right: Payload handling is enabled by default for the solution by the API builder. So it is assumed that you provide the payload to the API Builder container. Set the parameter: `SKIP_PAYLOAD_HANDLING=true` if you do not need this.  
+:point_right: Payload details returned by the API-Builder doesn't contain the headers as they are shonw anyway in the previous screen
+:point_right: Payload shown in the Traffic-Monitor UI is limited to 20 KB by default. If required the payload can be downloaded completely using the `Save` option. 
 
 <p align="right"><a href="#table-of-content">Top</a></p>
 
@@ -690,9 +691,9 @@ The configuration is defined here per data type (e.g. Summary, Details, Audit, .
 | **Domain-Audit**       | Domain Audit-Information as configured in Admin-Node-Manager           | 30GB / 270 days | 270 days| 720 days| 15 days | >3 years|
 
 Please note:
-- It's optional to use different hardware per stage
-- Do not change the ILM/Modify the ILM-Policies manually, as they are configured automatically. In a later version, the solution will provide options to customize the time range as needed without breaking updates.
-- To support long term analytics (e.g. 5 years) it's planned to use Elasticsearch [Rollup-Jobs](https://www.elastic.co/guide/en/kibana/current/data-rollups.html) in a future release of this solution
+:point_right: It's optional to use different hardware per stage  
+:point_right: Do not change the ILM/Modify the ILM-Policies manually, as they are configured automatically. In a later version, the solution will provide options to customize the time range as needed without breaking updates.  
+:point_right: To support long term analytics (e.g. 5 years) it's planned to use Elasticsearch [Rollup-Jobs](https://www.elastic.co/guide/en/kibana/current/data-rollups.html) in a future release of this solution  
 
 <p align="right"><a href="#table-of-content">Top</a></p>
 
