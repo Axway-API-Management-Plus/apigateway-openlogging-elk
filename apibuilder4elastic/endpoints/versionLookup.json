@@ -39,18 +39,16 @@
         "operationId": "Check version",
         "parameters": [
           {
-            "type": "number",
+            "type": "string",
             "in": "query",
             "name": "filebeatVersion",
-            "description": "The filebeat version",
-            "required": true
+            "description": "The filebeat version"
           },
           {
-            "type": "number",
+            "type": "string",
             "in": "query",
             "name": "logstashVersion",
-            "description": "The logstash version",
-            "required": true
+            "description": "The logstash version"
           }
         ],
         "description": "Checks the version of Filebeat and Logstash if they are contain the expected version shipped with the API-Builder Docker-Image currently used.",
