@@ -59,6 +59,16 @@ describe('Endpoints', function () {
                 expect(body.message).to.equal(`Filebeat and Logstash version okay`);
                 expect(body.versionStatus).to.equal(`ok`);
 			});
+        });
+        
+		it('[Check-Version-0004] Should return 400 if parameters are missing', () => {
+			return requestAsync({
+				method: 'GET',
+				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/version/check`,
+				json: true
+			}).then(({ response, body }) => {
+				expect(response.statusCode).to.equal(400);
+			});
 		});
 	});
 });
