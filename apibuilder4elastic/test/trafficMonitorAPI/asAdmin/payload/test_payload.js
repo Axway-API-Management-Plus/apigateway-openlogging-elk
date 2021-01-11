@@ -35,10 +35,6 @@ describe('Payload', function () {
 			// Should be limited to bytes => This is a large payload, that should be limited.
 			process.env.PAYLOAD_LIMIT = 48;
 			server = startApiBuilder();
-			auth = {
-				user: server.apibuilder.config.apikey || 'test',
-				password: ''
-			};
 			server.apibuilder.config.testElasticIndex = indexName;
 			elasticConfig = server.apibuilder.config.pluginConfig['@axway-api-builder-ext/api-builder-plugin-fn-elasticsearch'].elastic;
 			server.started
@@ -68,7 +64,7 @@ describe('Payload', function () {
 					'cookie': 'VIDUSR=Getinfo-0001-DAVID-1597762865-iUI5a8+v+zLkNA%3d%3d; APIMANAGERSTATIC=92122e5c-6bb3-4fd1-ad2f-08b65554d116', 
 					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
 				},
-				auth: auth, json: true
+				json: true
 			}).then(({ response, body }) => {
 				expect(response.statusCode).to.equal(200);
 				expect(response.headers["content-type"]).to.equal("application/vordel-xact-data; charset=utf-8");
@@ -88,7 +84,6 @@ describe('Payload', function () {
 					'cookie': 'VIDUSR=Getinfo-0002-DAVID-1597762865-iUI5a8+v+zLkNA%3d%3d; APIMANAGERSTATIC=92122e5c-6bb3-4fd1-ad2f-08b65554d116', 
 					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
 				},
-				auth: auth,
 				json: true
 			}).then(({ response, body }) => {
 				expect(response.statusCode).to.equal(200);
@@ -110,7 +105,6 @@ describe('Payload', function () {
 					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC', 
 					'Accept': '*/*' // That is the way the SHOW request is triggered
 				},
-				auth: auth,
 				json: true
 			}).then(({ response, body }) => {
 				expect(response.statusCode).to.equal(200);
@@ -122,16 +116,16 @@ describe('Payload', function () {
 			});
 		});
 
-		it.only('[Payload-0004] Payload should be SAVED and is NOT limited to a certain size (request is missing a CSRF-Token)', () => {
+		it('[Payload-0004] Payload should be SAVED and is NOT limited to a certain size (request is missing a CSRF-Token)', () => {
 			const testPayload = fs.readFileSync(`${payloadFolder}/2021-01-09/10.00/LargePayloadTest-1-received`);
 			return requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/stream/LargePayloadTest/1/received`,
 				headers: {
 					'cookie': 'VIDUSR=Getinfo-0002-DAVID-1597762865-iUI5a8+v+zLkNA%3d%3d; APIMANAGERSTATIC=92122e5c-6bb3-4fd1-ad2f-08b65554d116', 
+					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC', 
 					'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' // Payload requested for SAVE
 				},
-				auth: auth,
 				json: true
 			}).then(({ response, body }) => {
 				expect(response.statusCode).to.equal(200);

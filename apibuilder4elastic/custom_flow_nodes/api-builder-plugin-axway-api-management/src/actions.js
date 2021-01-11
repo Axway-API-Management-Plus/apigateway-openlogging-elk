@@ -40,6 +40,7 @@ const securityDeviceTypes = {
  *	 does not define "next", the first defined output).
  */
 async function lookupCurrentUser(params, options) {
+	debugger;
 	const { requestHeaders, apiManagerUserRequired } = params;
 	logger = options.logger;
 	cache = options.pluginContext.cache;
