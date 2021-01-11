@@ -26,8 +26,8 @@ module.exports = {
 	// These version are used, that Filebeat and Logstash are configured as required 
 	// by the API-Builder release
 	versions: {
-		filebeat: 2, 
-		logstash: 2
+		filebeat: "2", 
+		logstash: "2"
 	},
 	// Payload configuration settings
 	payload: {

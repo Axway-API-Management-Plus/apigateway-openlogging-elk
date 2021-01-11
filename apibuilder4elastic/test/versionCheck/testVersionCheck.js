@@ -20,8 +20,8 @@ describe('Endpoints', function () {
 
 	describe('Check version', () => {
 		it('[Check-Version-0001] Should return version issue for Filebeat', () => {
-            const filebeatVersion = 1;
-            const logstashVersion = 1;
+            const filebeatVersion = "1";
+            const logstashVersion = "1";
 			return requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/version/check?filebeatVersion=${filebeatVersion}&logstashVersion=${logstashVersion}`,
@@ -34,8 +34,8 @@ describe('Endpoints', function () {
         });
         
 		it('[Check-Version-0002] Should return version issue for Filebeat', () => {
-            const filebeatVersion = 2;
-            const logstashVersion = 1;
+            const filebeatVersion = "2";
+            const logstashVersion = "1";
 			return requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/version/check?filebeatVersion=${filebeatVersion}&logstashVersion=${logstashVersion}`,
@@ -48,8 +48,8 @@ describe('Endpoints', function () {
         });
         
 		it('[Check-Version-0003] Should return version check ok', () => {
-            const filebeatVersion = 2;
-            const logstashVersion = 2;
+            const filebeatVersion = "2";
+            const logstashVersion = "2";
 			return requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/version/check?filebeatVersion=${filebeatVersion}&logstashVersion=${logstashVersion}`,
@@ -61,13 +61,29 @@ describe('Endpoints', function () {
 			});
         });
         
-		it('[Check-Version-0004] Should return 400 if parameters are missing', () => {
+		it('[Check-Version-0004] Should return 200 with an error status if parameters are missing', () => {
 			return requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/version/check`,
 				json: true
 			}).then(({ response, body }) => {
-				expect(response.statusCode).to.equal(400);
+                expect(response.statusCode).to.equal(200);
+                expect(body.message).to.equal(`Filebeat version does not match to API-Builder release`);
+                expect(body.versionStatus).to.equal(`error`);
+			});
+        });
+        
+		it('[Check-Version-0005] Should return with an error status wit invalid versions', () => {
+            const filebeatVersion = "something";
+            const logstashVersion = "wrong";
+			return requestAsync({
+				method: 'GET',
+				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/version/check?filebeatVersion=${filebeatVersion}&logstashVersion=${logstashVersion}`,
+				json: true
+			}).then(({ response, body }) => {
+                expect(response.statusCode).to.equal(200);
+                expect(body.message).to.equal(`Filebeat version does not match to API-Builder release`);
+                expect(body.versionStatus).to.equal(`error`);
 			});
 		});
 	});
