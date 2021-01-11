@@ -15,7 +15,7 @@ filebeat.inputs:
     logtype: openlog
     gatewayName: ${GATEWAY_NAME:"API-Gateway"}
     gatewayRegion: ${GATEWAY_REGION:"N/A"}
-    version: "1"
+    filebeatVersion: "2"
 
 - type: log
   paths: ["/var/log/trace/*.trc"]
@@ -30,7 +30,7 @@ filebeat.inputs:
     logtype: trace
     gatewayName: ${GATEWAY_NAME:"API-Gateway"}
     gatewayRegion: ${GATEWAY_REGION:"N/A"}
-    version: "1"
+    filebeatVersion: "2"
 
 - type: log
   paths: ["/var/log/events/*.log", "/var/log/events/processed/*.log.PROCESSED"]
@@ -42,7 +42,7 @@ filebeat.inputs:
     logtype: events
     gatewayName: ${GATEWAY_NAME:"API-Gateway"}
     gatewayRegion: ${GATEWAY_REGION:"N/A"}
-    version: "1"
+    filebeatVersion: "2"
 
 - type: log
   paths: ["/var/log/audit/*.log"]
@@ -54,7 +54,7 @@ filebeat.inputs:
     logtype: domainaudit
     gatewayName: ${GATEWAY_NAME:"API-Gateway"}
     gatewayRegion: ${GATEWAY_REGION:"N/A"}
-    version: "1"
+    filebeatVersion: "2"
 
 # Required for Trace-Messages logged by the API-Gateway
 processors:

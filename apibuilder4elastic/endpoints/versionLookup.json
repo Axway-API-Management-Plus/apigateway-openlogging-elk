@@ -1,0 +1,63 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Version Check",
+    "version": "1.0",
+    "description": "Convenience endpoint to verify that the remote components of the solution (Filebeat & Logstash) matches to the release of the API-Builder.\nWhenever for instance the Filebeat configuration requires as change, this check is used to make sure customers are not juts updating API-Builder, they also have to update Filebeat the configuration and Logstash when needed. Not every release will required Filebeat or Logstash configuration to be updated, but in case it's required this endpoints helps to identify the configuration issue."
+  },
+  "host": "localhost:3000",
+  "schemes": [
+    "http"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "paths": {
+    "/version/check": {
+      "get": {
+        "summary": "Check version",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK - All components have the correct version",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "500": {
+            "description": "Configuration issue. One of the components has a wrong version",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          }
+        },
+        "operationId": "Check version",
+        "parameters": [
+          {
+            "type": "number",
+            "in": "query",
+            "name": "filebeatVersion",
+            "description": "The filebeat version",
+            "required": true
+          },
+          {
+            "type": "number",
+            "in": "query",
+            "name": "logstashVersion",
+            "description": "The logstash version",
+            "required": true
+          }
+        ],
+        "description": "Checks the version of Filebeat and Logstash if they are contain the expected version shipped with the API-Builder Docker-Image currently used.",
+        "x-flow": "versionLookup-Check version"
+      }
+    }
+  },
+  "definitions": {},
+  "basePath": "/elk/v1/api"
+}

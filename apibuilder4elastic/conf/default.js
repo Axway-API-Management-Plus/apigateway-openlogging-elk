@@ -23,6 +23,12 @@ module.exports = {
 
 	authorizationMode: process.env.USER_AUTHORIZATION_MODE || 'ManagerOrganization',
 
+	// These version are used, that Filebeat and Logstash are configured as required 
+	// by the API-Builder release
+	versions: {
+		filebeat: 2, 
+		logstash: 2
+	},
 	// Payload configuration settings
 	payload: {
 		// Parameter is used, if the payload handling should skip or not (defaults to false, if skipped a 501 is returned)
