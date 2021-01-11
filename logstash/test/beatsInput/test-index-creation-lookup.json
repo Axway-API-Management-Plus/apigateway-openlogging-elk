@@ -2,7 +2,7 @@
   "fields": {
     "gatewayName": "API-Gateway 1",
     "gatewayRegion": "EU", 
-    "filebeatVersion": 2,
+    "filebeatVersion": "2",
     "logtype": "trace",
     "integrationTest": "true"
   },
