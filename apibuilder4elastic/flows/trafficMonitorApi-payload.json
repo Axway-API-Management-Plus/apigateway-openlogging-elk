@@ -63,13 +63,15 @@
 			"outputs": {
 				"next": {
 					"routes": [
-						"base64.1"
+						"http.2"
 					],
 					"context": "$.fileContent",
 					"metaName": "Next"
 				},
 				"notFound": {
-					"routes": [],
+					"routes": [
+						"http.4"
+					],
 					"context": "$.result",
 					"metaName": "Not found"
 				},
@@ -208,9 +210,16 @@
 					"metaDescription": "The HTTP status code"
 				},
 				{
+					"name": "headers",
+					"type": "object",
+					"value": "{\n\"content-type\": \"application/vordel-xact-data\"\n}",
+					"metaName": "Headers",
+					"metaDescription": "Key-value pairs of headers"
+				},
+				{
 					"name": "body",
 					"type": "jsonpath",
-					"value": "$.b64data",
+					"value": "$.fileContent",
 					"metaName": "Body",
 					"metaDescription": "The response payload"
 				}
@@ -268,7 +277,9 @@
 					"metaName": "Next"
 				},
 				"notFound": {
-					"routes": [],
+					"routes": [
+						"http.4"
+					],
 					"context": "$.notFoundMessage",
 					"metaName": "Not found"
 				},
@@ -288,30 +299,6 @@
 				}
 			},
 			"metaMethod": "Get payload filename"
-		},
-		"base64.1": {
-			"type": "nodehandler://@axway/api-builder-plugin-fn-base64/base64",
-			"name": "Encode",
-			"method": "encode",
-			"parameters": [
-				{
-					"name": "data",
-					"type": "jsonpath",
-					"value": "$.fileContent",
-					"metaName": "Data",
-					"metaDescription": "The data to encode."
-				}
-			],
-			"outputs": {
-				"encoded": {
-					"routes": [
-						"http.2"
-					],
-					"context": "$.b64data",
-					"metaName": "Next"
-				}
-			},
-			"metaMethod": "Encode"
 		},
 		"condition.1": {
 			"type": "nodehandler://axway-flow/condition",
@@ -556,6 +543,28 @@
 					"value": "$.error",
 					"metaName": "Body",
 					"metaDescription": "The response payload"
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.response",
+					"routes": [],
+					"metaName": "Next"
+				}
+			},
+			"metaMethod": "Set HTTP Response"
+		},
+		"http.4": {
+			"type": "nodehandler://axway-flow/http",
+			"name": "Not found response",
+			"method": "setresponse",
+			"parameters": [
+				{
+					"name": "status",
+					"type": "number",
+					"value": "404",
+					"metaName": "Status",
+					"metaDescription": "The HTTP status code"
 				}
 			],
 			"outputs": {

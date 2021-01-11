@@ -86,7 +86,7 @@ describe('Payload restricted', function () {
 				json: true
 			}).then(({ response, body }) => {
 				expect(response.statusCode).to.equal(200);
-				expect(body).to.be.equal('UkVDRUlWRUQtUEFZTE9BRC1MRUctMQ==');
+				expect(body).to.be.equal('RECEIVED-PAYLOAD-LEG-1');
 				nock.cleanAll();
 			});
 		});

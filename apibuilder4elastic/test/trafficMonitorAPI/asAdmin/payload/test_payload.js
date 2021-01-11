@@ -70,11 +70,11 @@ describe('Payload', function () {
 				},
 				auth: auth, json: true
 			}).then(({ response, body }) => {
+				debugger;
 				expect(response.statusCode).to.equal(200);
+				expect(response.headers["content-type"]).to.equal("application/vordel-xact-data; charset=utf-8");
 				expect(body).to.be.an('String');
-				const bodyBase64Encoded = Buffer.from(body, 'base64');
-				let decodedDody = bodyBase64Encoded.toString('ascii');
-				expect(decodedDody).to.include(testPayload);
+				expect(body).to.include(testPayload);
 				//expect(decodedDody).to.include('X-CorrelationID: Id-5d7bf75fae00e64a0245fd25');
 				//expect(decodedDody).to.include('Server: Gateway');
 			});
@@ -93,10 +93,10 @@ describe('Payload', function () {
 				json: true
 			}).then(({ response, body }) => {
 				expect(response.statusCode).to.equal(200);
+				expect(response.headers["content-type"]).to.equal("application/vordel-xact-data; charset=utf-8");
 				expect(body).to.be.an('String');
-				const bodyBase64Encoded = Buffer.from(body, 'base64');
-				let decodedDody = bodyBase64Encoded.toString('ascii');
-				expect(decodedDody).to.include(testPayload);
+				expect(body).to.be.an('String');
+				expect(body).to.include(testPayload);
 				//expect(decodedDody).to.include('X-CorrelationID: Id-5d7bf75fae00e64a0245fd25');
 				//expect(decodedDody).to.include('Server: Gateway');
 			});
@@ -115,10 +115,9 @@ describe('Payload', function () {
 				json: true
 			}).then(({ response, body }) => {
 				expect(response.statusCode).to.equal(200);
+				expect(response.headers["content-type"]).to.equal("application/vordel-xact-data; charset=utf-8");
 				expect(body).to.be.an('String');
-				const bodyBase64Encoded = Buffer.from(body, 'base64');
-				let decodedDody = bodyBase64Encoded.toString('ascii');
-				expect(decodedDody).to.equal("This is a large payload, that should be limited.");
+				expect(body).to.equal("This is a large payload, that should be limited.");
 				//expect(decodedDody).to.include('X-CorrelationID: Id-5d7bf75fae00e64a0245fd25');
 				//expect(decodedDody).to.include('Server: Gateway');
 			});
@@ -138,10 +137,9 @@ describe('Payload', function () {
 				json: true
 			}).then(({ response, body }) => {
 				expect(response.statusCode).to.equal(200);
+				expect(response.headers["content-type"]).to.equal("application/vordel-xact-data; charset=utf-8");
 				expect(body).to.be.an('String');
-				const bodyBase64Encoded = Buffer.from(body, 'base64');
-				let decodedDody = bodyBase64Encoded.toString('ascii');
-				expect(decodedDody).to.include(testPayload);
+				expect(body).to.include(testPayload);
 				//expect(decodedDody).to.include('X-CorrelationID: Id-5d7bf75fae00e64a0245fd25');
 				//expect(decodedDody).to.include('Server: Gateway');
 			});
