@@ -314,7 +314,7 @@ ELASTIC_VERSION=7.10.0
 # Used-By: API-Builder, Logstash
 API_BUILDER_SSL_KEY=config/certificates/apibuilder4elastic.key
 API_BUILDER_SSL_CERT=config/certificates/apibuilder4elastic.crt
-API_BUILDER_SSL_KEY_PASSWORD=axway
+API_BUILDER_SSL_KEY_PASSWORD=
 
 # The following certificates and keys are mainly used by Elasticsearch to enable transport 
 # security on port: 9200.
@@ -325,13 +325,19 @@ API_BUILDER_SSL_KEY_PASSWORD=axway
 ELASTICSEARCH_CA=config/certificates/ca.crt
 
 ELASTICSEARCH1_KEY=config/certificates/elasticsearch1.key
+ELASTICSEARCH1_KEY_PASSPHRASE=
 ELASTICSEARCH1_CRT=config/certificates/elasticsearch1.crt
+
 ELASTICSEARCH2_KEY=config/certificates/elasticsearch2.key
+ELASTICSEARCH2_KEY_PASSPHRASE=
 ELASTICSEARCH2_CRT=config/certificates/elasticsearch2.crt
+
 ELASTICSEARCH3_KEY=config/certificates/elasticsearch3.key
+ELASTICSEARCH3_KEY_PASSPHRASE=
 ELASTICSEARCH3_CRT=config/certificates/elasticsearch3.crt
 
 # Certificate and key used by Kibana to expose the HTTPS-Listen socket.
 # Used-By: Kibana
 KIBANA_KEY=config/certificates/kibana.key
 KIBANA_CRT=config/certificates/kibana.crt
+KIBANA_KEYPASSPHRASE=

@@ -67,7 +67,9 @@ instances:
 ```
 
 Run elasticsearch-certutil:  
-`bin/elasticsearch-certutil cert --silent --in instances.yml --out sample-certificates.zip --pass axway --pem --keep-ca-key`
+`bin/elasticsearch-certutil cert --silent --in instances.yml --out sample-certificates.zip --pem --keep-ca-key`
 
 Copy the ZIP-File:  
 `docker cp elasticsearch1:/usr/share/elasticsearch/sample-certificates.zip .`
+
+Store the certificates in the config/certificates folder
