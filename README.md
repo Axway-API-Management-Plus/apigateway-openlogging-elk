@@ -645,7 +645,7 @@ To activate these changes the Filebeat service must be restarted.
 
 _If you are using an existing Elasticsearch cluster, you have to provide the required CA to the solution to allow certificate validation._
 
-The project is shipped with long running certificates/keys that should help you to get started with the solution. For a production environment these certificates and keys should be replaced with custom certificates.  
+The project is shipped with sample long running certificates/keys that should help you to get started with the solution. For a production environment these certificates and keys should be replaced with custom certificates, as the sample certificates & key are public available on GitHub.  
 
 After you have created the corresponding certificates and keys based on your CA, you must save them in the folder: `certificates`. 
 Afterwards these certificates must be configured in the `.env` file.  
@@ -653,9 +653,13 @@ Afterwards these certificates must be configured in the `.env` file.
 API_BUILDER_SSL_KEY=config/certificates/corporate-certificate.key
 API_BUILDER_SSL_CERT=config/certificates/corporate-certificate.crt
 API_BUILDER_SSL_KEY_PASSWORD=dfslkjaskljdklasjdlas
-ELASTICSEARCH_KEY=config/certificates/corporate-elasticsearch.key
-ELASTICSEARCH_CRT=config/certificates/corporate-elasticsearch.crt
 ELASTICSEARCH_CA=config/certificates/corp-ca.crt
+ELASTICSEARCH1_KEY=config/certificates/corporate-elasticsearch.key
+ELASTICSEARCH1_CRT=config/certificates/corporate-elasticsearch.crt
+ELASTICSEARCH2_KEY=config/certificates/corporate-elasticsearch.key
+ELASTICSEARCH2_CRT=config/certificates/corporate-elasticsearch.crt
+ELASTICSEARCH3_KEY=config/certificates/corporate-elasticsearch.key
+ELASTICSEARCH3_CRT=config/certificates/corporate-elasticsearch.crt
 KIBANA_KEY=config/certificates/corporate-kibana.key
 KIBANA_CRT=config/certificates/corporate-kibana.crt
 ```
