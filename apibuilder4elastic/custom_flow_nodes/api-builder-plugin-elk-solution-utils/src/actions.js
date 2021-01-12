@@ -131,8 +131,9 @@ async function updateRolloverAlias(params, options) {
 	}
 	// For each configured index do
 	for (const [indexName, indexConfig] of Object.entries(indices)) {
-		// Based on the main index name get all regional indices, if there is any ....
-		var indicesForName = await client.indices.get({index: `${indexName}-*-0*`}, { maxRetries: 3 });
+		// Based on the main indexName get  actual write index
+		// Examples: apigw-traffic-trace-000001 or apigw-traffic-trace-us-000001
+		var indicesForName = await client.indices.get({index: `${indexName}-*000001`}, { maxRetries: 3 });
 		for (const [key, val] of Object.entries(indicesForName.body)) {
 			logger.debug(`Check rollover alias for index: ${key}`);
 			var writeIndexAliasName;
