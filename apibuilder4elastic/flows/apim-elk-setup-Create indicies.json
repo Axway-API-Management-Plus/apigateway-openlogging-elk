@@ -97,8 +97,8 @@
 				},
 				{
 					"name": "body",
-					"type": "jsonpath",
-					"value": "$.indexConfig",
+					"type": "object",
+					"value": "{\n  \"status\":\"ok\"\n}",
 					"metaName": "Body",
 					"metaDescription": "The response payload"
 				}
