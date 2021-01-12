@@ -38,8 +38,7 @@
           "gatewayName": "API-Gateway 1",
           "gatewayRegion": "EU",
           "host": "test-host",
-          "integrationTest": "true", 
-          "cachedResponse": "true"
+          "integrationTest": "true"
         }
       ]
     }
