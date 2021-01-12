@@ -20,10 +20,7 @@
           "message": "This should create an index",
           "gatewayName": "API-Gateway 1",
           "gatewayRegion": "EU",
-          "host": "test-host", 
-          "indexExists": {
-            "mocked": "index-created"
-          }, 
+          "host": "test-host",
           "integrationTest": "true"
         }
       ]
@@ -41,9 +38,6 @@
           "gatewayName": "API-Gateway 1",
           "gatewayRegion": "EU",
           "host": "test-host",
-          "indexExists": {
-            "mocked": "index-created"
-          }, 
           "integrationTest": "true", 
           "cachedResponse": "true"
         }
