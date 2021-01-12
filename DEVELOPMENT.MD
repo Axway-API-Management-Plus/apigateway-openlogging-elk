@@ -58,7 +58,6 @@ instances:
   - name: "apibuilder4elastic"
     dns:
       - "apibuilder4elastic"
-      - "api-builder"
       - "localhost"
       - "api-env"
       - "*.ec2.internal"
