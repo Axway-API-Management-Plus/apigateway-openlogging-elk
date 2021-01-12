@@ -308,7 +308,7 @@ ELASTIC_VERSION=7.10.0
 
 # The following variables are used by API-Builder to define, which certificate is used
 # to expose the HTTPS-Listen socket.
-# You may use your own certificate by mounting it into the API-Builder Docker-Container 
+# You may use your own certificates by mounting them into the API-Builder Docker-Container 
 # and configure the path the key/cert and provide the password.
 # Logstash is using the certificate for validation when performing API- or User-Lookups.
 # Used-By: API-Builder, Logstash
@@ -322,11 +322,16 @@ API_BUILDER_SSL_KEY_PASSWORD=axway
 # It's expected that the certificates are placed into the folder caertificates as this folder 
 # is mounted into the Docker container.
 # Used-By: Elasticsearch, Kibana, Logstash, Filebeat
-ELASTICSEARCH_KEY=config/certificates/elasticsearch1.key
-ELASTICSEARCH_CRT=config/certificates/elasticsearch1.crt
 ELASTICSEARCH_CA=config/certificates/ca.crt
+
+ELASTICSEARCH1_KEY=config/certificates/elasticsearch1.key
+ELASTICSEARCH1_CRT=config/certificates/elasticsearch1.crt
+ELASTICSEARCH2_KEY=config/certificates/elasticsearch2.key
+ELASTICSEARCH2_CRT=config/certificates/elasticsearch2.crt
+ELASTICSEARCH3_KEY=config/certificates/elasticsearch3.key
+ELASTICSEARCH3_CRT=config/certificates/elasticsearch3.crt
 
 # Certificate and key used by Kibana to expose the HTTPS-Listen socket.
 # Used-By: Kibana
-KIBANA_KEY=config/certificates/elasticsearch1.key
-KIBANA_CRT=config/certificates/elasticsearch1.crt
+KIBANA_KEY=config/certificates/kibana.key
+KIBANA_CRT=config/certificates/kibana.crt
