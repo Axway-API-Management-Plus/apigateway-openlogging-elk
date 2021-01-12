@@ -14,15 +14,15 @@ services:
       - ELASTICSEARCH_ANONYMOUS_ENABLED=${ELASTICSEARCH_ANONYMOUS_ENABLED:-true}
       - xpack.security.enabled=true
       - xpack.security.http.ssl.enabled=true
-      - xpack.security.http.ssl.key=/usr/share/elasticsearch/${ELASTICSEARCH3_KEY}
-      - xpack.security.http.ssl.key_passphrase=${ELASTICSEARCH3_KEY_PASSPHRASE}
-      - xpack.security.http.ssl.certificate=/usr/share/elasticsearch/${ELASTICSEARCH3_CRT}
+      - xpack.security.http.ssl.key=/usr/share/elasticsearch/${ELASTICSEARCH_KEY}
+      - xpack.security.http.ssl.key_passphrase=${ELASTICSEARCH_KEY_PASSPHRASE}
+      - xpack.security.http.ssl.certificate=/usr/share/elasticsearch/${ELASTICSEARCH_CRT}
       - xpack.security.http.ssl.certificate_authorities=/usr/share/elasticsearch/${ELASTICSEARCH_CA}
       - xpack.security.transport.ssl.enabled=true
       - xpack.security.transport.ssl.verification_mode=certificate
-      - xpack.security.transport.ssl.key=/usr/share/elasticsearch/${ELASTICSEARCH3_KEY}
-      - xpack.security.transport.ssl.key_passphrase=${ELASTICSEARCH3_KEY_PASSPHRASE}
-      - xpack.security.transport.ssl.certificate=/usr/share/elasticsearch/${ELASTICSEARCH3_CRT}
+      - xpack.security.transport.ssl.key=/usr/share/elasticsearch/${ELASTICSEARCH_KEY}
+      - xpack.security.transport.ssl.key_passphrase=${ELASTICSEARCH_KEY_PASSPHRASE}
+      - xpack.security.transport.ssl.certificate=/usr/share/elasticsearch/${ELASTICSEARCH_CRT}
       - xpack.security.transport.ssl.certificate_authorities=/usr/share/elasticsearch/${ELASTICSEARCH_CA}
       # Activate the following parameters for advanced setup
       #- network.publish_host=${ELASTICSEARCH_PUBLISH_HOST3}

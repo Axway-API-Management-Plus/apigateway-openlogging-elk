@@ -324,17 +324,9 @@ API_BUILDER_SSL_KEY_PASSWORD=
 # Used-By: Elasticsearch, Kibana, Logstash, Filebeat
 ELASTICSEARCH_CA=config/certificates/ca.crt
 
-ELASTICSEARCH1_KEY=config/certificates/elasticsearch1.key
-ELASTICSEARCH1_KEY_PASSPHRASE=
-ELASTICSEARCH1_CRT=config/certificates/elasticsearch1.crt
-
-ELASTICSEARCH2_KEY=config/certificates/elasticsearch2.key
-ELASTICSEARCH2_KEY_PASSPHRASE=
-ELASTICSEARCH2_CRT=config/certificates/elasticsearch2.crt
-
-ELASTICSEARCH3_KEY=config/certificates/elasticsearch3.key
-ELASTICSEARCH3_KEY_PASSPHRASE=
-ELASTICSEARCH3_CRT=config/certificates/elasticsearch3.crt
+ELASTICSEARCH_KEY=config/certificates/elasticsearch1.key
+ELASTICSEARCH_KEY_PASSPHRASE=
+ELASTICSEARCH_CRT=config/certificates/elasticsearch1.crt
 
 # Certificate and key used by Kibana to expose the HTTPS-Listen socket.
 # Used-By: Kibana
