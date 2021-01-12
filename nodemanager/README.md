@@ -22,6 +22,8 @@ _The following endpoints are currently supported by the API Builder based Traffi
 | **Circuitpath**     | `^\/api\/router\/service\/[A-Za-z0-9-.]+\/ops\/stream\/[A-Za-z0-9]+\/[^\/]+\/circuitpath$` | Endpoint which provides the data for the Filter Execution Path as part of the detailed view of a transaction|
 | **Trace**     | `^\/api\/router\/service\/[A-Za-z0-9-.]+\/ops\/trace\/[A-Za-z0-9]+[\?]?.*$` | Endpoint which returns the trace information and the **getinfo** endpoint which returns the request detail information including the http header of each leg|
 | **GetInfo**     | `^\/api\/router\/service\/[A-Za-z0-9-.]+\/ops\/[A-Za-z0-9]+\/[A-Za-z0-9]+\/[\*0-9]{1}\/getinfo[\?]?.*$` |Endpoint provides information for the Requesr- Response-Details|
+| **Payload**     | `^\/api\/router\/service\/[A-Za-z0-9-.]+\/ops\/stream\/.*\/\d+\/(?:sent|received)$` |Payload endpoint|
+
 
 The compare attribute filter should look like this:   
 ![Is API Managed](../imgs/IsmanagedbyElasticsearchAPI.png)  
@@ -32,7 +34,26 @@ This `Set Attribute` filter: `Set region filter` creates a new attribute: `regio
 
 ![Set region filter](../imgs/setRegionFilter.png)  
 
-Sample:  `&region=${env.REGION == '[invalid field]' ? "" : env.REGION}`
+Sample:  `region=${env.REGION == '[invalid field]' ? "" : env.REGION}`
+
+### Add region filter
+
+Adds the region filter, which is optional to the `http.request.rawURI` attribute.
+
+```javascript
+function invoke(msg) {
+    var httpRequestRawURI = msg.get("http.request.rawURI");
+    var regionFilter = msg.get("regionFilter");
+
+    if (httpRequestRawURI.contains('?')) {
+        httpRequestRawURI += "&" + regionFilter;
+    } else {
+        httpRequestRawURI += "?" + regionFilter;
+    }
+    msg.put("http.request.rawURI", httpRequestRawURI);
+    return true;
+}
+```
 
 ### Connect to Elasticsearch API
 
