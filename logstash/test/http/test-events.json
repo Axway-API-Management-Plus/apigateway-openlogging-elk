@@ -28,11 +28,11 @@
         {
           "@timestamp": "2020-08-26T19:15:15.360Z",
           "type": "system",
-          "sysMem": 15677168000,
+          "sysMem": "15677168000",
           "diskUsed": 88,
-          "instMem": 2269044000,
+          "instMem": "2269044000",
           "sysCpu": 13,
-          "sysMemTotal": 16266828000,
+          "sysMemTotal": "16266828000",
           "instCpu": 3,
           "processInfo": {
             "gatewayName": "API-Gateway 1", 
