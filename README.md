@@ -288,7 +288,7 @@ into the main policy: `Protect Management Interfaces` and wire it like shown her
 It is recommended to disable the audit log for Failure transactions to avoid not needed log messages in the ANM trace file:  
 <p align="center"><img src="imgs/policy-shortcut-disable-failure.png" alt="Use Elasticsearch API" width="300" height="123"></p>
 
-- :point_right: Before you restart the Admin-Node-Manager process, please open the file: `<apigateway-install-dir>/apigateway/conf/envSettings.props` and add the following new environment variable: `API_BUILDER_URL=https://apibuilder4elastic:8443`.  
+- :point_right: Before you restart the Admin-Node-Manager process, please open the file:  `<apigateway-install-dir>/apigateway/conf/envSettings.props`  and add the following new environment variable:  `env.API_BUILDER_URL=https://apibuilder4elastic:8443`.  
 - :point_right: If you are using [multiple regions](#different-topologiesdomains) you may also configure the appropriate region to restrict the data of the Admin-Node-Manager to the correct regional data. E.g.: `REGION=US`.  
 - :point_right: Please remember to copy the changed Admin-Node-Manager configuration from the Policy-Studio project folder (path on Linux: `/home/<user>/apiprojects/\<project-name\>`) back to the ANM folder (`\<install-dir\>/apigateway/conf/fed`). Then restart the ANM.
 
@@ -898,20 +898,20 @@ Or the following:
 ```
 
 ### No results from Elasticsearch
-If you don't get any results from Elasticsearch for valid queries the template might not be used correctly during index creation. Elasticsearch does not execute queries on the original document, rather on the indexed fields. How these were indexed is defined by an index mapping.  
+If you don't get any results from Elasticsearch for valid queries an [index template](https://www.elastic.co/guide/en/elasticsearch/reference/7.10/index-templates.html) might not be applied correctly during index creation. You need to know, that Elasticsearch does not execute queries on the original document, rather on the indexed fields. How these were indexed is defined by an index mapping.  
 For this purpose, the solution delivers an index template for each index, which is used when the index is created.  
 You can find the index mapping in the API-Builder container: `elasticsearch_config/<index-name>/index_template.json` or you can review them [here](apibuilder4elastic/elasticsearch_config).  
 To check if the index mapping was applied correctly to an index execute the following request. For example the Traffic-Summary index:  
 `http://elasticsearch:9200/apigw-traffic-summary/_mapping`  
-then check if individual properties have the mapping from the template.
+then check if properties mappings defined in the configuration mentioned above have been applied to the index.
 
 ### Check API-Builder processing
 The API-Builder docker container is running 
 ```
-docker logs apigateway-openlogging-elk_elk-traffic-monitor-api_1_3fbba4deea37 --follow
+docker logs apibuilder4elastic --follow
 ```
 ```
-server started on port 8080
+server started on port 8443
 ```
 ### Check requests from Admin-Node-Manager
 When using the API-Gateway Traffic-Monitor to monitor requests and having the Admin-Node-Manager re-configured you should see how API-Builder is processing the requests:
@@ -973,6 +973,7 @@ VALUE version_status:versionCheck 1 89
 {I"
    message:ETI"'Filebeat and Logstash version okay;TI"versionStatus;TI"ok;T
 END
+```
 
 You can find additional information here: https://techleader.pro/a/90-Accessing-Memcached-from-the-command-line. You may also use [PHPMemcachedAdmin](https://github.com/elijaa/phpmemcachedadmin) to get insights about the Memcache instance.
 
