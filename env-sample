@@ -215,7 +215,7 @@ ELASTICSEARCH_CLUSTER_UUID=
 # If not given, all data is stored with the default value: All
 # Whitespaces and special characters are not allowed
 # Used-By: Filebeat, Elasticsearch
-# REGION=US
+# GATEWAY_REGION=US
 # or 
 # GATEWAY_REGION=US-DC1
 
