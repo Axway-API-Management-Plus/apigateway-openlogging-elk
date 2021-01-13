@@ -234,9 +234,11 @@ async function _getAPILocalProxies(params, options) {
 			logger.error(`Error reading API-Lookup file: '${lookupFile}'. Error: ${ex}`);
 			return;
 		}
+		options.logger.info(`Reading API-Details from local file: ${lookupFile}`);
 		localAPIConfig = { ...localProxies };
 		var filenames = await _getGroupRegionFilename(lookupFile, groupId, region);
 		if(filenames.groupFilename) {
+			options.logger.info(`Reading API-Details from local file: ${lookupFile}`);
 			var groupProxies = JSON.parse(fs.readFileSync(filenames.groupFilename), null);
 			localAPIConfig[groupId] = groupProxies;
 		}
@@ -261,11 +263,14 @@ async function _getAPILocalProxies(params, options) {
 }
 
 async function _getLocalProxy(localProxies, apiPath, policyName, options) {
-	if(localProxies == undefined) return;
+	if(localProxies == undefined) {
+		options.logger.warn(`No configuration found in file.`);
+		return;
+	}
 	var foundProxy;
 	// If a policy is given, it is used separately for the lookup
 	if(policyName != undefined && policyName != "") {
-		options.logger.debug(`Looking up information based on policy name: ${policyName}`);
+		options.logger.info(`Looking up information based on policy name: ${policyName}`);
 		if(localProxies[`Policy: ${policyName}`]) {
 			foundProxy =  localProxies[`Policy: ${policyName}`];
 		}
@@ -284,8 +289,10 @@ async function _getLocalProxy(localProxies, apiPath, policyName, options) {
 		};
 		// Perhaps, we have direct hit with the API-Path
 		if(localProxies[apiPath]) {
+			options.logger.info(`API-Details found based on API-Path: ${apiPath}`);
 			foundProxy = localProxies[apiPath];
 		} else {
+			options.logger.info(`Try to find API-Details starting with: ${apiPath}`);
 			// Iterate over all configured API-Proxies
 			for (const [key, val] of Object.entries(localProxies)) { 
 				if(apiPath.startsWith(key)) {
@@ -295,9 +302,13 @@ async function _getLocalProxy(localProxies, apiPath, policyName, options) {
 		}
 	}
 	// If we don't have a match return nothing
-	if(foundProxy==undefined) return;
+	if(foundProxy==undefined) {
+		options.logger.warn(`No API-Details found for API-Path: ${apiPath}`);
+		return;
+	}
 	// Take over the configuration, preserve the default values
 	proxy = {...proxy, ...foundProxy};
+	options.logger.warn(`Found API-Details for API-Path: ${JSON.stringify(apiPath)}`);
 	var proxies = [];
 	proxy.path = apiPath; // Copy the path, as it's normally returned by the API-Manager and used for caching
 	proxies.push(proxy);

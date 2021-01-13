@@ -855,7 +855,7 @@ docker logs logstash -f
 When Logstash is successfully started you should see the following:
 ```
 docker logs logstash
-Pipelines running {:count=>6, :running_pipelines=>[:".monitoring-logstash", :BeatsInput, :Events, :DomainAudit, :TraceMessages, :OpenTraffic], :non_running_pipelines=>[]}
+Pipelines running {:count=>6, :running_pipelines=>[:".monitoring-logstash", :DomainAudit, :Events, :TraceMessages, :BeatsInput, :OpenTraffic], :non_running_pipelines=>[]}
 Successfully started Logstash API endpoint {:port=>9600}
 ```
 If you see the following or similar error message during processing of events the API-Builder Lookup-API cannot be reached. In case, please make sure the environment variable: `API_BUILDER_URL`is set correctly.
@@ -959,9 +959,12 @@ END
 ```
 The example shows in the namespace ignoredAPIs that two entries are contained. So these are not queried again until they have expired.  
 ```
-stats cachedump 1 0
-ITEM index_status:openlog###N/A [4 b; 1609980429 s]
-ITEM index_status:trace###N/A [4 b; 1609980396 s]
+stats cachedump 2 0
+ITEM ignoredAPIs:###Health Check [19 b; 1610535266 s]
+ITEM ignoredAPIs:/healthcheck### [19 b; 1610535266 s]
+ITEM index_status:events###N/A [27 b; 1610538266 s]
+ITEM index_status:trace###N/A [27 b; 1610538266 s]
+ITEM index_status:openlog###N/A [27 b; 1610538266 s]
 END
 ```
 This holds the index creation status used by API-Builder & Logstash to determine if an indicies needs to be created or not.  
