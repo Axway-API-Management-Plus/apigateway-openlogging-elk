@@ -6,7 +6,7 @@
         "actions": {
           "rollover": {
             "max_age": "270d",
-            "max_size": "30gb"
+            "max_size": "10gb"
           },
           "set_priority": {
             "priority": 100

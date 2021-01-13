@@ -678,11 +678,10 @@ https://docker-host:8443/apidoc/swagger.json?endpoints/trafficMonitorApi
 ### Lifecycle Management
 
 Since new data is continuously stored in Elasticsearch in various indexes, these must of course be removed after a certain period of time.  
-The solution uses the Elasticsearch [ILM](https://www.elastic.co/guide/en/elasticsearch/reference/current/index-lifecycle-management.html) for this purpose, which defines different lifecycle stages per index. The so-called ILM policies are automatically configured by the solution using [configuration files](apibuilder4elastic/elasticsearch_config) and can be reviewed in Kibana.  
+Since version 2.0.0, the solution uses the Elasticsearch [ILM](https://www.elastic.co/guide/en/elasticsearch/reference/current/index-lifecycle-management.html) feature for this purpose, which defines different lifecycle stages per index. The so-called ILM policies are automatically configured by the solution using [configuration files](apibuilder4elastic/elasticsearch_config) and can be reviewed in Kibana.  
 The indices pass through stages such as Hot, Warm, Cold which can be used to deploy different performance hardware per stage. This means that traffic details from two weeks ago no longer have to be stored on high-performance machines.  
 
 The configuration is defined here per data type (e.g. Summary, Details, Audit, ...). The following table gives an overview.  
-
 
 | Data-Type              | Description                                                            | Hot (Size/Days) | Warm    | Cold    | Delete  | Total   |
 | :---                   |:---                                                                    | :---            | :---    | :---    | :---    | :---    |
@@ -692,7 +691,7 @@ The configuration is defined here per data type (e.g. Summary, Details, Audit, .
 | **Traffic-Trace**      | Trace-Messages belonging to an API-Request shown in Traffic-Monitor    | 30GB / 7 days   | 7 days  | 10 days | 5 days  | 29 days |
 | **General-Trace**      | General trace messages, like Start- & Stop-Messages                    | 30GB / 7 days   | 7 days  | 10 days | 5 days  | 29 days |
 | **Gateway-Monitoring** | System status information (CPU, HDD, etc.) from Event-Files            | 30GB / 15 days  | 15 days | 15 days | 15 days | 60 days |
-| **Domain-Audit**       | Domain Audit-Information as configured in Admin-Node-Manager           | 30GB / 270 days | 270 days| 720 days| 15 days | >3 years|
+| **Domain-Audit**       | Domain Audit-Information as configured in Admin-Node-Manager           | 10GB / 270 days | 270 days| 720 days| 15 days | >3 years|
 
 Please note:  
 :point_right: It's optional to use different hardware per stage  
@@ -714,7 +713,7 @@ The following recommendations are based on our tests and is splitted by the desi
 #### 7 Days rentention period
 
 Please note the following:
-The Standard Index Lifecycle Policy defines that an index can grow to 50 GB and rolls into a new after 30 days. For __7 days__, the indexes should be rolled after __2 days__ instead of 30 days.
+The relevant indices for the messaurment below are the Traffic-Summary & Traffic-Details indices that are driving the API-Gateway Traffic-Monitor. The Lifecycle Policy for these indices defines that an index grows to 30 GB or rolls into a new after 7 days (whatevery comes first).  
 The recommendation contains only one ElasticSearch node, which provides no data redundancy if this node fails. If you need data redundancy, another ElasticSearch node must be added. After adding another node the data is automatically distributed between them.
 
 | Volume                  | Components           | Nodes | Shards  | Comment |
@@ -731,7 +730,6 @@ The recommendation contains only one ElasticSearch node, which provides no data 
 #### 14 Days rentention period
 
 Please note the following:
-The Standard Index Lifecycle Policy defines that an index can grow to 50 GB and rolls into a new after 30 days. For __14 days__, the indexes should be rolled after __4 days__ instead of 30 days.
 The recommendation contains only one ElasticSearch node up to a volume of max. 25 million transactions. This means no data redundancy if this node fails. If you need data redundancy, another ElasticSearch node must be added. After adding another node the data is automatically distributed between them.
 
 | Volume                  | Components           | Nodes | Shards  | Comment |
@@ -748,7 +746,6 @@ The recommendation contains only one ElasticSearch node up to a volume of max. 2
 
 #### 30 Days rentention period
 
-The Standard Index Lifecycle Policy is sufficient for 30 days data retention.
 The recommendation contains only one ElasticSearch node up to a volume of max. 10 million transactions. This means no data redundancy if this node fails. If you need data redundancy, another ElasticSearch node must be added. After adding another node the data is automatically distributed between them.
 
 | Volume                  | Components           | Nodes | Comment |
