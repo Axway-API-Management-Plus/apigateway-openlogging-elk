@@ -45,6 +45,18 @@
             },
             "metaData.requestURI": {
                 "type": "text"
+            },
+            "processInfo.gatewayRegion": {
+                "type": "keyword"
+            },
+            "processInfo.gatewayName": {
+                "type": "text",
+                "fields": {
+                    "keyword": {
+                        "type": "keyword"
+                    }
+                },
+                "norms": false
             }
         }
     }
