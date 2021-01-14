@@ -372,8 +372,7 @@ All traffic payload from these API-Gateways must be made available to the API-Bu
 So you need to make the existing structure available in a regional folder. For this, the region must be in lower case.  
 
 Please note:  
-:point_right: Payload handling is enabled by default for the solution by the API builder. So it is assumed that you provide the payload to the API Builder container. Set the parameter: `SKIP_PAYLOAD_HANDLING=true` if you do not need this.  
-:point_right: Payload details returned by the API-Builder doesn't contain the headers as they are shonw anyway in the previous screen  
+:point_right: Payload handling is enabled by default. So it is assumed that you provide the payload to the API Builder container. Set the parameter: `SKIP_PAYLOAD_HANDLING=true` if you do not need this.  
 :point_right: Payload shown in the Traffic-Monitor UI is limited to 20 KB by default. If required the payload can be downloaded completely using the `Save` option. 
 
 <p align="right"><a href="#table-of-content">Top</a></p>
@@ -950,14 +949,11 @@ docker exec apibuilder4elastic wget --no-check-certificate https://localhost:844
 
 ### Check Caching
 
-The solution uses Memcache in API Builder & Logstash to avoid unnecessary duplicate queries for APIs and users. To check if entries are cached correctly, you can connect to the memcached via `telnet localhost 11211`. Some examples:  
-```
-stats cachedump 2 0
-ITEM ignoredAPIs:###Health Check [19 b; 1609979360 s]
-ITEM ignoredAPIs:/favicon.ico### [19 b; 1609979360 s]
-END
-```
-The example shows in the namespace ignoredAPIs that two entries are contained. So these are not queried again until they have expired.  
+The solution uses Memcache in API Builder & Logstash to avoid unnecessary duplicate queries for APIs and users. To check if entries are cached correctly, you can connect to the memcached via `telnet localhost 11211`. Some examples how to use it. 
+
+#### Get slabs
+Memcache is storing the data into slabs, which are like chunks depending 
+
 ```
 stats cachedump 2 0
 ITEM ignoredAPIs:###Health Check [19 b; 1610535266 s]
@@ -967,7 +963,7 @@ ITEM index_status:trace###N/A [27 b; 1610538266 s]
 ITEM index_status:openlog###N/A [27 b; 1610538266 s]
 END
 ```
-This holds the index creation status used by API-Builder & Logstash to determine if an indicies needs to be created or not.  
+You may also try `stats cachedump 1 0` instead. The example above shows that the index_status 
 
 To get a key, for instance the version check status:
 ```
