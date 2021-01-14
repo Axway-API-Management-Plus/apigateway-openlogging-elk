@@ -80,7 +80,7 @@ describe('Payload restricted', function () {
 				json: true
 			}).then(({ response, body }) => {
 				expect(response.statusCode).to.equal(200);
-				expect(body).to.be.equal('RECEIVED-PAYLOAD-LEG-1');
+				expect(body).to.be.equal('HTTP/1.1 200 OK\r\nserver: API Builder/4.27.29\r\nrequest-id: e923342a-cf72-4c93-a774-78d1fa80c002\r\nx-xss-protection: 1; mode=block\r\nx-frame-options: DENY\r\nsurrogate-control: no-store\r\ncache-control: no-store, no-cache, must-revalidate, proxy-revalidate\r\npragma: no-cache\r\nexpires: 0\r\nx-content-type-options: nosniff\r\nstart-time: 1593791748423\r\ncontent-type: application/json; charset=utf-8\r\nresponse-time: 1\r\ncontent-md5: 0c682d056c69de8e90bbdf0a677891d8\r\ncontent-length: 281\r\netag: W/"119-iMSR0WMPy7z6deRjls2eUuMCX5I"\r\nVary: Accept-Encoding\r\nDate: Fri, 03 Jul 2020 15:55:48 GMT\r\nConnection: close\r\n\r\n\r\nRECEIVED-PAYLOAD-LEG-1');
 				nock.cleanAll();
 			});
 		});
