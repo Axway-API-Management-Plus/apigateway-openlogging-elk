@@ -46,6 +46,13 @@ var authorizationConfig = {
 		// custom (text-field) --> { "match": { "customProperties.field1": "DGP UIF CSPARTINT CORSOEDMS CORSOLMS TCL" } }
 		// select/switch --> { "terms": { "customProperties.field1": [ "DGP", "UIF", "CSPARTINT", "CORSOEDMS", "CORSOLMS", "TCL" ] } }
 		restrictionFieldType: "select", 
+		
+		// If you would like to add some headers to the request you can do configure it here
+		// headers: { requiredHeader: "HeaderValue"},
+		// By default GET is used, but you can overwrite the method if you need
+		// method: "POST",
+		// Adjust the payload 
+		//body: { JSON: "Payload is supported as of now" },
 	}
 }
 

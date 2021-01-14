@@ -1,7 +1,7 @@
 var authorizationConfig = {
 	// For how long should the information cached by the API-Builder process
 	cacheTTL: parseInt(process.env.EXT_AUTHZ_CACHE_TTL) ? process.env.EXT_AUTHZ_CACHE_TTL : 300,
-	'externalHTTP' : {
+	externalHTTP : {
 		// e.g.: https://authz.ac.customer.com/api/v1/users/${loginName}/groups?registry=AD&caching=false&filter=apg-t
 		uri: process.env.EXT_AUTHZ_URI, 
 		// e.g.: customProperty1.apimId
