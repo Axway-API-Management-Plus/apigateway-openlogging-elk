@@ -6,18 +6,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [2.0.0] 2021-01-12
 ### Added
-- Custom-Properties for an API now looked up
-  - Index mapping now includes all configured custom properties
+- Support for API Custom-Properties
+  - configured custom properties are indexed according to their configuration in API-Manager
+    - can be used to create custom dashboard or perform custom queries
 - Regional-Support to store data from different regions separatly
   - See https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk#different-topologiesdomains
 - Local API-Lookup for native API-Enrichment & Disable APIs/Events ()
   - See https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/blob/develop/README.md#setup-local-lookup
 - Payload-Support
   - See https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk#traffic-payload
-- External HTTP-Based User-Authorization
+- Flexible User-Authorization
   - See https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/blob/develop/README.md#customize-user-authorization
 - Life-Cycle-Management
   - See https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/blob/develop/README.md#lifecycle-management
+- Initial early version of new Platform-Health-Dashboard
+  - the dashboard will be improved with future releases
 
 ### Changed
 - Updated API-Builder to version Dubai
@@ -25,6 +28,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - Index-Templates
   - ILM-Policies has been added
   - Rollup-Jobs has been added
+
+### Fixed
+- Trace-Messages for an API-Request now sorted correctly
+- API-Manager configuration not properly injected into API-Builder container
+- Kibana failed to start, when using multiple Elasticsearch hosts
 
 ## [1.0.0] 2020-10-01
 ### Added
