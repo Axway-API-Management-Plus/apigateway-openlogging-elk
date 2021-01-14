@@ -63,9 +63,9 @@
 			"outputs": {
 				"next": {
 					"routes": [
-						"http.2"
+						"javascript.4"
 					],
-					"context": "$.fileContent",
+					"context": "$.payload",
 					"metaName": "Next"
 				},
 				"notFound": {
@@ -278,9 +278,9 @@
 				},
 				"notFound": {
 					"routes": [
-						"http.4"
+						"javascript.4"
 					],
-					"context": "$.notFoundMessage",
+					"context": "$.payload",
 					"metaName": "Not found"
 				},
 				"noAccess": {
@@ -554,42 +554,6 @@
 			},
 			"metaMethod": "Set HTTP Response"
 		},
-		"http.4": {
-			"type": "nodehandler://axway-flow/http",
-			"name": "Not found response",
-			"method": "setresponse",
-			"parameters": [
-				{
-					"name": "headers",
-					"type": "object",
-					"value": "{\n\"content-type\": \"application/vordel-xact-data\"\n}",
-					"metaName": "Headers",
-					"metaDescription": "Key-value pairs of headers"
-				},
-				{
-					"name": "body",
-					"type": "jsonpath",
-					"value": "$.notFoundMessage",
-					"metaName": "Body",
-					"metaDescription": "The response payload"
-				},
-				{
-					"name": "status",
-					"type": "number",
-					"value": "200",
-					"metaName": "Status",
-					"metaDescription": "The HTTP status code"
-				}
-			],
-			"outputs": {
-				"next": {
-					"context": "$.response",
-					"routes": [],
-					"metaName": "Next"
-				}
-			},
-			"metaMethod": "Set HTTP Response"
-		},
 		"javascript.3": {
 			"type": "nodehandler://@axway/api-builder-plugin-fn-javascript/javascript",
 			"name": "Add Filename header",
@@ -690,6 +654,42 @@
 				}
 			},
 			"metaMethod": "Set HTTP Response"
+		},
+		"javascript.4": {
+			"type": "nodehandler://@axway/api-builder-plugin-fn-javascript/javascript",
+			"name": "Add Headers",
+			"method": "Execute",
+			"parameters": [
+				{
+					"name": "data",
+					"type": "jsonpath",
+					"value": "$",
+					"metaName": "data",
+					"metaDescription": "The value to apply as the `data` argument to the JavaScript code. For objects and arrays, `data` is passed by reference."
+				},
+				{
+					"name": "code",
+					"type": "string",
+					"value": "\"var source = data.transactionDetails.body.hits.hits[0]._source;\\n  var payload = data.payload;\\n  var direction = data.params.direction;\\n  var legID = data.params.legID;\\n  \\n  var headers;\\n  \\n  if(direction == \\\"sent\\\") {\\n    headers = source.transactionElements[`leg${legID}`].protocolInfo.sentHeader;\\n  } else if(direction == \\\"received\\\") {\\n    headers = source.transactionElements[`leg${legID}`].protocolInfo.recvHeader;\\n  }\\n  \\n  var result = `${headers}\\\\r\\\\n${payload}`;\\n  return result;\"",
+					"metaName": "code",
+					"metaDescription": "A JavaScript function body. Supports `await` and returning promises."
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.fileContent",
+					"routes": [
+						"http.2"
+					],
+					"metaName": "Next"
+				},
+				"error": {
+					"context": "$.error",
+					"routes": [],
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Execute"
 		}
 	}
 }
