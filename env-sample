@@ -258,7 +258,10 @@ MEMCACHED=memcached:11211
 # ----------------------------------------------------------------------------------------------
 # The number of Filebeat worker threads sending data to Logstash. This should be sufficient in 
 # most cases. You may increase it, if you experience a significant delay (>10 sec) between 
-# the request and when the transaction is available in Elasticsearch. 
+# the request and when the transaction is available in Elasticsearch. Especially Trace-Messages 
+# belonging to requests seems to appear late in the Traffic-Monitor.
+# Of course increasing worker threads for filebeat will increase CPU-Load on the API-Gateway 
+# machine.
 # Defaults to 2 threads.
 # Used-By: Filebeat
 # FILEBEAT_WORKER=2
