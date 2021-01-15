@@ -289,7 +289,7 @@ It is recommended to disable the audit log for Failure transactions to avoid not
 <p align="center"><img src="imgs/policy-shortcut-disable-failure.png" alt="Use Elasticsearch API" width="300" height="123"></p>
 
 - :point_right: Before you restart the Admin-Node-Manager process, please open the file:  `<apigateway-install-dir>/apigateway/conf/envSettings.props`  and add the following new environment variable:  `env.API_BUILDER_URL=https://apibuilder4elastic:8443`.  
-- :point_right: If you are using [multiple regions](#different-topologiesdomains) you may also configure the appropriate region to restrict the data of the Admin-Node-Manager to the correct regional data. E.g.: `REGION=US`.  
+- :point_right: If you are using [multiple regions](#different-topologiesdomains) you may also configure the appropriate region to restrict the data of the Admin-Node-Manager to the correct regional data. E.g.: `env.REGION=US`.  
 - :point_right: Please remember to copy the changed Admin-Node-Manager configuration from the Policy-Studio project folder (path on Linux: `/home/<user>/apiprojects/\<project-name\>`) back to the ANM folder (`\<install-dir\>/apigateway/conf/fed`). Then restart the ANM.
 
 If you would like to learn more about the imported policy, please [click here](nodemanager).
@@ -1002,6 +1002,14 @@ No, as it is not a 7.x version and not tested with this solution at all.
 ### Can I run Filebeat as a native process?
 
 Yes, you can run Filebeat natively instead of a Docker-Container if you prefer. As long as you are using the filebeat.yml and correct configuration that is supported.
+
+### What happens if Logstash is down for a while?
+
+In case Logstash is stopped, Filebeat cannot sent events any longer to Logstash. However, Filebeat remembers the position of the last sent events on each files and resumes at that position, when Logstash is available again. Of course, you have to make sure, files are available logn enough. For instance the OpenTraffic-Event Logs are configured by default to 1GB, which is sufficient for around
+
+### Can I run multiple Logstash instances?
+
+Yes, Logstash is stateless (besides what is stored is Memcache), hence you can run as many Logstash instances as you like or need. In that case you have to provide multiple Logstash instances using the parameter `LOGSTASH_HOSTS`.
 
 ## Known issues
 N/A

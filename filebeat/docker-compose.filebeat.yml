@@ -4,10 +4,12 @@ services:
   # You may also use a natively installed Filebeat (7.x) instance as long as it using the same configuration filebeat/filebeat.yml
   filebeat:
     image: docker.elastic.co/beats/filebeat:${ELASTIC_VERSION}
+    # This custom entrypoint is required to adjust the variable LOGSTASH_HOSTS as it is required by Filebeat
+    entrypoint: /usr/local/scripts/custom-entrypoint.sh
     container_name: filebeat
     command: --strict.perms=false
     environment:
-      - LOGSTASH=${LOGSTASH}
+      - LOGSTASH_HOSTS=${LOGSTASH_HOSTS}
       - ELASTICSEARCH_HOSTS=${ELASTICSEARCH_HOSTS}
       - ELASTICSEARCH_CLUSTER_UUID=${ELASTICSEARCH_CLUSTER_UUID}
       - ELASTICSEARCH_CRT=${ELASTICSEARCH_CRT}
@@ -31,6 +33,7 @@ services:
       - /var/lib/docker/containers:/var/lib/docker/containers:ro
       - /var/run/docker.sock:/var/run/docker.sock
       - ${PWD}/config/certificates:/usr/share/filebeat/config/certificates
+      - ${PWD}/filebeat/scripts:/usr/local/scripts
     networks:
       - elastic
     logging:

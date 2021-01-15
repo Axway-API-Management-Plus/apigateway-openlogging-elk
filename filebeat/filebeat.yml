@@ -61,8 +61,9 @@ processors:
   - add_locale:  
 
 output.logstash:
-  hosts: ["${LOGSTASH}"]
+  hosts: ${LOGSTASH_HOSTS}
   worker: ${FILEBEAT_WORKERS:2}
+  loadbalance: true
 
 monitoring:
   enabled: true

@@ -225,7 +225,8 @@ ELASTICSEARCH_CLUSTER_UUID=
 # If you are running Logstash somewhere else, e.g. as a service in K8S you need to change this 
 # parameter.
 # Used-By: Filebeat
-LOGSTASH=logstash:5044
+# LOGSTASH_HOSTS=logstash1:5044,logstash2:5044
+LOGSTASH_HOSTS=logstash:5044
 
 # ----------------------------------------------------------------------------------------------
 # With this parameter you tell the Logstash processing pipeline which memchached to use. It is 
