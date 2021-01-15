@@ -112,7 +112,7 @@ async function isAPIManagerUserAdmin(apiManagerConfig, logger) {
 					return response;
 				})
 				.catch(err => {
-					throw new Error(`Cant login to API-Manager: ${err}`);
+					throw new Error(`Cannot login to API-Manager: '${config.url}'. Got error: ${err}`);
 				});
 			const session = _getSession(result.headers);
 			var options = {
