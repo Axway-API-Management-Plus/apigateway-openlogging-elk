@@ -982,6 +982,10 @@ You can find additional information here: https://techleader.pro/a/90-Accessing-
 
 No, the delivered API builder Docker image includes the community version and is supported as part of this project.
 
+### Di I need a specific API-Gateway version to use this solution?
+
+Any API-Gateway version that supports the Open-Traffic event log is supported. However, the solution has been tested with version 7.7, but in general it should also work with version 7.6.2.
+
 ### Will indexed data be deleted automatically?
 
 Yes, as of version 2.0.0, each index created in Elasticsearch is assigned an Index Lifecycle Policy ([ILM](https://www.elastic.co/guide/en/elasticsearch/reference/current/index-lifecycle-management.html)). This controls how long data is retained for each data type.
@@ -994,6 +998,10 @@ Another reason are updates of the solution which should certainly be done on a t
 ### Can I use my own existing Elasticsearch cluster?
 
 Yes, you can use your own Elasticsearch cluster or a managed instance at AWS/Azure/etc. As long as it's a 7.x version it's supported.
+
+### Does the solution support high availability?
+
+Yes, all components can be deployed in way to support HA for the entire platform?
 
 ### Can I use the Filebeat version shipped with the API-Gateway?
 
@@ -1010,6 +1018,22 @@ In case Logstash is stopped, Filebeat cannot sent events any longer to Logstash.
 ### Can I run multiple Logstash instances?
 
 Yes, Logstash is stateless (besides what is stored is Memcache), hence you can run as many Logstash instances as you like or need. In that case you have to provide multiple Logstash instances using the parameter `LOGSTASH_HOSTS`.
+
+### Can I run multiple API-Builder instances?
+
+Yes, and just provide the same configuration for each API-Builder Docker-Container.
+
+### Can I customize / change the solution to my needs?
+
+It is not recommended that you change the solution just by hacking/changing some of the files, as they are very likely be overwritten with the next version. With that, you will break the option to upgrade to a newer version. See [here](#updates) for more details.
+
+### Are Trace-Messages stored in Elasticsearch?
+
+Yes. Trace-Messages you see in the Traffic-Monitor for an API-Request are coming from the Elasticsearch cluster. Please have in mind, running an API-Gateway in DEBUG mode, handling millions of transactions a day will signifcantly increase the disk-space requirements in Elasticsearch.
+
+### Can passwords given in the .env file be encrpyted?
+
+No, but this file is used by docker-compose only. If you would like to avoid to have sensitive data stored, the recommended approach it deploy the solution in Kubernetes environment and store passwords in the Secure-Vault. With that, sensitive data is injected into the containers from a secure source.
 
 ## Known issues
 N/A
