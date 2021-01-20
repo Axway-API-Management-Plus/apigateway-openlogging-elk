@@ -18,6 +18,13 @@
         "{\"message\":\"Deployment data with pending read by user 'admin'\",\"eventId\":1041,\"user\":\"admin\",\"outcome\":\"success\",\"additionalInfo\":\"\",\"metaData\":{},\"timeStamp\":1606742273624}"
       ],
       "expected": [ ]
+    },
+    {
+      "description": "Also message 'Local deployment data read by user ...' should be dropped - As it is constantly created and doesn't bring any value.",
+      "input": [
+        "{\"message\":\"Local deployment data read by user 'admin'\",\"eventId\":1042,\"user\":\"admin\",\"outcome\":\"success\",\"additionalInfo\":\"\",\"metaData\":{},\"timeStamp\":1611165639863}"
+      ],
+      "expected": [ ]
     }
   ]
 }
