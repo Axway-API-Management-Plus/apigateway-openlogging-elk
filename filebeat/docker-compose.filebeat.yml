@@ -10,6 +10,7 @@ services:
     command: --strict.perms=false
     environment:
       - LOGSTASH_HOSTS=${LOGSTASH_HOSTS}
+      - LOGSTASH=${LOGSTASH:""} # Deprecated, will be removed in a future release
       - ELASTICSEARCH_HOSTS=${ELASTICSEARCH_HOSTS}
       - ELASTICSEARCH_CLUSTER_UUID=${ELASTICSEARCH_CLUSTER_UUID}
       - ELASTICSEARCH_CRT=${ELASTICSEARCH_CRT}
