@@ -249,11 +249,11 @@ async function _getAPILocalProxies(params, options) {
 		if(localAPIConfig == undefined) {
 			return;
 		} else {
-			var proxy = await _getLocalProxy(regionProxies, apiPath, policyName, options);
+			var proxy = await _getLocalProxy(regionProxies, apiPath, policyName, 'Region', options);
 			if(proxy!=undefined) return proxy;
-			proxy = await _getLocalProxy(groupProxies, apiPath, policyName, options);
+			proxy = await _getLocalProxy(groupProxies, apiPath, policyName, 'Group', options);
 			if(proxy!=undefined) return proxy;
-			proxy = await _getLocalProxy(localProxies, apiPath, policyName, options);
+			proxy = await _getLocalProxy(localProxies, apiPath, policyName, 'General', options);
 			return proxy;
 		}
 	} else {
@@ -262,9 +262,9 @@ async function _getAPILocalProxies(params, options) {
 	}
 }
 
-async function _getLocalProxy(localProxies, apiPath, policyName, options) {
+async function _getLocalProxy(localProxies, apiPath, policyName, scope, options) {
 	if(localProxies == undefined) {
-		options.logger.warn(`No configuration found in file.`);
+		options.logger.warn(`No configuration found in file (${scope}).`);
 		return;
 	}
 	var foundProxy;

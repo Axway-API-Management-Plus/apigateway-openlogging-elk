@@ -964,7 +964,7 @@ Any API-Gateway version that supports the Open-Traffic event log is supported. H
 
 ### Will indexed data be deleted automatically?
 
-Yes, as of version 2.0.0, each index created in Elasticsearch is assigned an Index Lifecycle Policy ([ILM](https://www.elastic.co/guide/en/elasticsearch/reference/current/index-lifecycle-management.html)). This controls how long data is retained for each data type.
+Yes, as of version 2.0.0, each index created in Elasticsearch is assigned an Index Lifecycle Policy ([ILM](https://www.elastic.co/guide/en/elasticsearch/reference/current/index-lifecycle-management.html)). This controls how long data is retained for each data type. Learn more [here](#lifecycle-management).
 
 ### Can I use this solution for multiple stages?
 
@@ -990,6 +990,11 @@ Yes, you can run Filebeat natively instead of a Docker-Container if you prefer. 
 ### What happens if Logstash is down for a while?
 
 In case Logstash is stopped, Filebeat cannot sent events any longer to Logstash. However, Filebeat remembers the position of the last sent events on each files and resumes at that position, when Logstash is available again. Of course, you have to make sure, files are available long enough. For instance the OpenTraffic-Event Logs are configured by default to 1GB, which is sufficient for around 30 minutes when having 300 TPS. You should increase the disk space.
+
+### What happens if Filebeat is down for a while?
+
+Filebeat stores the current position in a file and which events have already been passed on. If Filebeat is shut down cleanly and then restarted, Filebeat will pick up where it left off.
+Tests have shown that it can still be that a few events are lost.
 
 ### Can I run multiple Logstash instances?
 
