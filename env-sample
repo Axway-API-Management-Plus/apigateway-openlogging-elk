@@ -236,6 +236,12 @@ LOGSTASH_HOSTS=logstash:5044
 # LOGSTASH_NODE_NAME=Logstash-2
 
 # ----------------------------------------------------------------------------------------------
+# Define JVM-Heap size for Logstash. Both values should be the same and not more than 6GB. 
+# Defaults to -Xmx1g -Xms1g
+# Used-By: Logstash
+# LS_JAVA_OPTS="-Xmx6g -Xms6g"
+
+# ----------------------------------------------------------------------------------------------
 # With this parameter you tell the Logstash processing pipeline which memchached to use. It is 
 # used to cache the API-Details that has been looked up from the API-Manager via the API-Builder.
 # Even if the API-Builder is already caching the result, this improves the Logstash pipeline 
@@ -281,11 +287,6 @@ MEMCACHED=memcached:11211
 # Defaults to 3072.
 # Used-By: Filebeat
 # FILEBEAT_BULK_MAX_SIZE=2048
-
-# ----------------------------------------------------------------------------------------------
-# Defaults to -Xmx1g -Xms1g
-# Used-By: Logstash
-# LS_JAVA_OPTS="-Xmx6g -Xms6g"
 
 # ----------------------------------------------------------------------------------------------
 # This is setting up the Elasticsearch clustername, which is used by Elasticsearch to form 
