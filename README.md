@@ -715,24 +715,24 @@ There are two important aspects for sizing the platform.
 
 The number of concurrent transactions per second (TPS) that the entire platform must handle. The platform must therefore be designed so that the events that occur on the basis of the transactions can be processed (Ingested) in real time. It is important to consider the permanent load. As a general rule, more capacity should be planned in order to also quickly enable catch-up operation after a downtime or maintenance.  
 
-The following table explains what a single component, such as Logstash, Filebeat, ... can process in terms of TPS with INFO Trace-Messages enabled to stay real-time. Please understand these values as the absolute maximum, which do not give any margin upwards for downtimes or maintenance of the platform. More is not possible per component, so obviously more capacity must be planned for in production. The tests were performed on AWS EC2 instances with the default parameters for this solution. In order to be able to reliably determine the limiting component, all other components were adequate sized and only the component under test was as stated in the table.
+The following table explains what a single component, such as Logstash, Filebeat, ... can process in terms of TPS with INFO Trace-Messages enabled to stay real-time. Please understand these values as the absolute maximum, which do not give any margin upwards for downtimes or maintenance of the platform. More is not possible per component, so obviously more capacity must be planned for production. The tests were performed on a number of [AWS EC2 instances](#test-infrastructure) with the default parameters for this solution. In order to be able to reliably determine the limiting component, all other components were adequate sized and only the component under test was as stated in the table.
 
 | Component               | Max. TPS           | Host-Machine | Config                | Comment |
 | :---                    | :---               | :---         | :---                  | :---    | 
 | Filebeat                | >300               | t2.xlarge    | Standard              | Test was limited by the TPS the Mock-Service was able to handle. Filebeat can very likely handle much more volume.|
-| Logstash                | 530                | t2.xlarge    | 6GB RAM for Logstash  | Includes API-Builder & Memcache on the same machine running along with Logstash. Has processed ap. 3500 events per second. CPU is finally the limiting factor.|
+| Logstash                | 530                | t2.xlarge    | 6GB RAM for Logstash  | Includes API-Builder & Memcache on the same machine running along with Logstash. Has processed ap. 3500 events per second. CPU is finally the limiting factor.  A production setup should have two Logstash nodes for high availability, which provides sufficient capacity for most requirements.|
 | 2 Elasticsearch nodes   | 480                | t2.xlarge    | 8GB RAM for each node | Starting with a Two-Node cluster as this should be the mininum for a production setup. Kibana running on the first node.|
 | 3 Elasticsearch nodes   | 740                | t2.xlarge    | 8GB RAM for each node | Data is searchable with a slight delay, but ingesting is not falling behind real-time in general up to the max. TPS.|
 | 4 Elasticsearch nodes   | 1010                | t2.xlarge    | 8GB RAM for each node | |
 
 Please note:  
-- Logstash, API-Builder, Filebeat (for monitoring only) and Kibana are load balanced across all available Elasticsearch nodes. An external Load-Balancer is not required as this is handled internally by each the Elasticsearch clients.
-- The solution scales up to 5 Elasticsearch nodes as indicies are stored with 5 shards. More will require custom configuration, please create an issue if you have this requirement.
+- Logstash, API-Builder, Filebeat (for monitoring only) and Kibana are load balanced across all available Elasticsearch nodes. An external Load-Balancer is not required as this is handled internally by each of the Elasticsearch clients.
+- do not size the Elasticsearch Cluster-Node too large. The servers should not have more than 32GB memory, because after that the memory management kills the advantage again. It is better to add another server. See the [Test-Infrastructure](#test-infrastructure) for reference.
 
 #### Rentention period
 
 The second important aspect for sizing is the rentention period, which defines how long data should be available. Accordingly, disk space must be made available.  
-The traffic summary, traffic details and trace messages play a particularly important role here. The solution is delivered with default values which you can read here. Based on the these default values which result in ap. 60 days the following disk space is required.
+The Traffic-Summary, Traffic-Details and Trace-Messages indicies play a particularly important role here. The solution is delivered with default values which you can read [here](#lifecycle-management). Based on the these default values which result in ap. 60 days the following disk space is required.
 
 | Volume per day           | Stored documents | Total Disk-Space  | Comment |
 | :---                     | :---             | :---              | :---    |
@@ -744,6 +744,8 @@ The traffic summary, traffic details and trace messages play a particularly impo
 
 
 ### Test infrastructure
+
+The following test infrastructure was used to determine the [maximum capacity or throughput](#transactions-per-second). The information is presented here so that you can derive your own sizing from it.
 
 | Count | Node/Instance              |CPUS     | RAM   |Disc  | Component      | Version | Comment | 
 | :---: | :---                       | :---    | :---  | :--- | :---           | :---    | :---    |
