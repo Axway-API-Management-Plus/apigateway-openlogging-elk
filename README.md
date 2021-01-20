@@ -750,7 +750,7 @@ The following test infrastructure was used to determine the [maximum capacity or
 | Count | Node/Instance              |CPUS     | RAM   |Disc  | Component      | Version | Comment | 
 | :---: | :---                       | :---    | :---  | :--- | :---           | :---    | :---    |
 | 6x    | AWS EC2 t2.xlarge instance | 4 vCPUS | 16GB  | 30GB | API-Management | 7.7-July| 6 API-Gateways Classical deployment, Simulate Traffic based on Test-Case |
-| 4x    | AWS EC2 t2.xlarge instance | 4 vCPUS | 16GB  | 30GB | Logstash, API-Builder, Memcached | 7.10.1  | Logstash instances started as needed for the test. Logstash, API-Builder and Memcache always run together |
+| 4x    | AWS EC2 t2.xlarge instance | 4 vCPUS | 16GB  | 30GB | Logstash, API-Builder, Memcached | 7.10.0  | Logstash instances started as needed for the test. Logstash, API-Builder and Memcache always run together |
 | 5x    | AWS EC2 t2.xlarge instance | 4 vCPUS | 16GB  | 80GB | Elasticsearch  | 7.10.0  | Elasticsearch instances started as needed. Kibana running on the first node |
 
 <p align="right"><a href="#table-of-content">Top</a></p>
