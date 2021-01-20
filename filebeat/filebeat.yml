@@ -4,9 +4,14 @@
 # If you are missing a certain feature or discover a bug, please raise an issue instead:
 # https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues
 name: Filebeat ${GATEWAY_NAME:"API-Gateway"}
+
+# Wait for max 60 seconds before stopping - This helps to avoid data loss, when stopping filebeat!
+filebeat.shutdown_timeout: 60s
+
 filebeat.inputs:
 - type: log
   paths: ["/var/log/opentraffic/*.log"]
+  close_inactive: 5m # Close filehandlers, if the file has not changed anymore
   json.keys_under_root: true
   json.overwrite_keys: false
   json.add_error_key: true
@@ -19,6 +24,7 @@ filebeat.inputs:
 
 - type: log
   paths: ["/var/log/trace/*.trc"]
+  close_inactive: 5m # Close filehandlers, if the file has not changed anymore
   multiline.pattern: '^\[ALERT|TRACE|DEBUG|NOTICE|INFO|WARNING|ERROR|CRITICAL|FATAL|SEVERE]'
   multiline.negate: true
   # any line that does not match the above pattern belongs to the previous line
@@ -26,6 +32,8 @@ filebeat.inputs:
   fields_under_root: true
   # The offset is used to sort the trace messages additionally to the timestamp
   offset: true
+  # When initially started, don't try to read all existing trace message (by default around 7.8GB per API-Gateway)
+  ignore_older: "48h"
   fields:
     logtype: trace
     gatewayName: ${GATEWAY_NAME:"API-Gateway"}
@@ -34,6 +42,7 @@ filebeat.inputs:
 
 - type: log
   paths: ["/var/log/events/*.log", "/var/log/events/processed/*.log.PROCESSED"]
+  close_inactive: 5m
   json.keys_under_root: true
   json.overwrite_keys: false
   json.add_error_key: true
@@ -46,6 +55,7 @@ filebeat.inputs:
 
 - type: log
   paths: ["/var/log/audit/*.log"]
+  close_inactive: 5m
   json.keys_under_root: true
   json.overwrite_keys: false
   json.add_error_key: true
@@ -63,6 +73,7 @@ processors:
 output.logstash:
   hosts: ${LOGSTASH_HOSTS}
   worker: ${FILEBEAT_WORKERS:2}
+  bulk_max_size: ${FILEBEAT_BULK_MAX_SIZE:3072}
   loadbalance: true
 
 monitoring:
@@ -77,3 +88,11 @@ monitoring:
     ssl.certificate_authorities: ["${ELASTICSEARCH_CRT:ELASTICSEARCH_CRT-NOT-SET}"]
     username: "${BEATS_SYSTEM_USERNAME:beats_system}"
     password: "${BEATS_SYSTEM_PASSWORD:BEATS_SYSTEM_PASSWORD-NOT-SET}"
+
+#logging.level: debug
+#logging.to_files: true
+#logging.files:
+#  name: filebeat.dbg
+#  keepfiles: 7
+#  permissions: 0644
+#logging.selectors: ["*"]

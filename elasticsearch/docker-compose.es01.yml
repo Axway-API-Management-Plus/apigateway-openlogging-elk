@@ -9,7 +9,7 @@ services:
     environment:
       - "ES_JAVA_OPTS=${ES_JAVA_OPTS}"
       - cluster.name=${ELASTICSEARCH_CLUSTERNAME}
-      - node.name=elasticsearch1
+      - node.name=Elasticsearch 1
       - ELASTICSEARCH_HOSTS=${ELASTICSEARCH_HOSTS}
       - ELASTICSEARCH_ANONYMOUS_ENABLED=${ELASTICSEARCH_ANONYMOUS_ENABLED:-true}
       - xpack.security.enabled=true

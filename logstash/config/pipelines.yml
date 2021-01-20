@@ -6,19 +6,21 @@
 
 - pipeline.id: BeatsInput
   path.config: "pipelines/BeatsInputPipeline.conf"
-  pipeline.workers: 4
+  pipeline.workers: 16
+  pipeline.batch.size: 2048
   pipeline.ordered: false
 
 - pipeline.id: OpenTraffic
   path.config: "pipelines/OpenTrafficPipeline.conf"
-  pipeline.workers: 4
-  pipeline.batch.size: 2000
+  pipeline.workers: 8
+  pipeline.batch.size: 2048
   pipeline.ordered: false
 
 - pipeline.id: TraceMessages
   path.config: "pipelines/TraceMessagesPipeline.conf"
-  pipeline.workers: 4
-  pipeline.ordered: true
+  pipeline.workers: 8
+  pipeline.batch.size: 2048
+  pipeline.ordered: false
 
 - pipeline.id: Events
   path.config: "pipelines/EventsPipeline.conf"

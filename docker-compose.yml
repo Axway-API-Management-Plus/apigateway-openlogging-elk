@@ -8,12 +8,13 @@ services:
     entrypoint: /usr/share/logstash/scripts/custom-entrypoint.sh
     container_name: logstash
     environment:
-      - node.name=Logstash1
+      - node.name=${LOGSTASH_NODE_NAME:Logstash-1}
       - xpack.monitoring.enabled=true
       - xpack.monitoring.elasticsearch.ssl.certificate_authority=${ELASTICSEARCH_CA}
       - xpack.monitoring.elasticsearch.hosts=[${ELASTICSEARCH_HOSTS}]
       - xpack.monitoring.elasticsearch.username=${LOGSTASH_SYSTEM_USERNAME}
       - xpack.monitoring.elasticsearch.password=${LOGSTASH_SYSTEM_PASSWORD}
+      - LS_JAVA_OPTS=${LS_JAVA_OPTS}
       - ELASTICSEARCH_CERT=${ELASTICSEARCH_CRT}
       - ELASTICSEARCH_HOSTS=${ELASTICSEARCH_HOSTS}
       - LOGSTASH_USERNAME=${LOGSTASH_USERNAME}
@@ -88,7 +89,6 @@ services:
 
 volumes:
   logs:
-  filebeatdata:
 
 networks:
   elastic:

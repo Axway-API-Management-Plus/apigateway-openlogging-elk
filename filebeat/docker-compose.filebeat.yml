@@ -42,7 +42,6 @@ services:
         max-size: "10m"
 
 volumes:
-  logs:
   filebeatdata:
 
 networks:

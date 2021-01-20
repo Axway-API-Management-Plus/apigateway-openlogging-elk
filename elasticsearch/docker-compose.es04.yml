@@ -1,15 +1,15 @@
 version: '3.7'
 services:
-  # Elasticsearch node 2
-  elasticsearch2:
+  # Elasticsearch node 4
+  elasticsearch4:
     image: docker.elastic.co/elasticsearch/elasticsearch:${ELASTIC_VERSION}
     # Custom entrypoint to configured ES based on given ELASTICSEARCH_HOSTS
     entrypoint: /usr/share/elasticsearch/scripts/custom-entrypoint.sh
-    container_name: elasticsearch2
+    container_name: elasticsearch4
     environment:
       - "ES_JAVA_OPTS=${ES_JAVA_OPTS}"
       - cluster.name=${ELASTICSEARCH_CLUSTERNAME}
-      - node.name=Elasticsearch 2
+      - node.name=Elasticsearch 4
       - ELASTICSEARCH_HOSTS=${ELASTICSEARCH_HOSTS}
       - ELASTICSEARCH_ANONYMOUS_ENABLED=${ELASTICSEARCH_ANONYMOUS_ENABLED:-true}
       - xpack.security.enabled=true
@@ -25,9 +25,9 @@ services:
       - xpack.security.transport.ssl.certificate=/usr/share/elasticsearch/${ELASTICSEARCH_CRT}
       - xpack.security.transport.ssl.certificate_authorities=/usr/share/elasticsearch/${ELASTICSEARCH_CA}
       # Activate the following parameters for advanced setup
-      #- network.publish_host=${ELASTICSEARCH_PUBLISH_HOST2}
-      #- http.port=${ELASTICSEARCH_HOST2_HTTP}
-      #- transport.port=${ELASTICSEARCH_HOST2_TRANSPORT}
+      #- network.publish_host=${ELASTICSEARCH_PUBLISH_HOST4}
+      #- http.port=${ELASTICSEARCH_HOST4_HTTP}
+      #- transport.port=${ELASTICSEARCH_HOST4_TRANSPORT}
     ulimits:
       memlock:
         soft: -1
@@ -42,7 +42,7 @@ services:
         source: logs
         target: /var/log
       - type: volume
-        source: esdata2
+        source: esdata4
         target: /usr/share/elasticsearch/data
       - ${PWD}/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
       - ${PWD}/config/certificates:/usr/share/elasticsearch/config/certificates
@@ -50,15 +50,15 @@ services:
     networks:
       - elastic
     ports:
-      - ${ELASTICSEARCH_HOST1_HTTP:-9201}:${ELASTICSEARCH_HOST1_HTTP:-9201}
-      - ${ELASTICSEARCH_HOST1_TRANSPORT:-9301}:${ELASTICSEARCH_HOST1_TRANSPORT:-9301}
+      - ${ELASTICSEARCH_HOST1_HTTP:-9203}:${ELASTICSEARCH_HOST1_HTTP:-9203}
+      - ${ELASTICSEARCH_HOST1_TRANSPORT:-9303}:${ELASTICSEARCH_HOST1_TRANSPORT:-9303}
     logging:
       options:
         max-file: "5"
         max-size: "10m"
 
 volumes:
-  esdata2:
+  esdata4:
   logs:
 
 networks:

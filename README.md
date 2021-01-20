@@ -111,7 +111,9 @@ It is possible to deploy all components on a single machine, which should then h
 
 #### Enable Open-Traffic Event Log
 Obviously, you have to enable Open-Traffic-Event log for your API-Gateway instance(s). [Read here][1] how to enable the Open-Traffic Event-Log.  
-After this configuration has been done, Open-Traffic log-files will be created by default in this location: `apigateway/logs/opentraffic`. This location becomes relevant when configuring Filebeat.
+After this configuration has been done, Open-Traffic log-files will be created by default in this location: `apigateway/logs/opentraffic`. This location becomes relevant when configuring Filebeat.  
+
+:point_right: To avoid data loss, it is strongly recommended to increase the disk space for the Open-Traffic logs from 1GB to at least 8GB, especially if you have a lot of traffic. If you have for example 100 TPS on 1 API-Gateway, depending on you custom policies, the oldest log file will be deleted after 30 minutes with only 1GB OpenTraffic log configured. If for any reason Filebeat, Logstash, etc. is not running to process event for more than 15-20 minutes you will have a loss of data as it also takes time to recover.
 
 #### Download and extract the release package
 
@@ -706,80 +708,48 @@ This advantage of being able to access millions of transactions is not free of c
 The solution has been extensively tested, especially for high-volume requirements. It processed 900 transactions per second, up to 55 million transactions per day on the following infrastructure.
 
 ### Sizing recommendations
-The most important key figure for sizing is the number of transactions per day or per month. The sizing of the platform depends on this and how long the data should be available in real-time. To store around 10 Millionen transactions with all details and trace-messages ap. 6,5 GB disc space is required.
-The following recommendations are based on our tests and is splitted by the desired rentention period.
 
-#### 7 Days rentention period
+There are two important aspects for sizing the platform. 
 
-Please note the following:
-The relevant indices for the messaurment below are the Traffic-Summary & Traffic-Details indices that are driving the API-Gateway Traffic-Monitor. The Lifecycle Policy for these indices defines that an index grows to 30 GB or rolls into a new after 7 days (whatevery comes first).  
-The recommendation contains only one ElasticSearch node, which provides no data redundancy if this node fails. If you need data redundancy, another ElasticSearch node must be added. After adding another node the data is automatically distributed between them.
+#### Transactions per Second
 
-| Volume                  | Components           | Nodes | Shards  | Comment |
-| :---                    | :---                 | :---  | :---    | :---    | 
-| up to 1 Mio  (~15 TPS)  | All                  | 4 CPU-Cores, 16 GB RAM, 15 GB HDD  || One node for all components, Filebeat is running close to the API-Gateway    |
-| up to 5 Mio  (~60 TPS)  | All                  | 4 CPU-Cores, 16 GB RAM, 50 GB HDD  || One node for all components, Filebeat is running close to the API-Gateway    |
-| up to 10 Mio (~120 TPS) | Logstash/API-Builder | 2 CPU-Cores, 1 GB RAM, 10 GB HDD   || Dedicated Logstash processing node    |
-|                         | Others               | 4 CPU-Cores, 16 GB RAM, 80 GB HDD  || ElasticSearch, Kibana node    |
-| up to 25 Mio (~300 TPS) | Logstash/API-Builder | 2 CPU-Cores, 1 GB RAM, 10 GB HDD   || Dedicated Logstash processing node    |
-|                         | Others               | 4 CPU-Cores, 16 GB RAM, 150 GB HDD || ElasticSearch, Kibana node    |
-| up to 50 Mio (~600 TPS) | Logstash/API-Builder | 4 CPU-Cores, 1 GB RAM, 10 GB HDD   || Dedicated Logstash processing node    |
-|                         | ElasticSearch 1      | 4 CPU-Cores, 32 GB RAM, 300 GB HDD || ElasticSearch, Kibana node    |
+The number of concurrent transactions per second (TPS) that the entire platform must handle. The platform must therefore be designed so that the events that occur on the basis of the transactions can be processed (Ingested) in real time. It is important to consider the permanent load. As a general rule, more capacity should be planned in order to also quickly enable catch-up operation after a downtime or maintenance.  
 
-#### 14 Days rentention period
+The following table explains what a single component, such as Logstash, Filebeat, ... can process in terms of TPS with INFO Trace-Messages enabled to stay real-time. Please understand these values as the absolute maximum, which do not give any margin upwards for downtimes or maintenance of the platform. More is not possible per component, so obviously more capacity must be planned for in production. The tests were performed on AWS EC2 instances with the default parameters for this solution. In order to be able to reliably determine the limiting component, all other components were adequate sized and only the component under test was as stated in the table.
 
-Please note the following:
-The recommendation contains only one ElasticSearch node up to a volume of max. 25 million transactions. This means no data redundancy if this node fails. If you need data redundancy, another ElasticSearch node must be added. After adding another node the data is automatically distributed between them.
+| Component               | Max. TPS           | Host-Machine | Config                | Comment |
+| :---                    | :---               | :---         | :---                  | :---    | 
+| Filebeat                | >300               | t2.xlarge    | Standard              | Test was limited by the TPS the Mock-Service was able to handle. Filebeat can very likely handle much more volume.|
+| Logstash                | 530                | t2.xlarge    | 6GB RAM for Logstash  | Includes API-Builder & Memcache on the same machine running along with Logstash. Has processed ap. 3500 events per second. CPU is finally the limiting factor.|
+| 2 Elasticsearch nodes   | 480                | t2.xlarge    | 8GB RAM for each node | Starting with a Two-Node cluster as this should be the mininum for a production setup. Kibana running on the first node.|
+| 3 Elasticsearch nodes   | 740                | t2.xlarge    | 8GB RAM for each node | Data is searchable with a slight delay, but ingesting is not falling behind real-time in general up to the max. TPS.|
+| 4 Elasticsearch nodes   | 1010                | t2.xlarge    | 8GB RAM for each node | |
 
-| Volume                  | Components           | Nodes | Shards  | Comment |
-| :---                    | :---                 | :---  | :---    | :---    | 
-| up to 1 Mio  (~15 TPS)  | All                  | 4 CPU-Cores, 16 GB RAM, 30 GB HDD  || One node for all components, Filebeat is running close to the API-Gateway    |
-| up to 5 Mio  (~60 TPS)  | All                  | 4 CPU-Cores, 16 GB RAM, 100 GB HDD || One node for all components, Filebeat is running close to the API-Gateway    |
-| up to 10 Mio (~120 TPS) | Logstash/API-Builder | 2 CPU-Cores, 1 GB RAM, 10 GB HDD   || Dedicated Logstash processing node    |
-|                         | Others               | 4 CPU-Cores, 16 GB RAM, 160 GB HDD || ElasticSearch, Kibana node    |
-| up to 25 Mio (~300 TPS) | Logstash/API-Builder | 2 CPU-Cores, 1 GB RAM, 10 GB HDD   || Dedicated Logstash processing node    |
-|                         | Others               | 4 CPU-Cores, 16 GB RAM, 300 GB HDD || ElasticSearch, Kibana node    |
-| up to 50 Mio (~600 TPS) | Logstash/API-Builder | 4 CPU-Cores, 1 GB RAM, 10 GB HDD   || Dedicated Logstash processing node    |
-|                         | ElasticSearch 1      | 4 CPU-Cores, 32 GB RAM, 300 GB HDD || ElasticSearch, Kibana node    |
-|                         | ElasticSearch 2      | 4 CPU-Cores, 32 GB RAM, 300 GB HDD || ElasticSearch node    |
+Please note:  
+- Logstash, API-Builder, Filebeat (for monitoring only) and Kibana are load balanced across all available Elasticsearch nodes. An external Load-Balancer is not required as this is handled internally by each the Elasticsearch clients.
+- The solution scales up to 5 Elasticsearch nodes as indicies are stored with 5 shards. More will require custom configuration, please create an issue if you have this requirement.
 
-#### 30 Days rentention period
+#### Rentention period
 
-The recommendation contains only one ElasticSearch node up to a volume of max. 10 million transactions. This means no data redundancy if this node fails. If you need data redundancy, another ElasticSearch node must be added. After adding another node the data is automatically distributed between them.
+The second important aspect for sizing is the rentention period, which defines how long data should be available. Accordingly, disk space must be made available.  
+The traffic summary, traffic details and trace messages play a particularly important role here. The solution is delivered with default values which you can read here. Based on the these default values which result in ap. 60 days the following disk space is required.
 
-| Volume                  | Components           | Nodes | Comment |
-| :---                    | :---                 | :---  | :---    | 
-| up to 1 Mio  (~15 TPS)  | All                  | 4 CPU-Cores, 16 GB RAM, 60 GB HDD  | One node for all components, Filebeat is running close to the API-Gateway    |
-| up to 5 Mio  (~60 TPS)  | All                  | 4 CPU-Cores, 16 GB RAM, 200 GB HDD | One node for all components, Filebeat is running close to the API-Gateway    |
-| up to 10 Mio (~120 TPS) | Logstash/API-Builder | 2 CPU-Cores, 1 GB RAM, 10 GB HDD   | Dedicated Logstash processing node    |
-|                         | Others               | 4 CPU-Cores, 16 GB RAM, 320 GB HDD | ElasticSearch, Kibana node    |
-| up to 25 Mio (~300 TPS) | Logstash/API-Builder | 2 CPU-Cores, 1 GB RAM, 10 GB HDD   | Dedicated Logstash processing node    |
-|                         | ElasticSearch 1      | 4 CPU-Cores, 16 GB RAM, 300 GB HDD | ElasticSearch, Kibana node    |
-|                         | ElasticSearch 2      | 4 CPU-Cores, 16 GB RAM, 300 GB HDD | ElasticSearch, Kibana node    |
-| up to 50 Mio (~600 TPS) | Logstash/API-Builder | 4 CPU-Cores, 1 GB RAM, 10 GB HDD   | Dedicated Logstash processing node    |
-|                         | ElasticSearch 1      | 4 CPU-Cores, 32 GB RAM, 750 GB HDD | ElasticSearch, Kibana node    |
-|                         | ElasticSearch 2      | 4 CPU-Cores, 32 GB RAM, 750 GB HDD | ElasticSearch node    |
+| Volume per day           | Stored documents | Total Disk-Space  | Comment |
+| :---                     | :---             | :---              | :---    |
+| up to 1 Mio  (~15 TPS)   | 60 Mio.          | 30 GB             | 2 Elasticsearch nodes, each with 15 GB  |
+| up to 5 Mio  (~60 TPS)   | 300 Mio.         | 60 GB             | 2 Elasticsearch nodes, each with 30 GB  |
+| up to 10 Mio (~120 TPS)  | 600 Mio.         | 160 GB            | 2 Elasticsearch nodes, each with 80 GB  |
+| up to 25 Mio (~300 TPS)  | 1.500 Bil.       | 500 GB            | 3 Elasticsearch nodes, each with 200 GB |
+| up to 50 Mio (~600 TPS)  | 3.000 Bil.       | 1 TB              | 4 Elasticsearch nodes, each with 250 GB |
+
 
 ### Test infrastructure
 
-| Node/Instance              |CPUS    |RAM   |Disc  | Component      | Version | Comment | 
-| :---                       | :---   | :--- | :--- | :---           | :---    | :---    |
-| AWS EC2 t2.xlarge instance | 4 vCPUS|16GB  |30GB  | API-Management | 7.7-July| Classical deployment |
-|                            |        |      |      | Filebeat       | 7.9.0   | Docker-Container running on API-Gateway Host |
-| AWS EC2 t2.xlarge instance | 4 vCPUS|16GB  |30GB  | API-Management | 7.7-July| Classical deployment |
-|                            |        |      |      | Filebeat       | 7.9.0   | Docker-Container running on API-Gateway Host |
-| AWS EC2 t2.xlarge instance | 4 vCPUS|16GB  |30GB  | API-Management | 7.7-July| Classical deployment |
-|                            |        |      |      | Filebeat       | 7.9.0   | Docker-Container running on API-Gateway Host |
-| AWS EC2 t2.xlarge instance | 4 vCPUS|16GB  |30GB  | API-Management | 7.7-July| Classical deployment |
-|                            |        |      |      | Filebeat       | 7.9.0   | Docker-Container running on API-Gateway Host |
-| AWS EC2 t2.xlarge instance | 4 vCPUS|16GB  |30GB  | API-Management | 7.7-July| Classical deployment |
-|                            |        |      |      | Filebeat       | 7.9.0   | Docker-Container running on API-Gateway Host |
-| AWS EC2 t2.xlarge instance | 4 vCPUS|16GB  |30GB  | API-Management | 7.7-July| Classical deployment |
-|                            |        |      |      | Filebeat       | 7.9.0   | Docker-Container running on API-Gateway Host |
-| AWS EC2 t2.xlarge instance | 4 vCPUS|16GB  |30GB  | Logstash       | 7.9.0   | Standard Logstash Docker-Container |
-|                            |        |      |      | API-Builder    | 0.0.10  | API-Builder proving Traffic-Monitor & Lookup API |
-| AWS EC2 t2.xlarge instance | 4 vCPUS|16GB  |80GB  | Elasticsearch  | 7.9.0   | Standard Elasticsearch Docker-Container |
-|                            |        |      |      | Kibana         | 7.9.0   | Standard Kibana Docker-Container |
+| Count | Node/Instance              |CPUS     | RAM   |Disc  | Component      | Version | Comment | 
+| :---: | :---                       | :---    | :---  | :--- | :---           | :---    | :---    |
+| 6x    | AWS EC2 t2.xlarge instance | 4 vCPUS | 16GB  | 30GB | API-Management | 7.7-July| 6 API-Gateways Classical deployment, Simulate Traffic based on Test-Case |
+| 4x    | AWS EC2 t2.xlarge instance | 4 vCPUS | 16GB  | 30GB | Logstash, API-Builder, Memcached | 7.10.1  | Logstash instances started as needed for the test. Logstash, API-Builder and Memcache always run together |
+| 5x    | AWS EC2 t2.xlarge instance | 4 vCPUS | 16GB  | 80GB | Elasticsearch  | 7.10.0  | Elasticsearch instances started as needed. Kibana running on the first node |
 
 <p align="right"><a href="#table-of-content">Top</a></p>
 
@@ -982,9 +952,13 @@ You can find additional information here: https://techleader.pro/a/90-Accessing-
 
 No, the delivered API builder Docker image includes the community version and is supported as part of this project.
 
-### Di I need a specific API-Gateway version to use this solution?
+### Do I need to be an Elastic-Stack expert?
 
-Any API-Gateway version that supports the Open-Traffic event log is supported. However, the solution has been tested with version 7.7, but in general it should also work with version 7.6.2.
+No, you do not need to be or become an expert on the Elastic stack. The solution configures the Elasticsearch cluster automatically including future updates, Logstash & Filebeat are preconfigured with the determined optimal parameters for the solution.
+
+### Do I need a specific API-Gateway version to use this solution?
+
+Any API-Gateway version that supports the Open-Traffic event log is supported. However, the solution has been tested with version 7.7-July, but in general it should also work with version 7.6.2.
 
 ### Will indexed data be deleted automatically?
 
@@ -1001,7 +975,7 @@ Yes, you can use your own Elasticsearch cluster or a managed instance at AWS/Azu
 
 ### Does the solution support high availability?
 
-Yes, all components can be deployed in way to support HA for the entire platform?
+Yes, all components can be deployed in way to support HA for the entire platform? Load-Balancing is done internally, so no load balancers are required.
 
 ### Can I use the Filebeat version shipped with the API-Gateway?
 
@@ -1009,19 +983,26 @@ No, as it is not a 7.x version and not tested with this solution at all.
 
 ### Can I run Filebeat as a native process?
 
-Yes, you can run Filebeat natively instead of a Docker-Container if you prefer. As long as you are using the filebeat.yml and correct configuration that is supported.
+Yes, you can run Filebeat natively instead of a Docker-Container if you prefer. As long as you are using the filebeat.yml and correct configuration that is supported. However, the solution has been tested with Filebeat 7.9 & 7.10. If you see performance degregation with an 'old' Filebeat the first advice would be to upgrade the Filebeat version.
 
 ### What happens if Logstash is down for a while?
 
-In case Logstash is stopped, Filebeat cannot sent events any longer to Logstash. However, Filebeat remembers the position of the last sent events on each files and resumes at that position, when Logstash is available again. Of course, you have to make sure, files are available logn enough. For instance the OpenTraffic-Event Logs are configured by default to 1GB, which is sufficient for around
+In case Logstash is stopped, Filebeat cannot sent events any longer to Logstash. However, Filebeat remembers the position of the last sent events on each files and resumes at that position, when Logstash is available again. Of course, you have to make sure, files are available long enough. For instance the OpenTraffic-Event Logs are configured by default to 1GB, which is sufficient for around 30 minutes when having 300 TPS. You should increase the disk space.
 
 ### Can I run multiple Logstash instances?
 
-Yes, Logstash is stateless (besides what is stored is Memcache), hence you can run as many Logstash instances as you like or need. In that case you have to provide multiple Logstash instances using the parameter `LOGSTASH_HOSTS`.
+Yes, Logstash is stateless (besides what is stored is Memcache), hence you can run as many Logstash instances as you like or need. In that case you have to provide multiple Logstash instances using the parameter `LOGSTASH_HOSTS` to the Filebeat instances so that they can load balance the events.
 
 ### Can I run multiple API-Builder instances?
 
-Yes, and just provide the same configuration for each API-Builder Docker-Container.
+Yes, and just provide the same configuration for each API-Builder Docker-Container. It's recommended to run the API-Builder process along Logstash & Memcache as these components are working closely together.
+
+### Are there any limits in terms of TPS?
+
+The solution was tested up to a maximum of 1,000 TPS and was thus able to process the events that occurred in real time. You can read more details in the Infrastructure Sizing section. 
+The solution is designed to scale to 5 Elasticsearch nodes as the indicies are configured on 5 shards. This means that Elasticsearch distributes each index evenly across the available nodes. 
+More Elasticsearch nodes can also have an impact as there are a number of indices (e.g. per region, per type) and this allows Elasticsearch to balance the cluster even better.
+So in principle, there is no limit. Of course, the components like Logstash/API builder then need to scale as well.
 
 ### Can I customize / change the solution to my needs?
 
@@ -1029,11 +1010,19 @@ It is not recommended that you change the solution just by hacking/changing some
 
 ### Are Trace-Messages stored in Elasticsearch?
 
-Yes. Trace-Messages you see in the Traffic-Monitor for an API-Request are coming from the Elasticsearch cluster. Please have in mind, running an API-Gateway in DEBUG mode, handling millions of transactions a day will signifcantly increase the disk-space requirements in Elasticsearch.
+Yes. Trace-Messages you see in the Traffic-Monitor for an API-Request are retrieved from the Elasticsearch cluster. Please have in mind, running an API-Gateway in DEBUG mode, handling millions of transactions a day, will signifcantly increase the disk-space requirements in Elasticsearch and the number of events to be processed. When enabling DEBUG, please monitor your Elasticsearch stack if event processing stays real-time.
 
 ### Can passwords given in the .env file be encrpyted?
 
 No, but this file is used by docker-compose only. If you would like to avoid to have sensitive data stored, the recommended approach it deploy the solution in Kubernetes environment and store passwords in the Secure-Vault. With that, sensitive data is injected into the containers from a secure source.
+
+### Why does Kibana a Kibana dashboards show different volumes than the Traffic Monitor?
+
+If the traffic monitor dashboard shows significantly more transactions than the Kibana dashboards, for example for the last 10 minutes, very likely the ingestion rate is not high enough. In other words, the ELK stack cannot process the data fast enough. If the behavior does not recover, you may need to add more Logstash and/or Elasticsearch nodes.
+
+### Can I increase the disk volume on an Elasticsearch machine?
+
+Yes, all indicies are configured to have one replica and therefore it's safe to stop machine, increae the disk-space and restart it. Please make sure, the cluster state is green, before stopping an instance. The increased volume will be automatically detected by Elasticsearch and used to assign more shards to it.
 
 ## Known issues
 N/A
