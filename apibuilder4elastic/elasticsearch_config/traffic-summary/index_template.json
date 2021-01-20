@@ -24,6 +24,10 @@
                 "type": "keyword",
                 "doc_values": false
             },
+            "tags": {
+                "type": "text",
+                "norms": false
+            },
             "processInfo.serviceId": {
                 "type": "keyword"
             },
