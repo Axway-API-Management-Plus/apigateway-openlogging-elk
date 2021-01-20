@@ -89,6 +89,9 @@ monitoring:
     username: "${BEATS_SYSTEM_USERNAME:beats_system}"
     password: "${BEATS_SYSTEM_PASSWORD:BEATS_SYSTEM_PASSWORD-NOT-SET}"
 
+logging.level: info
+logging.to_stderr: true
+logging.to_files: true
 #logging.level: debug
 #logging.to_files: true
 #logging.files:
