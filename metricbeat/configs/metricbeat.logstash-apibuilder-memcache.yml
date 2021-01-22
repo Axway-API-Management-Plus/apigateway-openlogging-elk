@@ -21,19 +21,19 @@ metricbeat.modules:
     - "memory"
     - "network"
   hosts: ["unix:///var/run/docker.sock"]
-  period: 10s
+  period: 30s
   enabled: true
 
 - module: logstash
   xpack.enabled: true
-  period: 10s
+  period: 30s
   hosts: ["logstash:9600"]
   #username: "user"
   #password: "secret"
 
 - module: memcached
 #  metricsets: ["stats"]
-  period: 10s
+  period: 30s
   hosts: ["memcached:11211"]
 
 - module: docker
@@ -47,11 +47,11 @@ metricbeat.modules:
     - "memory"
     - "network"
   hosts: ["unix:///var/run/docker.sock"]
-  period: 10s
+  period: 30s
   enabled: true
 
 - module: system
-  period: 10s
+  period: 30s
   hostsfs: true
   metricsets:
     - cpu

@@ -21,12 +21,12 @@ metricbeat.modules:
     - "memory"
     - "network"
   hosts: ["unix:///var/run/docker.sock"]
-  period: 10s
+  period: 30s
   enabled: true
 
 - module: elasticsearch
   xpack.enabled: true
-  period: 10s
+  period: 30s
   hosts: ${ELASTICSEARCH_HOSTS}
   username: "${METRICBEAT_USERNAME}"
   password: "${METRICBEAT_PASSWORD}"
@@ -35,7 +35,7 @@ metricbeat.modules:
 
 - module: kibana
   xpack.enabled: true
-  period: 10s
+  period: 30s
   hosts: ["${KIBANA_HOST}"]
   username: "${METRICBEAT_USERNAME}"
   password: "${METRICBEAT_PASSWORD}"

@@ -98,7 +98,7 @@ services:
     entrypoint: /usr/local/scripts/metricbeat-entrypoint.sh
     container_name: metricbeat
     # Define a fixed hostname to be reported back to Kibana
-    hostname: Logstash-APIBuilder
+    hostname: ${LOGSTASH_NODE_NAME:-Logstash-1}
     command: --strict.perms=false -e -c configs/metricbeat.logstash-apibuilder-memcache.yml
     user: root # Required to monitor docker containers
     environment:

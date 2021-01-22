@@ -23,16 +23,16 @@ metricbeat.modules:
     - "memory"
     - "network"
   hosts: ["unix:///var/run/docker.sock"]
-  period: 10s
+  period: 30s
   enabled: false
 
 - module: beat
   xpack.enabled: true
-  period: 10s
+  period: 30s
   hosts: ["http://localhost:5066"]
 
 - module: system
-  period: 10s
+  period: 30s
   hostsfs: true
   metricsets:
     - cpu
