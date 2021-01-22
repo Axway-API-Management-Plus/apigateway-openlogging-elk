@@ -56,7 +56,7 @@ services:
 
   # This is the API-Builder project exposing the API-Gateway Manager REST-API
   apibuilder4elastic:
-    image: cwiechmann/apibuilder4elastic:latest
+    image: cwiechmann/apibuilder4elastic:v2.0.0
     restart: always
     deploy:
       restart_policy:
