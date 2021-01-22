@@ -954,6 +954,16 @@ You can find additional information here: https://techleader.pro/a/90-Accessing-
 
 No, the delivered API builder Docker image includes the community version and is supported as part of this project.
 
+### Do I need an Elastic subscription?
+
+The solution can be operated in production without a subscription and is thereby community-supported. In this case, open an issue on this GitHub project.
+If you need official Elastic support to run your Elastic-Stack or additional features like alerts or machine learning for operation, then you need a subscription to Elastic.
+You can find more information here: https://www.elastic.co/pricing/
+
+### Is this solution officially supported by Axway?
+
+Currently this solution is not officially supported by Axway. However, it is on the roadmap to officially support the solution in the future. You can find the current roadmap in the Axway Community Portal: https://community.axway.com
+
 ### Do I need to be an Elastic-Stack expert?
 
 No, you do not need to be or become an expert on the Elastic stack. The solution configures the Elasticsearch cluster automatically including future updates, Logstash & Filebeat are preconfigured with the determined optimal parameters for the solution.

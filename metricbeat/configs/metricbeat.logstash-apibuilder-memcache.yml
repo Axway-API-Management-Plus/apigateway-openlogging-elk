@@ -36,7 +36,6 @@ metricbeat.modules:
   period: 10s
   hosts: ["memcached:11211"]
 
-metricbeat.modules:
 - module: docker
   metricsets:
     - "container"
