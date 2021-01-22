@@ -19,9 +19,11 @@ do
     # It is assumed, that node-names are sequentially counted elasticsearch1, elasticsearch2, ...
     if [ "${initCluster}" = "true" ]; then
         if [ "${initialMasterNodes}" == "" ]; then
+            echo "Init Elasticsearch cluster using nodeBasename: ${nodeBasename} and count: ${count}"
             initialMasterNodes="-E cluster.initial_master_nodes=${nodeBasename}${count}"
-        else 
-            initialMasterNodes="${initialMasterNodes},${nodeBasename}${count}"
+        else
+            echo "Init Elasticsearch cluster with given initialMasterNodes: ${initialMasterNodes}"
+            initialMasterNodes="-E cluster.initial_master_nodes=${initialMasterNodes}"
         fi
     fi
     # Use all declared hosts as seed hosts if 

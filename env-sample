@@ -227,7 +227,7 @@ ELASTICSEARCH_CLUSTER_UUID=
 # GATEWAY_REGION=US-DC1
 
 # ----------------------------------------------------------------------------------------------
-# This tells Filebeat where Logstash is running. 
+# This tells Filebeat where Logstash or multiple instances are running. 
 # When using the default docker-compose.yml the following default will work.
 # If you are running Logstash somewhere else, e.g. as a service in K8S you need to change this 
 # parameter.

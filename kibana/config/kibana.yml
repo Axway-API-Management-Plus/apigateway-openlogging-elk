@@ -3,7 +3,7 @@
 xpack.security.enabled: ${KIBANA_SECURITY_ENABLED}
 
 # Disabled, as Kibana is monitored by Metricbeat
-monitoring.kibana.collection.enabled: ${SELF_MONITORING_ENABLED:false}
+monitoring.kibana.collection.enabled: ${SELF_MONITORING_ENABLED}
 
 server.name: kibana
 server.host: "0"

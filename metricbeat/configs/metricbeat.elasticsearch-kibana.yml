@@ -28,8 +28,8 @@ metricbeat.modules:
   xpack.enabled: true
   period: 30s
   hosts: ${ELASTICSEARCH_HOSTS}
-  username: "${METRICBEAT_USERNAME}"
-  password: "${METRICBEAT_PASSWORD}"
+  username: '${METRICBEAT_USERNAME:""}'
+  password: '${METRICBEAT_PASSWORD:""}'
   ssl.enabled: true
   ssl.certificate_authorities: ["${ELASTICSEARCH_CA:ELASTICSEARCH_CA-NOT-SET}"]
 
@@ -37,21 +37,21 @@ metricbeat.modules:
   xpack.enabled: true
   period: 30s
   hosts: ["${KIBANA_HOST}"]
-  username: "${METRICBEAT_USERNAME}"
-  password: "${METRICBEAT_PASSWORD}"
+  username: '${METRICBEAT_USERNAME:""}'
+  password: '${METRICBEAT_PASSWORD:""}'
   ssl.enabled: true
   ssl.certificate_authorities: ["${ELASTICSEARCH_CA:ELASTICSEARCH_CA-NOT-SET}"]
 
 output.elasticsearch:
   hosts: '${ELASTICSEARCH_HOSTS}'
-  username: '${METRICBEAT_USERNAME}'
-  password: '${METRICBEAT_PASSWORD}'
+  username: '${METRICBEAT_USERNAME:""}'
+  password: '${METRICBEAT_PASSWORD:""}'
   ssl.enabled: true
   ssl.certificate_authorities: ["${ELASTICSEARCH_CA:ELASTICSEARCH_CA-NOT-SET}"]
 
 setup.kibana:
   host: "${KIBANA_HOST}"
-  username: "${METRICBEAT_USERNAME}"
-  password: "${METRICBEAT_PASSWORD}"
+  username: '${METRICBEAT_USERNAME:""}'
+  password: '${METRICBEAT_PASSWORD:""}'
   ssl.enabled: true
   ssl.certificate_authorities: ["${ELASTICSEARCH_CA:ELASTICSEARCH_CA-NOT-SET}"]

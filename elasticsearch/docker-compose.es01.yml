@@ -9,7 +9,7 @@ services:
     environment:
       - "ES_JAVA_OPTS=${ES_JAVA_OPTS}"
       - cluster.name=${ELASTICSEARCH_CLUSTERNAME}
-      - node.name=Elasticsearch 1
+      - node.name=Elasticsearch1 # Don't change the format (name and number) as it is used to bootstrap the cluster and identify the node number
       - ELASTICSEARCH_HOSTS=${ELASTICSEARCH_HOSTS}
       - ELASTICSEARCH_ANONYMOUS_ENABLED=${ELASTICSEARCH_ANONYMOUS_ENABLED:-true}
       - SELF_MONITORING_ENABLED=${SELF_MONITORING_ENABLED}
@@ -61,6 +61,7 @@ services:
   # Metricbeat monitoring Elasticsearch node 1
   metricbeatES:
     image: docker.elastic.co/beats/metricbeat:${ELASTIC_VERSION}
+    restart: on-failure:10
     entrypoint: /usr/local/scripts/metricbeat-entrypoint.sh
     container_name: metricbeatES1
     hostname: Elasticsearch1
@@ -75,6 +76,7 @@ services:
       - METRICBEAT_PASSWORD=${METRICBEAT_PASSWORD}
       - METRICBEAT_ENABLED=${METRICBEAT_ENABLED}
       - METRICBEAT_SETUP_DASHBOARDS=${METRICBEAT_SETUP_DASHBOARDS}
+      - ELASTICSEARCH_ANONYMOUS_ENABLED=${ELASTICSEARCH_ANONYMOUS_ENABLED}
     volumes:
       - type: volume
         source: metricbeatdata

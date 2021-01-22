@@ -144,10 +144,11 @@ Watch this video for a demonstration: [Setup Single Node Elasticsearch cluster](
 Open the `.env` file and configure the ELASTICSEARCH_HOSTS. At this point please configure only one Elasticsearch node. You can start with a single node and add more nodes later. More about this topic [Multi-Node Deployment](#setup-elasticsearch-multi-node) later in the documenation.  
 This URL is used by all Elasticsearch clients (Logstash, API-Builder, Filebeat) of the solution to establish communication.  
 If you use an external Elasticsearch cluster, please specify the node(s) that are given to you.  
-Please keep in mind that the hostnames must be resolvable within the docker containers. You can also assign the cluster name here if the default: `axway-apim-elasticsearch` is not appropriate. Example:  
+Please keep in mind that the hostnames must be resolvable within the docker containers. Some parameters to consider to change before starting the cluster::  
 ```
 ELASTICSEARCH_HOSTS=https://my-elasticsearch-host.com:9200
 ELASTICSEARCH_CLUSTERNAME=axway-apim-elasticsearch-prod
+ES_JAVA_OPTS="-Xms8g -Xmx8g"
 ```
 With the following command you initialize a new Elasticsearch Cluster which is going through an appropriate bootstrapping. Later you can add more nodes to this single node cluster. Please do not use the init extension when restarting the node:  
 ```

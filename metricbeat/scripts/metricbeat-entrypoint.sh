@@ -8,8 +8,10 @@ if [ "${METRICBEAT_ENABLED}" = "false" ];then
 fi
 
 if [ -z "${METRICBEAT_USERNAME}"  ] || [ -z "${METRICBEAT_PASSWORD}"  ];then
-    echo "Parameter: METRICBEAT_USERNAME or METRICBEAT_PASSWORD is missing";
-    exit 99;
+    if [ "${ELASTICSEARCH_ANONYMOUS_ENABLED}" = "false" ];then
+        echo "ELASTICSEARCH_ANONYMOUS_ENABLED is false, but parameter: METRICBEAT_USERNAME or METRICBEAT_PASSWORD is missing";
+        exit 99;
+    fi
 fi
 
 if [ -z "${ELASTICSEARCH_HOSTS}" ];then

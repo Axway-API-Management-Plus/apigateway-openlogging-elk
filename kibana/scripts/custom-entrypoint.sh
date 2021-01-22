@@ -7,6 +7,11 @@ hostsForKibana=`echo ${ELASTICSEARCH_HOSTS} | awk '{split($0, va, /,/); vl=""; f
 
 echo "Adjusted given Elasticsearch hosts: ${hostsForKibana} for Kibana"
 
+if [ -z "${SELF_MONITORING_ENABLED}" ];then
+    echo "Parameter: SELF_MONITORING_ENABLED not set, default to false.";
+    export SELF_MONITORING_ENABLED=false;
+fi
+
 export ELASTICSEARCH_HOSTS=$hostsForKibana
 
 # Finally call the original Docker-Entrypoint

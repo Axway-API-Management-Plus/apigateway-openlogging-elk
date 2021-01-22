@@ -57,11 +57,7 @@ services:
   # This is the API-Builder project exposing the API-Gateway Manager REST-API
   apibuilder4elastic:
     image: cwiechmann/apibuilder4elastic:v2.0.0
-    restart: always
-    deploy:
-      restart_policy:
-        delay: 20s
-        window: 120s
+    restart: on-failure:10
     container_name: apibuilder4elastic
     environment:
       - ELASTICSEARCH_HOSTS=${ELASTICSEARCH_HOSTS}
@@ -95,6 +91,7 @@ services:
   # Metricbeat monitoring Memcache, API-Builder and Logstash
   metricbeat:
     image: docker.elastic.co/beats/metricbeat:${ELASTIC_VERSION}
+    restart: on-failure:10
     entrypoint: /usr/local/scripts/metricbeat-entrypoint.sh
     container_name: metricbeat
     # Define a fixed hostname to be reported back to Kibana
@@ -110,6 +107,7 @@ services:
       - METRICBEAT_PASSWORD=${METRICBEAT_PASSWORD}
       - METRICBEAT_ENABLED=${METRICBEAT_ENABLED}
       - METRICBEAT_SETUP_DASHBOARDS=${METRICBEAT_SETUP_DASHBOARDS}
+      - ELASTICSEARCH_ANONYMOUS_ENABLED=${ELASTICSEARCH_ANONYMOUS_ENABLED}
     ports:
       - 9000:9000
     volumes:

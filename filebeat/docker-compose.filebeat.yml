@@ -46,10 +46,11 @@ services:
         max-size: "10m"
 
   # Metricbeat monitoring Filebeat, API-Gateway, API-Manager and perhaps later Cassandra
-  metricbeatFilebeat:
+  gatewayMetricbeat:
     image: docker.elastic.co/beats/metricbeat:${ELASTIC_VERSION}
+    restart: on-failure:10
     entrypoint: /usr/local/scripts/metricbeat-entrypoint.sh
-    container_name: metricbeatFilebeat
+    container_name: gatewayMetricbeat
     command: --strict.perms=false -c configs/metricbeat.filebeat-gateway.yml -e -system.hostfs=/hostfs
     user: root # Required to monitor docker containers
     environment:
@@ -61,6 +62,7 @@ services:
       - METRICBEAT_PASSWORD=${METRICBEAT_PASSWORD}
       - METRICBEAT_ENABLED=${METRICBEAT_ENABLED}
       - METRICBEAT_SETUP_DASHBOARDS=${METRICBEAT_SETUP_DASHBOARDS}
+      - ELASTICSEARCH_ANONYMOUS_ENABLED=${ELASTICSEARCH_ANONYMOUS_ENABLED}
     volumes:
       - type: volume
         source: metricbeatdata
