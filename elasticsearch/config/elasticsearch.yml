@@ -21,7 +21,7 @@ xpack.security.enabled: true
 #xpack.security.authc.anonymous.roles: kibana_admin,  superuser, beats_system, logstash_system
 #xpack.security.authc.anonymous.username: anonymous
 
-xpack.monitoring.collection.enabled: true
+xpack.monitoring.collection.enabled: ${SELF_MONITORING_ENABLED:false}
 
 # Don't enable this - This is just for testing!
 #cluster.routing.allocation.disk.watermark.high: "94%"

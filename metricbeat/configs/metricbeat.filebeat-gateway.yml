@@ -1,0 +1,81 @@
+logging.level: info
+
+setup.dashboards:
+  enabled: ${METRICBEAT_SETUP_DASHBOARDS:true}
+  directory: activeDashboards
+
+metricbeat.autodiscover:
+  providers:
+    - type: docker
+      hints.enabled: true
+
+monitoring.cluster_uuid: ${ELASTICSEARCH_CLUSTER_UUID}
+
+metricbeat.modules:
+- module: docker
+  metricsets:
+    - "container"
+    - "cpu"
+    - "diskio"
+    - "healthcheck"
+    - "info"
+    #- "image"
+    - "memory"
+    - "network"
+  hosts: ["unix:///var/run/docker.sock"]
+  period: 10s
+  enabled: false
+
+- module: beat
+  xpack.enabled: true
+  period: 10s
+  hosts: ["http://localhost:5066"]
+
+- module: system
+  period: 10s
+  hostsfs: true
+  metricsets:
+    - cpu
+    - load
+    - memory
+    - network
+    - process
+    - process_summary
+    - socket_summary
+    #- entropy
+    #- core
+    - diskio
+    #- socket
+    #- service
+    #- users
+  process.include_top_n:
+    by_cpu: 5      # include top 5 processes by CPU
+    by_memory: 5   # include top 5 processes by memory
+
+- module: system
+  period: 1m
+  metricsets:
+    - filesystem
+    - fsstat
+  processors:
+  - drop_event.when.regexp:
+      system.filesystem.mount_point: '^/(sys|cgroup|proc|dev|etc|host|lib|snap)($|/)'
+
+- module: system
+  period: 15m
+  metricsets:
+    - uptime
+
+output.elasticsearch:
+  hosts: '${ELASTICSEARCH_HOSTS}'
+  username: '${METRICBEAT_USERNAME}'
+  password: '${METRICBEAT_PASSWORD}'
+  ssl.enabled: true
+  ssl.certificate_authorities: ["${ELASTICSEARCH_CA:ELASTICSEARCH_CA-NOT-SET}"]
+
+setup.kibana:
+  host: "${KIBANA_HOST}"
+  username: "${METRICBEAT_USERNAME}"
+  password: "${METRICBEAT_PASSWORD}"
+  ssl.enabled: true
+  ssl.certificate_authorities: ["${ELASTICSEARCH_CA:ELASTICSEARCH_CA-NOT-SET}"]

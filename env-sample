@@ -110,6 +110,13 @@ API_MANAGER_PASSWORD=changeme
 #API_BUILDER_USERNAME=elastic
 #API_BUILDER_PASSWORD=
 
+# ----------------------------------------------------------------------------------------------
+# Account used by the Metricbeat to send metrics to Elasticsearch and create the required 
+# configuration in Kibana and Elasticsearch
+# Used-By: Metricbeat
+#METRICBEAT_USERNAME=elastic
+#METRICBEAT_PASSWORD=
+
 # With this parameter set to false, anonymous access to Elasticsearch is no longer possible. 
 # All clients needs to send username and password. 
 # This toggle is internally used to set the parameter: xpack.security.authc.anonymous.username
@@ -336,6 +343,41 @@ ELASTIC_VERSION=7.10.0
 # Used-By: API-Builder
 # Defaults to false.
 # DISABLE_SETUP_FLOWS=true
+
+################################################################################################
+#                         Stack Monitoring
+################################################################################################
+# By default the solution is using Metricbeat to collect information from all running components 
+# including running Docker-Containers. This is shown in Kibana Dashboards. 
+# With the following parameters you can control the stack monitoring to use either Self-Monitoring
+# or Metricbeat. Both should not be activated at the same time. 
+
+# ----------------------------------------------------------------------------------------------
+# If you do not want to use Metricbeat because you may already be monitoring the information 
+# with another solution, set this parameter to false. You can set this parameter individually. 
+# For example, leave it enabled on Elasticsearch servers, but disabled on the API gateways.
+# Used-By: Metricbeat
+# Defaults to true
+#METRICBEAT_ENABLED=false
+
+# ----------------------------------------------------------------------------------------------
+# Self-monitoring is used to monitor the Elastic stack itself, for example to monitor Logstash, 
+# Filebeat, etc. in Kibana stack monitoring. If Metricbeat is activated, you should not activate 
+# Self-Monitoring, as Metricbeat will then already take over the job. 
+# So only activate this parameter if you have deactivated Metricbeat and want to monitor the 
+# Elastic-Stack.
+# Used-By: Filebeat, Logstash, Elasticsearch, Kibana
+# Defaults to false
+#SELF_MONITORING_ENABLED=true
+
+# ----------------------------------------------------------------------------------------------
+# By default Metricbeat will upload all required Dashboards automatically into Kibana. Metricbeat
+# will overwrite existing Dashboards with every restart. If you want to customize Metricbeat 
+# dashboards you have to clone them.
+# Use this parameter to disable loading of dashboards.
+# Used-By: Metricbeat
+# Defaults to true
+#METRICBEAT_SETUP_DASHBOARDS=false
 
 ################################################################################################
 #                         Certificates and Certificate authorities

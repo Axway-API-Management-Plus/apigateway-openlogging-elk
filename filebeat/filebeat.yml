@@ -7,6 +7,9 @@ name: Filebeat ${GATEWAY_NAME:"API-Gateway"}
 
 # Wait for max 60 seconds before stopping - This helps to avoid data loss, when stopping filebeat!
 filebeat.shutdown_timeout: 60s
+# Endpoint used by Metricbeat 
+http.enabled: true
+http.host: "0.0.0.0"
 
 filebeat.inputs:
 - type: log
@@ -77,7 +80,7 @@ output.logstash:
   loadbalance: true
 
 monitoring:
-  enabled: true
+  enabled: ${SELF_MONITORING_ENABLED:false}
   # Get the Cluster-ID (cluster_uuid) with this simple query: https://elasticsearch1:9200/
   # This links this filebeat instance to the Cluster with the given ID to enable monitoring
   # It's also required to setup the beats_system user

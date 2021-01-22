@@ -18,6 +18,7 @@ services:
       - SERVER_SSL_KEY=${KIBANA_KEY}
       - SERVER_SSL_KEYPASSPHRASE=${KIBANA_KEYPASSPHRASE}
       - SERVER_SSL_CERTIFICATE=${KIBANA_CRT}
+      - SELF_MONITORING_ENABLED=${SELF_MONITORING_ENABLED}
     ports:
       - 5601:5601
     volumes:
@@ -44,6 +45,7 @@ services:
 volumes:
   esdata1:
   logs:
+  metricbeatdatakibana:
 
 networks:
   elastic:

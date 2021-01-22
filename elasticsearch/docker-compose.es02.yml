@@ -12,6 +12,7 @@ services:
       - node.name=Elasticsearch 2
       - ELASTICSEARCH_HOSTS=${ELASTICSEARCH_HOSTS}
       - ELASTICSEARCH_ANONYMOUS_ENABLED=${ELASTICSEARCH_ANONYMOUS_ENABLED:-true}
+      - SELF_MONITORING_ENABLED=${SELF_MONITORING_ENABLED}
       - xpack.security.enabled=true
       - xpack.security.http.ssl.enabled=true
       - xpack.security.http.ssl.key=/usr/share/elasticsearch/${ELASTICSEARCH_KEY}
@@ -57,9 +58,51 @@ services:
         max-file: "5"
         max-size: "10m"
 
+  # Metricbeat monitoring Elasticsearch node 1
+  metricbeatES:
+    image: docker.elastic.co/beats/metricbeat:${ELASTIC_VERSION}
+    entrypoint: /usr/local/scripts/metricbeat-entrypoint.sh
+    container_name: metricbeatES2
+    hostname: Elasticsearch2
+    command: --strict.perms=false -c configs/metricbeat.elasticsearch-container.yml -e -system.hostfs=/hostfs
+    user: root # Required to monitor docker containers
+    environment:
+      - ELASTICSEARCH_HOSTS=${ELASTICSEARCH_HOSTS}
+      - KIBANA_HOST=${KIBANA_HOST}
+      - ELASTICSEARCH_CLUSTER_UUID=${ELASTICSEARCH_CLUSTER_UUID}
+      - ELASTICSEARCH_CA=${ELASTICSEARCH_CA}
+      - METRICBEAT_USERNAME=${METRICBEAT_USERNAME}
+      - METRICBEAT_PASSWORD=${METRICBEAT_PASSWORD}
+      - METRICBEAT_ENABLED=${METRICBEAT_ENABLED}
+      - METRICBEAT_SETUP_DASHBOARDS=${METRICBEAT_SETUP_DASHBOARDS}
+    volumes:
+      - type: volume
+        source: metricbeatdata
+        target: /usr/share/metricbeat/data 
+      - /etc/localtime:/etc/localtime:ro # Required to sync timezone of the server into the Filebeat Docker-Container
+      - ${PWD}/metricbeat/configs:/usr/share/metricbeat/configs
+      - ${PWD}/metricbeat/activeDashboards:/usr/share/metricbeat/activeDashboards
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${PWD}/config/certificates:/usr/share/metricbeat/config/certificates
+      - ${PWD}/metricbeat/scripts:/usr/local/scripts
+      # Make it possible to monitor the host machine
+      # See here: https://www.elastic.co/guide/en/beats/metricbeat/current/running-on-docker.html
+      - /proc:/hostfs/proc:ro
+      - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
+      - /:/hostfs:ro
+    networks:
+      - elastic
+    
+    logging:
+      options:
+        max-file: "3"
+        max-size: "10m"
+
 volumes:
   esdata2:
   logs:
+  metricbeatdata:
 
 networks:
   elastic:

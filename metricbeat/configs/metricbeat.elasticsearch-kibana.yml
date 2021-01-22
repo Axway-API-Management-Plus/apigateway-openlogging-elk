@@ -1,0 +1,57 @@
+logging.level: info
+
+setup.dashboards:
+  enabled: ${METRICBEAT_SETUP_DASHBOARDS:true}
+  directory: activeDashboards
+
+metricbeat.autodiscover:
+  providers:
+    - type: docker
+      hints.enabled: true
+
+metricbeat.modules:
+- module: docker
+  metricsets:
+    - "container"
+    - "cpu"
+    - "diskio"
+    - "healthcheck"
+    - "info"
+    #- "image"
+    - "memory"
+    - "network"
+  hosts: ["unix:///var/run/docker.sock"]
+  period: 10s
+  enabled: true
+
+- module: elasticsearch
+  xpack.enabled: true
+  period: 10s
+  hosts: ${ELASTICSEARCH_HOSTS}
+  username: "${METRICBEAT_USERNAME}"
+  password: "${METRICBEAT_PASSWORD}"
+  ssl.enabled: true
+  ssl.certificate_authorities: ["${ELASTICSEARCH_CA:ELASTICSEARCH_CA-NOT-SET}"]
+
+- module: kibana
+  xpack.enabled: true
+  period: 10s
+  hosts: ["${KIBANA_HOST}"]
+  username: "${METRICBEAT_USERNAME}"
+  password: "${METRICBEAT_PASSWORD}"
+  ssl.enabled: true
+  ssl.certificate_authorities: ["${ELASTICSEARCH_CA:ELASTICSEARCH_CA-NOT-SET}"]
+
+output.elasticsearch:
+  hosts: '${ELASTICSEARCH_HOSTS}'
+  username: '${METRICBEAT_USERNAME}'
+  password: '${METRICBEAT_PASSWORD}'
+  ssl.enabled: true
+  ssl.certificate_authorities: ["${ELASTICSEARCH_CA:ELASTICSEARCH_CA-NOT-SET}"]
+
+setup.kibana:
+  host: "${KIBANA_HOST}"
+  username: "${METRICBEAT_USERNAME}"
+  password: "${METRICBEAT_PASSWORD}"
+  ssl.enabled: true
+  ssl.certificate_authorities: ["${ELASTICSEARCH_CA:ELASTICSEARCH_CA-NOT-SET}"]
