@@ -14,5 +14,5 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1
 
-      - name: Test Shell scripts
-        run: bats -r .
+      - name: Test Metricbeat shell script
+        run: bats -r metricbeat
