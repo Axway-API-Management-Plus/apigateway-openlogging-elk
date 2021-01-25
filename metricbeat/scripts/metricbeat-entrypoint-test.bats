@@ -13,7 +13,7 @@ setup() {
 
 @test "invoke metric-entrypoint without modules prints an error" {
     unset METRICBEAT_MODULES
-    run metricbeat/scripts/metricbeat-entrypoint.sh
+    metricbeat/scripts/metricbeat-entrypoint.sh
     [ "$status" -eq 77 ]
     [ "$output" = "METRICBEAT_MODULES is missing" ]
 }
