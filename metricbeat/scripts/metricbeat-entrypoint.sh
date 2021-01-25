@@ -86,8 +86,8 @@ if [ -z "${ELASTICSEARCH_HOSTS}" ];then
 fi
 
 if [ -z "${KIBANA_HOST}" ];then
-    echo "Parameter KIBANA_HOST not given, using first Elasticsearch host";
-    kibanaHost=`echo ${ELASTICSEARCH_HOSTS} | awk '{split($0, va, /,/); first=va[1]; split(first, parts, /:/); printf("'https:%s:5601'", parts[2]) }'`
+    echo "Parameter KIBANA_HOST not given, using https://kibana:5601 as default";
+    kibanaHost="https://kibana:5601" # This is the default as given by Docker-Compose
     export KIBANA_HOST=$kibanaHost
     echo "KIBANA_HOST set to $kibanaHost"
 fi
