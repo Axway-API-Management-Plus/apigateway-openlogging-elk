@@ -13,7 +13,7 @@ setup() {
 
 @test "invoke metric-entrypoint without modules prints an error" {
     unset METRICBEAT_MODULES
-    metricbeat/scripts/metricbeat-entrypoint.sh
+    run metricbeat/scripts/metricbeat-entrypoint.sh
     [ "$status" -eq 77 ]
     [ "$output" = "METRICBEAT_MODULES is missing" ]
 }
@@ -28,7 +28,7 @@ setup() {
 @test "invoke metric-entrypoint with valid ELASTICSEARCH_HOSTS prints adjusted hosts" {
     export ELASTICSEARCH_HOSTS="https://elasticsearch1.host:9200,https://elasticsearch1.host:9201"
     export METRICBEAT_MODULES="kibana,elasticsearch"
-    run metricbeat/scripts/metricbeat-entrypoint.sh
+    metricbeat/scripts/metricbeat-entrypoint.sh
     [ "$status" -eq 0 ]
     [ "${lines[2]}" = 'Elasticsearch hosts: ["https://elasticsearch1.host:9200","https://elasticsearch1.host:9201"] will be monitored by Metricbeat' ]
 }
