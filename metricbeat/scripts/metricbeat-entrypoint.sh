@@ -1,4 +1,4 @@
-#!/bin/sh -e
+#!/bin/bash -e
 
 # Each Metricbeat requires access to Elasticsearch to send Metric information and optionally (but at least one times)
 # access to Kibana in order to load the Metricbeat Dashboards into Kibana.
