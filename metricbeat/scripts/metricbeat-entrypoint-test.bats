@@ -36,7 +36,7 @@ setup() {
 @test "invoke metric-entrypoint with ELASTICSEARCH_HOSTS including spaces prints adjusted hosts" {
     export ELASTICSEARCH_HOSTS="https://elasticsearch1.host:9200 , https://elasticsearch2.host:9202, https://elasticsearch3.host:9203"
     export METRICBEAT_MODULES="kibana,elasticsearch"
-    metricbeat/scripts/metricbeat-entrypoint.sh
+    run metricbeat/scripts/metricbeat-entrypoint.sh
     echo "Line 0: ${lines[0]}"
     echo "Line 1: ${lines[1]}"
     echo "Line 2: ${lines[2]}"
