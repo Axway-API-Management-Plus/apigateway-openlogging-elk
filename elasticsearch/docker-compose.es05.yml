@@ -4,7 +4,7 @@ services:
   elasticsearch4:
     image: docker.elastic.co/elasticsearch/elasticsearch:${ELASTIC_VERSION}
     # Custom entrypoint to configured ES based on given ELASTICSEARCH_HOSTS
-    entrypoint: /usr/share/elasticsearch/scripts/elasticsearch-custom-entrypoint
+    entrypoint: /usr/share/elasticsearch/scripts/elasticsearch-custom-entrypoint.sh
     container_name: elasticsearch5
     environment:
       - "ES_JAVA_OPTS=${ES_JAVA_OPTS}"

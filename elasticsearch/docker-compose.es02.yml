@@ -4,7 +4,7 @@ services:
   elasticsearch2:
     image: docker.elastic.co/elasticsearch/elasticsearch:${ELASTIC_VERSION}
     # Custom entrypoint to configured ES based on given ELASTICSEARCH_HOSTS
-    entrypoint: /usr/share/elasticsearch/scripts/elasticsearch-custom-entrypoint
+    entrypoint: /usr/share/elasticsearch/scripts/elasticsearch-custom-entrypoint.sh
     container_name: elasticsearch2
     environment:
       - "ES_JAVA_OPTS=${ES_JAVA_OPTS}"
@@ -12,7 +12,7 @@ services:
       - node.name=Elasticsearch2 # Don't change the format (name and number) as it is used to bootstrap the cluster and identify the node number
       - ELASTICSEARCH_HOSTS=${ELASTICSEARCH_HOSTS}
       - ELASTICSEARCH_ANONYMOUS_ENABLED=${ELASTICSEARCH_ANONYMOUS_ENABLED:-true}
-      - SELF_MONITORING_ENABLED=${SELF_MONITORING_ENABLED:-t}
+      - SELF_MONITORING_ENABLED=${SELF_MONITORING_ENABLED}
       - xpack.security.enabled=true
       - xpack.security.http.ssl.enabled=true
       - xpack.security.http.ssl.key=/usr/share/elasticsearch/${ELASTICSEARCH_KEY}

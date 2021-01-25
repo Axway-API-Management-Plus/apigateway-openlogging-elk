@@ -47,7 +47,7 @@ APIGATEWAY_PAYLOADS_FOLDER=/home/localuser/Axway-x.y.z/apigateway/logs/payloads
 # this environment variable is used to locate the ElasticSearch cluster.
 # You may provide a single host or an array of hosts.
 # Example: ELASTICSEARCH_HOSTS=https://elasticsearch1:9200,https://elasticsearch2:9201
-# Used-By: Filebeat, API-Builder, Logstash
+# Used-By: Filebeat, API-Builder, Logstash, Metricbeat
 ELASTICSEARCH_HOSTS=https://elasticsearch1:9200
 
 # ----------------------------------------------------------------------------------------------
