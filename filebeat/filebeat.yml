@@ -3,7 +3,7 @@
 #
 # If you are missing a certain feature or discover a bug, please raise an issue instead:
 # https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues
-name: Filebeat ${GATEWAY_NAME:"API-Gateway"}
+name: Filebeat ${GATEWAY_NAME:API-Gateway}
 
 # Wait for max 60 seconds before stopping - This helps to avoid data loss, when stopping filebeat!
 filebeat.shutdown_timeout: 60s
