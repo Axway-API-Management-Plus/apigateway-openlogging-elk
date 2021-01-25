@@ -389,8 +389,9 @@ ELASTIC_VERSION=7.10.0
 # ----------------------------------------------------------------------------------------------
 # This is the name how metricbeat reports metric information back to Elasticsearch.
 # Used-By: Metricbeat
-# Example
-# METRICBEAT_NODE_NAME=Logstash-2
+# Examples
+# METRICBEAT_NODE_NAME=Host-1
+# METRICBEAT_NODE_NAME=API-Gateway-1
 
 # ----------------------------------------------------------------------------------------------
 # By default Metricbeat will upload all required Dashboards automatically into Kibana. Metricbeat

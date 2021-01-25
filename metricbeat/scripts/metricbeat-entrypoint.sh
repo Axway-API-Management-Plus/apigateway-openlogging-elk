@@ -112,7 +112,7 @@ elasticHosts=`echo ${ELASTICSEARCH_HOSTS} | awk '
 echo "Elasticsearch hosts: ${elasticHosts} will be monitored by Metricbeat"
 # Check if Kibana-Host is reachable and if not, disable Kibana-Monitoring
 curl -skf ${KIBANA_HOST} || rc=$?
-if [ \( "$rc" != "0" -o "$rc" != "" \) ] && [ "${SKIP_VALIDATION}" != true ]; then
+if [ \( "$rc" != "0" -a "$rc" != "" \) ] && [ "${SKIP_VALIDATION}" != true ]; then
     echo "KIBANA_HOST: ${KIBANA_HOST} is not reachable. Got returncode: ${rc} for command: curl -kv ${KIBANA_HOST}";
     echo "Metricbeat Kibana monitoring will be disabled on this host.";
     export METRICBEAT_KIBANA_ENABLED=false;

@@ -47,8 +47,8 @@ setup() {
     unset KIBANA_HOST
     run metricbeat/scripts/metricbeat-entrypoint.sh
     [ "$status" -eq 0 ]
-    [ "${lines[2]}" = 'Parameter KIBANA_HOST not given, using first Elasticsearch host' ]
-    [ "${lines[3]}" = 'KIBANA_HOST set to https://elasticsearch1.host:5601' ]
+    [ "${lines[2]}" = 'Parameter KIBANA_HOST not given, using https://kibana:5601 as default' ]
+    [ "${lines[3]}" = 'KIBANA_HOST set to https://kibana:5601' ]
 }
 
 @test "invoke metric-entrypoint with valid KIBANA_HOST (simuluated as valid host)" {
