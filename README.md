@@ -632,14 +632,14 @@ The monitoring users are used to send metric information to Elasticsearch to ena
 
 In the default configuration, the solution uses the so-called self-monitoring. This means that components such as Logstash, Kibana, Filebeat, etc. independently send monitoring information (metrics) to Elasticsearch. However, this approach is not recommended by Elastic and is deprecated.  
 Metricbeat should be used instead. Unfortunately, the solution cannot easily be delivered with a pre-configured Metricbeat, as it depends too much on the deployment.   
-So this means that you have to set some parameters in the .env file and then start Metricbeat.  
-You will learn here how to enable Metricbeat and thus monitor Memcache, the running Docker containers in addition to the pure Elastic stack. In the future, it is planned to monitor the API Manager and the API Builder process in the same way and to provide metrics.  
+So this means that you have to set some parameters in the `.env` file and then start Metricbeat.  
+You will learn here how to enable Metricbeat and thus monitor Memcache, the running Docker containers in addition to the pure Elastic stack. In the future, it is perhaps planned to monitor the API Manager and the API Builder process in the same way and to provide metrics.  
 
 __1. Activate Metricbeat__
 
-- Check that the METRICBEAT_USERNAME & METRICBEAT_PASSWORD user is set up correctly. This user must have rights to Kibana (to upload dashboards) and Elasticsearch (to create indexes).  
-- Set the parameter: METRICBEAT_ENABLED=true. This will be populated when the Metricbeat container starts.  
-- Set the parameter SELF_MONITORING_ENABLED=false to disable legacy monitoring.  
+- Check that the `METRICBEAT_USERNAME` & `METRICBEAT_PASSWORD` user is set up correctly. This user must have rights to Kibana (to upload dashboards) and Elasticsearch (to create indexes).  
+- Set the parameter: `METRICBEAT_ENABLED=true`. This will be populated when the Metricbeat container starts.  
+- Set the parameter `SELF_MONITORING_ENABLED=false` to disable legacy monitoring.  
 
 __2. Configure Metricbeat__
 
@@ -647,15 +647,15 @@ The parameter METRICBEAT_MODULES must be set differently for each host, dependin
 
 | Component              | Description                           | 
 | :---                   | :---                                  |
-| **elasticsearch**      | Replaces internet monitoring so that Elasticsearch metrics appear in Kibana stack monitoring. __Important:__ A metricbeat monitors ALL Elasticsearch nodes based on the parameter: ELASTICSEARCH_HOSTS and Kibana if needed.                                   |
-| **kibana**             | Enables monitoring of Kibana analogous to Elasticsearch. You can use a metricbeat for monitoring Elasticsearch & Kibana as explained. |
-| **logstash**           | Monitoring Logstash. Provides the data in Kibana stack monitoring. |
-| **filebeat**           | Monitoring Filebeat. Provides the data in Kibana stack monitoring. |
-| **memcached**          | Captures statistics from Memcached. Currently not used in any dashboard and can be disabled if not needed. |
+| **elasticsearch**      | Replaces internal monitoring so that Elasticsearch metrics appear in Kibana Stack-Monitoring. __Important:__ ONE metricbeat monitors ALL Elasticsearch nodes based on the parameter: ELASTICSEARCH_HOSTS and Kibana if needed.                                   |
+| **kibana**             | Enables monitoring of Kibana analogous to Elasticsearch. You can use a Metricbeat for monitoring Elasticsearch & Kibana as explained. |
+| **logstash**           | Monitoring Logstash. Provides the data in Kibana Stack-Monitoring. |
+| **filebeat**           | Monitoring Filebeat. Provides the data in Kibana stack-Monitoring. |
+| **memcached**          | Captures statistics from Memcached. Is indexed, but currently not used in any dashboard and can be disabled if not needed. |
 | **system**             | Provides system metrics such as disk IO, network IO, etc. __Important:__ In the default configuration out of the Docker container which limits the process view. Will be improved in a later release. See example: [System overview](imgs/metricbeat-system-overview.png) or [Host overview](imgs/metricbeat-api-host-overview.png) |
 | **docker**             | Provides information about running Docker containers that can be displayed in dashboards. Docker containers are automatically detected on the host. See example: [Docker overview](imgs/containers-overview.png) |
 
-Set the parameter: METRICBEAT_NODE_NAME to a descriptive name, which should be displayed later in the Kibana dashboards for the host.
+Set the parameter: `METRICBEAT_NODE_NAME` to a descriptive name, which should be displayed later in the Kibana dashboards for the host Metricbeat is running on.  
 
 __3. Start Metricbeat__
 
@@ -663,7 +663,7 @@ Now start the Metricbeat container on each host:
 ```
 docker-compose -f metricbeat/docker-compose.metricbeat.yml up -d
 ```
-So that on each host a container `metricbeat` started.
+On each host a container `metricbeat` started with given configuration in the belonging `.env` file.
 
 __4. Disable Self-Monitoring__
 
@@ -672,6 +672,7 @@ Make sure, the parameter: `SELF_MONITORING_ENABLED=false` is set. Then stop Elas
 docker stop kibana
 docker-compose -f kibana/docker-compose.kibana.yml up -d
 ```
+Please note, before restarting an Elasticsearch-Node make sure, the cluster state is green. to stay online during the restart.
 
 <p align="right"><a href="#table-of-content">Top</a></p>
 
