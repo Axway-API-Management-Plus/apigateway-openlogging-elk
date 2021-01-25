@@ -673,6 +673,8 @@ docker stop kibana
 docker-compose -f kibana/docker-compose.kibana.yml up -d
 ```
 
+<p align="right"><a href="#table-of-content">Top</a></p>
+
 ### Configure cluster UUID
 
 This step is optional, but required to monitor your Filebeat instances as part of the stack monitoring. To obtain the Cluster UUID run the following in your browser:  
@@ -994,6 +996,8 @@ END
 ```
 
 You can find additional information here: https://techleader.pro/a/90-Accessing-Memcached-from-the-command-line. You may also use [PHPMemcachedAdmin](https://github.com/elijaa/phpmemcachedadmin) to get insights about the Memcache instance.
+
+<p align="right"><a href="#table-of-content">Top</a></p>
 
 ## FAQ
 
