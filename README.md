@@ -652,8 +652,8 @@ The parameter METRICBEAT_MODULES must be set differently for each host, dependin
 | **logstash**           | Monitoring Logstash. Provides the data in Kibana stack monitoring. |
 | **filebeat**           | Monitoring Filebeat. Provides the data in Kibana stack monitoring. |
 | **memcached**          | Captures statistics from Memcached. Currently not used in any dashboard and can be disabled if not needed. |
-| **system**             | Provides system metrics such as disk IO, network IO, etc. __Important:__ In the default configuration out of the Docker container which limits the process view. Will be improved in a later release. See example: ![System overview](imgs/metricbeat-system-overview.png) or ![Host overview](imgs/metricbeat-api-host-overview.png) |
-| **docker**             | Provides information about running Docker containers that can be displayed in dashboards. Docker containers are automatically detected on the host. See example: ![Docker overview](imgs/containers-overview.png) |
+| **system**             | Provides system metrics such as disk IO, network IO, etc. __Important:__ In the default configuration out of the Docker container which limits the process view. Will be improved in a later release. See example: [System overview](imgs/metricbeat-system-overview.png) or [Host overview](imgs/metricbeat-api-host-overview.png) |
+| **docker**             | Provides information about running Docker containers that can be displayed in dashboards. Docker containers are automatically detected on the host. See example: [Docker overview](imgs/containers-overview.png) |
 
 Set the parameter: METRICBEAT_NODE_NAME to a descriptive name, which should be displayed later in the Kibana dashboards for the host.
 
