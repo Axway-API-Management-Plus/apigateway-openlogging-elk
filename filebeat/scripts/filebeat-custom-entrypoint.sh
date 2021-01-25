@@ -19,5 +19,10 @@ echo "Adjusted given Logstash hosts: ${hostsForFilebeat} for Filebeat"
 
 export LOGSTASH_HOSTS=$hostsForFilebeat
 
+if [ -z "${SELF_MONITORING_ENABLED}" ];then
+    echo "Parameter: SELF_MONITORING_ENABLED not set, default to true.";
+    export MONITORING_UI_CONTAINER_ELASTICSEARCH_ENABLED=true
+fi
+
 # Finally call the original Docker-Entrypoint
 /usr/local/bin/docker-entrypoint "$@"
