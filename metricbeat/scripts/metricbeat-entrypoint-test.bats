@@ -30,19 +30,15 @@ setup() {
     export METRICBEAT_MODULES="kibana,elasticsearch"
     run metricbeat/scripts/metricbeat-entrypoint.sh
     [ "$status" -eq 0 ]
-    [ "${lines[2]}" = 'Elasticsearch hosts: ["https://elasticsearch1.host:9200","https://elasticsearch1.host:9201"] will be monitored by Metricbeat' ]
+    [ "${lines[4]}" = 'Elasticsearch hosts: ["https://elasticsearch1.host:9200","https://elasticsearch1.host:9201"] will be monitored by Metricbeat' ]
 }
 
 @test "invoke metric-entrypoint with ELASTICSEARCH_HOSTS including spaces prints adjusted hosts" {
     export ELASTICSEARCH_HOSTS="https://elasticsearch1.host:9200 , https://elasticsearch2.host:9202, https://elasticsearch3.host:9203"
     export METRICBEAT_MODULES="kibana,elasticsearch"
     run metricbeat/scripts/metricbeat-entrypoint.sh
-    echo "Line 0: ${lines[0]}"
-    echo "Line 1: ${lines[1]}"
-    echo "Line 2: ${lines[2]}"
-    echo "Line 3: ${lines[3]}"
     [ "$status" -eq 0 ]
-    [ "${lines[2]}" = 'Elasticsearch hosts: ["https://elasticsearch1.host:9200","https://elasticsearch2.host:9202","https://elasticsearch3.host:9203"] will be monitored by Metricbeat' ]
+    [ "${lines[4]}" = 'Elasticsearch hosts: ["https://elasticsearch1.host:9200","https://elasticsearch2.host:9202","https://elasticsearch3.host:9203"] will be monitored by Metricbeat' ]
 }
 
 @test "invoke metric-entrypoint without KIBANA_HOST - First Elasticsearch host should be used as KIBANA_HOST" {
