@@ -236,13 +236,6 @@ ELASTICSEARCH_CLUSTER_UUID=
 LOGSTASH_HOSTS=logstash:5044
 
 # ----------------------------------------------------------------------------------------------
-# If you are using multiple Logstash instances use this parameter to define the Logstash-Name
-# as it's shown in the Stack-Monitoring Kibana. This helps to monitor Logstash instances 
-# individually. If not given it defaults to Logstash-1 when using Docker-Compose.
-# Used-By: Logstash
-# LOGSTASH_NODE_NAME=Logstash-2
-
-# ----------------------------------------------------------------------------------------------
 # Define JVM-Heap size for Logstash. Both values should be the same and not more than 6GB. 
 # Defaults to -Xmx1g -Xms1g
 # Used-By: Logstash
@@ -345,7 +338,7 @@ ELASTIC_VERSION=7.10.0
 # DISABLE_SETUP_FLOWS=true
 
 ################################################################################################
-#                         Stack Monitoring
+#                         Metricbeat
 ################################################################################################
 # By default the solution is using Metricbeat to collect information from all running components 
 # including running Docker-Containers. This is shown in Kibana Dashboards. 
@@ -353,31 +346,70 @@ ELASTIC_VERSION=7.10.0
 # or Metricbeat. Both should not be activated at the same time. 
 
 # ----------------------------------------------------------------------------------------------
-# If you do not want to use Metricbeat because you may already be monitoring the information 
-# with another solution, set this parameter to false. You can set this parameter individually. 
-# For example, leave it enabled on Elasticsearch servers, but disabled on the API gateways.
+# Since the setup of Metricbeat requires some steps that depend on the exact deployment, it is not 
+# enabled by default. Nevertheless, it is recommended to use Metricbeat for monitoring the components.
+# If you set this parameter to true, then please disable the parameter: SELF_MONITORING_ENABLED to 
+# avoid that the components report unnecessarily twice.
 # Used-By: Metricbeat
-# Defaults to true
-#METRICBEAT_ENABLED=false
+# Defaults to false
+#METRICBEAT_ENABLED=true
 
 # ----------------------------------------------------------------------------------------------
 # Self-monitoring is used to monitor the Elastic stack itself, for example to monitor Logstash, 
 # Filebeat, etc. in Kibana stack monitoring. If Metricbeat is activated, you should not activate 
 # Self-Monitoring, as Metricbeat will then already take over the job. 
-# So only activate this parameter if you have deactivated Metricbeat and want to monitor the 
-# Elastic-Stack.
+# So only activate this parameter if you dont use Metricbeat.
 # Used-By: Filebeat, Logstash, Elasticsearch, Kibana
-# Defaults to false
-#SELF_MONITORING_ENABLED=true
+# Defaults to true
+#SELF_MONITORING_ENABLED=false
+
+# ----------------------------------------------------------------------------------------------
+# Metricbeat is designed to monitor various services. For this purpose a Metricbeat instance runs 
+# on a host and based on activated modules the services are monitored.
+# After the Elastic solution is deployed, the internal so-called self-monitoring is used. This means 
+# that services like Filebeat, Logstash, etc. send metrics to Elasticsearch themselves.
+# However, the way is deprecated, so it is recommended to disable self-monitoring and use Metricbeat. 
+# For this, the solution is pre-configured as much as possible. You have to define per host which 
+# services (modules) should be activated and then start the Metricbeat Docker-Contaniner instance 
+# on each instance. Do not forget to deactivate the self-monitoring.
+# Used-By: Metricbeat
+# Defaults to true
+# Examples:
+# All modules enabled:
+#METRICBEAT_MODULES=kibana,elasticsearch,logstash,filebeat,memcached,system,docker
+# First Elasticsearch host also running Kibana:
+#METRICBEAT_MODULES=kibana,elasticsearch,system,docker
+# All other Elasticsearch nodes:
+#METRICBEAT_MODULES=system,docker
+# Logstash, API-Builder & Memcache running on one host:
+#METRICBEAT_MODULES=logstash,memcached,system,docker
+# Filebeat running at API-Gateway:
+#METRICBEAT_MODULES=filebeat,system,docker
+
+# ----------------------------------------------------------------------------------------------
+# This is the name how metricbeat reports metric information back to Elasticsearch.
+# Used-By: Metricbeat
+# Example
+# METRICBEAT_NODE_NAME=Logstash-2
 
 # ----------------------------------------------------------------------------------------------
 # By default Metricbeat will upload all required Dashboards automatically into Kibana. Metricbeat
 # will overwrite existing Dashboards with every restart. If you want to customize Metricbeat 
-# dashboards you have to clone them.
-# Use this parameter to disable loading of dashboards.
+# dashboards you should clone them.
+# Use this parameter to disable loading of dashboards. 
 # Used-By: Metricbeat
 # Defaults to true
 #METRICBEAT_SETUP_DASHBOARDS=false
+
+# ----------------------------------------------------------------------------------------------
+# Currently, the KIBANA_HOST is only used by Metricbeat to automatically load the configured 
+# dashboards into Kibana. If the parameter is not specified, Kibana will try to contact the first 
+# Elasticsearch host and use it if available. You can change this behavior with the 
+# parameter: KIBANA_HOST. For authentication Metricbeat uses the user: 
+# METRICBEAT_USERNAME & METRICBEAT_PASSWORD.
+# Used-By: Metricbeat
+# Defaults to first Elasticsearch host
+#KIBANA_HOST=https://my.kibanahost.net:5601
 
 ################################################################################################
 #                         Certificates and Certificate authorities

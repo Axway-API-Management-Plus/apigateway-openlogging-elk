@@ -1,0 +1,50 @@
+version: '3.7'
+services:
+  # Central Metricbeat service to run along all services
+  metricbeat:
+    image: docker.elastic.co/beats/metricbeat:${ELASTIC_VERSION}
+    restart: on-failure:10
+    entrypoint: /usr/local/scripts/metricbeat-entrypoint.sh
+    container_name: metricbeat
+    # Define a fixed hostname to be reported back to Kibana
+    hostname: ${METRICBEAT_NODE_NAME}
+    command: --strict.perms=false -e -c config/metricbeat.all.yml
+    user: root # Required to monitor docker containers
+    environment:
+      - ELASTICSEARCH_HOSTS=${ELASTICSEARCH_HOSTS}
+      - KIBANA_HOST=${KIBANA_HOST}
+      - ELASTICSEARCH_CLUSTER_UUID=${ELASTICSEARCH_CLUSTER_UUID}
+      - ELASTICSEARCH_CA=${ELASTICSEARCH_CA}
+      - METRICBEAT_USERNAME=${METRICBEAT_USERNAME}
+      - METRICBEAT_PASSWORD=${METRICBEAT_PASSWORD}
+      - METRICBEAT_ENABLED=${METRICBEAT_ENABLED}
+      - METRICBEAT_SETUP_DASHBOARDS=${METRICBEAT_SETUP_DASHBOARDS}
+      - METRICBEAT_MODULES=${METRICBEAT_MODULES}
+      - METRICBEAT_NODE_NAME=${METRICBEAT_NODE_NAME}
+      - ELASTICSEARCH_ANONYMOUS_ENABLED=${ELASTICSEARCH_ANONYMOUS_ENABLED}
+    ports:
+      - 9000:9000
+    volumes:
+      - type: volume
+        source: metricbeatdata
+        target: /usr/share/metricbeat/data # Required to make sure that Filebeat remembers the last position, even if the container is recreated
+      - /etc/localtime:/etc/localtime:ro # Required to sync timezone of the server into the Filebeat Docker-Container
+      - ${PWD}/metricbeat/configs:/usr/share/metricbeat/configs
+      - ${PWD}/metricbeat/activeDashboards:/usr/share/metricbeat/activeDashboards
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${PWD}/config/certificates:/usr/share/metricbeat/config/certificates
+      - ${PWD}/metricbeat/scripts:/usr/local/scripts
+    networks:
+      - elastic
+    logging:
+      options:
+        max-file: "3"
+        max-size: "10m"
+
+volumes:
+  logs:
+  metricbeatdata:
+
+networks:
+  elastic:

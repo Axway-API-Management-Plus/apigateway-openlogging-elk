@@ -5,11 +5,11 @@ services:
   logstash:
     image: docker.elastic.co/logstash/logstash:${ELASTIC_VERSION}
     # This custom entrypoint is required to adjust the variable ELASTICSEARCH_HOSTS from Comma to Space separated
-    entrypoint: /usr/share/logstash/scripts/custom-entrypoint.sh
+    entrypoint: /usr/share/logstash/scripts/logstash-custom-entrypoint.sh
     container_name: logstash
     environment:
       - node.name=${LOGSTASH_NODE_NAME:-Logstash-1}
-      - xpack.monitoring.enabled=${SELF_MONITORING_ENABLED:-false}
+      - xpack.monitoring.enabled=${SELF_MONITORING_ENABLED:-true}
       - xpack.monitoring.elasticsearch.ssl.certificate_authority=${ELASTICSEARCH_CA}
       - xpack.monitoring.elasticsearch.hosts=[${ELASTICSEARCH_HOSTS}]
       - xpack.monitoring.elasticsearch.username=${LOGSTASH_SYSTEM_USERNAME}
@@ -88,49 +88,8 @@ services:
         max-file: "3"
         max-size: "10m"
 
-  # Metricbeat monitoring Memcache, API-Builder and Logstash
-  metricbeat:
-    image: docker.elastic.co/beats/metricbeat:${ELASTIC_VERSION}
-    restart: on-failure:10
-    entrypoint: /usr/local/scripts/metricbeat-entrypoint.sh
-    container_name: metricbeat
-    # Define a fixed hostname to be reported back to Kibana
-    hostname: ${LOGSTASH_NODE_NAME:-Logstash-1}
-    command: --strict.perms=false -e -c configs/metricbeat.logstash-apibuilder-memcache.yml
-    user: root # Required to monitor docker containers
-    environment:
-      - ELASTICSEARCH_HOSTS=${ELASTICSEARCH_HOSTS}
-      - KIBANA_HOST=${KIBANA_HOST}
-      - ELASTICSEARCH_CLUSTER_UUID=${ELASTICSEARCH_CLUSTER_UUID}
-      - ELASTICSEARCH_CA=${ELASTICSEARCH_CA}
-      - METRICBEAT_USERNAME=${METRICBEAT_USERNAME}
-      - METRICBEAT_PASSWORD=${METRICBEAT_PASSWORD}
-      - METRICBEAT_ENABLED=${METRICBEAT_ENABLED}
-      - METRICBEAT_SETUP_DASHBOARDS=${METRICBEAT_SETUP_DASHBOARDS}
-      - ELASTICSEARCH_ANONYMOUS_ENABLED=${ELASTICSEARCH_ANONYMOUS_ENABLED}
-    ports:
-      - 9000:9000
-    volumes:
-      - type: volume
-        source: metricbeatdata
-        target: /usr/share/metricbeat/data # Required to make sure that Filebeat remembers the last position, even if the container is recreated
-      - /etc/localtime:/etc/localtime:ro # Required to sync timezone of the server into the Filebeat Docker-Container
-      - ${PWD}/metricbeat/configs:/usr/share/metricbeat/configs
-      - ${PWD}/metricbeat/activeDashboards:/usr/share/metricbeat/activeDashboards
-      - /var/lib/docker/containers:/var/lib/docker/containers:ro
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ${PWD}/config/certificates:/usr/share/metricbeat/config/certificates
-      - ${PWD}/metricbeat/scripts:/usr/local/scripts
-    networks:
-      - elastic
-    logging:
-      options:
-        max-file: "3"
-        max-size: "10m"
-
 volumes:
   logs:
-  metricbeatdata:
 
 networks:
   elastic:

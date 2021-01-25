@@ -8,8 +8,8 @@ hostsForKibana=`echo ${ELASTICSEARCH_HOSTS} | awk '{split($0, va, /,/); vl=""; f
 echo "Adjusted given Elasticsearch hosts: ${hostsForKibana} for Kibana"
 
 if [ -z "${SELF_MONITORING_ENABLED}" ];then
-    echo "Parameter: SELF_MONITORING_ENABLED not set, default to false.";
-    export SELF_MONITORING_ENABLED=false;
+    echo "Parameter: SELF_MONITORING_ENABLED not set, default to true.";
+    export MONITORING_UI_CONTAINER_ELASTICSEARCH_ENABLED=true
 fi
 
 export ELASTICSEARCH_HOSTS=$hostsForKibana

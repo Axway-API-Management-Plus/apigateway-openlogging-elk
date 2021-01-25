@@ -4,7 +4,7 @@ services:
   elasticsearch4:
     image: docker.elastic.co/elasticsearch/elasticsearch:${ELASTIC_VERSION}
     # Custom entrypoint to configured ES based on given ELASTICSEARCH_HOSTS
-    entrypoint: /usr/share/elasticsearch/scripts/custom-entrypoint.sh
+    entrypoint: /usr/share/elasticsearch/scripts/elasticsearch-custom-entrypoint
     container_name: elasticsearch5
     environment:
       - "ES_JAVA_OPTS=${ES_JAVA_OPTS}"
@@ -58,47 +58,9 @@ services:
         max-file: "5"
         max-size: "10m"
 
-  # Metricbeat monitoring Elasticsearch node 1
-  metricbeatES:
-    image: docker.elastic.co/beats/metricbeat:${ELASTIC_VERSION}
-    restart: on-failure:10
-    entrypoint: /usr/local/scripts/metricbeat-entrypoint.sh
-    container_name: metricbeatES5
-    hostname: Elasticsearch5
-    command: --strict.perms=false -e -c configs/metricbeat.elasticsearch-container.yml
-    user: root # Required to monitor docker containers
-    environment:
-      - ELASTICSEARCH_HOSTS=${ELASTICSEARCH_HOSTS}
-      - KIBANA_HOST=${KIBANA_HOST}
-      - ELASTICSEARCH_CLUSTER_UUID=${ELASTICSEARCH_CLUSTER_UUID}
-      - ELASTICSEARCH_CA=${ELASTICSEARCH_CA}
-      - METRICBEAT_USERNAME=${METRICBEAT_USERNAME}
-      - METRICBEAT_PASSWORD=${METRICBEAT_PASSWORD}
-      - METRICBEAT_ENABLED=${METRICBEAT_ENABLED}
-      - METRICBEAT_SETUP_DASHBOARDS=${METRICBEAT_SETUP_DASHBOARDS}
-      - ELASTICSEARCH_ANONYMOUS_ENABLED=${ELASTICSEARCH_ANONYMOUS_ENABLED}
-    volumes:
-      - type: volume
-        source: metricbeatdata
-        target: /usr/share/metricbeat/data 
-      - /etc/localtime:/etc/localtime:ro # Required to sync timezone of the server into the Filebeat Docker-Container
-      - ${PWD}/metricbeat/configs:/usr/share/metricbeat/configs
-      - ${PWD}/metricbeat/activeDashboards:/usr/share/metricbeat/activeDashboards
-      - /var/lib/docker/containers:/var/lib/docker/containers:ro
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ${PWD}/config/certificates:/usr/share/metricbeat/config/certificates
-      - ${PWD}/metricbeat/scripts:/usr/local/scripts
-    networks:
-      - elastic
-    logging:
-      options:
-        max-file: "3"
-        max-size: "10m"
-
 volumes:
   esdata5:
   logs:
-  metricbeatdata:
 
 networks:
   elastic:

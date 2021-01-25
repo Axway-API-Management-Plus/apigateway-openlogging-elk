@@ -7,8 +7,8 @@ services:
     # This custom entrypoint is required to adjust the variable LOGSTASH_HOSTS as it is required by Filebeat
     entrypoint: /usr/local/scripts/custom-entrypoint.sh
     container_name: filebeat
-    # Fixed Hostname as Filebeat is exposing the hostname instead of the configured name 
-    hostname: 'Filebeat ${GATEWAY_NAME:-"API-Gateway"}  '
+    # Fixed Hostname as Filebeat is exposing the hostname instead of the configured name
+    hostname: 'Filebeat ${GATEWAY_NAME:-"API-Gateway"}'
     command: --strict.perms=false
     environment:
       - LOGSTASH_HOSTS=${LOGSTASH_HOSTS}
@@ -45,49 +45,8 @@ services:
         max-file: "3"
         max-size: "10m"
 
-  # Metricbeat monitoring Filebeat, API-Gateway, API-Manager and perhaps later Cassandra
-  gatewayMetricbeat:
-    image: docker.elastic.co/beats/metricbeat:${ELASTIC_VERSION}
-    restart: on-failure:10
-    entrypoint: /usr/local/scripts/metricbeat-entrypoint.sh
-    container_name: gatewayMetricbeat
-    command: --strict.perms=false -c configs/metricbeat.filebeat-gateway.yml -e -system.hostfs=/hostfs
-    user: root # Required to monitor docker containers
-    environment:
-      - ELASTICSEARCH_HOSTS=${ELASTICSEARCH_HOSTS}
-      - KIBANA_HOST=${KIBANA_HOST}
-      - ELASTICSEARCH_CLUSTER_UUID=${ELASTICSEARCH_CLUSTER_UUID}
-      - ELASTICSEARCH_CA=${ELASTICSEARCH_CA}
-      - METRICBEAT_USERNAME=${METRICBEAT_USERNAME}
-      - METRICBEAT_PASSWORD=${METRICBEAT_PASSWORD}
-      - METRICBEAT_ENABLED=${METRICBEAT_ENABLED}
-      - METRICBEAT_SETUP_DASHBOARDS=${METRICBEAT_SETUP_DASHBOARDS}
-      - ELASTICSEARCH_ANONYMOUS_ENABLED=${ELASTICSEARCH_ANONYMOUS_ENABLED}
-    volumes:
-      - type: volume
-        source: metricbeatdata
-        target: /usr/share/metricbeat/data 
-      - /etc/localtime:/etc/localtime:ro # Required to sync timezone of the server into the Filebeat Docker-Container
-      - ${PWD}/metricbeat/configs:/usr/share/metricbeat/configs
-      - ${PWD}/metricbeat/activeDashboards:/usr/share/metricbeat/activeDashboards
-      - /var/lib/docker/containers:/var/lib/docker/containers:ro
-      - /var/run/docker.sock:/var/run/docker.sock
-      # Make it possible to monitor the host machine
-      # See here: https://www.elastic.co/guide/en/beats/metricbeat/current/running-on-docker.html
-      - /proc:/hostfs/proc:ro
-      - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
-      - /:/hostfs:ro
-      - ${PWD}/config/certificates:/usr/share/metricbeat/config/certificates
-      - ${PWD}/metricbeat/scripts:/usr/local/scripts
-    network_mode: host
-    logging:
-      options:
-        max-file: "3"
-        max-size: "10m"
-
 volumes:
   filebeatdata:
-  metricbeatdata:
 
 networks:
   elastic:

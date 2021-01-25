@@ -50,6 +50,8 @@ filebeat.inputs:
   json.overwrite_keys: false
   json.add_error_key: true
   fields_under_root: true
+  # When initially started, don't try to read all existing trace message (by default around 7.8GB per API-Gateway)
+  ignore_older: "48h"
   fields:
     logtype: events
     gatewayName: ${GATEWAY_NAME:"API-Gateway"}
@@ -80,7 +82,7 @@ output.logstash:
   loadbalance: true
 
 monitoring:
-  enabled: ${SELF_MONITORING_ENABLED:false}
+  enabled: ${SELF_MONITORING_ENABLED:true}
   # Get the Cluster-ID (cluster_uuid) with this simple query: https://elasticsearch1:9200/
   # This links this filebeat instance to the Cluster with the given ID to enable monitoring
   # It's also required to setup the beats_system user

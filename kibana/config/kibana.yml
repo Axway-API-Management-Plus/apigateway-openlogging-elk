@@ -2,8 +2,9 @@
 # Enable this parameter to activate security for Kibana
 xpack.security.enabled: ${KIBANA_SECURITY_ENABLED}
 
-# Disabled, as Kibana is monitored by Metricbeat
-monitoring.kibana.collection.enabled: ${SELF_MONITORING_ENABLED}
+# Should be disabled, when Kibana is monitored by Metricbeat
+# No longer hard coded is handled by the entry-script
+# monitoring.kibana.collection.enabled: true
 
 server.name: kibana
 server.host: "0"

@@ -4,7 +4,7 @@ services:
   kibana:
     image: docker.elastic.co/kibana/kibana:${ELASTIC_VERSION}
     # This custom entrypoint is required to adjust the variable ELASTICSEARCH_HOSTS from Comma to Space separated
-    entrypoint: /usr/share/kibana/scripts/custom-entrypoint.sh
+    entrypoint: /usr/share/kibana/scripts/kibana-custom-entrypoint.sh
     container_name: kibana
     environment:
       - SERVER_NAME=Kibana-Axway-APIM
@@ -45,7 +45,6 @@ services:
 volumes:
   esdata1:
   logs:
-  metricbeatdatakibana:
 
 networks:
   elastic:

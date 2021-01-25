@@ -11,6 +11,7 @@ metricbeat.autodiscover:
 
 metricbeat.modules:
 - module: docker
+  enabled: ${METRICBEAT_DOCKER_ENABLED}
   metricsets:
     - "container"
     - "cpu"
@@ -25,6 +26,7 @@ metricbeat.modules:
   enabled: true
 
 - module: logstash
+  enabled: ${METRICBEAT_LOGSTASH_ENABLED}
   xpack.enabled: true
   period: 30s
   hosts: ["logstash:9600"]
@@ -32,25 +34,39 @@ metricbeat.modules:
   #password: "secret"
 
 - module: memcached
+  enabled: ${METRICBEAT_MEMCACHED_ENABLED}
 #  metricsets: ["stats"]
   period: 30s
   hosts: ["memcached:11211"]
 
-- module: docker
-  metricsets:
-    - "container"
-    - "cpu"
-    - "diskio"
-    - "healthcheck"
-    - "info"
-    #- "image"
-    - "memory"
-    - "network"
-  hosts: ["unix:///var/run/docker.sock"]
+- module: beat
+  enabled: ${METRICBEAT_BEAT_ENABLED}
+  xpack.enabled: true
   period: 30s
-  enabled: true
+  hosts: ["http://filebeat:5066"]
+
+- module: elasticsearch
+  enabled: ${METRICBEAT_ELASTICSEARCH_ENABLED}
+  xpack.enabled: true
+  period: 30s
+  hosts: ${ELASTICSEARCH_HOSTS}
+  username: '${METRICBEAT_USERNAME:""}'
+  password: '${METRICBEAT_PASSWORD:""}'
+  ssl.enabled: true
+  ssl.certificate_authorities: ["${ELASTICSEARCH_CA:ELASTICSEARCH_CA-NOT-SET}"]
+
+- module: kibana
+  enabled: ${METRICBEAT_KIBANA_ENABLED}
+  xpack.enabled: true
+  period: 30s
+  hosts: ["${KIBANA_HOST}"]
+  username: '${METRICBEAT_USERNAME:""}'
+  password: '${METRICBEAT_PASSWORD:""}'
+  ssl.enabled: true
+  ssl.certificate_authorities: ["${ELASTICSEARCH_CA:ELASTICSEARCH_CA-NOT-SET}"]
 
 - module: system
+  enabled: ${METRICBEAT_SYSTEM_ENABLED}
   period: 30s
   hostsfs: true
   metricsets:
@@ -70,6 +86,22 @@ metricbeat.modules:
   process.include_top_n:
     by_cpu: 5      # include top 5 processes by CPU
     by_memory: 5   # include top 5 processes by memory
+
+- module: system
+  enabled: ${METRICBEAT_SYSTEM_ENABLED}
+  period: 1m
+  metricsets:
+    - filesystem
+    - fsstat
+  processors:
+  - drop_event.when.regexp:
+      system.filesystem.mount_point: '^/(sys|cgroup|proc|dev|etc|host|lib|snap)($|/)'
+
+- module: system
+  enabled: ${METRICBEAT_SYSTEM_ENABLED}
+  period: 15m
+  metricsets:
+    - uptime
 
 output.elasticsearch:
   hosts: '${ELASTICSEARCH_HOSTS:elasticsearch:9200}'

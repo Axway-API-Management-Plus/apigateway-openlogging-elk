@@ -76,6 +76,12 @@ do
     count=`expr $count + 1`    
 done
 
+# Check if Self-Monitoring should be enabled
+if [ -z "${SELF_MONITORING_ENABLED}" ];then
+    echo "Parameter: SELF_MONITORING_ENABLED not set, default to true.";
+    export SELF_MONITORING_ENABLED=true;
+fi
+
 # Check if the ELASTICSEARCH_ANONYMOUS_ENABLED status
 if [ "${ELASTICSEARCH_ANONYMOUS_ENABLED}" = "true" ]; then
     anonymousUsername="-E xpack.security.authc.anonymous.roles=kibana_admin,superuser,beats_system,logstash_system"
