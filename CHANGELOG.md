@@ -10,8 +10,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - configured custom properties are indexed according to their configuration in API-Manager
     - can be used to create custom dashboard or perform custom queries
 - Regional-Support to store data from different regions separatly
+  - Makes it possible to use this solution with multiple domains
   - See https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk#different-topologiesdomains
-- Local API-Lookup for native API-Enrichment & Disable APIs/Events ()
+- Local API-Lookup for native API-Enrichment & Disable APIs/Events
   - See https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/blob/develop/README.md#setup-local-lookup
 - Payload-Support
   - See https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk#traffic-payload
@@ -19,8 +20,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - See https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/blob/develop/README.md#customize-user-authorization
 - Life-Cycle-Management
   - See https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/blob/develop/README.md#lifecycle-management
+- API-Overview dashboard shows average response time
 - Initial early version of new Platform-Health-Dashboard
   - the dashboard will be improved with future releases
+- Added Metricbeat support
+  - Used to monitor the Elastic-Stack
+  - Used to monitor API-Gateways & Docker-Containers (Optional)
 
 ### Changed
 - Updated API-Builder to version Dubai
