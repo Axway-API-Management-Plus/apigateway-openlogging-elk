@@ -5,7 +5,7 @@ services:
   filebeat:
     image: docker.elastic.co/beats/filebeat:${ELASTIC_VERSION}
     # This custom entrypoint is required to adjust the variable LOGSTASH_HOSTS as it is required by Filebeat
-    entrypoint: /usr/local/scripts/filbeat-custom-entrypoint.sh
+    entrypoint: /usr/local/scripts/filebeat-custom-entrypoint.sh
     container_name: filebeat
     # Fixed Hostname as Filebeat is exposing the hostname instead of the configured name
     hostname: 'Filebeat ${GATEWAY_NAME:-"API-Gateway"}'
