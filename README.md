@@ -24,7 +24,7 @@ This shows a sample dashboard created in Kibana based on the indexed documents:
 <p align="center">
 <img src="https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/raw/develop/imgs/sample-apim-overview-dashboard.png"
   alt="Sample Kibana dashboard"
-  width="686" height="289">
+  width="686" height="327">
 </p>
 
 
@@ -55,7 +55,7 @@ This shows a sample dashboard created in Kibana based on the indexed documents:
   - [Custom certificates](#custom-certificates)
   - [Secure API-Builder Traffic-Monitor API](#secure-api-builder-traffic-monitor-api)
   - [Lifecycle Management](#lifecycle-management)
-- [Infrastructure sizing](#sizing-your-infrastructure)
+- [Infrastructure sizing](#size-your-infrastructure)
 - [Updates](#updates)
 - [Troubleshooting](#troubleshooting)
 - [FAQ](#faq)
@@ -751,7 +751,7 @@ Please note:
 
 <p align="right"><a href="#table-of-content">Top</a></p>
 
-## Sizing your infrastructure
+## Size your infrastructure
 
 The solution is designed to process and store millions of transactions per day and make them quickly available for traffic monitoring and analytics. 
 This advantage of being able to access millions of transactions is not free of charge with Elasticsearch, but is available in the size of the disc space provided.
