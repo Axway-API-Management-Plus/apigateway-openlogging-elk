@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [2.0.0] 2021-01-12
+## [2.0.0] 2021-01-26
 ### Added
 - Support for API Custom-Properties
   - configured custom properties are indexed according to their configuration in API-Manager
