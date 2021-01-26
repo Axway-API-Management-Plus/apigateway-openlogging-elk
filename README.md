@@ -759,7 +759,7 @@ The solution has been extensively tested, especially for high-volume requirement
 
 ### Sizing recommendations
 
-There are two important aspects for sizing the platform. The [transactions per second](#transactions-per-second), which are to be processed in real time, and the [retention period](#rentention-period), which is reflected in the required disk space.
+There are two important aspects for sizing the platform. The [transactions per second](#transactions-per-second), which are to be processed in real time, and the [retention period](#retention-period), which is reflected in the required disk space.
 
 #### Transactions per Second
 
@@ -779,9 +779,9 @@ Please note:
 - Logstash, API-Builder, Filebeat (for monitoring only) and Kibana are load balanced across all available Elasticsearch nodes. An external Load-Balancer is not required as this is handled internally by each of the Elasticsearch clients.
 - do not size the Elasticsearch Cluster-Node too large. The servers should not have more than 32GB memory, because after that the memory management kills the advantage again. It is better to add another server. See the [Test-Infrastructure](#test-infrastructure) for reference.
 
-#### Rentention period
+#### Retention period
 
-The second important aspect for sizing is the rentention period, which defines how long data should be available. Accordingly, disk space must be made available.  
+The second important aspect for sizing is the retention period, which defines how long data should be available. Accordingly, disk space must be made available.  
 The Traffic-Summary, Traffic-Details and Trace-Messages indicies play a particularly important role here. The solution is delivered with default values which you can read [here](#lifecycle-management). Based on the these default values which result in ap. 60 days the following disk space is required.
 
 | Volume per day           | Stored documents | Total Disk-Space  | Comment |
