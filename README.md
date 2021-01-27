@@ -754,7 +754,7 @@ Please note:
 
 The solution is designed to process and store millions of transactions per day and make them quickly available for traffic monitoring and analytics. 
 This advantage of being able to access millions of transactions is not free of charge with Elasticsearch, but is available in the size of the disc space provided.
-The solution has been extensively tested, especially for high-volume requirements. It processed 900 transactions per second, up to 55 million transactions per day on the following infrastructure.
+The solution has been extensively tested, especially for high-volume requirements. It processed 1010 transactions per second, up to 55 million transactions per day on the following infrastructure.
 
 ### Sizing recommendations
 
