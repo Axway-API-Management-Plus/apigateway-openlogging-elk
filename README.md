@@ -738,7 +738,6 @@ The configuration is defined here per data type (e.g. Summary, Details, Audit, .
 | :---                   |:---                                                                    | :---            | :---    | :---    | :---    | :---    |
 | **Traffic-Summary**    | Main index for traffic-monitor overview and primary dashboard          | 30GB / 7 days   | 15 days | 30 days | 10 days | 62 days |
 | **Traffic-Details**    | Details in Traffic-Monitor for Policy, Headers and Payload reference   | 30GB / 7 days   | 7 days  | 10 days | 5 days  | 29 days |
-| **Traffic-Details**    | Details in Traffic-Monitor for Policy, Headers and Payload reference   | 30GB / 7 days   | 7 days  | 10 days | 5 days  | 29 days |
 | **Traffic-Trace**      | Trace-Messages belonging to an API-Request shown in Traffic-Monitor    | 30GB / 7 days   | 7 days  | 10 days | 5 days  | 29 days |
 | **General-Trace**      | General trace messages, like Start- & Stop-Messages                    | 30GB / 7 days   | 7 days  | 10 days | 5 days  | 29 days |
 | **Gateway-Monitoring** | System status information (CPU, HDD, etc.) from Event-Files            | 30GB / 15 days  | 15 days | 15 days | 15 days | 60 days |
