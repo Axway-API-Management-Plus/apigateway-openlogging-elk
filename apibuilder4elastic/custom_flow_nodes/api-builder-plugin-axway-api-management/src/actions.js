@@ -5,7 +5,6 @@ const path = require('path');
 
 var pluginConfig = {};
 var cache = {};
-var logger;
 
 const securityDeviceTypes = {
 	apiKey: "API-Key",
@@ -41,7 +40,7 @@ const securityDeviceTypes = {
  */
 async function lookupCurrentUser(params, options) {
 	const { requestHeaders, apiManagerUserRequired } = params;
-	logger = options.logger;
+	const logger = options.logger;
 	cache = options.pluginContext.cache;
 	pluginConfig = options.pluginConfig;
 	var user = {};
@@ -92,7 +91,7 @@ async function lookupCurrentUser(params, options) {
 		throw new Error(`User: '${user.loginName}' not found in API-Manager.`);
 	}
 	user.apiManager = users[0];
-	var org = await _getOrganization(user.apiManager);
+	var org = await _getOrganization(user.apiManager, null, null, options);
 	user.apiManager.organizationName = org.name;
 	logger.debug(`User: '${user.loginName}' (Role: ${user.apiManager.role}) found in API-Manager. Organization: '${user.apiManager.organizationName}'`);
 	if(VIDUSR) {
@@ -103,7 +102,7 @@ async function lookupCurrentUser(params, options) {
 
 async function lookupAPIDetails(params, options) {
 	var { apiName, apiPath, operationId, groupId, region, mapCustomProperties } = params;
-	logger = options.logger;
+	const { logger } = options;
 	cache = options.pluginContext.cache;
 	pluginConfig = options.pluginConfig;
 	if (!apiPath) {
@@ -151,7 +150,7 @@ async function lookupAPIDetails(params, options) {
 	}
 	// Skip  the lookups if the API is locally configured and just take it as it is
 	if(!apiProxy.locallyConfigured) {
-		var org = await _getOrganization(apiProxy, groupId, region);
+		var org = await _getOrganization(apiProxy, groupId, region, options);
 		apiProxy.organizationName = org.name;
 		apiProxy.apiSecurity = await _getAPISecurity(apiProxy, operationId);
 		apiProxy.requestPolicy = await _getRequestPolicy(apiProxy, operationId);
@@ -170,7 +169,7 @@ async function lookupAPIDetails(params, options) {
 		delete apiProxy.serviceProfiles;
 		delete apiProxy.caCerts;
 		if(mapCustomProperties) {
-			apiProxy = await _addCustomProperties(apiProxy, groupId, region);
+			apiProxy = await _addCustomProperties(apiProxy, groupId, region, options);
 		}
 	}
 	logger.info(`Return looked up API details based on API-Name: '${apiName}' and apiPath: '${apiPath}': ${JSON.stringify(apiProxy)}`);
@@ -180,7 +179,7 @@ async function lookupAPIDetails(params, options) {
 
 async function isIgnoreAPI(params, options) {
 	var { apiPath, policyName, region, groupId } = params;
-	logger = options.logger;
+	const { logger } = options;
 	cache = options.pluginContext.cache;
 	pluginConfig = options.pluginConfig;
 	if (!apiPath && !policyName) {
@@ -218,13 +217,14 @@ async function isIgnoreAPI(params, options) {
 async function getCustomPropertiesConfig(params, options) {
 	const { groupId, region } = params;
 	pluginConfig = options.pluginConfig;
-	logger = options.logger;
+	const { logger } = options;
 	cache = options.pluginContext.cache;
-	return await _getConfiguredCustomProperties(groupId, region);
+	return await _getConfiguredCustomProperties(groupId, region, options);
 }
 
 async function _getAPILocalProxies(params, options) {
 	var { apiPath, groupId, region, policyName } = params;
+	const { logger } = options;
 	const lookupFile = options.pluginConfig.localLookupFile;
 	if(lookupFile != undefined && lookupFile != "")  {
 		var localAPIConfig = {};
@@ -235,11 +235,11 @@ async function _getAPILocalProxies(params, options) {
 			logger.error(`Error reading API-Lookup file: '${lookupFile}'. Error: ${ex}`);
 			return;
 		}
-		options.logger.info(`Reading API-Details from local file: ${lookupFile}`);
+		logger.info(`Reading API-Details from local file: ${lookupFile}`);
 		localAPIConfig = { ...localProxies };
 		var filenames = await _getGroupRegionFilename(lookupFile, groupId, region);
 		if(filenames.groupFilename) {
-			options.logger.info(`Reading API-Details from local file: ${lookupFile}`);
+			logger.info(`Reading API-Details from local file: ${lookupFile}`);
 			var groupProxies = JSON.parse(fs.readFileSync(filenames.groupFilename), null);
 			localAPIConfig[groupId] = groupProxies;
 		}
@@ -258,20 +258,21 @@ async function _getAPILocalProxies(params, options) {
 			return proxy;
 		}
 	} else {
-		options.logger.debug(`No local API-Lookup file configured.`);
+		logger.debug(`No local API-Lookup file configured.`);
 		return;
 	}
 }
 
 async function _getLocalProxy(localProxies, apiPath, policyName, scope, options) {
+	const { logger } = options;
 	if(localProxies == undefined) {
-		options.logger.warn(`No configuration found in file (${scope}).`);
+		logger.warn(`No configuration found in file (${scope}).`);
 		return;
 	}
 	var foundProxy;
 	// If a policy is given, it is used separately for the lookup
 	if(policyName != undefined && policyName != "") {
-		options.logger.info(`Looking up information based on policy name: ${policyName}`);
+		logger.info(`Looking up information based on policy name: ${policyName}`);
 		if(localProxies[`Policy: ${policyName}`]) {
 			foundProxy =  localProxies[`Policy: ${policyName}`];
 		}
@@ -290,10 +291,10 @@ async function _getLocalProxy(localProxies, apiPath, policyName, scope, options)
 		};
 		// Perhaps, we have direct hit with the API-Path
 		if(localProxies[apiPath]) {
-			options.logger.info(`API-Details found based on API-Path: ${apiPath}`);
+			logger.info(`API-Details found based on API-Path: ${apiPath}`);
 			foundProxy = localProxies[apiPath];
 		} else {
-			options.logger.info(`Try to find API-Details starting with: ${apiPath}`);
+			logger.info(`Try to find API-Details starting with: ${apiPath}`);
 			// Iterate over all configured API-Proxies
 			for (const [key, val] of Object.entries(localProxies)) { 
 				if(apiPath.startsWith(key)) {
@@ -304,12 +305,12 @@ async function _getLocalProxy(localProxies, apiPath, policyName, scope, options)
 	}
 	// If we don't have a match return nothing
 	if(foundProxy==undefined) {
-		options.logger.warn(`No API-Details found for API-Path: ${apiPath}`);
+		logger.warn(`No API-Details found for API-Path: ${apiPath}`);
 		return;
 	}
 	// Take over the configuration, preserve the default values
 	proxy = {...proxy, ...foundProxy};
-	options.logger.warn(`Found API-Details for API-Path: ${JSON.stringify(apiPath)}`);
+	logger.warn(`Found API-Details for API-Path: ${JSON.stringify(apiPath)}`);
 	var proxies = [];
 	proxy.path = apiPath; // Copy the path, as it's normally returned by the API-Manager and used for caching
 	proxies.push(proxy);
@@ -347,8 +348,8 @@ async function _getCurrentGWUser(requestHeaders) {
 	return loginName;
 }
 
-async function _addCustomProperties(apiProxy, groupId) {
-	var apiCustomProperties = await _getConfiguredCustomProperties(groupId);
+async function _addCustomProperties(apiProxy, groupId, region, options) {
+	var apiCustomProperties = await _getConfiguredCustomProperties(groupId, region, options);
 	apiProxy.customProperties = {};
 	for (var prop in apiCustomProperties) {
 		if (Object.prototype.hasOwnProperty.call(apiCustomProperties, prop)) {
@@ -495,7 +496,8 @@ async function _getAPIProxy(apiName, groupId, region) {
 	return apiProxy;
 }
 
-async function _getOrganization(apiProxy, groupId, region) {
+async function _getOrganization(apiProxy, groupId, region, options) {
+	const { logger } = options;
 	if(apiProxy.locallyConfigured) {
 		if(apiProxy.organizationName == undefined) apiProxy.organizationName = "N/A";
 		return apiProxy;
@@ -535,7 +537,8 @@ async function _getOrganization(apiProxy, groupId, region) {
 	return org;
 }
 
-async function _getConfiguredCustomProperties(groupId, region) {
+async function _getConfiguredCustomProperties(groupId, region, options) {
+	const { logger } = options;
 	const apiManagerConfig = getManagerConfig(pluginConfig.apimanager, groupId, region);
 	const customPropCacheKey = `CUSTOM_PROPERTIES###${groupId}###${region}`
 	if(cache.has(customPropCacheKey)) {
