@@ -485,7 +485,7 @@ async function _getAPIProxy(apiName, groupId, region) {
 		},
 		agent: new https.Agent({ rejectUnauthorized: false })
 	};
-	apiProxy = await sendRequest(apiManagerConfig.url, options)
+	const apiProxy = await sendRequest(apiManagerConfig.url, options)
 		.then(response => {
 			return response.body;
 		})
