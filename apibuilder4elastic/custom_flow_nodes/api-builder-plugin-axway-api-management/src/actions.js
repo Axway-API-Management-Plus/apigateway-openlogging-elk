@@ -173,6 +173,7 @@ async function lookupAPIDetails(params, options) {
 			apiProxy = await _addCustomProperties(apiProxy, groupId, region);
 		}
 	}
+	logger.info(`Return looked up API details based on API-Name: '${apiName}' and apiPath: '${apiPath}': ${JSON.stringify(apiProxy)}`);
 	cache.set(cacheKey, apiProxy);
 	return apiProxy;
 }
