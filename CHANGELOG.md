@@ -4,9 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## Unreleased
+## [2.0.1] 2021-01-28
 ### Fixed
-- API-Lookup variable apiProxy is now locally declared as a const [#61](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/61)
+- Avoid a Race-Condition by making the variable apiProxy locally instead of global [#61](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/61)
+- Avoid a Race-Condition for log messages logged with the wrong Transaction-ID  [#62](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/62)
 
 ## [2.0.0] 2021-01-26
 ### Added
