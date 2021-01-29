@@ -114,7 +114,7 @@ It is possible to deploy all components on a single machine, which should then h
 Obviously, you have to enable Open-Traffic-Event log for your API-Gateway instance(s). [Read here][1] how to enable the Open-Traffic Event-Log.  
 After this configuration has been done, Open-Traffic log-files will be created by default in this location: `apigateway/logs/opentraffic`. This location becomes relevant when configuring Filebeat.  
 
-:point_right: To avoid data loss, it is strongly recommended to increase the disk space for the Open-Traffic logs from 1GB to at least 8GB, especially if you have a lot of traffic. If you have for example 100 TPS on 1 API-Gateway, depending on you custom policies, the oldest log file will be deleted after 30 minutes with only 1GB OpenTraffic log configured. If for any reason Filebeat, Logstash, etc. is not running to process event for more than 15-20 minutes you will have a loss of data as it also takes time to recover.
+:point_right: To avoid data loss, it is strongly recommended to increase the disk space for the Open-Traffic logs from 1 GB to at least 8 GB, especially if you have a lot of traffic. If you have for example 100 TPS on 1 API-Gateway, depending on your custom policies, the oldest log file will be deleted after ap. 30 minutes with only 1 GB OpenTraffic log configured. If for any reason Filebeat, Logstash, etc. is not running to process events for more than 15-20 minutes you will have a loss of data as it also takes time to catch up.
 
 #### Download and extract the release package
 
