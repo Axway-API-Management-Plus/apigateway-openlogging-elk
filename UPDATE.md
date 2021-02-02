@@ -15,9 +15,10 @@ With the following steps you can update the solution without downtime. Of course
 The core component is the API Builder project which provides the information about the necessary configuration. In principle, it contains the desired or necessary state suitable for the version, especially about the Elasticsearch configuration, such as index templates, ILM policies, etc. If the version is updated, the API builder checks the current configuration in Elasticsearch and adjusts it if necessary to fit the corresponding version. This includes necessary changes for bug fixes or enhancements.  
 
 #### Upgrade steps overview
+
 - Load and unpack the current or desired release
    - it is recommended to unpack it next to the existing release
-   - `wget --no-check-certificate https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v2.0.0/axway-apim-elk-v2.0.0.tar.gz -O - | tar -xvz`
+   - `wget --no-check-certificate https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v2.0.2/axway-apim-elk-v2.0.2.tar.gz -O - | tar -xvz`
 - Copy your `.env` file from the existing installation
   - recommended is to use a sym-link to a central `.env` file, which should also be versioned if necessary
   - it is pointed out in this document, if parameters have changed or new ones have been added.

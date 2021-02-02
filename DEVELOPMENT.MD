@@ -12,7 +12,7 @@
 - Add recent changes
 
 ### Create the release
-- Create a new release on Github with the tag name: v2.0.0
+- Create a new release on Github with the tag name: v2.0.2
 
 ## Create the shipped certificates
 
