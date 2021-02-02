@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Wrong ILM Rollover alias added to regional index [#67](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/67)
 - Index-Rollover error when using regional indices [#66](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/66)
 
+### Changed
+- ILM policies optimized for the ideal index sizes [#68](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/68)
+
 ## [2.0.1] 2021-01-28
 ### Fixed
 - Avoid a Race-Condition by making the variable apiProxy locally instead of global [#61](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/61)
