@@ -131,7 +131,6 @@ async function updateRolloverAlias(params, options) {
 	}
 	// For each configured index do
 	for (const [indexName, indexConfig] of Object.entries(indices)) {
-		logger.debug(`Check rollover alias for configured index: ${indexName}`);
 		/*
 		 * Based on the main indexName get actual write index
 		 * The given index name is for instance: apigw-trace-messages, apigw-traffic-details, ... 
@@ -142,10 +141,11 @@ async function updateRolloverAlias(params, options) {
 		 * apigw-trace-messages-us apigw-trace-messages-us-000001 -      -             -              false
 		 */
 		var indicesForName = await client.indices.get({index: `${indexName}-*`}, { maxRetries: 3 });
+		logger.debug(`Check rollover alias for configured index: ${indexName} ... got ${indicesForName.length()} indicies from Elasticsearch to check.`);
 		// For each index returned on the name ...
 		for (const [key, val] of Object.entries(indicesForName.body)) {
 			logger.debug(`Check rollover alias for index: ${key} returned from Elasticsearch`);
-			var writeIndexAliasName;
+			var writeIndexAliasName = undefined;
 			// Check if current index is the write index
 			for (const [aliasName, aliasSettings] of Object.entries(val.aliases)) {
 				if(aliasSettings.is_write_index) {
