@@ -548,6 +548,7 @@
           "@timestamp": "2020-09-15T15:37:36.487Z",
           "correlationId": "c0df605fa2047bebbOPTIONS",
           "type": "summaryIndex",
+          "tags": [],
           "duration": 2,
           "finalStatus": "Pass",
           "processInfo": {
