@@ -151,7 +151,7 @@ async function updateRolloverAlias(params, options) {
 			for (const [aliasName, aliasSettings] of Object.entries(val.aliases)) {
 				if(aliasSettings.is_write_index) {
 					// If it is the write index, take over the write alias name to be used as the rollover alias
-					logger.debug(`Index: ${key} is write index with writeIndexAliasName: ${aliasName}`);
+					logger.debug(`Index: ${key} is write index having writeIndexAliasName: ${aliasName}`);
 					writeIndexAliasName = aliasName;
 					break;
 				}

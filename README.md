@@ -965,7 +965,17 @@ When an index is rolled, for example because the configured size, time has been 
 The API Builder checks periodically (every 10 minutes) if the ILM rollover alias is correct and adjusts it if necessary. 
 You can also start this modification manually:
 ```
-docker exec apibuilder4elastic wget --no-check-certificate https://localhost:8443/api/elk/v1/api/setup/index/rolloverAlias
+docker exec apibuilder4elastic wget --no-check-certificate https://localhost:8443/api/elk/v1/api/setup/index/rolloverAlias -O/dev/null
+```
+
+Additionally you may set the index rollover alias to the correct value using for example this request:
+```
+PUT /apigw-trace-messages-eu-000001/_settings
+{
+  "index" : {
+    "lifecycle.rollover_alias" : "apigw-trace-messages-eu"
+  }
+}
 ```
 
 ### Check Caching
