@@ -32,7 +32,7 @@
             "remotePort": "59574",
             "localPort": "8065",
             "sslSubject": null,
-            "authSubjectId": "180b1f32-d72f-40f4-949a-fc3f3f7dec2c"
+            "authSubjectId": "Plexus Suite - Patient Monitoring"
           },
           "processInfo": {
             "gatewayName": "API-Gateway 3",

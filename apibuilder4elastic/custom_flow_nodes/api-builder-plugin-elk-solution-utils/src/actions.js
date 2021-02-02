@@ -131,7 +131,6 @@ async function updateRolloverAlias(params, options) {
 	}
 	// For each configured index do
 	for (const [indexName, indexConfig] of Object.entries(indices)) {
-		debugger;
 		/*
 		 * Based on the main indexName get actual write index
 		 * The given index name is for instance: apigw-trace-messages, apigw-traffic-details, ... 

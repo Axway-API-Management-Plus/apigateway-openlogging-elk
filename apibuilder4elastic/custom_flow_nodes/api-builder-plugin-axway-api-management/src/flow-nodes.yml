@@ -105,6 +105,44 @@ flow-nodes:
             schema:
               type: object
 
+      lookupApplication:
+        name: Lookup application
+        description: Looks up an application based on the given application id
+        parameters:
+          applicationId:
+            name: Application-ID
+            description: ID of the application as it is stored in the API-Manager
+            required: true
+            schema:
+              type: string
+          region:
+            name: API-Gateway region
+            description: "The region is optionally configured for each filebeat. If configured it is used in combination with the group-id to lookup the API at the correct API-Manager. API_MANAGER must be configured like so: API_MANAGER=https://default-manager-1:8075,us|group1|https://manager-1:8075,group-2|https://manager-2:8075, ...."
+            required: false
+            initialType: string
+            schema:
+              type: string
+          groupId:
+            name: The API-Gateway Group-ID
+            description: "The ID of the Domain-Group where this event was created. If given, it's used to determined which API-Manager to use for the lookup. Optionally, the region can be used to select the API-Manager in the correct region. For that, the parameter: API_MANAGER must be configured like so: API_MANAGER=http://default-api-manager:8075,regiona|group-1|https://manager-1:8075,group-2|https://manager-2:8075, ...."
+            required: false
+            initialType: string
+            schema:
+              type: string
+        outputs:
+          next:
+            name: Next
+            description: The resolved application or an empty application with the given application-ID returned as the name
+            context: $.application
+            schema:
+              type: object
+          error:
+            name: Error
+            description: An unexpected error happened
+            context: $.error
+            schema:
+              type: object
+
       isIgnoreAPI:
         name: Is ignore API
         description: Is using the configuration file to determine if the API should be ignored or not.

@@ -1,0 +1,109 @@
+{
+	"schemaVersion": "4",
+	"info": {
+		"name": "Lookup application",
+		"description": "Looks up an application based on the given Application-ID"
+	},
+	"parameter": {
+		"properties": {
+			"params": {
+				"type": "object",
+				"description": "The parameters from the endpoint."
+			},
+			"request": {
+				"type": "object",
+				"description": "The HTTP request."
+			},
+			"config": {
+				"type": "object",
+				"description": "The service's configuration"
+			},
+			"env": {
+				"type": "object",
+				"description": "The host OS environment"
+			}
+		},
+		"additionalProperties": false,
+		"required": [
+			"request",
+			"config",
+			"env",
+			"params"
+		]
+	},
+	"start": "axway-api-management.1",
+	"nodes": {
+		"axway-api-management.1": {
+			"type": "nodehandler://api-builder-plugin-axway-api-management/axway-api-management",
+			"name": "Lookup application",
+			"method": "lookupApplication",
+			"parameters": [
+				{
+					"name": "applicationId",
+					"type": "jsonpath",
+					"value": "$.params.applicationId",
+					"metaName": "Application-ID",
+					"metaDescription": "ID of the application as it is stored in the API-Manager"
+				},
+				{
+					"name": "region",
+					"type": "jsonpath",
+					"value": "$.params.region",
+					"metaName": "API-Gateway region",
+					"metaDescription": "The region is optionally configured for each filebeat. If configured it is used in combination with the group-id to lookup the API at the correct API-Manager. API_MANAGER must be configured like so: API_MANAGER=https://default-manager-1:8075,us|group1|https://manager-1:8075,group-2|https://manager-2:8075, ...."
+				},
+				{
+					"name": "groupId",
+					"type": "jsonpath",
+					"value": "$.params.groupId",
+					"metaName": "The API-Gateway Group-ID",
+					"metaDescription": "The ID of the Domain-Group where this event was created. If given, it's used to determined which API-Manager to use for the lookup. Optionally, the region can be used to select the API-Manager in the correct region. For that, the parameter: API_MANAGER must be configured like so: API_MANAGER=http://default-api-manager:8075,regiona|group-1|https://manager-1:8075,group-2|https://manager-2:8075, ...."
+				}
+			],
+			"outputs": {
+				"next": {
+					"routes": [
+						"http.1"
+					],
+					"context": "$.application",
+					"metaName": "Next"
+				},
+				"error": {
+					"routes": [],
+					"context": "$.error",
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Lookup application"
+		},
+		"http.1": {
+			"type": "nodehandler://axway-flow/http",
+			"name": "Return application",
+			"method": "setresponse",
+			"parameters": [
+				{
+					"name": "status",
+					"type": "number",
+					"value": "200",
+					"metaName": "Status",
+					"metaDescription": "The HTTP status code"
+				},
+				{
+					"name": "body",
+					"type": "jsonpath",
+					"value": "$.application",
+					"metaName": "Body",
+					"metaDescription": "The response payload"
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.response",
+					"routes": [],
+					"metaName": "Next"
+				}
+			},
+			"metaMethod": "Set HTTP Response"
+		}
+	}
+}

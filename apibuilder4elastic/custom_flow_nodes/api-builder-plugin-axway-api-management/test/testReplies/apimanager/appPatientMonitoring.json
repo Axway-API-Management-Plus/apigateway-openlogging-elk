@@ -1,0 +1,14 @@
+{
+    "id": "268fd3bd-3af6-4565-a3aa-6dc9559f1fbf",
+    "name": "Plexus Suite - Patient Monitoring",
+    "description": "Physician app providing insight in wearable tracking data",
+    "organizationId": "2bfaa1c2-49ab-4059-832d-f833ca1c0a74",
+    "phone": null,
+    "email": null,
+    "createdBy": "778c42e1-7461-409d-afa7-e572d56d8d34",
+    "managedBy": [],
+    "createdOn": 1598603033910,
+    "enabled": true,
+    "image": null,
+    "state": "approved"
+}

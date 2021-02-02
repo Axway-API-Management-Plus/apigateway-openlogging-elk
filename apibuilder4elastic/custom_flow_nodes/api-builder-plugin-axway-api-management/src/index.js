@@ -1,6 +1,6 @@
 const path = require('path');
 const { SDK } = require('@axway/api-builder-sdk');
-const { lookupCurrentUser, lookupAPIDetails, getCustomPropertiesConfig, isIgnoreAPI } = require('./actions');
+const { lookupCurrentUser, lookupAPIDetails, getCustomPropertiesConfig, isIgnoreAPI, lookupApplication } = require('./actions');
 const { mergeCustomProperties } = require('./customProperties');
 const NodeCache = require( "node-cache" );
 const { sendRequest, _getSession, getManagerConfig } = require('./utils');
@@ -78,7 +78,7 @@ async function getPlugin(pluginConfig, options) {
 		}
 	}
 
-	sdk.load(path.resolve(__dirname, 'flow-nodes.yml'), {lookupCurrentUser, lookupAPIDetails, getCustomPropertiesConfig, mergeCustomProperties, isIgnoreAPI }, { pluginContext: { cache: cache }, pluginConfig});
+	sdk.load(path.resolve(__dirname, 'flow-nodes.yml'), {lookupCurrentUser, lookupAPIDetails, getCustomPropertiesConfig, mergeCustomProperties, isIgnoreAPI, lookupApplication }, { pluginContext: { cache: cache }, pluginConfig});
 	return sdk.getPlugin();
 }
 
@@ -207,6 +207,21 @@ async function addLookupAPIMocks(cache) {
 	});
 	cache.set( "isIgnore###group-2###us######Do not index this Policy", {
 		ignore: true
+	});
+
+	cache.set( "application###180b1f32-d72f-40f4-949a-fc3f3f7dec2c###group-2###us", {
+		"id": "180b1f32-d72f-40f4-949a-fc3f3f7dec2c",
+		"name": "Plexus Suite - Patient Monitoring",
+		"description": "Physician app providing insight in wearable tracking data",
+		"organizationId": "2bfaa1c2-49ab-4059-832d-f833ca1c0a74",
+		"phone": null,
+		"email": null,
+		"createdBy": "778c42e1-7461-409d-afa7-e572d56d8d34",
+		"managedBy": [],
+		"createdOn": 1598603033910,
+		"enabled": true,
+		"image": null,
+		"state": "approved"
 	});
 }
 

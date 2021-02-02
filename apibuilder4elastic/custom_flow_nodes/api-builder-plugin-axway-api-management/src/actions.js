@@ -177,6 +177,36 @@ async function lookupAPIDetails(params, options) {
 	return apiProxy;
 }
 
+async function lookupApplication(params, options) {
+	const { logger } = options;
+	var { applicationId, groupId, region } = params;
+	pluginConfig = options.pluginConfig;
+	cache = options.pluginContext.cache;
+	if (!applicationId) {
+		throw new Error('Missing parameter applicationId in order to lookup an application.');
+	}
+	if(region) {
+		region = region.toLowerCase();
+		params.region = region;
+	}
+	const cacheKey = `application###${applicationId}###${groupId}###${region}`;
+	logger.debug(`Trying to lookup application from cache using key: '${cacheKey}'`);
+	if(cache.has(cacheKey)) {
+		logger.debug(`Found application in cache with key: '${cacheKey}'`);
+		return cache.get(cacheKey);
+	}
+	logger.info(`No application found in cache using key: '${cacheKey}'.`);
+	var application = await _getApplication(applicationId, groupId, region);
+	if(!application) {
+		logger.info(`Application with ID: '${applicationId}' not found`);
+		application = { id: applicationId, name: applicationId };
+	} else {
+		logger.info(`Return looked up application based on ID: '${applicationId}': ${JSON.stringify(application)}`);
+	}
+	cache.set(cacheKey, application);
+	return application;
+}
+
 async function isIgnoreAPI(params, options) {
 	var { apiPath, policyName, region, groupId } = params;
 	const { logger } = options;
@@ -343,7 +373,7 @@ async function _getCurrentGWUser(requestHeaders) {
 			return response.body.result;
 		})
 		.catch(err => {
-			throw new Error(`Error getting current user Request sent to: '${pluginConfig.apigateway.url}'. ${err}`);
+			throw new Error(`Error getting current user Request sent to: '${pluginConfig.apigateway.url}' ${err.message} Response-Code: ${err.statusCode}`);
 		});
 	return loginName;
 }
@@ -496,6 +526,26 @@ async function _getAPIProxy(apiName, groupId, region) {
 	return apiProxy;
 }
 
+async function _getApplication(applicationId, groupId, region) {
+	const apiManagerConfig = getManagerConfig(pluginConfig.apimanager, groupId, region);
+	var options = {
+		path: `/api/portal/v1.3/applications/${applicationId}`,
+		headers: {
+			'Authorization': 'Basic ' + Buffer.from(apiManagerConfig.username + ':' + apiManagerConfig.password).toString('base64')
+		},
+		agent: new https.Agent({ rejectUnauthorized: false })
+	};
+	const appication = await sendRequest(apiManagerConfig.url, options)
+		.then(response => {
+			return response.body;
+		})
+		.catch(err => {
+			if(err.statusCode == 404) return undefined; // No application found
+			throw new Error(`Error getting application with ID: ${applicationId}. Request sent to: '${apiManagerConfig.url}'. ${err}`);
+		});
+	return appication;
+}
+
 async function _getOrganization(apiProxy, groupId, region, options) {
 	const { logger } = options;
 	if(apiProxy.locallyConfigured) {
@@ -571,6 +621,7 @@ async function _getConfiguredCustomProperties(groupId, region, options) {
 module.exports = {
 	lookupCurrentUser, 
 	lookupAPIDetails,
+	lookupApplication,
 	getCustomPropertiesConfig,
 	isIgnoreAPI
 };
