@@ -131,14 +131,24 @@ async function updateRolloverAlias(params, options) {
 	}
 	// For each configured index do
 	for (const [indexName, indexConfig] of Object.entries(indices)) {
-		// Based on the main indexName get  actual write index
-		// Examples: apigw-traffic-trace-000001 or apigw-traffic-trace-us-000001
-		var indicesForName = await client.indices.get({index: `${indexName}-*000001`}, { maxRetries: 3 });
+		/*
+		 * Based on the main indexName get actual write index
+		 * The given index name is for instance: apigw-trace-messages, apigw-traffic-details, ... 
+		 * Examples: 
+		 * Index: apigw-traffic-trace-000001 or apigw-traffic-trace-us-000001
+		 * alias                   index                          filter routing.index routing.search is_write_index
+		 * apigw-trace-messages-us apigw-trace-messages-us-000002 -      -             -              true
+		 * apigw-trace-messages-us apigw-trace-messages-us-000001 -      -             -              false
+		 */
+		var indicesForName = await client.indices.get({index: `${indexName}-*`}, { maxRetries: 3 });
+		// For each index returned on the name ...
 		for (const [key, val] of Object.entries(indicesForName.body)) {
 			logger.debug(`Check rollover alias for index: ${key}`);
 			var writeIndexAliasName;
+			// Check if current index is the write index
 			for (const [aliasName, aliasSettings] of Object.entries(val.aliases)) {
 				if(aliasSettings.is_write_index) {
+					// If it is the write index, take over the write alias name to be used as the rollover alias
 					writeIndexAliasName = aliasName;
 					break;
 				}

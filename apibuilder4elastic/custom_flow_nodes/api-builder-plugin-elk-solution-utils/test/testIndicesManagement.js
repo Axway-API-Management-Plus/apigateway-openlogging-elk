@@ -130,6 +130,7 @@ describe('flow-node elk-solution-utils indexManagement', () => {
 			var mockedIndexSettingsUpdatedFn = mockElasticsearchMethod(client, 'indices.putSettings', './test/mock/rolloverAliasUpdatedResponse.json', false);
 			var indexConfig = JSON.parse(fs.readFileSync('./test/testConfig/test_index_config.json'), null);
 			var indices = {};
+			// Select only one index, as we can only mock one request
 			indices['apigw-trace-messages'] = indexConfig['apigw-trace-messages'];
 			var { value, output } = await flowNode.updateRolloverAlias({ indices: indices });
 
