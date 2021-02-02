@@ -830,6 +830,19 @@ However, if you need to change files, it is recommended to make this change auto
 
 ## Troubleshooting
 
+- [Check processes/containers are running](#check-processescontainers-are-running)
+- [Check Filebeat is picking up data](#check-filebeat-is-picking-up-data)
+- [Check Logstash processing](#check-logstash-processing)
+- [Check ANM](#check-anm)
+- [vm.max_map_count is too low](#vmmax_map_count-is-too-low)
+- [No results from Elasticsearch](#no-results-from-elasticsearch)
+- [Check API-Builder processing](#check-api-builder-processing)
+- [Check requests from Admin-Node-Manager](#check-requests-from-admin-node-manager)
+- [Check queries send to ElasticSearch](#check-queries-send-to-elasticsearch)
+- [ILM Rollover alias error](#ilm-rollover-alias-error)
+- [Check Caching](#check-caching)
+- [Certificate error Admin-Node Manager to API-Builder](#certificate-error-admin-node-manager-to-api-builder)
+
 ### Check processes/containers are running
 From within the folder where the docker-compose.yml file is located (git project folder) execute: 
 ```
@@ -866,6 +879,7 @@ ls -l /var/log/work
 -rw-rw-r--. 1 filebeat filebeat 20972005 Jul 17 07:32 group-2_instance-1_traffic_2020-07-17-1.log
 
 ```
+<p align="right"><a href="#table-of-content">Top</a></p>
 
 ### Check Logstash processing
 Logstash writes to Stdout, hence you can view information just with:
@@ -903,6 +917,8 @@ When Elasticsearch is finally started:
 ```
 Status YELLOW is expected when running Elasticsearch on a single node, as it cannot achieve the desired replicas. You may use Kibana Development tools or curl to get additional information.
 
+<p align="right"><a href="#table-of-content">Top</a></p>
+
 ### vm.max_map_count is too low
 ```
 ERROR: [1] bootstrap checks failed
@@ -924,6 +940,8 @@ You can find the index mapping in the API-Builder container: `elasticsearch_conf
 To check if the index mapping was applied correctly to an index execute the following request. For example the Traffic-Summary index:  
 `http://elasticsearch:9200/apigw-traffic-summary/_mapping`  
 then check if properties mappings defined in the configuration mentioned above have been applied to the index.
+
+<p align="right"><a href="#table-of-content">Top</a></p>
 
 ### Check API-Builder processing
 The API-Builder docker container is running 
@@ -978,6 +996,8 @@ PUT /apigw-trace-messages-eu-000001/_settings
 }
 ```
 
+<p align="right"><a href="#table-of-content">Top</a></p>
+
 ### Check Caching
 
 The solution uses Memcache in API Builder & Logstash to avoid unnecessary duplicate queries for APIs and users. To check if entries are cached correctly, you can connect to the memcached via `telnet localhost 11211`. Some examples how to use it. 
@@ -1006,6 +1026,14 @@ END
 ```
 
 You can find additional information here: https://techleader.pro/a/90-Accessing-Memcached-from-the-command-line. You may also use [PHPMemcachedAdmin](https://github.com/elijaa/phpmemcachedadmin) to get insights about the Memcache instance.
+
+### Certificate error Admin-Node Manager to API-Builder
+
+If you have errors connecting from the Admin Node Manager to the API Builder, then the following instructions:
+Please make sure that the Admin-Node Manager has imported the correct CA.  
+If you connect to the API Builder using a hostname other than `apibuilder4elastic`, you may receive the following error message:  
+`The certificate was not issued by the domain issuer`
+To solve the problem you can create a [remote host](https://docs.axway.com/bundle/axway-open-docs/page/docs/apim_policydev/apigw_gw_instances/general_remote_hosts/index.html) and disable the hostname validation (`Verify server’s certificate matches requested hostname`). Or you can use your own matching keys & [certificates](#custom-certificates).
 
 <p align="right"><a href="#table-of-content">Top</a></p>
 
