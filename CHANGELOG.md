@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.2] 2021-02-02
+### Fixed
+- Wrong ILM Rollover alias added to regional index [#67](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/67)
+- Index-Rollover error when using regional indices [#66](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/66)
+
 ## [2.0.1] 2021-01-28
 ### Fixed
 - Avoid a Race-Condition by making the variable apiProxy locally instead of global [#61](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/61)

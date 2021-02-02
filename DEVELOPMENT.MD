@@ -5,6 +5,8 @@
     `image: cwiechmann/apibuilder4elastic:v2.0.0`
 - apibuilder4elastic/package.json
     `"version": "v2.0.0",`
+- UPDATE.md
+    `"version": "v2.0.0",`
 
 ### CHANGELOG.md
 - Add recent changes

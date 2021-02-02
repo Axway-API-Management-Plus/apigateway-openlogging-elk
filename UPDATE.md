@@ -14,6 +14,7 @@ With the following steps you can update the solution without downtime. Of course
 
 The core component is the API Builder project which provides the information about the necessary configuration. In principle, it contains the desired or necessary state suitable for the version, especially about the Elasticsearch configuration, such as index templates, ILM policies, etc. If the version is updated, the API builder checks the current configuration in Elasticsearch and adjusts it if necessary to fit the corresponding version. This includes necessary changes for bug fixes or enhancements.  
 
+#### Upgrade steps overview
 - Load and unpack the current or desired release
    - it is recommended to unpack it next to the existing release
    - `wget --no-check-certificate https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v2.0.0/axway-apim-elk-v2.0.0.tar.gz -O - | tar -xvz`
@@ -29,12 +30,12 @@ The core component is the API Builder project which provides the information abo
 
 ## Release history - Changed components
 
-| Ver   | API-Builder                         | Logstash                            | Memcached                           | Filebeat      | ANM-Config      | Dashboards      | Params          | ELK-Ver.| Notes |
-| :---  | :---:                               | :---:                               | :---:                               | :---:         | :---:           | :---:           | :---:           | :---:   | :---  |
-| 1.0.0 | N/A                                 | N/A                                 | N/A                                 | N/A           | N/A             | N/A             | N/A             | 7.9.2   |       |
-| 2.0.0 | [X](#api_builder_logstash_memcached)| [X](#api_builder_logstash_memcached)| [X](#api_builder_logstash_memcached)| [X](#filebeat)| [X](#anm_config)| [X](#dashboards)| [X](#parameters)| 7.10.0  |       |
-| 2.0.1 | [X](#api_builder_logstash_memcached)| -                                   | -                                   | -             | -               | -               | -               | 7.10.0  |       |
-| 2.0.2 | [X](#api_builder_logstash_memcached)| -                                   | -                                   | -             | -               | -               | -               | 7.10.0  |       |
+| Ver   | API-Builder                        | Logstash                           | Memcached                          | Filebeat      | ANM-Config      | Dashboards      | Params          | ELK-Ver.| Notes |
+| :---  | :---:                              | :---:                              | :---:                              | :---:         | :---:           | :---:           | :---:           | :---:   | :---  |
+| 1.0.0 | N/A                                | N/A                                | N/A                                | N/A           | N/A             | N/A             | N/A             | 7.9.2   |       |
+| 2.0.0 | [X](#api-builderlogstashmemcached) | [X](#api-builderlogstashmemcached) | [X](#api-builderlogstashmemcached) | [X](#filebeat)| [X](#anm-config)| [X](#dashboards)| [X](#parameters)| 7.10.0  |       |
+| 2.0.1 | [X](#api-builderlogstashmemcached) | -                                  | -                                  | -             | -               | -               | -               | 7.10.0  |       |
+| 2.0.2 | [X](#api-builderlogstashmemcached) | -                                  | -                                  | -             | -               | -               | -               | 7.10.0  |       |
 
 ### Update from Version 1.0.0
 
@@ -69,11 +70,11 @@ Repeat these steps on all machines running Logstash/API-Builder/Memcache.
 
 #### ANM config
 
-Please follow the instructions to [setup the Admin-Node-Manager](README.MD#setup-admin-node-manager) based on the most recent Policy-Fragment shipped with the release.
+Please follow the instructions to [setup the Admin-Node-Manager](README.md#setup-admin-node-manager) based on the most recent Policy-Fragment shipped with the release.
 
 #### Dashboards
 
-Please follow the instructions to [import Kibana-Dashboards](README.MD#kibana) based on the most recent Dashboards shipped with the release.
+Please follow the instructions to [import Kibana-Dashboards](README.mb#kibana) based on the most recent Dashboards shipped with the release.
 
 #### Parameters
 
