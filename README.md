@@ -705,12 +705,9 @@ API_BUILDER_SSL_KEY=config/certificates/corporate-certificate.key
 API_BUILDER_SSL_CERT=config/certificates/corporate-certificate.crt
 API_BUILDER_SSL_KEY_PASSWORD=dfslkjaskljdklasjdlas
 ELASTICSEARCH_CA=config/certificates/corp-ca.crt
-ELASTICSEARCH1_KEY=config/certificates/corporate-elasticsearch.key
-ELASTICSEARCH1_CRT=config/certificates/corporate-elasticsearch.crt
-ELASTICSEARCH2_KEY=config/certificates/corporate-elasticsearch.key
-ELASTICSEARCH2_CRT=config/certificates/corporate-elasticsearch.crt
-ELASTICSEARCH3_KEY=config/certificates/corporate-elasticsearch.key
-ELASTICSEARCH3_CRT=config/certificates/corporate-elasticsearch.crt
+ELASTICSEARCH_KEY=config/certificates/corporate-elasticsearch.key
+ELASTICSEARCH_KEY_PASSPHRASE=config/certificates/corporate-elasticsearch.crt
+ELASTICSEARCH_CRT=config/certificates/corporate-elasticsearch.key
 KIBANA_KEY=config/certificates/corporate-kibana.key
 KIBANA_CRT=config/certificates/corporate-kibana.crt
 ```
@@ -1032,7 +1029,7 @@ You can find additional information here: https://techleader.pro/a/90-Accessing-
 If you have errors connecting from the Admin Node Manager to the API Builder, then the following instructions:
 Please make sure that the Admin-Node Manager has imported the correct CA.  
 If you connect to the API Builder using a hostname other than `apibuilder4elastic`, you may receive the following error message:  
-`The certificate was not issued by the domain issuer`
+`The certificate was not issued by the domain issuer`  
 To solve the problem you can create a [remote host](https://docs.axway.com/bundle/axway-open-docs/page/docs/apim_policydev/apigw_gw_instances/general_remote_hosts/index.html) and disable the hostname validation (`Verify server’s certificate matches requested hostname`). Or you can use your own matching keys & [certificates](#custom-certificates).
 
 <p align="right"><a href="#table-of-content">Top</a></p>

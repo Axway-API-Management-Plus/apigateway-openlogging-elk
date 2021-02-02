@@ -415,6 +415,11 @@ ELASTIC_VERSION=7.10.0
 ################################################################################################
 #                         Certificates and Certificate authorities
 ################################################################################################
+# This CA is mounted into all applications and used to validate certificates for each component.
+# For instance, when Filebeat is sending Metrics to Elasticsearch or the ANM communicates with 
+# the API-Builder.
+# Used-By: Elasticsearch, Kibana, Logstash, Filebeat, Admin-Node-Manager
+ELASTICSEARCH_CA=config/certificates/ca.crt
 
 # The following variables are used by API-Builder to define, which certificate is used
 # to expose the HTTPS-Listen socket.
@@ -429,11 +434,12 @@ API_BUILDER_SSL_KEY_PASSWORD=
 # The following certificates and keys are mainly used by Elasticsearch to enable transport 
 # security on port: 9200.
 # Logstash, Filebeat and kibana are using the certificate for validation.
-# It's expected that the certificates are placed into the folder caertificates as this folder 
+# It's expected that the certificates are placed into the folder certificates as this folder 
 # is mounted into the Docker container.
-# Used-By: Elasticsearch, Kibana, Logstash, Filebeat
-ELASTICSEARCH_CA=config/certificates/ca.crt
 
+# Certificate and key used by Elasticsearch to expose the HTTPS-Listen socket and Inter-Node 
+# communcation.
+# Used-By: Elasticsearch
 ELASTICSEARCH_KEY=config/certificates/elasticsearch1.key
 ELASTICSEARCH_KEY_PASSPHRASE=
 ELASTICSEARCH_CRT=config/certificates/elasticsearch1.crt
