@@ -122,7 +122,7 @@ After this configuration has been done, Open-Traffic log-files will be created b
 
 Please download and extract the release package from the GitHub project onto your machine(s):  
 ```
-wget --no-check-certificate https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v2.0.0/axway-apim-elk-v2.0.0.tar.gz -O - | tar -xvz
+wget --no-check-certificate https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v2.0.2/axway-apim-elk-v2.0.2.tar.gz -O - | tar -xvz
 ```
 To simplify updates it is recommended to create a Symlink-Folder and finally rename the provided file `env-sample` to `.env`.  
 ```
