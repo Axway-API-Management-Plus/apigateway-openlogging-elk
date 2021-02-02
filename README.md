@@ -43,6 +43,8 @@ This shows a sample dashboard created in Kibana based on the indexed documents:
   - [Logstash / API-Builder / Memcached](#logstash--api-builder--memcached)
   - [Filebeat](#filebeat)
 - [Configure Axway API-Management](#configure-axway-api-management)
+  - [Setup Admin-Node-Manager](#setup-admin-node-manager)
+  - [Traffic-Monitor for API-Manager Users](#traffic-monitor-for-api-manager-users)
 - [Advanced and production Setup](#advanced-and-production-setup)
   - [Architecture examples](#architecture-examples)
   - [Traffic-Payload](#traffic-payload)
@@ -273,7 +275,7 @@ If you encounter issues please see the [Troubleshooting](#troubleshooting) secti
 
 Watch this video for an overview: [Traffic-Monitor & Kibana Dashboard](https://youtu.be/OZ0RNnqE6hs)  
 
-### Admin-Node-Manager
+### Setup Admin-Node-Manager
 As the idea of this project is to use the existing API-Gateway Manager UI (short: ANM) to render log data now provided by Elasticsearch instead of the individual API-Gateway instances before (the build in behavior), it is required to change the ANM configuration to make use of Elasticsearch instead of the API-Gateway instances (default setup). By default, ANM is listening on port 8090 for administrative traffic. This API is responsible to serve the Traffic-Monitor and needs to be configured to use the API-Builder REST-API instead.
 
 1. Open the ANM configuration in Policy-Studio. 
@@ -822,6 +824,8 @@ With each update there will be a changelog, release notes and instructions for t
 If you encounter a problem or need a feature, please open an issue that can be integrated directly into the solution.  
 Of course you are welcome to create your own Kibana dashboards or clone and customize existing ones.  
 However, if you need to change files, it is recommended to make this change automatically and repeatable (e.g. https://www.ansible.com). 
+
+[Learn more](UPDATE.md) how to update the solution. 
 
 <p align="right"><a href="#table-of-content">Top</a></p>
 
