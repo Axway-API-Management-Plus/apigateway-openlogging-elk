@@ -108,7 +108,7 @@
       },
       "parameters": []
     },
-    "/lookup/application/{applicationId}": {
+    "/lookup/application": {
       "get": {
         "summary": "Looks up an application",
         "tags": [],
@@ -134,20 +134,19 @@
             "in": "query",
             "name": "region",
             "description": "The region can be specified optionally. Based on the region, together with the Group-ID, the correct API manager for the lookup is determined. This must be specified in the API_MANAGER parameter."
+          },
+          {
+            "type": "string",
+            "in": "query",
+            "name": "applicationId",
+            "description": "ID of the application to lookup",
+            "required": true
           }
         ],
         "description": "Looks up an application based on the given application ID",
         "x-flow": "lookupAPI-Lookup-Application"
       },
-      "parameters": [
-        {
-          "type": "string",
-          "name": "applicationId",
-          "in": "path",
-          "required": true,
-          "description": "ID of the application"
-        }
-      ]
+      "parameters": []
     }
   },
   "basePath": "/elk/v1/api"
