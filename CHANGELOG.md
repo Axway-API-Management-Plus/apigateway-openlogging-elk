@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## Unreleased
+### Added
+- Now the Application-Id shown in Traffic-Monitor column: Subject resolves to the Application-Name [#69](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/69)
+- Now it is possible to perform a Full-Text search (search for a part of value) on the Subject-Column in Traffic-Monitor [#70](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/70)
+
 ## [2.0.2] 2021-02-02
 ### Fixed
 - Wrong ILM Rollover alias added to regional index [#67](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/67)

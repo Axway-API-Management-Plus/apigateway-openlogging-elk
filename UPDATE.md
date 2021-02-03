@@ -37,6 +37,7 @@ The core component is the API Builder project which provides the information abo
 | 2.0.0 | [X](#api-builderlogstashmemcached) | [X](#api-builderlogstashmemcached) | [X](#api-builderlogstashmemcached) | [X](#filebeat)| [X](#anm-config)| [X](#dashboards)| [X](#parameters)| 7.10.0  |       |
 | 2.0.1 | [X](#api-builderlogstashmemcached) | -                                  | -                                  | -             | -               | -               | -               | 7.10.0  |       |
 | 2.0.2 | [X](#api-builderlogstashmemcached) | -                                  | -                                  | -             | -               | -               | -               | 7.10.0  |       |
+| 2.1.0 | [X](#api-builderlogstashmemcached) | [X](#api-builderlogstashmemcached) | -                                  | -             | -               | -               | -               | 7.10.0  | Unreleased |
 
 ### Update from Version 1.0.0
 
