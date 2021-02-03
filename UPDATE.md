@@ -95,8 +95,10 @@ Sometimes it may be necessary to include newly introduced parameters in your `.e
 If the Elasticsearch version needs to be updated, for example because a problem has been fixed, please follow these steps:
 - Open your `.env` file and change the parameter: `ELASTIC_VERSION` to the necessary version as specified in the release or the version you would like to use 
   - Make sure that the `.env` file contains the correct/same version on all machines
-- To avoid any downtime, double check all Elasticsearch clients have multiple or all Elasticsearch nodes configured so that they can fail over
+- To avoid any downtime, double check all Elasticsearch clients have multiple or all Elasticsearch nodes configured so that they can fail over  
+
 __1. Update Elasticsearch cluster__   
+
 Updating the Elasticsearch cluster happens one node after next. Before updating the next node it's strongly recommended that the cluster state is green and remaining nodes have enough disk space to take over the shards from the node to be upgraded.
 ```
 wget --no-check-certificate https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v2.0.2/axway-apim-elk-v2.0.2.tar.gz -O - | tar -xvz
@@ -146,10 +148,12 @@ docker-compose -f filebeat/docker-compose.filebeat.yml up -d
 Whether the Elastic configuration has changed is for information only and does not require any steps during the update.  
 The required Elasticsearch configuration is built into the API Builder image and Elasticsearch will be updated accordingly if necessary.  
 This includes the following components:  
+
 - Index configuration
 - Index templates
 - Index lifecycle policies
-- Rollup jobs
+- Rollup jobs  
+
 You can find the current configuration here: [elasticsearch_config](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/tree/develop/apibuilder4elastic/elasticsearch_config)
 
 ## Update FAQ
