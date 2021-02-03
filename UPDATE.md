@@ -34,8 +34,8 @@ This table should help you to understand which components have changed with whic
   
 On the other hand, the API builder Docker image, as a central component of the solution, will most likely change with each release.  
 
-| Ver   | API-Builder                        | Logstash                           | Memcached                          | Filebeat      | ANM-Config      | Dashboards      | Params          |Elastic-Cfg         | ELK-Ver.| Notes      |
-| :---  | :---:                              | :---:                              | :---:                              | :---:         | :---:           | :---:           | :---:           |:---                | :---:   | :---       |
+| Ver   | API-Builder                        | Logstash                           | Memcached                          | Filebeat      | ANM-Config      | Dashboards      | Params          |Elastic-Config      | ELK-Ver.| Notes      |
+| :---  | :---:                              | :---:                              | :---:                              | :---:         | :---:           | :---:           | :---:           |:---:               | :---:   | :---       |
 | 1.0.0 | [X](#api-builderlogstashmemcached) | [X](#api-builderlogstashmemcached) | [X](#api-builderlogstashmemcached) | [X](#filebeat)| [X](#anm-config)| [X](#dashboards)| [X](#parameters)|[X](#elastic-config)| 7.9.2   |            |
 | 2.0.0 | [X](#api-builderlogstashmemcached) | [X](#api-builderlogstashmemcached) | [X](#api-builderlogstashmemcached) | [X](#filebeat)| [X](#anm-config)| [X](#dashboards)| [X](#parameters)|[X](#elastic-config)| 7.10.0  |            |
 | 2.0.1 | [X](#api-builderlogstashmemcached) | -                                  | -                                  | -             | -               | -               | -               |                    | 7.10.0  |            |
