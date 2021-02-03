@@ -18,8 +18,7 @@ The core component is the API Builder project which provides the information abo
 
 - Load and unpack the current or desired release
    - it is recommended to unpack it next to the existing release
-   - `wget --no-check-certificate https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v2.0.2/axway-apim-elk-v2.0.2.tar.gz -O - | tar -xvz`
-- Copy your `.env` file from the existing installation
+- Copy your existing `.env` file from the current installation
   - recommended is to use a sym-link to a central `.env` file, which should also be versioned if necessary
   - it is pointed out in this document, if parameters have changed or new ones have been added.
 - depending on which components have changed
@@ -31,21 +30,28 @@ The core component is the API Builder project which provides the information abo
 
 ## Release history - Changed components
 
-| Ver   | API-Builder                        | Logstash                           | Memcached                          | Filebeat      | ANM-Config      | Dashboards      | Params          | ELK-Ver.| Notes |
-| :---  | :---:                              | :---:                              | :---:                              | :---:         | :---:           | :---:           | :---:           | :---:   | :---  |
-| 1.0.0 | N/A                                | N/A                                | N/A                                | N/A           | N/A             | N/A             | N/A             | 7.9.2   |       |
-| 2.0.0 | [X](#api-builderlogstashmemcached) | [X](#api-builderlogstashmemcached) | [X](#api-builderlogstashmemcached) | [X](#filebeat)| [X](#anm-config)| [X](#dashboards)| [X](#parameters)| 7.10.0  |       |
-| 2.0.1 | [X](#api-builderlogstashmemcached) | -                                  | -                                  | -             | -               | -               | -               | 7.10.0  |       |
-| 2.0.2 | [X](#api-builderlogstashmemcached) | -                                  | -                                  | -             | -               | -               | -               | 7.10.0  |       |
-| 2.1.0 | [X](#api-builderlogstashmemcached) | [X](#api-builderlogstashmemcached) | -                                  | -             | -               | -               | -               | 7.10.0  | Unreleased |
+This table should help you to understand which components have changed with which version. For example, it is not always or very rarely necessary to update Filebeat.  
+  
+On the other hand, the API builder Docker image, as a central component of the solution, will most likely change with each release.  
+
+| Ver   | API-Builder                        | Logstash                           | Memcached                          | Filebeat      | ANM-Config      | Dashboards      | Params          |Elastic-Cfg         | ELK-Ver.| Notes      |
+| :---  | :---:                              | :---:                              | :---:                              | :---:         | :---:           | :---:           | :---:           |:---                | :---:   | :---       |
+| 1.0.0 | [X](#api-builderlogstashmemcached) | [X](#api-builderlogstashmemcached) | [X](#api-builderlogstashmemcached) | [X](#filebeat)| [X](#anm-config)| [X](#dashboards)| [X](#parameters)|[X](#elastic-config)| 7.9.2   |            |
+| 2.0.0 | [X](#api-builderlogstashmemcached) | [X](#api-builderlogstashmemcached) | [X](#api-builderlogstashmemcached) | [X](#filebeat)| [X](#anm-config)| [X](#dashboards)| [X](#parameters)|[X](#elastic-config)| 7.10.0  |            |
+| 2.0.1 | [X](#api-builderlogstashmemcached) | -                                  | -                                  | -             | -               | -               | -               |                    | 7.10.0  |            |
+| 2.0.2 | [X](#api-builderlogstashmemcached) | -                                  | -                                  | -             | -               | -               | -               |                    | 7.10.0  |            |
+| 2.1.0 | [X](#api-builderlogstashmemcached) | [X](#api-builderlogstashmemcached) | -                                  | -             | -               | -               | -               |[X](#elastic-config)| 7.10.0  | Unreleased |
 
 ### Update from Version 1.0.0
 
 If you are upgrading from Release 1.0.0 and encounter problems, please open an issue.
 
-### Upgrade components
+## Upgrade components
 
-#### Filebeat
+### Filebeat
+
+If Filebeat changes with a version, you must update the corresponding configuration on all your API Gateway instances. It is recommended to update Filebeat as the first component, because the Filebeat configuration version is checked by the API builder process. If it does not match, Logstash will exit with an error message. 
+Even if you run Filebeat as a native service, you have to copy the configuration (`filebeat/filebeat.yml`) from the release into your configuration.
 
 The following steps illustrates an update to version 2.0.2:
 ```
@@ -56,11 +62,13 @@ docker-compose -f filebeat/docker-compose.filebeat.yml stop
 docker-compose -f filebeat/docker-compose.filebeat.yml up -d
 ```
 
-#### API-Builder/Logstash/Memcached
+### API-Builder/Logstash/Memcached
 
 If Filebeat should be updated with one of the releases that are between the current one and the new one, then please [update Filebeat](#filebeat) in advance.
 
-API Builder, Logstash and Memcache work as a tight unit and should be stopped, updated together if possible. The following steps illustrates an update to version 2.0.2:
+API Builder, Logstash and Memcache work as a tight unit and should be stopped, updated together if possible. Please note, that changes to Logstash do not mean that the Logstash version has changed, but that the Logstash pipeline configuration has changed. To activate these changes the new release must be used to start Logstash.  
+  
+The following steps illustrates an update to version 2.0.2:
 ```
 wget --no-check-certificate https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v2.0.2/axway-apim-elk-v2.0.2.tar.gz -O - | tar -xvz
 cd axway-apim-elk-v2.0.2
@@ -70,19 +78,19 @@ docker-compose up -d
 ```
 Repeat these steps on all machines running Logstash/API-Builder/Memcache.
 
-#### ANM config
+### ANM config
 
 Please follow the instructions to [setup the Admin-Node-Manager](README.md#setup-admin-node-manager) based on the most recent Policy-Fragment shipped with the release.
 
-#### Dashboards
+### Dashboards
 
-Please follow the instructions to [import Kibana-Dashboards](README.mb#kibana) based on the most recent Dashboards shipped with the release.
+Please follow the instructions to [import Kibana-Dashboards](README.md#kibana) based on the most recent Dashboards shipped with the release. Select that existing objects are overwritten.
 
-#### Parameters
+### Parameters
 
-Sometimes it may be necessary to include newly introduced parameters in your `.env` file or you may want to use optional parameters. To do this, use the supplied `env-sample` as a reference and copy the desired parameters.
+Sometimes it may be necessary to include newly introduced parameters in your `.env` file or you may want to use optional parameters. To do this, use the supplied `env-sample` as a reference and copy the desired parameters. Please check the [changelog](CHANGELOG.mb) which new parameters have been added.
 
-#### Elastic-Stack version
+### Elastic-Stack version
 
 If the Elasticsearch version needs to be updated, for example because a problem has been fixed, please follow these steps:
 - Open your `.env` file and change the parameter: `ELASTIC_VERSION` to the necessary version as specified in the release or the version you would like to use 
@@ -132,6 +140,17 @@ cp ~/axway-apim-elk-v2.0.0/.env .
 docker-compose -f filebeat/docker-compose.filebeat.yml stop
 docker-compose -f filebeat/docker-compose.filebeat.yml up -d
 ```
+
+### Elastic Config
+
+Whether the Elastic configuration has changed is for information only and does not require any steps during the update.  
+The required Elasticsearch configuration is built into the API Builder image and Elasticsearch will be updated accordingly if necessary.  
+This includes the following components:  
+- Index configuration
+- Index templates
+- Index lifecycle policies
+- Rollup jobs
+You can find the current configuration here: [elasticsearch_config](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/tree/develop/apibuilder4elastic/elasticsearch_config)
 
 ## Update FAQ
 
