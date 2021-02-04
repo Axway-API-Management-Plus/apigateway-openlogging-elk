@@ -68,7 +68,7 @@ This shows a sample dashboard created in Kibana based on the indexed documents:
 ### Architecture
 
 The overall architecture this project provides looks like this:  
-![Architecture][img1]   
+![Architecture](imgs/component-overview.png)
 
 With that architecture it is possible to collect data from API-Gateways running all over the world into a centralized Elasticsearch instance to have it available with the best possible performance indendent from the network performance.  
 It also helps, when running the Axway API-Gateway in Docker-Orchestration-Environment where containers are started and stopped as it avoids to loose data, when an API-Gateway container is stopped.  
@@ -76,13 +76,41 @@ It also helps, when running the Axway API-Gateway in Docker-Orchestration-Enviro
 Click [here](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/tree/develop/imgs/architecture-examples) to find more detailed architecture examples. *Currently classic deployment only - Will be extended based on requirements*
 
 ### How it works  
+
 Each API-Gateway instance is writing, [if configured](#enable-open-traffic-event-log), Open-Traffic Event-Log-Files, which are streamed by [Filebeat](https://www.elastic.co/beats/filebeat) into a Logstash-Instance. [Logstash](https://www.elastic.co/logstash) performs data pre-processing, combines different events and finally forwards these so called documents into an Elasticsearch cluster.  
 
 Once the data is indexed by Elasticsearch it can be used by different clients. This process allows almost realtime monitoring of incoming requests. It takes around 5 seconds until a request is available in Elasticsearch.
 
+#### Filebeat
+
+Filebeat runs directly on the API gateways as a Docker container or as a native application. It streams the generated logfiles to the deployed Logstash instances. The OpenTraffic log, event log, trace messages and audit logging are streamed.
+
+#### Logstash
+
+Logstash has the task to preprocess the received events before sending them to Elasticsearch. As part of this processing, some of the data (for example, API details) are enriched using APIs provided by the API Builder. This information is of course cached in Memcached.
+
+#### API-Builder
+
+The API-Builder has three important tasks. 
+1. it provides some REST APIs for Logstash processing. For this purpose, it mainly uses the API Manager REST API to retrieve the information.
+2. it provides the same REST API expected by the traffic monitor, but based on Elasticsearch. The admin node manager is then redirected to the API builder traffic monitor API for some of the request.
+3. it configures Elasticsearch for the use of this solution. This includes index templates, ILM policies, etc. This makes it easy to update the solution.
+
+#### Memcached
+
+Memcached is used by Logstash to cache information retrieved from the API-Builder so that it does not have to be retrieved repeatedly. Among other things, API details are stored.
+
+#### Elasticsearch
+
+Ultimately, all information is stored in an Elasticsearch cluster in various indexes and is thus available to Kibana and API builders. Of course, once indexed, this data can also be used by other clients.
+
+#### Kibana
+
+Kibana can be used to visualize the indexed data in dashboards. The solution provides some dashboards, custom dashboards are also possible.
+
 #### The Traffic-Monitor
 
-The standard API-Gateway Traffic-Monitor which is shipped with the solution is __based on a REST-API__ that is provided by the Admin-Node-Manager. By default the Traffic-Information is loaded from the OBSDB running on each API-Gateway instance. This project is partly __re-implementing this REST-API__, which makes it possible, that the standard Traffic-Monitor is using data from ElasticSearch instead of the internal OBSDB.  
+The standard API-Gateway Traffic-Monitor which is shipped with the solution is __based on a REST-API__ that is provided by the Admin-Node-Manager. By default the Traffic-Information is loaded from the OBSDB running on each API-Gateway instance. The API-Builder, which is part of this project, is partly __re-implementing this REST-API__, which makes it possible, that the standard Traffic-Monitor is using data from ElasticSearch instead of the internal OBSDB.  
 That means, you can use the same tooling as of today, but the underlying implementation of the Traffic-Monitor is now pointing to Elasticsearch instead of the internal OPSDB hosted by each API-Gateway instance. This improves performance damatically, as Elasticsearch can scale across multiple machines if required and other dashboards can be created for instance with Kibana.  
 The glue between Elasticsearch and the API-Gateway Traffic-Monitor is an [API-Builder project](./apibuilder4elastic), that is exposing the same Traffic-Monitor API, but it is implemented using Elasticsearch instead of the OPSDB. The API-Builder is available as a ready to use Docker-Image and preconfigured in the docker-compose file.  
 
@@ -1052,7 +1080,14 @@ To solve the problem you can create a [remote host](https://docs.axway.com/bundl
 
 If you see the following error message in the filebeat log:  
 `failed to publish events: write tcp 172.23.0.2:55204->172.31.48.67:5044: write: connection reset by peer`  
-This means that Logstash could not accept any more events. Increase the number of logstash nodes if possible.
+This means that Logstash could not accept any more events. This does not automatically mean that Logstash instances have to be added, but can also mean that the Elasticsearch cluster can not process any more events.  
+The following options:
+- Check the CPU utilization of the Logstash nodes. Restart them if necessary. 
+- It sounds crazy, but it can help not to specify the logstash hosts in the same order on every filebeat.  
+- Check that the Logstash instances have configured all available Elasticsearch nodes.  
+- Add more Logstash nodes on a test basis, if that doesn't improve things, add an Elasticsearch node.  
+
+<p align="right"><a href="#table-of-content">Top</a></p>
 
 ## FAQ
 
@@ -1147,13 +1182,16 @@ If the traffic monitor dashboard shows significantly more transactions than the 
 
 Yes, all indicies are configured to have one replica and therefore it's safe to stop machine, increae the disk-space and restart it. Please make sure, the cluster state is green, before stopping an instance. The increased volume will be automatically detected by Elasticsearch and used to assign more shards to it.
 
+### During catch up, what should be the total events rate for Filebeat?
+
+Tests show that Filebeat can send more than 3,000 events per second to Logstash instances. Tests show that Filebeat can send more than 2,200 events per second to Logstash instances. Of course, this number also depends on the event type. Trace messages can be processed faster than OpenTraffic event logs, for example. You can find an example [here](#imgs/stack-monitoring/stack-monitoring-beats-instances.png).
+
 ## Known issues
 N/A
   
 <p align="right"><a href="#table-of-content">Top</a></p>
 
 
-[img1]: imgs/component-overview.png
 [img2]: imgs/node-manager-policies.png
 [img3]: imgs/node-manager-use-es-api.png
 [img4]: imgs/node-manager-policies-use-elasticsearch-api.png
