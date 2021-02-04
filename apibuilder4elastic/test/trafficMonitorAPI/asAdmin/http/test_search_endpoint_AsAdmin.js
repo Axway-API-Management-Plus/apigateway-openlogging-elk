@@ -53,7 +53,7 @@ describe('Endpoints', function () {
 
 	describe('Search', () => {
 		it('[Search-0001] Execute a search without a limit including all requests from instance-1', () => {
-			return requestAsync({
+			return await requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search`,
 				headers: {
@@ -79,7 +79,7 @@ describe('Endpoints', function () {
 				user: server.apibuilder.config.apikey || 'test',
 				password: ''
 			};
-			return requestAsync({
+			return await requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-2/ops/search`,
 				headers: {
@@ -101,7 +101,7 @@ describe('Endpoints', function () {
 				user: server.apibuilder.config.apikey || 'test',
 				password: ''
 			};
-			return requestAsync({
+			return await requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?field=uri&value=%2Fv2%2Fpet%2FfindByStatus&field=method&value=GET`,
 				headers: {
@@ -124,7 +124,7 @@ describe('Endpoints', function () {
 				user: server.apibuilder.config.apikey || 'test',
 				password: ''
 			};
-			return requestAsync({
+			return await requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?field=duration&op=gt&value=100`,
 				headers: {
@@ -145,7 +145,7 @@ describe('Endpoints', function () {
 				user: server.apibuilder.config.apikey || 'test',
 				password: ''
 			};
-			return requestAsync({
+			return await requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?field=operation&value=findPetsByStatus`,
 				headers: {
@@ -167,7 +167,7 @@ describe('Endpoints', function () {
 				user: server.apibuilder.config.apikey || 'test',
 				password: ''
 			};
-			return requestAsync({
+			return await requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?ago=5m`, // The first entry is generated with 8 minutes in the past
 				headers: {
@@ -195,7 +195,7 @@ describe('Endpoints', function () {
 			const greaterThenThisDate = getDate('10h', true);
 			const lowerThanThisDate = getDate('10m', true);
 			console.log(`Query with greaterThenThisDate: ${greaterThenThisDate} and lowerThanThisDate: ${lowerThanThisDate}`);
-			return requestAsync({
+			return await requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?field=timestamp&op=gt&value=${greaterThenThisDate}&field=timestamp&op=lt&value=${lowerThanThisDate}`,
 				headers: {
@@ -226,7 +226,7 @@ describe('Endpoints', function () {
 			const greaterThenThisDate = getDate('110h', true);
 			const lowerThanThisDate = getDate('5m', true);
 			console.log(`Query with greaterThenThisDate: ${greaterThenThisDate} and lowerThanThisDate: ${lowerThanThisDate}`);
-			return requestAsync({
+			return await requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?field=timestamp&op=gt&value=${greaterThenThisDate}&field=timestamp&op=lt&value=${lowerThanThisDate}`,
 				headers: {
@@ -246,7 +246,7 @@ describe('Endpoints', function () {
 			});
 		});
 		it('[Endpoint-0009] should return two entries with localport 8080', () => {
-			return requestAsync({
+			return await requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?field=localPort&value=8080`,
 				headers: {
@@ -264,7 +264,7 @@ describe('Endpoints', function () {
 		});
 
 		it('[Endpoint-0010A] should return one entry with localport 8080 and given subject-id', () => {
-			return requestAsync({
+			return await requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?field=localPort&value=8080&field=subject&value=Chris-Test`,
 				headers: {
@@ -281,8 +281,8 @@ describe('Endpoints', function () {
 				expect(body.data[0].subject).to.equals('Chris-Test');
 			});
 		});
-		it.only('[Endpoint-0010B] should return one entry with localport 8080 and a part of the original subject ID', () => {
-			return requestAsync({
+		it('[Endpoint-0010B] should return one entry with localport 8080 and a part of the original subject ID', () => {
+			return await requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?field=localPort&value=8080&field=subject&value=Chris`,
 				headers: {
@@ -300,7 +300,7 @@ describe('Endpoints', function () {
 			});
 		});
 		it('[Endpoint-0011] should return one entry with localport 8080 and given subject-id', () => {
-			return requestAsync({
+			return await requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?field=status&value=404`,
 				headers: {
@@ -318,7 +318,7 @@ describe('Endpoints', function () {
 			});
 		});
 		it('[Endpoint-0012] should return one entry with localadr 1.1.1.1', () => {
-			return requestAsync({
+			return await requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?field=localAddr&value=1.1.1.1`,
 				headers: {
@@ -336,7 +336,7 @@ describe('Endpoints', function () {
 			});
 		});
 		it('[Endpoint-0013] should return one entry with remoteName (remoteHost) TestHost', () => {
-			return requestAsync({
+			return await requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?field=remoteName&value=TestHost`,
 				headers: {
@@ -354,7 +354,7 @@ describe('Endpoints', function () {
 			});
 		});
 		it('[Endpoint-0014] should return one entry with remotePort 59641', () => {
-			return requestAsync({
+			return await requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?field=remotePort&value=59641`,
 				headers: {
@@ -372,7 +372,7 @@ describe('Endpoints', function () {
 			});
 		});
 		it('[Endpoint-0015] should return one entry with service name Petstore HTTP', () => {
-			return requestAsync({
+			return await requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?field=serviceName&value=Petstore%20HTTP`,
 				headers: {
@@ -391,7 +391,7 @@ describe('Endpoints', function () {
 			});
 		});
 		it('[Endpoint-0016] should return one entry WAF-Status 1', () => {
-			return requestAsync({
+			return await requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?field=wafStatus&value=1`,
 				headers: {
@@ -409,7 +409,7 @@ describe('Endpoints', function () {
 			});
 		});
 		it('[Endpoint-0017] should return one entry with the given correlation id', () => {
-			return requestAsync({
+			return await requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?field=correlationId&value=682c0f5fbe23dc8e1d80efe2`,
 				headers: {
@@ -427,7 +427,7 @@ describe('Endpoints', function () {
 			});
 		});
 		it('[Endpoint-0018] should return one entry with final status Error', () => {
-			return requestAsync({
+			return await requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?field=finalStatus&value=Error`,
 				headers: {
@@ -444,7 +444,7 @@ describe('Endpoints', function () {
 			});
 		});
 		it('[Endpoint-0019] should return results with a wildcard path.', () => {
-			return requestAsync({
+			return await requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?field=uri&value=%2Fv2%2Fpet`,
 				headers: {
@@ -462,7 +462,7 @@ describe('Endpoints', function () {
 			});
 		});
 		it('[Endpoint-0020] Should return 1 entry in the last 10 minutes (ago=10m)', () => {
-			return requestAsync({
+			return await requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?ago=10m`,
 				headers: {
@@ -479,7 +479,7 @@ describe('Endpoints', function () {
 			});
 		});
 		it('[Endpoint-0021] Should return 2 entries in the last 30 minutes (ago=30m)', () => {
-			return requestAsync({
+			return await requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?ago=30m`,
 				headers: {
@@ -496,7 +496,7 @@ describe('Endpoints', function () {
 			});
 		});
 		it('[Endpoint-0022] Should return 4 entries in the last 2 hours (ago=120h)', () => {
-			return requestAsync({
+			return await requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?ago=2h`,
 				headers: {
@@ -513,7 +513,7 @@ describe('Endpoints', function () {
 			});
 		});
 		it('[Endpoint-0023] Should include the V-Host value', () => {
-			return requestAsync({
+			return await requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?field=correlationId&value=7a240f5f0e21555d2d343482`,
 				headers: {
@@ -528,7 +528,7 @@ describe('Endpoints', function () {
 			});
 		});
 		it('[Endpoint-0024] Should not return anything when using the wrong request protocol.', () => {
-			return requestAsync({
+			return await requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?protocol=filetransfer`,
 				headers: {
@@ -544,7 +544,7 @@ describe('Endpoints', function () {
 			});
 		});
 		it('[Endpoint-0025] Should return the OPTIONS request including the URI', () => {
-			return requestAsync({
+			return await requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-2/ops/search?protocol=http&field=method&value=OPTIONS`,
 				headers: {
@@ -563,7 +563,7 @@ describe('Endpoints', function () {
 
 		// See issue #52
 		it('[Endpoint-0026] With query on v2/pet/findByTag should return only ONE API.', () => {
-			return requestAsync({
+			return await requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?field=uri&value=%2Fpetstore%2Fv2%2Fpet%2FfindByTag&field=method&value=GET`,
 				headers: {
@@ -582,7 +582,7 @@ describe('Endpoints', function () {
 		});
 
 		it('[Endpoint-0027] Should ignore the region if null', () => {
-			return requestAsync({
+			return await requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?field=uri&value=%2Fpetstore%2Fv2%2Fpet%2FfindByTag&field=method&value=GET`,
 				headers: {
