@@ -140,7 +140,7 @@ async function lookupAPIDetails(params, options) {
 	}
 	var apiProxy = undefined;
 	for (i = 0; i < proxies.length; i++) {
-		api = proxies[i];
+		var api = proxies[i];
 		if(apiPath.startsWith(api.path)) {
 			apiProxy = api;
 			break;
