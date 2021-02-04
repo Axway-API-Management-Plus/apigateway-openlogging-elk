@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Now the Application-Id shown in Traffic-Monitor column: Subject resolves to the Application-Name [#69](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/69)
 - Now it is possible to perform a Full-Text search (search for a part of value) on the Subject-Column in Traffic-Monitor [#70](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/70)
 
+### Changed
+- ILM policies optimized to reduce the required disk space [#73](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/73)
+
 ### Fixed
 - Indices are rolled over too often when an Index-Template is changed [#72](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/72)
 
@@ -18,7 +21,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Index-Rollover error when using regional indices [#66](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/66)
 
 ### Changed
-- ILM policies optimized for the ideal index sizes [#68](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/68)
+- ILM policies optimized for the ideal index sizes and number of shards [#68](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/68)
 
 ### Added
 - Initial version of Update instructions. See [UPDATE.md](UPDATE.md)

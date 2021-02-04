@@ -735,11 +735,11 @@ The configuration is defined here per data type (e.g. Summary, Details, Audit, .
 
 | Data-Type              | Description                                                            | Hot (Size/Days) | Warm    | Cold    | Delete  | Total   |
 | :---                   |:---                                                                    | :---            | :---    | :---    | :---    | :---    |
-| **Traffic-Summary**    | Main index for traffic-monitor overview and primary dashboard          | 30GB / 15 days  | 15 days | 30 days | 10 days | 70 days |
-| **Traffic-Details**    | Details in Traffic-Monitor for Policy, Headers and Payload reference   | 30GB / 15 days  | 7 days  | 10 days | 5 days  | 37 days |
-| **Traffic-Trace**      | Trace-Messages belonging to an API-Request shown in Traffic-Monitor    | 30GB / 60 days  | 7 days  | 10 days | 5 days  | 82 days |
-| **General-Trace**      | General trace messages, like Start- & Stop-Messages                    | 30GB / 60 days  | 7 days  | 10 days | 5 days  | 82 days |
-| **Gateway-Monitoring** | System status information (CPU, HDD, etc.) from Event-Files            | 30GB / 60 days  | 15 days | 15 days | 15 days | 105 days |
+| **Traffic-Summary**    | Main index for traffic-monitor overview and primary dashboard          | 30GB / 15 days  | 5 days  | 10 days | 0 days  | 30 days |
+| **Traffic-Details**    | Details in Traffic-Monitor for Policy, Headers and Payload reference   | 30GB / 15 days  | 5 days  | 10 days | 0 days  | 30 days |
+| **Traffic-Trace**      | Trace-Messages belonging to an API-Request shown in Traffic-Monitor    | 30GB / 60 days  | 5 days  | 10 days | 0 days  | 75 days |
+| **General-Trace**      | General trace messages, like Start- & Stop-Messages                    | 30GB / 60 days  | 5 days  | 10 days | 0 days  | 75 days |
+| **Gateway-Monitoring** | System status information (CPU, HDD, etc.) from Event-Files            | 30GB / 60 days  | 30 days | 15 days | 0 days  | 105 days |
 | **Domain-Audit**       | Domain Audit-Information as configured in Admin-Node-Manager           | 10GB / 270 days | 270 days| 720 days| 15 days | >3 years|
 
 Please note:  
@@ -780,16 +780,23 @@ Please note:
 #### Retention period
 
 The second important aspect for sizing is the retention period, which defines how long data should be available. Accordingly, disk space must be made available.  
-The Traffic-Summary, Traffic-Details and Trace-Messages indicies play a particularly important role here. The solution is delivered with default values which you can read [here](#lifecycle-management). Based on the these default values which result in ap. 60 days the following disk space is required.
+In particular the Traffic-Summary and Traffic-Details indicies become huge and therefore play a particularly important role here. The solution is delivered with default values which you can read [here](#lifecycle-management). Based on the these default values which result in ap. 30 days the following disk space is required.
 
-| Volume per day           | Stored documents | Total Disk-Space  | Comment |
-| :---                     | :---             | :---              | :---    |
-| up to 1 Mio  (~15 TPS)   | 60 Mio.          | 30 GB             | 2 Elasticsearch nodes, each with 15 GB  |
-| up to 5 Mio  (~60 TPS)   | 300 Mio.         | 60 GB             | 2 Elasticsearch nodes, each with 30 GB  |
-| up to 10 Mio (~120 TPS)  | 600 Mio.         | 160 GB            | 2 Elasticsearch nodes, each with 80 GB  |
-| up to 25 Mio (~300 TPS)  | 1.500 Bil.       | 500 GB            | 3 Elasticsearch nodes, each with 200 GB |
-| up to 50 Mio (~600 TPS)  | 3.000 Bil.       | 1 TB              | 4 Elasticsearch nodes, each with 250 GB |
+| Volume per day           | Total Disk-Space  | Comment |
+| :---                     | :---              | :---    |
+| up to 1 Mio  (~15 TPS)   | 60 GB             | 2 Elasticsearch nodes, each with 50 GB  |
+| up to 5 Mio  (~60 TPS)   | 250 GB            | 2 Elasticsearch nodes, each with 150 GB |
+| up to 10 Mio (~120 TPS)  | 500 GB            | 2 Elasticsearch nodes, each with 250 GB |
+| up to 25 Mio (~300 TPS)  | 1 TB              | 3 Elasticsearch nodes, each with 500 GB |
+| up to 50 Mio (~600 TPS)  | 2 TB              | 4 Elasticsearch nodes, each with 500 GB |
 
+If the required storage space is unexpectedly higher, then you can do the following:  
+- add an additional Elasticsearch cluster node at a later time.  
+  - Elasticsearch will then start balancing the cluster by moving shards to this new node  
+  - this additional node will of course also improve the overall performance of the cluster  
+- increase the disk space of an existing node  
+  - if the cluster state is green, you can stop a node, allocate more disk space, and then start it again
+  - the available disk space is used automatically by allocating shards  
 
 ### Test infrastructure
 
@@ -800,6 +807,8 @@ The following test infrastructure was used to determine the [maximum capacity or
 | 6x    | AWS EC2 t2.xlarge instance | 4 vCPUS | 16GB  | 30GB | API-Management | 7.7-July| 6 API-Gateways Classical deployment, Simulate Traffic based on Test-Case |
 | 4x    | AWS EC2 t2.xlarge instance | 4 vCPUS | 16GB  | 30GB | Logstash, API-Builder, Memcached | 7.10.0  | Logstash instances started as needed for the test. Logstash, API-Builder and Memcache always run together |
 | 5x    | AWS EC2 t2.xlarge instance | 4 vCPUS | 16GB  | 80GB | Elasticsearch  | 7.10.0  | Elasticsearch instances started as needed. Kibana running on the first node |
+
+There is no specific reason that EC2 t2.xlarge instances were used for the test setup. The deciding factor was simply the number of CPU cores and 16 GB RAM.  
 
 <p align="right"><a href="#table-of-content">Top</a></p>
 
