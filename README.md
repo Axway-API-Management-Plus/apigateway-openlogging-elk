@@ -31,9 +31,7 @@ This shows a sample dashboard created in Kibana based on the indexed documents:
 ## Table of content
 
 - [Overview](#overview)
-    - [Architecture](#architecture)
-    - [How it works](#how-it-works)
-    - [The Traffic-Monitor](#the-traffic-monitor)
+    - [How it works](#how-it-works-overview)
 - [Prerequisites](#prerequisites)
 - [Getting started](#getting-started)
 - [Basic setup](#basic-setup)
@@ -64,8 +62,6 @@ This shows a sample dashboard created in Kibana based on the indexed documents:
 - [Known issues](#known-issues)
 
 ## Overview
-
-### Architecture
 
 The overall architecture this project provides looks like this:  
 ![Architecture](imgs/component-overview.png)
