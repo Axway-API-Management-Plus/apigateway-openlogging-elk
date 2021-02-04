@@ -31,7 +31,7 @@ This shows a sample dashboard created in Kibana based on the indexed documents:
 ## Table of content
 
 - [Overview](#overview)
-    - [How it works](#how-it-works-overview)
+    - [How it works](#how-it-works---overview)
 - [Prerequisites](#prerequisites)
 - [Getting started](#getting-started)
 - [Basic setup](#basic-setup)
