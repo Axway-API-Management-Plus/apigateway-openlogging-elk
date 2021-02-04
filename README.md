@@ -852,6 +852,7 @@ However, if you need to change files, it is recommended to make this change auto
 - [ILM Rollover alias error](#ilm-rollover-alias-error)
 - [Check Caching](#check-caching)
 - [Certificate error Admin-Node Manager to API-Builder](#certificate-error-admin-node-manager-to-api-builder)
+- [Filebeat - Failed to publish events](#filebeat-failed-to-publish-events)
 
 ### Check processes/containers are running
 From within the folder where the docker-compose.yml file is located (git project folder) execute: 
@@ -1046,6 +1047,12 @@ If you connect to the API Builder using a hostname other than `apibuilder4elasti
 To solve the problem you can create a [remote host](https://docs.axway.com/bundle/axway-open-docs/page/docs/apim_policydev/apigw_gw_instances/general_remote_hosts/index.html) and disable the hostname validation (`Verify server’s certificate matches requested hostname`). Or you can use your own matching keys & [certificates](#custom-certificates).
 
 <p align="right"><a href="#table-of-content">Top</a></p>
+
+### Filebeat - Failed to publish events
+
+If you see the following error message in the filebeat log:  
+`failed to publish events: write tcp 172.23.0.2:55204->172.31.48.67:5044: write: connection reset by peer`  
+This means that Logstash could not accept any more events. Increase the number of logstash nodes if possible.
 
 ## FAQ
 

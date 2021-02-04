@@ -240,8 +240,8 @@ LOGSTASH_HOSTS=logstash:5044
 # Stack Monitoring. If you run multiple Logstash instances, it is recommended to set this 
 # parameter to identify the Logstash instances in the monitoring.
 # Used-By: Logstash
-# Defaults to Logstash 1
-# LOGSTASH_NODE_NAME=Logstash 2
+# Defaults to Logstash-1
+# LOGSTASH_NODE_NAME=Logstash-2
 
 # ----------------------------------------------------------------------------------------------
 # Define JVM-Heap size for Logstash. Both values should be the same and not more than 6GB. 
