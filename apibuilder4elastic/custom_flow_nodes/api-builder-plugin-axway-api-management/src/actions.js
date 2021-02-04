@@ -137,7 +137,7 @@ async function lookupAPIDetails(params, options) {
 	if(!proxies || proxies.length == 0) {
 		throw new Error(`No APIs found with name: '${apiName}'`);
 	}
-	apiProxy = undefined;
+	var apiProxy = undefined;
 	for (i = 0; i < proxies.length; i++) {
 		api = proxies[i];
 		if(apiPath.startsWith(api.path)) {
