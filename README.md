@@ -780,7 +780,7 @@ Please note:
 #### Retention period
 
 The second important aspect for sizing is the retention period, which defines how long data should be available. Accordingly, disk space must be made available.  
-In particular the Traffic-Summary and Traffic-Details indicies become huge and therefore play a particularly important role here. The solution is delivered with default values which you can read [here](#lifecycle-management). Based on the these default values which result in ap. 30 days the following disk space is required.
+In particular the Traffic-Summary and Traffic-Details indicies become huge and therefore play a particularly important role here. The solution is delivered with default values which you can read [here](#lifecycle-management). Based on the these default values which result in ap. __30 days__ the following disk space is required.
 
 | Volume per day           | Total Disk-Space  | Comment |
 | :---                     | :---              | :---    |

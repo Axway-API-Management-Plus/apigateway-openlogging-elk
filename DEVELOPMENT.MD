@@ -2,21 +2,22 @@
 
 ### Bump version
 - docker-compose.yml
-    `image: cwiechmann/apibuilder4elastic:v2.0.0`
+    - `image: cwiechmann/apibuilder4elastic:v2.0.0`
 - apibuilder4elastic/package.json
-    `"version": "v2.0.0",`
+    - `"version": "v2.0.0",`
 - UPDATE.md
-    `"version": "v2.0.0",`
+    - `"version": "v2.0.0",`
+    - Adjust/Verify version table
 
 ### CHANGELOG.md
-- Add recent changes
+- Add/Verify recent changes
 
 ### Create the release
 - Create a new release on Github with the tag name: v2.0.2
 
 ## Create the shipped certificates
 
-To generate the sample keys and certificates we a using the Elasticsearch cert-util: 
+To generate the sample keys and certificates we are using the Elasticsearch cert-util: 
 https://www.elastic.co/guide/en/elasticsearch/reference/current/certutil.html
 
 Within a running Elasticsearch instance docker container:  

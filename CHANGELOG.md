@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Now it is possible to perform a Full-Text search (search for a part of value) on the Subject-Column in Traffic-Monitor [#70](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/70)
 
 ### Changed
-- ILM policies optimized to reduce the required disk space [#73](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/73)
+- ILM policies optimized to reduce the required disk space / Traffic-Details & -Summary retention period now 30 days [#73](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/73)
 
 ### Fixed
 - Indices are rolled over too often when an Index-Template is changed [#72](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/72)
