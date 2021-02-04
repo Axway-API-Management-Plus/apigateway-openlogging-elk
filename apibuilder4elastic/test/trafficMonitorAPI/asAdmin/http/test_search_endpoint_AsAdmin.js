@@ -281,7 +281,7 @@ describe('Endpoints', function () {
 				expect(body.data[0].subject).to.equals('Chris-Test');
 			});
 		});
-		it('[Endpoint-0010B] should return one entry with localport 8080 and a part of the original subject ID', () => {
+		it.only('[Endpoint-0010B] should return one entry with localport 8080 and a part of the original subject ID', () => {
 			return requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?field=localPort&value=8080&field=subject&value=Chris`,

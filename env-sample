@@ -243,7 +243,6 @@ LOGSTASH_HOSTS=logstash:5044
 # Defaults to Logstash 1
 # LOGSTASH_NODE_NAME=Logstash 2
 
-
 # ----------------------------------------------------------------------------------------------
 # Define JVM-Heap size for Logstash. Both values should be the same and not more than 6GB. 
 # Defaults to -Xmx1g -Xms1g
