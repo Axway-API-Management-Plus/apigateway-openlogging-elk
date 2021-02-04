@@ -236,6 +236,15 @@ ELASTICSEARCH_CLUSTER_UUID=
 LOGSTASH_HOSTS=logstash:5044
 
 # ----------------------------------------------------------------------------------------------
+# This parameter determines with which name a Logstash instance presents itself in Elastic 
+# Stack Monitoring. If you run multiple Logstash instances, it is recommended to set this 
+# parameter to identify the Logstash instances in the monitoring.
+# Used-By: Logstash
+# Defaults to Logstash 1
+# LOGSTASH_NODE_NAME=Logstash 2
+
+
+# ----------------------------------------------------------------------------------------------
 # Define JVM-Heap size for Logstash. Both values should be the same and not more than 6GB. 
 # Defaults to -Xmx1g -Xms1g
 # Used-By: Logstash
