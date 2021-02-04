@@ -107,7 +107,7 @@ async function isAPIManagerUserAdmin(apiManagerConfig, logger) {
 				},
 				agent: new https.Agent({ rejectUnauthorized: false })
 			};
-			result = await sendRequest(config.url, options, data, 303)
+			const result = await sendRequest(config.url, options, data, 303)
 				.then(response => {
 					return response;
 				})

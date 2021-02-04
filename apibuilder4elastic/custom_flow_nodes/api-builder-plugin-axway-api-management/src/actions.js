@@ -368,7 +368,7 @@ async function _getCurrentGWUser(requestHeaders) {
 		headers: requestHeaders,
 		agent: new https.Agent({ rejectUnauthorized: false })
 	};
-	loginName = await sendRequest(pluginConfig.apigateway.url, options)
+	const loginName = await sendRequest(pluginConfig.apigateway.url, options)
 		.then(response => {
 			return response.body.result;
 		})
@@ -475,7 +475,7 @@ async function _getCurrentGWPermissions(requestHeaders, loginName) {
 		headers: requestHeaders,
 		agent: new https.Agent({ rejectUnauthorized: false })
 	};
-	result = await sendRequest(pluginConfig.apigateway.url, options)
+	const result = await sendRequest(pluginConfig.apigateway.url, options)
 		.then(response => {
 			return response.body.result;
 		})
@@ -497,7 +497,7 @@ async function _getManagerUser(user, groupId) {
 		},
 		agent: new https.Agent({ rejectUnauthorized: false })
 	};
-	managerUser = await sendRequest(apiManagerConfig.url, options)
+	const managerUser = await sendRequest(apiManagerConfig.url, options)
 		.then(response => {
 			return response.body;
 		})
@@ -567,7 +567,7 @@ async function _getOrganization(apiProxy, groupId, region, options) {
 		},
 		agent: new https.Agent({ rejectUnauthorized: false })
 	};
-	org = await sendRequest(apiManagerConfig.url, options)
+	const org = await sendRequest(apiManagerConfig.url, options)
 		.then(response => {
 			if(!response.body) {
 				throw new Error(`Organization with : '${orgId}' not found in API-Manager.`);
@@ -604,7 +604,7 @@ async function _getConfiguredCustomProperties(groupId, region, options) {
 		},
 		agent: new https.Agent({ rejectUnauthorized: false })
 	};
-	propertiesConfig = await sendRequest(apiManagerConfig.url, options)
+	const propertiesConfig = await sendRequest(apiManagerConfig.url, options)
 		.then(response => {
 			if(!response.body) {
 				throw new Error(`Error getting custom properties from API-Manager: ${apiManagerConfig.ur}`);
