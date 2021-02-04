@@ -2,15 +2,18 @@
 
 ### Bump version
 - docker-compose.yml
-    - `image: cwiechmann/apibuilder4elastic:v2.0.0`
+  - `image: cwiechmann/apibuilder4elastic:v2.0.0`
 - apibuilder4elastic/package.json
-    - `"version": "v2.0.0",`
+  - `"version": "v2.0.0",`
 - UPDATE.md
-    - `"version": "v2.0.0",`
-    - Adjust/Verify version table
+  - `"version": "v2.0.0",`
+  - Adjust/Verify version table
+- README.md
+  - `"version": "v2.0.0",`
 
 ### CHANGELOG.md
 - Add/Verify recent changes
+- Set the release version and date
 
 ### Create the release
 - Create a new release on Github with the tag name: v2.0.2
