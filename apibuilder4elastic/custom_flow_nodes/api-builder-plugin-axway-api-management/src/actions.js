@@ -105,6 +105,7 @@ async function lookupAPIDetails(params, options) {
 	const { logger } = options;
 	cache = options.pluginContext.cache;
 	pluginConfig = options.pluginConfig;
+	var proxies;
 	if (!apiPath) {
 		throw new Error('You must provide the apiPath that should be used to lookup the API.');
 	}
@@ -120,7 +121,7 @@ async function lookupAPIDetails(params, options) {
 	}
 	logger.info(`No API-Details found in cache using key: '${cacheKey}'. Trying to lookup API locally.`);
 	try {
-		var proxies = await _getAPILocalProxies(params, options);
+		proxies = await _getAPILocalProxies(params, options);
 	} catch (ex) {
 		logger.warn(`Error looking up API locally. ${JSON.stringify(ex)}`);
 	}
