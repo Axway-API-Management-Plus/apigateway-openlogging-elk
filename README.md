@@ -76,34 +76,34 @@ Click [here](https://github.com/Axway-API-Management-Plus/apigateway-openlogging
 Basically, the solution works by importing the log files produced by the API-Gateways around the globe into an Elasticsearch cluster. Once the data has been indexed, it can be used by various clients. One of the clients is of course Kibana to visualize the data in dashboards and furthermore the standard API-Gateway-Manager Traffic-Monitor can access the data.  
 All components, besides Filebeat, can be deployed and configured in a highly available way. The role of each component of the solution is discussed below.
 
-#### Filebeat
+### Filebeat
 
 Filebeat runs directly on the API gateways as a Docker container or as a native application. It streams the generated logfiles to the deployed Logstash instances. The OpenTraffic log, Event log, Trace messages and Audit logging are streamed.
 
-#### Logstash
+### Logstash
 
 Logstash has the task to preprocess the received events before sending them to Elasticsearch. As part of this processing, some of the data (for example, API details) are enriched using APIs provided by the API Builder. This makes it possible to access additional information such as policies, custom properties, etc. in Kibana and other applications. Of course, this information is cached in Memcached.
 
-#### API-Builder
+### API-Builder
 
 The API-Builder has three important tasks. 
 1. it provides some REST APIs for Logstash processing. For this purpose, it mainly uses the API Manager REST API to retrieve the information.
 2. it provides the same REST API expected by the Traffic-Monitor, but based on Elasticsearch. The Admin Node Manager is then redirected to the API builder traffic monitor API for some of the request.
 3. it configures Elasticsearch for the use of this solution. This includes index templates, ILM policies, etc. This makes it easy to update the solution.
 
-#### Memcached
+### Memcached
 
 Memcached is used by Logstash to cache information retrieved from the API-Builder so that it does not have to be retrieved repeatedly. Among other things, API details are stored.
 
-#### Elasticsearch
+### Elasticsearch
 
 Ultimately, all information is stored in an Elasticsearch cluster in various indexes and is thus available to Kibana and API-Builder. Of course, once indexed, this data can also be used by other clients.
 
-#### Kibana
+### Kibana
 
 Kibana can be used to visualize the indexed data in dashboards. The solution provides some default dashboards. However, it is also possible to add custom dashboards to the solution.
 
-#### The Traffic-Monitor
+### The Traffic-Monitor
 
 The standard API-Gateway Traffic-Monitor which is shipped with the solution is __based on a REST-API__ that is provided by the Admin-Node-Manager. By default the Traffic-Information is loaded from the OBSDB running on each API-Gateway instance. The API-Builder, which is part of this project, is partly __re-implementing this REST-API__, which makes it possible, that the standard Traffic-Monitor is using data from ElasticSearch instead of the internal OBSDB.  
 That means, you can use the same tooling as of today, but the underlying implementation of the Traffic-Monitor is now pointing to Elasticsearch instead of the internal OPSDB hosted by each API-Gateway instance. This improves performance damatically, as Elasticsearch can scale across multiple machines if required and other dashboards can be created for instance with Kibana.  
