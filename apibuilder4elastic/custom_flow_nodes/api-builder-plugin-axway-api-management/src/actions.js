@@ -58,7 +58,7 @@ async function lookupCurrentUser(params, options) {
 		logger.debug(`Trying to authorize user based on Authorization header.`);
 		user.loginName = await _getCurrentGWUser(headers = {'Authorization': `${requestHeaders.authorization}`});
 		logger.debug(`Authorized user is: ${user.loginName}`);
-		permissions = await _getCurrentGWPermissions(headers = {'Authorization': `${requestHeaders.authorization}`}, loginName);
+		permissions = await _getCurrentGWPermissions(headers = {'Authorization': `${requestHeaders.authorization}`}, user.loginName);
 	} else {
 		VIDUSR = _getCookie(requestHeaders.cookie, "VIDUSR");
 		if(!VIDUSR) {
@@ -75,7 +75,7 @@ async function lookupCurrentUser(params, options) {
 		logger.trace(`Trying to get current user based on VIDUSR cookie.`);
 		user.loginName = await _getCurrentGWUser(headers = {'Cookie': `VIDUSR=${VIDUSR}`});
 		logger.trace(`Current user is: ${user.loginName}`);
-		permissions = await _getCurrentGWPermissions(headers = {'Cookie': `VIDUSR=${VIDUSR}`, 'csrf-token': requestHeaders['csrf-token']}, loginName);
+		permissions = await _getCurrentGWPermissions(headers = {'Cookie': `VIDUSR=${VIDUSR}`, 'csrf-token': requestHeaders['csrf-token']}, user.loginName);
 	}
 	if(permissions.includes("adminusers_modify")) {
 		user.gatewayManager.isAdmin = true;
@@ -363,12 +363,13 @@ async function _getGroupRegionFilename(basefilename, groupId, region) {
 }
 
 async function _getCurrentGWUser(requestHeaders) {
+	debugger;
 	var options = {
 		path: '/api/rbac/currentuser',
 		headers: requestHeaders,
 		agent: new https.Agent({ rejectUnauthorized: false })
 	};
-	const loginName = await sendRequest(pluginConfig.apigateway.url, options)
+	var loginName = await sendRequest(pluginConfig.apigateway.url, options)
 		.then(response => {
 			return response.body.result;
 		})
@@ -475,7 +476,7 @@ async function _getCurrentGWPermissions(requestHeaders, loginName) {
 		headers: requestHeaders,
 		agent: new https.Agent({ rejectUnauthorized: false })
 	};
-	const result = await sendRequest(pluginConfig.apigateway.url, options)
+	var result = await sendRequest(pluginConfig.apigateway.url, options)
 		.then(response => {
 			return response.body.result;
 		})
@@ -497,7 +498,7 @@ async function _getManagerUser(user, groupId) {
 		},
 		agent: new https.Agent({ rejectUnauthorized: false })
 	};
-	const managerUser = await sendRequest(apiManagerConfig.url, options)
+	var managerUser = await sendRequest(apiManagerConfig.url, options)
 		.then(response => {
 			return response.body;
 		})
@@ -552,11 +553,12 @@ async function _getOrganization(apiProxy, groupId, region, options) {
 		if(apiProxy.organizationName == undefined) apiProxy.organizationName = "N/A";
 		return apiProxy;
 	}
+	var org;
 	const orgId = apiProxy.organizationId;
 	const apiManagerConfig = getManagerConfig(pluginConfig.apimanager, groupId, region);
 	const orgCacheKey = `ORG-${orgId}###${groupId}###${region}`
 	if(cache.has(orgCacheKey)) {
-		var org = cache.get(orgCacheKey);
+		org = cache.get(orgCacheKey);
 		logger.debug(`Organization: '${org.name}' (ID: ${orgId}) found in cache for groupId: ${groupId} in region: ${region}.`);
 		return org;
 	}
@@ -567,7 +569,7 @@ async function _getOrganization(apiProxy, groupId, region, options) {
 		},
 		agent: new https.Agent({ rejectUnauthorized: false })
 	};
-	const org = await sendRequest(apiManagerConfig.url, options)
+	org = await sendRequest(apiManagerConfig.url, options)
 		.then(response => {
 			if(!response.body) {
 				throw new Error(`Organization with : '${orgId}' not found in API-Manager.`);
@@ -591,8 +593,9 @@ async function _getConfiguredCustomProperties(groupId, region, options) {
 	const { logger } = options;
 	const apiManagerConfig = getManagerConfig(pluginConfig.apimanager, groupId, region);
 	const customPropCacheKey = `CUSTOM_PROPERTIES###${groupId}###${region}`
+	var propertiesConfig;
 	if(cache.has(customPropCacheKey)) {
-		var propertiesConfig = cache.get(customPropCacheKey);
+		propertiesConfig = cache.get(customPropCacheKey);
 		logger.debug(`Custom properties found in cache with groupId: ${groupId} and region ${region}.`);
 		return propertiesConfig;
 	}
@@ -604,7 +607,7 @@ async function _getConfiguredCustomProperties(groupId, region, options) {
 		},
 		agent: new https.Agent({ rejectUnauthorized: false })
 	};
-	const propertiesConfig = await sendRequest(apiManagerConfig.url, options)
+	propertiesConfig = await sendRequest(apiManagerConfig.url, options)
 		.then(response => {
 			if(!response.body) {
 				throw new Error(`Error getting custom properties from API-Manager: ${apiManagerConfig.ur}`);
