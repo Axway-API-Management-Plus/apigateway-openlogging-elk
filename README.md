@@ -75,25 +75,24 @@ It also helps, when running the Axway API-Gateway in Docker-Orchestration-Enviro
 
 Click [here](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/tree/develop/imgs/architecture-examples) to find more detailed architecture examples. *Currently classic deployment only - Will be extended based on requirements*
 
-### How it works  
+### How it works - Overview 
 
-Each API-Gateway instance is writing, [if configured](#enable-open-traffic-event-log), Open-Traffic Event-Log-Files, which are streamed by [Filebeat](https://www.elastic.co/beats/filebeat) into a Logstash-Instance. [Logstash](https://www.elastic.co/logstash) performs data pre-processing, combines different events and finally forwards these so called documents into an Elasticsearch cluster.  
-
-Once the data is indexed by Elasticsearch it can be used by different clients. This process allows almost realtime monitoring of incoming requests. It takes around 5 seconds until a request is available in Elasticsearch.
+Basically, the solution works by importing the log files produced by the API-Gateways around the globe into an Elasticsearch cluster. Once the data has been indexed, it can be used by various clients. One of the clients is of course Kibana to visualize the data in dashboards and furthermore the standard API-Gateway-Manager Traffic-Monitor can access the data.  
+All components, besides Filebeat, can be deployed and configured in a highly available way. The role of each component of the solution is discussed below.
 
 #### Filebeat
 
-Filebeat runs directly on the API gateways as a Docker container or as a native application. It streams the generated logfiles to the deployed Logstash instances. The OpenTraffic log, event log, trace messages and audit logging are streamed.
+Filebeat runs directly on the API gateways as a Docker container or as a native application. It streams the generated logfiles to the deployed Logstash instances. The OpenTraffic log, Event log, Trace messages and Audit logging are streamed.
 
 #### Logstash
 
-Logstash has the task to preprocess the received events before sending them to Elasticsearch. As part of this processing, some of the data (for example, API details) are enriched using APIs provided by the API Builder. This information is of course cached in Memcached.
+Logstash has the task to preprocess the received events before sending them to Elasticsearch. As part of this processing, some of the data (for example, API details) are enriched using APIs provided by the API Builder. This makes it possible to access additional information such as policies, custom properties, etc. in Kibana and other applications. Of course, this information is cached in Memcached.
 
 #### API-Builder
 
 The API-Builder has three important tasks. 
 1. it provides some REST APIs for Logstash processing. For this purpose, it mainly uses the API Manager REST API to retrieve the information.
-2. it provides the same REST API expected by the traffic monitor, but based on Elasticsearch. The admin node manager is then redirected to the API builder traffic monitor API for some of the request.
+2. it provides the same REST API expected by the Traffic-Monitor, but based on Elasticsearch. The Admin Node Manager is then redirected to the API builder traffic monitor API for some of the request.
 3. it configures Elasticsearch for the use of this solution. This includes index templates, ILM policies, etc. This makes it easy to update the solution.
 
 #### Memcached
@@ -102,11 +101,11 @@ Memcached is used by Logstash to cache information retrieved from the API-Builde
 
 #### Elasticsearch
 
-Ultimately, all information is stored in an Elasticsearch cluster in various indexes and is thus available to Kibana and API builders. Of course, once indexed, this data can also be used by other clients.
+Ultimately, all information is stored in an Elasticsearch cluster in various indexes and is thus available to Kibana and API-Builder. Of course, once indexed, this data can also be used by other clients.
 
 #### Kibana
 
-Kibana can be used to visualize the indexed data in dashboards. The solution provides some dashboards, custom dashboards are also possible.
+Kibana can be used to visualize the indexed data in dashboards. The solution provides some default dashboards. However, it is also possible to add custom dashboards to the solution.
 
 #### The Traffic-Monitor
 
