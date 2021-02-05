@@ -4,9 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## Unreleased
+## [2.1.1] 2021-02-05
 ### Fixed
-- Wrong organization assigned to API under heavy load [#75](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/75)
+- Race-Condition, causing wrong organization assigned to API under heavy load [#75](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/75)
 
 ## [2.1.0] 2021-02-04
 ### Added
