@@ -62,3 +62,41 @@ Copy the ZIP-File:
 `docker cp elasticsearch1:/usr/share/elasticsearch/sample-certificates.zip .`
 
 Store the certificates in the config/certificates folder
+
+## Elastic commands 
+
+Run if Shards are not assigned to see the reason:  
+`GET /_cluster/allocation/explain`
+
+Assign the entire index to a specific Node as it is needed to shrink:  
+```
+PUT /apigw-traffic-details-eu-000001/_settings
+{
+  "settings": {
+    "index.routing.allocation.require._name": "Elasticsearch1", 
+    "index.blocks.write": true                                    
+  }
+}
+```
+
+Go to a specific ILM-Step:
+```
+POST _ilm/move/apigw-traffic-details-eu-000001
+{
+  "current_step": { 
+    "phase": "warm",
+    "action": "shrink",
+    "name": "shrunk-shards-allocated"
+  },
+  "next_step": { 
+    "phase": "warm",
+    "action": "shrink",
+    "name": "shrink"
+  }
+}
+```
+
+Retry an ILM-Step:
+```
+POST /apigw-traffic-details-eu-000001/_ilm/retry
+```
