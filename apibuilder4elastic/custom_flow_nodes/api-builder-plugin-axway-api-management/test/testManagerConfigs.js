@@ -13,48 +13,51 @@ describe('Test API-Manager configuration variations', () => {
 
     describe('Test API-Manager parsing', () => {
         it('should succeed with a single API-Manager configured', async () => {
-            debugger;
-            var pluginConfig = { 
+            const pluginConfig = { 
                 apimanager: {
 				    url: "http://my.api-manager.com:8075", 
 				    username: "user", password: "password" 
                 }
 			};
             var expectedManagers = {
+                url: "http://my.api-manager.com:8075", username: "user", password: "password",
                 "default": {
                     url: "http://my.api-manager.com:8075",
                     username: "user", password: "password"
                 }
             }
-            var configuredManagers = await parseAPIManagerConfig(pluginConfig, options);
-            expect(configuredManagers).to.deep.equal(expectedManagers);
+            await parseAPIManagerConfig(pluginConfig, options);
+            expect(pluginConfig.apimanager).to.deep.equal(expectedManagers);
         });
 
         it('should succeed without giving an API-Manager', async () => {
-            var pluginConfig = { 
+            const pluginConfig = { 
                 apigateway: { url: "http://my.api-gateway.com:8090" },
                 apimanager: {
 				    username: "user", password: "password" 
                 }
 			};
             var expectedManagers = {
+                username: "user", password: "password",
                 "default": {
                     url: "http://my.api-gateway.com:8075/",
                     username: "user", password: "password"
                 }
             }
-            var configuredManagers = await parseAPIManagerConfig(pluginConfig, options);
-            expect(configuredManagers).to.deep.equal(expectedManagers);
+            await parseAPIManagerConfig(pluginConfig, options);
+            expect(pluginConfig.apimanager).to.deep.equal(expectedManagers);
         });
 
         it('should succeed with a default plus group based API-Manager', async () => {
-            var pluginConfig = { 
+            const pluginConfig = { 
                 apimanager: {
                     url: "http://my.api-manager.com:8075, group-a|http://my.group-a-api-manager.com:8075", 
 				    username: "user", password: "password" 
                 }
 			};
             var expectedManagers = {
+                url: "http://my.api-manager.com:8075, group-a|http://my.group-a-api-manager.com:8075", 
+                username: "user", password: "password",
                 "perGroupAndRegion": true,
                 "default": {
                     url: "http://my.api-manager.com:8075",
@@ -65,18 +68,20 @@ describe('Test API-Manager configuration variations', () => {
                     username: "user", password: "password"
                 }
             }
-            var configuredManagers = await parseAPIManagerConfig(pluginConfig, options);
-            expect(configuredManagers).to.deep.equal(expectedManagers);
+            await parseAPIManagerConfig(pluginConfig, options);
+            expect(pluginConfig.apimanager).to.deep.equal(expectedManagers);
         });
 
         it('should succeed with a default plus group plus region based API-Manager', async () => {
-            var pluginConfig = { 
+            const pluginConfig = { 
                 apimanager: {
                     url: "http://my.api-manager.com:8075, group-a|http://my.group-a-api-manager.com:8075, group-b|US|http://my.group-b-us-api-manager.com:8075", 
 				    username: "user", password: "password" 
                 }
 			};
             var expectedManagers = {
+                url: "http://my.api-manager.com:8075, group-a|http://my.group-a-api-manager.com:8075, group-b|US|http://my.group-b-us-api-manager.com:8075", 
+                username: "user", password: "password",
                 "perGroupAndRegion": true,
                 "default": {
                     url: "http://my.api-manager.com:8075",
@@ -91,18 +96,20 @@ describe('Test API-Manager configuration variations', () => {
                     username: "user", password: "password"
                 }
             }
-            var configuredManagers = await parseAPIManagerConfig(pluginConfig, options);
-            expect(configuredManagers).to.deep.equal(expectedManagers);
+            await parseAPIManagerConfig(pluginConfig, options);
+            expect(pluginConfig.apimanager).to.deep.equal(expectedManagers);
         });
 
         it('should succeed without a default API-Manager only group based', async () => {
-            var pluginConfig = { 
+            const pluginConfig = { 
                 apimanager: {
                     url: "group-a|http://my.group-a-api-manager.com:8075, group-b|US|http://my.group-b-us-api-manager.com:8075", 
 				    username: "user", password: "password" 
                 }
 			};
             var expectedManagers = {
+                url: "group-a|http://my.group-a-api-manager.com:8075, group-b|US|http://my.group-b-us-api-manager.com:8075", 
+				username: "user", password: "password",
                 "perGroupAndRegion": true,
                 "group-a": {
                     url: "http://my.group-a-api-manager.com:8075",
@@ -113,8 +120,8 @@ describe('Test API-Manager configuration variations', () => {
                     username: "user", password: "password"
                 }
             }
-            var configuredManagers = await parseAPIManagerConfig(pluginConfig, options);
-            expect(configuredManagers).to.deep.equal(expectedManagers);
+            await parseAPIManagerConfig(pluginConfig, options);
+            expect(pluginConfig.apimanager).to.deep.equal(expectedManagers);
         });
     });
 
@@ -134,7 +141,7 @@ describe('Test API-Manager configuration variations', () => {
                 }
             }
             var result = await checkAPIManagers(configuredManagers, options);
-            expect(result).to.equal(true);
+            expect(result.isValid).to.equal(true);
             expect(configuredManagers.default.isValid).to.equal(true);
         });
 
@@ -152,7 +159,7 @@ describe('Test API-Manager configuration variations', () => {
                 }
             }
             var result = await checkAPIManagers(configuredManagers, options);
-            expect(result).to.equal(false);
+            expect(result.isValid).to.equal(false);
             expect(configuredManagers.default.isValid).to.equal(false);
         });
 
@@ -178,7 +185,7 @@ describe('Test API-Manager configuration variations', () => {
                 },
             }
             var result = await checkAPIManagers(configuredManagers, options);
-            expect(result).to.equal(true);
+            expect(result.isValid).to.equal(true);
             expect(configuredManagers.default.isValid).to.equal(true);
             expect(configuredManagers.default.isValid).to.equal(true);
         });
@@ -205,7 +212,7 @@ describe('Test API-Manager configuration variations', () => {
                 },
             }
             var result = await checkAPIManagers(configuredManagers, options);
-            expect(result).to.equal(false);
+            expect(result.isValid).to.equal(false);
             expect(configuredManagers.default.isValid).to.equal(true);
             expect(configuredManagers['group-a'].isValid).to.equal(false);
         });

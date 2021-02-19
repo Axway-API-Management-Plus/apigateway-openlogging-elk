@@ -32,11 +32,11 @@ async function getPlugin(pluginConfig, options) {
 		if(!pluginConfig.apigateway.url) {
 			throw new Error(`Required parameter: apigateway.url is not set.`);
 		}
-		pluginConfig.apimanager = await parseAPIManagerConfig(pluginConfig, options);
+		await parseAPIManagerConfig(pluginConfig, options);
 		if(pluginConfig.validateConfig==true) {
-			var isValid = await checkAPIManagers(pluginConfig.apimanager, options);
-			if(!isValid) {
-				throw new Error(`Error checking configured API-Manager(s). ${JSON.stringify(pluginConfig.apimanager)}`);
+			var result = await checkAPIManagers(pluginConfig.apimanager, options);
+			if(!result.isValid) {
+				throw new Error(`Error checking configured API-Manager(s). ${JSON.stringify(result)}`);
 			} else {
 				options.logger.info("Connection to API-Manager successfully validated.");
 			}
