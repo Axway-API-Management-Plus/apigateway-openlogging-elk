@@ -3,7 +3,7 @@ const { SDK } = require('@axway/api-builder-sdk');
 const { lookupCurrentUser, lookupAPIDetails, getCustomPropertiesConfig, isIgnoreAPI, lookupApplication } = require('./actions');
 const { mergeCustomProperties } = require('./customProperties');
 const NodeCache = require( "node-cache" );
-const { sendRequest, _getSession, getManagerConfig } = require('./utils');
+const { checkAPIManagers, parseAPIManagerConfig } = require('./utils');
 const https = require('https');
 
 /**
@@ -32,44 +32,11 @@ async function getPlugin(pluginConfig, options) {
 		if(!pluginConfig.apigateway.url) {
 			throw new Error(`Required parameter: apigateway.url is not set.`);
 		}
-		if(!pluginConfig.apimanager.url) {
-			// If no API-Manager URL is given, use the Admin-Node-Manager URL
-			const managerURL = new URL(pluginConfig.apigateway.url);
-			managerURL.port = 8075;
-			pluginConfig.apimanager.url = managerURL.toString();
-		} else {
-			// Check, if multiple API-Manager URLs based on the groupId and regions are given (Format: groupId|managerUrl or groupId|region|managerUrl)
-			if(pluginConfig.apimanager.url.indexOf('|')!=-1) {
-				pluginConfig.apimanager.perGroupAndRegion = true;
-				// Looks like manager URLs are given based on groupIds and regions
-				pluginConfig.apimanager.url.split(',').forEach(groupRegionAndURL => {
-					groupRegionAndURL = groupRegionAndURL.trim().toLowerCase().split('|');
-					if(groupRegionAndURL.length == 1) {
-						// The default API-Manager
-						pluginConfig.apimanager.url = groupRegionAndURL[0]
-					} else if(groupRegionAndURL.length == 2) {
-						// Just the Group-ID is given
-						pluginConfig.apimanager[groupRegionAndURL[0]] = { url: groupRegionAndURL[1] };
-					} else if(groupRegionAndURL.length == 3) {
-						// Group-ID and region is given (Just create a map with a special key)
-						pluginConfig.apimanager[`${groupRegionAndURL[0]}###${groupRegionAndURL[1]}`] = { url: groupRegionAndURL[2] };
-					} else {
-						return Promise.reject(`Unexpected API-Manager format: ${groupRegionAndURL}`);
-
-					}
-				});
-			}
-		}
-		if(!pluginConfig.apimanager.username) {
-			throw new Error(`Required parameter: apimanager.username is not set.`)
-		}
-		if(!pluginConfig.apimanager.password) {
-			throw new Error(`Required parameter: apimanager.password is not set.`)
-		}
+		pluginConfig.apimanager = await parseAPIManagerConfig(pluginConfig);
 		if(pluginConfig.validateConfig==true) {
-			var isAdmin = await isAPIManagerUserAdmin(pluginConfig.apimanager, options.logger);
-			if(!isAdmin) {
-				throw new Error(`Configured API-Manager user: ${pluginConfig.apimanager.username} is either incorrect or has no Admin-Role.`);
+			var isValid = await checkAPIManagers(pluginConfig.apimanager, options.logger);
+			if(!isValid) {
+				throw new Error(`Error checking configured API-Manager(s). ${JSON.stringify(pluginConfig.apimanager)}`);
 			} else {
 				options.logger.info("Connection to API-Manager successfully validated.");
 			}
@@ -80,65 +47,6 @@ async function getPlugin(pluginConfig, options) {
 
 	sdk.load(path.resolve(__dirname, 'flow-nodes.yml'), {lookupCurrentUser, lookupAPIDetails, getCustomPropertiesConfig, mergeCustomProperties, isIgnoreAPI, lookupApplication }, { pluginContext: { cache: cache }, pluginConfig});
 	return sdk.getPlugin();
-}
-
-async function isAPIManagerUserAdmin(apiManagerConfig, logger) {
-	let groupIds = [];
-	if(apiManagerConfig.url.indexOf('#') != -1) {
-		apiManagerConfig.url.split(',').forEach(groupAndURL => {
-			groupAndURL = groupAndURL.trim().split();
-			groupIds.push(getManagerConfig(apiManagerConfig, groupAndURL[0]));
-		});
-	} else {
-		// The groupId doesn't matter if we don't have multiple configured
-		groupIds[0] = "NOT_SPECIFIED";
-	}
-	for (var i = 0; i < groupIds.length; ++i) {
-		var groupId = groupIds[i].trim();	
-		let config = getManagerConfig(apiManagerConfig, groupId);
-		try {
-			var data = `username=${config.username}&password=${config.password}`;
-			var options = {
-				path: `/api/portal/v1.3/login`,
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/x-www-form-urlencoded',
-					'Content-Length': data.length
-				},
-				agent: new https.Agent({ rejectUnauthorized: false })
-			};
-			const result = await sendRequest(config.url, options, data, 303)
-				.then(response => {
-					return response;
-				})
-				.catch(err => {
-					throw new Error(`Cannot login to API-Manager: '${config.url}'. Got error: ${err}`);
-				});
-			const session = _getSession(result.headers);
-			var options = {
-				path: `/api/portal/v1.3/currentuser`,
-				headers: {
-					'Cookie': `APIMANAGERSESSION=${session}`
-				},
-				agent: new https.Agent({ rejectUnauthorized: false })
-			};
-			const currentUser = await sendRequest(apiManagerConfig.url, options)
-				.then(response => {
-					return response;
-				})
-				.catch(err => {
-					throw new Error(`Cant get current user: ${err}`);
-				});
-			if(currentUser.body.role!='admin') {
-				logger.error(`User: ${currentUser.body.loginName} has no admin role.`);
-				return false;
-			}
-			return true;
-		} catch (ex) {
-			logger.error(ex);
-			throw ex;
-		}
-	}
 }
 
 /**

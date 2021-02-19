@@ -92,7 +92,7 @@ describe('Configuration parameter tests', () => {
 				expect(output).to.equal('error');
 			} catch(e) {
 				expect(e).to.be.an('Error')
-				.and.to.have.property('message', 'Configured API-Manager user: user is either incorrect or has no Admin-Role.');
+				.and.to.have.property('message', 'Error checking configured API-Manager(s). {"default":{"url":"https://mocked-api-gateway:8175","username":"user","password":"invalid","isValid":false}}');
 			}
 			nock.cleanAll();
 		});

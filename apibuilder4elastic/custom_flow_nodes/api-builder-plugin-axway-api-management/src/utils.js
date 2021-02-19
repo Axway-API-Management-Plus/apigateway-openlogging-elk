@@ -85,32 +85,139 @@ function isDeveloperMode() {
 	}
 }
 
+async function parseAPIManagerConfig(pluginConfig) {
+	var configuredManagers = {};
+	if(!pluginConfig.apimanager.username) {
+		throw new Error(`Required parameter: apimanager.username is not set.`)
+	}
+	if(!pluginConfig.apimanager.password) {
+		throw new Error(`Required parameter: apimanager.password is not set.`)
+	}
+	if(!pluginConfig.apimanager.url) {
+		// If no API-Manager URL is given, use the Admin-Node-Manager URL
+		const managerURL = new URL(pluginConfig.apigateway.url);
+		managerURL.port = 8075;
+		configuredManagers = {
+			default: {
+				url: managerURL.toString(),
+				username: pluginConfig.apimanager.username,
+				password: pluginConfig.apimanager.password
+			}
+		}
+	} else {
+		// Check, if multiple API-Manager URLs based on the groupId and regions are given (Format: groupId|managerUrl or groupId|region|managerUrl)
+		if(pluginConfig.apimanager.url.indexOf('|')!=-1) {
+			configuredManagers.perGroupAndRegion = true;
+			// Looks like manager URLs are given based on groupIds and regions
+			pluginConfig.apimanager.url.split(',').forEach(groupRegionAndURL => {
+				groupRegionAndURL = groupRegionAndURL.trim().toLowerCase().split('|');
+				if(groupRegionAndURL.length == 1) {
+					// The default API-Manager
+					configuredManagers.default = { url: groupRegionAndURL[0], username: pluginConfig.apimanager.username, password: pluginConfig.apimanager.password } 
+				} else if(groupRegionAndURL.length == 2) {
+					// Only the Group-ID is given
+					configuredManagers[groupRegionAndURL[0]] = { url: groupRegionAndURL[1], username: pluginConfig.apimanager.username, password: pluginConfig.apimanager.password } 
+				} else if(groupRegionAndURL.length == 3) {
+					// Group-ID and region is given (Just create a map with a special key)
+					configuredManagers[`${groupRegionAndURL[0]}###${groupRegionAndURL[1]}`] = { url: groupRegionAndURL[2], username: pluginConfig.apimanager.username, password: pluginConfig.apimanager.password} 
+				} else {
+					return Promise.reject(`Unexpected API-Manager format: ${groupRegionAndURL}`);
+				}
+			});
+		} else { // If not, create a default API-Manager
+			configuredManagers = {
+				default: {
+					url: pluginConfig.apimanager.url,
+					username: pluginConfig.apimanager.username,
+					password: pluginConfig.apimanager.password
+				}
+			}
+		}
+	}
+	return configuredManagers;
+}
+
 function getManagerConfig(apiManagerConfig, groupId, region) {
 	if(groupId == undefined && region == undefined) {
-		return apiManagerConfig;
+		if(apiManagerConfig.default == undefined) {
+			throw new Error(`Cannot return API-Manager config without groupId and region as no default API-Manager is configured.`);
+		} else {
+			return apiManagerConfig.default;
+		}
 	}
 	var key = groupId;
 	if(region != undefined) {
 		key = `${groupId}###${region}`.toLowerCase();
 	}
+	// Check if the requested combination based on groupId and region exists and return it directly
 	if (apiManagerConfig[key]) {
-		if (!apiManagerConfig[key].password) {
-			apiManagerConfig[key].password = apiManagerConfig.password;
-			apiManagerConfig[key].username = apiManagerConfig.username;
-		}
 		return apiManagerConfig[key];
 	} else {
-		if (apiManagerConfig.perGroupAndRegion) {
-			throw new Error(`You have configured API-Manager URLs based on groupIds (e.g. group-a|https://manager-host.com:8075), but the groupId: ${groupId} is NOT configured. Please check the configuration parameter: API_MANAGER`);
+	// 
+		if (apiManagerConfig.perGroupAndRegion && !apiManagerConfig.default) {
+			throw new Error(`You have configured API-Manager URLs based on groupIds (e.g. group-a|https://manager-host.com:8075), but the groupId: ${groupId} is NOT configured and no default is configured. Please check the configuration parameter: API_MANAGER`);
 		}
-		return apiManagerConfig;
+		return apiManagerConfig.default;
 	}
+}
+
+async function checkAPIManagers(apiManagerConfig, logger) {
+	var finalResult = true;
+	for (const [key, config] of Object.entries(apiManagerConfig)) {
+		if(key == "perGroupAndRegion") continue;
+		try {
+			var data = `username=${config.username}&password=${config.password}`;
+			var options = {
+				path: `/api/portal/v1.3/login`,
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/x-www-form-urlencoded',
+					'Content-Length': data.length
+				},
+				agent: new https.Agent({ rejectUnauthorized: false })
+			};
+			const result = await sendRequest(config.url, options, data, 303)
+				.then(response => {
+					return response;
+				})
+				.catch(err => {
+					throw new Error(`Cannot login to API-Manager: '${config.url}'. Got error: ${err}`);
+				});
+			const session = _getSession(result.headers);
+			var options = {
+				path: `/api/portal/v1.3/currentuser`,
+				headers: {
+					'Cookie': `APIMANAGERSESSION=${session}`
+				},
+				agent: new https.Agent({ rejectUnauthorized: false })
+			};
+			const currentUser = await sendRequest(config.url, options)
+				.then(response => {
+					return response;
+				})
+				.catch(err => {
+					throw new Error(`Cant get current user: ${err}`);
+				});
+			if(currentUser.body.role!='admin') {
+				logger.error(`User: ${currentUser.body.loginName} has no admin role on API-Manager: ${config.url}.`);
+				config.isValid = false;
+				finalResult = false;
+			} else {
+				config.isValid = true;
+			}
+		} catch (ex) {
+			logger.error(ex);
+			throw ex;
+		}
+	}
+	return finalResult;
 }
 
 module.exports = {
     sendRequest, 
     _getCookie, 
-    _getSession, 
 	isDeveloperMode, 
-	getManagerConfig
+	getManagerConfig,
+	checkAPIManagers,
+	parseAPIManagerConfig
 }
