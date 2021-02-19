@@ -34,7 +34,7 @@ async function getPlugin(pluginConfig, options) {
 		}
 		pluginConfig.apimanager = await parseAPIManagerConfig(pluginConfig, options);
 		if(pluginConfig.validateConfig==true) {
-			var isValid = await checkAPIManagers(pluginConfig.apimanager, options.logger);
+			var isValid = await checkAPIManagers(pluginConfig.apimanager, options);
 			if(!isValid) {
 				throw new Error(`Error checking configured API-Manager(s). ${JSON.stringify(pluginConfig.apimanager)}`);
 			} else {

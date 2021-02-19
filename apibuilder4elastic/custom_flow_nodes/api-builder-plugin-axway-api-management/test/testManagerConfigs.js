@@ -4,14 +4,16 @@ const simple = require('simple-mock');
 const nock = require('nock');
 
 describe('Test API-Manager configuration variations', () => {
-    var logger = {
+    var options = { logger: {
         info: simple.mock(),
         trace: simple.mock(),
-        error: simple.mock()
-    }
+        error: simple.mock(), 
+        debug: simple.mock()
+    } };
 
     describe('Test API-Manager parsing', () => {
         it('should succeed with a single API-Manager configured', async () => {
+            debugger;
             var pluginConfig = { 
                 apimanager: {
 				    url: "http://my.api-manager.com:8075", 
@@ -24,7 +26,7 @@ describe('Test API-Manager configuration variations', () => {
                     username: "user", password: "password"
                 }
             }
-            var configuredManagers = await parseAPIManagerConfig(pluginConfig, logger);
+            var configuredManagers = await parseAPIManagerConfig(pluginConfig, options);
             expect(configuredManagers).to.deep.equal(expectedManagers);
         });
 
@@ -41,7 +43,7 @@ describe('Test API-Manager configuration variations', () => {
                     username: "user", password: "password"
                 }
             }
-            var configuredManagers = await parseAPIManagerConfig(pluginConfig, logger);
+            var configuredManagers = await parseAPIManagerConfig(pluginConfig, options);
             expect(configuredManagers).to.deep.equal(expectedManagers);
         });
 
@@ -63,7 +65,7 @@ describe('Test API-Manager configuration variations', () => {
                     username: "user", password: "password"
                 }
             }
-            var configuredManagers = await parseAPIManagerConfig(pluginConfig, logger);
+            var configuredManagers = await parseAPIManagerConfig(pluginConfig, options);
             expect(configuredManagers).to.deep.equal(expectedManagers);
         });
 
@@ -89,7 +91,7 @@ describe('Test API-Manager configuration variations', () => {
                     username: "user", password: "password"
                 }
             }
-            var configuredManagers = await parseAPIManagerConfig(pluginConfig, logger);
+            var configuredManagers = await parseAPIManagerConfig(pluginConfig, options);
             expect(configuredManagers).to.deep.equal(expectedManagers);
         });
 
@@ -111,7 +113,7 @@ describe('Test API-Manager configuration variations', () => {
                     username: "user", password: "password"
                 }
             }
-            var configuredManagers = await parseAPIManagerConfig(pluginConfig, logger);
+            var configuredManagers = await parseAPIManagerConfig(pluginConfig, options);
             expect(configuredManagers).to.deep.equal(expectedManagers);
         });
     });
@@ -131,7 +133,7 @@ describe('Test API-Manager configuration variations', () => {
                     username: "user", password: "password"
                 }
             }
-            var result = await checkAPIManagers(configuredManagers, logger);
+            var result = await checkAPIManagers(configuredManagers, options);
             expect(result).to.equal(true);
             expect(configuredManagers.default.isValid).to.equal(true);
         });
@@ -149,7 +151,7 @@ describe('Test API-Manager configuration variations', () => {
                     username: "user", password: "password"
                 }
             }
-            var result = await checkAPIManagers(configuredManagers, logger);
+            var result = await checkAPIManagers(configuredManagers, options);
             expect(result).to.equal(false);
             expect(configuredManagers.default.isValid).to.equal(false);
         });
@@ -175,7 +177,7 @@ describe('Test API-Manager configuration variations', () => {
                     username: "user", password: "password"
                 },
             }
-            var result = await checkAPIManagers(configuredManagers, logger);
+            var result = await checkAPIManagers(configuredManagers, options);
             expect(result).to.equal(true);
             expect(configuredManagers.default.isValid).to.equal(true);
             expect(configuredManagers.default.isValid).to.equal(true);
@@ -202,7 +204,7 @@ describe('Test API-Manager configuration variations', () => {
                     username: "user", password: "password"
                 },
             }
-            var result = await checkAPIManagers(configuredManagers, logger);
+            var result = await checkAPIManagers(configuredManagers, options);
             expect(result).to.equal(false);
             expect(configuredManagers.default.isValid).to.equal(true);
             expect(configuredManagers['group-a'].isValid).to.equal(false);

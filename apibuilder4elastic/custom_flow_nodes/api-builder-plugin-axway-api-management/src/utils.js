@@ -167,13 +167,13 @@ function getManagerConfig(apiManagerConfig, groupId, region) {
 	}
 }
 
-async function checkAPIManagers(apiManagerConfig, logger) {
+async function checkAPIManagers(apiManagerConfig, options) {
 	var finalResult = true;
 	for (const [key, config] of Object.entries(apiManagerConfig)) {
 		if(key == "perGroupAndRegion") continue;
 		try {
 			var data = `username=${config.username}&password=${config.password}`;
-			var options = {
+			var reqOptions = {
 				path: `/api/portal/v1.3/login`,
 				method: 'POST',
 				headers: {
@@ -182,7 +182,7 @@ async function checkAPIManagers(apiManagerConfig, logger) {
 				},
 				agent: new https.Agent({ rejectUnauthorized: false })
 			};
-			const result = await sendRequest(config.url, options, data, 303)
+			const result = await sendRequest(config.url, reqOptions, data, 303)
 				.then(response => {
 					return response;
 				})
@@ -190,14 +190,14 @@ async function checkAPIManagers(apiManagerConfig, logger) {
 					throw new Error(`Cannot login to API-Manager: '${config.url}'. Got error: ${err}`);
 				});
 			const session = _getSession(result.headers);
-			var options = {
+			var reqOptions = {
 				path: `/api/portal/v1.3/currentuser`,
 				headers: {
 					'Cookie': `APIMANAGERSESSION=${session}`
 				},
 				agent: new https.Agent({ rejectUnauthorized: false })
 			};
-			const currentUser = await sendRequest(config.url, options)
+			const currentUser = await sendRequest(config.url, reqOptions)
 				.then(response => {
 					return response;
 				})
@@ -205,14 +205,14 @@ async function checkAPIManagers(apiManagerConfig, logger) {
 					throw new Error(`Cant get current user: ${err}`);
 				});
 			if(currentUser.body.role!='admin') {
-				logger.error(`User: ${currentUser.body.loginName} has no admin role on API-Manager: ${config.url}.`);
+				options.logger.error(`User: ${currentUser.body.loginName} has no admin role on API-Manager: ${config.url}.`);
 				config.isValid = false;
 				finalResult = false;
 			} else {
 				config.isValid = true;
 			}
 		} catch (ex) {
-			logger.error(ex);
+			options.logger.error(ex);
 			throw ex;
 		}
 	}
