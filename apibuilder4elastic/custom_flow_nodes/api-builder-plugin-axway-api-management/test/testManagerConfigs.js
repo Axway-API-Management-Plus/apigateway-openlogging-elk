@@ -24,7 +24,7 @@ describe('Test API-Manager configuration variations', () => {
                     username: "user", password: "password"
                 }
             }
-            var configuredManagers = await parseAPIManagerConfig(pluginConfig);
+            var configuredManagers = await parseAPIManagerConfig(pluginConfig, logger);
             expect(configuredManagers).to.deep.equal(expectedManagers);
         });
 
@@ -41,7 +41,7 @@ describe('Test API-Manager configuration variations', () => {
                     username: "user", password: "password"
                 }
             }
-            var configuredManagers = await parseAPIManagerConfig(pluginConfig);
+            var configuredManagers = await parseAPIManagerConfig(pluginConfig, logger);
             expect(configuredManagers).to.deep.equal(expectedManagers);
         });
 
@@ -63,7 +63,7 @@ describe('Test API-Manager configuration variations', () => {
                     username: "user", password: "password"
                 }
             }
-            var configuredManagers = await parseAPIManagerConfig(pluginConfig);
+            var configuredManagers = await parseAPIManagerConfig(pluginConfig, logger);
             expect(configuredManagers).to.deep.equal(expectedManagers);
         });
 
@@ -89,7 +89,7 @@ describe('Test API-Manager configuration variations', () => {
                     username: "user", password: "password"
                 }
             }
-            var configuredManagers = await parseAPIManagerConfig(pluginConfig);
+            var configuredManagers = await parseAPIManagerConfig(pluginConfig, logger);
             expect(configuredManagers).to.deep.equal(expectedManagers);
         });
 
@@ -111,7 +111,7 @@ describe('Test API-Manager configuration variations', () => {
                     username: "user", password: "password"
                 }
             }
-            var configuredManagers = await parseAPIManagerConfig(pluginConfig);
+            var configuredManagers = await parseAPIManagerConfig(pluginConfig, logger);
             expect(configuredManagers).to.deep.equal(expectedManagers);
         });
     });

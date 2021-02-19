@@ -85,7 +85,7 @@ function isDeveloperMode() {
 	}
 }
 
-async function parseAPIManagerConfig(pluginConfig) {
+async function parseAPIManagerConfig(pluginConfig, options) {
 	var configuredManagers = {};
 	if(!pluginConfig.apimanager.username) {
 		throw new Error(`Required parameter: apimanager.username is not set.`)
@@ -97,6 +97,7 @@ async function parseAPIManagerConfig(pluginConfig) {
 		// If no API-Manager URL is given, use the Admin-Node-Manager URL
 		const managerURL = new URL(pluginConfig.apigateway.url);
 		managerURL.port = 8075;
+		options.logger.info(`Parameter API_MANAGER not set. Expect API-Manager on URL: ${managerURL.toString()}`);
 		configuredManagers = {
 			default: {
 				url: managerURL.toString(),
@@ -108,23 +109,28 @@ async function parseAPIManagerConfig(pluginConfig) {
 		// Check, if multiple API-Manager URLs based on the groupId and regions are given (Format: groupId|managerUrl or groupId|region|managerUrl)
 		if(pluginConfig.apimanager.url.indexOf('|')!=-1) {
 			configuredManagers.perGroupAndRegion = true;
+			options.logger.info(`Parse group/region based API_MANAGER: ${pluginConfig.apimanager.url}.`);
 			// Looks like manager URLs are given based on groupIds and regions
 			pluginConfig.apimanager.url.split(',').forEach(groupRegionAndURL => {
 				groupRegionAndURL = groupRegionAndURL.trim().toLowerCase().split('|');
 				if(groupRegionAndURL.length == 1) {
 					// The default API-Manager
+					options.logger.debug(`Found default API-Manager URL: ${groupRegionAndURL[0]}`);
 					configuredManagers.default = { url: groupRegionAndURL[0], username: pluginConfig.apimanager.username, password: pluginConfig.apimanager.password } 
 				} else if(groupRegionAndURL.length == 2) {
 					// Only the Group-ID is given
+					options.logger.debug(`Found API-Manager URL: ${groupRegionAndURL[1]} for group: ${groupRegionAndURL[0]}`);
 					configuredManagers[groupRegionAndURL[0]] = { url: groupRegionAndURL[1], username: pluginConfig.apimanager.username, password: pluginConfig.apimanager.password } 
 				} else if(groupRegionAndURL.length == 3) {
 					// Group-ID and region is given (Just create a map with a special key)
+					options.logger.debug(`Found API-Manager URL: ${groupRegionAndURL[2]} for group: ${groupRegionAndURL[1]} and region: ${groupRegionAndURL[1]}`);
 					configuredManagers[`${groupRegionAndURL[0]}###${groupRegionAndURL[1]}`] = { url: groupRegionAndURL[2], username: pluginConfig.apimanager.username, password: pluginConfig.apimanager.password} 
 				} else {
 					return Promise.reject(`Unexpected API-Manager format: ${groupRegionAndURL}`);
 				}
 			});
 		} else { // If not, create a default API-Manager
+			options.logger.info(`Using only default API_MANAGER: ${pluginConfig.apimanager.url}.`);
 			configuredManagers = {
 				default: {
 					url: pluginConfig.apimanager.url,

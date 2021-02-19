@@ -32,7 +32,7 @@ async function getPlugin(pluginConfig, options) {
 		if(!pluginConfig.apigateway.url) {
 			throw new Error(`Required parameter: apigateway.url is not set.`);
 		}
-		pluginConfig.apimanager = await parseAPIManagerConfig(pluginConfig);
+		pluginConfig.apimanager = await parseAPIManagerConfig(pluginConfig, options);
 		if(pluginConfig.validateConfig==true) {
 			var isValid = await checkAPIManagers(pluginConfig.apimanager, options.logger);
 			if(!isValid) {
