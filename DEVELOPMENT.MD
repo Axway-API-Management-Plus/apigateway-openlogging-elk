@@ -21,6 +21,8 @@
 4. Create the release
 - Create a new release on Github with the tag name: e.g. v2.0.2
 
+5. Merge back master to developer for next development iteration
+
 ## Create the shipped certificates
 
 To generate the sample keys and certificates we are using the Elasticsearch cert-util: 
