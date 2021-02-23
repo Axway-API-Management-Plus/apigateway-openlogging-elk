@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 - Log-Retention-Period for Trace-Messages from 75 days to 30 days [#77](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/77)
 
+### Added
+- Added FAQ to make clear, that AWS Elasticsearch service is not supported [#78](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/78)
+
 ## [2.1.1] 2021-02-05
 ### Fixed
 - Race-Condition, causing wrong organization assigned to API under heavy load [#75](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/75)

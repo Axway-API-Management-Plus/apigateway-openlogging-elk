@@ -1181,6 +1181,11 @@ Yes, all indicies are configured to have one replica and therefore it's safe to 
 
 Tests show that Filebeat can send more than 3,000 events per second to Logstash instances. Tests show that Filebeat can send more than 2,200 events per second to Logstash instances. Of course, this number also depends on the event type. Trace messages can be processed faster than OpenTraffic event logs, for example. You can find an example [here](#imgs/stack-monitoring/stack-monitoring-beats-instances.png).
 
+### Can I use AWS Elasticsearch service?
+
+No, the solution does not support AWS Elasticsearch Service because some important features that are part of X-Pack are not supported by AWS. For example, index lifecycle management ([ILM](https://www.elastic.co/guide/en/elasticsearch/reference/current/index-lifecycle-management.html)).
+
+
 ## Known issues
 N/A
   
