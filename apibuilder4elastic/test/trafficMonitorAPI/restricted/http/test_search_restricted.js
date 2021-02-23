@@ -44,7 +44,7 @@ describe('Endpoints', function () {
 	});
 
 	describe('Search', () => {
-		it.only('[Restricted-Search-0001] Execute a search as Org-Admin without any filter - Only two of them belong to Chris-Org', () => {
+		it('[Restricted-Search-0001] Execute a search as Org-Admin without any filter - Only two of them belong to Chris-Org', () => {
 			nock('https://mocked-api-gateway:8090').get('/api/rbac/currentuser').reply(200, { "result": "chris" });
 			nock('https://mocked-api-gateway:8090').get('/api/rbac/permissions/currentuser').replyWithFile(200, './test/mockedReplies/apigateway/operatorChris.json');
 			nock('https://mocked-api-gateway:8075').get(`/api/portal/v1.3/users?field=loginName&op=eq&value=chris&field=enabled&op=eq&value=enabled`).replyWithFile(200, './test/mockedReplies/apimanager/apiManagerUserChris.json');		
