@@ -813,6 +813,8 @@ In particular the Traffic-Summary and Traffic-Details indicies become huge and t
 | up to 25 Mio (~300 TPS)  | 1 TB              | 3 Elasticsearch nodes, each with 500 GB |
 | up to 50 Mio (~600 TPS)  | 2 TB              | 4 Elasticsearch nodes, each with 500 GB |
 
+Tests were performed with log level __INFO__. If you run your API gateways with DEBUG or have an unusually high number of log messages, more disk space may be necessary.  
+
 If the required storage space is unexpectedly higher, then you can do the following:  
 - add an additional Elasticsearch cluster node at a later time.  
   - Elasticsearch will then start balancing the cluster by moving shards to this new node  
