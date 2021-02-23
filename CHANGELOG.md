@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 - Parse error when using multiple API_MANAGER configuration [#76](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/76)
 
+### Changed
+- Log-Retention-Period for Trace-Messages from 75 days to 30 days [#77](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/77)
+
 ## [2.1.1] 2021-02-05
 ### Fixed
 - Race-Condition, causing wrong organization assigned to API under heavy load [#75](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/75)
