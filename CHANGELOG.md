@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## Unreleased
+### Fixed
+- API builder mistakenly tries to create the regional index again [#81](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/81)
+
 ## [2.1.2] 2021-02-23
 ### Fixed
 - Parse error when using multiple API_MANAGER configuration [#76](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/76)
