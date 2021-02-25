@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    apigw.version: {{ .Values.global.apimVersion | quote }}
+    apigw.editor: {{ .Values.global.editor | quote }}
+  labels:
+    app: {{ .Values.memcached.name }}
+  name: {{ .Values.memcached.name }}
+  namespace: {{ .Values.global.namespace }}
+spec:
+  replicas: {{ .Values.memcached.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.memcached.name | quote }}
+  strategy:
+    type: {{ .Values.global.updateStrategy }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.memcached.name | quote }}
+    spec:
+      containers:
+      - env:
+        - name: TZ
+          value: "{{ .Values.global.timeZone }}"
+        image: {{ .Values.memcached.imageName }}:{{ .Values.memcached.buildTag }}
+        imagePullPolicy: {{ .Values.global.pullPolicy | quote }}
+        name: {{ .Values.memcached.name }}
+        ports:
+        - containerPort: {{ .Values.memcached.trafficPort }}
+        resources:
+          limits:
+            memory: {{ .Values.memcached.memoryLimits | quote }}
+            cpu: {{ .Values.memcached.cpuLimits | quote }}
+          requests:
+            memory: {{ .Values.memcached.memoryRequests | quote }}
+            cpu: {{ .Values.memcached.cpuRequests | quote }}
+        readinessProbe:
+          tcpSocket:
+            port: {{ .Values.memcached.trafficPort }}
+          initialDelaySeconds: 40
+          periodSeconds: 30
+        livenessProbe:
+          tcpSocket:
+            port: {{ .Values.memcached.trafficPort }}
+          initialDelaySeconds: 30
+          periodSeconds: 30
+        lifecycle:
+          preStop:
+            exec:
+              command: ["sleep","90"]
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      restartPolicy: Always
+      serviceAccountName: {{ .Values.global.serviceAccountName }}
+      volumes: null
+status: {}
