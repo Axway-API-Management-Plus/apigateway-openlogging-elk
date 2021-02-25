@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 - Field correlationId now has doc_values enabled / New index field: transactionId [#84](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/84)
+- Hot-Phase reduced from 15 to 10 days moved 5 days to Warm phase - Making it possible to delete rolled indices earlier on a manual basis
 
 ## [2.1.2] 2021-02-23
 ### Fixed
