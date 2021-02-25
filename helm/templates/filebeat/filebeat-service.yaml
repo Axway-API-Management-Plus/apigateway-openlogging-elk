@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: {{ .Values.filebeat.name | quote }}
+  name: {{ .Values.filebeat.name | quote }}
+  namespace: {{ .Values.global.namespace | quote }}
+spec:
+  clusterIP: None
+  ports:
+  - name: {{ .Values.filebeat.name }}
+    port: {{ .Values.filebeat.trafficPort }}
+    targetPort: {{ .Values.filebeat.trafficPort }}
+    protocol: TCP
+  selector:
+    app: {{ .Values.filebeat.name | quote }}
+  sessionAffinity: ClientIP
+  type: ClusterIP

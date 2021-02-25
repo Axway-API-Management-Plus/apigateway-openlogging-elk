@@ -1,0 +1,211 @@
+# Default values for logstash-memcache-apibuilder4elastic
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+global:
+   pullPolicy: IfNotPresent
+   updateStrategy: "RollingUpdate"
+   editor: "Axway"
+   apimVersion: "7.7-20200730"
+   namespace: "axway-jg-lab"
+   domainName: "local"
+   serviceAccountName: ""
+   dockerRegistry:
+      #secret: "registry-secret"
+      #url: "docker-registry.demo.axway.com"
+      #username: ""
+      #token: ""
+   timeZone: "Asia/Singapore"
+   elasticsearch:
+     url: "https://elasticsearch1:9200"
+     hosts: "https://elasticsearch1:9200"
+     clusterUUID: ""
+     cert: "config/certificates/elasticsearch1.crt"
+     certificate_authority: "config/certificates/ca.crt"
+     username: ""
+     password: ""
+   logstash:
+     hosts: "logstash:5044"
+   apibuilder:
+     url: "https://apibuilder4elastic:8443"
+     cert: "config/certificates/apibuilder4elastic.crt"
+   memcached:
+     url: "memcached:11211"
+   hostPath:
+     base: "/Users/jgoh/eclipse-workspace/apim-77-helm-JG-Local/data/"
+
+logstash:
+   name: logstash
+   replicas: 1
+   logstashConfig: {}
+   logstashPipeline: {}
+   extraEnvs: []
+   envFrom: []
+   secrets: []
+   secretMounts: []
+   hostAliases: []
+   image: "docker.elastic.co/logstash/logstash"
+   imageTag: "7.10.0"
+   imagePullSecrets: []
+   podAnnotations: {}
+   labels: {}
+   logstashJavaOpts: "-Xmx1g -Xms1g"
+   resources:
+     requests:
+       cpu: "100m"
+       memory: "1536Mi"
+     limits:
+       cpu: "1000m"
+       memory: "1536Mi"
+   volumeClaimTemplate:
+     accessModes: [ "ReadWriteOnce" ]
+     resources:
+       requests:
+         storage: 1Gi
+   rbac:
+     create: false
+     serviceAccountAnnotations: {}
+     serviceAccountName: ""
+     annotations: {}
+   podSecurityPolicy:
+     create: false
+     name: ""
+     spec:
+       privileged: true
+       fsGroup:
+         rule: RunAsAny
+       runAsUser:
+         rule: RunAsAny
+       seLinux:
+         rule: RunAsAny
+       supplementalGroups:
+         rule: RunAsAny
+       volumes:
+         - secret
+         - configMap
+         - persistentVolumeClaim
+   persistence:
+     enabled: false
+     annotations: {}
+   extraVolumes: ""
+   extraVolumeMounts: ""
+   extraContainers: ""
+   extraInitContainers: ""
+   priorityClassName: ""
+   antiAffinityTopologyKey: "kubernetes.io/hostname"
+   antiAffinity: "hard"
+   nodeAffinity: {}
+   podManagementPolicy: "Parallel"
+   httpPort: 9600
+   extraPorts: []
+   maxUnavailable: 1
+   podSecurityContext:
+     fsGroup: 1000
+     runAsUser: 1000
+   securityContext:
+     capabilities:
+       drop:
+       - ALL
+     # readOnlyRootFilesystem: true
+     runAsNonRoot: true
+     runAsUser: 1000
+   terminationGracePeriod: 120
+   livenessProbe:
+     httpGet:
+       path: /
+       port: 9600
+     initialDelaySeconds: 300
+     periodSeconds: 10
+     timeoutSeconds: 5
+     failureThreshold: 3
+     successThreshold: 1
+   readinessProbe:
+     httpGet:
+       path: /
+       port: 9600
+     initialDelaySeconds: 60
+     periodSeconds: 10
+     timeoutSeconds: 5
+     failureThreshold: 3
+     successThreshold: 3
+   schedulerName: ""
+   nodeSelector: {}
+   tolerations: []
+   nameOverride: ""
+   fullnameOverride: ""
+   lifecycle: {}
+   service: {}
+   ingress:
+     enabled: false
+   trafficPort: 5044
+   node:
+     name: ""
+   userName: ""
+   userPasswd: ""
+   javaOpts: ""
+   xpack:
+     monitoring:
+       enabled: true
+
+memcached:
+   name: "memcached"
+   buildTag: "1.6.6-alpine"
+   imageName: "memcached"
+   ingressName: "memcached"
+   replicaCount: 1
+   pvcQuota: 1
+   trafficPort: 11211
+   memoryLimits: "1Gi"
+   cpuLimits: "2000m"
+   memoryRequests: "1Gi"
+   cpuRequests: "1000m"
+
+apibuilder4elastic:
+   name: "apibuilder4elastic"
+   buildTag: "v2.0.0"
+   imageName: "cwiechmann/apibuilder4elastic"
+   ingressName: "apibuilder4elastic"
+   replicaCount: 1
+   pvcQuota: 1
+   trafficPort: 8080
+   userName: ""
+   userPasswd: ""
+   anm:
+     url: "https://192.168.178.1:8090"
+   apimgr:
+     url: "https://192.168.178.1:8075"
+     adminUser: "apiadmin"
+     adminPasswd: "changeme"
+   ssl:
+     cert: "config/tls.crt"
+     key: "config/tls.key"
+     keyPasswd: ""
+   localAPILookup: ""
+   authzConfig: ""
+   skipPayload: false
+   setupFlows: false
+   logLevel: "debug"
+   memoryLimits: "1Gi"
+   cpuLimits: "2000m"
+   memoryRequests: "1Gi"
+   cpuRequests: "1000m"
+
+filebeat:
+   name: "filebeat"
+   buildTag: "7.10.0"
+   imageName: "docker.elastic.co/beats/filebeat"
+   ingressName: "filebeat"
+   replicaCount: 1
+   pvcQuota: 1
+   trafficPort: 5066
+   userName: ""
+   userPasswd: ""
+   worker: ""
+   apigw:
+     name: "API-Manager"
+     region: ""
+   selfMonitoring: false
+   memoryLimits: "1Gi"
+   cpuLimits: "2000m"
+   memoryRequests: "1Gi"
+   cpuRequests: "1000m"

@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: {{ .Values.apibuilder4elastic.name | quote }}
+  namespace: {{ .Values.global.namespace }}
+  annotations:
+    ncp/http-redirect: "true"
+    kubernetes.io/ingress.class: "nsx"
+spec:
+  tls:
+  - hosts:
+    - apibuilder4elastic.{{ .Values.global.domainName }}
+    secretName: apibuilder4elastic-ingress-cert
+  rules:
+  - host: apibuilder4elastic.{{ .Values.global.domainName }}
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          serviceName: {{ .Values.apibuilder4elastic.name }}
+          servicePort: {{ .Values.apibuilder4elastic.trafficPort }}
