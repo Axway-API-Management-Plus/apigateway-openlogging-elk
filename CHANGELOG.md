@@ -4,12 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+### Added
+- Added initial support to handle API-Transactions (CorrelationID now supports Doc-Values) [#78](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/78)
+
 ## Unreleased
 ### Fixed
 - API builder mistakenly tries to create the regional index again [#81](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/81)
 
-### Added
-- Added initial support to handle API-Transactions (CorrelationID now supports Doc-Values) [#78](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/78)
+### Changed
+- Field correlationId now has doc_values enabled / New index field: transactionId [#84](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/84)
 
 ## [2.1.2] 2021-02-23
 ### Fixed
