@@ -39,7 +39,7 @@ describe('Endpoints', function () {
 				const entryset = require('../../../documents/http/search_test_documents');
 				sendToElasticsearch(elasticConfig, indexName, 'traffic-summary/index_template.json', entryset)
 				.then(() => {
-					resolve();
+					setTimeout(resolve(), 500); // Wait a few moments to give ES the chance to index the data completely
 				})
 				.catch(err => reject(err));
 			});
@@ -581,7 +581,9 @@ describe('Endpoints', function () {
 				expect(body.data[0].correlationId).to.equals('11111111111111111111111111');
 			});
 		});
-		it('[Endpoint-0078] should return one entry with localport 8080 and a part of the original subject ID', async () => {
+		// For any reason, this test-case sometimes returns a result and sometimes not
+		// 
+		it('[Endpoint-0028] should return one entry with localport 8080 and a part of the original subject ID', async () => {
 			return await requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?field=localPort&value=8080&field=subject&value=Chris`,
