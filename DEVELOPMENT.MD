@@ -1,6 +1,9 @@
 ## Create a release
 
-### Bump version
+1. Merge develop to master
+
+2. Bump version number
+
 - docker-compose.yml
   - `image: cwiechmann/apibuilder4elastic:v2.0.0`
 - apibuilder4elastic/package.json
@@ -11,12 +14,14 @@
 - README.md
   - `"version": "v2.0.0",`
 
-### CHANGELOG.md
+3. Modify the CHANGELOG.md
 - Add/Verify recent changes
 - Set the release version and date
 
-### Create the release
-- Create a new release on Github with the tag name: v2.0.2
+4. Create the release
+- Create a new release on Github with the tag name: e.g. v2.0.2
+
+5. Merge back master to developer for next development iteration
 
 ## Create the shipped certificates
 

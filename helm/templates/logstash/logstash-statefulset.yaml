@@ -1,0 +1,240 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Values.logstash.name }}
+  namespace: {{ .Values.global.namespace }}
+  labels:
+    app: {{ .Values.logstash.name | quote }}
+    chart: "{{ .Chart.Name }}"
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    {{- range $key, $value := .Values.logstash.labels }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
+spec:
+  serviceName: {{ .Values.logstash.name }}-headless
+  selector:
+    matchLabels:
+      app: {{ .Values.logstash.name | quote }}
+      release: {{ .Release.Name | quote }}
+  replicas: {{ .Values.logstash.replicas }}
+  podManagementPolicy: {{ .Values.logstash.podManagementPolicy }}
+  updateStrategy:
+    type: {{ .Values.global.updateStrategy }}
+  {{- if .Values.logstash.persistence.enabled }}
+  volumeClaimTemplates:
+  - metadata:
+      name: {{ .Values.logstash.name }}
+    {{- with .Values.logstash.persistence.annotations  }}
+      annotations:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    spec:
+{{ toYaml .Values.logstash.volumeClaimTemplate | indent 6 }}
+  {{- end }}
+  template:
+    metadata:
+      name: {{ .Values.logstash.name | quote }}
+      labels:
+        app: {{ .Values.logstash.name | quote }}
+        chart: "{{ .Chart.Name }}"
+        heritage: {{ .Release.Service | quote }}
+        release: {{ .Release.Name | quote }}
+        {{- range $key, $value := .Values.logstash.labels }}
+        {{ $key }}: {{ $value | quote }}
+        {{- end }}
+      annotations:
+        {{- range $key, $value := .Values.logstash.podAnnotations }}
+        {{ $key }}: {{ $value | quote }}
+        {{- end }}
+        {{- /* This forces a restart if the configmap has changed */}}
+        {{- if .Values.logstash.logstashConfig }}
+        configchecksum: {{ include (print .Template.BasePath "/configmap-config.yaml") . | sha256sum | trunc 63 }}
+        {{- end }}
+        {{- /* This forces a restart if the configmap has changed */}}
+        {{- if .Values.logstash.logstashPipeline }}
+        pipelinechecksum: {{ include (print .Template.BasePath "/configmap-pipeline.yaml") . | sha256sum | trunc 63 }}
+        {{- end }}
+        {{- if .Values.logstash.secrets }}
+        secretschecksum: {{ include (print .Template.BasePath "/secret.yaml") . | sha256sum | trunc 63 }}
+        {{- end }}
+    spec:
+      {{- if .Values.logstash.schedulerName }}
+      schedulerName: "{{ .Values.logstash.schedulerName }}"
+      {{- end }}
+      securityContext:
+{{ toYaml .Values.logstash.podSecurityContext | indent 8 }}
+      {{- if .Values.logstash.rbac.create }}
+      serviceAccountName: "{{ .Values.logstash.name }}"
+      {{- else if not (eq .Values.logstash.rbac.serviceAccountName "") }}
+      serviceAccountName: {{ .Values.logstash.rbac.serviceAccountName | quote }}
+      {{- end }}
+      {{- with .Values.logstash.tolerations }}
+      tolerations:
+{{ toYaml . | indent 6 }}
+      {{- end }}
+      {{- with .Values.logstash.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+      {{- end }}
+      {{- if or (eq .Values.logstash.antiAffinity "hard") (eq .Values.logstash.antiAffinity "soft") .Values.logstash.nodeAffinity }}
+      {{- if .Values.logstash.priorityClassName }}
+      priorityClassName: {{ .Values.logstash.priorityClassName }}
+      {{- end }}
+      affinity:
+      {{- end }}
+      {{- if eq .Values.logstash.antiAffinity "hard" }}
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - "{{ .Values.logstash.name }}"
+            topologyKey: {{ .Values.logstash.antiAffinityTopologyKey }}
+      {{- else if eq .Values.logstash.antiAffinity "soft" }}
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 1
+            podAffinityTerm:
+              topologyKey: {{ .Values.logstash.antiAffinityTopologyKey }}
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - "{{ .Values.logstash.name }}"
+      {{- end }}
+      {{- with .Values.logstash.nodeAffinity }}
+        nodeAffinity:
+{{ toYaml . | indent 10 }}
+      {{- end }}
+      terminationGracePeriodSeconds: {{ .Values.logstash.terminationGracePeriod }}
+      volumes:
+        {{- range .Values.logstash.secretMounts }}
+        - name: {{ .name }}
+          secret:
+            secretName: {{ .secretName }}
+        {{- end }}
+        - name: {{ .Values.logstash.name }}-config
+          configMap:
+            name: {{ .Values.logstash.name }}-config
+            defaultMode: 0755
+        - name: {{ .Values.logstash.name }}-custom-entrypoint
+          configMap:
+            name: {{ .Values.logstash.name }}-custom-entrypoint
+            defaultMode: 0755
+        - name: {{ .Values.logstash.name }}-pipeline
+          hostPath:
+            path: {{ .Values.global.hostPath.base }}/elkdemo/logstash/pipelines
+            type: DirectoryOrCreate
+        - name: {{ .Values.logstash.name }}-certificates
+          configMap:
+            name: {{ .Values.logstash.name }}-certificate
+            defaultMode: 0755
+        #- name: {{ .Values.logstash.name }}-debug
+        #  configMap:
+        #    name: {{ .Values.logstash.name }}-debug
+        #    defaultMode: 0755
+      {{- if .Values.logstash.extraVolumes }}
+{{ tpl .Values.extraVolumes . | indent 8 }}
+      {{- end }}
+      {{- if .Values.logstash.imagePullSecrets }}
+      imagePullSecrets:
+{{ toYaml .Values.logstash.imagePullSecrets | indent 8 }}
+      {{- end}}
+      {{- if .Values.logstash.hostAliases }}
+      hostAliases: {{ toYaml .Values.hostAliases | nindent 6 }}
+      {{- end }}
+      {{- if .Values.logstash.extraInitContainers }}
+      initContainers:
+{{ tpl .Values.logstash.extraInitContainers . | indent 6 }}
+      {{- end }}
+      containers:
+      - name: {{ .Values.logstash.name }}
+        securityContext:
+{{ toYaml .Values.logstash.securityContext | indent 10 }}
+        image: "{{ .Values.logstash.image }}:{{ .Values.logstash.imageTag }}"
+        imagePullPolicy: {{ .Values.global.pullPolicy | quote }}
+        livenessProbe:
+{{ toYaml .Values.logstash.livenessProbe | indent 10 }}
+        readinessProbe:
+{{ toYaml .Values.logstash.readinessProbe | indent 10 }}
+        ports:
+        - name: http
+          containerPort: {{ .Values.logstash.httpPort }}
+      {{- if .Values.logstash.extraPorts }}
+        {{- toYaml .Values.logstash.extraPorts | nindent 8 }}
+      {{- end }}
+        resources:
+{{ toYaml .Values.logstash.resources | indent 10 }}
+        env:
+          - name: TZ
+            value: "{{ .Values.global.timeZone }}"
+          - name: LS_JAVA_OPTS
+            value: "{{ .Values.logstash.logstashJavaOpts }}"
+          - name: ELASTICSEARCH_HOSTS
+            value: {{ .Values.global.elasticsearch.hosts | quote }}
+          - name: ELASTICSEARCH_CERT
+            value: {{ .Values.global.elasticsearch.cert | quote }}
+          - name: LOGSTASH_USERNAME
+            value: {{ .Values.logstash.userName | quote }}
+          - name: LOGSTASH_PASSWORD
+            value: {{ .Values.logstash.userPasswd | quote }}
+          - name: API_BUILDER_URL
+            value: {{ .Values.global.apibuilder.url | quote }}
+          - name: API_BUILDER_SSL_CERT
+            value: {{ .Values.global.apibuilder.cert | quote }}
+          - name: MEMCACHED
+            value: {{ .Values.global.memcached.url | quote }}
+          - name: node.name
+            value: {{ .Values.logstash.name | quote }}
+          - name: xpack.monitoring.enabled
+            value: {{ .Values.logstash.xpack.monitoring.enabled | quote }}
+          - name: xpack.monitoring.elasticsearch.hosts
+            value: {{ .Values.global.elasticsearch.hosts | quote }}
+          - name: xpack.monitoring.elasticsearch.username
+            value: {{ .Values.global.elasticsearch.username | quote }}
+          - name: xpack.monitoring.elasticsearch.password
+            value: {{ .Values.global.elasticsearch.password | quote }}
+          - name: xpack.monitoring.elasticsearch.ssl.certificate_authority
+            value: {{ .Values.global.elasticsearch.certificate_authority | quote }}
+{{- if .Values.logstash.extraEnvs }}
+{{ toYaml .Values.logstash.extraEnvs | indent 10 }}
+{{- end }}
+{{- if .Values.logstash.envFrom }}
+        envFrom:
+{{ toYaml .Values.logstash.envFrom | indent 10 }}
+{{- end }}
+        command:
+        #- /usr/share/logstash/debug.sh
+        - /usr/share/logstash/scripts/logstash-custom-entrypoint.sh
+        volumeMounts:
+          {{- if .Values.logstash.persistence.enabled }}
+          - name: {{ .Values.logstash.name | quote }}
+            mountPath: /usr/share/logstash/data
+          {{- end }}
+          - name: {{ .Values.logstash.name }}-config
+            mountPath: /usr/share/logstash/config/pipelines.yml
+            subPath: pipelines.yml
+          - name: {{ .Values.logstash.name }}-custom-entrypoint
+            mountPath: /usr/share/logstash/scripts
+          - name: {{ .Values.logstash.name }}-pipeline
+            mountPath: /usr/share/logstash/pipelines
+          - name: {{ .Values.logstash.name }}-certificates
+            mountPath: /usr/share/logstash/config/certificates
+          #- name: {{ .Values.logstash.name }}-debug
+          #  mountPath: /usr/share/logstash/debug.sh
+          #  subPath: debug.sh
+        {{- if .Values.logstash.extraVolumeMounts }}
+{{ tpl .Values.logstash.extraVolumeMounts . | indent 10 }}
+        {{- end }}
+{{- if .Values.logstash.lifecycle }}
+        lifecycle:
+{{ toYaml .Values.logstash.lifecycle | indent 10 }}
+{{- end }}
+      {{- if .Values.logstash.extraContainers }}
+{{ tpl .Values.logstash.extraContainers . | indent 6 }}
+      {{- end }}

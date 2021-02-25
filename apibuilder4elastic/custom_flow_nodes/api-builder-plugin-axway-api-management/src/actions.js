@@ -364,7 +364,6 @@ async function _getGroupRegionFilename(basefilename, groupId, region) {
 }
 
 async function _getCurrentGWUser(requestHeaders) {
-	debugger;
 	var options = {
 		path: '/api/rbac/currentuser',
 		headers: requestHeaders,

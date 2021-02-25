@@ -1,0 +1,115 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: filebeat-config
+  namespace: {{ .Values.global.namespace }}
+  labels:
+    app: {{ .Values.filebeat.name }}
+data:
+  filebeat.yml: |
+     # Please don't change this file as it is supposed to be overwritten as
+     # part of fixes or enhancements.
+     #
+     # If you are missing a certain feature or discover a bug, please raise an issue instead:
+     # https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues
+     name: Filebeat {{ .Values.filebeat.apigw.name }}
+
+     # Wait for max 60 seconds before stopping - This helps to avoid data loss, when stopping filebeat!
+     filebeat.shutdown_timeout: 60s
+     # Endpoint used by Metricbeat
+     http.enabled: true
+     http.host: "0.0.0.0"
+
+     filebeat.inputs:
+     - type: log
+       paths: ["/var/log/opentraffic/*.log"]
+       close_inactive: 5m # Close filehandlers, if the file has not changed anymore
+       json.keys_under_root: true
+       json.overwrite_keys: false
+       json.add_error_key: true
+       fields_under_root: true
+       fields:
+         logtype: openlog
+         gatewayName: {{ .Values.filebeat.apigw.name }}
+         gatewayRegion: {{ .Values.filebeat.apigw.region }}
+         filebeatVersion: "2"
+
+     - type: log
+       paths: ["/var/log/trace/*.trc"]
+       close_inactive: 5m # Close filehandlers, if the file has not changed anymore
+       multiline.pattern: '^\[ALERT|TRACE|DEBUG|NOTICE|INFO|WARNING|ERROR|CRITICAL|FATAL|SEVERE]'
+       multiline.negate: true
+       # any line that does not match the above pattern belongs to the previous line
+       multiline.match: after
+       fields_under_root: true
+       # The offset is used to sort the trace messages additionally to the timestamp
+       offset: true
+       # When initially started, don't try to read all existing trace message (by default around 7.8GB per API-Gateway)
+       ignore_older: "48h"
+       fields:
+         logtype: trace
+         gatewayName: {{ .Values.filebeat.apigw.name }}
+         gatewayRegion: {{ .Values.filebeat.apigw.region }}
+         filebeatVersion: "2"
+
+     - type: log
+       paths: ["/var/log/events/*.log", "/var/log/events/processed/*.log.PROCESSED"]
+       close_inactive: 5m
+       json.keys_under_root: true
+       json.overwrite_keys: false
+       json.add_error_key: true
+       fields_under_root: true
+       # When initially started, don't try to read all existing trace message (by default around 7.8GB per API-Gateway)
+       ignore_older: "48h"
+       fields:
+         logtype: events
+         gatewayName: {{ .Values.filebeat.apigw.name }}
+         gatewayRegion: {{ .Values.filebeat.apigw.region }}
+         filebeatVersion: "2"
+
+     - type: log
+       paths: ["/var/log/audit/*.log"]
+       close_inactive: 5m
+       json.keys_under_root: true
+       json.overwrite_keys: false
+       json.add_error_key: true
+       fields_under_root: true
+       fields:
+         logtype: domainaudit
+         gatewayName: {{ .Values.filebeat.apigw.name }}
+         gatewayRegion: {{ .Values.filebeat.apigw.region }}
+         filebeatVersion: "2"
+
+     # Required for Trace-Messages logged by the API-Gateway
+     processors:
+     - add_locale:
+
+     output.logstash:
+       hosts: {{ .Values.global.logstash.hosts }}
+       worker: {{ .Values.filebeat.worker }}
+       bulk_max_size: ${FILEBEAT_BULK_MAX_SIZE:3072}
+       loadbalance: true
+
+     monitoring:
+       enabled: {{ .Values.filebeat.selfMonitoring | quote }}
+     # Get the Cluster-ID (cluster_uuid) with this simple query: https://elasticsearch1:9200/
+     # This links this filebeat instance to the Cluster with the given ID to enable monitoring
+     # It's also required to setup the beats_system user
+     cluster_uuid: {{ .Values.global.elasticsearch.clusterUUID }}
+     elasticsearch:
+       hosts: {{ .Values.global.elasticsearch.hosts }}
+       ssl.enabled: true
+       ssl.certificate_authorities: ["{{ .Values.global.elasticsearch.cert }}"]
+       username: {{ .Values.filebeat.userName | quote }}
+       password: {{ .Values.filebeat.userPasswd | quote }}
+
+     logging.level: info
+     logging.to_stderr: true
+     logging.to_files: true
+     #logging.level: debug
+     #logging.to_files: true
+     #logging.files:
+     #  name: filebeat.dbg
+     #  keepfiles: 7
+     #  permissions: 0644
+     #logging.selectors: ["*"]

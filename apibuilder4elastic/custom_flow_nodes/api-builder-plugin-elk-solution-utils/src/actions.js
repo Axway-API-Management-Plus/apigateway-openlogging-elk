@@ -96,12 +96,12 @@ async function createIndices(params, options) {
 	for (const [indexName, indexConfig] of Object.entries(indices)) {
 		var aliasName = `${indexConfig.alias}${regionSuffix}`;
 		var myIndexName = `${indexName}${regionSuffix}-${intialCounter}`;
-		var indexExists = await client.indices.existsAlias({index: myIndexName, name: aliasName});
+		var indexExists = await client.indices.existsAlias({name: aliasName});
 		if(indexExists.body) {
-			logger.info(`Index: ${myIndexName} for region: ${region} with alias: ${aliasName} already exists.`);
+			logger.info(`Index with alias: ${aliasName} for region: ${region} already exists.`);
 			continue;
 		}
-		logger.info(`Creating index: ${myIndexName} for region: ${region} with alias: ${aliasName}`);
+		logger.info(`Creating write index: ${myIndexName} for region: ${region} with alias: ${aliasName}`);
 		var requestParams = { index: myIndexName, body: { aliases: { } } };
 		requestParams.body.aliases[aliasName] = { "is_write_index": true };
 		try {

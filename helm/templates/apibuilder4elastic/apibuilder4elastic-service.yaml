@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: {{ .Values.apibuilder4elastic.name | quote }}
+  name: {{ .Values.apibuilder4elastic.name | quote }}
+  namespace: {{ .Values.global.namespace | quote }}
+spec:
+  clusterIP: None
+  ports:
+  - name: {{ .Values.apibuilder4elastic.name }}
+    port: {{ .Values.apibuilder4elastic.trafficPort }}
+    targetPort: {{ .Values.apibuilder4elastic.trafficPort }}
+    protocol: TCP
+  selector:
+    app: {{ .Values.apibuilder4elastic.name | quote }}
+  sessionAffinity: ClientIP
+  type: ClusterIP
+

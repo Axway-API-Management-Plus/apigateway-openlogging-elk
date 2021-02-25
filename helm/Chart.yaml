@@ -1,0 +1,12 @@
+apiVersion: v1
+appVersion: 2.0.0
+description: Helm chart for
+home: https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk
+keywords:
+- API Management, Axway, Logstash, API Builder, Memcached, Filebeat
+kubeVersion: '>=1.15.0'
+maintainers:
+- email: jgoh@axway.com
+  name: APIM 7.7
+name: apigateway-openlogging-elk
+version: 1.0.0

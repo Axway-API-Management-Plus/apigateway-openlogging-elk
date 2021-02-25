@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: logstash-debug
+  namespace: {{ .Values.global.namespace }}
+  labels:
+    app: {{ .Values.logstash.name }}
+data:
+  debug.sh: |
+    #!/bin/sh -e
+    # This script is to debug
+
+    #ls -l /usr/share/logstash/config/pipelines.yml
+    #echo "--------------------------"
+    #echo "----- pipelines.yml ------"
+    #more /usr/share/logstash/config/pipelines.yml
+    #echo "--------------------------"
+    echo "/usr/share/logstash"
+    ls -l /usr/share/logstash
+    echo "--------------------------"
+    #echo "/usr/share/logstash/pipelines"
+    #ls -l /usr/share/logstash/pipelines
+    #echo "--------------------------"
+    #echo "/usr/share/logstash/index_template"
+    #ls -l /usr/share/logstash/index_template
+    #echo "--------------------------"
+    echo "/usr/share/logstash/config/certificates"
+    ls -l /usr/share/logstash/config/certificates
+    echo "--------------------------"
+    #echo "/usr/share/logstash/scripts"
+    #ls -l /usr/share/logstash/scripts
+    #echo "--------------------------"
+    #echo "-------- env -------------"
+    #env
+    #echo "--------------------------"
+
+

@@ -146,7 +146,7 @@ After this configuration has been done, Open-Traffic log-files will be created b
 
 Please download and extract the release package from the GitHub project onto your machine(s):  
 ```
-wget --no-check-certificate https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v2.1.1/axway-apim-elk-v2.1.1.tar.gz -O - | tar -xvz
+wget --no-check-certificate https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v2.1.2/axway-apim-elk-v2.1.2.tar.gz -O - | tar -xvz
 ```
 To simplify updates it is recommended to create a Symlink-Folder and finally rename the provided file `env-sample` to `.env`.  
 ```
@@ -761,8 +761,8 @@ The configuration is defined here per data type (e.g. Summary, Details, Audit, .
 | :---                   |:---                                                                    | :---            | :---    | :---    | :---    | :---    |
 | **Traffic-Summary**    | Main index for traffic-monitor overview and primary dashboard          | 30GB / 15 days  | 5 days  | 10 days | 0 days  | 30 days |
 | **Traffic-Details**    | Details in Traffic-Monitor for Policy, Headers and Payload reference   | 30GB / 15 days  | 5 days  | 10 days | 0 days  | 30 days |
-| **Traffic-Trace**      | Trace-Messages belonging to an API-Request shown in Traffic-Monitor    | 30GB / 60 days  | 5 days  | 10 days | 0 days  | 75 days |
-| **General-Trace**      | General trace messages, like Start- & Stop-Messages                    | 30GB / 60 days  | 5 days  | 10 days | 0 days  | 75 days |
+| **Traffic-Trace**      | Trace-Messages belonging to an API-Request shown in Traffic-Monitor    | 30GB / 15 days  | 5 days  | 10 days | 0 days  | 30 days |
+| **General-Trace**      | General trace messages, like Start- & Stop-Messages                    | 30GB / 15 days  | 5 days  | 10 days | 0 days  | 30 days |
 | **Gateway-Monitoring** | System status information (CPU, HDD, etc.) from Event-Files            | 30GB / 60 days  | 30 days | 15 days | 0 days  | 105 days |
 | **Domain-Audit**       | Domain Audit-Information as configured in Admin-Node-Manager           | 10GB / 270 days | 270 days| 720 days| 15 days | >3 years|
 
@@ -825,6 +825,8 @@ In particular the Traffic-Summary and Traffic-Details indicies become huge and t
 | up to 10 Mio (~120 TPS)  | 500 GB            | 2 Elasticsearch nodes, each with 250 GB |
 | up to 25 Mio (~300 TPS)  | 1 TB              | 3 Elasticsearch nodes, each with 500 GB |
 | up to 50 Mio (~600 TPS)  | 2 TB              | 4 Elasticsearch nodes, each with 500 GB |
+
+Tests were performed with log level __INFO__. If you run your API gateways with DEBUG or have an unusually high number of log messages, more disk space may be necessary.  
 
 If the required storage space is unexpectedly higher, then you can do the following:  
 - add an additional Elasticsearch cluster node at a later time.  
@@ -1193,6 +1195,11 @@ Yes, all indicies are configured to have one replica and therefore it's safe to 
 ### During catch up, what should be the total events rate for Filebeat?
 
 Tests show that Filebeat can send more than 3,000 events per second to Logstash instances. Tests show that Filebeat can send more than 2,200 events per second to Logstash instances. Of course, this number also depends on the event type. Trace messages can be processed faster than OpenTraffic event logs, for example. You can find an example [here](#imgs/stack-monitoring/stack-monitoring-beats-instances.png).
+
+### Can I use AWS Elasticsearch service?
+
+No, the solution does not support AWS Elasticsearch Service because some important features that are part of X-Pack are not supported by AWS. For example, index lifecycle management ([ILM](https://www.elastic.co/guide/en/elasticsearch/reference/current/index-lifecycle-management.html)).
+
 
 ## Known issues
 N/A

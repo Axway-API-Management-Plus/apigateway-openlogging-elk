@@ -28,15 +28,19 @@ describe('Test group based API lookup', () => {
 
 	describe('#lookupAPIDetails', () => {
 		// This only fails, if really multiple API-Manager are configured (for that the parameter-value of API_MANAGER is checked if it contains a #)
-		it('should return an error for a given groupId: group-unknown, which is not configured', async () => {
-			
+		it('should use the default API-Manager for the given unknown group', async () => {
+			// default
+			nock('https://mocked-api-manager-0:8075').get('/api/portal/v1.3/proxies?field=name&op=eq&value=Petstore HTTPS').replyWithFile(200, './test/testReplies/apimanager/manager-1/apiProxyManager1.json');
+			nock('https://mocked-api-manager-0:8075').get(`/api/portal/v1.3/organizations/2bfaa1c2-49ab-4059-832d-team-a`).replyWithFile(200, './test/testReplies/apimanager/manager-1/orgTeamA.json');
 			const { value, output } = await flowNode.lookupAPIDetails({ 
 				apiName: 'Petstore HTTPS', apiPath: '/v1/petstore', groupId: 'group-unknown'
 			});
 
-			expect(value).to.be.instanceOf(Error)
-				.and.to.have.property('message', 'You have configured API-Manager URLs based on groupIds (e.g. group-a|https://manager-host.com:8075), but the groupId: group-unknown is NOT configured. Please check the configuration parameter: API_MANAGER');
-			expect(output).to.equal('error');
+			expect(value.organizationName).to.equal(`Team A`);
+			expect(value.name).to.equal(`Petstore HTTPS`);
+			expect(value.path).to.equal(`/v1/petstore`);
+			expect(value.version).to.equal(`1.0.5 Manager 1`);
+			expect(output).to.equal('next');
 		});
 
 		it('should return the API-Details from the correct API-Manager based on the given groupId', async () => {

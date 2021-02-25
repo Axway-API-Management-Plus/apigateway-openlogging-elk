@@ -1,0 +1,23 @@
+{{- if .Values.service }}
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{ .Values.logstash.name | quote }}
+  namespace: {{ .Values.global.namespace }}
+  labels:
+    app: {{ .Values.logstash.name | quote }}
+    chart: "{{ .Chart.Name }}"
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+  annotations:
+{{ toYaml .Values.logstash.service.annotations | indent 4 }}
+spec:
+  type: {{ .Values.logstash.service.type }}
+  selector:
+    app: {{ .Values.logstash.name | quote }}
+    chart: "{{ .Chart.Name }}"
+    release: {{ .Release.Name | quote }}
+  ports:
+{{ toYaml .Values.logstash.service.ports | indent 4 }}
+{{- end }}
