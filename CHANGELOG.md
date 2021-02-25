@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 - API builder mistakenly tries to create the regional index again [#81](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/81)
 
+### Added
+- Added initial support to handle API-Transactions (CorrelationID now supports Doc-Values) [#78](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/78)
+
 ## [2.1.2] 2021-02-23
 ### Fixed
 - Parse error when using multiple API_MANAGER configuration [#76](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/76)
