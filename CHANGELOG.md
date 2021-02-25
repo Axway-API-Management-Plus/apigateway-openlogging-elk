@@ -9,8 +9,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - API builder mistakenly tries to create the regional index again [#81](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/81)
 
 ### Changed
-- Field correlationId now has doc_values enabled / New index field: transactionId [#84](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/84)
-- Hot-Phase reduced from 15 to 10 days moved 5 days to Warm phase - Making it possible to delete rolled indices earlier on a manual basis
+- Index: Traffic-Summary, Field correlationId now has doc_values enabled / New index field: transactionId [#84](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/84)
+- Hot-Phase for indices: Traffic-Summary, Traffic-Details & Trace reduced from 15 to 10 days. 5 days added to the Warm phase
 
 ## [2.1.2] 2021-02-23
 ### Fixed
