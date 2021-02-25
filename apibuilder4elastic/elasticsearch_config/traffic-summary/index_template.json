@@ -1,5 +1,5 @@
 {
-    "version": 3,
+    "version": 4,
     "index_patterns": [
         "apigw-traffic-summary-*"
     ],
@@ -21,8 +21,10 @@
                 "type" : "date"
             },
             "correlationId": {
-                "type": "keyword",
-                "doc_values": false
+                "type": "keyword"
+            },
+            "transactionId": {
+                "type": "keyword"
             },
             "tags": {
                 "type": "text",
