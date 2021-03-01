@@ -295,7 +295,9 @@ module.exports = {
 		// enableModelNameEncodingInSwagger is enabled. Breaking change for old
 		// versions as previously model names that start with a connector name,
 		// e.g. "oracle/foó" will now be encoded as "oracle/fo%C3%B3".
-		enableModelNameEncodingWithConnectorSlash: true
+		enableModelNameEncodingWithConnectorSlash: true,
+		// Enabling this flag will emit the log level in each log message.
+		enableLoggingOfLevel: true
 	},
 
 	authorization: {
