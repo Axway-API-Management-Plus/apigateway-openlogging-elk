@@ -408,7 +408,7 @@ Please note:
 
 ### Setup Elasticsearch Multi-Node
 
-For a production environment Elasticsearch should run a multi-node Elasticsearch cluster environment. Indexes are configured so that available nodes are automatically used for primary and replica shards. 
+For a production environment Elasticsearch must run a multi-node Elasticsearch cluster environment. Indices are configured so that available nodes are automatically used for primary and replica shards. If you use only one Elasticsearch node, the replica shards cannot be assigned to any node, which causes the cluster to remain in the Yellow state. This in turn leads to tasks not being performed by Elasticsearch. For example, lifecycle management of the indexes.   
 If you are using an external Elasticsearch cluster, you can skip most of the following instructions, besides step number 1 to configure your available Elasticsearch cluster nodes.
 
 #### General remarks
@@ -814,6 +814,7 @@ In particular the Traffic-Summary and Traffic-Details indicies become huge and t
 | up to 50 Mio (~600 TPS)  | 2 TB              | 4 Elasticsearch nodes, each with 500 GB |
 
 Tests were performed with log level __INFO__. If you run your API gateways with DEBUG or have an unusually high number of log messages, more disk space may be necessary.  
+
 
 If the required storage space is unexpectedly higher, then you can do the following:  
 - add an additional Elasticsearch cluster node at a later time.  
