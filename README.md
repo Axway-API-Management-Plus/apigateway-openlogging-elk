@@ -807,7 +807,7 @@ In particular the Traffic-Summary and Traffic-Details indicies become huge and t
 
 | Volume per day           | Total Disk-Space  | Comment |
 | :---                     | :---              | :---    |
-| up to 1 Mio  (~15 TPS)   | 60 GB             | 2 Elasticsearch nodes, each with 50 GB  |
+| up to 1 Mio  (~15 TPS)   | 100 GB            | 2 Elasticsearch nodes, each with 50 GB  |
 | up to 5 Mio  (~60 TPS)   | 250 GB            | 2 Elasticsearch nodes, each with 150 GB |
 | up to 10 Mio (~120 TPS)  | 500 GB            | 2 Elasticsearch nodes, each with 250 GB |
 | up to 25 Mio (~300 TPS)  | 1 TB              | 3 Elasticsearch nodes, each with 500 GB |
