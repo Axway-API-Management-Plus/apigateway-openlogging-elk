@@ -815,6 +815,8 @@ In particular the Traffic-Summary and Traffic-Details indicies become huge and t
 
 Tests were performed with log level __INFO__. If you run your API gateways with DEBUG or have an unusually high number of log messages, more disk space may be necessary.  
 
+:point_right: Please note that when Elasticsearch is started by Docker-Compose, its data is stored in an external volume. This is located at `/var/lib/docker` by default. So you need to make sure that the available space is allocated there.  
+
 
 If the required storage space is unexpectedly higher, then you can do the following:  
 - add an additional Elasticsearch cluster node at a later time.  
