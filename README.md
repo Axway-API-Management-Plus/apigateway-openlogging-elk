@@ -432,7 +432,7 @@ Watch this video for a demonstration: [Add Elasticsearch node](https://youtu.be/
 
 __1. Setup Cluster-Nodes__
 
-The solution is prepared for 3 nodes but can easily be extended to 5 nodes for example. To configure multiple hosts in the `.env`file: 
+The solution is prepared for 5 nodes but can easily be extended to more nodes if needed. To configure multiple hosts in the `.env`file: 
 ```
 ELASTICSEARCH_HOSTS=https://ip-172-31-61-143.ec2.internal:9200,https://ip-172-31-57-105.ec2.internal:9201
 ```
@@ -454,7 +454,7 @@ This node automatically becomes the master node.
 __3. Add additional nodes__
 
 You can add cluster nodes at any time to increase available disk space or CPU performance. 
-To achieve resilience, you should set up at least 2 cluster nodes.  
+To achieve resilience, it is strongly recommended set up at least 2 cluster nodes.  
 To add a cluster node, execute the following command:
 ```
 docker-compose -f elasticsearch/docker-compose.es02.yml up -d
