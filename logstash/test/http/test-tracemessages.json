@@ -58,6 +58,24 @@
           }
         }
       ]
+    },
+    {
+      "description": "Trace line causing Logstash to fail and stop responding",
+      "input": [
+        "DEBUG   03/Mar/2021:14:22:51.073 [19607:988d3f603f0063aef0c65174]     Event Log config [enabled=true, configFile= NotDefined, outputDir=/opt/axway/apigateway/events, header={\"type\":\"header\", \"logCreationTime\":\"2021-03-03 14:22:51.073\", \"hostname\":\"api-gateway\", \"domainId\":\"fb69e91d-123b-49bc-a964-d76b8a30a810\", \"groupId\":\"group-2\", \"groupName\":\"EXP_GROUP_INT\", \"serviceId\":\"instance-1\", \"serviceName\":\"EXP_API_GW_INT_1\", \"version\":\"v7.7.0-Internal\"}, writeSystemEventFreqSecs=60, customMessageAttributes=[], customSelectorAttributes=[${http.headers[\"X-CorrelationID\"]}, ${http.headers[\"User-Agent\"]}]]"
+      ],
+      "expected": [
+        {
+          "@timestamp": "2020-07-13T15:11:52.189Z",
+          "correlationId": "988d3f603f0063aef0c65174",
+          "level": "DEBUG",
+          "message": "Event Log config [enabled=true, configFile= NotDefined, outputDir=/opt/axway/apigateway/events, header={\"type\":\"header\", \"logCreationTime\":\"2021-03-03 14:22:51.073\", \"hostname\":\"api-gateway\", \"domainId\":\"fb69e91d-123b-49bc-a964-d76b8a30a810\", \"groupId\":\"group-2\", \"groupName\":\"EXP_GROUP_INT\", \"serviceId\":\"instance-1\", \"serviceName\":\"EXP_API_GW_INT_1\", \"version\":\"v7.7.0-Internal\"}, writeSystemEventFreqSecs=60, customMessageAttributes=[], customSelectorAttributes=[${http.headers[\"X-CorrelationID\"]}, ${http.headers[\"User-Agent\"]}]]",
+          "processInfo": {
+            "gatewayName": "API-Gateway 2", 
+            "gatewayRegion": "EU"
+          }
+        }
+      ]
     }
   ]
 }
