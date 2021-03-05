@@ -838,6 +838,19 @@ The following test infrastructure was used to determine the [maximum capacity or
 
 There is no specific reason that EC2 t2.xlarge instances were used for the test setup. The deciding factor was simply the number of CPU cores and 16 GB RAM.  
 
+#### Memory usage
+
+To give you a good feel for the memory usage of the individual components, the following table shows the memory usage at around 330 transactions per second.
+
+| Component      | Memory usage | Comment                                                                                                                   |
+| :---           | :---         | :---                                                                                                                      |
+| Elasticsearch  | 5-6 GB       | Configured to max. 8 GB, 5 Elasticsearch Hosts in total                                                                   |
+| Kibana         | 320 MB       | One Kibana instance running on along with first Elasticsearch host                                                        |
+| Logstash       | 4.5 GB       | Configured to max. 6 GB, 4 Logstash processes running in total                                                            |
+| API-Builder    | 110-120 MB   | 4 API-Builder docker containers running in total                                                                          |
+| Memcached      | 10-11 MB     | 4 Memcache instances. Memory finally depends on number of unique APIs, Apps, etc. Howevery, very unlikely more than 30 MB |
+| Filebeat       | 130 MB       | Filebeat is running as a Docker-Container along the API-Gateway. Filebeat itself is using ap. 30-35 MB.                   |
+
 <p align="right"><a href="#table-of-content">Top</a></p>
 
 ## Updates
