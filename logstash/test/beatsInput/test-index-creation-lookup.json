@@ -41,6 +41,23 @@
           "integrationTest": "true"
         }
       ]
+    },
+    {
+      "description": "Test a trace message that might crash logstash",
+      "input": [
+        "{\"type\":\"transaction\", \"time\":1614949200167, \"path\":null, \"protocol\":null, \"protocolSrc\":null, \"duration\":165, \"status\":\"exception\", \"serviceContexts\":[], \"customMsgAtts\":{\"${http.headers[\\\"User-Agent\\\"]}\":\"\", \"${http.headers[\\\"X-CorrelationID\\\"]}\":\"Id-502b426056db1755319cf954 0\"}, \"correlationId\":\"502b4260c80091439d3e1d50\", \"legs\":[{\"uri\":\"/api/topology/groups\", \"status\":403, \"statustext\":\"Forbidden\", \"method\":\"GET\", \"vhost\":null, \"wafStatus\":0, \"bytesSent\":206, \"bytesReceived\":875, \"remoteName\":\"scl000103908.sccloud.swissre.com\", \"remoteAddr\":\"10.92.47.98\", \"localAddr\":\"10.92.47.98\", \"remotePort\":\"8090\", \"localPort\":\"58784\", \"sslsubject\":\"/DC=host-1/OU=group-1/CN=nodemanager-1\", \"leg\":1, \"timestamp\":1614949200135, \"duration\":11, \"serviceName\":null, \"subject\":null, \"operation\":null, \"type\":\"http\", \"finalStatus\":null}]}"
+      ],
+      "expected": [ 
+        {
+          "@timestamp": "2020-12-11T10:50:52.896Z",
+          "logtype": "trace",
+          "message": "This should create an index",
+          "gatewayName": "API-Gateway 1",
+          "gatewayRegion": "EU",
+          "host": "test-host",
+          "integrationTest": "true"
+        }
+      ]
     }
   ]
 }
