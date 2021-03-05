@@ -844,7 +844,7 @@ To give you a good feel for the memory usage of the individual components, the f
 
 | Component      | Memory usage | Comment                                                                                                                   |
 | :---           | :---         | :---                                                                                                                      |
-| Elasticsearch  | 5-6 GB       | Configured to max. 8 GB, 5 Elasticsearch Hosts in total                                                                   |
+| Elasticsearch  | 5.8 GB       | Configured to max. 8 GB, 5 Elasticsearch Hosts in total                                                                   |
 | Kibana         | 320 MB       | One Kibana instance running on along with first Elasticsearch host                                                        |
 | Logstash       | 4.5 GB       | Configured to max. 6 GB, 4 Logstash processes running in total                                                            |
 | API-Builder    | 110-120 MB   | 4 API-Builder docker containers running in total                                                                          |
