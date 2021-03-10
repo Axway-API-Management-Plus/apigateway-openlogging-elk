@@ -1,6 +1,7 @@
 {
     "/healthcheck": {
         "name": "Healthcheck API",
+        "method": "Get health",
         "organizationName": "Native API",
         "version": "1.0.0",
         "deprecated": false,
@@ -21,6 +22,7 @@
     "/another/api/base/path": {
         "ignore": true,
         "name": "Can match longer paths",
+        "method": "Method A",
         "organizationName": "Local Org",
         "version": "2.0.0",
         "deprecated": false,
