@@ -73,9 +73,9 @@ async function lookupCurrentUser(params, options) {
 			throw new Error('The requestHeaders do not contain the required header csrf-token');
 		}
 		logger.trace(`Trying to get current user based on VIDUSR cookie.`);
-		user.loginName = await _getCurrentGWUser(headers = {'Cookie': `VIDUSR=${VIDUSR}`});
+		user.loginName = await _getCurrentGWUser(headers = {'Cookie': requestHeaders.cookie});
 		logger.trace(`Current user is: ${user.loginName}`);
-		permissions = await _getCurrentGWPermissions(headers = {'Cookie': `VIDUSR=${VIDUSR}`, 'csrf-token': requestHeaders['csrf-token']}, user.loginName);
+		permissions = await _getCurrentGWPermissions(headers = {'Cookie': requestHeaders.cookie}, user.loginName);
 	}
 	if(permissions.includes("adminusers_modify")) {
 		user.gatewayManager.isAdmin = true;
