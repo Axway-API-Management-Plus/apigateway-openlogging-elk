@@ -182,7 +182,7 @@ async function checkAPIManagers(apiManagerConfig, options) {
 					return response;
 				})
 				.catch(err => {
-					throw new Error(`Cannot login to API-Manager: '${config.url}'. Got error: ${err}`);
+					throw new Error(`Cannot login to API-Manager: '${config.url}'. Got error: ${JSON.stringify(err)}`);
 				});
 			const session = _getSession(result.headers);
 			var reqOptions = {
