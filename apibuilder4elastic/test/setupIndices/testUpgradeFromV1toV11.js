@@ -7,7 +7,7 @@ const nock = require('nock');
 const envLoader = require('dotenv');
 const { ElasticsearchClient } = require('@axway-api-builder-ext/api-builder-plugin-fn-elasticsearch/src/actions/ElasticsearchClient.js');
 const { spyElasticSearchMethod } = require('./spyElasticsearch');
-const { renderString, renderTemplateFile } = require('template-file');
+const { renderFile } = require('template-file');
 
 
 describe('Test Setup Indices endpoint', function () {
@@ -47,7 +47,7 @@ describe('Test Setup Indices endpoint', function () {
 		var testConfig = path.join(tempDir, 'index_config.json');
 		console.log(`Using test-config: ${testConfig}`);
 		var data = { id: randomId };
-		renderTemplateFile(configFile, data)
+		renderFile(configFile, data)
 			.then(function(renderedString) {
 				fs.writeFileSync(testConfig, renderedString);
 			});
