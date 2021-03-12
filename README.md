@@ -758,11 +758,11 @@ The configuration is defined here per data type (e.g. Summary, Details, Audit, .
 
 | Data-Type              | Description                                                            | Hot (Size/Days) | Warm    | Cold    | Delete  | Total   |
 | :---                   |:---                                                                    | :---            | :---    | :---    | :---    | :---    |
-| **Traffic-Summary**    | Main index for traffic-monitor overview and primary dashboard          | 30GB / 10 days  | 10 days | 10 days | 0 days  | 30 days |
-| **Traffic-Details**    | Details in Traffic-Monitor for Policy, Headers and Payload reference   | 30GB / 10 days  | 10 days | 10 days | 0 days  | 30 days |
-| **Traffic-Trace**      | Trace-Messages belonging to an API-Request shown in Traffic-Monitor    | 30GB / 10 days  | 10 days | 10 days | 0 days  | 30 days |
-| **General-Trace**      | General trace messages, like Start- & Stop-Messages                    | 30GB / 10 days  | 10 days | 10 days | 0 days  | 30 days |
-| **Gateway-Monitoring** | System status information (CPU, HDD, etc.) from Event-Files            | 30GB / 60 days  | 30 days | 15 days | 0 days  | 105 days |
+| **Traffic-Summary**    | Main index for traffic-monitor overview and primary dashboard          | 30GB / 7 days   | 4 days  | 3 days  | 0 days  | 14 days |
+| **Traffic-Details**    | Details in Traffic-Monitor for Policy, Headers and Payload reference   | 30GB / 7 days   | 4 days  | 3 days  | 0 days  | 14 days |
+| **Traffic-Trace**      | Trace-Messages belonging to an API-Request shown in Traffic-Monitor    | 30GB / 7 days   | 4 days  | 3 days  |  0 days | 14 days |
+| **General-Trace**      | General trace messages, like Start- & Stop-Messages                    | 30GB / 7 days   | 4 days  | 3 days  | 0 days  | 14 days |
+| **Gateway-Monitoring** | System status information (CPU, HDD, etc.) from Event-Files            | 30GB / 60 days  | 30 days | 15 days | 0 days  | 105 days|
 | **Domain-Audit**       | Domain Audit-Information as configured in Admin-Node-Manager           | 10GB / 270 days | 270 days| 720 days| 15 days | >3 years|
 
 Please note:  

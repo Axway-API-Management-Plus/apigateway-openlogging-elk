@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - API-Builder Log-Level messages enabled
 - Now all cookies are returned back to the Admin-Node-Manager. This makes it possible to use Load-Balances ANMs with session stickyness
 - Now the returned error message is properly logged if the API-Manager login test at startup fails.
+- Reduced Retention-Period from 30 to 14 days for Traffic-Summary/-Details & Trace [#85](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/85)
 
 ## [2.1.2] 2021-02-23
 ### Fixed
