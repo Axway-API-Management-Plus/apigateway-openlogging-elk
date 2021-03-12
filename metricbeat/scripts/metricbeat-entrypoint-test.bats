@@ -68,7 +68,7 @@ setup() {
     export METRICBEAT_MODULES="kibana,elasticsearch"
     run metricbeat/scripts/metricbeat-entrypoint.sh
     [ "$status" -eq 0 ]
-    [ "${lines[3]}" = 'KIBANA_HOST: https://my.kibana.host:5601 is not reachable. Got returncode: 6 for command: curl -kv https://my.kibana.host:5601' ]
+    [ "${lines[3]}" = 'KIBANA_HOST: https://my.kibana.host:5601 is not reachable. Got returncode: for command: curl -kv https://my.kibana.host:5601' ]
     [ "${lines[4]}" = 'Metricbeat Kibana monitoring will be disabled on this host.' ]
 }
 
