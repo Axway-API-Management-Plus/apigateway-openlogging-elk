@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 - Index: Traffic-Summary, Field correlationId now has doc_values enabled / New index field: transactionId [#84](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/84)
 - Hot-Phase for indices: Traffic-Summary, Traffic-Details & Trace reduced from 15 to 10 days. 5 days added to the Warm phase
-- API-Builder release changed from dubai to hanoi
+- API-Builder release changed from Dubai to Ibiza
 - API-Builder Log-Level messages enabled
 - Now all cookies are returned back to the Admin-Node-Manager. This makes it possible to use Load-Balances ANMs with session stickyness
 - Now the returned error message is properly logged if the API-Manager login test at startup fails.
