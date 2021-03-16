@@ -803,15 +803,15 @@ Please note:
 #### Retention period
 
 The second important aspect for sizing is the retention period, which defines how long data should be available. Accordingly, disk space must be made available.  
-In particular the Traffic-Summary and Traffic-Details indicies become huge and therefore play a particularly important role here. The solution is delivered with default values which you can read [here](#lifecycle-management). Based on the these default values which result in ap. __30 days__ the following disk space is required.
+In particular the Traffic-Summary and Traffic-Details indicies become huge and therefore play a particularly important role here. The solution is delivered with default values which you can read [here](#lifecycle-management). Based on the these default values which result in ap. __14 days__ the following disk space is required.
 
 | Volume per day           | Total Disk-Space  | Comment |
 | :---                     | :---              | :---    |
 | up to 1 Mio  (~15 TPS)   | 100 GB            | 2 Elasticsearch nodes, each with 50 GB  |
-| up to 5 Mio  (~60 TPS)   | 250 GB            | 2 Elasticsearch nodes, each with 150 GB |
-| up to 10 Mio (~120 TPS)  | 500 GB            | 2 Elasticsearch nodes, each with 250 GB |
-| up to 25 Mio (~300 TPS)  | 1 TB              | 3 Elasticsearch nodes, each with 500 GB |
-| up to 50 Mio (~600 TPS)  | 2 TB              | 4 Elasticsearch nodes, each with 500 GB |
+| up to 5 Mio  (~60 TPS)   | 200 GB            | 2 Elasticsearch nodes, each with 100 GB |
+| up to 10 Mio (~120 TPS)  | 250 GB            | 2 Elasticsearch nodes, each with 125 GB |
+| up to 25 Mio (~300 TPS)  | 750 GB            | 3 Elasticsearch nodes, each with 250 GB |
+| up to 50 Mio (~600 TPS)  | 1.5 TB            | 4 Elasticsearch nodes, each with 500 GB |
 
 Tests were performed with log level __INFO__. If you run your API gateways with DEBUG or have an unusually high number of log messages, more disk space may be necessary.  
 
