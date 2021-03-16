@@ -1,3 +1,6 @@
+const path = require('path');
+const fs = require('fs');
+
 var authorizationConfig = {
 	// For how long should the information cached by the API-Builder process
 	cacheTTL: parseInt(process.env.EXT_AUTHZ_CACHE_TTL) ? process.env.EXT_AUTHZ_CACHE_TTL : 300,
@@ -8,6 +11,20 @@ var authorizationConfig = {
 		restrictionField: "customProperties.field1",
 		// The type of the customProperty as it's configured in the API-Manager (custom, select, switch)
 		restrictionFieldType: "select", 
+		options: {
+			// Disables certificate validation
+			// insecureSSL: true,
+			// Validate server certificate with this CA.
+			// ca: fs.readFileSync('../../../config/certificates/external-https-ca.crt'),
+
+			// Mutual SSL-Support
+			/*
+			 * cert: fs.readFileSync('PathToClientCertificate'),
+			 * key: fs.readFileSync('PathToKeyFile'),
+			 * Key passphrase
+			 * passphrase: 'password'
+			*/
+		}
 	}
 }
 

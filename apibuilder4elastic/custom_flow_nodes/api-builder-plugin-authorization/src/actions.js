@@ -118,7 +118,8 @@ async function addExtHTTPAuthzFilter(params, options) {
 		// Replace the loginName which is part of the URI
 		cfg.replacedUri = cfg.uri.replace("${loginName}", user.loginName);
 		logger.info(`External groups NOT found in cache with key: '${cacheKey}'. Request information from ${cfg.replacedUri}`);
-		const resp = await requester(cfg.replacedUri, cfg.headers, cfg.method, cfg.body, { logger });
+		debugger;
+		const resp = await requester(cfg.replacedUri, cfg.headers, cfg.method, cfg.body, { logger, ...cfg.options });
 		cache.set(cacheKey, resp);
 	} else {
 		logger.debug(`External groups found in cache with key: '${cacheKey}'.`);

@@ -8,6 +8,11 @@ var authorizationConfig = {
 		restrictionField: "customProperties.field1",
 		// The type of the customProperty as it's configured in the API-Manager (custom, select, switch)
 		restrictionFieldType: "custom", 
+
+		options: {
+			// Disables certificate validation
+			insecureSSL: false
+		}
 	}
 }
 

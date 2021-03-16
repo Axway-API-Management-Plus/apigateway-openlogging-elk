@@ -53,6 +53,22 @@ var authorizationConfig = {
 		// method: "POST",
 		// Adjust the payload 
 		//body: { JSON: "Payload is supported as of now" },
+
+		options: {
+			// Disables certificate validation completely
+			// insecureSSL: true,
+
+			// or use this CA to validate the server certificate
+			// ca: fs.readFileSync('../../../config/certificates/external-https-ca.crt'),
+
+			// Mutual SSL-Support
+			/*
+			 * cert: fs.readFileSync('PathToClientCertificate'),
+			 * key: fs.readFileSync('PathToKeyFile'),
+			 * Key passphrase
+			 * passphrase: 'password'
+			*/
+		}
 	}
 }
 

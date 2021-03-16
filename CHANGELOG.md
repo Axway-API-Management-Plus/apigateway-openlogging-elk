@@ -17,6 +17,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Now the returned error message is properly logged if the API-Manager login test at startup fails.
 - Reduced Retention-Period from 30 to 14 days for Traffic-Summary/-Details & Trace [#85](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/85)
 
+### Added
+- Added new option for external HTTPS-Based user authorization. Server certificates can now be verified with correct CA or validation can be disabled completely.
+
 ## [2.1.2] 2021-02-23
 ### Fixed
 - Parse error when using multiple API_MANAGER configuration [#76](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/76)
@@ -25,7 +28,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Log-Retention-Period for Trace-Messages from 75 days to 30 days [#77](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/77)
 
 ### Added
-- Added FAQ to make clear, that AWS Elasticsearch service is not supported [#78](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/78)
+- FAQ to make clear, that AWS Elasticsearch service is not supported [#78](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/78)
 
 ## [2.1.1] 2021-02-05
 ### Fixed
