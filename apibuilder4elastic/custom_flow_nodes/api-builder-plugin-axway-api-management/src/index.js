@@ -111,10 +111,10 @@ async function addLookupAPIMocks(cache) {
 	});
 	
 	cache.set( "isIgnore###group-2###us###/favicon.ico###", {
-		ignore: true
+		status: 200, body: { ignore: true }
 	});
 	cache.set( "isIgnore###group-2###us######Do not index this Policy", {
-		ignore: true
+		status: 200, body: { ignore: true }
 	});
 
 	cache.set( "application###180b1f32-d72f-40f4-949a-fc3f3f7dec2c###group-2###us", {
