@@ -214,7 +214,7 @@ async function isIgnoreAPI(params, options) {
 	cache = options.pluginContext.cache;
 	pluginConfig = options.pluginConfig;
 	if (!apiPath && !policyName) {
-		throw new Error('You must either provide the apiPath or the policyName used to read the configuration.');
+		return { status: 400, body: { message: 'You must either provide the apiPath or the policyName used to read the configuration.' }};
 	}
 	if(region) {
 		region = region.toLowerCase();
@@ -234,15 +234,17 @@ async function isIgnoreAPI(params, options) {
 	// No config found - Return the default index:true
 	if(proxies==undefined || proxies.length == 0) {
 		logger.info(`API with apiPath: '${apiPath}', policyName: '${policyName}' not configured. Return default ingore: false.`);
-		return {"ignore": false};
+		return {status: 200, body: { ignore: false }};
 	}
 	if(proxies.length > 1) {
 		logger.warn(`No unique result for path: '${apiPath}', policy name: '${policyName}'. Return default ingore: false`);
-		return {"ignore": false};
+		return {status: 200, body: { ignore: false }};
 	}
+	debugger;
 	logger.info(`Return API with apiPath: '${apiPath}', policyName: '${policyName}' as to be ignored: ${proxies[0].ignore}`);
-	cache.set(cacheKey, proxies[0]);
-	return proxies[0];
+	var result = {status: 200, body: { ...proxies[0] }};
+	cache.set(cacheKey, result);
+	return result;
 }
 
 async function getCustomPropertiesConfig(params, options) {

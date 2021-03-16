@@ -90,18 +90,18 @@
 			"method": "setresponse",
 			"parameters": [
 				{
-					"name": "status",
-					"type": "number",
-					"value": "200",
-					"metaName": "Status",
-					"metaDescription": "The HTTP status code"
-				},
-				{
 					"name": "body",
 					"type": "jsonpath",
-					"value": "$.ignoreFileResult",
+					"value": "$.ignoreFileResult.body",
 					"metaName": "Body",
 					"metaDescription": "The response payload"
+				},
+				{
+					"name": "status",
+					"type": "jsonpath",
+					"value": "$.ignoreFileResult.status",
+					"metaName": "Status",
+					"metaDescription": "The HTTP status code"
 				}
 			],
 			"outputs": {

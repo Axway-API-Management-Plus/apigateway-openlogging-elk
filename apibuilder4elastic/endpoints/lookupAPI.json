@@ -54,6 +54,12 @@
             "in": "query",
             "name": "region",
             "description": "The region can be specified optionally. Based on the region, together with the Group-ID, the correct API manager for the lookup is determined. This must be specified in the API_MANAGER parameter."
+          },
+          {
+            "type": "string",
+            "in": "query",
+            "name": "correlationId",
+            "description": "The API-Gateway correlationId - Not used by the endpoint and for back-reference only."
           }
         ],
         "summary": "Looks up an API based on the API-Path",
@@ -93,6 +99,12 @@
             "in": "query",
             "name": "apiPath",
             "description": "The API-Path used to lookup the configuration of this API."
+          },
+          {
+            "type": "string",
+            "in": "query",
+            "name": "correlationId",
+            "description": "The API-Gateway correlationId - Not used by the endpoint and for back-reference only."
           }
         ],
         "responses": {
@@ -141,6 +153,12 @@
             "name": "applicationId",
             "description": "ID of the application to lookup",
             "required": true
+          },
+          {
+            "type": "string",
+            "in": "query",
+            "name": "correlationId",
+            "description": "The API-Gateway correlationId - Not used by the endpoint and for back-reference only."
           }
         ],
         "description": "Looks up an application based on the given application ID",
