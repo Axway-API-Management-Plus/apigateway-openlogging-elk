@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 - Added new option for external HTTPS-Based user authorization. Server certificates can now be verified with correct CA or validation can be disabled completely.
+- API-Gateway CorrelationId is now logged in API-Builder for all lookups performed by Logstash [#86](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/86)
 
 ## [2.1.2] 2021-02-23
 ### Fixed
