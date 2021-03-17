@@ -1,3 +1,6 @@
+const path = require('path');
+const fs = require('fs');
+
 /*
 By default, the solution uses user's API Manager organization to determine which 
 API-Requests they are allowed to see in the API Gateway Traffic-Monitor. 
