@@ -75,7 +75,7 @@ async function lookupCurrentUser(params, options) {
 		logger.trace(`Trying to get current user based on VIDUSR cookie.`);
 		user.loginName = await _getCurrentGWUser(headers = {'Cookie': requestHeaders.cookie});
 		logger.trace(`Current user is: ${user.loginName}`);
-		permissions = await _getCurrentGWPermissions(headers = {'Cookie': requestHeaders.cookie}, user.loginName);
+		permissions = await _getCurrentGWPermissions(headers = {'Cookie': requestHeaders.cookie, 'csrf-token': requestHeaders['csrf-token']}, user.loginName);
 	}
 	if(permissions.includes("adminusers_modify")) {
 		user.gatewayManager.isAdmin = true;
