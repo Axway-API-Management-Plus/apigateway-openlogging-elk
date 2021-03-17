@@ -481,9 +481,6 @@ async function _getCurrentGWPermissions(requestHeaders, loginName) {
 	var result = await sendRequest(pluginConfig.apigateway.url, options)
 		.then(response => {
 			return response.body.result;
-		})
-		.catch(err => {
-			throw new Error(err);
 		});
 	if(result.user!=loginName) {
 		throw new Error(`Error reading current permissions from API-Gateway Manager. Loginname: ${loginName} does not match to retrieved user: ${result.user}.`);
