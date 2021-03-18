@@ -59,7 +59,7 @@ describe('Payload restricted', function () {
 				},
 				json: true
 			}).then(({ response, body }) => {
-				expect(response.statusCode).to.equal(403);
+				expect(response.statusCode).to.equal(200);
 				nock.cleanAll();
 			});
 		});
