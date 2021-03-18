@@ -1,0 +1,73 @@
+{
+  "leg0": {
+    "duration": 60607,
+    "protocolInfo": {
+      "recvHeader": "POST /api/Lacoste/BookingService/v1 HTTP/1.1\r\nhost: internal.eu-central-1.elb.amazonaws.com:8080\r\nBDID: 12345\r\nContent-Type: application/xml\r\nfile_name: STS_12345_67890.xml\r\njms.header.JMSCorrelationID: Unknown JMS Correlation ID: Wed Mar 17 15:27:52 CET 2021\r\njms.header.JMSDeliveryMode: 2\r\njms.header.JMSMessageID: ID:0180255ae31a25b22.ppr.de.customer-37877-1615931207546-948:1:1:1:1\r\njms.header.JMSPriority: 4\r\njms.header.JMSTimestamp: 1615991272111\r\njms.header.JMSType: TextMessage\r\npartner_info: Lacoste_BookingService_booking\r\nprocess_id: LACOWSO2XM\r\nUser-Agent: \r\nX-CorrelationID: Id-e8115260f70ab7251e4fa48a 1\r\nX-Forwarded-For: 172.27.145.175\r\nX-Forwarded-Port: 8080\r\nX-Forwarded-Proto: http\r\nContent-Length: 568\r\nConnection: keep-alive\r\n\r\n",
+      "http": {
+        "wafStatus": 0,
+        "bytesReceived": 1386,
+        "localPort": "8080",
+        "method": "POST",
+        "statusText": "Internal Server Error",
+        "remotePort": "45494",
+        "bytesSent": 473,
+        "localAddr": "172.27.145.116",
+        "uri": "/api/Lacoste/BookingService/v1",
+        "remoteName": "172.27.145.72",
+        "remoteAddr": "172.27.145.72",
+        "status": 500
+      },
+      "sentPayload": "file:///Cloud/shared/Openlogs/2021-03-17/15.28/e81152604ee92d2f0c0ca11b-0-sent",
+      "sentHeader": "HTTP/1.1 500 Internal Server Error\r\nDate: Wed, 17 Mar 2021 14:27:52 GMT\r\nServer: \r\nConnection: close\r\nX-CorrelationID: Id-e81152604ee92d2f0c0ca11b 0\r\nAuthorization: Basic NTQ1OTJiNjMtNmIzMi00YjA5LWE2MmQtZjljYmNlZDJiYjU4Om9Xa0dneUYzZWpFMVdnNmJpRC9DQ2xhUU9ZL2ZTeWFUbmpMTyswYm1Bb2c9\r\nOcp-Apim-Subscription-Key: 0d33ee1519224f66aa50b37033cd14fe\revent.eventcode: E2130\r\nstatus.code: 500\r\nContent-Type: application/xml\r\n\r\n",
+      "recvPayload": "file:///Cloud/shared/Openlogs/2021-03-17/15.27/e81152604ee92d2f0c0ca11b-0-received"
+    },
+    "finalStatus": "Pass",
+    "leg": 0
+  },
+  "leg2": {
+    "duration": 0,
+    "protocolInfo": {
+      "http": {
+        "wafStatus": 0,
+        "localPort": "59552",
+        "method": "POST",
+        "remotePort": "443",
+        "bytesSent": 1014,
+        "uri": "/Overseas/booking-process",
+        "bytesReceived": 0,
+        "statusText": "OK",
+        "localAddr": "172.27.145.116",
+        "sslSubject": "/C=US/ST=WA/L=Redmond/O=Microsoft Corporation/CN=*.azure-api.net",
+        "remoteName": "lacoste-apm-global-frc-uat.azure-api.net",
+        "remoteAddr": "51.103.43.155",
+        "status": 200
+      },
+      "sentPayload": "file:///Cloud/shared/Openlogs/2021-03-17/15.28/e81152604ee92d2f0c0ca11b-2-sent",
+      "sentHeader": "POST /Overseas/booking-process HTTP/1.1\r\nHost: lacoste-apm-global-frc-uat.azure-api.net\r\nMax-Forwards2: 28\r\nVia: 1.0 api-front-21 ()\r\nAuthorization: Basic NTQ1OTJiNjMtNmIzMi00YjA5LWE2MmQtZjljYmNlZDJiYjU4Om9Xa0dneUYzZWpFMVdnNmJpRC9DQ2xhUU9ZL2ZTeWFUbmpMTyswYm1Bb2c9\r\nOcp-Apim-Subscription-Key: 0d33ee1519224f66aa50b37033cd14fe\r\nContent-Length: 568\r\nConnection: close\r\nX-CorrelationID: Id-e81152604ee92d2f0c0ca11b 2\r\nContent-Type: application/xml\r\n\r\n"
+    },
+    "leg": 2
+  },
+  "leg1": {
+    "duration": 0,
+    "protocolInfo": {
+      "http": {
+        "wafStatus": 0,
+        "localPort": "59348",
+        "method": "POST",
+        "remotePort": "443",
+        "bytesSent": 1014,
+        "uri": "/Overseas/booking-process",
+        "bytesReceived": 0,
+        "statusText": "OK",
+        "localAddr": "172.27.145.116",
+        "sslSubject": "/C=US/ST=WA/L=Redmond/O=Microsoft Corporation/CN=*.azure-api.net",
+        "remoteName": "lacoste-apm-global-frc-uat.azure-api.net",
+        "remoteAddr": "51.103.43.155",
+        "status": 200
+      },
+      "sentPayload": "file:///Cloud/shared/Openlogs/2021-03-17/15.27/e81152604ee92d2f0c0ca11b-1-sent",
+      "sentHeader": "POST /Overseas/booking-process HTTP/1.1\r\nHost: lacoste-apm-global-frc-uat.azure-api.net\r\nMax-Forwards: 20\r\nVia: 1.0 api-front-21 ()\r\nAuthorization: Basic NTQ1OTJiNjMtNmIzMi00YjA5LWE2MmQtZjljYmNlZDJiYjU4Om9Xa0dneUYzZWpFMVdnNmJpRC9DQ2xhUU9ZL2ZTeWFUbmpMTyswYm1Bb2c9\r\nOcp-Apim-Subscription-Key: 0d33ee1519224f66aa50b37033cd14fe\r\nContent-Length: 568\r\nConnection: close\r\nX-CorrelationID: Id-e81152604ee92d2f0c0ca11b 1\r\nContent-Type: application/xml\r\n\r\n"
+    },
+    "leg": 1
+  }
+}

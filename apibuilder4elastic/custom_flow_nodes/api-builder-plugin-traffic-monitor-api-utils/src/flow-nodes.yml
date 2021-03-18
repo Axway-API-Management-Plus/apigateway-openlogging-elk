@@ -36,3 +36,66 @@ flow-nodes:
             properties:
               message:
                 type: string
+
+      getTransactionElementLegInfo:
+        name: Get Leg info
+        description: This flow node extracts the request and response information from the transaction elements (legs) so that they can be displayed in the traffic monitor.
+        parameters:
+          transactionElements:
+            name: TransactionElements
+            description: "The transaction element object returned by Elasticsearch traffic details index containing the individual Legs. The legs can contain HTTP or other protocols like JMS."
+            required: true
+            schema:
+              type: object
+          correlationId:
+            name: CorrelationId
+            description: "The correlation ID of the request. It needs to be added to the transaction information"
+            required: true
+            schema:
+              type: string
+          timestamp:
+            name: Request timestamp
+            description: "The timestamp of the request. It needs to be added to the transaction information"
+            required: true
+            schema:
+              type: string
+          legIdParam:
+            name: Leg-ID
+            description: "The number of the leg to be returned or * for all legs."
+            required: true
+            schema:
+              type: string
+          detailsParam:
+            name: Include details
+            description: "Should details returned or not (1 or 0)"
+            required: true
+            schema:
+              type: integer
+          sheadersParam:
+            name: Include Sent-Headers
+            description: "Should Sent-Headers returned or not (1 or 0)"
+            required: true
+            schema:
+              type: integer
+          rheadersParam:
+            name: Include Received-Headers
+            description: "Should Received-Headers returned or not (1 or 0)"
+            required: true
+            schema:
+              type: integer
+              
+        outputs:
+          next:
+            name: Next
+            description: The Leg-Information formatted as required by the Traffic-Monitor
+            context: $.result
+            schema:
+              oneOf:
+                - type: array
+                - type: object
+          error:
+            name: Error
+            description: An unexpected error happened
+            context: $.error
+            schema:
+              type: object

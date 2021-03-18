@@ -1,0 +1,72 @@
+{
+  "leg2": {
+    "duration": 0,
+    "protocolInfo": {
+      "jms": {
+        "jmsType": "BytesMessage",
+        "jmsDeliveryMode": 2,
+        "jmsTimestamp": 1615968552500,
+        "jmsPriority": 4,
+        "jmsRedelivered": 0,
+        "jmsExpiration": 0,
+        "jmsProviderURL": "local",
+        "jmsReplyTo": "",
+        "jmsCorrelationID": "Id-28b951603d5a734bcd27c5ce",
+        "jmsStatus": "Success",
+        "jmsMessageID": "ID:0180255ae31a25b22.ppr.cloud-37877-1615931207546-677:1:105:42:1",
+        "jmsDestination": "queue://com.customer.msg.ABCYY.TEST.XYZEvent_OQ"
+      },
+      "sentPayload": "file:///Cloud/shared/Openlogs/2021-03-17/09.09/28b951603d5a734bcd27c5ce-2-sent",
+      "sentHeader": "{ \"process_id\": \"FRTIAICOMP\", \"status_code\": \"200\", \"receiver\": \"SWORD\", \"partner_info\": \"FreightTiger\", \"sender\": \"FreightTiger\", \"web_service_name\": \"TripStatusService\", \"transfer_id\": \"Id-28b951603d5a734bcd27c5ce\", \"contentType\": \"application\\/json\", \"direction\": \"API2SWORD\", \"timestamp\": \"1615968552465\" }"
+    },
+    "leg": 2
+  },
+  "leg1": {
+    "duration": 0,
+    "protocolInfo": {
+      "jms": {
+        "jmsTimestamp": 1615968552481,
+        "jmsDestination": "queue://com.customer.msg.ABCZZ.TEST.FreightTiger.TripStatusService_OQ",
+        "jmsPriority": 4,
+        "jmsRedelivered": 0,
+        "jmsDeliveryMode": 2,
+        "jmsCorrelationID": "Id-28b951603d5a734bcd27c5ce",
+        "jmsStatus": "Success",
+        "jmsExpiration": 0,
+        "jmsProviderURL": "local",
+        "jmsType": "BytesMessage",
+        "jmsMessageID": "ID:0180255ae31a25b22.ppr.cloud-37877-1615931207546-677:1:105:41:1",
+        "jmsReplyTo": ""
+      },
+      "sentPayload": "file:///Cloud/shared/Openlogs/2021-03-17/09.09/28b951603d5a734bcd27c5ce-1-sent",
+      "sentHeader": "{ \"status_code\": \"200\", \"partner_info\": \"FreightTiger\", \"receiver\": \"SWORD\", \"detect1\": \"FRTIAICOMP\", \"sender\": \"FreightTiger\", \"web_service_name\": \"TripStatusService\", \"ProcessID\": \"FRTIAICOMP\", \"transfer_id\": \"Id-28b951603d5a734bcd27c5ce\", \"contentType\": \"application\\/json\", \"direction\": \"API2SWORD\", \"timestamp\": \"1615968552465\" }"
+    },
+    "leg": 1
+  },
+  "leg0": {
+    "duration": 48,
+    "protocolInfo": {
+      "recvHeader": "POST /api/FreightTiger/TripStatusService/v1/tripCompleted HTTP/1.1\r\nhost: internal-ppr.eu-central-1.elb.amazonaws.com:8080\r\nAccept: text/plain, application/xml, text/xml, application/json, application/x-jackson-smile, application/cbor, application/*+xml, application/*+json, */*\r\nAccept-Charset: big5, big5-hkscs, cesu-8, euc-jp, euc-kr, gb18030, gb2312, gbk, ibm-thai, ibm00858, ibm01140, ibm01141, ibm01142, ibm01143, ibm01144, ibm01145, ibm01146, ibm01147, ibm01148, ibm01149, ibm037, ibm1026, ibm1047, ibm273, ibm277, ibm278, ibm280, ibm284, ibm285, ibm290, ibm297, ibm420, ibm424, ibm437, ibm500, ibm775, ibm850, ibm852, ibm855, ibm857, ibm860, ibm861, ibm862, ibm863, ibm864, ibm865, ibm866, ibm868, ibm869, ibm870, ibm871, ibm918, iso-2022-cn, iso-2022-jp, iso-2022-jp-2, iso-2022-kr, iso-8859-1, iso-8859-13, iso-8859-15, iso-8859-2, iso-8859-3, iso-8859-4, iso-8859-5, iso-8859-6, iso-8859-7, iso-8859-8, iso-8859-9, jis_x0201, jis_x0212-1990, koi8-r, koi8-u, shift_jis, tis-620, us-ascii, utf-16, utf-16be, utf-16le, utf-32, utf-32be, utf-32le, utf-8, windows-1250, windows-1251, windows-1252, windows-1253, windows-1254, windows-1255, windows-1256, windows-1257, windows-1258, windows-31j, x-big5-hkscs-2001, x-big5-solaris, x-compound_text, x-euc-jp-linux, x-euc-tw, x-eucjp-open, x-ibm1006, x-ibm1025, x-ibm1046, x-ibm1097, x-ibm1098, x-ibm1112, x-ibm1122, x-ibm1123, x-ibm1124, x-ibm1166, x-ibm1364, x-ibm1381, x-ibm1383, x-ibm300, x-ibm33722, x-ibm737, x-ibm833, x-ibm834, x-ibm856, x-ibm874, x-ibm875, x-ibm921, x-ibm922, x-ibm930, x-ibm933, x-ibm935, x-ibm937, x-ibm939, x-ibm942, x-ibm942c, x-ibm943, x-ibm943c, x-ibm948, x-ibm949, x-ibm949c, x-ibm950, x-ibm964, x-ibm970, x-iscii91, x-iso-2022-cn-cns, x-iso-2022-cn-gb, x-iso-8859-11, x-jis0208, x-jisautodetect, x-johab, x-macarabic, x-maccentraleurope, x-maccroatian, x-maccyrillic, x-macdingbat, x-macgreek, x-machebrew, x-maciceland, x-macroman, x-macromania, x-macsymbol, x-macthai, x-macturkish, x-macukraine, x-ms932_0213, x-ms950-hkscs, x-ms950-hkscs-xp, x-mswin-936, x-pck, x-sjis_0213, x-utf-16le-bom, x-utf-32be-bom, x-utf-32le-bom, x-windows-50220, x-windows-50221, x-windows-874, x-windows-949, x-windows-950, x-windows-iso2022jp\r\nContent-Type: application/json\r\nMax-Forwards: 19\r\nUser-Agent: Apache-HttpClient/4.5.6 (Java/1.8.0_212)\r\nVia: 1.0 api-front-21 (), 1.0 api-front-11-i-02daa041429daa2e8 ()\r\nVia: 1.0 api-front-21 ()\r\nX-NewRelic-ID: VgQBU1FVDhAFVFFQBQkFXlI=\r\nX-NewRelic-Transaction: PxQCAFECD1FSV1UHVggHAlJTFB8EBw8RVU4aV1kPVQVRBwpVVAAKUgAAVUNKQQ8HVFNQBwIJFTs=\r\nX-Forwarded-For: 13.234.139.9, 172.27.145.116, 172.27.145.90\r\nX-Forwarded-Port: 8080\r\nX-Forwarded-Proto: http\r\nContent-Length: 1919\r\nConnection: keep-alive\r\n\r\n",
+      "http": {
+        "wafStatus": 0,
+        "localPort": "8080",
+        "method": "POST",
+        "remotePort": "34478",
+        "bytesSent": 2792,
+        "uri": "/api/FreightTiger/TripStatusService/v1/tripCompleted",
+        "bytesReceived": 4668,
+        "authSubjectId": "TripStatusService",
+        "statusText": "OK",
+        "localAddr": "172.27.145.138",
+        "remoteName": "172.27.145.132",
+        "remoteAddr": "172.27.145.132",
+        "status": 200
+      },
+      "sentPayload": "file:///Cloud/shared/Openlogs/2021-03-17/09.09/28b951603d5a734bcd27c5ce-0-sent",
+      "sentHeader": "HTTP/1.1 200 OK\r\nDate: Wed, 17 Mar 2021 08:09:12 GMT\r\nServer: \r\nConnection: close\r\nX-CorrelationID: Id-28b951603d5a734bcd27c5ce 0\r\nAccept: text/plain, application/xml, text/xml, application/json, application/x-jackson-smile, application/cbor, application/*+xml, application/*+json, */*\r\nAccept-Charset: big5, big5-hkscs, cesu-8, euc-jp, euc-kr, gb18030, gb2312, gbk, ibm-thai, ibm00858, ibm01140, ibm01141, ibm01142, ibm01143, ibm01144, ibm01145, ibm01146, ibm01147, ibm01148, ibm01149, ibm037, ibm1026, ibm1047, ibm273, ibm277, ibm278, ibm280, ibm284, ibm285, ibm290, ibm297, ibm420, ibm424, ibm437, ibm500, ibm775, ibm850, ibm852, ibm855, ibm857, ibm860, ibm861, ibm862, ibm863, ibm864, ibm865, ibm866, ibm868, ibm869, ibm870, ibm871, ibm918, iso-2022-cn, iso-2022-jp, iso-2022-jp-2, iso-2022-kr, iso-8859-1, iso-8859-13, iso-8859-15, iso-8859-2, iso-8859-3, iso-8859-4, iso-8859-5, iso-8859-6, iso-8859-7, iso-8859-8, iso-8859-9, jis_x0201, jis_x0212-1990, koi8-r, koi8-u, shift_jis, tis-620, us-ascii, utf-16, utf-16be, utf-16le, utf-32, utf-32be, utf-32le, utf-8, windows-1250, windows-1251, windows-1252, windows-1253, windows-1254, windows-1255, windows-1256, windows-1257, windows-1258, windows-31j, x-big5-hkscs-2001, x-big5-solaris, x-compound_text, x-euc-jp-linux, x-euc-tw, x-eucjp-open, x-ibm1006, x-ibm1025, x-ibm1046, x-ibm1097, x-ibm1098, x-ibm1112, x-ibm1122, x-ibm1123, x-ibm1124, x-ibm1166, x-ibm1364, x-ibm1381, x-ibm1383, x-ibm300, x-ibm33722, x-ibm737, x-ibm833, x-ibm834, x-ibm856, x-ibm874, x-ibm875, x-ibm921, x-ibm922, x-ibm930, x-ibm933, x-ibm935, x-ibm937, x-ibm939, x-ibm942, x-ibm942c, x-ibm943, x-ibm943c, x-ibm948, x-ibm949, x-ibm949c, x-ibm950, x-ibm964, x-ibm970, x-iscii91, x-iso-2022-cn-cns, x-iso-2022-cn-gb, x-iso-8859-11, x-jis0208, x-jisautodetect, x-johab, x-macarabic, x-maccentraleurope, x-maccroatian, x-maccyrillic, x-macdingbat, x-macgreek, x-machebrew, x-maciceland, x-macroman, x-macromania, x-macsymbol, x-macthai, x-macturkish, x-macukraine, x-ms932_0213, x-ms950-hkscs, x-ms950-hkscs-xp, x-mswin-936, x-pck, x-sjis_0213, x-utf-16le-bom, x-utf-32be-bom, x-utf-32le-bom, x-windows-50220, x-windows-50221, x-windows-874, x-windows-949, x-windows-950, x-windows-iso2022jp\r\nhost: internal-ppr-1756186690.eu-central-1.elb.amazonaws.com:8080\r\nUser-Agent: Apache-HttpClient/4.5.6 (Java/1.8.0_212)\r\nVia: 1.0 api-front-21 (), 1.0 api-front-11-i-02daa041429daa2e8 ()\r\nVia: 1.0 api-front-21 ()\r\nX-Forwarded-For: 13.234.139.9, 172.27.145.116, 172.27.145.90\r\nX-Forwarded-Port: 8080\r\nX-Forwarded-Proto: http\r\nX-NewRelic-ID: VgQBU1FVDhAFVFFQBQkFXlI=\r\nX-NewRelic-Transaction: PxQCAFECD1FSV1UHVggHAlJTFB8EBw8RVU4aV1kPVQVRBwpVVAAKUgAAVUNKQQ8HVFNQBwIJFTs=\r\nContent-Type: text/xml\r\n\r\n",
+      "recvPayload": "file:///Cloud/shared/Openlogs/2021-03-17/09.09/28b951603d5a734bcd27c5ce-0-received"
+    },
+    "finalStatus": "Pass",
+    "leg": 0
+  }
+}

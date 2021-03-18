@@ -166,8 +166,60 @@ describe('Endpoints', function () {
 				expect(body[1].sheaders).to.equal(null);
 			});
 		});
-
-
+		it('[Getinfo-0006] Should return information for any protocol (e.g. JMS)', () => {
+			return requestAsync({
+				method: 'GET',
+				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-3/ops/any/28b951603d5a734bcd27c5ce/*/getinfo?format=json&details=1&rheaders=0&sheaders=0`,
+				headers: {
+					'cookie': 'VIDUSR=Getinfo-0005-DAVID-1597762865-iUI5a8+v+zLkNA%3d%3d; APIMANAGERSTATIC=92122e5c-6bb3-4fd1-ad2f-08b65554d116', 
+					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
+				},
+				json: true
+			}).then(({ response, body }) => {
+				expect(response.statusCode).to.equal(200);
+				expect(body).to.be.an('Array');
+				expect(body).to.have.lengthOf(3);
+				expect(body[0]).to.be.an('Object');
+				expect(body[0]).to.have.property('details');
+				expect(body[0]).to.have.property('rheaders');
+				expect(body[0].rheaders).to.equal(null);
+				expect(body[0]).to.have.property('sheaders');
+				expect(body[0].sheaders).to.equal(null);
+				expect(body[1]).to.be.an('Object');
+				expect(body[1]).to.have.property('details');
+				expect(body[1]).to.have.property('rheaders');
+				expect(body[1].rheaders).to.equal(null);
+				expect(body[1]).to.have.property('sheaders');
+				expect(body[1].sheaders).to.equal(null);
+			});
+		});
+		it('[Getinfo-0007] Should return information if received or sent headers are missing', () => {
+			return requestAsync({
+				method: 'GET',
+				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-2/ops/any/e81152604ee92d2f0c0ca11b/*/getinfo?format=json&details=1&rheaders=0&sheaders=0`,
+				headers: {
+					'cookie': 'VIDUSR=Getinfo-0005-DAVID-1597762865-iUI5a8+v+zLkNA%3d%3d; APIMANAGERSTATIC=92122e5c-6bb3-4fd1-ad2f-08b65554d116', 
+					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
+				},
+				json: true
+			}).then(({ response, body }) => {
+				expect(response.statusCode).to.equal(200);
+				expect(body).to.be.an('Array');
+				expect(body).to.have.lengthOf(3);
+				expect(body[0]).to.be.an('Object');
+				expect(body[0]).to.have.property('details');
+				expect(body[0]).to.have.property('rheaders');
+				expect(body[0].rheaders).to.equal(null);
+				expect(body[0]).to.have.property('sheaders');
+				expect(body[0].sheaders).to.equal(null);
+				expect(body[1]).to.be.an('Object');
+				expect(body[1]).to.have.property('details');
+				expect(body[1]).to.have.property('rheaders');
+				expect(body[1].rheaders).to.equal(null);
+				expect(body[1]).to.have.property('sheaders');
+				expect(body[1].sheaders).to.equal(null);
+			});
+		});
 	});
 });
 	

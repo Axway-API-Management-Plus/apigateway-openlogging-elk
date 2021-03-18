@@ -28,7 +28,7 @@ async function handleFilterFields(parameters, options) {
 		throw new Error('Missing required parameter: serviceID');
 	}
 
-	if(params.protocol == 'filetransfer') {
+	if (params.protocol == 'filetransfer') {
 		params.protocol = 'fileTransfer';
 	}
 
@@ -69,7 +69,7 @@ async function handleFilterFields(parameters, options) {
 		params.value = [params.value];
 	}
 
-	var elasticSearchquery = { bool: { must: [] } } ;
+	var elasticSearchquery = { bool: { must: [] } };
 
 	var filters = [];
 
@@ -115,6 +115,122 @@ async function handleFilterFields(parameters, options) {
 	elasticSearchquery.bool.must = filters;
 	logger.info(`Elasticsearch query: ${JSON.stringify(elasticSearchquery)}`);
 	return elasticSearchquery;
+}
+
+async function getTransactionElementLegInfo(parameters, options) {
+	const { transactionElements, legIdParam, detailsParam, sheadersParam, rheadersParam, correlationId, timestamp } = parameters;
+	const { logger } = options;
+	var resultLegs = [];
+	if (!transactionElements) {
+		throw new Error('Missing required parameter: transactionElements');
+	}
+	if (legIdParam == undefined) {
+		throw new Error('Missing required parameter: legIdParam');
+	}
+	if (detailsParam == undefined) {
+		throw new Error('Missing required parameter: detailsParam');
+	}
+	if (sheadersParam == undefined) {
+		throw new Error('Missing required parameter: sheadersParam');
+	}
+	if (rheadersParam == undefined) {
+		throw new Error('Missing required parameter: rheadersParam');
+	}
+	if (!correlationId) {
+		throw new Error('Missing required parameter: correlationId');
+	}
+	if (!timestamp) {
+		throw new Error('Missing required parameter: timestamp');
+	}
+	
+	for (var item in transactionElements) {
+		let sourceLeg = transactionElements[item];
+		let resultLeg = {
+			details: null,
+			rheaders: null,
+			sheaders: null
+		};
+		if (legIdParam != '*' && legIdParam != sourceLeg.leg) {
+			continue; // Skip this leg
+		}
+		if (detailsParam == '1') {
+			await _addLegDetails(sourceLeg, resultLeg, correlationId, timestamp, logger);
+		}
+		if (rheadersParam == '1') {
+			await _addFormattedHeaders(sourceLeg, resultLeg, correlationId, 'received', logger);	
+		}
+		if (sheadersParam == '1') {
+			await _addFormattedHeaders(sourceLeg, resultLeg, correlationId, 'sent', logger);	
+		}
+		if(legIdParam != '*') {
+			return resultLeg;
+		}
+		resultLegs[sourceLeg.leg] = resultLeg;	
+	}
+	return resultLegs;
+}
+
+async function _addFormattedHeaders(sourceLeg, resultLeg, correlationId, direction, logger) {
+	let rawHeader = [];
+	try {
+		if(direction == 'received') {
+			rawHeader = sourceLeg.protocolInfo.recvHeader.split("\r\n");
+		} else {
+			rawHeader = sourceLeg.protocolInfo.sentHeader.split("\r\n");
+		}
+		// Formatting the headers
+		let attributes = [];
+
+		rawHeader.forEach(function (item, index) {
+			if (index != 0) {
+				let attribObj = {};
+				let n = item.indexOf(":");
+				let attribName = item.substr(0, n).toString();
+				let atrribValue = (item.substr(n + 1).trim());
+				if (attribName.length != 0) {
+					attribObj[attribName] = atrribValue;
+					attributes.push(attribObj);
+				}
+			}
+		});
+		if(direction == 'received') {
+			resultLeg.rheaders = attributes;
+		} else {
+			resultLeg.sheaders = attributes;
+		}
+	} catch (err) {
+		logger.error(`Error adding details for leg: ${sourceLeg.leg} of transaction: ${correlationId}. Error: ${err}`);
+	}
+}
+
+async function _addLegDetails(sourceLeg, resultLeg, correlationId, timestamp, logger) {
+	try {
+		var details = {};
+		if(sourceLeg.protocolInfo.http) {
+			details = { ...sourceLeg.protocolInfo.http};
+			if(!sourceLeg.protocolInfo.http.vhost) details.vhost = null;
+			details.statustext = sourceLeg.protocolInfo.http.statusText;
+			details.subject = sourceLeg.protocolInfo.http.authSubjectId;
+			details.type = 'http';
+		} else if(sourceLeg.protocolInfo.jms) {
+			details = { ...sourceLeg.protocolInfo.jms};
+			details.type = 'jms';
+		} else {
+			logger.error(`Cannot get protocolInfo details from object: ${JSON.stringify(sourceLeg.protocolInfo)}`);
+		}
+		details.leg = sourceLeg.leg;
+		details.timestamp = Date.parse(timestamp); //Needs to be formatted
+		details.duration = sourceLeg.duration;
+		details.correlationId = correlationId;
+		details.serviceName = sourceLeg.serviceName;
+		details.operation = sourceLeg.operation;
+		details.finalStatus = (typeof sourceLeg.finalStatus === 'undefined') ? null : sourceLeg.finalStatus; //need to be checked - not always avail in test data 
+
+
+		resultLeg.details = details;
+	} catch (err) {
+		logger.error(`Error adding details for leg: ${sourceLeg.leg} of transaction: ${correlationId}. Error: ${err}`);
+	}
 }
 
 async function addProtocolFilter(filters, params, logger) {
@@ -209,5 +325,6 @@ function convertAgo(ago, logger) {
 }
 
 module.exports = {
-	handleFilterFields
+	handleFilterFields,
+	getTransactionElementLegInfo
 };

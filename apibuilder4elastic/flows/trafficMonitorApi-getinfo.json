@@ -133,8 +133,7 @@
 				"next": {
 					"context": "$.elasticsearch.query",
 					"routes": [
-						"elasticsearch.1",
-						"javascript.4"
+						"elasticsearch.1"
 					],
 					"metaName": "Next"
 				},
@@ -172,7 +171,7 @@
 				"next": {
 					"context": "$.elasticsearch.result",
 					"routes": [
-						"javascript.4"
+						"traffic-monitor-api-utils.1"
 					],
 					"metaName": "Next"
 				},
@@ -214,44 +213,6 @@
 				}
 			},
 			"metaMethod": "Set HTTP Response"
-		},
-		"javascript.4": {
-			"type": "nodehandler://@axway/api-builder-plugin-fn-javascript/javascript",
-			"name": "Format GetInfo Response",
-			"method": "Execute",
-			"parameters": [
-				{
-					"name": "data",
-					"type": "jsonpath",
-					"value": "$",
-					"metaName": "data",
-					"metaDescription": "The value to apply as the `data` argument to the JavaScript code. For objects and arrays, `data` is passed by reference."
-				},
-				{
-					"name": "code",
-					"type": "string",
-					"value": "\"//init variables\\n  \\n  let transactionInfo = {};\\n  let sourceLegs = [];\\n  let resultLegs = [];\\n  let legParam = data.params.legID;\\n  let detailsParam = data.params.details;\\n  let sheadersParam = data.params.sheaders;\\n  let rheadersParam = data.params.rheaders;\\n  let elasticData = data.elasticsearch.result.body.hits;\\n  \\n  \\n  transactionInfo = elasticData.hits[0]._source;\\n  sourceLegs = transactionInfo.transactionElements;\\n  \\n  // Loop over legs\\n  for (var item in sourceLegs) {\\n    let sourceLeg = sourceLegs[item];\\n    let resultLeg = {};\\n    let details = {};\\n\\n\\tlet rheaders = [];\\n    let sheaders = [];\\n    \\n    if (legParam == '*' || legParam == sourceLeg.leg)\\n    {\\n    \\n      if (detailsParam == '1'){\\n        details.uri = sourceLeg.protocolInfo.http.uri;\\n        details.status = sourceLeg.protocolInfo.http.status;\\n        details.statustext = sourceLeg.protocolInfo.http.statusText;\\n        details.method = sourceLeg.protocolInfo.http.method;\\n        details.vhost = (typeof sourceLeg.protocolInfo.http.vhost === 'undefined') ? null : sourceLeg.protocolInfo.http.vhost; // needs to be checked - not avail in test data\\n        details.wafStatus = sourceLeg.protocolInfo.http.wafStatus;\\n        details.bytesSent = sourceLeg.protocolInfo.http.bytesSent;\\n        details.bytesReceived = sourceLeg.protocolInfo.http.bytesReceived;\\n        details.remoteName = sourceLeg.protocolInfo.http.remoteName;\\n        details.remoteAddr = sourceLeg.protocolInfo.http.remoteAddr;\\n        details.localAddr = sourceLeg.protocolInfo.http.localAddr;\\n        details.remotePort = sourceLeg.protocolInfo.http.remotePort;\\n        details.localPort = sourceLeg.protocolInfo.http.localPort; \\n        details.sslsubject = (typeof sourceLeg.protocolInfo.http.sslSubject === 'undefined') ? null : sourceLeg.protocolInfo.http.sslSubject; //need to be checked - not avail in test data \\n        details.leg = sourceLeg.leg;\\n        details.timestamp = Date.parse(transactionInfo['@timestamp']); //Needs to be formatted\\n        details.duration = sourceLeg.duration;\\n        details.correlationId = transactionInfo.correlationId;\\n        details.serviceName = sourceLeg.serviceName;\\n        details.subject = sourceLeg.protocolInfo.http.authSubjectId;\\n        details.operation = sourceLeg.operation;\\n        details.type = 'http'; //ToDo - currently hardcoded. Get it from path param in future\\n        details.finalStatus  = (typeof sourceLeg.finalStatus === 'undefined') ? null : sourceLeg.finalStatus; //need to be checked - not always avail in test data \\n        resultLeg.details = details;\\n      } else if (detailsParam == '0'){ \\n        resultLeg.details = null;\\n      } else{\\n        // No details element at all\\n      }\\n\\n                 \\n      // Formatting the rHeaders    \\n      if (rheadersParam == '1'){\\n        let rawRecvHeader = [];\\n        rawRecvHeader = sourceLeg.protocolInfo.recvHeader.split(\\\"\\\\r\\\\n\\\")\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t;\\n        let recvAttributes = [];   \\n\\n        rawRecvHeader.forEach(function (item,index){\\n        if (index !=0){\\n            let attribObj = {};        \\n            let n = item.indexOf(\\\":\\\");\\n            let attribName = item.substr(0,n).toString();\\n            let atrribValue = (item.substr(n+1).trim());\\n            if (attribName.length != 0) {\\n                attribObj[attribName]= atrribValue; \\n                recvAttributes.push(attribObj);\\n                }\\n            }\\n        });\\n        resultLeg.rheaders = recvAttributes;\\n      } else if (rheadersParam == '0'){   \\n        resultLeg.rheaders = null;\\n      } else {\\n        // No rheaders elemenmt at all\\n      }\\n\\n\\n      // Formatting the sHeaders\\n      \\n\\t  if (sheadersParam == '1') {\\n        let rawSendHeader = [];\\n        rawSendHeader = sourceLeg.protocolInfo.sentHeader.split(\\\"\\\\r\\\\n\\\")\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t;\\n        let sendAttributes = [];   \\n\\n        rawSendHeader.forEach(function (item,index){\\n        if (index !=0){\\n            let attribObj = {};        \\n            let n = item.indexOf(\\\":\\\");\\n            let attribName = item.substr(0,n).toString();\\n            let atrribValue = (item.substr(n+1).trim());\\n            if (attribName.length != 0) {\\n                attribObj[attribName]= atrribValue; \\n                sendAttributes.push(attribObj);\\n                }\\n            }\\n        });\\n\\n        resultLeg.sheaders = sendAttributes;\\n      } else if (sheadersParam == '0') {\\n        resultLeg.sheaders = null;\\n      } else {\\n        // No sheaders element at all\\n      }\\n\\n\\t  // Only when all legs are requested create an Array with leg objects.\\n      // Otherwise just return the leg object.\\n\\t  if (legParam == '*') {\\n      \\tresultLegs.push(resultLeg);\\n      } else {\\n        return resultLeg;\\n      }\\n\\n    }\\n  }\\n  return resultLegs;\"",
-					"metaName": "code",
-					"metaDescription": "A JavaScript function body. Supports `await` and returning promises."
-				}
-			],
-			"outputs": {
-				"next": {
-					"context": "$.result",
-					"routes": [
-						"http.2"
-					],
-					"metaName": "Next"
-				},
-				"error": {
-					"context": "$.error",
-					"routes": [
-						"http.1"
-					],
-					"metaName": "Error"
-				}
-			},
-			"metaMethod": "Execute"
 		},
 		"http.1": {
 			"type": "nodehandler://axway-flow/http",
@@ -332,6 +293,79 @@
 				}
 			},
 			"metaMethod": "Lookup current user"
+		},
+		"traffic-monitor-api-utils.1": {
+			"type": "nodehandler://api-builder-plugin-traffic-monitor-api-utils/traffic-monitor-api-utils",
+			"name": "Format GetInfo",
+			"method": "getTransactionElementLegInfo",
+			"parameters": [
+				{
+					"name": "detailsParam",
+					"type": "jsonpath",
+					"value": "$.params.details",
+					"metaName": "Include details",
+					"metaDescription": "Should details returned or not (1 or 0)"
+				},
+				{
+					"name": "rheadersParam",
+					"type": "jsonpath",
+					"value": "$.params.rheaders",
+					"metaName": "Include Received-Headers",
+					"metaDescription": "Should Received-Headers returned or not (1 or 0)"
+				},
+				{
+					"name": "legIdParam",
+					"type": "jsonpath",
+					"value": "$.params.legID",
+					"metaName": "Leg-ID",
+					"metaDescription": "The number of the leg to be returned or * for all legs."
+				},
+				{
+					"name": "correlationId",
+					"type": "jsonpath",
+					"value": "$.elasticsearch.result.body.hits.hits[0]._source.correlationId",
+					"metaName": "CorrelationId",
+					"metaDescription": "The correlation ID of the request. It needs to be added to the transaction information"
+				},
+				{
+					"name": "timestamp",
+					"type": "jsonpath",
+					"value": "$.elasticsearch.result.body.hits.hits[0]._source['@timestamp']",
+					"metaName": "Request timestamp",
+					"metaDescription": "The timestamp of the request. It needs to be added to the transaction information"
+				},
+				{
+					"name": "transactionElements",
+					"type": "jsonpath",
+					"value": "$.elasticsearch.result.body.hits.hits[0]._source.transactionElements",
+					"metaName": "TransactionElements",
+					"metaDescription": "The transaction element object returned by Elasticsearch traffic details index containing the individual Legs. The legs can contain HTTP or other protocols like JMS."
+				},
+				{
+					"name": "sheadersParam",
+					"type": "jsonpath",
+					"value": "$.params.sheaders",
+					"metaName": "Include Sent-Headers",
+					"metaDescription": "Should Sent-Headers returned or not (1 or 0)"
+				}
+			],
+			"outputs": {
+				"next": {
+					"routes": [
+						"http.2"
+					],
+					"context": "$.result",
+					"metaName": "Next"
+				},
+				"error": {
+					"routes": [
+						"http.1"
+					],
+					"context": "$.error",
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Get Leg info"
 		}
 	}
 }
