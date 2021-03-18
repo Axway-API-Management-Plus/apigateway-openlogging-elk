@@ -53,7 +53,7 @@ async function addApiManagerOrganizationFilter(params, options) {
 		throw new Error('Parameter: elasticQuery must be an object');
 	}
 	if(!indexProperty) {
-		indexProperty = "transactionSummary.serviceContext";
+		indexProperty = "serviceContext.apiOrg";
 	}
 	var filters = elasticQuery.bool.must;
 	// Skip, if the user an API-Gateway Admin
