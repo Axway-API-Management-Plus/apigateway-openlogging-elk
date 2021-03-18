@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## Unreleased
 ### Fixed
 - API builder mistakenly tries to create the regional index again [#81](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/81)
+- Playload not vissible for restricted users [#88](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/88)
+- Playload not vissible for restricted users [#88](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/88)
 
 ### Changed
 - Index: Traffic-Summary, Field correlationId now has doc_values enabled / New index field: transactionId [#84](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/84)
@@ -16,6 +18,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Now all cookies are returned back to the Admin-Node-Manager. This makes it possible to use Load-Balances ANMs with session stickyness
 - Now the returned error message is properly logged if the API-Manager login test at startup fails.
 - Reduced Retention-Period from 30 to 14 days for Traffic-Summary/-Details & Trace [#85](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/85)
+- Lookup API-Calls now contain the correlation id to streamline debugging and root-cause analysis [#86](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/86)
+- TransactionDetails not shown if one of the Legs used non HTTP (e.g. JMS) [#87](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/87)
 
 ### Added
 - Added new option for external HTTPS-Based user authorization. Server certificates can now be verified with correct CA or validation can be disabled completely.
