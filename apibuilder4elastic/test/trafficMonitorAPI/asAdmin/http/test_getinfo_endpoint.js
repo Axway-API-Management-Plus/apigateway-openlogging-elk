@@ -66,11 +66,11 @@ describe('Endpoints', function () {
 				expect(body).to.have.lengthOf(2);
 				expect(body[0]).to.be.an('Object');
 				expect(body[0]).to.have.property('details');
-				expect(body[0].details.leg).to.equal(1);
+				expect(body[0].details.leg).to.equal(0);
 				expect(body[0]).to.have.property('rheaders');
 				expect(body[0]).to.have.property('sheaders');
 				expect(body[1]).to.have.property('details');
-				expect(body[1].details.leg).to.equal(0);
+				expect(body[1].details.leg).to.equal(1);
 				expect(body[1]).to.have.property('rheaders');
 				expect(body[1]).to.have.property('sheaders');
 			});
