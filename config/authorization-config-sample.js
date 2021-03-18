@@ -75,6 +75,18 @@ var authorizationConfig = {
 	}
 }
 
+/*
+This function is called before the request is send to the external service. You may customize the URI as you need.
+*/
+async function createRequestUri(user, cfg, options) {
+	// Replace the loginName which is part of the URI
+	return cfg.uri.replace("${loginName}", user.loginName);
+}
+
+/*
+This function is called, after the response has returned from the external HTTP service. Use it to create 
+you restricted query.
+*/
 async function handleResponse(response, elasticQuery, cfg, options) {
 	var filters = elasticQuery.bool.must;
 	var regex = /.{3}-.{2}-.{2}-.{3}-.{1}-(.*)-.*/;
@@ -105,5 +117,6 @@ async function handleResponse(response, elasticQuery, cfg, options) {
 
 module.exports = {
 	authorizationConfig,
-	handleResponse
+	handleResponse,
+	createRequestUri
 }

@@ -85,6 +85,7 @@ async function addExtHTTPAuthzFilter(params, options) {
 	cache = options.pluginContext.cache;
 	var authZConfig = options.pluginContext.authZConfig;
 	var responseHandler = options.pluginContext.responseHandler;
+	var createRequestUri = options.pluginContext.createRequestUri;
 	
 	if (!user) {
 		throw new Error('Missing required parameter: user');
@@ -115,10 +116,13 @@ async function addExtHTTPAuthzFilter(params, options) {
 	const cacheKey = `ExtAuthZ###${user.loginName}`;
 	var cfg = authZConfig.externalHTTP;
 	if(!cache.has(cacheKey)) {
-		// Replace the loginName which is part of the URI
-		cfg.replacedUri = cfg.uri.replace("${loginName}", user.loginName);
-		logger.info(`External groups NOT found in cache with key: '${cacheKey}'. Request information from ${cfg.replacedUri}`);
-		debugger;
+		if(createRequestUri) {
+			cfg.replacedUri = await createRequestUri(user, cfg, options);
+			logger.debug(`Request URI created: ${cfg.replacedUri}`);
+		} else {
+			throw new Error(`Missing method: createRequestUri. You have to defined the createRequestUri method to create the request URI.`);
+		}
+		logger.info(`External groups NOT found in cache with key: '${cacheKey}'. Going to request information from ${cfg.replacedUri}`);
 		const resp = await requester(cfg.replacedUri, cfg.headers, cfg.method, cfg.body, { logger, ...cfg.options });
 		cache.set(cacheKey, resp);
 	} else {

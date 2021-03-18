@@ -240,7 +240,6 @@ async function isIgnoreAPI(params, options) {
 		logger.warn(`No unique result for path: '${apiPath}', policy name: '${policyName}'. Return default ingore: false`);
 		return {status: 200, body: { ignore: false }};
 	}
-	debugger;
 	logger.info(`Return API with apiPath: '${apiPath}', policyName: '${policyName}' as to be ignored: ${proxies[0].ignore}`);
 	var result = {status: 200, body: { ...proxies[0] }};
 	cache.set(cacheKey, result);

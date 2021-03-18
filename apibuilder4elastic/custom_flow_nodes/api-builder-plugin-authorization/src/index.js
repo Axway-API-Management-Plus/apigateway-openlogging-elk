@@ -34,7 +34,8 @@ async function getPlugin(pluginConfig, options) {
 	sdk.load(path.resolve(__dirname, 'flow-nodes.yml'), actions, { pluginContext: { 
 		cache: cache, 
 		authZConfig: authZConfig.authorizationConfig, 
-		responseHandler: authZConfig.handleResponse 
+		responseHandler: authZConfig.handleResponse, 
+		createRequestUri: authZConfig.createRequestUri 
 	}, pluginConfig });
 	return sdk.getPlugin();
 }
