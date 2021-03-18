@@ -140,5 +140,23 @@ describe('flow-node Authorization', () => {
 			expect(value).to.deep.equal(expectedQuery);
 			expect(output).to.equal('next');
 		});
+
+		it('should add the organization filter for a Non-Admin user to the query based on the given property', async () => { 
+			var user = JSON.parse(fs.readFileSync('./test/mock/noAdminUserObject.json'), null);
+			var elasticQuery = JSON.parse(fs.readFileSync('./test/mock/givenElasticQuery.json'), null);
+			let expectedQuery = JSON.parse(JSON.stringify(elasticQuery));
+			
+			const { value, output } = await flowNode.addApiManagerOrganizationFilter({
+				user: user, elasticQuery: elasticQuery, indexProperty: "transactionSummary.serviceContext.apiOrg"
+			});
+			
+			expectedQuery.bool.must.push({
+				term: {  "transactionSummary.serviceContext.apiOrg" : "API Development" }
+			});
+
+			expect(value).to.be.instanceOf(Object);
+			expect(value).to.deep.equal(expectedQuery);
+			expect(output).to.equal('next');
+		});
 	});
 });

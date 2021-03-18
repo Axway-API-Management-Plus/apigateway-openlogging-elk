@@ -38,7 +38,7 @@ async function switchOnAuthZ(params, options) {
 }
 
 async function addApiManagerOrganizationFilter(params, options) {
-	const { user, elasticQuery } = params;
+	var { user, elasticQuery, indexProperty } = params;
 	const { logger } = options;
 	if (!user) {
 		throw new Error('Missing required parameter: user');
@@ -51,6 +51,9 @@ async function addApiManagerOrganizationFilter(params, options) {
 	}
 	if (typeof elasticQuery != 'object') {
 		throw new Error('Parameter: elasticQuery must be an object');
+	}
+	if(!indexProperty) {
+		indexProperty = "transactionSummary.serviceContext";
 	}
 	var filters = elasticQuery.bool.must;
 	// Skip, if the user an API-Gateway Admin
@@ -68,11 +71,8 @@ async function addApiManagerOrganizationFilter(params, options) {
 				}
 			};
 		} else {
-			filter = {
-				term: {
-					"serviceContext.apiOrg": user.apiManager.organizationName
-				}
-			};
+			filter = { term: {} };
+			filter.term[indexProperty] = user.apiManager.organizationName;
 		}
 		filters.push(filter);
 	}

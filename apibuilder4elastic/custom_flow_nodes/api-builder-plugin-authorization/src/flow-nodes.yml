@@ -44,6 +44,12 @@ flow-nodes:
             required: true
             schema:
               type: object
+          indexProperty:
+            name: Index property
+            description: "The name of the Elasticsearch property within the index to restrict the query on. If not given: serviceContext.apiOrg is used."
+            required: false
+            schema:
+              type: string
         returns:
           name: Next
           description: Returns the enhanced Elasticsearch query

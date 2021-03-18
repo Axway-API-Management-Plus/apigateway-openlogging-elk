@@ -440,6 +440,13 @@
 					"value": "$.elasticsearch.query",
 					"metaName": "Elasticsearch query",
 					"metaDescription": "The Elasticsearch query that should be enhanced with a filter."
+				},
+				{
+					"name": "indexProperty",
+					"type": "string",
+					"value": "\"transactionSummary.serviceContext.apiOrg\"",
+					"metaName": "Index property",
+					"metaDescription": "The name of the Elasticsearch property within the index to restrict the query on. If not given: serviceContext.apiOrg is used."
 				}
 			],
 			"outputs": {
