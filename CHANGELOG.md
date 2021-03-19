@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [2.2.0] 2021-03-19
 ### Fixed
 - API builder mistakenly tries to create the regional index again [#81](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/81)
-- Playload not vissible for restricted users [#88](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/88)
+- Payload not vissible for restricted users [#88](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/88)
 - IsignoreAPI Lookup failure for JMS-Legs [#89](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/89)
 
 ### Changed
