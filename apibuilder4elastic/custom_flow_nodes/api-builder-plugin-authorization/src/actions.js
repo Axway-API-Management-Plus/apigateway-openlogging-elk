@@ -117,6 +117,7 @@ async function addExtHTTPAuthzFilter(params, options) {
 	var cfg = authZConfig.externalHTTP;
 	if(!cache.has(cacheKey)) {
 		if(createRequestUri) {
+			console.log("------------------------------------- URL: " + cfg.uri);
 			cfg.replacedUri = await createRequestUri(user, cfg, options);
 			logger.debug(`Request URI created: ${cfg.replacedUri}`);
 		} else {
