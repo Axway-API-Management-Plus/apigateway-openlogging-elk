@@ -214,6 +214,7 @@ async function _addLegDetails(sourceLeg, resultLeg, correlationId, timestamp, lo
 			details.type = 'http';
 		} else if(sourceLeg.protocolInfo.jms) {
 			details = { ...sourceLeg.protocolInfo.jms};
+			if(!sourceLeg.protocolInfo.jms.jmsStatusText) details.jmsStatusText = null;
 			details.type = 'jms';
 		} else {
 			logger.error(`Cannot get protocolInfo details from object: ${JSON.stringify(sourceLeg.protocolInfo)}`);
