@@ -4,11 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## Unreleased
+## [2.2.0] 2021-03-19
 ### Fixed
 - API builder mistakenly tries to create the regional index again [#81](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/81)
 - Playload not vissible for restricted users [#88](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/88)
-- Playload not vissible for restricted users [#88](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/88)
+- IsignoreAPI Lookup failure for JMS-Legs [#89](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/89)
 
 ### Changed
 - Index: Traffic-Summary, Field correlationId now has doc_values enabled / New index field: transactionId [#84](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/84)
