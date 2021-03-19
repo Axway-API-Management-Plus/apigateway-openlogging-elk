@@ -18,7 +18,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Now all cookies are returned back to the Admin-Node-Manager. This makes it possible to use Load-Balances ANMs with session stickyness
 - Now the returned error message is properly logged if the API-Manager login test at startup fails.
 - Reduced Retention-Period from 30 to 14 days for Traffic-Summary/-Details & Trace [#85](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/85)
-- Lookup API-Calls now contain the correlation id to streamline debugging and root-cause analysis [#86](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/86)
 - TransactionDetails not shown if one of the Legs used non HTTP (e.g. JMS) [#87](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/87)
 
 ### Added
