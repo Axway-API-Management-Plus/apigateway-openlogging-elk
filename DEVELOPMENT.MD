@@ -1,6 +1,7 @@
 ## Create a release
 
-1. Merge develop to master
+1. Merge develop into master
+- make sure no .only or debugger instruction is still in the code
 
 2. Bump version number
 
