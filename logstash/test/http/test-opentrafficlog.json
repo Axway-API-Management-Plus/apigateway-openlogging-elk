@@ -662,9 +662,6 @@
             "serviceId": "instance-3",
             "version": "7.7.20201130"
           },
-          "tags": [
-            "_httprequestfailure"
-          ],
           "transactionElements": {
             "leg2": {
               "duration": 0,
