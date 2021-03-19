@@ -86,5 +86,19 @@ describe('Test is Index-API', () => {
 			expect(value.status).to.equal(200);
 			expect(output).to.equal('next');
 		});
+
+		it('[isIgnoreAPI-0006] should return an error if the apiPath contains an unresolved Logstash variable', async () => {
+			const { value, output } = await flowNode.isIgnoreAPI({ policyName: "%{[transact-something-in-the-middle-ri]}" });
+
+			expect(value).to.deep.equal({status: 400, body: { message: "Policy-Name contains unresolved Logstash variable: '%{[transact-something-in-the-middle-ri]}'. Please check Logstash pipeline configuration." }});
+			expect(output).to.equal('next');
+		});
+
+		it('[isIgnoreAPI-0006] should return an error if the apiPath contains an unresolved Logstash variable', async () => {
+			const { value, output } = await flowNode.isIgnoreAPI({ apiPath: "%{[transact-something-in-the-middle-ri]}" });
+
+			expect(value).to.deep.equal({status: 400, body: { message: "API-Path contains unresolved Logstash variable: '%{[transact-something-in-the-middle-ri]}'. Please check Logstash pipeline configuration." }});
+			expect(output).to.equal('next');
+		});	
 	});
 });

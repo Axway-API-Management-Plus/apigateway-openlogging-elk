@@ -216,6 +216,13 @@ async function isIgnoreAPI(params, options) {
 	if (!apiPath && !policyName) {
 		return { status: 400, body: { message: 'You must either provide the apiPath or the policyName used to read the configuration.' }};
 	}
+	debugger;
+	if(apiPath && apiPath.startsWith("%{[") && apiPath.endsWith("]}")) {
+		return { status: 400, body: { message: `API-Path contains unresolved Logstash variable: '${apiPath}'. Please check Logstash pipeline configuration.` }};
+	}
+	if(policyName && policyName.startsWith("%{[") && policyName.endsWith("]}")) {
+		return { status: 400, body: { message: `Policy-Name contains unresolved Logstash variable: '${policyName}'. Please check Logstash pipeline configuration.` }};
+	}
 	if(region) {
 		region = region.toLowerCase();
 		params.region = region;
