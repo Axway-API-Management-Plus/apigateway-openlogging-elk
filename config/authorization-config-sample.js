@@ -38,7 +38,7 @@ var authorizationConfig = {
 	cacheTTL: parseInt(process.env.EXT_AUTHZ_CACHE_TTL) ? process.env.EXT_AUTHZ_CACHE_TTL : 300,
 	externalHTTP : {
 		// URI you want to use for the lookup, the variable loginName will be replaced, all the rest is static
-		// e.g.: https://authz.ac.customer.com/api/v1/users/${loginName}/groups?registry=AD&caching=false&filter=apg-t
+		// e.g.: https://authz.ac.customer.com/api/v1/users/__loginName__/groups?registry=AD&caching=false&filter=apg-t
 		uri: process.env.EXT_AUTHZ_URI, 
 		// Wich indexed field should be used to customize the query
 		// This field is used in a terms or match clause 
@@ -80,7 +80,11 @@ This function is called before the request is send to the external service. You 
 */
 async function createRequestUri(user, cfg, options) {
 	// Replace the loginName which is part of the URI
-	return cfg.uri.replace("${loginName}", user.loginName);
+	/* Example to use some kind of regex to be performed on the given username
+		var match = /CN=([0-9a-zA-Z]*)/.exec(username);
+		var userId = match[1];
+	*/
+	return cfg.uri.replace("__loginName__", user.loginName);
 }
 
 /*

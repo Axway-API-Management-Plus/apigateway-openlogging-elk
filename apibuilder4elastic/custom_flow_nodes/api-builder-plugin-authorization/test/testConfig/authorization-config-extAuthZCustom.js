@@ -2,7 +2,7 @@ var authorizationConfig = {
 	// For how long should the information cached by the API-Builder process
 	cacheTTL: parseInt(process.env.EXT_AUTHZ_CACHE_TTL) ? process.env.EXT_AUTHZ_CACHE_TTL : 300,
 	externalHTTP : {
-		// e.g.: https://authz.ac.customer.com/api/v1/users/${loginName}/groups?registry=AD&caching=false&filter=apg-t
+		// e.g.: https://authz.ac.customer.com/api/v1/users/__loginName__/groups?registry=AD&caching=false&filter=apg-t
 		uri: process.env.EXT_AUTHZ_URI, 
 		// e.g.: customProperty1.apimId
 		restrictionField: "customProperties.field1",
@@ -18,7 +18,7 @@ var authorizationConfig = {
 
 async function createRequestUri(user, cfg, options) {
 	// Replace the loginName which is part of the URI
-	return cfg.uri.replace("${loginName}", user.loginName);
+	return cfg.uri.replace("__loginName__", user.loginName);
 }
 
 async function handleResponse(response, elasticQuery, cfg, options) {
