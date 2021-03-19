@@ -7,21 +7,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [2.2.0] 2021-03-19
 ### Fixed
 - API builder mistakenly tries to create the regional index again [#81](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/81)
-- Payload not vissible for restricted users [#88](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/88)
-- IsignoreAPI Lookup failure for JMS-Legs [#89](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/89)
+- Payload not visible for restricted users [#88](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/88)
+- IsIgnoreAPI Lookup failure for JMS-Legs [#89](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/89)
+- TransactionDetails not shown if one of the Legs used non HTTP (e.g. JMS) [#87](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/87)
 
 ### Changed
 - Index: Traffic-Summary, Field correlationId now has doc_values enabled / New index field: transactionId [#84](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/84)
-- Hot-Phase for indices: Traffic-Summary, Traffic-Details & Trace reduced from 15 to 10 days. 5 days added to the Warm phase
+- Reduced Retention-Period from 30 to 14 days for Traffic-Summary/-Details & Trace [#85](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/85)
 - API-Builder release changed from Dubai to Ibiza
 - API-Builder Log-Level messages enabled
 - Now all cookies are returned back to the Admin-Node-Manager. This makes it possible to use Load-Balances ANMs with session stickyness
 - Now the returned error message is properly logged if the API-Manager login test at startup fails.
-- Reduced Retention-Period from 30 to 14 days for Traffic-Summary/-Details & Trace [#85](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/85)
-- TransactionDetails not shown if one of the Legs used non HTTP (e.g. JMS) [#87](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/87)
 
 ### Added
-- Added new option for external HTTPS-Based user authorization. Server certificates can now be verified with correct CA or validation can be disabled completely.
+- New option for external HTTPS-Based user authorization. Server certificates can now be verified with correct CA or validation can be disabled completely.
+- New callback to external HTTPS-Based user authorization to set the request URI
 - API-Gateway CorrelationId is now logged in API-Builder for all lookups performed by Logstash [#86](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/86)
 
 ## [2.1.2] 2021-02-23
