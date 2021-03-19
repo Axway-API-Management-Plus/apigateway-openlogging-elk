@@ -643,6 +643,13 @@
         "{\"timestamp\":1608318768751,\"correlationId\":\"30ffdc5f2ec9f0c26e65fce2\",\"processInfo\":{\"hostname\":\"api-env\",\"domainId\":\"ed992442-c363-4d36-963a-9e6314b0f421\",\"groupId\":\"group-2\",\"groupName\":\"QuickStart Group\",\"serviceId\":\"instance-1\",\"serviceName\":\"QuickStart Server\",\"version\":\"7.7.20200930\"},\"transactionSummary\":{\"path\":\"/favicon.ico\", \"protocol\":\"http\", \"protocolSrc\":\"8080\", \"status\":\"success\", \"serviceContexts\":[]}}"
       ],
       "expected": []
+    },
+    {
+      "description": "JMS leg that should skip any lookups (Checked there is no request tag in the output",
+      "input": [
+        "{\"timestamp\":1615979426799,\"correlationId\":\"a1e3516071b71fe9e3bdb25b\",\"processInfo\":{\"hostname\":\"api-back-11\",\"domainId\":\"973fdd33-69fd-4a0f-aacf-e430d70da6d3\",\"groupId\":\"group-3\",\"groupName\":\"Back\",\"serviceId\":\"instance-3\",\"serviceName\":\"api-back-11.ppr.schenkerag.de.axway.cloud\",\"version\":\"7.7.20201130\"},\"transactionElement\":{\"leg\":2,\"duration\":0,\"serviceName\":null,\"operation\":null,\"finalStatus\":null,\"protocolInfo\":{\"jms\":{\"jmsMessageID\":\"ID:api-back-11-i-0180255ae31a25b22.ppr.schenkerag.de.axway.cloud-37877-1615931207546-741:1:107:98:1\",\"jmsCorrelationID\":\"Id-a1e3516071b71fe9e3bdb25b\",\"jmsDestination\":\"queue://com.schenker.SHIELD.msg.WWSWO.TEST.SWINGEvent_OQ\",\"jmsProviderURL\":\"local\",\"jmsDeliveryMode\":2,\"jmsPriority\":4,\"jmsReplyTo\":\"\",\"jmsRedelivered\":0,\"jmsTimestamp\":1615979426802,\"jmsExpiration\":0,\"jmsType\":\"BytesMessage\",\"jmsStatus\":\"Success\",\"jmsStatusText\":null,\"authSubjectId\":null},\"recvHeader\":null,\"sentHeader\":\"{ \\\"process_id\\\": \\\"HVISAOBSTS\\\", \\\"status_code\\\": \\\"200\\\", \\\"receiver\\\": \\\"Hikvision\\\", \\\"partner_info\\\": \\\"Hikvision\\\", \\\"sender\\\": \\\"SWORD\\\", \\\"web_service_name\\\": \\\"ShipmentStatusService\\\", \\\"transfer_id\\\": \\\"Id-a1e3516071b71fe9e3bdb25b\\\", \\\"contentType\\\": \\\"application\\\/json\\\", \\\"direction\\\": \\\"SWORD2API\\\", \\\"timestamp\\\": \\\"1615979425413\\\" }\",\"recvPayload\":null,\"sentPayload\":\"file:\/\/\/Cloud\/shared\/Openlogs\/2021-03-17\/12.10\/a1e3516071b71fe9e3bdb25b-2-sent\"}}}"
+      ],
+      "expected": []
     }
   ]
 }
