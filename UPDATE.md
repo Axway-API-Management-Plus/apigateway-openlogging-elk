@@ -16,11 +16,12 @@ The core component is the API Builder project which provides the information abo
 
 #### Upgrade steps overview
 
-- Load and unpack the current or desired release
+- load and unpack the current or desired release
    - it is recommended to unpack it next to the existing release
-- Copy your existing `.env` file from the current installation
+- copy your existing `.env` file from the current installation
   - recommended is to use a sym-link to a central `.env` file, which should also be versioned if necessary
   - it is pointed out in this document, if parameters have changed or new ones have been added.
+- please make sure that you carry over your own certificates into the new release
 - depending on which components have changed
   - these containers must be stopped and then restarted based on the new release with `docker-compose up -d`
   - e.g. if no change is noted in logstash, then this component can continue to run
@@ -61,6 +62,7 @@ The following steps illustrates an update to version 2.0.2:
 wget --no-check-certificate https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v2.0.2/axway-apim-elk-v2.0.2.tar.gz -O - | tar -xvz
 cd axway-apim-elk-v2.0.2
 cp ~/axway-apim-elk-v2.0.0/.env .
+cp ~/axway-apim-elk-v2.0.0/config/all-my-custom-certificates ./config
 docker-compose -f filebeat/docker-compose.filebeat.yml stop
 docker-compose -f filebeat/docker-compose.filebeat.yml up -d
 ```
@@ -76,6 +78,7 @@ The following steps illustrates an update to version 2.0.2:
 wget --no-check-certificate https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v2.0.2/axway-apim-elk-v2.0.2.tar.gz -O - | tar -xvz
 cd axway-apim-elk-v2.0.2
 cp ~/axway-apim-elk-v2.0.0/.env .
+cp ~/axway-apim-elk-v2.0.0/config/all-my-custom-certificates ./config
 docker-compose stop
 docker-compose up -d
 ```
@@ -83,7 +86,7 @@ Repeat these steps on all machines running Logstash/API-Builder/Memcache.
 
 ### ANM config
 
-Please follow the instructions to [setup the Admin-Node-Manager](README.md#setup-admin-node-manager) based on the most recent Policy-Fragment shipped with the release.
+Please follow the instructions to [setup the Admin-Node-Manager](README.md#setup-admin-node-manager) based on the most recent Policy-Fragment shipped with the release. Please make sure that they take their own certificates with them.
 
 ### Dashboards
 
@@ -107,6 +110,7 @@ Updating the Elasticsearch cluster happens one node after next. Before updating 
 wget --no-check-certificate https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v2.0.2/axway-apim-elk-v2.0.2.tar.gz -O - | tar -xvz
 cd axway-apim-elk-v2.0.2
 cp ~/axway-apim-elk-v2.0.0/.env .
+cp ~/axway-apim-elk-v2.0.0/config/all-my-custom-certificates ./config
 docker-compose -f elasticsearch/docker-compose.es01.yml stop
 docker-compose -f elasticsearch/docker-compose.es01.yml up -d
 ```
@@ -120,6 +124,7 @@ To update Kibana you need to perform the following steps after adjusting the `EL
 wget --no-check-certificate https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v2.0.2/axway-apim-elk-v2.0.2.tar.gz -O - | tar -xvz
 cd axway-apim-elk-v2.0.2
 cp ~/axway-apim-elk-v2.0.0/.env .
+cp ~/axway-apim-elk-v2.0.0/config/all-my-custom-certificates ./config
 docker-compose -f kibana/docker-compose.kibana.yml stop
 docker-compose -f kibana/docker-compose.kibana.yml up -d
 ```
@@ -142,6 +147,7 @@ Same procedure as for Kibana and Logstash but repeat this on all Filebeat nodes.
 wget --no-check-certificate https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v2.0.2/axway-apim-elk-v2.0.2.tar.gz -O - | tar -xvz
 cd axway-apim-elk-v2.0.2
 cp ~/axway-apim-elk-v2.0.0/.env .
+cp ~/axway-apim-elk-v2.0.0/config/all-my-custom-certificates ./config
 docker-compose -f filebeat/docker-compose.filebeat.yml stop
 docker-compose -f filebeat/docker-compose.filebeat.yml up -d
 ```
