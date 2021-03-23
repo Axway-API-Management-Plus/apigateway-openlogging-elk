@@ -152,5 +152,17 @@ describe('flow-node Authorization', () => {
 			expect(output).to.equal('noAccess');
 			expect(value).to.equal('User: anna has no access');
 		});
+
+		it('should result in Full-Access if an API-Gateway Admin-User has logged in', async () => { 
+			var user = JSON.parse(fs.readFileSync('./test/mock/gwAdminUserObject.json'), null);
+			var elasticQuery = JSON.parse(fs.readFileSync('./test/mock/givenElasticQuery.json'), null);
+
+			var { value, output } = await flowNode.addExtHTTPAuthzFilter({
+				user: user, elasticQuery: elasticQuery
+			});
+			expect(value).to.be.instanceOf(Object);
+			expect(value).to.deep.equal(elasticQuery);
+			expect(output).to.equal('next');
+		});
 	});
 });

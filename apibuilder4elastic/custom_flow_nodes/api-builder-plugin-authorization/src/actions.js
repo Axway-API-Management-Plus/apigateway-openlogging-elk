@@ -55,27 +55,28 @@ async function addApiManagerOrganizationFilter(params, options) {
 	if(!indexProperty) {
 		indexProperty = "serviceContext.apiOrg";
 	}
-	var filters = elasticQuery.bool.must;
 	// Skip, if the user an API-Gateway Admin
-	if (!user.gatewayManager.isAdmin) {
-		var filter;
-		// If the user is an API-Manager Admin, he should see all traffic passed API-Manager (has a ServiceContext)
-		if (user.apiManager.role == "admin") {
-			// The serviceContext may be at different places depending on the queried index
-			filter = {
-				bool: {
-					should: [
-						{ exists: {  "field" : "transactionSummary.serviceContext" } },
-						{ exists: {  "field" : "serviceContext" } }
-					]
-				}
-			};
-		} else {
-			filter = { term: {} };
-			filter.term[indexProperty] = user.apiManager.organizationName;
-		}
-		filters.push(filter);
+	if (user.gatewayManager.isAdmin) {
+		return elasticQuery;
 	}
+	var filters = elasticQuery.bool.must;
+	var filter;
+	// If the user is an API-Manager Admin, he should see all traffic passed API-Manager (has a ServiceContext)
+	if (user.apiManager.role == "admin") {
+		// The serviceContext may be at different places depending on the queried index
+		filter = {
+			bool: {
+				should: [
+					{ exists: {  "field" : "transactionSummary.serviceContext" } },
+					{ exists: {  "field" : "serviceContext" } }
+				]
+			}
+		};
+	} else {
+		filter = { term: {} };
+		filter.term[indexProperty] = user.apiManager.organizationName;
+	}
+	filters.push(filter);
 	return elasticQuery;
 }
 
@@ -93,6 +94,7 @@ async function addExtHTTPAuthzFilter(params, options) {
 	if (!elasticQuery) {
 		throw new Error('Missing required parameter: elasticQuery');
 	}
+
 	if (!(user instanceof Object)) {
 		throw new Error('Parameter: user must be an object');
 	}
@@ -112,6 +114,10 @@ async function addExtHTTPAuthzFilter(params, options) {
 		authZConfig.externalHTTP.restrictionFieldType!="select" && 
 		authZConfig.externalHTTP.restrictionFieldType!="switch") {
 		throw new Error(`Invalid configuration: externalHTTP.restrictionFieldType: ${authZConfig.externalHTTP.restrictionFieldType}`);
+	}
+	// Skip, if the user an API-Gateway Admin
+	if (user.gatewayManager && user.gatewayManager.isAdmin) {
+		return elasticQuery;
 	}
 	const cacheKey = `ExtAuthZ###${user.loginName}`;
 	var cfg = authZConfig.externalHTTP;
