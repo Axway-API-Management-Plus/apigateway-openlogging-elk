@@ -13,6 +13,10 @@
         "faulthandlerPolicy": "N/A",
         "backendBasePath": "http://i.can.give.any.host.i.want.com"
     },
+    "/healthchecklb": {
+        "name": "Healthcheck",
+        "method": "Get health"
+    },
     "/favicon.ico": {
         "ignore": true
     },
