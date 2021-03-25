@@ -119,7 +119,7 @@ describe('Tests User-Lookup with complete configuration parameters', () => {
 			nock('https://mocked-api-gateway:8190').get('/api/rbac/permissions/currentuser').replyWithFile(200, './test/testReplies/gateway/operatorRoleOnlyPermissions.json');
 
 			const { value, output } = await flowNode.lookupCurrentUser({ 
-				apiManagerUserRequired: false, requestHeaders: {"host":"api-gateway:8090","max-forwards":"20", "cookie":"VIDUSR=1597381095-XTawGDtJhBA7Zw==;", "csrf-token": "CF2796B3BD18C1B0B5AB1C8E95B75662E92FBC04BD799DEB97838FC5B9C39348"}
+				getApiManagerUser: false, requestHeaders: {"host":"api-gateway:8090","max-forwards":"20", "cookie":"VIDUSR=1597381095-XTawGDtJhBA7Zw==;", "csrf-token": "CF2796B3BD18C1B0B5AB1C8E95B75662E92FBC04BD799DEB97838FC5B9C39348"}
 			});
 
 			expect(value).to.deep.equal({

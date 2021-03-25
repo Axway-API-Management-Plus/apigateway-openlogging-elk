@@ -39,7 +39,7 @@ const securityDeviceTypes = {
  *	 does not define "next", the first defined output).
  */
 async function lookupCurrentUser(params, options) {
-	const { requestHeaders, apiManagerUserRequired } = params;
+	const { requestHeaders, getApiManagerUser } = params;
 	const logger = options.logger;
 	cache = options.pluginContext.cache;
 	pluginConfig = options.pluginConfig;
@@ -84,7 +84,7 @@ async function lookupCurrentUser(params, options) {
 			cache.set( VIDUSR, user);
 		}
 		return user;
-	} else if(apiManagerUserRequired==false) {
+	} else if(getApiManagerUser==false) {
 		logger.debug(`Current user is: '${user.loginName}' Is Gateway admin: ${user.gatewayManager.isAdmin}. Don't search user on API-Manager.`);
 		if(VIDUSR) {
 			cache.set( VIDUSR, user);
