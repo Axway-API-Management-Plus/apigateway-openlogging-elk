@@ -168,11 +168,11 @@
 					"metaDescription": "The request headers are used to lookup the current users based on the current session cookie (VIDUSR)."
 				},
 				{
-					"name": "apiManagerUserRequired",
+					"name": "getApiManagerUser",
 					"type": "jsonpath",
 					"value": "$.authzConfig.enableUserAuthorization",
-					"metaName": "API-Manager user required?",
-					"metaDescription": "If set to false, the flow-node does not try to lookup the user on the API-Manager. This is for instance required, when user authorization is skipped and there might be no user configured in API-Manager."
+					"metaName": "Get the API-Manager user?",
+					"metaDescription": "If set to false, the flow-node does not tries to lookup the user on the API-Manager. Set it to false, when for instance user authorization is disabled as there might be no belonging user configured in the API-Manager."
 				}
 			],
 			"outputs": {
