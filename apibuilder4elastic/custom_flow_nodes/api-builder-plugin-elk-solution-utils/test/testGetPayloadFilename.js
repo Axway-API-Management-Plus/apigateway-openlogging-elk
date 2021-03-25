@@ -134,5 +134,18 @@ describe('flow-node elk-solution-utils PayloadFilename', () => {
 			});
 			expect(output).to.equal('noAccess');
 		});
+
+		// https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/90
+		it('should return the payload from the first document, if multiple documents are returned from Elasticsearch for 1 correlationId', async () => {
+			var trafficDetails = JSON.parse(fs.readFileSync('./test/trafficDetails/trafficDetailsDuplicate.json'), null);
+			const { value, output } = await flowNode.getPayloadFilename({ 
+				trafficDetails: trafficDetails, 
+				correlationId: "0455ff5e82267be8182a553d", 
+				legNo: "0", 
+				direction: "sent"
+			});
+			expect(value).to.equal("2020-07-03/08.55/first-5e82267be8182a553d-0-sent"); // Should be the first document
+			expect(output).to.equal('next');
+		});
 	});
 });

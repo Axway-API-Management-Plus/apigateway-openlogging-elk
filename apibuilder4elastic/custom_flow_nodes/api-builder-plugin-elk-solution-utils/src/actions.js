@@ -201,8 +201,12 @@ async function getPayloadFilename(params, options) {
 	if(direction != "sent" && direction != "received") {
 		throw new Error('Parameter: direction must be either sent or received.');
 	}
-	if(trafficDetails.body.hits.hits.length != 1) {
+	if(trafficDetails.body.hits.hits.length == 0) {
 		return options.setOutput('noAccess', `No access as traffic details contains no hit.`);
+	}
+	if(trafficDetails.body.hits.hits.length > 1) {
+		logger.warn(`Expected one Traffic-Details document for correlationId: ${correlationId} returned from Elasticsearch, but got: ${trafficDetails.body.hits.hits.length}. Using first document.`);
+		logger.warn(`Returned Traffic-Details: ${JSON.stringify(trafficDetails)}`);
 	}
 	if(!trafficDetails.body.hits.hits[0]._source.transactionElements) {
 		throw new Error(`Traffic-Details source must contain transactionElements.`);
