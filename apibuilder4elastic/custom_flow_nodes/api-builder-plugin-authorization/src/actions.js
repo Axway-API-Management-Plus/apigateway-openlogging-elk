@@ -26,15 +26,22 @@ var cache = {};
 async function switchOnAuthZ(params, options) {
 	const { logger } = options;
 	var authZConfig = options.pluginContext.authZConfig;
+	// No authorization config declared at all using default
 	if(!authZConfig) {
-		logger.debug(`Using organization based authorization.`);
+		logger.debug(`Using API-Manager organization based authorization.`);
 		return options.setOutput('org', {});
-	} else if(authZConfig.externalHTTP) {
+	} else if(authZConfig.enableUserAuthorization==false) {	
+		logger.debug(`User authorization is disabled.`);
+		return options.setOutput('skip', authZConfig);
+	} else if(authZConfig.externalHTTP && authZConfig.externalHTTP.enabled != false) {
 		logger.debug(`Using external HTTP based authorization.`);
 		return options.setOutput('extHttp', authZConfig.externalHTTP);
+	} else if(authZConfig.apimanagerOrganization && authZConfig.apimanagerOrganization.enabled != false) {
+		logger.debug(`Using API-Manager organization based authorization.`);
+		return options.setOutput('org', authZConfig.apimanagerOrganization);
+	} else {
+		throw new Error('All user authorization options are disabled, but skipUserAuthorization is not set to true');
 	}
-	logger.debug(`Using organization based authorization. (Default)`);
-	return options.setOutput('org', {});
 }
 
 async function addApiManagerOrganizationFilter(params, options) {

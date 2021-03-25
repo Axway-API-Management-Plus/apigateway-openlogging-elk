@@ -9,6 +9,12 @@ flow-nodes:
         name: Switch on Authorization
         description: Helper method to control the flow based on the configured authorization.
         outputs:
+          skip:
+            name: Skip
+            description: The entire authorization is skipped as no authorization is enabled. Returns the authorization config which has authZConfig.skipUserAuthorization set to true in this case.
+            context: $.authzConfig
+            schema:
+              type: object
           org:
             name: Organization
             description: Exit used if API-Manager organization is used for authorization.

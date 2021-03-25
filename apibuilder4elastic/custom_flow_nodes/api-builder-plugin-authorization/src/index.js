@@ -24,6 +24,9 @@ async function getPlugin(pluginConfig, options) {
 		}
 		options.logger.debug(`Trying to load authorization config file: ${configFile}`);
 		authZConfig = require(configFile);
+		if(authZConfig.authorizationConfig.skipUserAuthorization==true) {
+			options.logger.warn(`User authorization for the API-Gateway Traffic-Monitor is disabled. Entire traffic is visible to every user.`);
+		}
 		if(authZConfig.authorizationConfig.cacheTTL) {
 			cacheTTL = authZConfig.authorizationConfig.cacheTTL;
 			options.logger.debug(`Using configured cache TTL: ${cacheTTL}`);

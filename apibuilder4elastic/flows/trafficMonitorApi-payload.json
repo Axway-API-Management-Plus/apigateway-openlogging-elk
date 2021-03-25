@@ -381,6 +381,13 @@
 					"context": "$.authzConfig",
 					"metaName": "Ext-HTTP"
 				},
+				"skip": {
+					"routes": [
+						"elasticsearch.1"
+					],
+					"context": "$.authzConfig",
+					"metaName": "Skip"
+				},
 				"error": {
 					"routes": [
 						"http.3"

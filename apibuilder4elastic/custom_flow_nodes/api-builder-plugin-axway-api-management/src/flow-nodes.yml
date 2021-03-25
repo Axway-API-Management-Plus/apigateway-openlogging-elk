@@ -16,6 +16,14 @@ flow-nodes:
             initialType: string
             schema:
               type: string
+          getApiManagerUser:
+            name: Get the API-Manager user?
+            description: If set to false, the flow-node does not tries to lookup the user on the API-Manager. Set it to false, when for instance user authorization is disabled as there might be no belonging user configured in the API-Manager.
+            required: false
+            initialType: boolean
+            schema:
+              default: true
+              type: boolean
         outputs:
           next:
             name: Next

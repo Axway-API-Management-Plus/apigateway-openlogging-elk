@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Fixed
+- Duplicated document for one correlationId returned from Elasticsearch causing API-Payload details not to show [#90](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/90)
+
+### Added
+- Option to disable user authorization for the API-Gateway Traffic-Monitor [#91](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/91)
+
 ## [2.2.0] 2021-03-19
 ### Fixed
 - API builder mistakenly tries to create the regional index again [#81](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/81)

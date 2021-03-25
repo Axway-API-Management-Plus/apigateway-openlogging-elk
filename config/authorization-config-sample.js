@@ -2,42 +2,24 @@ const path = require('path');
 const fs = require('fs');
 
 /*
-By default, the solution uses user's API Manager organization to determine which 
-API-Requests they are allowed to see in the API Gateway Traffic-Monitor. 
-This behavior can be customized. 
-
-This option is customized for a very specific external HTTP service, as in this 
-example, which returns  information about a user's access rights. This information 
-is used to customize the Elasticsearch query. 
-
-Example response for this service:
-{
-  "status": 200,
-  "data": [
-    "CHR-GP-SV-APG-P-DGP-Approver",
-    "CHR-GP-SV-APG-P-UIF-Developer",
-    "CHR-GP-SV-APG-P-UIF-Approver",
-    "CHR-GP-SV-APG-P-CSPARTINT-Approver",
-    "CHR-GP-SV-APG-P-CORSOEDMS-Approver",
-    "CHR-GP-SV-APG-P-CORSOLMS-Approver",
-    "CHR-GP-SV-APG-P-TCL-Approver",
-    "CHR-DP-SV-APG-P-UIF-Developer",
-    "CHR-DP-SV-APG-P-DGP-Approver",
-    "CHR-DP-SV-APG-P-UIF-Approver",
-    "CHR-DP-SV-APG-P-CSPARTINT-Approver",
-    "CHR-DP-SV-APG-P-CORSOEDMS-Approver",
-    "CHR-DP-SV-APG-P-CORSOLMS-Approver",
-    "CHR-DP-SV-APG-P-TCL-Approver"
-  ]
-}
-This result is parsed to get a collection of groups, which are used to customize the query.
+	By default, the solution uses user's API Manager organization to determine which 
+	API-Requests they are allowed to see in the API Gateway Traffic-Monitor. 
+	This behavior can be customized. 
 */
 
 var authorizationConfig = {
 	// For how long should the information cached by the API-Builder process
 	cacheTTL: parseInt(process.env.EXT_AUTHZ_CACHE_TTL) ? process.env.EXT_AUTHZ_CACHE_TTL : 300,
+	// If you would like to disable user authorization completely, set this flag to false
+	enableUserAuthorization: true,
+	// Authorize users based on their API-Manager organization (this is the default)
+	apimanagerOrganization: {
+		enabled: true
+	},
+	// You may use an external HTTP-Service used for the authorization
 	externalHTTP : {
-		// URI you want to use for the lookup, the variable loginName will be replaced, all the rest is static
+		enabled: false,
+		// URI you want to use for the lookup - Implement the method: createRequestUri to replace for instance the loginName
 		// e.g.: https://authz.ac.customer.com/api/v1/users/__loginName__/groups?registry=AD&caching=false&filter=apg-t
 		uri: process.env.EXT_AUTHZ_URI, 
 		// Wich indexed field should be used to customize the query

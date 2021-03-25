@@ -84,6 +84,12 @@ async function lookupCurrentUser(params, options) {
 			cache.set( VIDUSR, user);
 		}
 		return user;
+	} else if(apiManagerUserRequired==false) {
+		logger.debug(`Current user is: '${user.loginName}' Is Gateway admin: ${user.gatewayManager.isAdmin}. Don't search user on API-Manager.`);
+		if(VIDUSR) {
+			cache.set( VIDUSR, user);
+		}
+		return user;
 	}
 	logger.trace(`Trying to load API-Manager user using Login-Name: '${user.loginName}'`);
 	const users = await _getManagerUser(user);

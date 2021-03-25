@@ -114,6 +114,23 @@ describe('Tests User-Lookup with complete configuration parameters', () => {
 			expect(output).to.equal('next');
 		});
 
+		it('should result into a normal API-Gateway User which requires no login to API-Manager as flag apiManagerUserRequired is set to false', async () => {
+			nock('https://mocked-api-gateway:8190').get('/api/rbac/currentuser').reply(200, { "result": "chris" });
+			nock('https://mocked-api-gateway:8190').get('/api/rbac/permissions/currentuser').replyWithFile(200, './test/testReplies/gateway/operatorRoleOnlyPermissions.json');
+
+			const { value, output } = await flowNode.lookupCurrentUser({ 
+				apiManagerUserRequired: false, requestHeaders: {"host":"api-gateway:8090","max-forwards":"20", "cookie":"VIDUSR=1597381095-XTawGDtJhBA7Zw==;", "csrf-token": "CF2796B3BD18C1B0B5AB1C8E95B75662E92FBC04BD799DEB97838FC5B9C39348"}
+			});
+
+			expect(value).to.deep.equal({
+				"loginName": "chris",
+				"gatewayManager": {
+					"isAdmin": false
+				}
+			});
+			expect(output).to.equal('next');
+		});
+
 		it('should result into a standard API-Gateway User (NOT HAVING permission: adminusers_modify), which requires user lookup to the API-Manager', async () => {
 			nock('https://mocked-api-gateway:8190').get('/api/rbac/currentuser').reply(200, { "result": "chris" });
 			nock('https://mocked-api-gateway:8190').get('/api/rbac/permissions/currentuser').replyWithFile(200, './test/testReplies/gateway/operatorRoleOnlyPermissions.json');
