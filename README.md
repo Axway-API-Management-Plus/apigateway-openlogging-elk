@@ -365,11 +365,15 @@ docker stop apibuilder4elastic
 docker-compose up -d
 ```
 
-In this configuration, which also contains corresponding Javascript code, necessary parameters and code are stored, for example to parse the response and to adjust the Elasticsearch query. The example: [config/authorization-config-sample.js](config/authorization-config-sample.js) contains all required documentation.  
+In this configuration, which also contains corresponding Javascript code, necessary parameters and code is stored, for example to parse the response and to adjust the Elasticsearch query. The example: [config/authorization-config-sample.js](config/authorization-config-sample.js) contains all required documentation.  
 
 Once this configuration is stored, the API Manager Organization based authorization will be replaced.  
 
-Please note: Besides the API-Manager Organization autorization only `externalHTTP` is currently supported. It is also possible to disable user authorization completely. To do this, set the parameter: `enableUserAuthorization: false`. If you have further use-cases please create an issue describing the use-case/requirements.  
+Please note:  
+- Besides the API-Manager Organization autorization only `externalHTTP` is currently supported.  
+- Only 1 authorization method can be enabled
+- It is also possible to disable user authorization completely. To do this, set the parameter: `enableUserAuthorization: false`. 
+- If you have further use-cases please create an issue describing the use-case/requirements.  
 
 <p align="right"><a href="#table-of-content">Top</a></p>
 

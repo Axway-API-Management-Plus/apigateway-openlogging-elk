@@ -58,7 +58,7 @@ var authorizationConfig = {
 }
 
 /*
-This function is called before the request is send to the external service. You may customize the URI as you need.
+This function is called, when externalHTTP is enabled and before the request is send to the external service. You may customize the URI as you need.
 */
 async function createRequestUri(user, cfg, options) {
 	// Replace the loginName which is part of the URI
@@ -70,7 +70,7 @@ async function createRequestUri(user, cfg, options) {
 }
 
 /*
-This function is called, after the response has returned from the external HTTP service. Use it to create 
+This function is called, when externalHTTP is enabled after the response has returned from the external HTTP service. Implement it to create 
 you restricted query.
 */
 async function handleResponse(response, elasticQuery, cfg, options) {
