@@ -17,6 +17,7 @@ describe('Payload restricted', function () {
 	 */
 	before(() => {
 		return new Promise(function(resolve, reject){
+			delete process.env.AUTHZ_CONFIG; // Make sure, it is not using config from a previous test
 			const envFilePath = path.join(__dirname, '../../../.env');
 			if (fs.existsSync(envFilePath)) {
 				envLoader.config({ path: envFilePath });
