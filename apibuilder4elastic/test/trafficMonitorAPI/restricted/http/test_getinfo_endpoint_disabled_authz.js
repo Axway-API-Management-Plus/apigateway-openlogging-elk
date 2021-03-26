@@ -5,12 +5,11 @@ const fs = require('fs');
 const nock = require('nock');
 const envLoader = require('dotenv');
 
-describe('Payload restricted', function () {
+describe('Endpoints', function () {
 	this.timeout(30000);
 	let server;
 	let auth;
-	const indexName = `apigw-traffic-details-payload_test_${getRandomInt(9999)}`;
-	const payloadFolder = `./test/mockedReplies/payloads`;
+	const indexName = `apigw-traffic-details-getinfo_test_${getRandomInt(9999)}`;
 
 	/**
 	 * Start API Builder.
@@ -23,7 +22,6 @@ describe('Payload restricted', function () {
 				envLoader.config({ path: envFilePath });
 			}
 			process.env.AUTHZ_CONFIG = "../../../test/trafficMonitorAPI/authZConfig/authorization-config-skipped.js";
-			process.env.PAYLOAD_FOLDER = payloadFolder;
 			server = startApiBuilder();
 			server.apibuilder.config.testElasticIndex = indexName;
 			elasticConfig = server.apibuilder.config.pluginConfig['@axway-api-builder-ext/api-builder-plugin-fn-elasticsearch'].elastic;
@@ -42,26 +40,27 @@ describe('Payload restricted', function () {
 	/**
 	 * Stop API Builder after the tests.
 	 */
-	after(() => {
-		stopApiBuilder(server);
-	});
+	after(() => stopApiBuilder(server));
 
-	describe('Disabled User-AuthZ - Payload endpoint tests', () => {
-		it('[Disabled-AuthZ-Payload-0001] Should return payload as the authz is disabled', () => {
+	describe('Disabled User-AuthZ - GetInfo endpoint tests', () => {
+		it('[Disabled-AuthZ-Getinfo-0001] Should return a result, as user authorization is disabled', () => {
 			nock('https://mocked-api-gateway:8090').get('/api/rbac/currentuser').reply(200, { "result": "chris" });
 			nock('https://mocked-api-gateway:8090').get('/api/rbac/permissions/currentuser').replyWithFile(200, './test/mockedReplies/apigateway/operatorChris.json');
 			return requestAsync({
 				method: 'GET',
-				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/stream/0455ff5e82267be8182a553d/1/received`,
+				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/http/0455ff5e82267be8182a553d/*/getinfo?format=json&details=1&rheaders=1&sheaders=1`,
 				headers: {
-					'cookie': 'VIDUSR=Restricted-Search-0001-CHRIS-1597468226-Z+qdRW4rGZnwzQ==', 
+					'cookie': 'VIDUSR=Restricted-Getinfo-0001-CHRIS-1597762865-iUI5a8+v+zLkNA%3d%3d; APIMANAGERSTATIC=92122e5c-6bb3-4fd1-ad2f-08b65554d116', 
 					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
 				},
 				json: true
 			}).then(({ response, body }) => {
 				expect(response.statusCode).to.equal(200);
+				expect(body).to.be.an('Array');
+				expect(body).to.have.lengthOf(2);
 				nock.cleanAll();
 			});
 		});
 	});
 });
+	

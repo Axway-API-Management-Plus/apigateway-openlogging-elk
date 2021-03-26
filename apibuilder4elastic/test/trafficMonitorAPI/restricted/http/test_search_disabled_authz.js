@@ -44,7 +44,7 @@ describe('Endpoints', function () {
 		stopApiBuilder(server);
 	});
 
-	describe('Search - Disabled AuthZ', () => {
+	describe('Disabled User-AuthZ - Search endpoint tests', () => {
 		it('[Disabled-AuthZ-Search-0001] Execute a search when user authorization is disabled', () => {
 			nock('https://mocked-api-gateway:8090').get('/api/rbac/currentuser').reply(200, { "result": "chris" });
 			nock('https://mocked-api-gateway:8090').get('/api/rbac/permissions/currentuser').replyWithFile(200, './test/mockedReplies/apigateway/operatorChris.json');
