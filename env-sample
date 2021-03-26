@@ -318,9 +318,9 @@ ELASTIC_VERSION=7.10.0
 # the traffic monitor based on their API-Manager organization. 
 # You may configure another option as of today to perform an external HTTP-Call, which is used 
 # to adjust the Elastic-Query. For more details please see: config/authorization-config-sample.js
-# It's recommended to rename this file and configure it with the following parameter:
+# It's recommended to create a copy the sample file and configure it with the following parameter:
 # For example:
-# AUTHZ_CONFIG=./config/authorization-config-ext-http.js
+# AUTHZ_CONFIG=./config/my-authorization-config.js
 
 # ----------------------------------------------------------------------------------------------
 # By default, the solution also provides the payload to the API gateway traffic monitor based on 

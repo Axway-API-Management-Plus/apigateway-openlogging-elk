@@ -31,7 +31,7 @@
 			"env"
 		]
 	},
-	"start": "axway-api-management.1",
+	"start": "authorization.1",
 	"nodes": {
 		"elasticsearch.1": {
 			"type": "nodehandler://@axway-api-builder-ext/api-builder-plugin-fn-elasticsearch/elasticsearch",
@@ -254,6 +254,13 @@
 					"value": "$.request.headers",
 					"metaName": "Request Headers",
 					"metaDescription": "The request headers are used to lookup the current users based on the current session cookie (VIDUSR)."
+				},
+				{
+					"name": "getApiManagerUser",
+					"type": "jsonpath",
+					"value": "$.authzConfig.enableUserAuthorization",
+					"metaName": "Get the API-Manager user?",
+					"metaDescription": "If set to false, the flow-node does not tries to lookup the user on the API-Manager. Set it to false, when for instance user authorization is disabled as there might be no belonging user configured in the API-Manager."
 				}
 			],
 			"outputs": {
@@ -271,6 +278,43 @@
 				}
 			},
 			"metaMethod": "Lookup current user"
+		},
+		"authorization.1": {
+			"type": "nodehandler://api-builder-plugin-authorization/authorization",
+			"name": "Get AuthZ Config",
+			"method": "switchOnAuthZ",
+			"parameters": [],
+			"outputs": {
+				"skip": {
+					"routes": [
+						"axway-api-management.1"
+					],
+					"context": "$.authzConfig",
+					"metaName": "Skip"
+				},
+				"org": {
+					"routes": [
+						"axway-api-management.1"
+					],
+					"context": "$.authzConfig",
+					"metaName": "Organization"
+				},
+				"extHttp": {
+					"routes": [
+						"axway-api-management.1"
+					],
+					"context": "$.authzConfig",
+					"metaName": "Ext-HTTP"
+				},
+				"error": {
+					"routes": [
+						"http.1"
+					],
+					"context": "$.error",
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Switch on Authorization"
 		}
 	}
 }
