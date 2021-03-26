@@ -347,17 +347,29 @@ You can, of course, create additional roles in the API Gateway Manager to adjust
 
 #### Customize user authorization
 
-By default, the organization of the API-Manager user is used for authorization to the Traffic-Monitor. This means that the user only sees traffic from his own organization (multi-organization is not yet supported). From a technical point of view, an additional filter clause is added to the Elasticsearch query, which results in a restricted result set. An example:  
-`{ term: { "serviceContext.apiOrg": "Org-A" }}`  
+By default, the organization of the API-Manager user is used for authorization to the Traffic-Monitor. This means that the user only sees traffic from his own organization (multi-organization is not yet supported). From a technical point of view, an additional filter clause is added to the Elasticsearch query, which results in a restricted result set. An example:  `{ term: { "serviceContext.apiOrg": "Org-A" }}`  
+   
 Since version 2.0.0, it is alternatively possible to use an external HTTP service for authorization instead of the API Manager organizations, to restrict the Elasticsearch result based on other criterias.  
-To customize user authorization, you need to configure an appropriate configuration file as in the following example:  
-`AUTHZ_CONFIG=./config/my-authorization-config-ext-http.js`  
 
-In this configuration, which also contains corresponding Javascript code, necessary parameters and code are stored, for example to parse the response and to adjust the Elasticsearch query. You can find an example in the folder: [config/authorization-config-sample.js](config/authorization-config-sample.js)  
+To customize user authorization, you need to configure an appropriate configuration file as described here:  
+```
+# Copy the provided example 
+cp ./config/authorization-config-sample.js ./config/my-authorization-config.js
+# Customize your configuration file as needed
+vi ./config/my-authorization-config.js
+# Setup your .env file to use your authorization config file
+vi .env
+AUTHZ_CONFIG=./config/my-authorization-config.js
+# Recreate the API-Builder container
+docker stop apibuilder4elastic
+docker-compose up -d
+```
+
+In this configuration, which also contains corresponding Javascript code, necessary parameters and code are stored, for example to parse the response and to adjust the Elasticsearch query. The example: [config/authorization-config-sample.js](config/authorization-config-sample.js) contains all required documentation.  
 
 Once this configuration is stored, the API Manager Organization based authorization will be replaced.  
 
-Please note: Besides the API-Manager Organization autorization only `externalHTTP` is currently supported. If you have further use-cases please create an issue describing the use-case/requirements.  
+Please note: Besides the API-Manager Organization autorization only `externalHTTP` is currently supported. It is also possible to disable user authorization completely. To do this, set the parameter: `enableUserAuthorization: false`. If you have further use-cases please create an issue describing the use-case/requirements.  
 
 <p align="right"><a href="#table-of-content">Top</a></p>
 
