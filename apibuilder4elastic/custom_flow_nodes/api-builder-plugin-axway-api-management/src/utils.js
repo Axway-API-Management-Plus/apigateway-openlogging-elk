@@ -117,7 +117,7 @@ async function parseAPIManagerConfig(pluginConfig, options) {
 				} else if(groupRegionAndURL.length == 2) {
 					// Only the Group-ID is given
 					options.logger.debug(`Found API-Manager URL: ${groupRegionAndURL[1]} for group: ${groupRegionAndURL[0]}`);
-					pluginConfig.apimanager[`${groupRegionAndURL[0]}###`] = { url: groupRegionAndURL[1], username: pluginConfig.apimanager.username, password: pluginConfig.apimanager.password } 
+					pluginConfig.apimanager[`${groupRegionAndURL[0]}`] = { url: groupRegionAndURL[1], username: pluginConfig.apimanager.username, password: pluginConfig.apimanager.password } 
 				} else if(groupRegionAndURL.length == 3) {
 					// Group-ID and region is given (Just create a map with a special key)
 					options.logger.debug(`Found API-Manager URL: ${groupRegionAndURL[2]} for group: ${groupRegionAndURL[1]} and region: ${groupRegionAndURL[1]}`);
@@ -145,7 +145,7 @@ function getManagerConfig(apiManagerConfig, groupId, region) {
 			return apiManagerConfig.default;
 		}
 	}
-	var key = groupId;
+	var key = groupId.toLowerCase();
 	if(region != undefined) {
 		key = `${groupId}###${region}`.toLowerCase();
 	}
