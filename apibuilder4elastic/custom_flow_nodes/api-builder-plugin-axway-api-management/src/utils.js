@@ -117,7 +117,7 @@ async function parseAPIManagerConfig(pluginConfig, options) {
 				} else if(groupRegionAndURL.length == 2) {
 					// Only the Group-ID is given
 					options.logger.debug(`Found API-Manager URL: ${groupRegionAndURL[1]} for group: ${groupRegionAndURL[0]}`);
-					pluginConfig.apimanager[groupRegionAndURL[0]] = { url: groupRegionAndURL[1], username: pluginConfig.apimanager.username, password: pluginConfig.apimanager.password } 
+					pluginConfig.apimanager[`${groupRegionAndURL[0]}###`] = { url: groupRegionAndURL[1], username: pluginConfig.apimanager.username, password: pluginConfig.apimanager.password } 
 				} else if(groupRegionAndURL.length == 3) {
 					// Group-ID and region is given (Just create a map with a special key)
 					options.logger.debug(`Found API-Manager URL: ${groupRegionAndURL[2]} for group: ${groupRegionAndURL[1]} and region: ${groupRegionAndURL[1]}`);
@@ -153,9 +153,8 @@ function getManagerConfig(apiManagerConfig, groupId, region) {
 	if (apiManagerConfig[key]) {
 		return apiManagerConfig[key];
 	} else {
-	// 
 		if (apiManagerConfig.perGroupAndRegion && !apiManagerConfig.default) {
-			throw new Error(`You have configured API-Manager URLs based on groupIds (e.g. group-a|https://manager-host.com:8075), but the groupId: ${groupId} is NOT configured and no default is configured. Please check the configuration parameter: API_MANAGER`);
+			throw new Error(`You have configured API-Manager URLs based on groupIds (e.g. group-a|https://manager-host.com:8075), but the groupId: ${groupId} is NOT configured and no default is configured (lookup key: '${key}'). Please check the configuration parameter: API_MANAGER`);
 		}
 		return apiManagerConfig.default;
 	}
@@ -167,6 +166,7 @@ async function checkAPIManagers(apiManagerConfig, options) {
 		if(typeof config != 'object') continue;
 		finalResult[key] = config;
 		try {
+			options.logger.debug(`Validating connection to API-Manager URL: '${config.url}'`)
 			var data = `username=${config.username}&password=${config.password}`;
 			var reqOptions = {
 				path: `/api/portal/v1.3/login`,

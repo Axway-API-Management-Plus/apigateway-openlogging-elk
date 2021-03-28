@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Fixed
 - Duplicated document for one correlationId returned from Elasticsearch causing API-Payload details not to show [#90](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/90)
+- API-Manager config for groupId only was registered wrong - Causing error API-Manager config not found for group
 
 ### Added
 - Option to disable user authorization for the API-Gateway Traffic-Monitor [#91](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/91)

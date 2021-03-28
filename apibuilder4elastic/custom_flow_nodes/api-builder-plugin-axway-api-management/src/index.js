@@ -39,7 +39,7 @@ async function getPlugin(pluginConfig, options) {
 			if(!result.isValid) {
 				throw new Error(`Error checking configured API-Manager(s). ${JSON.stringify(result)}`);
 			} else {
-				options.logger.info("Connection to API-Manager successfully validated.");
+				options.logger.info("Connection to API-Manager(s) successfully validated.");
 			}
 		} else {
 			options.logger.warn("Config validation is skipped, as parameter: pluginConfig.validateConfig=true");
