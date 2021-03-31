@@ -289,5 +289,20 @@ describe('Test API-Manager configuration variations', () => {
             var managerConfig = await getManagerConfig(configuredManagers, "group-b", "US");
             expect(managerConfig).to.deep.equal({ username: "user", password: "password", url: "https://my.group-b-us-api-manager.com:8075"});
         });
+
+        it('should return group based API-Manager is region is set to N/A', async () => {
+            var configuredManagers = {
+                "group-a": {
+                    url: "https://my.group-a-api-manager.com:8075",
+                    username: "user", password: "password"
+                },
+                "group-b###us": {
+                    url: "https://my.group-b-us-api-manager.com:8075",
+                    username: "user", password: "password"
+                },            
+            }
+            var managerConfig = await getManagerConfig(configuredManagers, "group-a", "N/A");
+            expect(managerConfig).to.deep.equal({ username: "user", password: "password", url: "https://my.group-a-api-manager.com:8075"});
+        });
     });
 });

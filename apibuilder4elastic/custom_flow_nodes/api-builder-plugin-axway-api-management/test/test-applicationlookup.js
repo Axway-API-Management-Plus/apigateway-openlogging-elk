@@ -41,7 +41,7 @@ describe('Test Application Lookup', () => {
 		it('should follow the Error path if the API-Manager host cannot be reached/communicated', async () => {
 			nock.cleanAll();
 			// We just have NO mock to make this test
-			const { value, output } = await flowNode.lookupApplication({ applicationId: '268fd3bd-3af6-4565-a3aa-6dc9559f1fbf' });
+			const { value, output } = await flowNode.lookupApplication({ applicationId: '268fd3bd-3af6-4565-a3aa-6dc9559f1fbf', region: "N/A" });
 
 			expect(value).to.be.instanceOf(Error);
 			expect(value.message).to.have.string(`Error getting application with ID: 268fd3bd-3af6-4565-a3aa-6dc9559f1fbf. Request sent to: 'https://mocked-api-gateway:8175'. Error: getaddrinfo`);

@@ -79,7 +79,7 @@ describe('Test API Lookup', () => {
 		it('should error with an unknown API', async () => {
 			nock('https://mocked-api-gateway:8175').get('/api/portal/v1.3/proxies?field=name&op=eq&value=Unknown API').reply(200, '[]');
 			const { value, output } = await flowNode.lookupAPIDetails({
-				apiName: 'Unknown API', apiPath: '/v1/unkownAPI'
+				apiName: 'Unknown API', apiPath: '/v1/unkownAPI', region: "n/a" // n/a for region considered as not set in case Logstash is providing it anyway
 			});
 
 			expect(value).to.be.instanceOf(Error);
@@ -98,12 +98,12 @@ describe('Test API Lookup', () => {
 			expect(output).to.equal('error');
 		});
 
-		it('should return the resolved API proxy details (cache is tested as well)', async () => {
+		it('should return the resolved API proxy details (cache is tested as well), Region N/A considered as not set', async () => {
 			nock('https://mocked-api-gateway:8175').get('/api/portal/v1.3/proxies?field=name&op=eq&value=Petstore HTTPS').replyWithFile(200, './test/testReplies/apimanager/apiProxyFound.json');
 			nock('https://mocked-api-gateway:8175').get(`/api/portal/v1.3/organizations/439ec2bd-0350-459c-8df3-bb6d14da6bc8`).replyWithFile(200, './test/testReplies/apimanager/organizationAPIDevelopment.json');
 			
 			const { value, output } = await flowNode.lookupAPIDetails({ 
-				apiName: 'Petstore HTTPS', apiPath: '/v1/petstore'
+				apiName: 'Petstore HTTPS', apiPath: '/v1/petstore', region: "N/A" // N/A for region considered as not set in case Logstash is providing it anyway
 			});
 			expect(value.organizationName).to.equal(`API Development`);
 			expect(value.name).to.equal(`Petstore HTTPS`);

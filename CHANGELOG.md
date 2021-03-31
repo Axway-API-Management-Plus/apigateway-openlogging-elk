@@ -12,6 +12,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - Option to disable user authorization for the API-Gateway Traffic-Monitor [#91](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/91)
 
+### Changed
+- Consider N/A and n/a for the region as not set - In case Logstash does not properly clean it
+
 ## [2.2.0] 2021-03-19
 ### Fixed
 - API builder mistakenly tries to create the regional index again [#81](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/81)

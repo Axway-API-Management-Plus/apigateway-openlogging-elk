@@ -56,7 +56,7 @@ describe('Test is Index-API', () => {
 		});
 
 		it('[isIgnoreAPI-0002] should return ignore true based on the apiPath', async () => {
-			const { value, output } = await flowNode.isIgnoreAPI({ apiPath: "/do/not/index/api", policyName: "" });
+			const { value, output } = await flowNode.isIgnoreAPI({ apiPath: "/do/not/index/api", policyName: "", region: "N/A" });
 
 			expect(value.body.ignore).to.equal(true);
 			expect(value.status).to.equal(200);

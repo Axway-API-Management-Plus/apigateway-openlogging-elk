@@ -107,7 +107,7 @@ async function lookupCurrentUser(params, options) {
 }
 
 async function lookupAPIDetails(params, options) {
-	var { apiName, apiPath, operationId, groupId, region, mapCustomProperties } = params;
+	var { apiName, apiPath, operationId, groupId, mapCustomProperties } = params;
 	const { logger } = options;
 	cache = options.pluginContext.cache;
 	pluginConfig = options.pluginConfig;
@@ -115,11 +115,13 @@ async function lookupAPIDetails(params, options) {
 	if (!apiPath) {
 		throw new Error('You must provide the apiPath that should be used to lookup the API.');
 	}
-	if(region) {
-		region = region.toLowerCase();
-		params.region = region;
+	if(params.region) {
+		params.region = params.region.toLowerCase();
+		if(params.region=="n/a") {
+			delete params.region;
+		}
 	}
-	const cacheKey = `${apiPath}###${groupId}###${region}`;
+	const cacheKey = `${apiPath}###${groupId}###${params.region}`;
 	logger.debug(`Trying to lookup API-Details from cache using key: '${cacheKey}'`);
 	if(cache.has(cacheKey)) {
 		logger.debug(`Found API-Details in cache with key: '${cacheKey}'`);
@@ -137,7 +139,7 @@ async function lookupAPIDetails(params, options) {
 			throw new Error(`API not configured locally, based on path: ${apiPath}. The API cannot be queried at the API Manager as no API name is given. Please configure this API path locally.`);
 		}
 		logger.debug(`API not configured locally, trying to get details from API-Manager.`);
-		proxies = await _getAPIProxy(apiName, groupId, region);
+		proxies = await _getAPIProxy(apiName, groupId, params.region);
 	} else {
 		logger.info(`API-Details for API with path: '${apiPath}' looked up locally.`);
 	}
@@ -157,7 +159,7 @@ async function lookupAPIDetails(params, options) {
 	}
 	// Skip  the lookups if the API is locally configured and just take it as it is
 	if(!apiProxy.locallyConfigured) {
-		var org = await _getOrganization(apiProxy, groupId, region, options);
+		var org = await _getOrganization(apiProxy, groupId, params.region, options);
 		apiProxy.organizationName = org.name;
 		apiProxy.apiSecurity = await _getAPISecurity(apiProxy, operationId);
 		apiProxy.requestPolicy = await _getRequestPolicy(apiProxy, operationId);
@@ -176,7 +178,7 @@ async function lookupAPIDetails(params, options) {
 		delete apiProxy.serviceProfiles;
 		delete apiProxy.caCerts;
 		if(mapCustomProperties) {
-			apiProxy = await _addCustomProperties(apiProxy, groupId, region, options);
+			apiProxy = await _addCustomProperties(apiProxy, groupId, params.region, options);
 		}
 	}
 	logger.info(`Return looked up API details based on API-Name: '${apiName}' and apiPath: '${apiPath}': ${JSON.stringify(apiProxy)}`);
@@ -186,24 +188,26 @@ async function lookupAPIDetails(params, options) {
 
 async function lookupApplication(params, options) {
 	const { logger } = options;
-	var { applicationId, groupId, region } = params;
+	var { applicationId, groupId } = params;
 	pluginConfig = options.pluginConfig;
 	cache = options.pluginContext.cache;
 	if (!applicationId) {
 		throw new Error('Missing parameter applicationId in order to lookup an application.');
 	}
-	if(region) {
-		region = region.toLowerCase();
-		params.region = region;
+	if(params.region) {
+		params.region = params.region.toLowerCase();
+		if(params.region=="n/a") {
+			delete params.region;
+		}
 	}
-	const cacheKey = `application###${applicationId}###${groupId}###${region}`;
+	const cacheKey = `application###${applicationId}###${groupId}###${params.region}`;
 	logger.debug(`Trying to lookup application from cache using key: '${cacheKey}'`);
 	if(cache.has(cacheKey)) {
 		logger.debug(`Found application in cache with key: '${cacheKey}'`);
 		return cache.get(cacheKey);
 	}
 	logger.info(`No application found in cache using key: '${cacheKey}'.`);
-	var application = await _getApplication(applicationId, groupId, region);
+	var application = await _getApplication(applicationId, groupId, params.region);
 	if(!application) {
 		logger.info(`Application with ID: '${applicationId}' not found`);
 		application = { id: applicationId, name: applicationId };
@@ -215,7 +219,7 @@ async function lookupApplication(params, options) {
 }
 
 async function isIgnoreAPI(params, options) {
-	var { apiPath, policyName, region, groupId } = params;
+	var { apiPath, policyName, groupId } = params;
 	const { logger } = options;
 	cache = options.pluginContext.cache;
 	pluginConfig = options.pluginConfig;
@@ -228,11 +232,13 @@ async function isIgnoreAPI(params, options) {
 	if(policyName && policyName.startsWith("%{[") && policyName.endsWith("]}")) {
 		return { status: 400, body: { message: `Policy-Name contains unresolved Logstash variable: '${policyName}'. Please check Logstash pipeline configuration.` }};
 	}
-	if(region) {
-		region = region.toLowerCase();
-		params.region = region;
+	if(params.region) {
+		params.region = params.region.toLowerCase();
+		if(params.region=="n/a") {
+			delete params.region;
+		}
 	}
-	const cacheKey = `isIgnore###${groupId}###${region}###${apiPath}###${policyName}`;
+	const cacheKey = `isIgnore###${groupId}###${params.region}###${apiPath}###${policyName}`;
 	logger.debug(`Trying to lookup ignore status from cache using key: '${cacheKey}'`);
 	if(cache.has(cacheKey)) {
 		logger.debug(`Found ignore status in cache with key: '${cacheKey}'`);
@@ -259,11 +265,17 @@ async function isIgnoreAPI(params, options) {
 }
 
 async function getCustomPropertiesConfig(params, options) {
-	const { groupId, region } = params;
+	const { groupId } = params;
+	if(params.region) {
+		params.region = params.region.toLowerCase();
+		if(params.region=="n/a") {
+			delete params.region;
+		}
+	}
 	pluginConfig = options.pluginConfig;
 	const { logger } = options;
 	cache = options.pluginContext.cache;
-	return await _getConfiguredCustomProperties(groupId, region, options);
+	return await _getConfiguredCustomProperties(groupId, params.region, options);
 }
 
 async function _getAPILocalProxies(params, options) {

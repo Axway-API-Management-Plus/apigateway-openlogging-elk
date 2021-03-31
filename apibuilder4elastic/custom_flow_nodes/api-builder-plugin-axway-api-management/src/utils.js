@@ -146,7 +146,7 @@ function getManagerConfig(apiManagerConfig, groupId, region) {
 		}
 	}
 	var key = groupId.toLowerCase();
-	if(region != undefined) {
+	if(region != undefined && region != "N/A" && region != "n/a") {
 		key = `${groupId}###${region}`.toLowerCase();
 	}
 	// Check if the requested combination based on groupId and region exists and return it directly
