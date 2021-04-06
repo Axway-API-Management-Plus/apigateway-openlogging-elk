@@ -53,10 +53,10 @@ describe('Test Setup Indices endpoint with custom properties disable', function 
 			.then(function(renderedString) {
 				console.log(`renderedString: ${renderedString}`);
 				fs.writeFileSync(testConfig, renderedString);
-			}
+			})
 			.catch(err => {
 				throw new Error(`Error write index configuration test config. ${err}`);
-			}));
+			});
 		process.env.INDEX_CONFIG_FILE = testConfig;
 		process.env.DISABLE_SETUP_FLOWS = false;
 		process.env.DISABLE_CUSTOM_PROPERTIES = true;
