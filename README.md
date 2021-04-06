@@ -118,7 +118,7 @@ Components such as the API-Builder project are supposed to run as a Docker-Conta
 ### Docker-Compose
 
 Docker Compose is currently used to deploy the solution. It is planned to provide HELM charts for the solution in the medium term to simplify deployment on Kubernetes and OpenShift.  
-Please be careful using docker-compose version 1.28.x as it may contain a bug/issue reading the .env file. See here: https://github.com/docker/compose/issues/8108 or https://github.com/docker/compose/issues/8173. Perhaps switch back to a previous version.
+Please be careful using docker-compose version 1.28.x as it may contain a bug/issue reading the .env file. See here: https://github.com/docker/compose/issues/8108 or https://github.com/docker/compose/issues/8173. Perhaps switch back to a previous version. Looks like is has been fixed with version 1.28.6.
 
 ### API-Gateway/API-Management
 
