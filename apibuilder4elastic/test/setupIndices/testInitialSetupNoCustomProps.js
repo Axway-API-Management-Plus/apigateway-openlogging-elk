@@ -49,7 +49,7 @@ describe('Test Setup Indices endpoint with custom properties disable', function 
 		var testConfig = path.join(tempDir, 'index_config.json');
 		console.log(`Using test-config: ${testConfig}`);
 		var data = { id: randomId };
-		renderFile(configFile, data)
+		await renderFile(configFile, data)
 			.then(function(renderedString) {
 				fs.writeFileSync(testConfig, renderedString);
 			});
