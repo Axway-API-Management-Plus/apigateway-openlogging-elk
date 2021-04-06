@@ -33,7 +33,7 @@ describe('Test Setup Indices endpoint with custom properties disable', function 
 	 * Start API Builder.
 	 */
 	before(() => {
-		generateRandomConfig(process.env.INDEX_CONFIG_FILE);
+		await generateRandomConfig(process.env.INDEX_CONFIG_FILE);
 		server = startApiBuilder();
 		auth = {
 			user: server.apibuilder.config.apikey || 'test',
@@ -42,7 +42,7 @@ describe('Test Setup Indices endpoint with custom properties disable', function 
 		return server.started;
 	});
 
-	function generateRandomConfig(configFile) {
+	async function generateRandomConfig(configFile) {
 		var tempDir = path.join(os.tmpdir(), `/elk-test-${randomId}`);
 		fs.mkdirSync(tempDir);
 		var testConfig = path.join(tempDir, 'index_config.json');
