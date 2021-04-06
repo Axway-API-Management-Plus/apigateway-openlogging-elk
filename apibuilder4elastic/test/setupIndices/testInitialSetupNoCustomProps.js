@@ -51,6 +51,7 @@ describe('Test Setup Indices endpoint with custom properties disable', function 
 		var data = { id: randomId };
 		await renderFile(configFile, data)
 			.then(function(renderedString) {
+				console.log(`renderedString: ${renderedString}`);
 				fs.writeFileSync(testConfig, renderedString);
 			}
 			.catch(err => {
