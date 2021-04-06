@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [2.3.0]
 ### Fixed
 - Duplicated document for one correlationId returned from Elasticsearch causing API-Payload details not to show [#90](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/90)
 - API-Manager config for groupId only was registered wrong - Causing error API-Manager config not found for group
