@@ -201,6 +201,13 @@ API_MANAGER_PASSWORD=changeme
 # API_BUILDER_LOCAL_API_LOOKUP_FILE=./config/api-lookup.json
 
 # ----------------------------------------------------------------------------------------------
+# Option to disable custom properties. With that, custom properties are no longer looked up 
+# at the API-Manager neither indexed in Elasticsearch. If set, it is of course no longer 
+# possible to use these for example for a customized authorization.
+# Used-By: API-Builder
+# DISABLE_CUSTOM_PROPERTIES=false
+
+# ----------------------------------------------------------------------------------------------
 # Recommended to configure to see Filebeat statistics in the Elastic Stack monitoring.
 # You can get your Cluster UUID with the following request: https://elasticsearch1:9200/
 # Used-By: Filebeat (to send monitoring events)

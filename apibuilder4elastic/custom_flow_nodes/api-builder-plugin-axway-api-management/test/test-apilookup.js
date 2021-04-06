@@ -26,7 +26,6 @@ describe('Test API Lookup', () => {
 		plugin = await MockRuntime.loadPlugin(getPlugin,pluginConfig);
 		plugin.setOptions({ validateOutputs: true });
 		flowNode = plugin.getFlowNode('axway-api-management');
-		nock('https://mocked-api-gateway:8175').get(`/api/portal/v1.3/config/customproperties`).replyWithFile(200, './test/testReplies/apimanager/customPropertiesConfig.json');
 	});
 
 	describe('#constructor', () => {
@@ -101,6 +100,7 @@ describe('Test API Lookup', () => {
 		it('should return the resolved API proxy details (cache is tested as well), Region N/A considered as not set', async () => {
 			nock('https://mocked-api-gateway:8175').get('/api/portal/v1.3/proxies?field=name&op=eq&value=Petstore HTTPS').replyWithFile(200, './test/testReplies/apimanager/apiProxyFound.json');
 			nock('https://mocked-api-gateway:8175').get(`/api/portal/v1.3/organizations/439ec2bd-0350-459c-8df3-bb6d14da6bc8`).replyWithFile(200, './test/testReplies/apimanager/organizationAPIDevelopment.json');
+			nock('https://mocked-api-gateway:8175').get(`/api/portal/v1.3/config/customproperties`).replyWithFile(200, './test/testReplies/apimanager/customPropertiesConfig.json');
 			
 			const { value, output } = await flowNode.lookupAPIDetails({ 
 				apiName: 'Petstore HTTPS', apiPath: '/v1/petstore', region: "N/A" // N/A for region considered as not set in case Logstash is providing it anyway
@@ -120,6 +120,7 @@ describe('Test API Lookup', () => {
 		it('should return the default backend base path when not providing an operationId', async () => {
 			nock('https://mocked-api-gateway:8175').get('/api/portal/v1.3/proxies?field=name&op=eq&value=Petstore HTTPS').replyWithFile(200, './test/testReplies/apimanager/apiProxyFound.json');
 			nock('https://mocked-api-gateway:8175').get(`/api/portal/v1.3/organizations/439ec2bd-0350-459c-8df3-bb6d14da6bc8`).replyWithFile(200, './test/testReplies/apimanager/organizationAPIDevelopment.json');
+			nock('https://mocked-api-gateway:8175').get(`/api/portal/v1.3/config/customproperties`).replyWithFile(200, './test/testReplies/apimanager/customPropertiesConfig.json');
 			
 			const { value, output } = await flowNode.lookupAPIDetails({ 
 				apiName: 'Petstore HTTPS', apiPath: '/v1/petstore'
@@ -139,6 +140,7 @@ describe('Test API Lookup', () => {
 		it('should return API-Key security when not providing any operationId and API-Key is configured as default', async () => {
 			nock('https://mocked-api-gateway:8175').get('/api/portal/v1.3/proxies?field=name&op=eq&value=Petstore HTTPS').replyWithFile(200, './test/testReplies/apimanager/apiProxyFound.json');
 			nock('https://mocked-api-gateway:8175').get(`/api/portal/v1.3/organizations/439ec2bd-0350-459c-8df3-bb6d14da6bc8`).replyWithFile(200, './test/testReplies/apimanager/organizationAPIDevelopment.json');
+			nock('https://mocked-api-gateway:8175').get(`/api/portal/v1.3/config/customproperties`).replyWithFile(200, './test/testReplies/apimanager/customPropertiesConfig.json');
 			
 			const { value, output } = await flowNode.lookupAPIDetails({ 
 				apiName: 'Petstore HTTPS', apiPath: '/v1/petstore'
@@ -158,6 +160,7 @@ describe('Test API Lookup', () => {
 		it('should return default policies when not providing an operationId', async () => {
 			nock('https://mocked-api-gateway:8175').get('/api/portal/v1.3/proxies?field=name&op=eq&value=Petstore HTTPS').replyWithFile(200, './test/testReplies/apimanager/apiProxyWithDefaultPolicies.json');
 			nock('https://mocked-api-gateway:8175').get(`/api/portal/v1.3/organizations/439ec2bd-0350-459c-8df3-bb6d14da6bc8`).replyWithFile(200, './test/testReplies/apimanager/organizationAPIDevelopment.json');
+			nock('https://mocked-api-gateway:8175').get(`/api/portal/v1.3/config/customproperties`).replyWithFile(200, './test/testReplies/apimanager/customPropertiesConfig.json');
 			
 			const { value, output } = await flowNode.lookupAPIDetails({ 
 				apiName: 'Petstore HTTPS', apiPath: '/v1/petstore'
@@ -181,6 +184,7 @@ describe('Test API Lookup', () => {
 		it('should return null for policies (Request, Response, ....) when no policy is configured', async () => {
 			nock('https://mocked-api-gateway:8175').get('/api/portal/v1.3/proxies?field=name&op=eq&value=Petstore HTTPS').replyWithFile(200, './test/testReplies/apimanager/apiProxyFound.json');
 			nock('https://mocked-api-gateway:8175').get(`/api/portal/v1.3/organizations/439ec2bd-0350-459c-8df3-bb6d14da6bc8`).replyWithFile(200, './test/testReplies/apimanager/organizationAPIDevelopment.json');
+			nock('https://mocked-api-gateway:8175').get(`/api/portal/v1.3/config/customproperties`).replyWithFile(200, './test/testReplies/apimanager/customPropertiesConfig.json');
 			
 			const { value, output } = await flowNode.lookupAPIDetails({ 
 				apiName: 'Petstore HTTPS', apiPath: '/v1/petstore'
@@ -204,6 +208,7 @@ describe('Test API Lookup', () => {
 		it('should ignore the given groupId, if only ONE API-Manager is configured anyway', async () => {
 			nock('https://mocked-api-gateway:8175').get('/api/portal/v1.3/proxies?field=name&op=eq&value=Petstore HTTPS').replyWithFile(200, './test/testReplies/apimanager/apiProxyFound.json');
 			nock('https://mocked-api-gateway:8175').get(`/api/portal/v1.3/organizations/439ec2bd-0350-459c-8df3-bb6d14da6bc8`).replyWithFile(200, './test/testReplies/apimanager/organizationAPIDevelopment.json');
+			nock('https://mocked-api-gateway:8175').get(`/api/portal/v1.3/config/customproperties`).replyWithFile(200, './test/testReplies/apimanager/customPropertiesConfig.json');
 			
 			const { value, output } = await flowNode.lookupAPIDetails({ 
 				apiName: 'Petstore HTTPS', apiPath: '/v1/petstore', groupId: 'group-unknown'
@@ -222,6 +227,7 @@ describe('Test API Lookup', () => {
 		it('should return passthrough as API-Security', async () => {
 			nock('https://mocked-api-gateway:8175').get('/api/portal/v1.3/proxies?field=name&op=eq&value=Petstore without security').replyWithFile(200, './test/testReplies/apimanager/apiProxyPassthrough.json');
 			nock('https://mocked-api-gateway:8175').get(`/api/portal/v1.3/organizations/439ec2bd-0350-459c-8df3-bb6d14da6bc8`).replyWithFile(200, './test/testReplies/apimanager/organizationAPIDevelopment.json');
+			nock('https://mocked-api-gateway:8175').get(`/api/portal/v1.3/config/customproperties`).replyWithFile(200, './test/testReplies/apimanager/customPropertiesConfig.json');
 			
 			const { value, output } = await flowNode.lookupAPIDetails({ 
 				apiName: 'Petstore without security', apiPath: '/without/security'
@@ -237,9 +243,10 @@ describe('Test API Lookup', () => {
 		it('should return API incl. defined custom properties', async () => {
 			nock('https://mocked-api-gateway:8175').get('/api/portal/v1.3/proxies?field=name&op=eq&value=API Custom-Properties Test').replyWithFile(200, './test/testReplies/apimanager/apiProxyWithCustomProps.json');
 			nock('https://mocked-api-gateway:8175').get(`/api/portal/v1.3/organizations/439ec2bd-0350-459c-8df3-bb6d14da6bc8`).replyWithFile(200, './test/testReplies/apimanager/organizationAPIDevelopment.json');
+			nock('https://mocked-api-gateway:8175').get(`/api/portal/v1.3/config/customproperties`).replyWithFile(200, './test/testReplies/apimanager/customPropertiesConfig.json');
 			
 			const { value, output } = await flowNode.lookupAPIDetails({ 
-				apiName: 'API Custom-Properties Test', apiPath: '/api-custom-prop-test', mapCustomProperties: true
+				apiName: 'API Custom-Properties Test', apiPath: '/api-custom-prop-test', disableCustomProperties: false
 			});
 			expect(output).to.equal('next');
 			expect(value.organizationName).to.equal(`API Development`);
@@ -252,18 +259,33 @@ describe('Test API Lookup', () => {
 			nock.cleanAll();
 		});
 
-		// Empty custom properties object make life easier in the Logstash pipeline
+		// Empty custom properties object make life easier in the Logstash pipeline / Test without parameter disableCustomProperties, which should default to false
 		it('should return an empty custom properties object, even if there are no custom properties configured', async () => {
 			nock('https://mocked-api-gateway:8175').get('/api/portal/v1.3/proxies?field=name&op=eq&value=No custom properties').replyWithFile(200, './test/testReplies/apimanager/apiProxyPassthrough.json');
 			nock('https://mocked-api-gateway:8175').get(`/api/portal/v1.3/organizations/439ec2bd-0350-459c-8df3-bb6d14da6bc8`).replyWithFile(200, './test/testReplies/apimanager/organizationAPIDevelopment.json');
+			nock('https://mocked-api-gateway:8175').get(`/api/portal/v1.3/config/customproperties`).replyWithFile(200, './test/testReplies/apimanager/customPropertiesConfig.json');
 			
 			const { value, output } = await flowNode.lookupAPIDetails({ 
-				apiName: 'No custom properties', apiPath: '/without/security', mapCustomProperties: true
+				apiName: 'No custom properties', apiPath: '/without/security'
 			});
-			console.log(`value: ${value}`);
 			expect(output).to.equal('next');
 			expect(value.organizationName).to.equal(`API Development`);
 			expect(value.customProperties).to.be.a('object');
+			nock.cleanAll();
+		});
+
+		it('should return API without custom properties as it is turned off', async () => {
+			nock('https://mocked-api-gateway:8175').get('/api/portal/v1.3/proxies?field=name&op=eq&value=API Custom-Properties Test').replyWithFile(200, './test/testReplies/apimanager/apiProxyWithCustomProps.json');
+			nock('https://mocked-api-gateway:8175').get(`/api/portal/v1.3/organizations/439ec2bd-0350-459c-8df3-bb6d14da6bc8`).replyWithFile(200, './test/testReplies/apimanager/organizationAPIDevelopment.json');
+			
+			const { value, output } = await flowNode.lookupAPIDetails({ 
+				apiName: 'API Custom-Properties Test', apiPath: '/api-custom-prop-test', disableCustomProperties: true
+			});
+			expect(output).to.equal('next');
+			expect(value.organizationName).to.equal(`API Development`);
+			expect(value.name).to.equal(`API Custom-Properties Test`);
+			expect(value.path).to.equal(`/api-custom-prop-test`);
+			expect(value.customProperties).to.be.undefined;
 			nock.cleanAll();
 		});
 	});

@@ -91,13 +91,13 @@ flow-nodes:
             initialType: string
             schema:
               type: string
-          mapCustomProperties:
-            name: Map custom properties
-            description: Turn this on to validate custom properties against the API-Manager configuration. Additionally, all found custom properties will be mapped into the properties customProperties
+          disableCustomProperties:
+            name: Disable custom properties
+            description: Turn this to false to disable custom properties against the API-Manager configuration. Additionally, all found custom properties will be mapped into the properties customProperties
             required: false
             initialType: boolean
             schema:
-              default: true
+              default: false
               type: boolean
         outputs:
           next:
@@ -215,6 +215,13 @@ flow-nodes:
             initialType: string
             schema:
               type: string
+          disableCustomProperties:
+            name: Disable custom properties
+            description: Convience flag to disable loading of custom properties. This may be set by a configuration toggle.
+            required: false
+            schema:
+              default: false
+              type: boolean
         outputs:
           next:
             name: Next

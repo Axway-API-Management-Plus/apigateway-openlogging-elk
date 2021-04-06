@@ -107,7 +107,7 @@ async function lookupCurrentUser(params, options) {
 }
 
 async function lookupAPIDetails(params, options) {
-	var { apiName, apiPath, operationId, groupId, mapCustomProperties } = params;
+	var { apiName, apiPath, operationId, groupId, disableCustomProperties } = params;
 	const { logger } = options;
 	cache = options.pluginContext.cache;
 	pluginConfig = options.pluginConfig;
@@ -115,6 +115,7 @@ async function lookupAPIDetails(params, options) {
 	if (!apiPath) {
 		throw new Error('You must provide the apiPath that should be used to lookup the API.');
 	}
+	if(!disableCustomProperties) disableCustomProperties = false;
 	if(params.region) {
 		params.region = params.region.toLowerCase();
 		if(params.region=="n/a") {
@@ -177,8 +178,10 @@ async function lookupAPIDetails(params, options) {
 		delete apiProxy.outboundProfiles;
 		delete apiProxy.serviceProfiles;
 		delete apiProxy.caCerts;
-		if(mapCustomProperties) {
+		if(disableCustomProperties==false) {
 			apiProxy = await _addCustomProperties(apiProxy, groupId, params.region, options);
+		} else {
+			logger.debug(`Support for custom properties is disabled. Return API-Proxy details without potentially configured custom properties.`);
 		}
 	}
 	logger.info(`Return looked up API details based on API-Name: '${apiName}' and apiPath: '${apiPath}': ${JSON.stringify(apiProxy)}`);
@@ -265,7 +268,12 @@ async function isIgnoreAPI(params, options) {
 }
 
 async function getCustomPropertiesConfig(params, options) {
-	const { groupId } = params;
+	const { groupId,  disableCustomProperties} = params;
+	if(!disableCustomProperties) disableCustomProperties = false;
+	if(disableCustomProperties != false) {
+		options.logger.debug(`Custom properties support is disabled. Return empty object as custom properties config.`);
+		return {};
+	}
 	if(params.region) {
 		params.region = params.region.toLowerCase();
 		if(params.region=="n/a") {

@@ -60,13 +60,6 @@
 					"metaDescription": "The ID of the Domain-Group where this event was created. If given, it's used to determined which API-Manager to use for the lookup. Optionally, the region can be used to select the API-Manager in the correct region. For that, the parameter: API_MANAGER must be configured like so: API_MANAGER=http://default-api-manager:8075,regiona|group-1|https://manager-1:8075,group-2|https://manager-2:8075, ...."
 				},
 				{
-					"name": "mapCustomProperties",
-					"type": "boolean",
-					"value": "true",
-					"metaName": "Map custom properties",
-					"metaDescription": "Turn this on to validate custom properties against the API-Manager configuration. Additionally, all found custom properties will be mapped into the properties customProperties"
-				},
-				{
 					"name": "region",
 					"type": "jsonpath",
 					"value": "$.params.region",
@@ -79,6 +72,13 @@
 					"value": "$.params.policy",
 					"metaName": "Policy",
 					"metaDescription": "Used during local search only to figure out if Policy-Event should be indexed or not."
+				},
+				{
+					"name": "disableCustomProperties",
+					"type": "jsonpath",
+					"value": "$.config.disableCustomProperties",
+					"metaName": "Disable custom properties",
+					"metaDescription": "Turn this to false to disable custom properties against the API-Manager configuration. Additionally, all found custom properties will be mapped into the properties customProperties"
 				}
 			],
 			"outputs": {

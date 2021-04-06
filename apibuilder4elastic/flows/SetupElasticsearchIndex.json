@@ -37,7 +37,15 @@
 			"type": "nodehandler://api-builder-plugin-axway-api-management/axway-api-management",
 			"name": "Get custom properties",
 			"method": "getCustomPropertiesConfig",
-			"parameters": [],
+			"parameters": [
+				{
+					"name": "disableCustomProperties",
+					"type": "jsonpath",
+					"value": "$.config.disableCustomProperties",
+					"metaName": "Disable custom properties",
+					"metaDescription": "Convience flag to disable loading of custom properties. This may be set by a configuration toggle."
+				}
+			],
 			"outputs": {
 				"next": {
 					"routes": [

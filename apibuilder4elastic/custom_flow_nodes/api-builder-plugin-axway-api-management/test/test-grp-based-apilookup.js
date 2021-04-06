@@ -32,6 +32,7 @@ describe('Test group based API lookup', () => {
 			// default
 			nock('https://mocked-api-manager-0:8075').get('/api/portal/v1.3/proxies?field=name&op=eq&value=Petstore HTTPS').replyWithFile(200, './test/testReplies/apimanager/manager-1/apiProxyManager1.json');
 			nock('https://mocked-api-manager-0:8075').get(`/api/portal/v1.3/organizations/2bfaa1c2-49ab-4059-832d-team-a`).replyWithFile(200, './test/testReplies/apimanager/manager-1/orgTeamA.json');
+			nock('https://mocked-api-manager-0:8075').get(`/api/portal/v1.3/config/customproperties`).replyWithFile(200, './test/testReplies/apimanager/customPropertiesConfig.json');
 			const { value, output } = await flowNode.lookupAPIDetails({ 
 				apiName: 'Petstore HTTPS', apiPath: '/v1/petstore', groupId: 'group-unknown'
 			});
@@ -47,16 +48,20 @@ describe('Test group based API lookup', () => {
 			// group-1
 			nock('https://mocked-api-manager-1:8175').get('/api/portal/v1.3/proxies?field=name&op=eq&value=Petstore HTTPS').replyWithFile(200, './test/testReplies/apimanager/manager-1/apiProxyManager1.json');
 			nock('https://mocked-api-manager-1:8175').get(`/api/portal/v1.3/organizations/2bfaa1c2-49ab-4059-832d-team-a`).replyWithFile(200, './test/testReplies/apimanager/manager-1/orgTeamA.json');
+			nock('https://mocked-api-manager-1:8175').get(`/api/portal/v1.3/config/customproperties`).replyWithFile(200, './test/testReplies/apimanager/customPropertiesConfig.json');
 
 			// group-5
 			nock('https://mocked-api-manager-2:8275').get('/api/portal/v1.3/proxies?field=name&op=eq&value=Petstore HTTPS').replyWithFile(200, './test/testReplies/apimanager/manager-2/apiProxyManager2.json');
 			nock('https://mocked-api-manager-2:8275').get(`/api/portal/v1.3/organizations/2bfaa1c2-49ab-4059-832d-team-b`).replyWithFile(200, './test/testReplies/apimanager/manager-2/orgTeamB.json');
+			nock('https://mocked-api-manager-2:8275').get(`/api/portal/v1.3/config/customproperties`).replyWithFile(200, './test/testReplies/apimanager/customPropertiesConfig.json');
 			// group-6|us
 			nock('https://mocked-api-manager-3:8375').get('/api/portal/v1.3/proxies?field=name&op=eq&value=Petstore HTTPS').replyWithFile(200, './test/testReplies/apimanager/manager-3/apiProxyManager3.json');
 			nock('https://mocked-api-manager-3:8375').get(`/api/portal/v1.3/organizations/2bfaa1c2-49ab-4059-832d-team-c`).replyWithFile(200, './test/testReplies/apimanager/manager-3/orgTeamC.json');
+			nock('https://mocked-api-manager-3:8375').get(`/api/portal/v1.3/config/customproperties`).replyWithFile(200, './test/testReplies/apimanager/customPropertiesConfig.json');
 			// group-6|eu
 			nock('https://mocked-api-manager-4:8475').get('/api/portal/v1.3/proxies?field=name&op=eq&value=Petstore HTTPS').replyWithFile(200, './test/testReplies/apimanager/manager-4/apiProxyManager4.json');
 			nock('https://mocked-api-manager-4:8475').get(`/api/portal/v1.3/organizations/2bfaa1c2-49ab-4059-832d-team-d`).replyWithFile(200, './test/testReplies/apimanager/manager-4/orgTeamD.json');
+			nock('https://mocked-api-manager-4:8475').get(`/api/portal/v1.3/config/customproperties`).replyWithFile(200, './test/testReplies/apimanager/customPropertiesConfig.json');
 			// This API exists with the same criterias on both API-Managers, but the organization and versions are different
 			// This tests makes sure, the correct API-Manager has returned the API-Details based on the groupId
 			var { value, output } = await flowNode.lookupAPIDetails({ 

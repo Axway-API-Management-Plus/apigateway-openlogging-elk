@@ -23,6 +23,9 @@ module.exports = {
 
 	authorizationMode: process.env.USER_AUTHORIZATION_MODE || 'ManagerOrganization',
 
+	// Disables custom properties lookup
+	disableCustomProperties: process.env.DISABLE_CUSTOM_PROPERTIES,
+
 	// These version are used, that Filebeat and Logstash are configured as required 
 	// by the API-Builder release
 	versions: {
