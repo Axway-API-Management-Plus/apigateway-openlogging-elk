@@ -69,7 +69,7 @@ The overall architecture this project provides looks like this:
 With that architecture it is possible to collect data from API-Gateways running all over the world into a centralized Elasticsearch instance to have it available with the best possible performance indendent from the network performance.  
 It also helps, when running the Axway API-Gateway in Docker-Orchestration-Environment where containers are started and stopped as it avoids to loose data, when an API-Gateway container is stopped.  
 
-Click [here](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/tree/develop/imgs/architecture-examples) to find more detailed architecture examples. *Currently classic deployment only - Will be extended based on requirements*
+Click [here](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/tree/develop/architecture) to find more detailed architecture examples and explanations.  
 
 ### How it works - Overview 
 
