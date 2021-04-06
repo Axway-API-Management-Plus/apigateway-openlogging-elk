@@ -22,7 +22,7 @@ async function getPlugin(pluginConfig, options) {
 	if(pluginConfig.MOCK_LOOKUP_API=="true") {
 		options.logger.info("MOCK_LOOKUP_API set to true - Lookup API will mock for tests");
 		await addLookupAPIMocks(cache);
-		await parseAPIManagerConfig(pluginConfig, options);
+		//await parseAPIManagerConfig(pluginConfig, options);
 	} else {
 		if(!pluginConfig.apigateway) {
 			throw new Error(`API-Gateway (apigateway) paramater section is missing in configuration`);
