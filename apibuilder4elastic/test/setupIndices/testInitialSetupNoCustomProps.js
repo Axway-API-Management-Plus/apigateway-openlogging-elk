@@ -43,6 +43,7 @@ describe('Test Setup Indices endpoint with custom properties disable', function 
 	});
 
 	async function generateRandomConfig(configFile) {
+		delete process.env.INDEX_CONFIG_FILE;
 		var tempDir = path.join(os.tmpdir(), `/elk-test-${randomId}`);
 		fs.mkdirSync(tempDir);
 		var testConfig = path.join(tempDir, 'index_config.json');
