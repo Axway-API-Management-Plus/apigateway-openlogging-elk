@@ -55,7 +55,10 @@ describe('Test Setup Indices endpoint', function () {
 		await renderFile(configFile, data)
 			.then(function(renderedString) {
 				fs.writeFileSync(testConfig, renderedString);
-			});
+			}
+			.catch(err => {
+				throw new Error(`Error write index configuration test config. ${err}`);
+			}));
 		process.env.INDEX_CONFIG_FILE = testConfig;
 		process.env.DISABLE_SETUP_FLOWS = false;
 	}
