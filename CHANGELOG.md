@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 - Consider N/A and n/a for the region as not set - In case Logstash does not properly clean it
+- Updated Dev-Dependency mocha to version 8.3.2
 
 ## [2.2.0] 2021-03-19
 ### Fixed
