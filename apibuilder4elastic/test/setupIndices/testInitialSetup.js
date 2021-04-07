@@ -54,7 +54,6 @@ describe('Test Setup Indices endpoint', function () {
 		console.log(`Using test-config: ${testConfig}`);
 		var data = { id: randomId };
 		var renderedString = await renderFile(configFile, data);
-		console.log(`renderedString: ${renderedString}`);
 		fs.writeFileSync(testConfig, renderedString);
 		delete process.env.INDEX_CONFIG_FILE;
 		process.env.INDEX_CONFIG_FILE = testConfig;
