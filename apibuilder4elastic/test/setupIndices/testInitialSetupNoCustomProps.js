@@ -33,7 +33,7 @@ describe('Test Setup Indices endpoint with custom properties disable', function 
 	 * Start API Builder.
 	 */
 	before(async () => {
-		await generateRandomConfig(process.env.INDEX_CONFIG_FILE);
+		await generateRandomConfig("test/setupIndices/test-config/index_config_template.json");
 		server = startApiBuilder();
 		auth = {
 			user: server.apibuilder.config.apikey || 'test',
@@ -43,20 +43,16 @@ describe('Test Setup Indices endpoint with custom properties disable', function 
 	});
 
 	async function generateRandomConfig(configFile) {
-		delete process.env.INDEX_CONFIG_FILE;
+		debugger;
 		var tempDir = path.join(os.tmpdir(), `/elk-test-${randomId}`);
 		fs.mkdirSync(tempDir);
 		var testConfig = path.join(tempDir, 'index_config.json');
 		console.log(`Using test-config: ${testConfig}`);
 		var data = { id: randomId };
-		await renderFile(configFile, data)
-			.then(function(renderedString) {
-				console.log(`renderedString: ${renderedString}`);
-				fs.writeFileSync(testConfig, renderedString);
-			})
-			.catch(err => {
-				throw new Error(`Error write index configuration test config. ${err}`);
-			});
+		var renderedString = await renderFile(configFile, data);
+		console.log(`renderedString: ${renderedString}`);
+		fs.writeFileSync(testConfig, renderedString);
+		delete process.env.INDEX_CONFIG_FILE;
 		process.env.INDEX_CONFIG_FILE = testConfig;
 		process.env.DISABLE_SETUP_FLOWS = false;
 		process.env.DISABLE_CUSTOM_PROPERTIES = true;
