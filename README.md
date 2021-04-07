@@ -123,7 +123,7 @@ Please be careful using docker-compose version 1.28.x as it may contain a bug/is
 ### API-Gateway/API-Management
 
 The solution is designed to work with _Classical_ and the _EMT_ deployment model. As it is mainly based on events given in the Open-Traffic-Event log, these must be enabled. Also Events-Logs are indexed and stored in Elasticsearch. This is used for System-Monitoring information and to highlight annotations based on Governance-Alerts in API-Manager.    
-Versin 7.7-20200130 is required due to some Dateformat changes in the Open-Traffic-Format. With older versions of the API-Gateway you will get an error in Logstash processing.
+Version 7.7-20200130 is required due to some Dateformat changes in the Open-Traffic-Format. With older versions of the API-Gateway you will get an error in Logstash processing.
 
 ### Elastic stack
 
