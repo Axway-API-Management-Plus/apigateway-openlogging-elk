@@ -142,7 +142,6 @@ async function getTransactionElementLegInfo(parameters, options) {
 	if (!timestamp) {
 		throw new Error('Missing required parameter: timestamp');
 	}
-	
 	for (var item in transactionElements) {
 		let sourceLeg = transactionElements[item];
 		let resultLeg = {
@@ -167,6 +166,16 @@ async function getTransactionElementLegInfo(parameters, options) {
 		}
 		resultLegs[sourceLeg.leg] = resultLeg;	
 	}
+	// It might happen, that leg numbers are not in a row, for missing legs, we are adding an empty default
+	// Note: 
+	// It would certainly also be possible not to take over the given Leg number and instead 
+	// to renumber the resultLegs. 
+	// However, it may help to see the original Leg ID in case of errors for better analysis.
+	for (var i = 0; i < resultLegs.length; i++) {
+		if(resultLegs[i]==null) {
+			resultLegs[i] = { details: {}, rheaders: [], sheaders: []};
+		}
+	}
 	return resultLegs;
 }
 
@@ -174,8 +183,10 @@ async function _addFormattedHeaders(sourceLeg, resultLeg, correlationId, directi
 	let rawHeader = [];
 	try {
 		if(direction == 'received') {
+			if(!sourceLeg.protocolInfo.recvHeader) return;
 			rawHeader = sourceLeg.protocolInfo.recvHeader.split("\r\n");
 		} else {
+			if(!sourceLeg.protocolInfo.sentHeader) return;
 			rawHeader = sourceLeg.protocolInfo.sentHeader.split("\r\n");
 		}
 		// Formatting the headers
@@ -199,7 +210,7 @@ async function _addFormattedHeaders(sourceLeg, resultLeg, correlationId, directi
 			resultLeg.sheaders = attributes;
 		}
 	} catch (err) {
-		logger.error(`Error adding details for leg: ${sourceLeg.leg} of transaction: ${correlationId}. Error: ${err}`);
+		logger.error(`Error adding details for leg: ${sourceLeg.leg} of transaction: ${correlationId} (Header). Error: ${err}`);
 	}
 }
 
@@ -230,7 +241,7 @@ async function _addLegDetails(sourceLeg, resultLeg, correlationId, timestamp, lo
 
 		resultLeg.details = details;
 	} catch (err) {
-		logger.error(`Error adding details for leg: ${sourceLeg.leg} of transaction: ${correlationId}. Error: ${err}`);
+		logger.error(`Error adding details for leg: ${sourceLeg.leg} of transaction: ${correlationId} (Leg-Details). Error: ${err}`);
 	}
 }
 

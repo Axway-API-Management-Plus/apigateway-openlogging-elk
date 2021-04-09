@@ -1,0 +1,93 @@
+{
+    "leg5": {
+    "duration": 0,
+    "protocolInfo": {
+        "sentPayload": "file:///Cloud/shared/Openlogs/2021-04-08/10.15/84bb6e60d076071783b6e640-5-sent",
+        "sentHeader": "{ \"customer\": \"PPR\", \"ws.name\": \"null\", \"error.description\": \"Success\", \"event.time\": \"1617869700011\", \"customer.partner\": \"null\", \"transfer.id\": \"Id-84bb6e60d076071783b6e640\" }",
+        "jms": {
+        "jmsStatus": "Success",
+        "jmsType": "TextMessage",
+        "jmsDeliveryMode": 2,
+        "jmsRedelivered": 0,
+        "jmsPriority": 4,
+        "jmsMessageID": "ID:api-back-11-i-0180255ae31a25b22.ppr.system.customer.com-46029-1617794987819-855:1:121:1:1",
+        "jmsReplyTo": "",
+        "jmsProviderURL": "local",
+        "jmsExpiration": 0,
+        "jmsCorrelationID": "Id-84bb6e60d076071783b6e640",
+        "jmsTimestamp": 1617869700574,
+        "jmsDestination": "queue://customer.service_now.internal"
+        }
+    },
+    "leg": 5
+    },
+    "leg0": {
+    "duration": 580,
+    "protocolInfo": {
+        "recvHeader": "GET /face/Testing/SchedulerTestService/v1/products HTTP/1.1\r\nHost: 172.27.145.138:8080\r\nUser-Agent: \r\nConnection: close\r\nX-CorrelationID: Id-83bb6e60ce76c965d9351dc5 1\r\n\r\n",
+        "http": {
+        "wafStatus": 0,
+        "bytesReceived": 173,
+        "method": "GET",
+        "localPort": "8080",
+        "statusText": "OK",
+        "remotePort": "53358",
+        "bytesSent": 835,
+        "uri": "/face/Testing/SchedulerTestService/v1/products",
+        "localAddr": "172.27.145.138",
+        "remoteAddr": "172.27.145.138",
+        "status": 200,
+        "remoteName": "172.27.145.138"
+        },
+        "sentPayload": "file:///Cloud/shared/Openlogs/2021-04-08/10.15/84bb6e60d076071783b6e640-0-sent",
+        "sentHeader": "HTTP/1.1 200 OK\r\nMax-Forwards: 19\r\nVia: 1.0 api-front-11-i-02daa041429daa2e8 (), 1.0 api-back-11 ()\r\nConnection: close\r\nX-CorrelationID: Id-84bb6e60d076071783b6e640 0; Id-84bb6e602dd13385d6de18d9 0\r\nAccess-Control-Allow-Origin: *\r\nDate: Thu, 08 Apr 2021 08:15:00 GMT\r\nVary: Accept-Encoding\r\nContent-Type: application/json\r\n\r\n"
+    },
+    "finalStatus": "Fail",
+    "leg": 0
+    },
+    "leg2": {
+    "duration": 0,
+    "protocolInfo": {
+        "jms": {
+        "jmsTimestamp": 1617869700550,
+        "jmsDestination": "queue://com.customer.face.msg.WWSHL.TEST.Testing.SchedulerTestService_OQ",
+        "jmsPriority": 4,
+        "jmsRedelivered": 0,
+        "jmsDeliveryMode": 2,
+        "jmsStatus": "Success",
+        "jmsCorrelationID": "Id-84bb6e60d076071783b6e640",
+        "jmsProviderURL": "local",
+        "jmsExpiration": 0,
+        "jmsType": "BytesMessage",
+        "jmsMessageID": "ID:api-back-11-i-0180255ae31a25b22.ppr.system.customer.com-46029-1617794987819-855:1:119:11:1",
+        "jmsReplyTo": ""
+        },
+        "sentPayload": "file:///Cloud/shared/Openlogs/2021-04-08/10.15/84bb6e60d076071783b6e640-2-sent",
+        "sentHeader": "{ \"partner_info\": \"Testing\", \"web_service_name\": \"SchedulerTestService\", \"transfer_id\": \"Id-84bb6e60d076071783b6e640\", \"contentType\": \"application\\/json\", \"timestamp\": \"1617869700011\" }"
+    },
+    "leg": 2
+    },
+    "leg1": {
+    "duration": 523,
+    "protocolInfo": {
+        "recvHeader": "HTTP/1.1 200 OK\r\nAccess-Control-Allow-Origin: *\r\nContent-Type: application/json\r\nDate: Thu, 08 Apr 2021 08:15:00 GMT\r\nMax-Forwards: 20\r\nVary: Accept-Encoding\r\nVia: 1.0 api-front-11-i-02daa041429daa2e8 ()\r\nX-CorrelationID: Id-84bb6e602dd13385d6de18d9 0\r\ntransfer-encoding: chunked\r\nConnection: Close\r\n\r\n",
+        "http": {
+        "wafStatus": 0,
+        "bytesReceived": 336,
+        "method": "GET",
+        "localPort": "41898",
+        "statusText": "OK",
+        "remotePort": "8080",
+        "bytesSent": 368,
+        "uri": "/face/Testing/SchedulerTestService/v1/products",
+        "localAddr": "172.27.145.138",
+        "remoteAddr": "172.27.145.120",
+        "status": 200,
+        "remoteName": "internal-Customer-Ppr-Apifront-Int-1224373398host.com"
+        },
+        "sentHeader": "GET /face/Testing/SchedulerTestService/v1/products HTTP/1.1\r\nHost: internal-Customer-Ppr-Apifront-Int-1224373398host.com:8080\r\nMax-Forwards: 20\r\nVia: 1.0 api-back-11 ()\r\npartner_info: Testing_SchedulerTestService\r\nservice.name: Testing_SchedulerTestService\r\nUser-Agent: \r\nConnection: close\r\nX-CorrelationID: Id-84bb6e60d076071783b6e640 1\r\n\r\n",
+        "recvPayload": "file:///Cloud/shared/Openlogs/2021-04-08/10.15/84bb6e60d076071783b6e640-1-received"
+    },
+    "leg": 1
+    }
+}

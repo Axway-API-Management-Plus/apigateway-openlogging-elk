@@ -5,8 +5,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+- TransactionData not shown, if TransactionElement legs are not in a row [#97](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/97)
+
 ### Added
-- Added a new parameter: DISABLE_CUSTOM_PROPERTIES to disable custom properties support [#95](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/95)
+- Added a new parameter: `DISABLE_CUSTOM_PROPERTIES` to disable custom properties support [#95](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/95)
 
 ## [2.3.0]
 ### Fixed

@@ -209,6 +209,37 @@ describe('flow-node traffic-monitor-api-utils', () => {
 			expect(value[2].sheaders[1]).to.deep.equal({'Max-Forwards2': "28"});
 		});
 
+		it('should return missing legs with a default object - Legs 3 and 4 are missing', async () => {
+			var testTransactionElements = JSON.parse(fs.readFileSync('./test/documents/transactionElementsLegsNotInARow.json'), null);
+			const { value, output } = await flowNode.getTransactionElementLegInfo(
+				{ transactionElements: testTransactionElements, legIdParam: "*", detailsParam: 1, sheadersParam: 1, rheadersParam: 1, correlationId: "312326566654321", timestamp: "2020-07-03T15:56:11.597Z"  }
+			);
+
+			expect(output).to.equal('next');
+			expect(value).to.be.a('array');
+			expect(value).to.have.lengthOf(6); // Six legs are expected (Leg-1 and Leg-2 are the JMS-Legs)
+			expect(value[0]).to.be.a('object');
+			expect(value[0].rheaders).to.be.a('array');
+			expect(value[0].sheaders).to.be.a('array');
+
+			expect(value[1]).to.be.a('object');
+			expect(value[1].sheaders).to.be.a('array');
+			expect(value[1].sheaders).to.be.a('array');
+
+			expect(value[2]).to.be.a('object');
+			expect(value[2].rheaders).to.equal(null); // No headers given for the JMS-Leg
+			expect(value[2].sheaders).to.be.a('array');
+
+			expect(value[3]).to.deep.equal({ details: {}, rheaders: [], sheaders: [] }); // Missing leg 3 must be a default object to satisfy Traffic-Monitor needs
+			expect(value[4]).to.deep.equal({ details: {}, rheaders: [], sheaders: [] }); // Missing leg 4 must be a default object to satisfy Traffic-Monitor needs
+
+			expect(value[5]).to.be.a('object');
+			expect(value[5].rheaders).to.equal(null); // No headers given for the JMS-Leg
+			expect(value[5].sheaders).to.be.a('array');
+		});
+
+
+
 		it('should return without any error, when having an unsupported protocol', async () => {
 			var testTransactionElements = JSON.parse(fs.readFileSync('./test/documents/transactionElementTwoLegsUnsuppProtocol.json'), null);
 			const { value, output } = await flowNode.getTransactionElementLegInfo(
