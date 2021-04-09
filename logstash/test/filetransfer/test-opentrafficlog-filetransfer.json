@@ -134,6 +134,8 @@
               "duration": 924,
               "finalStatus": "success",
               "leg": 0,
+              "operation": null,
+              "serviceName": null,
               "protocolInfo": {
                 "fileTransfer": {
                   "remoteAddr": "/192.168.65.1:63026",

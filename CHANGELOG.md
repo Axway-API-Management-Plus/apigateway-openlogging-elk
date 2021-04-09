@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Fixed
 - TransactionData not shown, if TransactionElement legs are not in a row [#97](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/97)
+- Already existing ServiceName and Operation (Policy-Based) is removed during API-Lookup, when native API cannot be looked up [#98](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/98)
 
 ### Added
 - Added a new parameter: `DISABLE_CUSTOM_PROPERTIES` to disable custom properties support [#95](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/95)
