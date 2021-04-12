@@ -31,7 +31,7 @@
         }
       },
       "cold": {
-        "min_age": "30d",
+        "min_age": "90d",
         "actions": {
           "set_priority": {
             "priority": 0
@@ -39,7 +39,7 @@
         }
       },
       "delete": {
-        "min_age": "15d",
+        "min_age": "105d",
         "actions": {
           "delete": {
             "delete_searchable_snapshot": true
