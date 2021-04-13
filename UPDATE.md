@@ -96,7 +96,7 @@ Please follow the instructions to [import Kibana-Dashboards](README.md#kibana) b
 
 ### Parameters
 
-Sometimes it may be necessary to include newly introduced parameters in your `.env` file or you may want to use optional parameters. To do this, use the supplied `env-sample` as a reference and copy the desired parameters. Please check the [changelog](CHANGELOG.mb) which new parameters have been added.
+Sometimes it may be necessary to include newly introduced parameters in your `.env` file or you may want to use optional parameters. To do this, use the supplied `env-sample` as a reference and copy the desired parameters. Please check the [changelog](CHANGELOG.md) which new parameters have been added.
 
 ### Elastic-Stack version
 
