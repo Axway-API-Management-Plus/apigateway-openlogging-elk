@@ -40,7 +40,7 @@ async function handleFilterFields(parameters, options) {
 		{ fieldName: 'remotePort', queryType: 'match', queryLocation: 'http.remotePort' },
 		{ fieldName: 'remoteName', queryType: 'match', queryLocation: 'http.remoteName' },
 		{ fieldName: 'localAddr', queryType: 'match', queryLocation: 'http.localAddr' },
-		{ fieldName: 'status', queryType: 'match', queryLocation: 'http.status' },
+		{ fieldName: 'status', queryType: 'match', queryLocation: addStatusFilter },
 		{ fieldName: 'subject', queryType: 'match', queryLocation: 'http.authSubjectId' },
 		{ fieldName: 'operation', queryType: 'match', queryLocation: 'serviceContext.method' },
 		{ fieldName: 'localPort', queryType: 'match', queryLocation: 'http.localPort' },
@@ -71,7 +71,10 @@ async function handleFilterFields(parameters, options) {
 
 	var elasticSearchquery = { bool: { must: [] } };
 
-	var filters = [];
+	var filters = {
+		mustFilters: [],
+		mustNotFilters: []
+	};
 
 	// Iterate over all known filter fields (e.g. uri, wafstatus, ...)
 	fields.map(function (entry) {
@@ -92,27 +95,36 @@ async function handleFilterFields(parameters, options) {
 				var value = params.value[index];
 				var filter = {};
 				var filterQuery = {};
-				// Example: filterQuery[http.uri] = /petstore/v2/pet/findByTag 
-				filterQuery[queryLocation] = { query: value, ...queryParams };
-				// Add search params to the filterQuery if given
-				/*if(queryParams) {
-					filterQuery = {...queryParams, ...filterQuery };
-				}*/
-				// Example: filter[match] = { http.uri: /petstore/v2/pet/findByTag }
-				filter[queryType] = filterQuery;
-				// All filters are then pushed into the queryFilters array
-				// Example: [ {"match":{"http.uri":"/petstore/v2/pet/findByTag"}} , {"match":{"http.method":"GET"}} ]
-				filters.push(filter);
+				if(typeof queryLocation == 'function') {
+					queryLocation(filters, entry.fieldName, value, queryParams, params)
+				} else {
+					// Example: filterQuery[http.uri] = /petstore/v2/pet/findByTag 
+					filterQuery[queryLocation] = { query: value, ...queryParams };
+					// Add search params to the filterQuery if given
+					/*if(queryParams) {
+						filterQuery = {...queryParams, ...filterQuery };
+					}*/
+					// Example: filter[match] = { http.uri: /petstore/v2/pet/findByTag }
+					filter[queryType] = filterQuery;
+					// All filters are then pushed into the queryFilters array
+					// Example: [ {"match":{"http.uri":"/petstore/v2/pet/findByTag"}} , {"match":{"http.method":"GET"}} ]
+					filters.mustFilters.push(filter);
+				}
 				logger.debug(JSON.stringify(filter));
 			}
 		});
 	});
-	await addProtocolFilter(filters, params, logger);
-	await addServiceIdFilter(filters, serviceID, logger);
-	await addDurationFilter(filters, params, logger);
-	await addAgoFilter(filters, params, logger);
-	await addTimestampFilter(filters, params, logger);
-	elasticSearchquery.bool.must = filters;
+	await addProtocolFilter(filters.mustFilters, params, logger);
+	await addServiceIdFilter(filters.mustFilters, serviceID, logger);
+	await addDurationFilter(filters.mustFilters, params, logger);
+	await addAgoFilter(filters.mustFilters, params, logger);
+	await addTimestampFilter(filters.mustFilters, params, logger);
+	if(filters.mustFilters.length != 0) {
+		elasticSearchquery.bool.must = filters.mustFilters;
+	}
+	if(filters.mustNotFilters.length != 0) {
+		elasticSearchquery.bool.must_not = filters.mustNotFilters;
+	}
 	logger.info(`Elasticsearch query: ${JSON.stringify(elasticSearchquery)}`);
 	return elasticSearchquery;
 }
@@ -243,6 +255,35 @@ async function _addLegDetails(sourceLeg, resultLeg, correlationId, timestamp, lo
 	} catch (err) {
 		logger.error(`Error adding details for leg: ${sourceLeg.leg} of transaction: ${correlationId} (Leg-Details). Error: ${err}`);
 	}
+}
+
+function addStatusFilter(filters, fieldName, statusCodeFilter, queryParams, params) {
+	if (typeof statusCodeFilter == 'undefined') {
+		return;
+	}
+	if(!statusCodeFilter.match(/^!?[0-9x]{3}$/)) { // Matches 200, !500, !2xx, 3xx
+		throw new Error(`Unsupported status code filter: ${statusCodeFilter}`);
+	}
+	var filtersToUse;
+	if(statusCodeFilter.startsWith("!")) {
+		filtersToUse = filters.mustNotFilters;
+		statusCodeFilter = statusCodeFilter.replace("!", "");
+	} else {
+		filtersToUse = filters.mustFilters;
+	}
+	var startValue;
+	var endValue;
+	// Direct filter such as 200 or !200
+	if(statusCodeFilter.indexOf("x")==-1) {
+		startValue = parseInt(statusCodeFilter);
+		endValue = parseInt(statusCodeFilter);
+	// A range filter such as 2xx or !2xx or even 40x or !40x
+	} else {
+		startValue = parseInt(statusCodeFilter.replace(/x/g, "0"));
+		endValue = parseInt(statusCodeFilter.replace(/x/g, "9"));
+	}
+	filtersToUse.push({ "range": { "http.status": { "gte": startValue, "lte": endValue } } });
+	return filters;
 }
 
 async function addProtocolFilter(filters, params, logger) {

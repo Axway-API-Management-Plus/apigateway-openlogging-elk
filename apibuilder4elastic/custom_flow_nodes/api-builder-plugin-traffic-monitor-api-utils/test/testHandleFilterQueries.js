@@ -114,5 +114,81 @@ describe('flow-node traffic-monitor-api-utils', () => {
 				{"term": {"processInfo.serviceId": "instance-1"}}
 			  ]}});
 		});
+
+		it('should succeed with a direct status filter', async () => {
+			const { value, output } = await flowNode.handleFilterFields({ params: { field: "status", value: "200" }, serviceID: "instance-1" });
+
+			expect(output).to.equal('next');
+			expect(value).to.be.a('object');
+
+			expect(value).to.deep.equal({ "bool": { "must": [
+				{ range: {"http.status": { "gte": 200, "lte": 200 }}},
+				{ exists: { "field": "http"} },
+				{ term: {"processInfo.serviceId": "instance-1"}}
+			  ]}});
+		});
+
+		it('should succeed with a 2xx status filter', async () => {
+			const { value, output } = await flowNode.handleFilterFields({ params: { field: "status", value: "2xx" }, serviceID: "instance-1" });
+
+			expect(output).to.equal('next');
+			expect(value).to.be.a('object');
+
+			expect(value).to.deep.equal({ "bool": { "must": [
+				{ range: {"http.status": { "gte": 200, "lte": 299 }}},
+				{ exists: { "field": "http"} },
+				{ term: {"processInfo.serviceId": "instance-1"}}
+			  ]}});
+		});
+
+		it('should succeed with a negated direct 200 status filter', async () => {
+			const { value, output } = await flowNode.handleFilterFields({ params: { field: "status", value: "!200" }, serviceID: "instance-1" });
+
+			expect(output).to.equal('next');
+			expect(value).to.be.a('object');
+
+			expect(value).to.deep.equal({ "bool": 
+			{ "must": [
+				{ exists: { "field": "http"} },
+				{ term: {"processInfo.serviceId": "instance-1"}}
+			],
+			"must_not": [
+				{ range: {"http.status": { "gte": 200, "lte": 200 }}},
+			]}}
+			);
+		});
+
+		it('should succeed with a negated direct 200 status filter', async () => {
+			const { value, output } = await flowNode.handleFilterFields({ params: { field: "status", value: "!2xx" }, serviceID: "instance-1" });
+
+			expect(output).to.equal('next');
+			expect(value).to.be.a('object');
+
+			expect(value).to.deep.equal({ "bool": 
+			{ "must": [
+				{ exists: { "field": "http"} },
+				{ term: {"processInfo.serviceId": "instance-1"}}
+			],
+			"must_not": [
+				{ range: {"http.status": { "gte": 200, "lte": 299 }}}
+			]}
+			});
+		});
+
+		it('should fail with an invalid status code filter (too long)', async () => {
+			const { value, output } = await flowNode.handleFilterFields({ params: { field: "status", value: "!2xx6" }, serviceID: "instance-1" });
+
+			expect(value).to.be.instanceOf(Error)
+				.and.to.have.property('message', 'Unsupported status code filter: !2xx6');
+			expect(output).to.equal('error');
+		});
+
+		it('should fail with an invalid status code filter (invalid characters)', async () => {
+			const { value, output } = await flowNode.handleFilterFields({ params: { field: "status", value: "!2ZZ" }, serviceID: "instance-1" });
+
+			expect(value).to.be.instanceOf(Error)
+				.and.to.have.property('message', 'Unsupported status code filter: !2ZZ');
+			expect(output).to.equal('error');
+		});
 	});
 });
