@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 - Added a new parameter: `DISABLE_CUSTOM_PROPERTIES` to disable custom properties support [#95](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/95)
+- Added more flexibility for the API-Gateway HTTP Status-Code filter. Filters such as 2xx or !2xx are now supported [#100](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/100)
 
 ## [2.3.0]
 ### Fixed
