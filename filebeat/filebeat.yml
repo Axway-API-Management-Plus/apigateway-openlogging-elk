@@ -73,7 +73,7 @@ filebeat.inputs:
 
 # Required for Trace-Messages logged by the API-Gateway
 processors:
-  - add_locale: 
+  - add_locale:
 
 output.logstash:
   hosts: ${LOGSTASH_HOSTS}
