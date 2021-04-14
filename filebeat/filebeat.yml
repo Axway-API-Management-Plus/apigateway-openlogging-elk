@@ -1,4 +1,4 @@
-# Please don't change this file as it is supposed to be overwritten as 
+# Please don't change this file as it is supposed to be overwritten as
 # part of fixes or enhancements.
 #
 # If you are missing a certain feature or discover a bug, please raise an issue instead:
@@ -7,7 +7,7 @@ name: Filebeat ${GATEWAY_NAME:API-Gateway}
 
 # Wait for max 60 seconds before stopping - This helps to avoid data loss, when stopping filebeat!
 filebeat.shutdown_timeout: 60s
-# Endpoint used by Metricbeat 
+# Endpoint used by Metricbeat
 http.enabled: true
 http.host: "0.0.0.0"
 
@@ -73,7 +73,7 @@ filebeat.inputs:
 
 # Required for Trace-Messages logged by the API-Gateway
 processors:
-  - add_locale:  
+  - add_locale: 
 
 output.logstash:
   hosts: ${LOGSTASH_HOSTS}
