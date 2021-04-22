@@ -1,23 +1,23 @@
 ################################################################################################
-#       Axway API-Management solution connected to Elasticsearch 
+#       Axway API-Management solution connected to Elasticsearch
 #
-# This is the main configuration file, which is designed to run this solution with minimal 
-# configuration effort in a standard setup. 
+# This is the main configuration file, which is designed to run this solution with minimal
+# configuration effort in a standard setup.
 # Standard setup means:
 # - All services are using HTTPS
 # - Using an anonoymus user to communicate with Elasticsearch
-# 
-# For a production environment it's recommended to configure users in Elasticsearch and 
-# configure them in this configuration file. 
 #
-# It's also supported to run this solution with dedicated or existing services. For instance 
-# using an Elasticsearch-Cluster, Kibana (7.x) or Filebeat installed as a software 
-# installation (Filebeat should be 7.x). 
+# For a production environment it's recommended to configure users in Elasticsearch and
+# configure them in this configuration file.
+#
+# It's also supported to run this solution with dedicated or existing services. For instance
+# using an Elasticsearch-Cluster, Kibana (7.x) or Filebeat installed as a software
+# installation (Filebeat should be 7.x).
 # For that, just disable the services in this docker-compose file you don't need.
 #
-# All parameters are exposed as environment variables or mounted files, which makes it possible 
+# All parameters are exposed as environment variables or mounted files, which makes it possible
 # to run this solution in a Docker-Orchestrastion framework such as K8S, OpenShift, ...
-# 
+#
 ################################################################################################
 
 COMPOSE_PROJECT_NAME=axway-apim-elastic
@@ -27,9 +27,9 @@ COMPOSE_PROJECT_NAME=axway-apim-elastic
 ################################################################################################
 
 # ----------------------------------------------------------------------------------------------
-# When running Filebeat as a Docker-Container direclty on the API-Gateway machines, these 
+# When running Filebeat as a Docker-Container direclty on the API-Gateway machines, these
 # folders are mounted into the Filebeat Container to have access to the files.
-# If you prefer to run Filebeat as a software installation, please make sure the you are using 
+# If you prefer to run Filebeat as a software installation, please make sure the you are using
 # the filebeat config file: filebeat/filebeat.yml and the given directories are accessible.
 # Used-By: Filebeat
 APIGATEWAY_OPENTRAFFIC_FOLDER=/home/localuser/Axway-x.y.z/apigateway/logs/opentraffic
@@ -39,9 +39,9 @@ APIGATEWAY_AUDITLOGS_FOLDER=/home/localuser/Axway-x.y.z/apigateway/logs
 APIGATEWAY_PAYLOADS_FOLDER=/home/localuser/Axway-x.y.z/apigateway/logs/payloads
 
 # ----------------------------------------------------------------------------------------------
-# Is used by almost all services to communicate with Elasticsearch. Either to send events, 
+# Is used by almost all services to communicate with Elasticsearch. Either to send events,
 # execute queries or send monitoring information.
-# When using the default docker-compose.yaml the following default parameter will work as 
+# When using the default docker-compose.yaml the following default parameter will work as
 # the Elasticsearch service is running with this service name.
 # When running the ElasticSearch on a difference host (e.g. existing Elastic-Search cluster)
 # this environment variable is used to locate the ElasticSearch cluster.
@@ -51,25 +51,25 @@ APIGATEWAY_PAYLOADS_FOLDER=/home/localuser/Axway-x.y.z/apigateway/logs/payloads
 ELASTICSEARCH_HOSTS=https://elasticsearch1:9200
 
 # ----------------------------------------------------------------------------------------------
-# Used by Logstash to communicate with the Lookup-API, which is used to 
-# enrich documents before sending it to ElasticSearch.  
-# When using the default docker-compose.yml the default setting will work. 
-# But, if the API-Builder process is running somewhere else (e.g. in a K8S), you have to 
+# Used by Logstash to communicate with the Lookup-API, which is used to
+# enrich documents before sending it to ElasticSearch.
+# When using the default docker-compose.yml the default setting will work.
+# But, if the API-Builder process is running somewhere else (e.g. in a K8S), you have to
 # configure this environment variable correctly.
 # Used-By: Logstash
 API_BUILDER_URL=https://apibuilder4elastic:8443
 
 # ----------------------------------------------------------------------------------------------
 # Connection to the Admin-Node-Manager. Used by the API-Builder identify the current user.
-# IMPORTANT NOTE: This URL must be reachable/resolveable from within the API-Builder 
+# IMPORTANT NOTE: This URL must be reachable/resolveable from within the API-Builder
 #                 Docker-Container!
 # Used-By: API-Builder
 ADMIN_NODE_MANAGER=https://172.17.0.1:8090
 
 # ----------------------------------------------------------------------------------------------
-# By default it's assumed, that the API-Manager is running on the same host as the ANM just 
+# By default it's assumed, that the API-Manager is running on the same host as the ANM just
 # on port 8075 instead of 8080.
-# This user is used by API-Builder to lookup APIs & User-Information in API-Manager. 
+# This user is used by API-Builder to lookup APIs & User-Information in API-Manager.
 # Therefore it must be a user having "admin" role.
 # The connection is validated during API-Builder start up.
 # These credentials are used for all configured API-Managers.
@@ -111,20 +111,20 @@ API_MANAGER_PASSWORD=changeme
 #API_BUILDER_PASSWORD=
 
 # ----------------------------------------------------------------------------------------------
-# Account used by the Metricbeat to send metrics to Elasticsearch and create the required 
+# Account used by the Metricbeat to send metrics to Elasticsearch and create the required
 # configuration in Kibana and Elasticsearch
 # Used-By: Metricbeat
 #METRICBEAT_USERNAME=elastic
 #METRICBEAT_PASSWORD=
 
-# With this parameter set to false, anonymous access to Elasticsearch is no longer possible. 
-# All clients needs to send username and password. 
+# With this parameter set to false, anonymous access to Elasticsearch is no longer possible.
+# All clients needs to send username and password.
 # This toggle is internally used to set the parameter: xpack.security.authc.anonymous.username
 # and xpack.security.authc.anonymous.roles
 # Used-By: Elasticsearch
 # ELASTICSEARCH_ANONYMOUS_ENABLED=false
 
-# This parameter controls if Kibana is forcing users to authenticate. Activate this parameter 
+# This parameter controls if Kibana is forcing users to authenticate. Activate this parameter
 # once you have disabled anonymous access to Elasticsearch
 # Used-By: Kibana
 # KIBANA_SECURITY_ENABLED=true
@@ -132,12 +132,12 @@ API_MANAGER_PASSWORD=changeme
 ################################################################################################
 #                            Configure Multi-Node ES-Cluster
 ################################################################################################
-# The following parameters are used to build and configure the Elasticsearch cluster. 
-# If you don't set this parameters the cluster is configured based on the configured 
+# The following parameters are used to build and configure the Elasticsearch cluster.
+# If you don't set this parameters the cluster is configured based on the configured
 # ELASTICSEARCH_HOSTS.
 #
-# The publish host is used for internal cluster communication between each node. If must be 
-# set to a host that is reachable from other nodes. 
+# The publish host is used for internal cluster communication between each node. If must be
+# set to a host that is reachable from other nodes.
 # ELASTICSEARCH_PUBLISH_HOST1=elasticsearch1
 # ELASTICSEARCH_PUBLISH_HOST2=elasticsearch2
 # ELASTICSEARCH_PUBLISH_HOST3=elasticsearch3
@@ -156,19 +156,19 @@ API_MANAGER_PASSWORD=changeme
 #                            Optional / Advanced parameters
 ################################################################################################
 # ----------------------------------------------------------------------------------------------
-# API requests are made in a specific group (e.g. group-2) and possibly in a specific region. 
-# With this parameter you can control which API manager to use for lookup for which traffic 
+# API requests are made in a specific group (e.g. group-2) and possibly in a specific region.
+# With this parameter you can control which API manager to use for lookup for which traffic
 # origin.
-# If the parameter is not specified, then it is assumed that the API manager is reached on the 
+# If the parameter is not specified, then it is assumed that the API manager is reached on the
 # node manager. In this case, the same URL is used, but with port: 8075.
-# IMPORTANT NOTES: These URLs must be reachable/resolveable from within the API-Builder 
+# IMPORTANT NOTES: These URLs must be reachable/resolveable from within the API-Builder
 #                  Docker-Container!
 #                  The same API-Manager credentials are used for all API-Managers.
 # Used-By: API-Builder
 # Examples:
 # Use a single API-Manager for all kind of traffic no matter of the origin
 # API_MANAGER=https://172.17.0.1:8075
-# The API-Manager used is based on group-id of the traffic (e.g. when having 
+# The API-Manager used is based on group-id of the traffic (e.g. when having
 # multiple API-Manager in a single topology)
 # API_MANAGER=group-2|https://api-manager-1:8075, group-5|https://api-manager-2:8275
 # If a region is configured, perform the lookup on the API-Manager based on the region and group
@@ -178,10 +178,10 @@ API_MANAGER_PASSWORD=changeme
 # Another way of fallback based on the group not having the region configured
 # API_MANAGER=https://172.17.0.1:8075, group-2|https://api-manager-1:8075, group-2|eu|https://api-manager-2:8275
 
-# Additionally to the API-Manager(s) itself, the API-Builder can perform an API-Lookup against 
+# Additionally to the API-Manager(s) itself, the API-Builder can perform an API-Lookup against
 # a local configuration file. This is useful if you would like to map natively exposed APIs
-# (e.g. http://api-gateway:8080/healthcheck) to a real API-Name and Method. 
-# Additionally to the general lookup-file, it is also possible to create one lookup file per 
+# (e.g. http://api-gateway:8080/healthcheck) to a real API-Name and Method.
+# Additionally to the general lookup-file, it is also possible to create one lookup file per
 # group or group/region. This makes it possible to define different information per group or region.
 # The name of the groups or group-region file is derived from the main lookup file.
 # The files are used in the following order:
@@ -201,8 +201,8 @@ API_MANAGER_PASSWORD=changeme
 # API_BUILDER_LOCAL_API_LOOKUP_FILE=./config/api-lookup.json
 
 # ----------------------------------------------------------------------------------------------
-# Option to disable custom properties. With that, custom properties are no longer looked up 
-# at the API-Manager neither indexed in Elasticsearch. If set, it is of course no longer 
+# Option to disable custom properties. With that, custom properties are no longer looked up
+# at the API-Manager neither indexed in Elasticsearch. If set, it is of course no longer
 # possible to use these for example for a customized authorization.
 # Used-By: API-Builder
 # DISABLE_CUSTOM_PROPERTIES=false
@@ -214,80 +214,80 @@ API_MANAGER_PASSWORD=changeme
 ELASTICSEARCH_CLUSTER_UUID=
 
 # ----------------------------------------------------------------------------------------------
-# This is an optional parameter used by Filebeat to set a proper name. This allows for instance 
-# to identify the different Filebeat instances in the Kibana-Stack Monitoring dashboards. 
+# This is an optional parameter used by Filebeat to set a proper name. This allows for instance
+# to identify the different Filebeat instances in the Kibana-Stack Monitoring dashboards.
 # Defaults to: "API-Gateway"
 # Used-By: Filebeat
 # GATEWAY_NAME=API-Gateway 3
 
 # ----------------------------------------------------------------------------------------------
-# This parameter can be used to support multiple regions or datacenters. The key you give here 
-# is stored along with all the documents/transactions created by this Filebeat instance. 
-# In addition, based on this parameter, additional indices per region are created in Elastisearch, 
+# This parameter can be used to support multiple regions or datacenters. The key you give here
+# is stored along with all the documents/transactions created by this Filebeat instance.
+# In addition, based on this parameter, additional indices per region are created in Elastisearch,
 # which stores the data of the region.
 # It helps for instance to filter information on a specific region.
 # If not given, all data is stored with the default value: All
 # Whitespaces and special characters are not allowed
 # Used-By: Filebeat, Elasticsearch
 # GATEWAY_REGION=US
-# or 
+# or
 # GATEWAY_REGION=US-DC1
 
 # ----------------------------------------------------------------------------------------------
-# This tells Filebeat where Logstash or multiple instances are running. 
+# This tells Filebeat where Logstash or multiple instances are running.
 # When using the default docker-compose.yml the following default will work.
-# If you are running Logstash somewhere else, e.g. as a service in K8S you need to change this 
+# If you are running Logstash somewhere else, e.g. as a service in K8S you need to change this
 # parameter.
 # Used-By: Filebeat
 # LOGSTASH_HOSTS=logstash1:5044,logstash2:5044
 LOGSTASH_HOSTS=logstash:5044
 
 # ----------------------------------------------------------------------------------------------
-# This parameter determines with which name a Logstash instance presents itself in Elastic 
-# Stack Monitoring. If you run multiple Logstash instances, it is recommended to set this 
+# This parameter determines with which name a Logstash instance presents itself in Elastic
+# Stack Monitoring. If you run multiple Logstash instances, it is recommended to set this
 # parameter to identify the Logstash instances in the monitoring.
 # Used-By: Logstash
 # Defaults to Logstash-1
 # LOGSTASH_NODE_NAME=Logstash-2
 
 # ----------------------------------------------------------------------------------------------
-# Define JVM-Heap size for Logstash. Both values should be the same and not more than 6GB. 
+# Define JVM-Heap size for Logstash. Both values should be the same and not more than 6GB.
 # Defaults to -Xmx1g -Xms1g
 # Used-By: Logstash
 # LS_JAVA_OPTS="-Xmx6g -Xms6g"
 
 # ----------------------------------------------------------------------------------------------
-# With this parameter you tell the Logstash processing pipeline which memchached to use. It is 
+# With this parameter you tell the Logstash processing pipeline which memchached to use. It is
 # used to cache the API-Details that has been looked up from the API-Manager via the API-Builder.
-# Even if the API-Builder is already caching the result, this improves the Logstash pipeline 
-# processing performance. 
-# IMPORTANT NOTE: When memcached is running somewhere else, please avoid high latency between  
+# Even if the API-Builder is already caching the result, this improves the Logstash pipeline
+# processing performance.
+# IMPORTANT NOTE: When memcached is running somewhere else, please avoid high latency between
 #                 Logstash and memached.
 # The default parameter works when using the docker-compose.yml
 # Used-By: Logstash
 MEMCACHED=memcached:11211
 
 # ----------------------------------------------------------------------------------------------
-# This parameter controls how long information looked up from API-Manager should stay in the 
+# This parameter controls how long information looked up from API-Manager should stay in the
 # cache. Currently used for API-Details and User-Information.
-# You may increase this timeout if you need to reduce the API-Manager REST-API calls performed 
+# You may increase this timeout if you need to reduce the API-Manager REST-API calls performed
 # by the Logstash pipeline.
 # Used-By: Logstash
 # LOOKUP_CACHE_TTL=600
 
 # ----------------------------------------------------------------------------------------------
-# The maximum heap memory for ES. Xmx should be configured to 50% of the available memory, when 
+# The maximum heap memory for ES. Xmx should be configured to 50% of the available memory, when
 # running ES on a dedicated node. Both values should be same.
-# It should not be bigger than 31GB. Defaults to 1GB by ES default which is in most cases not 
+# It should not be bigger than 31GB. Defaults to 1GB by ES default which is in most cases not
 # correct.
 # Used-By: Elasticsearch
 # ES_JAVA_OPTS="-Xms8g -Xmx8g"
 
 # ----------------------------------------------------------------------------------------------
-# The number of Filebeat worker threads sending data to Logstash. This should be sufficient in 
+# The number of Filebeat worker threads sending data to Logstash. This should be sufficient in
 # most cases (ap. up to 750 TPS). You may increase it, if you experience a delay in the Traffic-
 # Monitor or Kibana dashboards, but it might even slow down the ingestion rate.
-# And of course increasing worker threads for Filebeat will increase CPU-Load on the API-Gateway 
+# And of course increasing worker threads for Filebeat will increase CPU-Load on the API-Gateway
 # machine.
 # Tests have proven, that two worker threads are optimal.
 # See: https://www.elastic.co/guide/en/beats/filebeat/current/logstash-output.html
@@ -304,10 +304,10 @@ MEMCACHED=memcached:11211
 # FILEBEAT_BULK_MAX_SIZE=2048
 
 # ----------------------------------------------------------------------------------------------
-# This is setting up the Elasticsearch clustername, which is used by Elasticsearch to form 
-# the cluster. 
+# This is setting up the Elasticsearch clustername, which is used by Elasticsearch to form
+# the cluster.
 # Nodes will only join the cluster if they have the same cluster name.
-# Make sure that you don’t reuse the same cluster names in different environments, otherwise 
+# Make sure that you don’t reuse the same cluster names in different environments, otherwise
 # you might end up with nodes joining the wrong cluster.
 # Good examples are: axway-apim-elasticsearch-prod, axway-apim-elasticsearch-qa, etc.
 # Used-By: Elasticsearch
@@ -319,25 +319,25 @@ ELASTICSEARCH_CLUSTERNAME=Axway APIM
 ELASTIC_VERSION=7.10.0
 
 # ----------------------------------------------------------------------------------------------
-# With these parameters you can change the way the authorization for the traffic monitor is 
-# performed. 
-# By default, users who are not API-Gateway administrators are authorized to see traffic in 
-# the traffic monitor based on their API-Manager organization. 
-# You may configure another option as of today to perform an external HTTP-Call, which is used 
+# With these parameters you can change the way the authorization for the traffic monitor is
+# performed.
+# By default, users who are not API-Gateway administrators are authorized to see traffic in
+# the traffic monitor based on their API-Manager organization.
+# You may configure another option as of today to perform an external HTTP-Call, which is used
 # to adjust the Elastic-Query. For more details please see: config/authorization-config-sample.js
 # It's recommended to create a copy the sample file and configure it with the following parameter:
 # For example:
 # AUTHZ_CONFIG=./config/my-authorization-config.js
 
 # ----------------------------------------------------------------------------------------------
-# By default, the solution also provides the payload to the API gateway traffic monitor based on 
+# By default, the solution also provides the payload to the API gateway traffic monitor based on
 # the exported payload.
-# In other words, if the traffic monitor is first connected to the API Builder/Elasticsearch via 
-# the policy, then it will also try to obtain the payload via it. For this, of course, it is 
+# In other words, if the traffic monitor is first connected to the API Builder/Elasticsearch via
+# the policy, then it will also try to obtain the payload via it. For this, of course, it is
 # necessary to export the payload accordingly and make it available. More details about this:
 # https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk#traffic-payload
-# If it is not necessary for your use cases, then you can disable this feature in the API Builder 
-# process with this parameter. The traffic monitor will then retrieve the payload from the OBSDB 
+# If it is not necessary for your use cases, then you can disable this feature in the API Builder
+# process with this parameter. The traffic monitor will then retrieve the payload from the OBSDB
 # as long as it is available.
 # Used-By: API-Builder
 # Defaults to false.
@@ -345,8 +345,8 @@ ELASTIC_VERSION=7.10.0
 
 # ----------------------------------------------------------------------------------------------
 # Disables the Elasticsearch setup flows in API-Builder that are used to configure.
-# If you run more than one API builder, you can set this parameter to true, as it is not 
-# necessary. However, it is technically not a problem to have multiple API builders running 
+# If you run more than one API builder, you can set this parameter to true, as it is not
+# necessary. However, it is technically not a problem to have multiple API builders running
 # with setup flow enabled.
 # Used-By: API-Builder
 # Defaults to false.
@@ -355,37 +355,37 @@ ELASTIC_VERSION=7.10.0
 ################################################################################################
 #                         Metricbeat
 ################################################################################################
-# By default the solution is using Metricbeat to collect information from all running components 
-# including running Docker-Containers. This is shown in Kibana Dashboards. 
+# By default the solution is using Metricbeat to collect information from all running components
+# including running Docker-Containers. This is shown in Kibana Dashboards.
 # With the following parameters you can control the stack monitoring to use either Self-Monitoring
-# or Metricbeat. Both should not be activated at the same time. 
+# or Metricbeat. Both should not be activated at the same time.
 
 # ----------------------------------------------------------------------------------------------
-# Since the setup of Metricbeat requires some steps that depend on the exact deployment, it is not 
+# Since the setup of Metricbeat requires some steps that depend on the exact deployment, it is not
 # enabled by default. Nevertheless, it is recommended to use Metricbeat for monitoring the components.
-# If you set this parameter to true, then please disable the parameter: SELF_MONITORING_ENABLED to 
+# If you set this parameter to true, then please disable the parameter: SELF_MONITORING_ENABLED to
 # avoid that the components report unnecessarily twice.
 # Used-By: Metricbeat
 # Defaults to false
 #METRICBEAT_ENABLED=true
 
 # ----------------------------------------------------------------------------------------------
-# Self-monitoring is used to monitor the Elastic stack itself, for example to monitor Logstash, 
-# Filebeat, etc. in Kibana stack monitoring. If Metricbeat is activated, you should not activate 
-# Self-Monitoring, as Metricbeat will then already take over the job. 
+# Self-monitoring is used to monitor the Elastic stack itself, for example to monitor Logstash,
+# Filebeat, etc. in Kibana stack monitoring. If Metricbeat is activated, you should not activate
+# Self-Monitoring, as Metricbeat will then already take over the job.
 # So only activate this parameter if you dont use Metricbeat.
 # Used-By: Filebeat, Logstash, Elasticsearch, Kibana
 # Defaults to true
 #SELF_MONITORING_ENABLED=false
 
 # ----------------------------------------------------------------------------------------------
-# Metricbeat is designed to monitor various services. For this purpose a Metricbeat instance runs 
+# Metricbeat is designed to monitor various services. For this purpose a Metricbeat instance runs
 # on a host and based on activated modules the services are monitored.
-# After the Elastic solution is deployed, the internal so-called self-monitoring is used. This means 
+# After the Elastic solution is deployed, the internal so-called self-monitoring is used. This means
 # that services like Filebeat, Logstash, etc. send metrics to Elasticsearch themselves.
-# However, the way is deprecated, so it is recommended to disable self-monitoring and use Metricbeat. 
-# For this, the solution is pre-configured as much as possible. You have to define per host which 
-# services (modules) should be activated and then start the Metricbeat Docker-Contaniner instance 
+# However, the way is deprecated, so it is recommended to disable self-monitoring and use Metricbeat.
+# For this, the solution is pre-configured as much as possible. You have to define per host which
+# services (modules) should be activated and then start the Metricbeat Docker-Contaniner instance
 # on each instance. Do not forget to deactivate the self-monitoring.
 # Used-By: Metricbeat
 # Defaults to true
@@ -410,18 +410,18 @@ ELASTIC_VERSION=7.10.0
 
 # ----------------------------------------------------------------------------------------------
 # By default Metricbeat will upload all required Dashboards automatically into Kibana. Metricbeat
-# will overwrite existing Dashboards with every restart. If you want to customize Metricbeat 
+# will overwrite existing Dashboards with every restart. If you want to customize Metricbeat
 # dashboards you should clone them.
-# Use this parameter to disable loading of dashboards. 
+# Use this parameter to disable loading of dashboards.
 # Used-By: Metricbeat
 # Defaults to true
 #METRICBEAT_SETUP_DASHBOARDS=false
 
 # ----------------------------------------------------------------------------------------------
-# Currently, the KIBANA_HOST is only used by Metricbeat to automatically load the configured 
-# dashboards into Kibana. If the parameter is not specified, Kibana will try to contact the first 
-# Elasticsearch host and use it if available. You can change this behavior with the 
-# parameter: KIBANA_HOST. For authentication Metricbeat uses the user: 
+# Currently, the KIBANA_HOST is only used by Metricbeat to automatically load the configured
+# dashboards into Kibana. If the parameter is not specified, Kibana will try to contact the first
+# Elasticsearch host and use it if available. You can change this behavior with the
+# parameter: KIBANA_HOST. For authentication Metricbeat uses the user:
 # METRICBEAT_USERNAME & METRICBEAT_PASSWORD.
 # Used-By: Metricbeat
 # Defaults to https://kibana:5601
@@ -431,14 +431,14 @@ ELASTIC_VERSION=7.10.0
 #                         Certificates and Certificate authorities
 ################################################################################################
 # This CA is mounted into all applications and used to validate certificates for each component.
-# For instance, when Filebeat is sending Metrics to Elasticsearch or the ANM communicates with 
+# For instance, when Filebeat is sending Metrics to Elasticsearch or the ANM communicates with
 # the API-Builder.
 # Used-By: Elasticsearch, Kibana, Logstash, Filebeat, Admin-Node-Manager
 ELASTICSEARCH_CA=config/certificates/ca.crt
 
 # The following variables are used by API-Builder to define, which certificate is used
 # to expose the HTTPS-Listen socket.
-# You may use your own certificates by mounting them into the API-Builder Docker-Container 
+# You may use your own certificates by mounting them into the API-Builder Docker-Container
 # and configure the path the key/cert and provide the password.
 # Logstash is using the certificate for validation when performing API- or User-Lookups.
 # Used-By: API-Builder, Logstash
@@ -446,13 +446,13 @@ API_BUILDER_SSL_KEY=config/certificates/apibuilder4elastic.key
 API_BUILDER_SSL_CERT=config/certificates/apibuilder4elastic.crt
 API_BUILDER_SSL_KEY_PASSWORD=
 
-# The following certificates and keys are mainly used by Elasticsearch to enable transport 
+# The following certificates and keys are mainly used by Elasticsearch to enable transport
 # security on port: 9200.
 # Logstash, Filebeat and kibana are using the certificate for validation.
-# It's expected that the certificates are placed into the folder certificates as this folder 
+# It's expected that the certificates are placed into the folder certificates as this folder
 # is mounted into the Docker container.
 
-# Certificate and key used by Elasticsearch to expose the HTTPS-Listen socket and Inter-Node 
+# Certificate and key used by Elasticsearch to expose the HTTPS-Listen socket and Inter-Node
 # communcation.
 # Used-By: Elasticsearch
 ELASTICSEARCH_KEY=config/certificates/elasticsearch1.key
