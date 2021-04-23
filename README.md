@@ -1158,7 +1158,7 @@ Another reason are updates of the solution which should certainly be done on a t
 
 ### Can I use my own existing Elasticsearch cluster?
 
-Yes, you can use your own Elasticsearch cluster or a managed instance at AWS/Azure/etc. As long as it's a 7.x version it's supported.
+Yes, you can use your own Elasticsearch cluster. As long as it's a 7.x version with X-Pack features enabled it's supported. For instance AWS-Elasticsearch service does not provide X-Pack is therefore not supported.
 
 ### Does the solution support high availability?
 
