@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [2.4.0] 2021-04-26
 ### Fixed
 - TransactionData not shown, if TransactionElement legs are not in a row [#97](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/97)
 - Already existing ServiceName and Operation (Policy-Based) is removed during API-Lookup, when native API cannot be looked up [#98](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/98)
@@ -15,7 +15,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Added a new parameter: `DISABLE_CUSTOM_PROPERTIES` to disable custom properties support [#95](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/95)
 - Added more flexibility for the API-Gateway HTTP Status-Code filter. Filters such as 2xx or !2xx are now supported [#100](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/100)
 
-## [2.3.0]
+## [2.3.0] 2021-04-05
 ### Fixed
 - Duplicated document for one correlationId returned from Elasticsearch causing API-Payload details not to show [#90](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/90)
 - API-Manager config for groupId only was registered wrong - Causing error API-Manager config not found for group
