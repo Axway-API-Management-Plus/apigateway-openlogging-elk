@@ -52,7 +52,7 @@ describe('Endpoints', function () {
 	after(() => stopApiBuilder(server));
 
 	describe('Search', async () => {
-		it.only('[Search-0001] Execute a search without a limit including all requests from instance-1', async () => {
+		it('[Search-0001] Execute a search without a limit including all requests from instance-1', async () => {
 			return await requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search`,
