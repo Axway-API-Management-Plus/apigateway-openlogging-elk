@@ -116,7 +116,7 @@ describe('Endpoints', function () {
 				expect(body.data).to.have.lengthOf(1);
 				expect(body.data[0].uri).to.equals('/petstore/v2/pet/findByStatus');
 				expect(body.data[0].method).to.equals('GET');
-				checkFields(body.data, true);
+				checkFields(body.data, true, false);
 			});
 		});
 		it('[Endpoint-0004] should return 1 entry based on duration filter', async () => {
@@ -137,7 +137,7 @@ describe('Endpoints', function () {
 				expect(body).to.be.an('Object');
 				expect(body).to.have.property('data');
 				expect(body.data).to.have.lengthOf(2);
-				checkFields(body.data, true);
+				checkFields(body.data, true, false);
 			});
 		});
 		it('[Endpoint-0005] should return 1 entry based on operation filter', async () => {
@@ -159,7 +159,7 @@ describe('Endpoints', function () {
 				expect(body).to.have.property('data');
 				expect(body.data).to.have.lengthOf(1);
 				expect(body.data[0].operation).to.equals('findPetsByStatus');
-				checkFields(body.data, true);
+				checkFields(body.data, true, false);
 			});
 		});
 		it('[Endpoint-0006] should return 0 entries as all test data is in the past', async () => {
