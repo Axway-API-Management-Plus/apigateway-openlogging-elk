@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased] 
+### Fixed
+- Error during setup Get custom properties with message Assignment to constant variable
+
 ## [2.4.0] 2021-04-26
 ### Fixed
 - TransactionData not shown, if TransactionElement legs are not in a row [#97](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/97)
