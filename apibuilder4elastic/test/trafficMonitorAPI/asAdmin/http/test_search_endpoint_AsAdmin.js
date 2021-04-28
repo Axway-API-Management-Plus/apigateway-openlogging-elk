@@ -70,7 +70,7 @@ describe('Endpoints', function () {
 				expect(body.data[0].timestamp).gt(body.data[1].timestamp);
 				expect(body.data[1].timestamp).gt(body.data[2].timestamp);
 				expect(body.data[2].timestamp).gt(body.data[3].timestamp);
-				checkFields(body.data, false);
+				checkFields(body.data, false, false);
 			});
 		});
 
@@ -622,7 +622,8 @@ describe('Endpoints', function () {
 	});
 });
 
-function checkFields(data, hasServiceContext) {
+function checkFields(data, hasServiceContext, hasVhost) {
+	if(hasVhost == undefined) hasVhost = true;
 	data.map((entry) => {
 		expect(entry).to.have.property('timestamp');
 		expect(entry).to.have.property('statustext');
@@ -639,7 +640,9 @@ function checkFields(data, hasServiceContext) {
 		expect(entry).to.have.property('remoteAddr');
 		expect(entry).to.have.property('remotePort');
 		expect(entry).to.have.property('localAddr');
-		expect(entry).to.have.property('vhost');
+		if(hasVhost) {
+			expect(entry).to.have.property('vhost');
+		}
 		expect(entry).to.have.property('leg');
 		if(entry.method!='OPTIONS') {
 			expect(entry).to.have.property('finalStatus');
