@@ -31,6 +31,7 @@ module.exports = [
             "localPort": 8065,
             "localAddr" : "192.168.65.129",
             "remoteName" : "192.168.65.1",
+            "remoteAddr": "192.168.65.1",
             "remotePort" : 59641,
             "wafStatus": 1,
             "vhost": "api.customer.com:443"
@@ -104,6 +105,7 @@ module.exports = [
             "authSubjectId" : "Chris-Test",
             "localAddr" : "1.1.1.1",
             "remoteName" : "TestHost",
+            "remoteAddr": "192.168.65.1",
             "remotePort" : 78786,
             "wafStatus" : 0
         },
@@ -142,6 +144,7 @@ module.exports = [
             "localPort": 8080,
             "localAddr" : "192.168.65.129",
             "remoteName" : "192.168.65.1",
+            "remoteAddr": "192.168.65.1",
             "remotePort" : 65392,
             "wafStatus" : 0 
         },
@@ -197,6 +200,7 @@ module.exports = [
             "localPort": 8065,
             "localAddr" : "192.168.65.129",
             "remoteName" : "192.168.65.1",
+            "remoteAddr": "192.168.65.1",
             "remotePort" : 50982
         }
       },
@@ -248,6 +252,7 @@ module.exports = [
             "localPort": 8065,
             "localAddr" : "192.168.65.129",
             "remoteName" : "192.168.65.1",
+            "remoteAddr": "192.168.65.1",
             "remotePort" : 50982
         }
       }

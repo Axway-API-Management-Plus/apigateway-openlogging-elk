@@ -640,6 +640,7 @@ function checkFields(data, hasServiceContext) {
 		expect(entry).to.have.property('remotePort');
 		expect(entry).to.have.property('localAddr');
 		expect(entry).to.have.property('vhost');
+		expect(entry).to.have.property('leg');
 		if(entry.method!='OPTIONS') {
 			expect(entry).to.have.property('finalStatus');
 		}
