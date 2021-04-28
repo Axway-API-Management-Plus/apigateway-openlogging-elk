@@ -52,7 +52,7 @@ describe('Endpoints', function () {
 	after(() => stopApiBuilder(server));
 
 	describe('Search', async () => {
-		it('[Search-0001] Execute a search without a limit including all requests from instance-1', async () => {
+		it.only('[Search-0001] Execute a search without a limit including all requests from instance-1', async () => {
 			return await requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search`,
@@ -633,6 +633,13 @@ function checkFields(data, hasServiceContext) {
 		expect(entry).to.have.property('uri');
 		expect(entry).to.have.property('duration');
 		expect(entry).to.have.property('type');
+		expect(entry).to.have.property('bytesSent');
+		expect(entry).to.have.property('bytesReceived');
+		expect(entry).to.have.property('remoteName');
+		expect(entry).to.have.property('remoteAddr');
+		expect(entry).to.have.property('remotePort');
+		expect(entry).to.have.property('localAddr');
+		expect(entry).to.have.property('vhost');
 		if(entry.method!='OPTIONS') {
 			expect(entry).to.have.property('finalStatus');
 		}
