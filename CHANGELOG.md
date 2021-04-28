@@ -4,9 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased] 
+## [2.4.1] 2021-04-28
 ### Fixed
-- Error during setup Get custom properties with message Assignment to constant variable
+- Error during setup - Get custom properties flow node returned with error message: `Assignment to constant variable`
+- Traffic-Monitor Search API now returns almost the same fields as the original API [#103](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/103)
 
 ## [2.4.0] 2021-04-26
 ### Fixed
