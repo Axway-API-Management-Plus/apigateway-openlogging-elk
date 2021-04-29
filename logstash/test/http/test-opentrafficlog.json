@@ -741,14 +741,14 @@
             "remoteName": "localhost",
             "remoteAddr": "127.0.0.1",
             "localAddr": "127.0.0.1",
-            "remotePort": "60041",
+            "remotePort": "8065",
             "localPort": "55640",
             "sslSubject": "/CN=Change this for production",
             "authSubjectId": null
           }
         },
         {
-          "@timestamp": "2021-03-17T11:10:26.799Z",
+          "@timestamp": "2021-04-29T09:35:09.827Z",
           "correlationId": "cd7d8a6097b7669f3d48c5b6",
           "processInfo": {
             "gatewayName": "API-Gateway 3",
