@@ -26,6 +26,11 @@ This compare attribute filter is used to check if the parameter: `useOpsdb` is `
 
 ![Skip Elasticsearch?](../imgs/skip_elasticsearch_useOpsdb.png)  
 
+To make use of this parameter and force to use the OPSDB you may send a request to the ANM Traffic-Monitor API like so:  
+```
+https://admin-nodemanaget:8090/api/router/service/instance-1/ops/search?useOpsdb=true
+```
+
 ### Is managed by Elasticsearch API?
 
 The `Compare Attribute` filter named `Is managed by Elasticsearch API?` checks for each endpoint based on the attribute: `http.request.path` if the requested API can be handled by the API-Builder ElasticSearch-Traffic-Monitor API.  
