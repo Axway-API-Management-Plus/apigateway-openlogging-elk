@@ -703,6 +703,59 @@
           }
         }
       ]
+    },
+    {
+      "description": "Transaction-Element Leg-0 having an SSL-Subject set.",
+      "input": [
+        "{\"timestamp\":1619688909827,\"correlationId\":\"cd7d8a6097b7669f3d48c5b6\",\"processInfo\":{\"hostname\":\"api-front-11\",\"domainId\":\"8591ad8b-c13d-492a-83cd-c3f937bb91bd\",\"groupId\":\"group-3\",\"groupName\":\"Front\",\"serviceId\":\"instance-3\",\"serviceName\":\"api-front-11.prd.schenkerag.de.axway.cloud\",\"version\":\"7.7.20201130\"},\"transactionElement\":{\"leg\":0,\"duration\":26,\"serviceName\":\"MapService\",\"operation\":null,\"finalStatus\":null,\"protocolInfo\":{\"http\":{\"uri\":\"/mapservice/v1/data/v3/1/1/1.pbf\",\"status\":200,\"statusText\":\"OK\",\"method\":\"OPTIONS\",\"vhost\":null,\"wafStatus\":0,\"bytesSent\":617,\"bytesReceived\":723,\"remoteName\":\"localhost\",\"remoteAddr\":\"127.0.0.1\",\"localAddr\":\"127.0.0.1\",\"remotePort\":\"8065\",\"localPort\":\"55640\",\"sslSubject\":\"/CN=Change this for production\",\"authSubjectId\":null},\"recvHeader\":\"HTTP\/1.1 200 OK\r\nDate: Thu, 29 Apr 2021 09:35:09 GMT\r\nContent-Type: application\/x-protobuf\r\n\r\n\",\"sentHeader\":\"OPTIONS \/mapservice\/v1\/data\/v3\/1\/1\/1.pbf HTTP\/1.1\r\nHost: localhost:8065\r\nX-CorrelationID: Id-cd7d8a6097b7669f3d48c5b6 1\r\n\r\n\",\"recvPayload\":\"file:\/\/\/Cloud\/shared\/Openlogs\/2021-04-29\/11.35\/cd7d8a6097b7669f3d48c5b6-1-received\",\"sentPayload\":null}}}"
+      ],
+      "expected": [
+        {
+          "@timestamp": "2021-03-17T11:10:26.799Z",
+          "correlationId": "cd7d8a6097b7669f3d48c5b6",
+          "processInfo": {
+            "gatewayName": "API-Gateway 3",
+            "gatewayRegion": "US",
+            "groupId": "group-3",
+            "groupName": "Front",
+            "hostname": "api-front-11",
+            "serviceId": "instance-3",
+            "version": "7.7.20201130"
+          },
+          "transactionElements": {
+            "leg0": {
+              "duration": 26,
+              "finalStatus": null,
+              "leg": 0,
+              "operation": null,
+              "serviceName": "MapService",
+              "protocolInfo": {
+                "http": {
+                  "uri": "/mapservice/v1/data/v3/1/1/1.pbf",
+                  "status": 200,
+                  "statusText": "OK",
+                  "method": "OPTIONS",
+                  "vhost": null,
+                  "wafStatus": 0,
+                  "bytesSent": 617,
+                  "bytesReceived": 723,
+                  "remoteName": "localhost",
+                  "remoteAddr": "127.0.0.1",
+                  "localAddr": "127.0.0.1",
+                  "remotePort": "8065",
+                  "localPort": "55640",
+                  "sslSubject": "/CN=Change this for production",
+                  "authSubjectId": null
+                },
+                "recvHeader": "HTTP\/1.1 200 OK\r\nDate: Thu, 29 Apr 2021 09:35:09 GMT\r\nContent-Type: application\/x-protobuf\r\n\r\n",
+                "recvPayload": "file:\/\/\/Cloud\/shared\/Openlogs\/2021-04-29\/11.35\/cd7d8a6097b7669f3d48c5b6-1-received",
+                "sentHeader": "OPTIONS \/mapservice\/v1\/data\/v3\/1\/1\/1.pbf HTTP\/1.1\r\nHost: localhost:8065\r\nX-CorrelationID: Id-cd7d8a6097b7669f3d48c5b6 1\r\n\r\n",
+                "sentPayload": null
+              }
+            }
+          }
+        }
+      ]
     }
   ]
 }
