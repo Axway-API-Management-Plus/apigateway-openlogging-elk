@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased] 
+### Added
+- An option to skip Elasticsearch and instead still use OPSDB by providing an extra REST-API parameter [#105](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/105)
+
 ## [2.4.2] 2021-04-28
 ### Added
 - Traffic-Monitor Search API now supports the field sslSubject [#104](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/104)
