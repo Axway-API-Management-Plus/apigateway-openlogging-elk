@@ -49,6 +49,19 @@ describe('flow-node traffic-monitor-api-utils', () => {
 					]}});
 		});
 
+		// Example .../search?format=json&field=sslsubject&value=/CN=*.ngrok.io
+		it('should succeed with SSL-Subject field and proper value given', async () => {
+			const { value, output } = await flowNode.handleFilterFields({ params: { field: "sslsubject", value: "/CN=*.ngrok.io" }, serviceID: "instance-1" });
+
+			expect(output).to.equal('next');
+			expect(value).to.be.a('object');
+			expect(value).to.deep.equal({ "bool": { "must": [
+					  {"match": {"http.sslSubject": { "query": "/CN=*.ngrok.io" }}},
+					  {"exists": {"field": "http"}},
+					  {"term": {"processInfo.serviceId": "instance-1"}}
+					]}});
+		});
+
 		// Example .../search?field=uri&value=/v2/pet/findByStatus&field=method&value=GET
 		it('should succeed with valid argument', async () => {
 			const { value, output } = await flowNode.handleFilterFields({ params: { field: ["uri","method"], value: ["/v2/pet/findByStatus","GET"] }, serviceID: "instance-1" });

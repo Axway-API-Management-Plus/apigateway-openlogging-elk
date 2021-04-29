@@ -69,7 +69,7 @@ module.exports = [
             "localAddr": "192.168.65.133",
             "remotePort": "60041",
             "localPort": "8065",
-            "sslSubject": null,
+            "sslSubject": "null",
             "authSubjectId": null
         }
     },
@@ -201,7 +201,8 @@ module.exports = [
             "localAddr" : "192.168.65.129",
             "remoteName" : "192.168.65.1",
             "remoteAddr": "192.168.65.1",
-            "remotePort" : 50982
+            "remotePort" : 50982, 
+            "sslSubject": "/CN=*.ngrok.io"
         }
       },
       // Slightly different API

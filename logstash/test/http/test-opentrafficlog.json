@@ -711,6 +711,40 @@
       ],
       "expected": [
         {
+          "@timestamp": "2020-09-15T15:37:36.487Z",
+          "correlationId": "cd7d8a6097b7669f3d48c5b6",
+          "type": "summaryIndex",
+          "tags": [],
+          "duration": 2,
+          "finalStatus": "Pass",
+          "processInfo": {
+            "hostname": "api-env",
+            "groupId": "group-2",
+            "groupName": "QuickStart Group",
+            "serviceId": "instance-1",
+            "version": "7.7.20200730",
+            "gatewayName": "API-Gateway 3", 
+            "gatewayRegion": "US"
+          },
+          "http": {
+            "status": 200,
+            "statusText": "OK",
+            "method": "OPTIONS",
+            "uri": "/WebShop.svc",
+            "vhost": null,
+            "wafStatus": 0,
+            "bytesSent": 212,
+            "bytesReceived": 477,
+            "remoteName": "192.168.65.1",
+            "remoteAddr": "192.168.65.1",
+            "localAddr": "192.168.65.133",
+            "remotePort": "60041",
+            "localPort": "8065",
+            "sslSubject": null,
+            "authSubjectId": null
+          }
+        },
+        {
           "@timestamp": "2021-03-17T11:10:26.799Z",
           "correlationId": "cd7d8a6097b7669f3d48c5b6",
           "processInfo": {
