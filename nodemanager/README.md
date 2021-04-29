@@ -19,7 +19,7 @@ This filter is used to extract given REST-API Query-Parameters into attributes, 
 ### Skip Elasticsearch?
 
 This Compare attribute filter is used to check if the parameter: `useOpsdb` is set to `true`. If `true`, Elasticsearch is not used to handle this request.  
-:point_right: In order to make use of this optional parameter you have to configure it in your `<apigateway>/config/acl.json` as an allowed parameter like so otherwise the ANM will return a 403 error:  
+:point_right: In order to make use of this optional parameter you have to configure it in your `<apigateway>/config/acl.json` as an allowed parameter as shown below, otherwise the ANM will return a 403 error:  
 ```
 "ops_get_messages" : { "path" : "/ops/search?protocol=&format=&from=&count=&order=&rorder=&ago=&field=&value=&op=&jmsPropertyName=&jmsPropertyValue=&useOpsdb=" },
 ```
