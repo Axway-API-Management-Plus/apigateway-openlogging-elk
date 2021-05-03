@@ -42,6 +42,7 @@ async function handleFilterFields(parameters, options) {
 		{ fieldName: 'localAddr', queryType: 'match', queryLocation: 'http.localAddr' },
 		{ fieldName: 'status', queryType: 'match', queryLocation: addStatusFilter },
 		{ fieldName: 'subject', queryType: 'match', queryLocation: 'http.authSubjectId' },
+		{ fieldName: 'sslsubject', queryType: 'match', queryLocation: 'http.sslSubject' },
 		{ fieldName: 'operation', queryType: 'match', queryLocation: 'serviceContext.method' },
 		{ fieldName: 'localPort', queryType: 'match', queryLocation: 'http.localPort' },
 		{ fieldName: 'method', queryType: 'match', queryLocation: 'http.method' },

@@ -268,7 +268,7 @@ async function isIgnoreAPI(params, options) {
 }
 
 async function getCustomPropertiesConfig(params, options) {
-	const { groupId,  disableCustomProperties} = params;
+	let { groupId,  disableCustomProperties} = params;
 	if(!disableCustomProperties) disableCustomProperties = false;
 	if(disableCustomProperties != false) {
 		options.logger.debug(`Custom properties support is disabled. Return empty object as custom properties config.`);

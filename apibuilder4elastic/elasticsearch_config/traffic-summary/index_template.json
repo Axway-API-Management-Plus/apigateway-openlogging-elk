@@ -1,5 +1,5 @@
 {
-    "version": 4,
+    "version": 5,
     "index_patterns": [
         "apigw-traffic-summary-*"
     ],
@@ -113,6 +113,15 @@
                 "type": "keyword"
             },
             "http.authSubjectId": {
+                "type": "text",
+                "fields": {
+                    "keyword": {
+                        "type": "keyword"
+                    }
+                },
+                "norms": false
+            },
+            "http.sslSubject": {
                 "type": "text",
                 "fields": {
                     "keyword": {

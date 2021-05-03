@@ -10,6 +10,27 @@ Howevery, if you like to setup the policy you find the details here.
 
   ![use ES API](../imgs/node-manager-use-es-api.png)  
 
+### Extract REST Request Attributes
+
+This filter is used to extract given REST-API Query-Parameters into attributes, which is required to get the optional parameter: `useOpsdb` which can be used to skip Elasticsearch and use the internal OPSDB.  
+
+![Extract REST-Attributes](../imgs/extract_rest_attributes.png)  
+
+### Skip Elasticsearch?
+
+This Compare attribute filter is used to check if the parameter: `useOpsdb` is set to `true`. If `true`, Elasticsearch is not used to handle this request.  
+:point_right: In order to make use of this optional parameter you have to configure it in your `<apigateway>/config/acl.json` as an allowed parameter as shown below, otherwise the ANM will return a 403 error:  
+```
+"ops_get_messages" : { "path" : "/ops/search?protocol=&format=&from=&count=&order=&rorder=&ago=&field=&value=&op=&jmsPropertyName=&jmsPropertyValue=&useOpsdb=" },
+```
+
+![Skip Elasticsearch?](../imgs/skip_elasticsearch_useOpsdb.png)  
+
+To make use of this parameter and force to use the OPSDB you may send a request to the ANM Traffic-Monitor API like so:  
+```
+https://admin-nodemanaget:8090/api/router/service/instance-1/ops/search?useOpsdb=true
+```
+
 ### Is managed by Elasticsearch API?
 
 The `Compare Attribute` filter named `Is managed by Elasticsearch API?` checks for each endpoint based on the attribute: `http.request.path` if the requested API can be handled by the API-Builder ElasticSearch-Traffic-Monitor API.  

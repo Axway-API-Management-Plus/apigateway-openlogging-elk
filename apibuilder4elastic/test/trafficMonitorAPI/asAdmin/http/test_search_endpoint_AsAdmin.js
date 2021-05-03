@@ -70,7 +70,7 @@ describe('Endpoints', function () {
 				expect(body.data[0].timestamp).gt(body.data[1].timestamp);
 				expect(body.data[1].timestamp).gt(body.data[2].timestamp);
 				expect(body.data[2].timestamp).gt(body.data[3].timestamp);
-				checkFields(body.data, false);
+				checkFields(body.data, false, false);
 			});
 		});
 
@@ -116,7 +116,7 @@ describe('Endpoints', function () {
 				expect(body.data).to.have.lengthOf(1);
 				expect(body.data[0].uri).to.equals('/petstore/v2/pet/findByStatus');
 				expect(body.data[0].method).to.equals('GET');
-				checkFields(body.data, true);
+				checkFields(body.data, true, false);
 			});
 		});
 		it('[Endpoint-0004] should return 1 entry based on duration filter', async () => {
@@ -137,7 +137,7 @@ describe('Endpoints', function () {
 				expect(body).to.be.an('Object');
 				expect(body).to.have.property('data');
 				expect(body.data).to.have.lengthOf(2);
-				checkFields(body.data, true);
+				checkFields(body.data, true, false);
 			});
 		});
 		it('[Endpoint-0005] should return 1 entry based on operation filter', async () => {
@@ -159,7 +159,7 @@ describe('Endpoints', function () {
 				expect(body).to.have.property('data');
 				expect(body.data).to.have.lengthOf(1);
 				expect(body.data[0].operation).to.equals('findPetsByStatus');
-				checkFields(body.data, true);
+				checkFields(body.data, true, false);
 			});
 		});
 		it('[Endpoint-0006] should return 0 entries as all test data is in the past', async () => {
@@ -619,10 +619,31 @@ describe('Endpoints', function () {
 				expect(body.data[0].subject).to.equals('Chris-Test');
 			});
 		});
+
+		it('[Endpoint-0030] Should return a single result based on the given sslSubject', async () => {
+			return await requestAsync({
+				method: 'GET',
+				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?field=sslsubject&value=/CN=*.ngrok.io`,
+				headers: {
+					'cookie': 'VIDUSR=Search-0022-DAVID-1597468226-Z+qdRW4rGZnwzQ==', 
+					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
+				},
+				json: true
+			}).then(({ response, body }) => {
+				expect(response.statusCode).to.equal(200);
+				expect(body).to.be.an('Object');
+				expect(body).to.have.property('data');
+				expect(body.data).to.have.lengthOf(1); // We expect ONE API as a result
+				expect(body.data[0].uri).to.equals('/petstore/v2/pet/findByStatus');
+				expect(body.data[0].correlationId).to.equals('682c0f5fbe23dc8e1d80efe2');
+				expect(body.data[0].sslsubject).to.equals('/CN=*.ngrok.io');
+			});
+		});
 	});
 });
 
-function checkFields(data, hasServiceContext) {
+function checkFields(data, hasServiceContext, hasVhost) {
+	if(hasVhost == undefined) hasVhost = true;
 	data.map((entry) => {
 		expect(entry).to.have.property('timestamp');
 		expect(entry).to.have.property('statustext');
@@ -633,6 +654,17 @@ function checkFields(data, hasServiceContext) {
 		expect(entry).to.have.property('uri');
 		expect(entry).to.have.property('duration');
 		expect(entry).to.have.property('type');
+		expect(entry).to.have.property('bytesSent');
+		expect(entry).to.have.property('bytesReceived');
+		expect(entry).to.have.property('remoteName');
+		expect(entry).to.have.property('remoteAddr');
+		expect(entry).to.have.property('remotePort');
+		expect(entry).to.have.property('localAddr');
+		expect(entry).to.have.property('sslsubject');
+		if(hasVhost) {
+			expect(entry).to.have.property('vhost');
+		}
+		expect(entry).to.have.property('leg');
 		if(entry.method!='OPTIONS') {
 			expect(entry).to.have.property('finalStatus');
 		}

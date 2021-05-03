@@ -150,7 +150,7 @@ After this configuration has been done, Open-Traffic log-files will be created b
 
 Please download and extract the release package from the GitHub project onto your machine(s):  
 ```
-wget --no-check-certificate https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v2.3.0/axway-apim-elk-v2.3.0.tar.gz -O - | tar -xvz
+wget --no-check-certificate https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v2.4.2/axway-apim-elk-v2.4.2.tar.gz -O - | tar -xvz
 ```
 To simplify updates it is recommended to create a Symlink-Folder and finally rename the provided file `env-sample` to `.env`.  
 ```
@@ -1158,7 +1158,7 @@ Another reason are updates of the solution which should certainly be done on a t
 
 ### Can I use my own existing Elasticsearch cluster?
 
-Yes, you can use your own Elasticsearch cluster or a managed instance at AWS/Azure/etc. As long as it's a 7.x version it's supported.
+Yes, you can use your own Elasticsearch cluster. As long as it's a 7.x version with X-Pack features enabled it's supported. For instance AWS-Elasticsearch service does not provide X-Pack is therefore not supported.
 
 ### Does the solution support high availability?
 
