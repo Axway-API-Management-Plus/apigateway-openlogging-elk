@@ -83,11 +83,11 @@ apibuilder4elastic:
   # extraVolumeMounts mounts your volumes into the API-Builder pod. 
   # Payload is expected at /var/log/payloads by APIBuilder4Elastic
   extraVolumeMounts: 
-  # - name: apibuilder4elastic-payload
-  #   mountPath: /var/log/payloads
+  #  - name: apibuilder4elastic-payload
+  #    mountPath: /var/log/payloads
   # APIBuilder4Elastic expects custom configuration in the config folder
-  # - name: axway-elk-custom-config
-  #   mountPath: /app/config
+  #  - name: axway-elk-custom-config
+  #    mountPath: /app/config
   
   # extraVolumes is used to create additional volumes in for the API-Builder POD
   # For instance to add payload volumes or extra config files.

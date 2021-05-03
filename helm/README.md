@@ -100,7 +100,7 @@ spec:
 
 Create the volume:
 ```
-kubectl apply -f pv-vol1.yaml
+kubectl apply -n apim-elk -f pv-vol1.yaml
 ```
 
 This volume will bound to the following example `elasticsearch.volumeClaimTemplate`:  
@@ -139,8 +139,111 @@ distributed between the logstash instances. (See https://github.com/elastic/beat
 
 ## Use externally provided Secrets & ConfigMaps
 
-It is recommended to use externally provided Secrets and ConfigMaps especially for Secrets like passwords or certificates. You should also 
-manage and deploy them via your own helmet chart. Then deploy the APIM4Elastic solution and reference the created resources.
+It is recommended to use externally provided Secrets and ConfigMaps especially for Secrets like passwords or certificates. 
+All components offer the possibility to use own ConfigMaps and Secretes. These can then be used to make passwords, etc. from 
+your own secrets available in containers or to integrate certificates via volume mounts.
+
+For this purpose, it is recommended to deploy a separate Helm chart with the necessary resources before deploying the 
+APIM4Elastic solution. After your resources ared create reference these in the APIM4Elastic values.yaml. 
+
+### Example Custom ConfigMap
+
+Create a ConfigMap for the APIBuilder4Elastic:  
+
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: my-extra-api-builder-config
+data:
+  ADMIN_NODE_MANAGER: https://my-admin-node:8090
+  API_BUILDER_SSL_CERT: "config/certificates/myCustomSSL.crt"
+  API_BUILDER_SSL_KEY: "config/certificates/myCustomSSL.key"
+  API_MANAGER: https://my-api-manager:8075
+  API_BUILDER_LOCAL_API_LOOKUP_FILE: "config/myLocalLookupFile.json"
+  AUTHZ_CONFIG: "config/myAuthZConfig.json"
+  ELASTICSEARCH_HOSTS: https://my-elasticsearch-host:9200
+```
+
+In reality you should create your resources with HELM, but this is out of scope for this documentation:
+
+```
+kubectl apply -n apim-elk -f myAPIBuilder.yaml
+```
+
+In the values.yaml reference your ConfigMap: 
+
+```yaml
+apibuilder4elastic:
+  # Injects the environment variables from the ConfigMaps and Secrets into the 
+  # APIBuilder4Elastic pod. Specify your own ConfigMaps or Secrets if you don't
+  # provide Configuration and Secrets as part of this values.yaml.
+  envFrom: 
+    - configMapRef:
+        name: my-extra-api-builder-config
+    - secretRef:
+        name: axway-elk-apim4elastic-apibuilder4elastic-secret
+```
+
+Analogously, of course, you have the same option for Secrets, Volumes, VolumeMounts to include the necessary resources in the containers.
+
+### Example Custom-API-Builder Configuration
+
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: apibuilder4elastic-authz-config
+data:
+  myAuthzConfig.js: |
+    const path = require('path');
+    const fs = require('fs');
+
+    /*
+        By default, the solution uses user's API Manager organization to determine which 
+        API-Requests they are allowed to see in the API Gateway Traffic-Monitor. 
+        This behavior can be customized. 
+    */
+
+    var authorizationConfig = {
+        // For how long should the information cached by the API-Builder process
+        cacheTTL: parseInt(process.env.EXT_AUTHZ_CACHE_TTL) ? process.env.EXT_AUTHZ_CACHE_TTL : 300,
+        // If you would like to disable user authorization completely, set this flag to false
+        enableUserAuthorization: true,
+        // Authorize users based on their API-Manager organization (this is the default)
+        apimanagerOrganization: {
+            enabled: true
+        },
+    ....
+    ..
+    .
+```
+
+```
+kubectl apply -n apim-elk -f myAPIBuilderAuthZConfig.yaml
+```
+
+Now mount this ConfigMap into the API-Builder container and refernce it in the configuration using the values.yaml:
+
+```yaml
+apibuilder4elastic:
+  extraVolumes:
+  - name: my-authz-config
+    mountPath: /app/config
+    subPath: myAuthzConfig.js
+    
+  extraVolumeMounts:
+    - name: my-authz-config
+      configMap:
+        name: apibuilder4elastic-authz-config
+```
+
+Finally, tell API-Builder4Elastic to use your custom configuration:
+
+```yaml
+apibuilder4elastic:
+  authzConfig: "./config/myAuthzConfig.js"
+```
 
 ## Required resources
 
