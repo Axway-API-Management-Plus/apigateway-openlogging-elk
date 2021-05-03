@@ -189,6 +189,8 @@ Analogously, of course, you have the same option for Secrets, Volumes, VolumeMou
 
 ### Example Custom-API-Builder Configuration
 
+Create a ConfigMap that contains your custom configuration file: 
+
 ```yaml
 apiVersion: v1
 kind: ConfigMap
@@ -219,11 +221,13 @@ data:
     .
 ```
 
+Tip: When using HELM use `.Files.get.`. Example: [templates/elasticApimLogstash/logstash-pipelines.yaml]
+
 ```
 kubectl apply -n apim-elk -f myAPIBuilderAuthZConfig.yaml
 ```
 
-Now mount this ConfigMap into the API-Builder container and refernce it in the configuration using the values.yaml:
+Now mount this ConfigMap into the API-Builder container and reference it in the configuration using the `values.yaml`:
 
 ```yaml
 apibuilder4elastic:
