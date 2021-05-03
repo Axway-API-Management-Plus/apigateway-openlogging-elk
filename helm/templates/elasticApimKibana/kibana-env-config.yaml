@@ -1,0 +1,25 @@
+{{- if .Values.kibana.enabled }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "kibana.fullname" . }}-env-config
+  labels:
+    app: "{{ template "kibana.fullname" . }}"
+    chart: "{{ .Chart.Name }}"
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    {{- range $key, $value := .Values.labels }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
+data: 
+  SERVER_NAME: "Kibana-Axway-APIM"
+  ELASTICSEARCH_HOSTS: {{ required "The value global.elasticsearchHosts is missing." .Values.global.elasticsearchHosts | quote }}
+  KIBANA_SECURITY_ENABLED: {{ default false .Values.kibana.securityEnabled | quote }}
+  SELF_MONITORING_ENABLED: {{ default true .Values.global.selfMonitoringEnabled | quote }}
+  SERVER_SSL_ENABLED: "true"
+  SERVER_SSL_KEY: {{ default "config/certificates/kibana.key" .Values.kibana.ssl.key | quote }}
+  SERVER_SSL_CERTIFICATE: {{ default "config/certificates/kibana.crt" .Values.kibana.ssl.cert | quote }}
+  SERVER_SSL_KEYPASSPHRASE: {{ default "" .Values.kibana.ssl.password | quote }}
+  ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES: {{ required "The path to the CA for Kibana to Elasticsearch communication is missing" .Values.global.elasticsearchCa | quote }}
+{{- end }}

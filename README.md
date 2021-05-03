@@ -115,9 +115,9 @@ The glue between Elasticsearch and the API-Gateway Traffic-Monitor is an [API-Bu
 
 Components such as the API-Builder project are supposed to run as a Docker-Container. The Elasticsearch stack is using standard Docker-Images which are configured with environment variables and some mount points. With that, you are pretty flexible. You can run them with the provided docker-compose or with a Docker Orchestration platform such a Kubernetes or OpenShift to get elastic scaling & self-healing.   
 
-### Docker-Compose
+### Docker-Compose or HELM
 
-Docker Compose is currently used to deploy the solution. It is planned to provide HELM charts for the solution in the medium term to simplify deployment on Kubernetes and OpenShift.  
+Docker Compose is one optione to deploy the solution. Additionally [HELM-Charts](helm/README.md) are provided for the solution on Kubernetes and OpenShift.  
 Please be careful using docker-compose version 1.28.x as it may contain a bug/issue reading the .env file. See here: https://github.com/docker/compose/issues/8108 or https://github.com/docker/compose/issues/8173. Perhaps switch back to a previous version. Looks like is has been fixed with version 1.28.6.
 
 ### API-Gateway/API-Management

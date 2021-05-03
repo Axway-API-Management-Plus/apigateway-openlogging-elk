@@ -1,0 +1,19 @@
+{{- if .Values.filebeat.enabled }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "filebeat.fullname" . }}-config
+  labels:
+    app: "{{ template "filebeat.fullname" . }}"
+    chart: "{{ .Chart.Name }}"
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+data: 
+  LOGSTASH_HOSTS: {{ .Release.Name }}-{{ .Chart.Name }}-logstash-headless
+  ELASTICSEARCH_HOSTS: {{ required "The value global.elasticsearchHosts is missing." .Values.global.elasticsearchHosts | quote }}
+  ELASTICSEARCH_CLUSTER_UUID: {{ .Values.filebeat.elasticsearchClusterUUID | quote }}
+  ELASTICSEARCH_CRT: {{ required "The path to the CA for Logstash to Elasticsearch communication is missing" .Values.global.elasticsearchCa | quote }}
+  FILEBEAT_WORKER: {{ .Values.filebeat.filebeatWorker | quote }}
+  SELF_MONITORING_ENABLED: {{ .Values.global.selfMonitoringEnabled | quote }}
+{{- end }}

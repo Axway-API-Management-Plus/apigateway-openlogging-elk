@@ -1,0 +1,30 @@
+{{- if .Values.logstash.enabled }}
+{{- $pipelinesYaml := .Files.Get "configuration/logstash/config/pipelines.yml" }}
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "logstash.fullname" . }}-config
+  labels:
+    app: "{{ template "logstash.fullname" . }}"
+    chart: "{{ .Chart.Name }}"
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    {{- range $key, $value := .Values.labels }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
+data: 
+  pipelines.yml: |
+{{ required "Logstash pipelines.yml is missing in configuration folder" $pipelinesYaml | indent 4 }}
+  xpack.monitoring.enabled: "true"
+  xpack.monitoring.elasticsearch.hosts: {{ required "The value global.elasticsearchHosts is missing." .Values.global.elasticsearchHosts | quote }}
+  xpack.monitoring.elasticsearch.ssl.certificate_authority: {{ required "The path to the CA for Logstash to Elasticsearch communication is missing" .Values.global.elasticsearchCa | quote }}
+  LS_JAVA_OPTS: {{ .Values.logstash.logstashJavaOpts | quote }}
+  ELASTICSEARCH_HOSTS: {{ required "The value global.elasticsearchHosts is missing." .Values.global.elasticsearchHosts | quote }}
+  ELASTICSEARCH_CERT: {{ required "The path to the CA for Logstash to Elasticsearch communication is missing" .Values.global.elasticsearchCa | quote }}
+  API_BUILDER_URL: {{ .Release.Name }}-apibuilder4elastic
+  API_BUILDER_SSL_CERT: {{ required "The path to the CA for Logstash to Elasticsearch communication is missing" .Values.global.elasticsearchCa | quote }}
+  MEMCACHED: {{ .Release.Name }}-{{ .Chart.Name }}-memcached
+  LOG_LEVEL: info
+{{- end }}

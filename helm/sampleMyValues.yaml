@@ -1,0 +1,25 @@
+elasticsearch:
+  resources:
+    requests:
+      cpu: "500m"
+    limits:
+      cpu: "500m"
+
+  volumeClaimTemplate:
+    accessModes: [ "ReadWriteOnce" ]
+    resources:
+      requests:
+        storage: 1Gi
+
+logstash:
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "1536Mi"
+    limits:
+      cpu: "1000m"
+      memory: "1536Mi"
+      
+      
+elasticsearch:
+    replicas: 2

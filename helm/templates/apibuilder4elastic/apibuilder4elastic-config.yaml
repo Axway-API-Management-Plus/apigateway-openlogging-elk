@@ -1,0 +1,18 @@
+{{- if .Values.apibuilder4elastic.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "apibuilder4elastic.fullname" . }}-config
+  labels:
+    {{- include "apibuilder4elastic.labels" . | nindent 4 }}
+data:
+  ELASTICSEARCH_HOSTS: {{ required "The value global.elasticsearchHosts is missing." .Values.global.elasticsearchHosts | quote }}
+  ADMIN_NODE_MANAGER: {{ .Values.apibuilder4elastic.anmUrl | quote }}
+  API_MANAGER: {{ .Values.apibuilder4elastic.apimgrUrl | quote }}
+  API_BUILDER_SSL_CERT: {{ default "" .Values.apibuilder4elastic.ssl.cert | quote }}
+  API_BUILDER_SSL_KEY: {{ default "" .Values.apibuilder4elastic.ssl.key | quote }}
+  API_BUILDER_LOCAL_API_LOOKUP_FILE: {{ default "" .Values.apibuilder4elastic.localAPILookup | quote}}
+  AUTHZ_CONFIG: {{ default "" .Values.apibuilder4elastic.authzConfig | quote}}
+  PAYLOAD_HANDLING_ENABLED: {{ default true .Values.apibuilder4elastic.payloadEnabled | quote }}
+  LOG_LEVEL: {{ default "info" .Values.apibuilder4elastic.logLevel | quote }}
+{{- end }}

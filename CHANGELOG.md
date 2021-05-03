@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.0.0]
+### Changed
+- Parameter: SKIP_PAYLOAD_HANDLING changed to PAYLOAD_HANDLING_ENABLED
+
+### Added
+- HELM-Charts - Learn more about the provide chart [here](helm/README.md) [#63](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/63)
+
 ## [Unreleased]
 ### Fixed
 - TransactionData not shown, if TransactionElement legs are not in a row [#97](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/97)

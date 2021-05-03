@@ -341,7 +341,7 @@ ELASTIC_VERSION=7.10.0
 # as long as it is available.
 # Used-By: API-Builder
 # Defaults to false.
-# SKIP_PAYLOAD_HANDLING=true
+# PAYLOAD_HANDLING_ENABLED=false
 
 # ----------------------------------------------------------------------------------------------
 # Disables the Elasticsearch setup flows in API-Builder that are used to configure.

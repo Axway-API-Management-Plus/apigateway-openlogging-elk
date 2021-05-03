@@ -1,0 +1,32 @@
+{{- if .Values.elasticsearch.enabled }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "elasticsearch.fullname" . }}-env-config
+  labels:
+    app: "{{ template "elasticsearch.fullname" . }}"
+    chart: "{{ .Chart.Name }}"
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    {{- range $key, $value := .Values.labels }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
+data: 
+  ELASTICSEARCH_ANONYMOUS_ENABLED: {{ default true .Values.elasticsearch.anonymousEnabled | quote }}
+  SELF_MONITORING_ENABLED: {{ default true .Values.global.selfMonitoringEnabled | quote }}
+  xpack.security.enabled: "true"
+  xpack.security.http.ssl.enabled: "true"
+  xpack.security.http.ssl.key: {{ default "/usr/share/elasticsearch/config/certificates/elasticsearch.key" .Values.elasticsearch.ssl.key | quote }}
+  xpack.security.http.ssl.key_passphrase: {{ default "" .Values.elasticsearch.ssl.password | quote }}
+  xpack.security.http.ssl.certificate: {{ default "/usr/share/elasticsearch/config/certificates/elasticsearch.crt" .Values.elasticsearch.ssl.cert | quote }}
+  xpack.security.http.ssl.certificate_authorities: "/usr/share/elasticsearch/{{ required "The path to the CA Elasticsearch is missing" .Values.global.elasticsearchCa }}"
+  xpack.security.transport.ssl.enabled: "true"
+  xpack.security.transport.ssl.verification_mode: "certificate"
+  xpack.security.transport.ssl.key: {{ default "/usr/share/elasticsearch/config/certificates/elasticsearch.key" .Values.elasticsearch.ssl.key | quote }}
+  xpack.security.transport.ssl.key_passphrase: {{ default "" .Values.elasticsearch.ssl.password | quote }}
+  xpack.security.transport.ssl.certificate: {{ default "/usr/share/elasticsearch/config/certificates/elasticsearch.crt" .Values.elasticsearch.ssl.cert | quote }}
+  xpack.security.transport.ssl.certificate_authorities: "/usr/share/elasticsearch/{{ required "The path to the CA Elasticsearch is missing" .Values.global.elasticsearchCa }}"
+  xpack.security.authc.anonymous.roles: "kibana_admin,superuser,beats_system,logstash_system"
+  xpack.security.authc.anonymous.username: "anonymous"
+{{- end }}

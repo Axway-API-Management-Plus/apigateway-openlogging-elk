@@ -1,0 +1,29 @@
+{{- if .Values.logstash.enabled }}
+{{- $beatsPipeline := .Files.Get "configuration/logstash/pipelines/BeatsInputPipeline.conf" }}
+{{- $auditPipeline := .Files.Get "configuration/logstash/pipelines/DomainAuditPipeline.conf" }}
+{{- $eventsPipeline := .Files.Get "configuration/logstash/pipelines/EventsPipeline.conf" }}
+{{- $openTrafficPipeline := .Files.Get "configuration/logstash/pipelines/OpenTrafficPipeline.conf" }}
+{{- $tracesPipeline := .Files.Get "configuration/logstash/pipelines/TraceMessagesPipeline.conf" }}
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "logstash.fullname" . }}-pipelines
+  labels:
+    app: "{{ template "logstash.fullname" . }}"
+    chart: "{{ .Chart.Name }}"
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+data: 
+  BeatsInputPipeline.conf: |
+{{ required "Logstash BeatsPipeline configuration is missing" $beatsPipeline | indent 4 }}
+  DomainAuditPipeline.conf: |
+{{ required "Logstash AuditPipeline configuration is missing" $auditPipeline | indent 4 }}
+  EventsPipeline.conf: |
+{{ required "Logstash EventlogsPipeline configuration is missing" $eventsPipeline | indent 4 }}
+  OpenTrafficPipeline.conf: |
+{{ required "Logstash OpenTrafficPipeline configuration is missing" $openTrafficPipeline | indent 4 }}
+  TraceMessagesPipeline.conf: |
+{{ required "Logstash TraceMessagesPipeline configuration is missing" $tracesPipeline | indent 4 }}
+{{- end }}

@@ -1,0 +1,19 @@
+{{- if .Values.apibuilder4elastic.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "apibuilder4elastic.fullname" . }}-service
+  labels:
+    {{- include "apibuilder4elastic.labels" . | nindent 4 }}
+spec:
+  clusterIP: None
+  ports:
+  - name: {{ .Values.apibuilder4elastic.name }}
+    port: {{ .Values.apibuilder4elastic.port }}
+    targetPort: {{ .Values.apibuilder4elastic.port }}
+    protocol: TCP
+  selector:
+    {{- include "apibuilder4elastic.selectorLabels" . | nindent 4 }}
+  sessionAffinity: ClientIP
+  type: ClusterIP
+{{- end }}

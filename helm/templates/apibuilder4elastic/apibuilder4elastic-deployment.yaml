@@ -1,85 +1,65 @@
+{{- if .Values.apibuilder4elastic.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  annotations:
-    apigw.version: {{ .Values.global.apimVersion | quote }}
-    apigw.editor: {{ .Values.global.editor | quote }}
+  name: {{ template "apibuilder4elastic.fullname" . }}
   labels:
-    app: {{ .Values.apibuilder4elastic.name }}
-  name: {{ .Values.apibuilder4elastic.name }}
-  namespace: {{ .Values.global.namespace }}
+    {{- include "apibuilder4elastic.labels" . | nindent 4 }}
 spec:
-  replicas: {{ .Values.apibuilder4elastic.replicaCount }}
+  {{- if not .Values.apibuilder4elastic.autoscaling.enabled }}
+  replicas: {{ .Values.apibuilder4elastic.replicas }}
+  {{- end }}
   selector:
     matchLabels:
-      app: {{ .Values.apibuilder4elastic.name | quote }}
+      {{- include "apibuilder4elastic.selectorLabels" . | nindent 6 }}
   strategy:
     type: {{ .Values.global.updateStrategy }}
   template:
     metadata:
       labels:
-        app: {{ .Values.apibuilder4elastic.name | quote }}
+        {{- include "apibuilder4elastic.selectorLabels" . | nindent 8 }}
+      annotations:
+        {{/* This forces a restart if the configmap has changed */}}
+        configchecksum: {{ include (print .Template.BasePath "/apibuilder4elastic/apibuilder4elastic-config.yaml") . | sha256sum | trunc 63 }}
     spec:
       containers:
-      - env:
-        - name: TZ
-          value: "{{ .Values.global.timeZone }}"
-        - name: ELASTICSEARCH_HOSTS
-          value: {{ .Values.global.elasticsearch.url }}
-        - name: ADMIN_NODE_MANAGER
-          value: {{ .Values.apibuilder4elastic.anm.url }}
-        - name: API_MANAGER
-          value: {{ .Values.apibuilder4elastic.apimgr.url }}
-        - name: API_MANAGER_USERNAME
-          value: {{ .Values.apibuilder4elastic.apimgr.adminUser }}
-        - name: API_MANAGER_PASSWORD
-          value: {{ .Values.apibuilder4elastic.apimgr.adminPasswd }}
-        - name: API_BUILDER_USERNAME
-          value: {{ .Values.apibuilder4elastic.userName }}
-        - name: API_BUILDER_PASSWORD
-          value: {{ .Values.apibuilder4elastic.userPasswd }}
-        - name: API_BUILDER_SSL_CERT
-          value: {{ .Values.apibuilder4elastic.ssl.cert }}
-        - name: API_BUILDER_SSL_KEY
-          value: {{ .Values.apibuilder4elastic.ssl.key }}
-        - name: API_BUILDER_SSL_KEY_PASSWORD
-          value: {{ .Values.apibuilder4elastic.ssl.keyPasswd }}
-        - name: API_BUILDER_LOCAL_API_LOOKUP_FILE
-          value: {{ .Values.apibuilder4elastic.localAPILookup | quote}}
-        - name: AUTHZ_CONFIG
-          value: {{ .Values.apibuilder4elastic.authzConfig | quote}}
-        - name: SKIP_PAYLOAD_HANDLING
-          value: {{ .Values.apibuilder4elastic.skipPayload | quote }}
-        - name: LOG_LEVEL
-          value: {{ .Values.apibuilder4elastic.logLevel }}
-        image: {{ .Values.apibuilder4elastic.imageName }}:{{ .Values.apibuilder4elastic.buildTag }}
-        imagePullPolicy: {{ .Values.global.pullPolicy | quote }}
-        name: {{ .Values.apibuilder4elastic.name }}
+      - name: {{ .Chart.Name }}
+{{- if .Values.apibuilder4elastic.envFrom }}
+        envFrom:
+{{ toYaml .Values.apibuilder4elastic.envFrom | indent 10 }}
+{{- end }}
+{{- if .Values.apibuilder4elastic.extraEnvs }}
+        env: {{ toYaml .Values.apibuilder4elastic.extraEnvs | nindent 10 }}
+{{- end }}
+        image: {{ .Values.apibuilder4elastic.image }}:{{ .Values.apibuilder4elastic.imageTag }}
+        imagePullPolicy: {{ .Values.apibuilder4elastic.imagePullPolicy | quote }}
+        {{- if .Values.global.imagePullSecrets }}
+        imagePullSecrets:
+{{ toYaml .Values.global.imagePullSecrets | indent 10 }}
+        {{- end }}
         volumeMounts:
-        - name: apib-cert
-          mountPath: /app/config
-        - name: apib-payload
-          mountPath: /var/log/payloads
-        - name: apibuilder4elastic-debug
-          mountPath: /app/debug.sh
-          subPath: debug.sh
+        {{- range .Values.apibuilder4elastic.secretMounts }}
+        - name: {{ .name }}
+          mountPath: {{ .path }}
+          {{- if .subPath }}
+          subPath: {{ .subPath }}
+          {{- end }}
+        {{- end }}
+        {{- if .Values.apibuilder4elastic.extraVolumeMounts }}
+{{ toYaml ( .Values.apibuilder4elastic.extraVolumeMounts ) | indent 8 }}
+        {{- end }}
         ports:
-        - containerPort: {{ .Values.apibuilder4elastic.trafficPort }}
-        resources:
-          limits:
-            memory: {{ .Values.apibuilder4elastic.memoryLimits | quote }}
-            cpu: {{ .Values.apibuilder4elastic.cpuLimits | quote }}
-          requests:
-            memory: {{ .Values.apibuilder4elastic.memoryRequests | quote }}
-            cpu: {{ .Values.apibuilder4elastic.cpuRequests | quote }}
+        - containerPort: {{ .Values.apibuilder4elastic.port }}
+        resources: 
+{{ toYaml .Values.apibuilder4elastic.resources | indent 10 }}
         readinessProbe:
           tcpSocket:
-            port: {{ .Values.apibuilder4elastic.trafficPort }}
-          initialDelaySeconds: 40
-          periodSeconds: 30
+            port: {{ .Values.apibuilder4elastic.port }}
+          initialDelaySeconds: 5
+          periodSeconds: 10
         livenessProbe:
           tcpSocket:
-            port: {{ .Values.apibuilder4elastic.trafficPort }}
+            port: {{ .Values.apibuilder4elastic.port }}
           initialDelaySeconds: 30
           periodSeconds: 30
         lifecycle:
@@ -88,20 +68,29 @@ spec:
               command: ["sleep","90"]
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
-        #command:
-        #- /app/debug.sh
+        #command: ["sh", "-c", "tail -f /dev/null" ]
       restartPolicy: Always
+      {{- with .Values.tolerations }}
+      tolerations:
+{{ toYaml . | indent 6 }}
+      {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+      {{- end }}
+      securityContext:
+{{ toYaml .Values.apibuilder4elastic.podSecurityContext | indent 8 }}
       serviceAccountName: {{ .Values.global.serviceAccountName }}
       volumes:
-        - name: apib-payload
-          hostPath:
-            path: {{ .Values.global.hostPath.base }}/apimgr/logs/payload
-            type: DirectoryOrCreate
-        - name: apib-cert
+        {{- range .Values.apibuilder4elastic.secretMounts }}
+        - name: {{ .name }}
           secret:
-            secretName: apibuilder4elastic-secret
-        - name: apibuilder4elastic-debug
-          configMap:
-            name: apibuilder4elastic-debug
-            defaultMode: 0755
-status: {}
+            secretName: {{ .secretName }}
+            {{- if .defaultMode }}
+            defaultMode: {{ .defaultMode }}
+            {{- end }}
+        {{- end }}
+        {{- if .Values.apibuilder4elastic.extraVolumes }}
+{{ toYaml ( .Values.apibuilder4elastic.extraVolumes ) | indent 8 }}
+        {{- end }}
+{{- end }}

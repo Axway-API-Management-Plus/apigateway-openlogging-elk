@@ -1,12 +1,31 @@
-apiVersion: v1
-appVersion: 2.0.0
-description: Helm chart for
-home: https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk
-keywords:
-- API Management, Axway, Logstash, API Builder, Memcached, Filebeat
-kubeVersion: '>=1.15.0'
-maintainers:
-- email: jgoh@axway.com
-  name: APIM 7.7
-name: apigateway-openlogging-elk
-version: 1.0.0
+apiVersion: v2
+name: apim4elastic
+description: A Helm chart for the Axway APIM Elasticsearch integration.
+
+type: application
+
+version: 3.0.0-SNAPSHOT
+
+appVersion: "3.0.0-SNAPSHOT"
+
+dependencies:
+  - name: memcached
+    version: "5.10.1"
+    repository: https://charts.bitnami.com/bitnami
+    condition: memcached.enabled
+  - name: logstash
+    version: "7.12.0"
+    repository: https://helm.elastic.co
+    condition: logstash.enabled
+  - name: filebeat
+    version: "7.12.0"
+    repository: https://helm.elastic.co
+    condition: filebeat.enabled
+  - name: elasticsearch
+    version: "7.12.0"
+    repository: https://helm.elastic.co
+    condition: elasticsearch.enabled
+  - name: kibana
+    version: "7.12.0"
+    repository: https://helm.elastic.co
+    condition: kibana.enabled

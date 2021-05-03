@@ -1,22 +1,30 @@
+{{- if .Values.apibuilder4elastic.ingress.enabled -}}
+{{- $fullName := include "apibuilder4elastic.fullname" . -}}
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
-  name: {{ .Values.apibuilder4elastic.name | quote }}
-  namespace: {{ .Values.global.namespace }}
+  name: {{ template "apibuilder4elastic.fullname" . }}-ingress
+  labels:
+    {{- include "apibuilder4elastic.labels" . | nindent 4 }}
+{{- with .Values.apibuilder4elastic.ingress.annotations }}
   annotations:
-    ncp/http-redirect: "true"
-    kubernetes.io/ingress.class: "nsx"
+{{ toYaml . | indent 4 }}
+{{- end }}
 spec:
+{{- if .Values.apibuilder4elastic.ingress.tls }}
   tls:
-  - hosts:
-    - apibuilder4elastic.{{ .Values.global.domainName }}
-    secretName: apibuilder4elastic-ingress-cert
+{{ toYaml .Values.apibuilder4elastic.ingress.tls | indent 4 }}
+{{- end }}
   rules:
-  - host: apibuilder4elastic.{{ .Values.global.domainName }}
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          serviceName: {{ .Values.apibuilder4elastic.name }}
-          servicePort: {{ .Values.apibuilder4elastic.trafficPort }}
+  {{- range $.Values.apibuilder4elastic.ingress.hosts }}
+    - host: {{ .host }}
+      http:
+        paths:
+        {{- range .paths }}
+          - path: {{ .path }}
+            backend:
+              serviceName: {{ $fullName }}-service
+              servicePort: {{ .servicePort }}
+        {{- end }}
+  {{- end }}
+{{- end }}
