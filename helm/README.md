@@ -221,7 +221,7 @@ data:
     .
 ```
 
-Tip: When using HELM use `.Files.get.`. Example: [templates/elasticApimLogstash/logstash-pipelines.yaml]
+Tip: When using HELM use `.Files.get.`. Example: [templates/elasticApimLogstash/logstash-pipelines.yaml](templates/elasticApimLogstash/logstash-pipelines.yaml)
 
 ```
 kubectl apply -n apim-elk -f myAPIBuilderAuthZConfig.yaml
