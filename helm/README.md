@@ -127,15 +127,18 @@ Other variants are possible, but have not yet been tested.
 
 ## Logstash and Filebeat
 
-The communication between Filebeat and Logstash is a TCP based connection which is sticky. In the classic deployment, you would configure the available Logstash instances in Filebeat and Filebeat performs the load balancing on its own.
-In the case of Kubernetes, there are basically two ways to make the Logstash service available externally:
+The communication between Filebeat and Logstash is a maintained TCP connection which is sticky. In the classic deployment using for instance Docker-Compose, you would configure 
+the available Logstash instances as a list in Filebeat. With that Filebeat performs the load balancing on its own.  
+In the case of Kubernetes things are a bit different, there are basically two ways to make the Logstash service externally available:
 
-1. Node Port
-Here the administrative effort is higher, but it can be worthwhile from the throughput to set up the logstash service as a node port and to configure Filebeat accordingly on all nodes. 
-Per default Logstash Node-Affinity only 1 Logstash is deployed per node. This is the recommended approach.
-2. Load Balancer.
-In the case of the load balancer, care must be taken to ensure that Filebeat is set with an appropriate TTL to ensure that the load is evenly 
-distributed between the logstash instances. (See https://github.com/elastic/beats/issues/661)
+1. __Node Port__  
+Here the administrative effort is higher, but it can be worthwhile from the throughput to set up the Logstash service as a node port and to configure Filebeat accordingly on all nodes. 
+You need to know, that per default the Logstash Node-Affinity makes sure, that only 1 Logstash is deployed per Kubernetes worker node. This is the recommended approach.
+
+2. __Load Balancer__  
+
+In the case of an load balancer, care must be taken to ensure that Filebeat is set with an appropriate [TTL](https://www.elastic.co/guide/en/beats/filebeat/7.12/logstash-output.html#_ttl) to ensure that the load is evenly 
+distributed between the availbel logstash instances. (See here for more details https://github.com/elastic/beats/issues/661)
 
 ## Use externally provided Secrets & ConfigMaps
 
