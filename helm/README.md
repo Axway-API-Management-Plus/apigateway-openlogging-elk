@@ -194,16 +194,18 @@ Customize the generated Helm chart according to your needs and remove stuff that
 
 ### Use a Secret for API-Manager Username & Password
 
-The following example explains how you can create your own secret, to keep the API-Manager username and password to be used by the API-Builder. 
+The following example explains how you can create a secret, that keeps the API-Manager username and password and use it with API-Builder. The same procedure applies for all confidential information.  
 
-1. Create a secret
+__1. Create a secret__  
 Use for instance the following command to create a secret that contains the API-Manager Username and Password and store the result in Helm-Chart template folder.
 ```
 kubectl create secret generic api-builder-secrets --from-literal=API_MANAGER_PASSWORD=change --from-literal=API_MANAGER_USERNAME=apiadmin --dry-run -o yaml > templates/api-builder-secret.yaml
 ```
-2. You may adjust the generated Yaml-File to really become a template. 
+__2. Template it__  
 
-3. Install or upgrade your setup chart
+Optionally you may change the generated Yaml file to really become a more flexible Helm-Template.
+
+__3. Install or upgrade your setup chart__  
 ```
 helm install -n apim-elk axway-elk-setup .
 NAME: axway-elk-setup
@@ -213,7 +215,7 @@ STATUS: deployed
 REVISION: 1
 TEST SUITE: None
 ```
-4. Reference the secret 
+__4. Reference the secret__   
 Adjust your `myvalues.yaml` to reference the created secret. Additionally you have to declare the default ConfigMap, if you don't want to manage that ConfigMap yourself.
 
 ```yaml
@@ -228,7 +230,7 @@ apibuilder4elastic:
     enabled: false
 ```
 
-5. Install or Upgrade the APIM4Elastic solution
+__5. Install or Upgrade the APIM4Elastic solution__  
 
 Now you can install or upgrade the solution and in the process your Secret will inject the API Manager username and password into the API Builder container:
 ```
@@ -243,14 +245,16 @@ If you use an external Elasticsearch cluster, then the corresponding CA of this 
 
 This is how you include an Elasticsearch certificate in the solution. It is also assumed here that the resources, i.e. certificates and keys, are managed via the `axway-elk-setup` Helm chart. 
 
-1. Create a secret containing your CA
+__1. Create a secret containing your CA__  
 ```
 kubectl create secret generic    --from-file=myElasticsearchCa.crt=myElasticsearchCa.crt --dry-run -o yaml > templates/elasticsearch-certificate.yaml
 ```
 
-2. Optionally, you may adjust the generated secret to really become a Helm template. 
+__2. Template it__  
 
-3. Install or upgrade your setup chart
+Optionally you may change the generated Yaml file to really become a more flexible Helm-Template.
+
+__3. Install or upgrade your setup chart__  
 ```
 helm upgrade -n apim-elk axway-elk-setup .
 Release "axway-elk-setup" has been upgraded. Happy Helming!
@@ -261,7 +265,7 @@ STATUS: deployed
 REVISION: 2
 TEST SUITE: None
 ```
-4. Reference the CA
+__4. Reference the CA__  
 To use the custom CA, it must be included appropriately in all containers. To do this, modify your `myvalues.yaml` as shown here in the Logstash example.
 
 ```yaml
@@ -283,14 +287,14 @@ global:
   elasticsearchCa: "customConfig/certificates/myElasticsearchCa.crt"
 ```
 
-5. Install or Upgrade the APIM4Elastic solution
+__5. Install or Upgrade the APIM4Elastic solution__  
 ```
 helm upgrade -n apim-elk -f myvalues.yaml axway-elk apim4elastic-3.0.0.tgz
 ```
 
 ### Example Custom-API-Builder Configuration
 
-1. Create ConfigFile configMap
+__1. Create ConfigFile configMap__  
 
 Create a ConfigMap that contains your custom configuration file: 
 
@@ -324,11 +328,13 @@ data:
     .
 ```
 
-2. Optionally, you may adjust the generated secret to really become a Helm template. 
+__2. Template it__  
+
+Optionally you may change the generated Yaml file to really become a more flexible Helm-Template.  
 
 Tip: When using Helm use `.Files.get.` to include your custom configuration file. See here for an example: [templates/elasticApimLogstash/logstash-pipelines.yaml](templates/elasticApimLogstash/logstash-pipelines.yaml)
 
-3. Install or upgrade your setup chart
+__3. Install or upgrade your setup chart__  
 ```
 helm upgrade -n apim-elk axway-elk-setup .
 Release "axway-elk-setup" has been upgraded. Happy Helming!
@@ -340,7 +346,7 @@ REVISION: 2
 TEST SUITE: None
 ```
 
-4. Mount the ConfigFile
+__4. Mount the ConfigFile__  
 
 Now mount this ConfigMap into the API-Builder container and reference it in the configuration using the `values.yaml`:
 
@@ -364,7 +370,7 @@ apibuilder4elastic:
   authzConfig: "./config/myAuthzConfig.js"
 ```
 
-5. Install or Upgrade the APIM4Elastic solution
+__5. Install or Upgrade the APIM4Elastic solution__  
 ```
 helm upgrade -n apim-elk -f myvalues.yaml axway-elk apim4elastic-3.0.0.tgz
 ```
