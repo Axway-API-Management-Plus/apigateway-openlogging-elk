@@ -1,10 +1,9 @@
-# Helm-Chart - Axway APIM-Manager for Elastic
+# # Axway APIM-Management4Elastic - Helm-Chart
 
 This page provides information on how to deploy the Axway API Management for Elastic solution on a Kubernetes or 
 OpenShift cluster using Helm.  
-The Helm chart provided is extremely flexible and configurable. All or only the desired components can be deployed. 
-For example, you can use an existing Elasticsearch cluster + Kibana, deploy Logstash, API-Builder4Elastic & Memcached 
-in Kubernetes and run Filebeat native to the API-Gateways.
+The provided Helm chart is extremely flexible and configurable. You can decide which components to deploy, 
+use your own labels, annotations, secrets, and volumes to customize the deployment to your needs.
 
 ## Requirements
 
@@ -13,7 +12,7 @@ in Kubernetes and run Filebeat native to the API-Gateways.
 - OpenShift (not yet tested (Please create an issue if you need help))
 - See [required resources](#required-resources)
 
-Even though this HELM chart makes deploying the solution on Kubernetes/OpenShift much easier, extensive knowledge 
+Even though this Helm chart makes deploying the solution on Kubernetes/OpenShift much easier, extensive knowledge 
 about Kubernetes/OpenShift and Helm is mandatory.  
 You must be familiar with:  
 - Concepts of Helm, How to create a Helm-Chart, Install & Upgrade
@@ -23,9 +22,9 @@ You must be familiar with:
 
 We try to help to the best of our knowledge within the framework of this project, but we cannot cover every environment and its specifics.
 
-## Installation
+## Usage notes
 
-The following explains how to deploy the solution on your Kubernetes/OpenShift using the provided HELM chart. We start with a simple deployment 
+The following explains how to deploy the solution on your Kubernetes/OpenShift using the provided Helm chart. We start with a simple deployment 
 that includes all components except Filebeat. This deployment is useful if there is no existing Elasticsearch cluster + Kibana and 
 API-Management is running on classic virtual machines externally to the Kubernetes.  
 
@@ -34,49 +33,38 @@ The resources are deployed in Kubernetes as follows:
 
 ### Configuration
 
-Create your own `myValues.yaml` based on the standard `[values.yaml](values.yaml)` and configure required parameters. All of the parameters are 
-explained in details in the provided `[values.yaml](values.yaml)`.  
+Create your own `myvalues.yaml` based on the standard [`values.yaml`](values.yaml) and configure required parameters. All of the parameters are 
+explained in details in the charts [`values.yaml`](values.yaml).  
 The following contains a list of parameters that needs to be set very likely for each deployment: 
 
 | Parameter                                   | Description                                                                                                                                                             
 |---------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `global.elasticsearchHosts`                 | The Elasticsearch Host Service, Elasticsearch should be running in K8S/OpenShift. For an external Elasticsearch service, specify the Elasticsearch host addresses.      |
-| `apibuilder4elastic`                        | __Parameters used by API-Builder4Elastic__                                                                                                                              |
+| `global.elasticsearchHosts`                 | The Elasticsearch Host Service, Elasticsearch should be running in K8S/OpenShift. For an external Elasticsearch service, specify the Elasticsearch host addresses.      |                                                                                                  |
+| `apibuilder4elastic.enabled`                | Controls if API-Buider4Elastic should be deployed. Defaults to true. Required component along with Logstash and Memcached                              |
 | `apibuilder4elastic.anmUrl`                 | The URL of the Axway API Gateway admin node manager. Please note that the address must be reachable from the API Builder.                                               |
 | `apibuilder4elastic.apimgrUrl`              | The URL of the Axway API Gateway admin node manager. Please note that the address must be reachable from the API Builder.                                               |
 | `apibuilder4elastic.secrets.apimgrUsername` | Username used by API-Builder to authenticate at the API-Manager. Must be an Admin-User. Default is set to apiadmin                                                      |
 | `apibuilder4elastic.secrets.apimgrPassword` | Password used by API-Builder to authenticate at the API-Manager. Default is set to changeme                                                                             |
-| `elasticsearch.enabled`                     | Controls if [Elasticsearch should be provisioned](#provision-elasticsearch). Defaults to true. Disable it if you plan to use an external Elasticsearch cluster          |
+| `logstash.enabled`                          | Controls if Logstash should be deployed. Defaults to true. Required component along with API-Builder4Elastic and Memcached                              |
+| `memached.enabled`                          | Controls if Memcached should be deployed. Defaults to true. Required component along with API-Builder4Elastic and Logstash                               |
+| `elasticsearch.enabled`                     | Controls if [Elasticsearch should be provisioned](#provision-elasticsearch). Defaults to false. Enable it if you plan to use an external Elasticsearch cluster          |
 | `elasticsearch.replicas`                    | Number of Elasticsearch nodes to provision. Defaults to 2 nodes.                                                                                                        |
-| `kibana.enabled`                            | Controls if Kibana should be provisioned as part of Helm-Install. Defaults to true. Disable it if you plan to use an external Kibana application                        |
+| `kibana.enabled`                            | Controls if Kibana should be provisioned as part of Helm-Install. Defaults to false. Enable it if you plan to use an external Kibana application                      |
 | `filebeat.enabled`                          | Controls if Filebeat should be provisioned as part of Helm-Install. Defaults to false. Enable it if the API-Management solution runs in your Kubernetes                 |
 
-Depending on the desired deployment model, additional parameters must be set in your myValues.yaml. Some of the deployment options are explained below.
+Depending on the desired deployment options, additional parameters must be set in your myValues.yaml. Some of the deployment options are explained below.
 
-### Installation
+## Prepare Elasticsearch
 
-__Please note__ that the release name must be currently: `axway-elk`, because some resources, like Services, ConfigMaps or Secrets 
-are created with it and referenced in the standard values.yaml. An example is the Elasticsearch-Service: `axway-elk-apim4elastic-elasticsearch` This may be changed in a later release to get more flexibility.
-
-```
-helm install -n apim-elk -f myvalues.yaml axway-elk apim4elastic-3.0.0.tgz
-```
-
-### Upgrade
-
-Example to upgrade an existing deployment:
-```
-helm upgrade -n apim-elk -f myvalues.yaml axway-elk apim4elastic-3.1.0.tgz
-```
-
-## Provision Elasticsearch
-
-To provision Elasticsearch you need to create persistent volumes for each replica and the configured `elasticsearch.volumeClaimTemplate`.  
+If you have `elasticseach.enabled` set to true, you need to create for each Elasticsearch node (number of `elasticsearch.replicas`) a persistent volume. The persisent volume must match to the configured `elasticsearch.volumeClaimTemplate`.  
 Furthermore, each replica must have a worker node available, since one Elasticsearch node is deployed per worker node.  
 
 ![Elasticsearch PVC and PV](../imgs/kubernetes/elastichsearch_pvc_and_pv.png)  
 
-For testing purposes, you can create a [hostpath volume](https://kubernetes.io/docs/concepts/storage/volumes/#hostpath). For production, you should provision an appropriate [persistent volumes](https://kubernetes.io/docs/concepts/storage/persistent-volumes/).
+For a production environment, you should provision an appropriate [persistent volumes](https://kubernetes.io/docs/concepts/storage/persistent-volumes/) 
+depending on your environment.
+
+For testing purposes, you can create simple a [hostpath volume](https://kubernetes.io/docs/concepts/storage/volumes/#hostpath). 
 
 Example hostpath volume you may create for testing:  
 ```yaml
@@ -110,6 +98,51 @@ This volume will bound to the following example `elasticsearch.volumeClaimTempla
     resources:
       requests:
         storage: 1Gi
+```
+
+### Install the Helm-Chart
+
+__Please note__ that the release name must currently: `axway-elk`, because many resources, like Services, ConfigMaps or Secrets 
+are created with it and referenced in the standard `values.yaml`. An example is the Elasticsearch-Service: `axway-elk-apim4elastic-elasticsearch`, 
+which is for instance used for the standard `elasticsearchHosts: "https://axway-elk-apim4elastic-elasticsearch:9200"`. This restriction may 
+be changed in a later release to get more flexibility.  
+
+To deploy the solution execute the following command:
+```
+helm install -n apim-elk -f myvalues.yaml axway-elk apim4elastic-3.0.0.tgz
+
+// Check the installed release
+helm list -n apim-elk
+NAME            NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                           APP VERSION   
+axway-elk       apim-elk        1               2021-05-03 14:22:08.9325287 +0200 CEST  deployed        apim4elastic-3.0.0              3.0.0
+
+// Check the pods, with Elasticsearch and Kibana enabled
+kubectl get pods -n apim-elk
+NAME                                                         READY   STATUS    RESTARTS   AGE 
+axway-elk-apim4elastic-apibuilder4elastic-65b5d56d77-5hv9z   1/1     Running   1          7h2m
+axway-elk-apim4elastic-elasticsearch-0                       1/1     Running   0          7h2m
+axway-elk-apim4elastic-elasticsearch-1                       1/1     Running   0          7h2m
+axway-elk-apim4elastic-kibana-7c6d4b675f-dnxj7               1/1     Running   0          7h2m
+axway-elk-apim4elastic-logstash-0                            1/1     Running   0          7h2m
+axway-elk-apim4elastic-memcached-56b7447d9-25xwb             1/1     Running   0          7h2m
+
+// Check deployed services
+kubectl -n apim-elk get service
+NAME                                                TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)             AGE
+axway-elk-apim4elastic-apibuilder4elastic-service   ClusterIP   None            <none>        8443/TCP            7h7m
+axway-elk-apim4elastic-elasticsearch                ClusterIP   10.100.85.132   <none>        9200/TCP,9300/TCP   7h7m
+axway-elk-apim4elastic-elasticsearch-headless       ClusterIP   None            <none>        9200/TCP,9300/TCP   7h4m
+axway-elk-apim4elastic-kibana                       ClusterIP   10.105.84.214   <none>        5601/TCP            7h7m
+axway-elk-apim4elastic-logstash                     NodePort    10.103.53.111   <none>        5044:32001/TCP      7h7m
+axway-elk-apim4elastic-logstash-headless            ClusterIP   None            <none>        9600/TCP            7h7m
+axway-elk-apim4elastic-memcached                    ClusterIP   10.108.48.131   <none>        11211/TCP           7h7m
+```
+
+### Upgrade the release
+
+Example how to upgrade an existing Helm release:  
+```
+helm upgrade -n apim-elk -f myvalues.yaml axway-elk apim4elastic-3.1.0.tgz
 ```
 
 ## API-Management running in Kubernetes

@@ -155,6 +155,7 @@ apibuilder4elastic:
     runAsUser: 100
     fsGroup: 101
   # Makes the apibuilder4elastic externally available for the Admin-Node-Manager
+  # This example is using an Nginx Ingress-Controller
   ingress:
     enabled: true
     annotations: 
@@ -322,6 +323,17 @@ elasticsearch:
   #    requests:
   #      storage: 250Gi
 
+  # Create an Ingress resource for Elasticsearch
+  # The example is using an NGINX Ingress controller
+  ingress:
+    enabled: true
+    hosts:
+      - host: elasticsearch.apim4elastic.local
+        paths:
+          - path: /
+    annotations: 
+      nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+
   esConfig: 
     elasticsearch.yml: |
       #http.host: 0.0.0.0
@@ -417,6 +429,7 @@ kibana:
       xpack.security.encryptionKey: "YT8d68CZE4Z3mXBxYDVqjC4hhts4H9TQ"
 
   # Create an Ingress resource for Kibana
+  # The example is using an NGINX Ingress controller
   ingress:
     enabled: true
     hosts:

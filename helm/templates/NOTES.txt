@@ -1,0 +1,63 @@
+Thank you for installing {{ .Chart.Name }}.
+
+
+{{- if .Values.apibuilder4elastic.ingress.enabled }}
+-------------------------------------------
+Ingress addresses. Please make sure you have an ingress controller installed.
+{{- range $host := .Values.apibuilder4elastic.ingress.hosts }}
+  {{- range .paths }}
+  APIBuilder4Elastic URL: https://{{ $host.host }}{{ .path }}
+  {{- end }}
+{{- end }}
+{{- end }}
+
+{{- if .Values.kibana.ingress.enabled }}
+{{- range $host := .Values.kibana.ingress.hosts }}
+  {{- range .paths }} 
+  Kibana URL:             https://{{ $host.host }}{{ .path }}
+  {{- end }}
+{{- end }}
+{{- end }}
+
+{{- if .Values.elasticsearch.ingress.enabled }}
+{{- range $host := .Values.kibana.ingress.hosts }}
+  {{- range .paths }}
+  Elasticsearch URL:      https://{{ $host.host }}{{ .path }}
+  {{- end }}
+{{- end }}
+{{- end }}
+
+{{- if .Values.logstash.enabled }}
+-------------------------------------------
+Logstash
+
+{{- if contains "NodePort" .Values.logstash.service.type }}
+  export NODE_PORT=$(kubectl get --namespace {{ .Release.Namespace }} -o jsonpath="{.spec.ports[0].nodePort}" services {{ include "apim4elastic.fullname" . }}-logstash)
+  export NODE_IP=$(kubectl get nodes --namespace {{ .Release.Namespace }} -o jsonpath="{.items[0].status.addresses[0].address}")
+  Logstash service exposed on Node-Port: 
+  echo http://$NODE_IP:$NODE_PORT
+{{- else if contains "LoadBalancer" .Values.logstash.service.type }}
+     NOTE: It may take a few minutes for the LoadBalancer IP to be available.
+           You can watch the status of by running 'kubectl get --namespace {{ .Release.Namespace }} svc -w {{ include "apim4elastic.fullname" . }}'
+  Logstash configured with LoadBalancer: 
+  export SERVICE_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ include "apim4elastic.fullname" . }} --template "{{"{{ range (index .status.loadBalancer.ingress 0) }}{{.}}{{ end }}"}}")
+  echo http://$SERVICE_IP:{{ .Values.logstash.service.port }}
+{{- end }}
+{{- end }}
+
+
+{{- if .Values.elasticsearch.enabled }}
+-------------------------------------------
+ElasticSearch
+
+Once Elasticsearch is ready, it's recommended to create Elasticsearch users with the following command:
+
+  kubectl -n {{ .Release.Namespace }} exec {{ .Release.Name }}-{{ .Chart.Name }}-elasticsearch-0 -- bin/elasticsearch-setup-passwords auto --batch --url https://localhost:9200
+
+Created users must be configured in the values.yaml or your custom Secrets and afterwards perform a helm upgrade
+{{- end }}
+
+
+NOTE: It may take a few minutes for the services to start. 
+      You can watch the status of by running:
+        kubectl get --namespace {{ .Release.Namespace }} pods -w
