@@ -1,4 +1,4 @@
-# # Axway APIM-Management4Elastic - Helm-Chart
+# Axway APIM-Management4Elastic - Helm-Chart
 
 This page provides information on how to deploy the Axway API Management for Elastic solution on a Kubernetes or 
 OpenShift cluster using Helm.  
@@ -129,7 +129,7 @@ axway-elk-apim4elastic-memcached-56b7447d9-25xwb             1/1     Running   0
 // Check deployed services
 kubectl -n apim-elk get service
 NAME                                                TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)             AGE
-axway-elk-apim4elastic-apibuilder4elastic-service   ClusterIP   None            <none>        8443/TCP            7h7m
+axway-elk-apim4elastic-apibuilder4elastic           ClusterIP   None            <none>        8443/TCP            7h7m
 axway-elk-apim4elastic-elasticsearch                ClusterIP   10.100.85.132   <none>        9200/TCP,9300/TCP   7h7m
 axway-elk-apim4elastic-elasticsearch-headless       ClusterIP   None            <none>        9200/TCP,9300/TCP   7h4m
 axway-elk-apim4elastic-kibana                       ClusterIP   10.105.84.214   <none>        5601/TCP            7h7m
@@ -152,11 +152,11 @@ If you are already running the Axway API management solution in a Kubernetes env
 The following shows Filebeat and API-Management in a Kubernetes cluster:  
 ![Kubernetes architecture all components](../imgs/kubernetes/all_components_incl_filebeat.png)  
 
-One way to provide Filebeat with the necessary log files of the API gateway is a central volume. The API gateways write to this volume and Filebeat reads & streams the corresponding documents/events.  
+One way to provide Filebeat with the necessary log files of the API gateway is a central volume. All API-Gateways write to this volume and Filebeat reads & streams the corresponding documents/events.  
 
-Mount the log volume in the filebeat container using `extraVolumes` and mount it in the correct location using `extraVolumeMounts`. You can find sample configuration in Values.yaml.
+Add the log volume into the Filebeat container using `extraVolumes` and mount it in the correct location using `extraVolumeMounts`. You can find sample configuration in values.yaml.
 
-Other variants are possible, but have not yet been tested.
+Other options are possible, but have not yet been tested.
 
 ## Logstash and Filebeat
 
@@ -167,67 +167,130 @@ In the case of Kubernetes things are a bit different, there are basically two wa
 1. __Node Port__  
 Here the administrative effort is higher, but it can be worthwhile from the throughput to set up the Logstash service as a node port and to configure Filebeat accordingly on all nodes. 
 You need to know, that per default the Logstash Node-Affinity makes sure, that only 1 Logstash is deployed per Kubernetes worker node. 
-Of course, you can connect an appropriate external load balancer in front of the exposed node port. Please note also in this case to set a TTL value for filebeat. See further below.
-
-NodePort is enabled by default and exposes Logstash on port: 32001 on each Node.
+Of course, you can connect an appropriate external load balancer in front of the exposed node port. Please note also in this case to set a TTL value for filebeat. See further below. 
+Type NodePort is enabled by default and exposes Logstash on port: 32001 on each Node.
 
 2. __Load Balancer__  
 
-If you run the platform in a cloud environment, such as GCP, AWS, etc., you can use load balancers to automatically provision an external IP address for Logstash. However, care must be taken to 
+If you run the platform in a cloud environment, such as GCP, AWS, etc., you can use Cloud Load-Balancers to automatically provision an IP address for Logstash. However, care must be taken to 
 ensure that Filebeat is set with an appropriate [TTL](https://www.elastic.co/guide/en/beats/filebeat/7.12/logstash-output.html#_ttl) to ensure that the load is evenly 
 distributed between the available Logstash instances. (See here for more details https://github.com/elastic/beats/issues/661)
 
-## Use externally provided Secrets & ConfigMaps
+## Customize the setup
 
-It is recommended to use externally provided Secrets and ConfigMaps especially for Secrets like passwords or certificates. 
-All components offer the possibility to use own ConfigMaps and Secretes. These can then be used to make passwords, etc. from 
-your own secrets available in containers or to integrate certificates via volume mounts.
+To customize the solution according to your needs, you can configure it using your own Secrets, ConfigMaps, etc.
 
-For this purpose, it is recommended to deploy a separate Helm chart with the necessary resources before deploying the 
-APIM4Elastic solution. After your resources ared create reference these in the APIM4Elastic values.yaml. 
+We recommend that you create your own Helm chart that contains all the necessary resources. 
+You then link your custom resources in your `myvalues.yaml` for the final deployment of the solution. The following illustration the approach we recommend:  
 
-### Example Custom ConfigMap
+![Customized deployment with Helm](../imgs/kubernetes/customized_deployment_with_helm.png)
 
-Create a ConfigMap for the APIBuilder4Elastic:  
-
-```yaml
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: my-extra-api-builder-config
-data:
-  ADMIN_NODE_MANAGER: https://my-admin-node:8090
-  API_BUILDER_SSL_CERT: "config/certificates/myCustomSSL.crt"
-  API_BUILDER_SSL_KEY: "config/certificates/myCustomSSL.key"
-  API_MANAGER: https://my-api-manager:8075
-  API_BUILDER_LOCAL_API_LOOKUP_FILE: "config/myLocalLookupFile.json"
-  AUTHZ_CONFIG: "config/myAuthZConfig.json"
-  ELASTICSEARCH_HOSTS: https://my-elasticsearch-host:9200
+### Create you own Helm-Chart
 ```
-
-In reality you should create your resources with HELM, but this is out of scope for this documentation:
-
+helm create axway-elk-setup
+cd axway-elk-setup
 ```
-kubectl apply -n apim-elk -f myAPIBuilder.yaml
-```
+Customize the generated Helm chart according to your needs and remove stuff that is not needed. Based on a few examples it's explained below how to customize the solution.  
 
-In the values.yaml reference your ConfigMap: 
+### Use a Secret for API-Manager Username & Password
+
+The following example explains how you can create your own secret, to keep the API-Manager username and password to be used by the API-Builder. 
+
+1. Create a secret
+Use for instance the following command to create a secret that contains the API-Manager Username and Password and store the result in Helm-Chart template folder.
+```
+kubectl create secret generic api-builder-secrets --from-literal=API_MANAGER_PASSWORD=change --from-literal=API_MANAGER_USERNAME=apiadmin --dry-run -o yaml > templates/api-builder-secret.yaml
+```
+2. You may adjust the generated Yaml-File to really become a template. 
+
+3. Install or upgrade your setup chart
+```
+helm install -n apim-elk axway-elk-setup .
+NAME: axway-elk-setup
+LAST DEPLOYED: Tue May  4 14:17:49 2021
+NAMESPACE: apim-elk
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+```
+4. Reference the secret 
+Adjust your `myvalues.yaml` to reference the created secret. Additionally you have to declare the default ConfigMap, if you don't want to manage that ConfigMap yourself.
 
 ```yaml
 apibuilder4elastic:
-  # Injects the environment variables from the ConfigMaps and Secrets into the 
-  # APIBuilder4Elastic pod. Specify your own ConfigMaps or Secrets if you don't
-  # provide Configuration and Secrets as part of this values.yaml.
-  envFrom: 
+  envFrom:
     - configMapRef:
-        name: my-extra-api-builder-config
+        name: axway-elk-apim4elastic-apibuilder4elastic-config
     - secretRef:
-        name: axway-elk-apim4elastic-apibuilder4elastic-secret
+        name: api-builder-secrets
+  # Optionally you can disable the secrets driven by the values.yaml
+  secrets: 
+    enabled: false
 ```
 
-Analogously, of course, you have the same option for Secrets, Volumes, VolumeMounts to include the necessary resources in the containers.
+5. Install or Upgrade the APIM4Elastic solution
+
+Now you can install or upgrade the solution and in the process your Secret will inject the API Manager username and password into the API Builder container:
+```
+helm install -n apim-elk -f myvalues.yaml axway-elk apim4elastic-3.0.0.tgz
+```
+
+### Custom certificates
+
+By default, necessary keys and certificates are automatically generated in a Secret: axway-elk-apim4elastic-certificates and included in the corresponding containers. 
+There are a number of keys and certificates issued by the CA. All components trust certificates of this CA, which is especially necessary for the communication with Elasticsearch.
+If you use an external Elasticsearch cluster, then the corresponding CA of this cluster must be included in the environment.  
+
+This is how you include an Elasticsearch certificate in the solution. It is also assumed here that the resources, i.e. certificates and keys, are managed via the `axway-elk-setup` Helm chart. 
+
+1. Create a secret containing your CA
+```
+kubectl create secret generic    --from-file=myElasticsearchCa.crt=myElasticsearchCa.crt --dry-run -o yaml > templates/elasticsearch-certificate.yaml
+```
+
+2. Optionally, you may adjust the generated secret to really become a Helm template. 
+
+3. Install or upgrade your setup chart
+```
+helm upgrade -n apim-elk axway-elk-setup .
+Release "axway-elk-setup" has been upgraded. Happy Helming!
+NAME: axway-elk-setup
+LAST DEPLOYED: Tue May  4 15:06:30 2021
+NAMESPACE: apim-elk
+STATUS: deployed
+REVISION: 2
+TEST SUITE: None
+```
+4. Reference the CA
+To use the custom CA, it must be included appropriately in all containers. To do this, modify your `myvalues.yaml` as shown here in the Logstash example.
+
+```yaml
+logstash:
+  secretMounts: 
+    - name: certificates
+      secretName: axway-elk-apim4elastic-certificates
+      path: /usr/share/logstash/config/certificates
+    - name: myCustomCA
+      secretName: apim4elastic-elastic-ca
+      path: /usr/share/logstash/customConfig/certificates
+      # The subPath is not really needed, when mounting into a different folder
+      subPath: myElasticsearchCa.crt
+```
+You can declare secret mounts in the same way for each component. After you provide each component with the additional secret, you can store the path to its CA in its myvalues.yaml.
+
+```yaml
+global:
+  elasticsearchCa: "customConfig/certificates/myElasticsearchCa.crt"
+```
+
+5. Install or Upgrade the APIM4Elastic solution
+```
+helm upgrade -n apim-elk -f myvalues.yaml axway-elk apim4elastic-3.0.0.tgz
+```
 
 ### Example Custom-API-Builder Configuration
+
+1. Create ConfigFile configMap
 
 Create a ConfigMap that contains your custom configuration file: 
 
@@ -261,11 +324,23 @@ data:
     .
 ```
 
-Tip: When using HELM use `.Files.get.` to include your custom configuration file. See here for an example: [templates/elasticApimLogstash/logstash-pipelines.yaml](templates/elasticApimLogstash/logstash-pipelines.yaml)
+2. Optionally, you may adjust the generated secret to really become a Helm template. 
 
+Tip: When using Helm use `.Files.get.` to include your custom configuration file. See here for an example: [templates/elasticApimLogstash/logstash-pipelines.yaml](templates/elasticApimLogstash/logstash-pipelines.yaml)
+
+3. Install or upgrade your setup chart
 ```
-kubectl apply -n apim-elk -f myAPIBuilderAuthZConfig.yaml
+helm upgrade -n apim-elk axway-elk-setup .
+Release "axway-elk-setup" has been upgraded. Happy Helming!
+NAME: axway-elk-setup
+LAST DEPLOYED: Tue May  4 15:06:30 2021
+NAMESPACE: apim-elk
+STATUS: deployed
+REVISION: 2
+TEST SUITE: None
 ```
+
+4. Mount the ConfigFile
 
 Now mount this ConfigMap into the API-Builder container and reference it in the configuration using the `values.yaml`:
 
@@ -289,29 +364,34 @@ apibuilder4elastic:
   authzConfig: "./config/myAuthzConfig.js"
 ```
 
+5. Install or Upgrade the APIM4Elastic solution
+```
+helm upgrade -n apim-elk -f myvalues.yaml axway-elk apim4elastic-3.0.0.tgz
+```
+
 ## Required resources
 
 ### API-Builder4Elastic
 
-Memory: 50Mi - 80Mi
+Memory: 50Mi - 80Mi  
 CPU: 100m - 200m
 
 ### Memcached
 
-Memory: 32Mi - 64Mi
+Memory: 32Mi - 64Mi  
 CPU: 50m - 100m
 
 ### Logstash
 
-Memory: 6Gi - 6Gi
+Memory: 6Gi - 6Gi  
 CPU: 1000m - 1000m
 
 ### Elasticsearch
 
-Memory: 2Gi - 2Gi
+Memory: 8Gi - 8Gi  
 CPU: 1000m - 1000m
 
 ### Kibana
 
-Memory: 500m - 500m
+Memory: 500m - 500m  
 CPU: 500m - 500m
