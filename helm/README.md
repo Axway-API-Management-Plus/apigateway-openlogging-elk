@@ -10,15 +10,17 @@ use your own labels, annotations, secrets, and volumes to customize the deployme
 - Kubernetes >= 1.19
   - At least two dedicated woker nodes for two Elasticsearch instances
 - Helm >= 3.3.0
+- kubectl installed and configured
 - OpenShift (not yet tested (Please create an issue if you need help))
 - See [required resources](#required-resources)
-- Strongly recommended to have an Ingress-Controller already installed (https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/)
+- Strongly recommended to have an Ingress-Controller already installed
+  - See https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/
 
 Even though this Helm chart makes deploying the solution on Kubernetes/OpenShift much easier, extensive knowledge 
 about Kubernetes/OpenShift and Helm is mandatory.  
 You must be familiar with:  
 - Concepts of Helm, How to create a Helm-Chart, Install & Upgrade
-- Kubernetes resources such as ConfigMaps, Secrets
+- Kubernetes resources such as Deployments, ConfigMaps, Secrets
 - Kubernetes networking, Ingress, Services and Load-Balancing
 - Kubernetes Persistent Volumes, Volumes, Volume-Mounts
 
@@ -26,11 +28,11 @@ We try to help to the best of our knowledge within the framework of this project
 
 ## Architecture overview
 
-The following explains how to deploy the solution on your Kubernetes/OpenShift using the provided Helm chart. We start with a simple deployment 
-that includes all components except Filebeat. This deployment is useful if there is no existing Elasticsearch cluster + Kibana and 
-API-Management is running on classic virtual machines externally to the Kubernetes.  
+The following figure shows an overview of the architecture to be deployed in the Kubernetes cluster. The example 
+is for an environment where the API management platform is external to Kubernetes, so Filebeat is also external.  
 
-The resources are deployed in Kubernetes as follows:  
+Further deployment options and customizations are described in this document.  
+
 ![Kubernetes architecture all components](../imgs/kubernetes/all_components_overview_ext_api-management.png)
 
 ### Get started
@@ -38,7 +40,7 @@ The resources are deployed in Kubernetes as follows:
 Create your own `myvalues.yaml` based on the standard [`values.yaml`](values.yaml) and configure all required parameters, like in the example below. All of the parameters are 
 explained in detail in the charts [`values.yaml`](values.yaml).  
 
-This represents the most simple `myvalues.yaml` assuming the API-Management Plattform + Filebeat is running externally to the Kubernetes cluster as indicated in the illustration above:  
+The following represents the most simple `myvalues.yaml` assuming the API-Management Plattform + Filebeat is running externally to the Kubernetes cluster as indicated in the illustration above:  
 
 ```yaml
 apibuilder4elastic: 
@@ -61,25 +63,30 @@ kibana:
 
 ### Elasticsearch Persistent volumes
 
-As Elasticsearch is enabled and requires a PersistentVolume for each volume, first create two persistent volumes
+As Elasticsearch is enabled and requires a PersistentVolume for each Elasticsearch node, first two persistent volumes must be created.  
 
 The following should help you to get started, but these volumes are HostPath volumes pointing to a Worker-Node directory - This is not for production.
-Make sure to create a directory /tmp/data on your WorkerNodes and give it permissions for everybody.
+Make sure to create a directory `/tmp/data` on your WorkerNodes and give it permissions for everybody.
 
 ```
 kubectl apply -n apim-elk \ 
-    -f https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/blob/develop/helm/misc/pv-vol1.yaml \
-    -f https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/blob/develop/helm/misc/pv-vol2.yaml
+    -f https://raw.githubusercontent.com/Axway-API-Management-Plus/apigateway-openlogging-elk/develop/helm/misc/pv-vol1.yaml \
+    -f https://raw.githubusercontent.com/Axway-API-Management-Plus/apigateway-openlogging-elk/develop/helm/misc/pv-vol2.yaml
+
+// Example indicating to grant permissions
+ssh kubenode01
+cd /tmp
+sudo chmod 777 data
 ```
 
 ### Install the Helm-Chart
 
-With Elasticsearch volumes and your myvalues.yaml file in place, you can start the installation (__Please note:__ The Helm Release-Name: __axway-elk__ is mandatory as of now):  
+With Elasticsearch volumes and your `myvalues.yaml` file in place, you can start the installation (__Please note:__ The Helm Release-Name: __axway-elk__ is mandatory as of now):  
 ```
 helm install -n apim-elk -f myvalues.yaml axway-elk apim4elastic-3.0.0.tgz
 ```
 
-You may run the following command to check the status of the deployment, pods, etc.
+You may run the following commands to check the status of the deployment, pods, services, etc.
 ```
 // Check the installed release
 helm list -n apim-elk
@@ -114,11 +121,13 @@ kubectl -n apim-elk describe pod axway-elk-apim4elastic-elasticsearch-0
 kubectl -n apim-elk logs axway-elk-apim4elastic-apibuilder4elastic-65b5d56d77-5hv9z
 ```
 
-If everything goes well you can access the different components on the following ingress hosts (assumed DNS-Resolution for apim4elastic.local is point to your Ingress IP):  
+If everything goes well, you can access the different components on the following host-names:  
 
 https://kibana.apim4elastic.local  
 https://apibuilder.apim4elastic.local  
 https://elasticsearch.apim4elastic.local  
+
+:point-right: This assumes, that Ingress is configured and DNS-Resolution for `apim4elastic.local` points to your cluster IP. More details is out of scope for this document.
 
 At this point, it is still assumed, that the API-Management Plattform is running externally. Therefore, as the next step, you need to connect one or more Filebeats to Logstash running in Kubernetes. 
 
@@ -132,9 +141,7 @@ In the case of Kubernetes things are a bit different, there are basically two wa
 Here the administrative effort is higher, but it can be worthwhile from the throughput to set up the Logstash service as a node port and to configure Filebeat accordingly on all nodes. 
 You need to know, that per default the Logstash Node-Affinity makes sure, that only 1 Logstash is deployed per Kubernetes worker node. 
 Of course, you can connect an appropriate external load balancer in front of the exposed node port. Please note also in this case to set a TTL value for filebeat. See further below. 
-The type NodePort is __enabled by default__ for the Logstash-Service and exposes Logstash on port: 32001 on each Node.  
-
-To get details about the Logstash service:  
+The type NodePort is __enabled by default__ for the Logstash-Service and exposes Logstash on port: 32001 on each Node. To get details about the Logstash service:  
 ```
 kubectl -n apim-elk get services axway-elk-apim4elastic-logstash -o wide
 NAME                              TYPE       CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE   SELECTOR
@@ -164,8 +171,8 @@ distributed between the available Logstash instances. (See here for more details
 
 ## Enable User-Authentication
 
-Enabling user authentication in Elasticsearch is quite analogous to the Docker Compose variant. For a newly created Elasticsearch cluster, 
-you generate passwords for the default users and then store them in your myvalues.yaml or in your own secrets.  
+Enabling user authentication in Elasticsearch is quite analogous to the Docker Compose approach. For a newly created Elasticsearch cluster, 
+you generate passwords for the default Elasticsearch users and then store them in your `myvalues.yaml` or in your own secrets.  
 
 Run the following command to generate the passwords for the default users.
 
@@ -173,7 +180,7 @@ Run the following command to generate the passwords for the default users.
 kubectl -n apim-elk exec axway-elk-apim4elastic-elasticsearch-0 -- bin/elasticsearch-setup-passwords auto --batch --url https://localhost:9200
 ```
 
-This shows structure how to setup the Elasticsearch users in your `myvalues.yaml` and disable anonymous access.
+This structure shows how to setup the Elasticsearch users in your `myvalues.yaml` and disable anonymous access.
 
 ```yaml
 apibuilder4elastic:
@@ -289,8 +296,8 @@ TEST SUITE: None
 __4. Reference the CA__  
 
 To use the custom CA, it must be included appropriately in all containers. To do this, modify your `myvalues.yaml` as shown here in the Logstash example. 
-If you do not control all keys and certificates yourself, you must continue to reference the secret: axway-elk-apim4elastic-certificates, otherwise it 
-will not be included by the new declaration.
+If you do not control all keys and certificates yourself, you must continue to reference the secret: `axway-elk-apim4elastic-certificates`, otherwise it 
+will not be included by the new declaration and some keys from the default certificates are missing.
 
 ```yaml
 logstash:
@@ -304,12 +311,13 @@ logstash:
       # The subPath is not really needed, when mounting into a different folder
       subPath: myElasticsearchCa.crt
 ```
-You can declare secret mounts in the same way for each component. After you provide each component with the additional secret, you can store the path to its CA in its myvalues.yaml.
+You can declare secret mounts in the same way for each component. After you provide each component with the additional secret, you can store the path to its CA in your `myvalues.yaml`.
 
 ```yaml
 global:
   elasticsearchCa: "customConfig/certificates/myElasticsearchCa.crt"
 ```
+This tells every component to read the CA for Elasticsearch from this location.
 
 __5. Install or Upgrade the APIM4Elastic solution__  
 
@@ -407,9 +415,9 @@ If you are already running the Axway API management solution in a Kubernetes env
 The following shows Filebeat and API-Management in a Kubernetes cluster:  
 ![Kubernetes architecture all components](../imgs/kubernetes/all_components_incl_filebeat.png)  
 
-One way to provide Filebeat with the necessary log files of the API gateway is a central volume. All API-Gateways write to this volume and Filebeat reads & streams the corresponding documents/events.  
+One way to provide Filebeat with the necessary log files of the API-Gateway in a central volume. All API-Gateways write to this volume and Filebeat reads & streams the corresponding documents/events.  
 
-Add the log volume into the Filebeat container using `extraVolumes` and mount it in the correct location using `extraVolumeMounts`. You can find sample configuration in values.yaml.
+Add the log volume into the Filebeat container using `extraVolumes` and mount it in the correct location using `extraVolumeMounts`. You can find sample configuration in `values.yaml`. Make sure to mount the volume only once.
 
 Other options are possible, but have not yet been tested.
 
