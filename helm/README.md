@@ -239,15 +239,15 @@ helm install -n apim-elk -f myvalues.yaml axway-elk apim4elastic-3.0.0.tgz
 
 ### Custom certificates
 
-By default, necessary keys and certificates are automatically generated in a Secret: axway-elk-apim4elastic-certificates and included in the corresponding containers. 
-There are a number of keys and certificates issued by the CA. All components trust certificates of this CA, which is especially necessary for the communication with Elasticsearch.
+By default, necessary keys and certificates are automatically generated in a Secret: `axway-elk-apim4elastic-certificates` and included in the corresponding containers. 
+There are a number of keys and certificates all issued by a single CA. All components trust certificates of this CA, which is especially necessary for the communication with Elasticsearch.
 If you use an external Elasticsearch cluster, then the corresponding CA of this cluster must be included in the environment.  
 
-This is how you include an Elasticsearch certificate in the solution. It is also assumed here that the resources, i.e. certificates and keys, are managed via the `axway-elk-setup` Helm chart. 
+This is how you include an external Elasticsearch certificate into the solution. It is also assumed here that the resources, i.e. certificates and keys, are managed via the `axway-elk-setup` Helm chart. 
 
 __1. Create a secret containing your CA__  
 ```
-kubectl create secret generic    --from-file=myElasticsearchCa.crt=myElasticsearchCa.crt --dry-run -o yaml > templates/elasticsearch-certificate.yaml
+kubectl create secret generic apim4elastic-elastic-ca --from-file=myElasticsearchCa.crt=myElasticsearchCa.crt --dry-run -o yaml > templates/elasticsearch-certificate.yaml
 ```
 
 __2. Template it__  
@@ -266,7 +266,10 @@ REVISION: 2
 TEST SUITE: None
 ```
 __4. Reference the CA__  
-To use the custom CA, it must be included appropriately in all containers. To do this, modify your `myvalues.yaml` as shown here in the Logstash example.
+
+To use the custom CA, it must be included appropriately in all containers. To do this, modify your `myvalues.yaml` as shown here in the Logstash example. 
+If you do not control all keys and certificates yourself, you must continue to reference the secret: axway-elk-apim4elastic-certificates, otherwise it 
+will not be included by the new declaration.
 
 ```yaml
 logstash:
@@ -288,6 +291,7 @@ global:
 ```
 
 __5. Install or Upgrade the APIM4Elastic solution__  
+
 ```
 helm upgrade -n apim-elk -f myvalues.yaml axway-elk apim4elastic-3.0.0.tgz
 ```
