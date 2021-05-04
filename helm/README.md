@@ -8,9 +8,11 @@ use your own labels, annotations, secrets, and volumes to customize the deployme
 ## Requirements
 
 - Kubernetes >= 1.19
+  - At least two dedicated woker nodes for two Elasticsearch instances
 - Helm >= 3.3.0
 - OpenShift (not yet tested (Please create an issue if you need help))
 - See [required resources](#required-resources)
+- Strongly recommended to have an Ingress-Controller already installed (https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/)
 
 Even though this Helm chart makes deploying the solution on Kubernetes/OpenShift much easier, extensive knowledge 
 about Kubernetes/OpenShift and Helm is mandatory.  
@@ -22,7 +24,7 @@ You must be familiar with:
 
 We try to help to the best of our knowledge within the framework of this project, but we cannot cover every environment and its specifics.
 
-## Usage notes
+## Architecture overview
 
 The following explains how to deploy the solution on your Kubernetes/OpenShift using the provided Helm chart. We start with a simple deployment 
 that includes all components except Filebeat. This deployment is useful if there is no existing Elasticsearch cluster + Kibana and 
@@ -31,86 +33,54 @@ API-Management is running on classic virtual machines externally to the Kubernet
 The resources are deployed in Kubernetes as follows:  
 ![Kubernetes architecture all components](../imgs/kubernetes/all_components_overview_ext_api-management.png)
 
-### Configuration
+### Get started
 
-Create your own `myvalues.yaml` based on the standard [`values.yaml`](values.yaml) and configure required parameters. All of the parameters are 
-explained in details in the charts [`values.yaml`](values.yaml).  
-The following contains a list of parameters that needs to be set very likely for each deployment: 
+Create your own `myvalues.yaml` based on the standard [`values.yaml`](values.yaml) and configure all required parameters, like in the example below. All of the parameters are 
+explained in detail in the charts [`values.yaml`](values.yaml).  
 
-| Parameter                                   | Description                                                                                                                                                             
-|---------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `global.elasticsearchHosts`                 | The Elasticsearch Host Service, Elasticsearch should be running in K8S/OpenShift. For an external Elasticsearch service, specify the Elasticsearch host addresses.      |                                                                                                  |
-| `apibuilder4elastic.enabled`                | Controls if API-Buider4Elastic should be deployed. Defaults to true. Required component along with Logstash and Memcached                              |
-| `apibuilder4elastic.anmUrl`                 | The URL of the Axway API Gateway admin node manager. Please note that the address must be reachable from the API Builder.                                               |
-| `apibuilder4elastic.apimgrUrl`              | The URL of the Axway API Gateway admin node manager. Please note that the address must be reachable from the API Builder.                                               |
-| `apibuilder4elastic.secrets.apimgrUsername` | Username used by API-Builder to authenticate at the API-Manager. Must be an Admin-User. Default is set to apiadmin                                                      |
-| `apibuilder4elastic.secrets.apimgrPassword` | Password used by API-Builder to authenticate at the API-Manager. Default is set to changeme                                                                             |
-| `logstash.enabled`                          | Controls if Logstash should be deployed. Defaults to true. Required component along with API-Builder4Elastic and Memcached                              |
-| `memached.enabled`                          | Controls if Memcached should be deployed. Defaults to true. Required component along with API-Builder4Elastic and Logstash                               |
-| `elasticsearch.enabled`                     | Controls if [Elasticsearch should be provisioned](#provision-elasticsearch). Defaults to false. Enable it if you plan to use an external Elasticsearch cluster          |
-| `elasticsearch.replicas`                    | Number of Elasticsearch nodes to provision. Defaults to 2 nodes.                                                                                                        |
-| `kibana.enabled`                            | Controls if Kibana should be provisioned as part of Helm-Install. Defaults to false. Enable it if you plan to use an external Kibana application                      |
-| `filebeat.enabled`                          | Controls if Filebeat should be provisioned as part of Helm-Install. Defaults to false. Enable it if the API-Management solution runs in your Kubernetes                 |
+This represents the most simple `myvalues.yaml` assuming the API-Management Plattform + Filebeat is running externally to the Kubernetes cluster as indicated in the illustration above:  
 
-Depending on the desired deployment options, additional parameters must be set in your myValues.yaml. Some of the deployment options are explained below.
-
-## Prepare Elasticsearch
-
-If you have `elasticseach.enabled` set to true, you need to create for each Elasticsearch node (number of `elasticsearch.replicas`) a persistent volume. The persisent volume must match to the configured `elasticsearch.volumeClaimTemplate`.  
-Furthermore, each replica must have a worker node available, since one Elasticsearch node is deployed per worker node.  
-
-![Elasticsearch PVC and PV](../imgs/kubernetes/elastichsearch_pvc_and_pv.png)  
-
-For a production environment, you should provision an appropriate [persistent volumes](https://kubernetes.io/docs/concepts/storage/persistent-volumes/) 
-depending on your environment.
-
-For testing purposes, you can create simple a [hostpath volume](https://kubernetes.io/docs/concepts/storage/volumes/#hostpath). 
-
-Example hostpath volume you may create for testing:  
 ```yaml
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  labels:
-    app: elasticsearch-master
-  name: pv-vol1
-spec:
-  accessModes:
-  - ReadWriteOnce
-  capacity:
-    storage: 1Gi
-  hostPath:
-    path: /tmp/data
-    type: ""
-  persistentVolumeReclaimPolicy: Retain
-  volumeMode: Filesystem
-```
-
-Create the volume:
-```
-kubectl apply -n apim-elk -f pv-vol1.yaml
-```
-
-This volume will bound to the following example `elasticsearch.volumeClaimTemplate`:  
-```yaml 
+apibuilder4elastic: 
+  anmUrl: "https://my-admin-node-manager:8090"
+  secrets: 
+    apimgrUsername: "apiadmin"
+    apimgrPassword: "changeme"
+# Enable, if you would like to deploy a new Elasticsearch cluster for the solution
+elasticsearch:
+  enabled: true
   volumeClaimTemplate:
     accessModes: [ "ReadWriteOnce" ]
     resources:
       requests:
         storage: 1Gi
+# Enable, if you would like to deploy Kibana for the solution
+kibana:
+  enabled: true
+```
+
+### Elasticsearch Persistent volumes
+
+As Elasticsearch is enabled and requires a PersistentVolume for each volume, first create two persistent volumes
+
+The following should help you to get started, but these volumes are HostPath volumes pointing to a Worker-Node directory - This is not for production.
+Make sure to create a directory /tmp/data on your WorkerNodes and give it permissions for everybody.
+
+```
+kubectl apply -n apim-elk \ 
+    -f https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/blob/develop/helm/misc/pv-vol1.yaml \
+    -f https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/blob/develop/helm/misc/pv-vol2.yaml
 ```
 
 ### Install the Helm-Chart
 
-__Please note__ that the release name must currently: `axway-elk`, because many resources, like Services, ConfigMaps or Secrets 
-are created with it and referenced in the standard `values.yaml`. An example is the Elasticsearch-Service: `axway-elk-apim4elastic-elasticsearch`, 
-which is for instance used for the standard `elasticsearchHosts: "https://axway-elk-apim4elastic-elasticsearch:9200"`. This restriction may 
-be changed in a later release to get more flexibility.  
-
-To deploy the solution execute the following command:
+With Elasticsearch volumes and your myvalues.yaml file in place, you can start the installation (__Please note:__ The Helm Release-Name: __axway-elk__ is mandatory as of now):  
 ```
 helm install -n apim-elk -f myvalues.yaml axway-elk apim4elastic-3.0.0.tgz
+```
 
+You may run the following command to check the status of the deployment, pods, etc.
+```
 // Check the installed release
 helm list -n apim-elk
 NAME            NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                           APP VERSION   
@@ -136,27 +106,21 @@ axway-elk-apim4elastic-kibana                       ClusterIP   10.105.84.214   
 axway-elk-apim4elastic-logstash                     NodePort    10.103.53.111   <none>        5044:32001/TCP      7h7m
 axway-elk-apim4elastic-logstash-headless            ClusterIP   None            <none>        9600/TCP            7h7m
 axway-elk-apim4elastic-memcached                    ClusterIP   10.108.48.131   <none>        11211/TCP           7h7m
+
+// Desribe a certain POD
+kubectl -n apim-elk describe pod axway-elk-apim4elastic-elasticsearch-0
+
+// Get the logs for a POD
+kubectl -n apim-elk logs axway-elk-apim4elastic-apibuilder4elastic-65b5d56d77-5hv9z
 ```
 
-### Upgrade the release
+If everything goes well you can access the different components on the following ingress hosts (assumed DNS-Resolution for apim4elastic.local is point to your Ingress IP):  
 
-Example how to upgrade an existing Helm release:  
-```
-helm upgrade -n apim-elk -f myvalues.yaml axway-elk apim4elastic-3.1.0.tgz
-```
+https://kibana.apim4elastic.local  
+https://apibuilder.apim4elastic.local  
+https://elasticsearch.apim4elastic.local  
 
-## API-Management running in Kubernetes
-
-If you are already running the Axway API management solution in a Kubernetes environment, then it makes sense to also run Filebeat in Kubernetes.
-
-The following shows Filebeat and API-Management in a Kubernetes cluster:  
-![Kubernetes architecture all components](../imgs/kubernetes/all_components_incl_filebeat.png)  
-
-One way to provide Filebeat with the necessary log files of the API gateway is a central volume. All API-Gateways write to this volume and Filebeat reads & streams the corresponding documents/events.  
-
-Add the log volume into the Filebeat container using `extraVolumes` and mount it in the correct location using `extraVolumeMounts`. You can find sample configuration in values.yaml.
-
-Other options are possible, but have not yet been tested.
+At this point, it is still assumed, that the API-Management Plattform is running externally. Therefore, as the next step, you need to connect one or more Filebeats to Logstash running in Kubernetes. 
 
 ## Logstash and Filebeat
 
@@ -168,13 +132,70 @@ In the case of Kubernetes things are a bit different, there are basically two wa
 Here the administrative effort is higher, but it can be worthwhile from the throughput to set up the Logstash service as a node port and to configure Filebeat accordingly on all nodes. 
 You need to know, that per default the Logstash Node-Affinity makes sure, that only 1 Logstash is deployed per Kubernetes worker node. 
 Of course, you can connect an appropriate external load balancer in front of the exposed node port. Please note also in this case to set a TTL value for filebeat. See further below. 
-Type NodePort is enabled by default and exposes Logstash on port: 32001 on each Node.
+The type NodePort is __enabled by default__ for the Logstash-Service and exposes Logstash on port: 32001 on each Node.  
+
+To get details about the Logstash service:  
+```
+kubectl -n apim-elk get services axway-elk-apim4elastic-logstash -o wide
+NAME                              TYPE       CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE   SELECTOR
+axway-elk-apim4elastic-logstash   NodePort   10.110.89.215   <none>        5044:32001/TCP   85m   app=axway-elk-apim4elastic-logstash,chart=logstash,release=axway-elk
+
+// The given NodePort (default 32001) is exposed on all Worker-Nodes:
+kubectl get nodes -o wide
+NAME         STATUS   ROLES                  AGE   VERSION   INTERNAL-IP    EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION       CONTAINER-RUNTIME
+kubemaster   Ready    control-plane,master   12d   v1.21.0   192.168.56.2   <none>        Ubuntu 18.04.5 LTS   4.15.0-142-generic   docker://20.10.6
+kubenode01   Ready    <none>                 12d   v1.21.0   192.168.56.3   <none>        Ubuntu 18.04.5 LTS   4.15.0-142-generic   docker://20.10.6
+kubenode02   Ready    <none>                 12d   v1.21.0   192.168.56.4   <none>        Ubuntu 18.04.5 LTS   4.15.0-142-generic   docker://20.10.6
+```
+Now you could configure an external Load-Balancer to use the IPs: 192.168.56.3 & 192.168.56.4 on port: 32001 for Logstash or you configure both Logstash addresses directly in Filebeat. For example:  
+```yaml
+output.logstash:
+  hosts: ["192.168.56.3:32001", "192.168.56.4:32001"]
+  worker: 2
+  bulk_max_size: 3072
+  loadbalance: true
+```
 
 2. __Load Balancer__  
 
 If you run the platform in a cloud environment, such as GCP, AWS, etc., you can use Cloud Load-Balancers to automatically provision an IP address for Logstash. However, care must be taken to 
 ensure that Filebeat is set with an appropriate [TTL](https://www.elastic.co/guide/en/beats/filebeat/7.12/logstash-output.html#_ttl) to ensure that the load is evenly 
 distributed between the available Logstash instances. (See here for more details https://github.com/elastic/beats/issues/661)
+
+## Enable User-Authentication
+
+Enabling user authentication in Elasticsearch is quite analogous to the Docker Compose variant. For a newly created Elasticsearch cluster, 
+you generate passwords for the default users and then store them in your myvalues.yaml or in your own secrets.  
+
+Run the following command to generate the passwords for the default users.
+
+```
+kubectl -n apim-elk exec axway-elk-apim4elastic-elasticsearch-0 -- bin/elasticsearch-setup-passwords auto --batch --url https://localhost:9200
+```
+
+This shows structure how to setup the Elasticsearch users in your `myvalues.yaml` and disable anonymous access.
+
+```yaml
+apibuilder4elastic:
+  secrets:
+    elasticsearchUsername: "elastic"
+    elasticsearchPassword: "TGSOaIKtajLtAEdPupSS"
+logstash:
+  logstashSecrets:
+    logstashSystemUsername: "logstash_system"
+    logstashSystemPassword: "sXGdK8PHYeaX4CKBtB93"
+kibana:
+  kibanaSecrets:
+    username: "kibana_system"
+    password: "0uOtilmJEIdMHyljdqvd"
+filebeatSecrets: 
+  beatsSystemUsername: "beats_system"
+  beatsSystemPassword: "MZjgrc84LlkEUSYWHvGm"
+  elasticsearchClusterUUID: "iMXdceqVRt61HX2HHVAGjQ"
+elasticsearch:
+  anonymous: 
+    enabled: false
+```
 
 ## Customize the setup
 
@@ -379,6 +400,26 @@ __5. Install or Upgrade the APIM4Elastic solution__
 helm upgrade -n apim-elk -f myvalues.yaml axway-elk apim4elastic-3.0.0.tgz
 ```
 
+## API-Management running in Kubernetes
+
+If you are already running the Axway API management solution in a Kubernetes environment, then it makes sense to also run Filebeat in Kubernetes.
+
+The following shows Filebeat and API-Management in a Kubernetes cluster:  
+![Kubernetes architecture all components](../imgs/kubernetes/all_components_incl_filebeat.png)  
+
+One way to provide Filebeat with the necessary log files of the API gateway is a central volume. All API-Gateways write to this volume and Filebeat reads & streams the corresponding documents/events.  
+
+Add the log volume into the Filebeat container using `extraVolumes` and mount it in the correct location using `extraVolumeMounts`. You can find sample configuration in values.yaml.
+
+Other options are possible, but have not yet been tested.
+
+### Upgrade the release
+
+Example how to upgrade an existing Helm release:  
+```
+helm upgrade -n apim-elk -f myvalues.yaml axway-elk apim4elastic-3.1.0.tgz
+```
+
 ## Required resources
 
 The following resources are preliminary and have yet to be verified through load and performance testing.
@@ -408,37 +449,8 @@ CPU: 1000m - 1000m
 Memory: 500m - 500m  
 CPU: 500m - 500m
 
-## Enable User-Authentication
-
-Enabling user authentication in Elasticsearch is quite analogous to the Docker Compose variant. For a newly created Elasticsearch cluster, 
-you generate passwords for the default users and then store them in your myvalues.yaml or in your own secrets.  
-
-Run the following command to generate the passwords for the default users.
-
-```
-kubectl -n apim-elk exec axway-elk-apim4elastic-elasticsearch-0 -- bin/elasticsearch-setup-passwords auto --batch --url https://localhost:9200
-```
-
-This shows structure how to setup the Elasticsearch users in your `myvalues.yaml` and disable anonymous access.
-
-```yaml
-apibuilder4elastic:
-  secrets:
-    elasticsearchUsername: "elastic"
-    elasticsearchPassword: "TGSOaIKtajLtAEdPupSS"
-logstash:
-  logstashSecrets:
-    logstashSystemUsername: "logstash_system"
-    logstashSystemPassword: "sXGdK8PHYeaX4CKBtB93"
-kibana:
-  kibanaSecrets:
-    username: "kibana_system"
-    password: "0uOtilmJEIdMHyljdqvd"
-filebeatSecrets: 
-  beatsSystemUsername: "beats_system"
-  beatsSystemPassword: "MZjgrc84LlkEUSYWHvGm"
-  elasticsearchClusterUUID: "iMXdceqVRt61HX2HHVAGjQ"
-elasticsearch:
-  anonymous: 
-    enabled: false
-```
+## Why Helm Release-Name axway-elk ?
+The release name must currently: `axway-elk`, because many resources, like Services, ConfigMaps or Secrets 
+are created with it and referenced in the standard `values.yaml`. An example is the Elasticsearch-Service: `axway-elk-apim4elastic-elasticsearch`, 
+which is for instance used for the standard `elasticsearchHosts: "https://axway-elk-apim4elastic-elasticsearch:9200"`. This restriction may 
+be changed in a later release to get more flexibility.  

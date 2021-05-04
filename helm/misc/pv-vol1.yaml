@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  labels:
+    app: elasticsearch-master
+  name: pv-vol2
+spec:
+  accessModes:
+  - ReadWriteOnce
+  capacity:
+    storage: 1Gi
+  hostPath:
+    path: /tmp/data
+    type: ""
+  persistentVolumeReclaimPolicy: Retain
+  volumeMode: Filesystem
