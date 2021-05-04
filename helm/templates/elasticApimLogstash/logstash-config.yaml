@@ -23,7 +23,7 @@ data:
   LS_JAVA_OPTS: {{ .Values.logstash.logstashJavaOpts | quote }}
   ELASTICSEARCH_HOSTS: {{ required "The value global.elasticsearchHosts is missing." .Values.global.elasticsearchHosts | quote }}
   ELASTICSEARCH_CERT: {{ required "The path to the CA for Logstash to Elasticsearch communication is missing" .Values.global.elasticsearchCa | quote }}
-  API_BUILDER_URL: {{ .Release.Name }}-apibuilder4elastic
+  API_BUILDER_URL: "https://{{ include "apim4elastic.fullname" . }}-apibuilder4elastic:{{ .Values.apibuilder4elastic.port }}"
   API_BUILDER_SSL_CERT: {{ required "The path to the CA for Logstash to Elasticsearch communication is missing" .Values.global.elasticsearchCa | quote }}
   MEMCACHED: {{ .Release.Name }}-{{ .Chart.Name }}-memcached
   LOG_LEVEL: info

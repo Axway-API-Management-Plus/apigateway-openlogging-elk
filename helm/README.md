@@ -166,12 +166,16 @@ In the case of Kubernetes things are a bit different, there are basically two wa
 
 1. __Node Port__  
 Here the administrative effort is higher, but it can be worthwhile from the throughput to set up the Logstash service as a node port and to configure Filebeat accordingly on all nodes. 
-You need to know, that per default the Logstash Node-Affinity makes sure, that only 1 Logstash is deployed per Kubernetes worker node. This is the recommended approach.
+You need to know, that per default the Logstash Node-Affinity makes sure, that only 1 Logstash is deployed per Kubernetes worker node. 
+Of course, you can connect an appropriate external load balancer in front of the exposed node port. Please note also in this case to set a TTL value for filebeat. See further below.
+
+NodePort is enabled by default and exposes Logstash on port: 32001 on each Node.
 
 2. __Load Balancer__  
 
-In the case of an load balancer, care must be taken to ensure that Filebeat is set with an appropriate [TTL](https://www.elastic.co/guide/en/beats/filebeat/7.12/logstash-output.html#_ttl) to ensure that the load is evenly 
-distributed between the availbel logstash instances. (See here for more details https://github.com/elastic/beats/issues/661)
+If you run the platform in a cloud environment, such as GCP, AWS, etc., you can use load balancers to automatically provision an external IP address for Logstash. However, care must be taken to 
+ensure that Filebeat is set with an appropriate [TTL](https://www.elastic.co/guide/en/beats/filebeat/7.12/logstash-output.html#_ttl) to ensure that the load is evenly 
+distributed between the available Logstash instances. (See here for more details https://github.com/elastic/beats/issues/661)
 
 ## Use externally provided Secrets & ConfigMaps
 

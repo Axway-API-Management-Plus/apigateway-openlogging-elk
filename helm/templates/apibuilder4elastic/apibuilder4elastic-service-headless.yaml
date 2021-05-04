@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ template "apibuilder4elastic.fullname" . }}-service
+  name: {{ template "apibuilder4elastic.fullname" . }}
   labels:
     {{- include "apibuilder4elastic.labels" . | nindent 4 }}
 spec:

@@ -246,6 +246,8 @@ logstash:
         protocol: TCP
         targetPort: 5044
         nodePort: 32001
+  podAnnotations: 
+    configVersion: 2
 
 ##################################################################################################################################
 #          M E M C A C H E D
