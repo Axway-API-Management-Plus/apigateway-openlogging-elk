@@ -185,7 +185,7 @@ You then link your custom resources in your `myvalues.yaml` for the final deploy
 
 ![Customized deployment with Helm](../imgs/kubernetes/customized_deployment_with_helm.png)
 
-### Create you own Helm-Chart
+### Create your own Helm-Chart
 ```
 helm create axway-elk-setup
 cd axway-elk-setup
@@ -381,6 +381,8 @@ helm upgrade -n apim-elk -f myvalues.yaml axway-elk apim4elastic-3.0.0.tgz
 
 ## Required resources
 
+The following resources are preliminary and have yet to be verified through load and performance testing.
+
 ### API-Builder4Elastic
 
 Memory: 50Mi - 80Mi  
@@ -405,3 +407,38 @@ CPU: 1000m - 1000m
 
 Memory: 500m - 500m  
 CPU: 500m - 500m
+
+## Enable User-Authentication
+
+Enabling user authentication in Elasticsearch is quite analogous to the Docker Compose variant. For a newly created Elasticsearch cluster, 
+you generate passwords for the default users and then store them in your myvalues.yaml or in your own secrets.  
+
+Run the following command to generate the passwords for the default users.
+
+```
+kubectl -n apim-elk exec axway-elk-apim4elastic-elasticsearch-0 -- bin/elasticsearch-setup-passwords auto --batch --url https://localhost:9200
+```
+
+This shows structure how to setup the Elasticsearch users in your `myvalues.yaml` and disable anonymous access.
+
+```yaml
+apibuilder4elastic:
+  secrets:
+    elasticsearchUsername: "elastic"
+    elasticsearchPassword: "TGSOaIKtajLtAEdPupSS"
+logstash:
+  logstashSecrets:
+    logstashSystemUsername: "logstash_system"
+    logstashSystemPassword: "sXGdK8PHYeaX4CKBtB93"
+kibana:
+  kibanaSecrets:
+    username: "kibana_system"
+    password: "0uOtilmJEIdMHyljdqvd"
+filebeatSecrets: 
+  beatsSystemUsername: "beats_system"
+  beatsSystemPassword: "MZjgrc84LlkEUSYWHvGm"
+  elasticsearchClusterUUID: "iMXdceqVRt61HX2HHVAGjQ"
+elasticsearch:
+  anonymous: 
+    enabled: false
+```

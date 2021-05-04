@@ -144,10 +144,10 @@ apibuilder4elastic:
   # Resource requests for API-Builder
   resources:
     requests:
-      cpu: "100m"
+      cpu: "50m"
       memory: "50Mi"
     limits:
-      cpu: "200m"
+      cpu: "100m"
       memory: "80Mi"
   
   # User-Group 100 is the axway-user - Required to run timers in the container
@@ -296,6 +296,11 @@ elasticsearch:
   #      name: axway-elk-apim4elastic-elasticsearch-secret
     - configMapRef:
         name: axway-elk-apim4elastic-elasticsearch-env-config
+  # Once users have been created, enable security for Elasticsearch to force authentication
+  anonymous: 
+    enabled: false
+  #  roles: "kibana_admin,superuser,beats_system,logstash_system"
+  #  username: "anonymous"
   # SSL-Configuration for Elasticsearch - It defaults to settings below
   ssl: {}
   #  key: "/usr/share/elasticsearch/config/certificates/elasticsearch.key"
@@ -320,7 +325,10 @@ elasticsearch:
 
   # Define the volume claim for Elasticsearch
   #volumeClaimTemplate:
+  #- metadata:
+  #      name: elastic-data
   #  accessModes: [ "ReadWriteOnce" ]
+  #  storageClassName: elastic-cloud-disk
   #  resources:
   #    requests:
   #      storage: 250Gi
@@ -360,10 +368,6 @@ elasticsearch:
       #xpack.security.authc.anonymous.username: anonymous
 
       xpack.monitoring.collection.enabled: ${SELF_MONITORING_ENABLED:true}
-
-      # Don't enable this - This is just for testing!
-      #cluster.routing.allocation.disk.watermark.high: "94%"
-      #cluster.routing.allocation.disk.watermark.low: "93%"
 
 ##################################################################################################################################
 #          K I B A N A

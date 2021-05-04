@@ -22,11 +22,13 @@ data:
   xpack.security.http.ssl.certificate: {{ default "/usr/share/elasticsearch/config/certificates/elasticsearch.crt" .Values.elasticsearch.ssl.cert | quote }}
   xpack.security.http.ssl.certificate_authorities: "/usr/share/elasticsearch/{{ required "The path to the CA Elasticsearch is missing" .Values.global.elasticsearchCa }}"
   xpack.security.transport.ssl.enabled: "true"
-  xpack.security.transport.ssl.verification_mode: "certificate"
+  xpack.security.transport.ssl.verification_mode: {{ default "certificate" .Values.elasticsearch.ssl.verification_mode | quote }}
   xpack.security.transport.ssl.key: {{ default "/usr/share/elasticsearch/config/certificates/elasticsearch.key" .Values.elasticsearch.ssl.key | quote }}
   xpack.security.transport.ssl.key_passphrase: {{ default "" .Values.elasticsearch.ssl.password | quote }}
   xpack.security.transport.ssl.certificate: {{ default "/usr/share/elasticsearch/config/certificates/elasticsearch.crt" .Values.elasticsearch.ssl.cert | quote }}
   xpack.security.transport.ssl.certificate_authorities: "/usr/share/elasticsearch/{{ required "The path to the CA Elasticsearch is missing" .Values.global.elasticsearchCa }}"
-  xpack.security.authc.anonymous.roles: "kibana_admin,superuser,beats_system,logstash_system"
-  xpack.security.authc.anonymous.username: "anonymous"
+  {{- if .Values.elasticsearch.anonymous.enabled }}
+  xpack.security.authc.anonymous.roles: {{ default "kibana_admin,superuser,beats_system,logstash_system" .Values.elasticsearch.anonymous.roles | quote }}
+  xpack.security.authc.anonymous.username: {{ default "anonymous" .Values.elasticsearch.anonymous.username | quote }}
+  {{- end }}
 {{- end }}

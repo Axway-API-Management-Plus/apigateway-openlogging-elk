@@ -15,7 +15,11 @@ metadata:
 data: 
   SERVER_NAME: "Kibana-Axway-APIM"
   ELASTICSEARCH_HOSTS: {{ required "The value global.elasticsearchHosts is missing." .Values.global.elasticsearchHosts | quote }}
-  KIBANA_SECURITY_ENABLED: {{ default false .Values.kibana.securityEnabled | quote }}
+  {{- if .Values.elasticsearch.anonymous.enabled }}
+  KIBANA_SECURITY_ENABLED: "false"
+  {{- else }}
+  KIBANA_SECURITY_ENABLED: "true"
+  {{- end }}
   SELF_MONITORING_ENABLED: {{ default true .Values.global.selfMonitoringEnabled | quote }}
   SERVER_SSL_ENABLED: "true"
   SERVER_SSL_KEY: {{ default "config/certificates/kibana.key" .Values.kibana.ssl.key | quote }}

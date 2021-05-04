@@ -1,3 +1,8 @@
+apibuilder4elastic:
+  secrets:
+    elasticsearchUsername: "elastic"
+    elasticsearchPassword: "TGSOaIKtajLtAEdPupSS"
+
 elasticsearch:
   volumeClaimTemplate:
     accessModes: [ "ReadWriteOnce" ]
@@ -12,6 +17,7 @@ elasticsearch:
   replicas: 2
 
 logstash:
+  enabled: true
   resources:
     requests:
       cpu: "100m"
@@ -19,3 +25,11 @@ logstash:
     limits:
       cpu: "1000m"
       memory: "1536Mi"
+  logstashSecrets:
+    logstashSystemUsername: "logstash_system"
+    logstashSystemPassword: "sXGdK8PHYeaX4CKBtB93"
+
+kibana:
+  kibanaSecrets:
+    username: "kibana_system"
+    password: "0uOtilmJEIdMHyljdqvd"
