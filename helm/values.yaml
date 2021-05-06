@@ -35,7 +35,7 @@ apibuilder4elastic:
     maxReplicas: 10
     targetCPUUtilizationPercentage: 80
   # Default replicas if autoscaling is disabled
-  replicas: 1
+  replicas: 2
   # additional labels
   labels: {}
   # additional annotations
@@ -45,9 +45,12 @@ apibuilder4elastic:
 
   port: 8443
   # Admin-Node-Manager URL. For more details please see env-sample: ADMIN_NODE_MANAGER
-  anmUrl: "https://192.168.65.134:8090"
+  # anmUrl: {}
+
   # API-Manager URL. For more details please see env-sample: API_MANAGER
-  apimgrUrl: "https://192.168.65.134:8075"
+  # Defaults to the same host as anmUrl if not given
+  # apimgrUrl: "https://my-api-manager-host:8075"
+
   # If enabled, the secret <releaseName>-apim4elastic-apibuilder4elastic-secret 
   # is automatically created and used below as envFrom input. 
   # Alternatively and recommended for production, create your own secret with the 
@@ -144,11 +147,11 @@ apibuilder4elastic:
   # Resource requests for API-Builder
   resources:
     requests:
-      cpu: "50m"
-      memory: "50Mi"
-    limits:
       cpu: "100m"
       memory: "80Mi"
+    limits:
+      cpu: "1000m"
+      memory: "150Mi"
   
   # User-Group 100 is the axway-user - Required to run timers in the container
   podSecurityContext:
@@ -188,10 +191,10 @@ logstash:
     logstashSystemPassword: ""
   # Logstash Java-Options - Very likely for production too less memory
   # See parameter LS_JAVA_OPTS in env-sample for more details
-  logstashJavaOpts: "-Xmx1g -Xms1g"
+  logstashJavaOpts: "-Xmx6g -Xms6g"
   fullnameOverride: "axway-elk-apim4elastic"
   # Number of replicas for Logstash
-  replicas: 1
+  replicas: 2
   # Injects the environment variables from the ConfigMaps and Secrets into the 
   # Logstash container. Specify your own ConfigMaps or Secrets if you don't
   # provide Configuration and Secrets as part of this values.yaml.
@@ -228,10 +231,10 @@ logstash:
   resources:
     requests:
       cpu: "1000m"
-      memory: "6Gi"
+      memory: "7Gi"
     limits:
-      cpu: "1000m"
-      memory: "6Gi"
+      cpu: "2000m"
+      memory: "7Gi"
   extraPorts:
     - name: beats
       containerPort: 5044
@@ -239,7 +242,6 @@ logstash:
   labels: {}
   service:  
     type: NodePort
-    #externalName: my.database.example.com
     ports:
       - name: beats
         port: 5044
@@ -248,6 +250,8 @@ logstash:
         nodePort: 32001
   podAnnotations: 
     configVersion: 2
+  # How long to wait for logstash to stop gracefully
+  terminationGracePeriod: 30
 
 ##################################################################################################################################
 #          M E M C A C H E D
@@ -261,11 +265,15 @@ memcached:
   # Must be enabled, when Logstash is enabled
   enabled: true
   fullnameOverride: "axway-elk-apim4elastic-memcached"
+  replicaCount: 2
+  architecture: high-availability
+  service:
+    type: ClusterIP
   # Resourced for memcached depend on the number of different APIs and applications
   # What is requested should be sufficient even for larger catalogs.
   resources:
     limits: 
-       cpu: 100m
+       cpu: 200m
        memory: 64Mi
     requests:
       memory: 32Mi
@@ -285,20 +293,24 @@ elasticsearch:
   clusterName: "axway-apim"
   replicas: 2
   minimumMasterNodes: 1
-  esJavaOpts: ""
+  esJavaOpts: "-Xms8g -Xmx8g"
   protocol: https
   # Required configuration for Elasticsearch is inject through ConfigMaps and if required 
   # secret references. 
   # You may override this if you like, providing externally created ConfigMaps or Secrets
   envFrom: 
   # The secretReference can be used to inject for instance the required key passphrase
-  #  - secretRef:
-  #      name: axway-elk-apim4elastic-elasticsearch-secret
+    - secretRef:
+        name: axway-elk-apim4elastic-elasticsearch-secret
     - configMapRef:
         name: axway-elk-apim4elastic-elasticsearch-env-config
   # Once users have been created, enable security for Elasticsearch to force authentication
+  elasticsearchSecrets:
+    enabled: true
+    elasticUsername: "elastic"
+    elasticPassword: ""
   anonymous: 
-    enabled: false
+    enabled: true
   #  roles: "kibana_admin,superuser,beats_system,logstash_system"
   #  username: "anonymous"
   # SSL-Configuration for Elasticsearch - It defaults to settings below
@@ -315,13 +327,20 @@ elasticsearch:
   #    secretName: custom-certificate
   #    path: /usr/share/elasticsearch/config/certificates
 
-  #resources:
-  #  requests:
-  #    cpu: "1000m"
-  #    memory: "2Gi"
-  #  limits:
-  #    cpu: "1000m"
-  #    memory: "2Gi"
+  # By default make Elasticsearch available as a NodePort
+  service:  
+    type: NodePort
+    httpPortName: elasticsearch
+    httpPort: 9200
+    nodePort: 32002
+
+  resources:
+    requests:
+      cpu: "1000m"
+      memory: "9Gi"
+    limits:
+      cpu: "2000m"
+      memory: "9Gi"
 
   # Define the volume claim for Elasticsearch
   #volumeClaimTemplate:
@@ -343,6 +362,17 @@ elasticsearch:
           - path: /
     annotations: 
       nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+
+  # Change the permissions of the data folder and increase the File-Descriptor limit
+  extraInitContainers:
+    - name: fix-permissions
+      image: busybox
+      command: ["sh", "-c", "chown -R 1000:1000 /usr/share/elasticsearch/data"]
+      securityContext:
+        privileged: true
+      volumeMounts: 
+        - name: "axway-elk-apim4elastic-elasticsearch"
+          mountPath: /usr/share/elasticsearch/data
 
   esConfig: 
     elasticsearch.yml: |
@@ -396,7 +426,7 @@ kibana:
       cpu: "500m"
       memory: "300Mi"
     limits:
-      cpu: "500m"
+      cpu: "1000m"
       memory: "300Mi"
   protocol: https
   # Injects the environment variables from the ConfigMaps and Secrets into the 
@@ -446,6 +476,9 @@ kibana:
       nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
   # Set to false to avoid, that the standard Kibana Helm-Chart overwrites the global setting
   elasticsearchHosts: false
+
+  # Extra labels for Kibana related resources
+  labels: {}
 
 ##################################################################################################################################
 #          F I L E B E A T
@@ -526,11 +559,11 @@ filebeat:
   # Recommended resource requests for Filebeat
   resources:
     requests:
-      cpu: "100m"
-      memory: "50Mi"
+      cpu: "500m"
+      memory: "150Mi"
     limits:
       cpu: "1000m"
-      memory: "80Mi"
+      memory: "200Mi"
   
   # Filebeat configuration is added as part of the values.yaml, because the existing filebeatConfig 
   # cannot be be overridden due to a bug in Helm. 

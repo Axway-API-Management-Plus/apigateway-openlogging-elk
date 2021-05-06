@@ -9,7 +9,7 @@
 {{/*
 Common labels
 */}}
-{{- define "elasticsearch.label" -}}
+{{- define "elasticsearch.labels" -}}
 helm.sh/chart: {{ include "apim4elastic.chart" . }}
 {{ include "elasticsearch.selectorLabels" . }}
 {{- if .Chart.AppVersion }}

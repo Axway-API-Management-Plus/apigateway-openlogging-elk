@@ -133,41 +133,78 @@ At this point, it is still assumed, that the API-Management Plattform is running
 
 ## Logstash and Filebeat
 
-The communication between Filebeat and Logstash is a maintained TCP connection which is sticky. In the classic deployment using for instance Docker-Compose, you would configure 
-the available Logstash instances as a list in Filebeat. With that Filebeat performs the load balancing on its own.  
-In the case of Kubernetes things are a bit different, there are basically two ways to make the Logstash service externally available:
+The communication between Filebeat and Logstash is a persistent TCP connection. This means that once the connection has been extended, it will continue 
+to be used for the best possible throughput. If you specify multiple Logstash instances in your Filebeat configuration, then Filebeat will establish multiple 
+persistent connections handle the load balancing for you.  
+This is however only in the classical Deployment easily possible, since you can address each Logstash instance individually.  
 
-1. __Node Port__  
-Here the administrative effort is higher, but it can be worthwhile from the throughput to set up the Logstash service as a node port and to configure Filebeat accordingly on all nodes. 
-You need to know, that per default the Logstash Node-Affinity makes sure, that only 1 Logstash is deployed per Kubernetes worker node. 
-Of course, you can connect an appropriate external load balancer in front of the exposed node port. Please note also in this case to set a TTL value for filebeat. See further below. 
-The type NodePort is __enabled by default__ for the Logstash-Service and exposes Logstash on port: 32001 on each Node. To get details about the Logstash service:  
+In the case of Kubernetes/OpenShift, multiple Logstash instances are running behind a Kubernetes service, which acts like a load balancer. 
+
+1. __NodePort Service__
+
+By default, a single service is deployed for all Logstash instances. This service is by default configured as a NodePort and thus Logstash becomes available on the configured 
+port: `32001` on all nodes of the cluster.  
+You can now setup the corresponding nodes as Logstash hosts in your Filebeat configuration with Load-Balancing enabled and Filebeat will distribute the 
+Traffic accross the available nodes. With that, it works almost the same as before, as Filebeat will establish multiple peristent connections for you.  
+
+This is an example setup:  
 ```
+// The service exposing Logstash as a NodePort on 32001
 kubectl -n apim-elk get services axway-elk-apim4elastic-logstash -o wide
 NAME                              TYPE       CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE   SELECTOR
 axway-elk-apim4elastic-logstash   NodePort   10.110.89.215   <none>        5044:32001/TCP   85m   app=axway-elk-apim4elastic-logstash,chart=logstash,release=axway-elk
 
 // The given NodePort (default 32001) is exposed on all Worker-Nodes:
 kubectl get nodes -o wide
-NAME         STATUS   ROLES                  AGE   VERSION   INTERNAL-IP    EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION       CONTAINER-RUNTIME
-kubemaster   Ready    control-plane,master   12d   v1.21.0   192.168.56.2   <none>        Ubuntu 18.04.5 LTS   4.15.0-142-generic   docker://20.10.6
-kubenode01   Ready    <none>                 12d   v1.21.0   192.168.56.3   <none>        Ubuntu 18.04.5 LTS   4.15.0-142-generic   docker://20.10.6
-kubenode02   Ready    <none>                 12d   v1.21.0   192.168.56.4   <none>        Ubuntu 18.04.5 LTS   4.15.0-142-generic   docker://20.10.6
+NAME                            STATUS   ROLES                  AGE   VERSION   INTERNAL-IP     EXTERNAL-IP   OS-IMAGE         KERNEL-VERSION                  CONTAINER-RUNTIME
+ip-172-31-51-209.ec2.internal   Ready    <none>                 23h   v1.21.0   172.31.51.209   <none>        Amazon Linux 2   4.14.209-160.339.amzn2.x86_64   docker://19.3.13
+ip-172-31-53-214.ec2.internal   Ready    <none>                 23h   v1.21.0   172.31.53.214   <none>        Amazon Linux 2   4.14.193-149.317.amzn2.x86_64   docker://19.3.6
+ip-172-31-54-120.ec2.internal   Ready    <none>                 23h   v1.21.0   172.31.54.120   <none>        Amazon Linux 2   4.14.209-160.339.amzn2.x86_64   docker://19.3.13
+ip-172-31-57-105.ec2.internal   Ready    <none>                 23h   v1.21.0   172.31.57.105   <none>        Amazon Linux 2   4.14.181-142.260.amzn2.x86_64   docker://19.3.6
+ip-172-31-61-143.ec2.internal   Ready    control-plane,master   23h   v1.21.0   172.31.61.143   <none>        Amazon Linux 2   4.14.181-142.260.amzn2.x86_64   docker://19.3.6
 ```
-Now you could configure an external Load-Balancer to use the IPs: 192.168.56.3 & 192.168.56.4 on port: 32001 for Logstash or you configure both Logstash addresses directly in Filebeat. For example:  
+
+And this would be the belonging configuration for the Filebeat Logstash output  
 ```yaml
 output.logstash:
-  hosts: ["192.168.56.3:32001", "192.168.56.4:32001"]
+  hosts: ["172.31.51.209:32001", "172.31.53.214:32001", "172.31.54.120:32001"]
+  # Or as part of the .env:
+  # LOGSTASH_HOSTS=172.31.51.209:32001,172.31.53.214:32001,172.31.54.120:32001
   worker: 2
   bulk_max_size: 3072
   loadbalance: true
 ```
 
+The NodePort Service is the recommended approach for the best possible throughput.  
+
 2. __Load Balancer__  
 
-If you run the platform in a cloud environment, such as GCP, AWS, etc., you can use Cloud Load-Balancers to automatically provision an IP address for Logstash. However, care must be taken to 
-ensure that Filebeat is set with an appropriate [TTL](https://www.elastic.co/guide/en/beats/filebeat/7.12/logstash-output.html#_ttl) to ensure that the load is evenly 
-distributed between the available Logstash instances. (See here for more details https://github.com/elastic/beats/issues/661)
+Using the single service approach above is the most optimal setup, as it makes sure Filebeat can perform proper load balancing still using persistent connections for the best throughput.  
+
+However, if you prefer to use a Load-Balancer to have a single entry point it's also possible. You can configure the service from a NodePort to a LoadBalancer if you prefer and use for instance 
+your Public-Cloud Load-Balancer, from AWS, GCP, etc.  
+But With that kind of setup, care must be taken to ensure that Filebeat is set with an appropriate [TTL](https://www.elastic.co/guide/en/beats/filebeat/7.12/logstash-output.html#_ttl) to 
+ensure that the load is at least better distributed between the available Logstash instances. (See here for more details https://github.com/elastic/beats/issues/661)  
+
+For example:  
+```yaml
+output.logstash:
+  # Or as part of the .env:
+  # LOGSTASH_HOSTS=172.31.51.209:32001,172.31.53.214:32001,172.31.54.120:32001
+  hosts: ["logstash.on.load-balancer:5044"]
+  worker: 2
+  bulk_max_size: 3072
+  # This parameter has not effect, as there is only one Logstash host configured
+  loadbalance: true
+  # The following two parameters drop & re-establish the connection to Logstash every 5 minutes
+  # With that, you give the Service/LoadBalancer from time to time the chance to distribute the traffic. 
+  # But even with that, it might be the case, that call traffic goes to one Logstash instance.
+  # Do not set the ttl less than 1 minute, as it would increase the connection management overhead
+  ttl: 5m
+  pipelining: 0
+```
+
+If you would like to read more: https://discuss.elastic.co/t/filebeat-only-goes-to-one-of-the-logstash-servers-that-is-behind-an-elb/48875/5
 
 ## Enable User-Authentication
 
@@ -186,20 +223,28 @@ This structure shows how to setup the Elasticsearch users in your `myvalues.yaml
 apibuilder4elastic:
   secrets:
     elasticsearchUsername: "elastic"
-    elasticsearchPassword: "TGSOaIKtajLtAEdPupSS"
+    elasticsearchPassword: "XXXXXXXXXXXXXXXXXXXX"
 logstash:
   logstashSecrets:
+    # Used to send stack monitoring information
     logstashSystemUsername: "logstash_system"
-    logstashSystemPassword: "sXGdK8PHYeaX4CKBtB93"
+    logstashSystemPassword: "AAAAAAAAAAAAAAAAAA"
+    # Used to send events
+    logstashUsername: "elastic"
+    logstashPassword: "XXXXXXXXXXXXXXXXXXXX"
 kibana:
   kibanaSecrets:
     username: "kibana_system"
-    password: "0uOtilmJEIdMHyljdqvd"
+    password: "ZZZZZZZZZZZZZZZZZ"
 filebeatSecrets: 
   beatsSystemUsername: "beats_system"
-  beatsSystemPassword: "MZjgrc84LlkEUSYWHvGm"
-  elasticsearchClusterUUID: "iMXdceqVRt61HX2HHVAGjQ"
+  beatsSystemPassword: "YYYYYYYYYYYYYYYYYYY"
+  elasticsearchClusterUUID: "YOUR-CLUSTER-UUID-ID"
+# Required for the Elasticsearch readiness check, once users have been generated
 elasticsearch:
+  elasticsearchSecrets: 
+    elasticsearchPassword: "elastic"
+    elasticUsername: "BBBBBBBBBBBBBBBBBBBBBB"
   anonymous: 
     enabled: false
 ```
@@ -450,7 +495,9 @@ CPU: 1000m - 1000m
 ### Elasticsearch
 
 Memory: 8Gi - 8Gi  
-CPU: 1000m - 1000m
+CPU: 1000m - 1000m  
+
+Maximum number of file descriptors must be at least 65536. (See for instance here: https://documentation.sisense.com/latest/linux/dockerlimits.htm)
 
 ### Kibana
 
