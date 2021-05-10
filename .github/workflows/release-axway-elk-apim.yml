@@ -64,3 +64,5 @@ jobs:
         asset_path: apim4elastic-${{ github.event.release.tag_name }}.tgz
         asset_name: apim4elastic-${{ github.event.release.tag_name }}.tgz
         asset_content_type: application/gzip
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
