@@ -648,6 +648,9 @@ filebeat:
         worker: ${FILEBEAT_WORKERS:2}
         bulk_max_size: ${FILEBEAT_BULK_MAX_SIZE:3072}
         loadbalance: true
+        ttl: 2m
+        # Required to make TTL working
+        pipelining: 0
 
       monitoring:
         enabled: ${SELF_MONITORING_ENABLED}

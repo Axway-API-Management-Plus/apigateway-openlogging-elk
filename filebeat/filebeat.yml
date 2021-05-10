@@ -36,7 +36,7 @@ filebeat.inputs:
   # The offset is used to sort the trace messages additionally to the timestamp
   offset: true
   # When initially started, don't try to read all existing trace message (by default around 7.8GB per API-Gateway)
-  ignore_older: "48h"
+  ignore_older: "12h"
   fields:
     logtype: trace
     gatewayName: ${GATEWAY_NAME:"API-Gateway"}
@@ -51,7 +51,7 @@ filebeat.inputs:
   json.add_error_key: true
   fields_under_root: true
   # When initially started, don't try to read all existing trace message (by default around 7.8GB per API-Gateway)
-  ignore_older: "48h"
+  ignore_older: "12h"
   fields:
     logtype: events
     gatewayName: ${GATEWAY_NAME:"API-Gateway"}
@@ -80,6 +80,10 @@ output.logstash:
   worker: ${FILEBEAT_WORKERS:2}
   bulk_max_size: ${FILEBEAT_BULK_MAX_SIZE:3072}
   loadbalance: true
+  # TTL is only required for a Kubernetes deployment
+  # ttl: 2m
+  # Required to make TTL working
+  # pipelining: 0
 
 monitoring:
   enabled: ${SELF_MONITORING_ENABLED}
