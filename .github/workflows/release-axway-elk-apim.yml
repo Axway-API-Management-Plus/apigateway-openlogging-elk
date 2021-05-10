@@ -6,7 +6,7 @@ on:
 
 jobs:
   release-elk-apim:
-
+    name: Release APIM4Elastic
     runs-on: ubuntu-latest
     env:
       RELEASE_NAME: axway-apim-elk-${{ github.event.release.tag_name }}
@@ -17,29 +17,49 @@ jobs:
       run: tar --transform 's,^,${{ env.RELEASE_NAME }}/,' -czvf ${{ env.RELEASE_NAME }}.tar.gz --exclude='*.bats' config elasticsearch filebeat kibana logstash docker-compose.yml nodemanager metricbeat README.md CHANGELOG.md env-sample
     - name: create-checksum
       run: sha256sum "${{ env.RELEASE_NAME }}".tar.gz >${{ env.RELEASE_NAME }}-checksum.txt
-    - name: upload-archive
+#    - name: upload-archive
+#      uses: actions/upload-release-asset@v1
+#      with:
+#        upload_url: ${{ github.event.release.upload_url }}
+#        asset_path: ${{ env.RELEASE_NAME }}.tar.gz
+#        asset_name: ${{ env.RELEASE_NAME }}.tar.gz
+#        asset_content_type: application/gzip
+#      env:
+#        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#    - name: upload-checksum
+#      uses: actions/upload-release-asset@v1
+#      with:
+#        upload_url: ${{ github.event.release.upload_url }}
+#        asset_path: ${{ env.RELEASE_NAME }}-checksum.txt
+#        asset_name: ${{ env.RELEASE_NAME }}-checksum.txt
+#        asset_content_type: text/plain
+#      env:
+#        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#    - name: Publish Docker image
+#      uses: elgohr/Publish-Docker-Github-Action@2.13
+#      with:
+#        name: cwiechmann/apibuilder4elastic
+#        workdir: 'apibuilder4elastic'
+#        username: ${{ secrets.DOCKER_USERNAME }}
+#        password: ${{ secrets.DOCKER_PASSWORD }}
+#        tags: "${{ github.event.release.tag_name }}"
+  release-helm-chart:
+    name: Release Helm chart
+    needs: release-elk-apim
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Copy Logstash configuration
+      run: |
+        mkdir -p helm/configuration/logstash
+        cp -r logstash/pipelines helm/configuration/logstash
+        cp logstash/config helm/config
+    - name: Create packaged Helm-Chart
+      run: helm package ./helm
+    - name: upload-helm-chart
       uses: actions/upload-release-asset@v1
       with:
         upload_url: ${{ github.event.release.upload_url }}
-        asset_path: ${{ env.RELEASE_NAME }}.tar.gz
-        asset_name: ${{ env.RELEASE_NAME }}.tar.gz
+        asset_path: apim4elastic-${{ github.event.release.tag_name }}.tgz
+        asset_name: apim4elastic-${{ github.event.release.tag_name }}.tgz
         asset_content_type: application/gzip
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    - name: upload-checksum
-      uses: actions/upload-release-asset@v1
-      with:
-        upload_url: ${{ github.event.release.upload_url }}
-        asset_path: ${{ env.RELEASE_NAME }}-checksum.txt
-        asset_name: ${{ env.RELEASE_NAME }}-checksum.txt
-        asset_content_type: text/plain
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    - name: Publish Docker image
-      uses: elgohr/Publish-Docker-Github-Action@2.13
-      with:
-        name: cwiechmann/apibuilder4elastic
-        workdir: 'apibuilder4elastic'
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
-        tags: "${{ github.event.release.tag_name }}"
