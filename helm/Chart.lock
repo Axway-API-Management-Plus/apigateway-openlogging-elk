@@ -1,18 +1,15 @@
 dependencies:
-- name: memcached
-  repository: https://charts.bitnami.com/bitnami
-  version: 5.10.1
 - name: logstash
   repository: https://helm.elastic.co
-  version: 7.12.0
+  version: 7.12.1
 - name: filebeat
   repository: https://helm.elastic.co
-  version: 7.12.0
+  version: 7.12.1
 - name: elasticsearch
   repository: https://helm.elastic.co
-  version: 7.12.0
+  version: 7.12.1
 - name: kibana
   repository: https://helm.elastic.co
-  version: 7.12.0
-digest: sha256:2ff98dcbd98ea812431bb1ace3eb2f8d6459b891704bb660a43a10c9b928a1ca
-generated: "2021-04-27T13:42:34.5768397+02:00"
+  version: 7.12.1
+digest: sha256:84b72ccef27ac38a100fd8dd40be9199a7d1fc44c5a03e45259e67dda52f9939
+generated: "2021-05-10T18:02:30.2833794+02:00"

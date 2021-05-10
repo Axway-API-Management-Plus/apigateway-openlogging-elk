@@ -56,13 +56,13 @@ jobs:
         cp -r logstash/config helm/configuration/config
         tree -f helm/configuration
     - name: Create packaged Helm-Chart
-      run: helm package ./helm
+      run: helm package ./helm --dependency-update --app-version ${{ github.event.release.tag_name }} --version ${{ github.event.release.tag_name }}
     - name: upload-helm-chart
       uses: actions/upload-release-asset@v1
       with:
         upload_url: ${{ github.event.release.upload_url }}
         asset_path: apim4elastic-${{ github.event.release.tag_name }}.tgz
-        asset_name: apim4elastic-${{ github.event.release.tag_name }}.tgz
+        asset_name: apim4elastic-helm-${{ github.event.release.tag_name }}.tgz
         asset_content_type: application/gzip
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
