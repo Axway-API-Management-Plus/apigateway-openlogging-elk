@@ -117,13 +117,13 @@ Components such as the API-Builder project are supposed to run as a Docker-Conta
 
 ### Docker-Compose or HELM
 
-Docker Compose is one optione to deploy the solution. Additionally [HELM-Charts](helm/README.md) are provided for the solution on Kubernetes and OpenShift.  
-Please be careful using docker-compose version 1.28.x as it may contain a bug/issue reading the .env file. See here: https://github.com/docker/compose/issues/8108 or https://github.com/docker/compose/issues/8173. Perhaps switch back to a previous version. Looks like is has been fixed with version 1.28.6.
+Docker Compose is one option to deploy the solution. Additionally [HELM-Charts](helm/README.md) are provided to deploy the solution on Kubernetes and OpenShift.  
+Please be careful using docker-compose version 1.28.x as it may contain a bug/issue reading the .env file. See here: https://github.com/docker/compose/issues/8108 or https://github.com/docker/compose/issues/8173. Perhaps switch back to a previous version. 
 
 ### API-Gateway/API-Management
 
-The solution is designed to work with _Classical_ and the _EMT_ deployment model. As it is mainly based on events given in the Open-Traffic-Event log, these must be enabled. Also Events-Logs are indexed and stored in Elasticsearch. This is used for System-Monitoring information and to highlight annotations based on Governance-Alerts in API-Manager.    
-Version 7.7-20200130 is required due to some Dateformat changes in the Open-Traffic-Format. With older versions of the API-Gateway you will get an error in Logstash processing.
+The solution is designed to work with _Classical_ and the _EMT_ API-Management deployment model. As it is mainly based on events given in the Open-Traffic-Event log, these must be enabled. Also Events-Logs are indexed and stored in Elasticsearch. This is used for System-Monitoring information and to highlight annotations based on Governance-Alerts in API-Manager.    
+Version __7.7-20200130__ is required due to some Dateformat changes in the Open-Traffic-Format. With older versions of the API-Gateway you will get errors in the Logstash processing.
 
 ### Elastic stack
 
@@ -134,17 +134,18 @@ It is also possible to use existing components such as an Elasticsearch cluster 
 
 ## Basic setup
 
-The basic setup explains the individual components, how they can be played and started together. After completing the basic setup you will have a single node Elasticsearch cluster including a Kibana instance running. This cluster receives data from 1 to N API gateways via Filebeat, Logstash, API-Builder and is accessible via the Traffic Monitor. You can also use the sample Kibana Dashboard or create your own visualizations.  
+The basic setup explains the individual components, how they can be deployed and play together. After completing the basic setup you will have a single node Elasticsearch cluster including a Kibana instance running. This cluster receives data from 1 to N API-Gateways via Filebeat, Logstash, API-Builder and is accessible via the Traffic Monitor. You can also use the sample Kibana Dashboard or create your own visualizations.  
 You can extend this setup, then expand it to a production cluster.
-It is possible to deploy all components on a single machine, which should then have at least 16 GB RAM available. _(For instance like the Axway internal API-Management reference environment.)_
+To test this solution, it is possible to deploy all components on a single machine, which should then have at least 16 GB RAM available. _(For instance like the Axway internal API-Management reference environment.)_
 
 ### Preparations
 
 #### Enable Open-Traffic Event Log
+
 Obviously, you have to enable Open-Traffic-Event log for your API-Gateway instance(s). [Read here][1] how to enable the Open-Traffic Event-Log.  
 After this configuration has been done, Open-Traffic log-files will be created by default in this location: `apigateway/logs/opentraffic`. This location becomes relevant when configuring Filebeat.  
 
-:point_right: To avoid data loss, it is strongly recommended to increase the disk space for the Open-Traffic logs from 1 GB to at least 8 GB, especially if you have a lot of traffic. If you have for example 100 TPS on 1 API-Gateway, depending on your custom policies, the oldest log file will be deleted after ap. 30 minutes with only 1 GB OpenTraffic log configured. If for any reason Filebeat, Logstash, etc. is not running to process events for more than 15-20 minutes you will have a loss of data as it also takes time to catch up.
+:point_right: To avoid data loss, it is strongly recommended to increase the disk space for the Open-Traffic logs from 1 GB to at least 8 GB, especially if you have a lot of traffic. If you have for example 100 TPS on 1 API-Gateway, depending on your custom policies, the oldest log file will be deleted after ap. 30 minutes with only 1 GB OpenTraffic log configured. If for any reason Filebeat, Logstash, etc. is not running to process events for more than 15-20 minutes you will have a loss of data as it also takes some time to catch up.
 
 #### Download and extract the release package
 
@@ -422,7 +423,7 @@ All traffic payload from these API-Gateways must be made available to the API-Bu
 So you need to make the existing structure available in a regional folder. For this, the region must be in lower case.  
 
 Please note:  
-:point_right: Payload handling is enabled by default. So it is assumed that you provide the payload to the API Builder container. Set the parameter: `SKIP_PAYLOAD_HANDLING=true` if you do not need this.  
+:point_right: Payload handling is enabled by default. So it is assumed that you provide the payload to the API Builder container. Set the parameter: `PAYLOAD_HANDLING_ENABLED=false` if you do not need this.  
 :point_right: Payload shown in the Traffic-Monitor UI is limited to 20 KB by default. If required the payload can be downloaded completely using the `Save` option. 
 
 <p align="right"><a href="#table-of-content">Top</a></p>

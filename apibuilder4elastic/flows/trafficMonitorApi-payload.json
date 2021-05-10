@@ -624,7 +624,7 @@
 				{
 					"name": "source",
 					"type": "jsonpath",
-					"value": "$.config.payload.skip",
+					"value": "$.config.payload.enabled",
 					"metaName": "Source",
 					"metaDescription": "The input to test."
 				}

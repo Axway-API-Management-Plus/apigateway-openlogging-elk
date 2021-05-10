@@ -7,10 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Added
 - An option to skip Elasticsearch and instead still use OPSDB by providing an extra REST-API parameter [#105](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/105)
-- HELM-Charts - Learn more about the provide chart [here](helm/README.md) [#63](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/63)
+- HELM-Charts - Learn more about the provided chart [here](helm/README.md) [#63](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/63)
 
 ### Changed
-- Parameter: SKIP_PAYLOAD_HANDLING changed to PAYLOAD_HANDLING_ENABLED
+- Parameter: `SKIP_PAYLOAD_HANDLING` changed to `PAYLOAD_HANDLING_ENABLED`
+- Elastic-Version changed from 7.10.0 to 7.12.1
 
 ## [2.4.2] 2021-04-28
 ### Added

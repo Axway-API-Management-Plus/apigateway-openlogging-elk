@@ -17,7 +17,7 @@ describe('Skip Payload', function () {
 	 * Start API Builder.
 	 */
 	before(() => {
-		process.env.SKIP_PAYLOAD_HANDLING = true;
+		process.env.PAYLOAD_HANDLING_ENABLED = false;
 		server = startApiBuilder();
 		return server.started;
 	});
@@ -27,7 +27,7 @@ describe('Skip Payload', function () {
 	 */
 	after(() => {
 		stopApiBuilder(server);
-		delete process.env.SKIP_PAYLOAD_HANDLING;
+		delete process.env.PAYLOAD_HANDLING_ENABLED;
 	});
 
 	describe('Payload handling tests', () => {
