@@ -37,8 +37,8 @@ Further deployment options and customizations are described in this document.
 
 ### Get started
 
-Create your own `myvalues.yaml` based on the standard [`values.yaml`](values.yaml) and configure all required parameters, like in the example below. All of the parameters are 
-explained in detail in the charts [`values.yaml`](values.yaml).  
+Here it is explained how you could start the solution with minimal setup. Nevertheless, you need sufficient [resources](#required-resources) for it, if you take over the standard resources defined by the [`values.yaml`](values.yaml). In the further course of the document how you can include your own Secrets, Volumes or adjust the required resources.  
+Create your own `myvalues.yaml` based on the standard [`values.yaml`](values.yaml) and configure needed parameters. All of the parameters are explained in detail in the charts [`values.yaml`](values.yaml).  
 
 The following represents the most simple `myvalues.yaml` assuming the API-Management Plattform + Filebeat is running externally to the Kubernetes cluster as indicated in the illustration above:  
 
@@ -65,9 +65,9 @@ Please check the [`values.yaml`](values.yaml) for all possible configuration opt
 
 ### Elasticsearch Persistent volumes
 
-As Elasticsearch is enabled and requires a PersistentVolume for each Elasticsearch node, first two persistent volumes must be created.  
+As Elasticsearch is enabled in the previous example two PersistentVolumes, one for each Elasticsearch node, are required. So, first, create two persistent volumes.  
 
-The following should help you to get started, but these volumes are HostPath volumes pointing to a Worker-Node directory - This is not for production.
+The following should help you to get started, but these volumes are HostPath volumes pointing to a Worker-Node directory - This is not for production. For production use, use appropriate persistent volumes according to your environment/infrastructure. How to set this up is out of scope for this documentation.  
 Make sure to create a directory `/tmp/data` on your WorkerNodes and give it permissions for everybody.
 
 ```
@@ -83,10 +83,11 @@ sudo chmod 777 data
 
 ### Install the Helm-Chart
 
-With Elasticsearch volumes and your `myvalues.yaml` file in place, you can start the installation (__Please note:__ The Helm Release-Name: __axway-elk__ is mandatory as of now):  
+With Elasticsearch volumes and your `myvalues.yaml` file in place, you can start the installation:  
 ```
-helm install -n apim-elk -f myvalues.yaml axway-elk apim4elastic-3.0.0.tgz
+helm install -n apim-elk -f myvalues.yaml axway-elk https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/3.0.0/apim4elastic-helm-3.0.0.tgz
 ```
+👉: __Please note:__ The Helm Release-Name: __axway-elk__ is mandatory  
 
 You may run the following commands to check the status of the deployment, pods, services, etc.
 ```
@@ -123,13 +124,13 @@ kubectl -n apim-elk describe pod axway-elk-apim4elastic-elasticsearch-0
 kubectl -n apim-elk logs axway-elk-apim4elastic-apibuilder4elastic-65b5d56d77-5hv9z
 ```
 
-If everything goes well, you can access the different components on the following host-names:  
+If everything goes well and you Ingress-Configuration is running fine, you can access the different components on the following host-names:  
 
 https://kibana.apim4elastic.local  
 https://apibuilder.apim4elastic.local  
 https://elasticsearch.apim4elastic.local  
 
-:point-right: This assumes, that Ingress is configured and DNS-Resolution for `apim4elastic.local` points to your cluster IP. More details is out of scope for this document.
+👉 This assumes, that Ingress is configured and DNS-Resolution for `apim4elastic.local` points to your cluster IP. Of course you can configure different Ingress-Hostnames. More details is out of scope for this document.
 
 At this point, it is still assumed, that the API-Management Plattform is running externally. Therefore, as the next step, you need to connect one or more Filebeats to Logstash running in Kubernetes. 
 
@@ -139,14 +140,13 @@ The communication between Filebeat and Logstash is a persistent TCP connection. 
 to be used for the best possible throughput. If you specify multiple Logstash instances in your Filebeat configuration, then Filebeat will establish multiple 
 persistent connections and uses all of the them for load balancing and failover.   
 
-In the case of Kubernetes/OpenShift, multiple Logstash instances are running behind a Kubernetes service, which acts like a load balancer. However, due to the persistent 
-connection, the load balancer cannot really distribute the load. Therefore, for high volumes, it is still the better option to let Filebeat do the load balancing.  
+In the case of Kubernetes/OpenShift, multiple Logstash instances are running behind a Kubernetes service, which acts like a load balancer. However, due to the persistent connection, the load balancer/service cannot really distribute the load. Therefore, for high volumes, it is still the better option to let Filebeat do the load balancing.  
 
 ### 1. NodePort Service
 
 By default, the Helm chart deploys a NodePort service for Logstash and with that it becomes available on the configured port: `32001` on all nodes of the cluster.  
 You can now setup the corresponding nodes as Logstash hosts in your Filebeat configuration with Load-Balancing enabled and Filebeat will distribute the 
-Traffic accross the available Logstashes. With that, it works almost the same as with the Docker-Compose deployment, as Filebeat establishes multiple peristent 
+Traffic accross the available Logstashes. With that, it works almost the same as with the Docker-Compose deployment, as Filebeat establishes multiple persistent 
 connections.  
 The following diagram illustrates the approach:  
 
@@ -189,16 +189,12 @@ output.logstash:
   pipelining: 0
 ```
 
-The NodePort Service without any Load-Balancer in between is the recommended approach for the best possible throughput. This has been tested with up to 1.000 TPS using 4 Logstash 
-instances and a 5 Node-Elasticsearch cluster.  
+The NodePort Service without any Load-Balancer in between is the recommended approach for the best possible throughput. This has been tested with up to 1.000 TPS using 4 Logstash instances and a 5 Node-Elasticsearch cluster.  
 
 ### 2. Load Balancer
 
-If you prefer to use a Load-Balancer to have a single entry point it's also possible. You can configure the service from a NodePort to a LoadBalancer if you prefer and use for instance 
-your Public-Cloud Load-Balancer, from AWS, GCP, etc.  
-With that kind of setup, care must be taken to ensure that Filebeat is set with an appropriate [TTL](https://www.elastic.co/guide/en/beats/filebeat/7.12/logstash-output.html#_ttl) to 
-ensure that the load is at least better distributed between the available Logstash instances. (See here for more details https://github.com/elastic/beats/issues/661). However, it's still 
-to which Logstash instances connections are established.  
+If you prefer to use a Load-Balancer to have a single entry point it's also possible. You can re-configure the Logstash service from a NodePort to a LoadBalancer and use for instance your Public-Cloud Load-Balancer, from AWS, GCP, etc.  
+With that kind of setup, care must be taken to ensure that Filebeat is set with an appropriate [TTL](https://www.elastic.co/guide/en/beats/filebeat/7.12/logstash-output.html#_ttl) to improve the load is at least better distributed between the available Logstash instances. (See here for more details https://github.com/elastic/beats/issues/661). However, it's still random to which Logstash instances connections are established. So, you might see situations where Logstash-Instances are on Idle and other under heavy load.  
 
 For example:  
 ```yaml
@@ -227,7 +223,6 @@ Enabling user authentication in Elasticsearch is quite analogous to the Docker C
 you generate passwords for the default Elasticsearch users and then store them in your `myvalues.yaml` or in your own secrets.  
 
 Run the following command to generate the passwords for the default users.
-
 ```
 kubectl -n apim-elk exec axway-elk-apim4elastic-elasticsearch-0 -- bin/elasticsearch-setup-passwords auto --batch --url https://localhost:9200
 ```
@@ -268,8 +263,8 @@ elasticsearch:
 
 To customize the solution according to your needs, you can configure it using your own Secrets, ConfigMaps, etc.
 
-We recommend that you create your own Helm chart that contains all the necessary resources. 
-You then link your custom resources in your `myvalues.yaml` for the final deployment of the solution. The following illustration the approach we recommend:  
+We recommend that you create your own Helm chart that contains all the necessary resources.  
+You then link your custom resources in your `myvalues.yaml` for the final deployment of the solution. The following illustrates the recommended approach:  
 
 ![Customized deployment with Helm](../imgs/kubernetes/customized_deployment_with_helm.png)
 
@@ -282,18 +277,19 @@ Customize the generated Helm chart according to your needs and remove stuff that
 
 ### Use a Secret for API-Manager Username & Password
 
-The following example explains how you can create a secret, that keeps the API-Manager username and password and use it with API-Builder. The same procedure applies for all confidential information.  
+The following example explains how you can create a secret, that keeps the API-Manager username and password and use it with API-Builder. The same procedure applies for all confidential information. Please check [`values.yaml`](values.yaml) for more details.  
 
-__1. Create a secret__  
+#### 1. Create a secret
+
 Use for instance the following command to create a secret that contains the API-Manager Username and Password and store the result in Helm-Chart template folder.
 ```
-kubectl create secret generic api-builder-secrets --from-literal=API_MANAGER_PASSWORD=change --from-literal=API_MANAGER_USERNAME=apiadmin --dry-run -o yaml > templates/api-builder-secret.yaml
+kubectl create secret generic api-builder-secrets --from-literal=API_MANAGER_PASSWORD=changeme --from-literal=API_MANAGER_USERNAME=apiadmin --dry-run -o yaml > templates/api-builder-secret.yaml
 ```
-__2. Template it__  
+#### 2. Template it
 
 Optionally you may change the generated Yaml file to really become a more flexible Helm-Template.
 
-__3. Install or upgrade your setup chart__  
+#### 3. Install or upgrade your setup chart
 ```
 helm install -n apim-elk axway-elk-setup .
 NAME: axway-elk-setup
@@ -303,7 +299,8 @@ STATUS: deployed
 REVISION: 1
 TEST SUITE: None
 ```
-__4. Reference the secret__   
+#### 4. Reference the secret
+
 Adjust your `myvalues.yaml` to reference the created secret. Additionally you have to declare the default ConfigMap, if you don't want to manage that ConfigMap yourself.
 
 ```yaml
@@ -318,7 +315,7 @@ apibuilder4elastic:
     enabled: false
 ```
 
-__5. Install or Upgrade the APIM4Elastic solution__  
+#### 5. Install or Upgrade the APIM4Elastic solution
 
 Now you can install or upgrade the solution and in the process your Secret will inject the API Manager username and password into the API Builder container:
 ```
@@ -327,22 +324,22 @@ helm install -n apim-elk -f myvalues.yaml axway-elk apim4elastic-3.0.0.tgz
 
 ### Custom certificates
 
-By default, necessary keys and certificates are automatically generated in a Secret: `axway-elk-apim4elastic-certificates` and included in the corresponding containers. 
+By default, necessary keys and certificates are automatically generated in a Secret: `axway-elk-apim4elastic-certificates` and included in the corresponding containers.  
 There are a number of keys and certificates all issued by a single CA. All components trust certificates of this CA, which is especially necessary for the communication with Elasticsearch.
 If you use an external Elasticsearch cluster, then the corresponding CA of this cluster must be included in the environment.  
 
 This is how you include an external Elasticsearch certificate into the solution. It is also assumed here that the resources, i.e. certificates and keys, are managed via the `axway-elk-setup` Helm chart. 
 
-__1. Create a secret containing your CA__  
+#### 1. Create a secret containing your CA
 ```
 kubectl create secret generic apim4elastic-elastic-ca --from-file=myElasticsearchCa.crt=myElasticsearchCa.crt --dry-run -o yaml > templates/elasticsearch-certificate.yaml
 ```
 
-__2. Template it__  
+#### 2. Template it
 
 Optionally you may change the generated Yaml file to really become a more flexible Helm-Template.
 
-__3. Install or upgrade your setup chart__  
+#### 3. Install or upgrade your setup chart
 ```
 helm upgrade -n apim-elk axway-elk-setup .
 Release "axway-elk-setup" has been upgraded. Happy Helming!
@@ -353,7 +350,7 @@ STATUS: deployed
 REVISION: 2
 TEST SUITE: None
 ```
-__4. Reference the CA__  
+#### 4. Reference the CA
 
 To use the custom CA, it must be included appropriately in all containers. To do this, modify your `myvalues.yaml` as shown here in the Logstash example. 
 If you do not control all keys and certificates yourself, you must continue to reference the secret: `axway-elk-apim4elastic-certificates`, otherwise it 
@@ -379,7 +376,7 @@ global:
 ```
 This tells every component to read the CA for Elasticsearch from this location.
 
-__5. Install or Upgrade the APIM4Elastic solution__  
+#### 5. Install or Upgrade the APIM4Elastic solution
 
 ```
 helm upgrade -n apim-elk -f myvalues.yaml axway-elk apim4elastic-3.0.0.tgz
@@ -387,7 +384,9 @@ helm upgrade -n apim-elk -f myvalues.yaml axway-elk apim4elastic-3.0.0.tgz
 
 ### Example Custom-API-Builder Configuration
 
-__1. Create ConfigFile configMap__  
+For some functions, like Local-API-Lookup, you need to inject your own configuration files into the API-Builder4Elastic Container. Here we explain how this works using the example of a custom user authorization.
+
+#### 1. Create ConfigFile configMap
 
 Create a ConfigMap that contains your custom configuration file: 
 
@@ -421,13 +420,14 @@ data:
     .
 ```
 
-__2. Template it__  
+#### 2. Template it
 
 Optionally you may change the generated Yaml file to really become a more flexible Helm-Template.  
 
 Tip: When using Helm use `.Files.get.` to include your custom configuration file. See here for an example: [templates/elasticApimLogstash/logstash-pipelines.yaml](templates/elasticApimLogstash/logstash-pipelines.yaml)
 
-__3. Install or upgrade your setup chart__  
+#### 3. Install or upgrade your setup chart
+
 ```
 helm upgrade -n apim-elk axway-elk-setup .
 Release "axway-elk-setup" has been upgraded. Happy Helming!
@@ -439,7 +439,7 @@ REVISION: 2
 TEST SUITE: None
 ```
 
-__4. Mount the ConfigFile__  
+#### 4. Mount the ConfigFile
 
 Now mount this ConfigMap into the API-Builder container and reference it in the configuration using the `values.yaml`:
 
@@ -463,7 +463,7 @@ apibuilder4elastic:
   authzConfig: "./config/myAuthzConfig.js"
 ```
 
-__5. Install or Upgrade the APIM4Elastic solution__  
+#### 5. Install or Upgrade the APIM4Elastic solution
 ```
 helm upgrade -n apim-elk -f myvalues.yaml axway-elk apim4elastic-3.0.0.tgz
 ```
@@ -473,6 +473,7 @@ helm upgrade -n apim-elk -f myvalues.yaml axway-elk apim4elastic-3.0.0.tgz
 If you are already running the Axway API management solution in a Kubernetes environment, then it makes sense to also run Filebeat in Kubernetes.
 
 The following shows Filebeat and API-Management in a Kubernetes cluster:  
+
 ![Kubernetes architecture all components](../imgs/kubernetes/all_components_incl_filebeat.png)  
 
 One way to provide Filebeat with the necessary log files of the API-Gateway in a central volume. All API-Gateways write to this volume and Filebeat reads & streams the corresponding documents/events.  
@@ -490,32 +491,44 @@ helm upgrade -n apim-elk -f myvalues.yaml axway-elk apim4elastic-3.1.0.tgz
 
 ## Required resources
 
-The following resources are preliminary and have yet to be verified through load and performance testing.
+The following resources were determined to be able to process up to 1,000 TPS in real-time. However, this is the absolute maximum and you should add more capacity if you have constantly __1.000 TPS__ or above.  
+If you have fewer transactions per second, then you can make the platform smaller accordingly. Use the [performance information from the classic deployment](../README.md#size-your-infrastructure) as a reference, since the data is comparable.  
 
-### API-Builder4Elastic
+| Component                | Requested Memory | Memory limit | Request CPU | CPU Limit     | Notes                                 |
+| :---                     | :---             | :---         | :---        | :---          | :---                                  |
+| API-Builder4Elastic 1    | 80Mi             | 150Mi        | 100m        | 100m          | 2 Instances are recommended for HA    |
+| API-Builder4Elastic 2    | 80Mi             | 150Mi        | 100m        | 100m          |                                       |
+| Logstash incl. Memcached | 6.5Gi            | 6.5Gi        | 2000m       | 4000m         | For 1.000 TPS 4 Logstash instances    |
+| Logstash incl. Memcached | 6.5Gi            | 6.5Gi        | 2000m       | 4000m         | are required                          |
+| Logstash incl. Memcached | 6.5Gi            | 6.5Gi        | 2000m       | 4000m         | Instance 3                            |
+| Logstash incl. Memcached | 6.5Gi            | 6.5Gi        | 2000m       | 4000m         | Instance 4                            |
+| Elasticsearch 1          | 14Gi             | 16Gi         | 2000m       | 4000m         | For 1.000 TPS a 5 Node Elasticsearch  |
+| Elasticsearch 2          | 14Gi             | 16Gi         | 2000m       | 4000m         | cluster is required                   |
+| Elasticsearch 3          | 14Gi             | 16Gi         | 2000m       | 4000m         | Node 3                                |
+| Elasticsearch 4          | 14Gi             | 16Gi         | 2000m       | 4000m         | Node 4                                |
+| Elasticsearch 5          | 14Gi             | 16Gi         | 2000m       | 4000m         | Node 5                                |
+| Kibana                   | 300Mi            | 500Mi        | 500m        | 1000m         |                                       |
+| __Total__                | __~97Gi__        | __~140Gi__   | __~19__     | __~38__       | __Supposed to handle up to 1.000 TPS__|
 
-Memory: 80Mi - 150Mi  
-CPU: 100m - 200m
+Filebeat is not yet tested as part of the Kubernetes deployment. Memory is ap. between 150Mi and 200Mi. CPU between 500m and 1000m.  
 
-### Logstash
+For Elasticsearch the maximum number of file descriptors must be at least 65536. (See for instance here: https://documentation.sisense.com/latest/linux/dockerlimits.htm)  
 
-Memory: 6.5Gi - 6.5Gi  
-CPU: 2000m - 4000m
+## FAQ
 
-### Elasticsearch
+### Why Helm Release-Name axway-elk?
 
-Memory: 14Gi - 16Gi  
-CPU: 2000m - 4000m  
-
-Maximum number of file descriptors must be at least 65536. (See for instance here: https://documentation.sisense.com/latest/linux/dockerlimits.htm)
-
-### Kibana
-
-Memory: 300m - 300m  
-CPU: 500m - 1000m
-
-## Why Helm Release-Name axway-elk ?
 The release name must currently: `axway-elk`, because many resources, like Services, ConfigMaps or Secrets 
 are created with it and referenced in the standard `values.yaml`. An example is the Elasticsearch-Service: `axway-elk-apim4elastic-elasticsearch`, 
 which is for instance used for the standard `elasticsearchHosts: "https://axway-elk-apim4elastic-elasticsearch:9200"`. This restriction may 
 be changed in a later release to get more flexibility.  
+
+### Can I use Auto-Scaling?
+
+Apart from API-Builder4Elastic, this is unfortunately not possible. Elasticsearch automatically stores the data on multiple cluster nodes and would have to rebalance the cluster again and again when adding or removing nodes. Logstash also does not offer the option of autoscaling.
+
+### Can I easily add or remove instances?
+
+Yes, they can change the number of nodes via the scaling function or via their values.yaml using replicas. This works for API-Builder4Elastic, Logstash, Elasticsearch and Kibana.  
+For Elasticsearch, make sure the cluster is in Green state before removing a node to avoid data loss. 
+If you change the Logstash instances, it is recommended to restart all Filebeat instances afterwards. The reason for this are the persistent connections. You may also need to adjust the filebeat configuration.
