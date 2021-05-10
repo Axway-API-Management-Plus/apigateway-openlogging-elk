@@ -145,6 +145,7 @@ connection, the load balancer cannot really distribute the load. Therefore, for 
 By default, the Helm chart deploys a NodePort service for Logstash and with that it becomes available on the configured port: `32001` on all nodes of the cluster.  
 You can now setup the corresponding nodes as Logstash hosts in your Filebeat configuration with Load-Balancing enabled and Filebeat will distribute the 
 Traffic accross the available Logstashes. With that, it works almost the same as before, as Filebeat will establish multiple peristent connections for you.  
+The following diagram illustrates the approach:  
 
 ![Filebeat and Logstash via NodePort](../imgs/kubernetes/filebeat_logstash_nodeport_3_worker_nodes.png)  
 
@@ -161,7 +162,6 @@ NAME                            STATUS   ROLES                  AGE   VERSION   
 ip-172-31-51-209.ec2.internal   Ready    <none>                 23h   v1.21.0   172.31.51.209   <none>        Amazon Linux 2   4.14.209-160.339.amzn2.x86_64   docker://19.3.13
 ip-172-31-53-214.ec2.internal   Ready    <none>                 23h   v1.21.0   172.31.53.214   <none>        Amazon Linux 2   4.14.193-149.317.amzn2.x86_64   docker://19.3.6
 ip-172-31-54-120.ec2.internal   Ready    <none>                 23h   v1.21.0   172.31.54.120   <none>        Amazon Linux 2   4.14.209-160.339.amzn2.x86_64   docker://19.3.13
-ip-172-31-57-105.ec2.internal   Ready    <none>                 23h   v1.21.0   172.31.57.105   <none>        Amazon Linux 2   4.14.181-142.260.amzn2.x86_64   docker://19.3.6
 ip-172-31-61-143.ec2.internal   Ready    control-plane,master   23h   v1.21.0   172.31.61.143   <none>        Amazon Linux 2   4.14.181-142.260.amzn2.x86_64   docker://19.3.6
 ```
 
@@ -186,7 +186,7 @@ output.logstash:
   pipelining: 0
 ```
 
-The NodePort Service is the recommended approach for the best possible throughput. This has been tested with 1.000 TPS.  
+The NodePort Service is the recommended approach for the best possible throughput. This has been tested with up to 1.000 TPS using 4 Logstash instances and a 5 Node-Elasticsearch cluster.  
 
 2. __Load Balancer__  
 
