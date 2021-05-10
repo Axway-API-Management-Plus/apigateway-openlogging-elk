@@ -53,7 +53,8 @@ jobs:
       run: |
         mkdir -p helm/configuration/logstash
         cp -r logstash/pipelines helm/configuration/logstash
-        cp logstash/config helm/config
+        cp -r logstash/config helm/config
+        tree -f helm/configuration
     - name: Create packaged Helm-Chart
       run: helm package ./helm
     - name: upload-helm-chart
