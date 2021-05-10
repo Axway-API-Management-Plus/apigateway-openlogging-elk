@@ -42,6 +42,8 @@ apibuilder4elastic:
   annotations: {}
   nodeSelector: {}
   tolerations: []
+  #antiAffinity: "hard"
+  #antiAffinityTopologyKey: "kubernetes.io/hostname"
 
   port: 8443
   # Admin-Node-Manager URL. For more details please see env-sample: ADMIN_NODE_MANAGER
@@ -150,7 +152,7 @@ apibuilder4elastic:
       cpu: "100m"
       memory: "80Mi"
     limits:
-      cpu: "1000m"
+      cpu: "500m"
       memory: "150Mi"
   
   # User-Group 100 is the axway-user - Required to run timers in the container
@@ -169,6 +171,17 @@ apibuilder4elastic:
           - path: /
             servicePort: 8443
     tls: []
+  
+  # Try to place API-Builder4Elastic along with Logstash
+  #podAffinity: 
+  #  preferredDuringSchedulingIgnoredDuringExecution: 
+  #  - labelSelector:
+  #      matchExpressions: 
+  #      - key: app
+  #        operator: In
+  #        values: 
+  #        - axway-elk-apim4elastic-logstash
+  #    topologyKey: kubernetes.io/hostname
 
 ##################################################################################################################################
 #          L O G S T A S H
@@ -227,14 +240,18 @@ logstash:
   #    secretName: custom-certificate
   #    path: /usr/share/logstash/config/certificates
 
-  # Recommended resource requests for Logstash
+  # Logstash is the most demanding component and very much CPU-Bound. 
+  # 
+  # Due to the difficult load distribution on the available logstash instances, a relatively high limit is set here. This is 
+  # to ensure that Logstash can keep up, even if possibly too many Filebeat instances are connected by the service to a single Logstash instance
   resources:
     requests:
-      cpu: "1000m"
-      memory: "7Gi"
-    limits:
       cpu: "2000m"
-      memory: "7Gi"
+      memory: "6.5Gi"
+    # The CPU limit for Logstash is high to avoid unnecessary many Logstash instances with 6 GB memory each.
+    limits:
+      cpu: "4000m"
+      memory: "6.5Gi"
   extraPorts:
     - name: beats
       containerPort: 5044
@@ -253,31 +270,9 @@ logstash:
   # How long to wait for logstash to stop gracefully
   terminationGracePeriod: 30
 
-##################################################################################################################################
-#          M E M C A C H E D
-##################################################################################################################################
-
-# The Memcached configuration is based on the official Memcached Helm chart. You can use all the parameters documented here: 
-# https://github.com/bitnami/charts/blob/master/bitnami/memcached/values.yaml
-
-# The following parameters represent only the most important parameters for the solution.
-memcached:
-  # Must be enabled, when Logstash is enabled
-  enabled: true
-  fullnameOverride: "axway-elk-apim4elastic-memcached"
-  replicaCount: 2
-  architecture: high-availability
-  service:
-    type: ClusterIP
-  # Resourced for memcached depend on the number of different APIs and applications
-  # What is requested should be sufficient even for larger catalogs.
-  resources:
-    limits: 
-       cpu: 200m
-       memory: 64Mi
-    requests:
-      memory: 32Mi
-      cpu: 50m
+  extraContainers: |
+    - name: memcached
+      image: memcached:1.6.6-alpine
 
 ##################################################################################################################################
 #          E L A S T I C S E A R C H
@@ -336,11 +331,11 @@ elasticsearch:
 
   resources:
     requests:
-      cpu: "1000m"
-      memory: "9Gi"
-    limits:
       cpu: "2000m"
-      memory: "9Gi"
+      memory: "14Gi"
+    limits:
+      cpu: "4000m"
+      memory: "16Gi"
 
   # Define the volume claim for Elasticsearch
   #volumeClaimTemplate:
@@ -609,7 +604,7 @@ filebeat:
         # The offset is used to sort the trace messages additionally to the timestamp
         offset: true
         # When initially started, don't try to read all existing trace message (by default around 7.8GB per API-Gateway)
-        ignore_older: "48h"
+        ignore_older: "12h"
         fields:
           logtype: trace
           gatewayName: ${GATEWAY_NAME:"API-Gateway"}
@@ -624,7 +619,7 @@ filebeat:
         json.add_error_key: true
         fields_under_root: true
         # When initially started, don't try to read all existing trace message (by default around 7.8GB per API-Gateway)
-        ignore_older: "48h"
+        ignore_older: "12h"
         fields:
           logtype: events
           gatewayName: ${GATEWAY_NAME:"API-Gateway"}

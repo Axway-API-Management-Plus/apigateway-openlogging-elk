@@ -133,19 +133,20 @@ At this point, it is still assumed, that the API-Management Plattform is running
 
 ## Logstash and Filebeat
 
-The communication between Filebeat and Logstash is a persistent TCP connection. This means that once the connection has been extended, it will continue 
+The communication between Filebeat and Logstash is a persistent TCP connection. This means that once the connection has been etsablished, it will continue 
 to be used for the best possible throughput. If you specify multiple Logstash instances in your Filebeat configuration, then Filebeat will establish multiple 
-persistent connections handle the load balancing for you.  
-This is however only in the classical Deployment easily possible, since you can address each Logstash instance individually.  
+persistent connections and uses all of the them for load balancing and failover.   
 
-In the case of Kubernetes/OpenShift, multiple Logstash instances are running behind a Kubernetes service, which acts like a load balancer. 
+In the case of Kubernetes/OpenShift, multiple Logstash instances are running behind a Kubernetes service, which acts like a load balancer. However, due to the persistent 
+connection, the load balancer cannot really distribute the load. Therefore, for high volumes, it is still the better option to let Filebeat do the load balancing.  
 
 1. __NodePort Service__
 
-By default, a single service is deployed for all Logstash instances. This service is by default configured as a NodePort and thus Logstash becomes available on the configured 
-port: `32001` on all nodes of the cluster.  
+By default, the Helm chart deploys a NodePort service for Logstash and with that it becomes available on the configured port: `32001` on all nodes of the cluster.  
 You can now setup the corresponding nodes as Logstash hosts in your Filebeat configuration with Load-Balancing enabled and Filebeat will distribute the 
-Traffic accross the available nodes. With that, it works almost the same as before, as Filebeat will establish multiple peristent connections for you.  
+Traffic accross the available Logstashes. With that, it works almost the same as before, as Filebeat will establish multiple peristent connections for you.  
+
+![Filebeat and Logstash via NodePort](../imgs/kubernetes/filebeat_logstash_nodeport_3_worker_nodes.png)  
 
 This is an example setup:  
 ```
@@ -167,24 +168,33 @@ ip-172-31-61-143.ec2.internal   Ready    control-plane,master   23h   v1.21.0   
 And this would be the belonging configuration for the Filebeat Logstash output  
 ```yaml
 output.logstash:
+  # Based on our tests, the more WorkerNodes you add, the more likely the traffic 
+  # is evenly distributed
   hosts: ["172.31.51.209:32001", "172.31.53.214:32001", "172.31.54.120:32001"]
   # Or as part of the .env:
   # LOGSTASH_HOSTS=172.31.51.209:32001,172.31.53.214:32001,172.31.54.120:32001
   worker: 2
   bulk_max_size: 3072
   loadbalance: true
+  # Required for the NodePort service approach to give Filebeat a chance to recognize 
+  # and use additional Logstash instances that have been provisioned. 
+  # 5m was determined to be the best value for the highest possible throughput. 
+  # Values lower than 5 minutes may cause an error in Filebeat described here:
+  # https://www.elastic.co/guide/en/beats/filebeat/current/publishing-ls-fails-connection-reset-by-peer.html
+  ttl: 2m
+  # Required to make TTL working
+  pipelining: 0
 ```
 
-The NodePort Service is the recommended approach for the best possible throughput.  
+The NodePort Service is the recommended approach for the best possible throughput. This has been tested with 1.000 TPS.  
 
 2. __Load Balancer__  
 
-Using the single service approach above is the most optimal setup, as it makes sure Filebeat can perform proper load balancing still using persistent connections for the best throughput.  
-
-However, if you prefer to use a Load-Balancer to have a single entry point it's also possible. You can configure the service from a NodePort to a LoadBalancer if you prefer and use for instance 
+If you prefer to use a Load-Balancer to have a single entry point it's also possible. You can configure the service from a NodePort to a LoadBalancer if you prefer and use for instance 
 your Public-Cloud Load-Balancer, from AWS, GCP, etc.  
-But With that kind of setup, care must be taken to ensure that Filebeat is set with an appropriate [TTL](https://www.elastic.co/guide/en/beats/filebeat/7.12/logstash-output.html#_ttl) to 
-ensure that the load is at least better distributed between the available Logstash instances. (See here for more details https://github.com/elastic/beats/issues/661)  
+With that kind of setup, care must be taken to ensure that Filebeat is set with an appropriate [TTL](https://www.elastic.co/guide/en/beats/filebeat/7.12/logstash-output.html#_ttl) to 
+ensure that the load is at least better distributed between the available Logstash instances. (See here for more details https://github.com/elastic/beats/issues/661). However, it's still 
+to which Logstash instances connections are established.  
 
 For example:  
 ```yaml
@@ -200,7 +210,8 @@ output.logstash:
   # With that, you give the Service/LoadBalancer from time to time the chance to distribute the traffic. 
   # But even with that, it might be the case, that call traffic goes to one Logstash instance.
   # Do not set the ttl less than 1 minute, as it would increase the connection management overhead
-  ttl: 5m
+  ttl: 2m
+  # Required to make TTL working
   pipelining: 0
 ```
 
@@ -479,30 +490,25 @@ The following resources are preliminary and have yet to be verified through load
 
 ### API-Builder4Elastic
 
-Memory: 50Mi - 80Mi  
+Memory: 80Mi - 150Mi  
 CPU: 100m - 200m
-
-### Memcached
-
-Memory: 32Mi - 64Mi  
-CPU: 50m - 100m
 
 ### Logstash
 
-Memory: 6Gi - 6Gi  
-CPU: 1000m - 1000m
+Memory: 6.5Gi - 6.5Gi  
+CPU: 2000m - 4000m
 
 ### Elasticsearch
 
-Memory: 8Gi - 8Gi  
-CPU: 1000m - 1000m  
+Memory: 14Gi - 16Gi  
+CPU: 2000m - 4000m  
 
 Maximum number of file descriptors must be at least 65536. (See for instance here: https://documentation.sisense.com/latest/linux/dockerlimits.htm)
 
 ### Kibana
 
-Memory: 500m - 500m  
-CPU: 500m - 500m
+Memory: 300m - 300m  
+CPU: 500m - 1000m
 
 ## Why Helm Release-Name axway-elk ?
 The release name must currently: `axway-elk`, because many resources, like Services, ConfigMaps or Secrets 
