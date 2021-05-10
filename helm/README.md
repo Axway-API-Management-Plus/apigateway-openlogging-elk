@@ -142,7 +142,7 @@ persistent connections and uses all of the them for load balancing and failover.
 In the case of Kubernetes/OpenShift, multiple Logstash instances are running behind a Kubernetes service, which acts like a load balancer. However, due to the persistent 
 connection, the load balancer cannot really distribute the load. Therefore, for high volumes, it is still the better option to let Filebeat do the load balancing.  
 
-1. __NodePort Service__
+### 1. NodePort Service
 
 By default, the Helm chart deploys a NodePort service for Logstash and with that it becomes available on the configured port: `32001` on all nodes of the cluster.  
 You can now setup the corresponding nodes as Logstash hosts in your Filebeat configuration with Load-Balancing enabled and Filebeat will distribute the 
@@ -190,7 +190,7 @@ output.logstash:
 
 The NodePort Service is the recommended approach for the best possible throughput. This has been tested with up to 1.000 TPS using 4 Logstash instances and a 5 Node-Elasticsearch cluster.  
 
-2. __Load Balancer__  
+### 2. Load Balancer
 
 If you prefer to use a Load-Balancer to have a single entry point it's also possible. You can configure the service from a NodePort to a LoadBalancer if you prefer and use for instance 
 your Public-Cloud Load-Balancer, from AWS, GCP, etc.  
