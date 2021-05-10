@@ -61,6 +61,8 @@ kibana:
   enabled: true
 ```
 
+Please check the [`values.yaml`](values.yaml) for all possible configuration options.
+
 ### Elasticsearch Persistent volumes
 
 As Elasticsearch is enabled and requires a PersistentVolume for each Elasticsearch node, first two persistent volumes must be created.  
