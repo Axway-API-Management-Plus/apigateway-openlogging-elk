@@ -146,7 +146,8 @@ connection, the load balancer cannot really distribute the load. Therefore, for 
 
 By default, the Helm chart deploys a NodePort service for Logstash and with that it becomes available on the configured port: `32001` on all nodes of the cluster.  
 You can now setup the corresponding nodes as Logstash hosts in your Filebeat configuration with Load-Balancing enabled and Filebeat will distribute the 
-Traffic accross the available Logstashes. With that, it works almost the same as before, as Filebeat will establish multiple peristent connections for you.  
+Traffic accross the available Logstashes. With that, it works almost the same as with the Docker-Compose deployment, as Filebeat establishes multiple peristent 
+connections.  
 The following diagram illustrates the approach:  
 
 ![Filebeat and Logstash via NodePort](../imgs/kubernetes/filebeat_logstash_nodeport_3_worker_nodes.png)  
@@ -188,7 +189,8 @@ output.logstash:
   pipelining: 0
 ```
 
-The NodePort Service is the recommended approach for the best possible throughput. This has been tested with up to 1.000 TPS using 4 Logstash instances and a 5 Node-Elasticsearch cluster.  
+The NodePort Service without any Load-Balancer in between is the recommended approach for the best possible throughput. This has been tested with up to 1.000 TPS using 4 Logstash 
+instances and a 5 Node-Elasticsearch cluster.  
 
 ### 2. Load Balancer
 
