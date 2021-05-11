@@ -230,6 +230,13 @@
 					"value": "\"//only json is supported. \\n  //If param format is skipped automatically json is returned\\n  if(data.params.format != undefined && data.params.format != 'json') {\\n    throw {\\n      name: \\\"unknown format exception\\\",\\n      message: \\\"unknown format\\\"\\n    };\\n  }\"",
 					"metaName": "code",
 					"metaDescription": "A JavaScript function body. Supports `await` and returning promises."
+				},
+				{
+					"name": "unsafe",
+					"type": "boolean",
+					"value": "true",
+					"metaName": "Unsafe mode",
+					"metaDescription": "USE WITH CAUTION. When enabled, JavaScript is not executed in a sandboxed environment and all globals are available."
 				}
 			],
 			"outputs": {
