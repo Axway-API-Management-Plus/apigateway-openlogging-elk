@@ -37,6 +37,9 @@ Further deployment options and customizations are described in this document.
 
 ### Get started
 
+Watch this video to see how to deploy the solution on Kubernetes:  
+[![Traffic-Monitor for API-Manager users](https://img.youtube.com/vi/w4n9JcBA-X4/0.jpg)](https://youtu.be/w4n9JcBA-X4)
+
 Here it is explained how you could start the solution with minimal setup. Nevertheless, you need sufficient [resources](#required-resources) for it, if you take over the standard resources defined by the [`values.yaml`](values.yaml). In the further course of the document how you can include your own Secrets, Volumes or adjust the required resources.  
 Create your own `myvalues.yaml` based on the standard [`values.yaml`](values.yaml) and configure needed parameters. All of the parameters are explained in detail in the charts [`values.yaml`](values.yaml).  
 
