@@ -71,14 +71,8 @@ The following should help you to get started, but these volumes are HostPath vol
 Make sure to create a directory `/tmp/data` on your WorkerNodes and give it permissions for everybody.
 
 ```
-kubectl apply -n apim-elk \ 
-    -f https://raw.githubusercontent.com/Axway-API-Management-Plus/apigateway-openlogging-elk/develop/helm/misc/pv-vol1.yaml \
-    -f https://raw.githubusercontent.com/Axway-API-Management-Plus/apigateway-openlogging-elk/develop/helm/misc/pv-vol2.yaml
-
-// Example indicating to grant permissions
-ssh kubenode01
-cd /tmp
-sudo chmod 777 data
+kubectl apply -n apim-elk -f https://raw.githubusercontent.com/Axway-API-Management-Plus/apigateway-openlogging-elk/develop/helm/misc/pv-vol1.yaml
+kubectl apply -n apim-elk -f https://raw.githubusercontent.com/Axway-API-Management-Plus/apigateway-openlogging-elk/develop/helm/misc/pv-vol2.yaml
 ```
 
 ### Install the Helm-Chart
