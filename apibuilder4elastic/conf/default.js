@@ -35,7 +35,7 @@ module.exports = {
 	// Payload configuration settings
 	payload: {
 		// Parameter is used, to enable or disable payload handling (defaults to true, if disabled a 501 is returned)
-		enabled: ("false" == process.env.PAYLOAD_HANDLING_ENABLED) ? false :  true, 
+		enabled: ("false" == process.env.PAYLOAD_HANDLING_ENABLED) ? false : true, 
 		// Mainly used for tests as normally the folder to payload should be fixed
 		folder: process.env.PAYLOAD_FOLDER || '/var/log/payloads', 
 		// Limit the payload to a certain size (in Byte)
