@@ -4,10 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [3.0.0] 2021-05-11
 ### Added
-- An option to skip Elasticsearch and instead still use OPSDB by providing an extra REST-API parameter [#105](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/105)
-- HELM-Charts - Learn more about the provided chart [here](helm/README.md) [#63](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/63)
+- New option to skip Elasticsearch in ANM and instead still use the OPSDB by providing an extra REST-API parameter [#105](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/105)
+- HELM-Chart - Learn more about the provided chart [here](helm/README.md) [#63](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/63)
 
 ### Changed
 - Parameter: `SKIP_PAYLOAD_HANDLING` changed to `PAYLOAD_HANDLING_ENABLED`
