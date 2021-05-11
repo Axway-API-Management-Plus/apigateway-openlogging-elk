@@ -84,7 +84,7 @@ With Elasticsearch volumes and your `myvalues.yaml` file in place, you can start
 ```
 helm install -n apim-elk -f myvalues.yaml axway-elk https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v3.0.0/helm-chart-apim4elastic-v3.0.0.tgz
 ```
-👉 __Please note:__ The Helm Release-Name: __axway-elk__ is mandatory  
+👉 __Please note:__ The Helm Release-Name: __axway-elk__ is mandatory. Read [here](#why-helm-release-name-axway-elk) way.  
 
 You may run the following commands to check the status of the deployment, pods, services, etc.
 ```
