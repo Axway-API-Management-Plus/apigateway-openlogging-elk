@@ -85,7 +85,7 @@ sudo chmod 777 data
 
 With Elasticsearch volumes and your `myvalues.yaml` file in place, you can start the installation:  
 ```
-helm install -n apim-elk -f myvalues.yaml axway-elk https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/3.0.0/apim4elastic-helm-3.0.0.tgz
+helm install -n apim-elk -f myvalues.yaml axway-elk https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v3.0.0/apim4elastic-helm-v3.0.0.tgz
 ```
 👉: __Please note:__ The Helm Release-Name: __axway-elk__ is mandatory  
 

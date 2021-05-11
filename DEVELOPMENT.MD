@@ -14,6 +14,8 @@
   - Adjust/Verify version table
 - README.md
   - `"version": "v2.0.0",`
+- helm/README.md
+  - `"version": "v2.0.0",`
 
 3. Modify the CHANGELOG.md
 - Add/Verify recent changes
