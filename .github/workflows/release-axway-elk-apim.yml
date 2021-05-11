@@ -53,7 +53,7 @@ jobs:
       run: |
         mkdir -p helm/configuration/logstash
         cp -r logstash/pipelines helm/configuration/logstash
-        cp -r logstash/config helm/configuration/config
+        cp -r logstash/config helm/configuration/logstash
         tree -f helm/configuration
     - name: Create packaged Helm-Chart
       run: helm package ./helm --dependency-update --app-version ${{ github.event.release.tag_name }} --version ${{ github.event.release.tag_name }}
