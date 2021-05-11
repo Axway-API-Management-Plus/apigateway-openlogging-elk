@@ -33,7 +33,7 @@ is for an environment where the API management platform is external to Kubernete
 
 Further deployment options and customizations are described in this document.  
 
-![Kubernetes architecture all components](../imgs/kubernetes/all_components_overview_ext_api-management.png)
+![Kubernetes architecture all components](../architecture/kubernetes/all_components_overview_ext_api-management.png)
 
 ### Get started
 
@@ -150,7 +150,7 @@ Traffic accross the available Logstashes. With that, it works almost the same as
 connections.  
 The following diagram illustrates the approach:  
 
-![Filebeat and Logstash via NodePort](../imgs/kubernetes/filebeat_logstash_nodeport_3_worker_nodes.png)  
+![Filebeat and Logstash via NodePort](../architecture/kubernetes/filebeat_logstash_nodeport_3_worker_nodes.png)  
 
 This is an example setup:  
 ```
@@ -266,7 +266,7 @@ To customize the solution according to your needs, you can configure it using yo
 We recommend that you create your own Helm chart that contains all the necessary resources.  
 You then link your custom resources in your `myvalues.yaml` for the final deployment of the solution. The following illustrates the recommended approach:  
 
-![Customized deployment with Helm](../imgs/kubernetes/customized_deployment_with_helm.png)
+![Customized deployment with Helm](../architecture/kubernetes/customized_deployment_with_helm.png)
 
 ### Create your own Helm-Chart
 ```
@@ -474,7 +474,7 @@ If you are already running the Axway API management solution in a Kubernetes env
 
 The following shows Filebeat and API-Management in a Kubernetes cluster:  
 
-![Kubernetes architecture all components](../imgs/kubernetes/all_components_incl_filebeat.png)  
+![Kubernetes architecture all components](../architecture/kubernetes/all_components_incl_filebeat.png)  
 
 One way to provide Filebeat with the necessary log files of the API-Gateway in a central volume. All API-Gateways write to this volume and Filebeat reads & streams the corresponding documents/events.  
 

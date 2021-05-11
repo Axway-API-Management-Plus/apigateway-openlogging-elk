@@ -15,6 +15,7 @@ For each architecture example there will be corresponding detailed information. 
 | :---          | :---                 | 
 | [AWS EC2 HA-Setup 1 Region / 2 Zones](aws-ec2-ha-one-region-2-zones)|Example deployment architecture based on classic AWS-EC2 instances for a high availability solution in an AWS region with 2 availability zones.|
 | [Classic-Setup with native Filebeat](classic-simple-filebeat-native)|Very simple example of a classically deployed API gateway (3 nodes).|
+| [Kubernetes/OpenShift deployment](kubernetes)|Deployment in a Docker-Orchestration framework such as Kubernetes|
 
 # Architecture FAQ
 
@@ -24,7 +25,7 @@ No, the solution is designed to run based on Docker containers. It is also plann
 
 ## Can we get rid of API Builder and instead leverage policies in API Gateway/Manager for API detail lookup and other requirements?
 
-No, a large part of the logic of the solution is in the API Builder application. Implementing this in policies might be possible, but managing & updating the individual customer installations would be very time-consuming and error-prone. So the customer has to reference the appropriate API builder image and you know by version exactly what code base the customer is running.
+No, a large part of the logic of the solution is in the API Builder application. Implementing this in policies might be possible, but managing & updating the individual customer installations would be very time-consuming and error-prone. So the customer has to reference the appropriate API-Builder image and you know by version exactly what code base the customer is running.
 
 ## Can we minimize the number of dependencies? Elastic Search, Logstash, Kibana and FileBeat agents are mandatory. Can API Builder and MemCache be made optional?
 
