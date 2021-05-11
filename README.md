@@ -117,7 +117,7 @@ Components such as the API-Builder project are supposed to run as a Docker-Conta
 
 ### Docker-Compose or HELM
 
-Docker Compose is one option to deploy the solution. Additionally [HELM-Charts](helm/README.md) are provided to deploy the solution on Kubernetes and OpenShift.  
+Docker Compose is one option to deploy the solution. Additionally a [HELM-Chart](helm/README.md) is provided to deploy the solution on Kubernetes or OpenShift.  
 Please be careful using docker-compose version 1.28.x as it may contain a bug/issue reading the .env file. See here: https://github.com/docker/compose/issues/8108 or https://github.com/docker/compose/issues/8173. Perhaps switch back to a previous version. 
 
 ### API-Gateway/API-Management
