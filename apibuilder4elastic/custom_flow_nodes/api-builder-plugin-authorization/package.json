@@ -18,7 +18,7 @@
 		"scripts"
 	],
 	"dependencies": {
-		"@axway/api-builder-sdk": "^1.0.0",
+		"@axway/api-builder-sdk": "^1.1.5",
 		"@axway/requester": "4.0.5",
 		"node-cache": "^5.1.2"
 	},
@@ -26,11 +26,11 @@
 		"@axway/api-builder-runtime": "^4.5.0"
 	},
 	"devDependencies": {
-		"@axway/api-builder-test-utils": "^1.1.0",
-		"chai": "^4.1.2",
+		"@axway/api-builder-test-utils": "^1.1.12",
+		"chai": "^4.3.4",
+		"dotenv": "^8.6.0",
 		"mocha": "^8.3.2",
-		"nock": "^13.0.4",
-		"dotenv": "^8.2.0"
+		"nock": "^13.0.11"
 	},
 	"scripts": {
 		"test": "mocha ./test --recursive -R spec"

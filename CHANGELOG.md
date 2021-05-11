@@ -11,7 +11,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 - Parameter: `SKIP_PAYLOAD_HANDLING` changed to `PAYLOAD_HANDLING_ENABLED`
-- Elastic-Version changed from 7.10.0 to 7.12.1
+- Updated Elastic-Version from 7.10.0 to 7.12.1
+- Updated API-Builder version from Ibiza (4.60.0) to Madrid (4.64.1)
 
 ## [2.4.2] 2021-04-28
 ### Added
