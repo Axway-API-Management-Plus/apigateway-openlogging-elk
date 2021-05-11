@@ -15,7 +15,7 @@ For each architecture example there will be corresponding detailed information. 
 | :---          | :---                 | 
 | [AWS EC2 HA-Setup 1 Region / 2 Zones](aws-ec2-ha-one-region-2-zones)|Example deployment architecture based on classic AWS-EC2 instances for a high availability solution in an AWS region with 2 availability zones.|
 | [Classic-Setup with native Filebeat](classic-simple-filebeat-native)|Very simple example of a classically deployed API gateway (3 nodes).|
-| [Kubernetes/OpenShift deployment](kubernetes)|Deployment in a Docker-Orchestration framework such as Kubernetes|
+| [Kubernetes/OpenShift deployment](kubernetes)|Deployment in a Docker-Orchestration framework such as Kubernetes. It's recommeded to use the [Helm-Chart](../helm) for the deployment.|
 
 # Architecture FAQ
 
