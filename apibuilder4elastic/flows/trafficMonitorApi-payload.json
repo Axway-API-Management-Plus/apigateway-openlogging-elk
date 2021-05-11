@@ -611,7 +611,7 @@
 		},
 		"condition.2": {
 			"type": "nodehandler://axway-flow/condition",
-			"name": "Skip payload handling?",
+			"name": "Payload handling enabled?",
 			"method": "equals",
 			"parameters": [
 				{
@@ -632,14 +632,14 @@
 			"outputs": {
 				"true": {
 					"routes": [
-						"http.5"
+						"javascript.1"
 					],
 					"context": "$.equals",
 					"metaName": "True"
 				},
 				"false": {
 					"routes": [
-						"javascript.1"
+						"http.5"
 					],
 					"context": "$.equals",
 					"metaName": "False"
@@ -649,7 +649,7 @@
 		},
 		"http.5": {
 			"type": "nodehandler://axway-flow/http",
-			"name": "Skip payload handling",
+			"name": "Payload handling is disabled",
 			"method": "setresponse",
 			"parameters": [
 				{
