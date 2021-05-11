@@ -15,7 +15,7 @@ jobs:
     - uses: actions/checkout@v2
     - uses: pocket-apps/action-update-version@v1
       with: 
-        files: 'apibuilder4elastic/package.json,docker-compose.yml,README.MD'
+        files: 'apibuilder4elastic/package.json,docker-compose.yml,README.md'
         version-regexp: 'v\d+.\d+.\d+'
         repo-token: ${{ secrets.GITHUB_TOKEN }}
     - name: Create release archive
