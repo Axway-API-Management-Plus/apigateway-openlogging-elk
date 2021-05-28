@@ -124,6 +124,7 @@ async function addExtHTTPAuthzFilter(params, options) {
 	}
 	// Skip, if the user an API-Gateway Admin
 	if (user.gatewayManager && user.gatewayManager.isAdmin) {
+		logger.debug(`User authorization skippped as the user an API-Gateway Admin`);
 		return elasticQuery;
 	}
 	const cacheKey = `ExtAuthZ###${user.loginName}`;
