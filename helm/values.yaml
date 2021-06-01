@@ -503,7 +503,7 @@ filebeat:
   # provide Configuration and Secrets as part of this values.yaml.
   envFrom: 
     - configMapRef:
-        name: axway-elk-apim4elastic-filebeat-config
+        name: axway-elk-apim4elastic-filebeat-env-config
     # Injects username & password for Elasticsearch stack monitoring
     - secretRef:
         name: axway-elk-apim4elastic-filebeat-secret
@@ -543,13 +543,13 @@ filebeat:
  
   extraVolumeMounts: []
   #  - name: opentraffic-volume
-  #    mountPath: /var/log/opentraffic
+  #    mountPath: /var/opentraffic
   #  - name: traces-volume
-  #    mountPath: /var/log/trace
+  #    mountPath: /var/trace
   #  - name: eventlogs-volume
-  #    mountPath: /var/log/events
+  #    mountPath: /var/events
   #  - name: auditlog-volume
-  #    mountPath: /var/log/audit
+  #    mountPath: /var/audit
 
   # Recommended resource requests for Filebeat
   resources:
@@ -581,7 +581,7 @@ filebeat:
 
       filebeat.inputs:
       - type: log
-        paths: ["/var/log/opentraffic/*.log"]
+        paths: ["/var/opentraffic/*.log"]
         close_inactive: 5m # Close filehandlers, if the file has not changed anymore
         json.keys_under_root: true
         json.overwrite_keys: false
@@ -594,7 +594,7 @@ filebeat:
           filebeatVersion: "2"
 
       - type: log
-        paths: ["/var/log/trace/*.trc"]
+        paths: ["/var/trace/*.trc"]
         close_inactive: 5m # Close filehandlers, if the file has not changed anymore
         multiline.pattern: '^\[ALERT|TRACE|DEBUG|NOTICE|INFO|WARNING|ERROR|CRITICAL|FATAL|SEVERE]'
         multiline.negate: true
@@ -612,7 +612,7 @@ filebeat:
           filebeatVersion: "2"
 
       - type: log
-        paths: ["/var/log/events/*.log", "/var/log/events/processed/*.log.PROCESSED"]
+        paths: ["/var/events/*.log", "/var/events/processed/*.log.PROCESSED"]
         close_inactive: 5m
         json.keys_under_root: true
         json.overwrite_keys: false
@@ -627,7 +627,7 @@ filebeat:
           filebeatVersion: "2"
 
       - type: log
-        paths: ["/var/log/audit/*.log"]
+        paths: ["/var/audit/*.log"]
         close_inactive: 5m
         json.keys_under_root: true
         json.overwrite_keys: false

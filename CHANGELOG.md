@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Changed/Fixed
+- Helm-Chart for Filebeat now creates a dedicated ConfigMap: `...tic-filebeat-env-config` for environment properties and `...tic-filebeat-config` for the filebeat.yaml
+- Helm-Chart now expects files given in `/var/<logType>` instead of `/var/log/<logType>`, as `var/log` was causing the error: read-only file system: unknown when trying to mount the directories
+
 ## [3.0.0] 2021-05-11
 ### Added
 - New option to skip Elasticsearch in ANM and instead still use the OPSDB by providing an extra REST-API parameter [#105](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/105)
