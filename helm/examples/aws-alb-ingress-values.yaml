@@ -1,0 +1,35 @@
+# A sample myvalues.yaml file
+apibuilder4elastic: 
+  anmUrl: "https://my-admin-node-manager:8090"
+  secrets: 
+    apimgrUsername: "apiadmin"
+    apimgrPassword: "changeme"
+# Enable, if you would like to deploy a new Elasticsearch cluster for the solution
+elasticsearch:
+  enabled: true
+  volumeClaimTemplate:
+    accessModes: [ "ReadWriteOnce" ]
+    resources:
+      requests:
+        storage: 1Gi
+
+# Enable, if you would like to deploy Kibana for the solution
+kibana:
+  enabled: true
+  ingress:
+    # Annotations used to expose Kibana on an AWS-ALB
+    # See here for more information
+    # https://kubernetes-sigs.github.io/aws-load-balancer-controller/v2.1/guide/ingress/annotations
+    annotations:
+      kubernetes.io/ingress.class: alb
+      alb.ingress.kubernetes.io/scheme: internet-facing
+      alb.ingress.kubernetes.io/target-type: ip
+      alb.ingress.kubernetes.io/group.name: axway-apim-ingress
+      alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS": 443}]'
+      alb.ingress.kubernetes.io/backend-protocol: "HTTPS"
+      # 302 is also accepted, as Kibana is performing a redirect
+      alb.ingress.kubernetes.io/success-codes: 200,302
+    hosts:
+      - host: kibana.axway-amplify-central.com
+        paths:
+          - path: /*
