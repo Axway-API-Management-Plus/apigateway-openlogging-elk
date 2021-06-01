@@ -1,0 +1,17 @@
+# A sample myvalues.yaml file
+apibuilder4elastic: 
+  anmUrl: "https://my-admin-node-manager:8090"
+  secrets: 
+    apimgrUsername: "apiadmin"
+    apimgrPassword: "changeme"
+# Enable, if you would like to deploy a new Elasticsearch cluster for the solution
+elasticsearch:
+  enabled: true
+  volumeClaimTemplate:
+    accessModes: [ "ReadWriteOnce" ]
+    resources:
+      requests:
+        storage: 1Gi
+# Enable, if you would like to deploy Kibana for the solution
+kibana:
+  enabled: true
