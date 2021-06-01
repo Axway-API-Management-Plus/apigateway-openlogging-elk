@@ -66,7 +66,7 @@ kibana:
 
 Please check the [`values.yaml`](values.yaml) for all possible configuration options. You can get a copy of the file above with:  
 ```
-wget https://raw.githubusercontent.com/Axway-API-Management-Plus/apigateway-openlogging-elk/develop/helm/misc/myvalues.yaml
+wget https://raw.githubusercontent.com/Axway-API-Management-Plus/apigateway-openlogging-elk/develop/helm/examples/myvalues.yaml
 ```
 
 ### Elasticsearch Persistent volumes
