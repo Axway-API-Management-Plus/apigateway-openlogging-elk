@@ -4,7 +4,7 @@ kind: PersistentVolume
 metadata:
   labels:
     app: elasticsearch-master
-  name: pv-vol1
+  name: pv-vol2
 spec:
   accessModes:
   - ReadWriteOnce
