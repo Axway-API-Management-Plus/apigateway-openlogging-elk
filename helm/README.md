@@ -253,8 +253,8 @@ filebeatSecrets:
 # Required for the Elasticsearch readiness check, once users have been generated
 elasticsearch:
   elasticsearchSecrets: 
-    elasticsearchPassword: "elastic"
-    elasticUsername: "BBBBBBBBBBBBBBBBBBBBBB"
+    elasticUsername: "elastic"
+    elasticPassword: "BBBBBBBBBBBBBBBBBBBBBB"
   anonymous: 
     enabled: false
 ```
