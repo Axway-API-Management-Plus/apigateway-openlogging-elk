@@ -476,11 +476,60 @@ The following shows Filebeat and API-Management in a Kubernetes cluster:
 
 ![Kubernetes architecture all components](../architecture/kubernetes/all_components_incl_filebeat.png)  
 
-One way to provide Filebeat with the necessary log files of the API-Gateway in a central volume. All API-Gateways write to this volume and Filebeat reads & streams the corresponding documents/events.  
+One way to provide Filebeat with the necessary log files of the API-Gateway in a central persistent volume. All API-Gateways write to this volume and Filebeat reads & streams the corresponding documents/events.  
 
-Add the log volume into the Filebeat container using `extraVolumes` and mount it in the correct location using `extraVolumeMounts`. You can find sample configuration in `values.yaml`. Make sure to mount the volume only once.
+### Filebeat using a shared persistent volume
 
-Other options are possible, but have not yet been tested.
+Add the log volume into the Filebeat container using `extraVolumes` and mount it in the correct location using `extraVolumeMounts`. You can find sample configuration in `values.yaml`. Make sure to mount the volume only once.  
+
+Here is one example using a pre-configured AWS-EBS volume: 
+
+```yaml
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: opentraffic-pv-volume
+spec:
+  capacity:
+    storage: 3Gi
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: gp2
+  awsElasticBlockStore:
+    fsType: "ext4"
+    volumeID: "vol-0b4396115b8eb52d3"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  annotations:
+  name: opentraffic-pv-claim
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 3Gi
+  volumeName: opentraffic-pv-volume
+```
+And the following goes into your `myvalues.yaml`:
+```yaml
+filebeat:
+  enabled: true
+  elasticsearchClusterUUID: "XXXXXXXXXXXXXXXXXXXXX"
+
+  extraVolumeMounts:
+    - name: opentraffic
+      mountPath: /var/opentraffic
+
+  extraVolumes:
+    - name: opentraffic
+      persistentVolumeClaim:
+        claimName: opentraffic-pv-claim
+```
+
+Of course, this a very basic example just to explain the concept. More sophisticated options are possible and perhaps even recommended depending on your infrastructure.
 
 ### Upgrade the release
 
