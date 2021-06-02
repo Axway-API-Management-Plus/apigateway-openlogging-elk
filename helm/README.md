@@ -246,9 +246,11 @@ kibana:
   kibanaSecrets:
     username: "kibana_system"
     password: "ZZZZZZZZZZZZZZZZZ"
-filebeatSecrets: 
-  beatsSystemUsername: "beats_system"
-  beatsSystemPassword: "YYYYYYYYYYYYYYYYYYY"
+filebeat:
+  filebeatSecrets: 
+    beatsSystemUsername: "beats_system"
+    beatsSystemPassword: "YYYYYYYYYYYYYYYYYYY"
+  # Required for the internal stack monitoring to work with Filebeat
   elasticsearchClusterUUID: "YOUR-CLUSTER-UUID-ID"
 # Required for the Elasticsearch readiness check, once users have been generated
 elasticsearch:
