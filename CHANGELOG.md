@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed/Fixed
 - Helm-Chart for Filebeat now creates a dedicated ConfigMap: `...tic-filebeat-env-config` for environment properties and `...tic-filebeat-config` for the filebeat.yaml
 - Helm-Chart now expects files given in `/var/<logType>` instead of `/var/log/<logType>`, as `var/log` was causing the error: read-only file system: unknown when trying to mount the directories
+- Helm-Chart now expects the Cluster-UUID for Filebeat given in `filebeat.elasticsearchClusterUUID` instead of `filebeat.filebeatSecrets.elasticsearchClusterUUID`
 
 ## [3.0.0] 2021-05-11
 ### Added

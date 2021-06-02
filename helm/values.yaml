@@ -495,7 +495,8 @@ filebeat:
     enabled: true
     beatsSystemUsername: "beats_system"
     beatsSystemPassword: ""
-    elasticsearchClusterUUID: ""
+  # Required for the internal stack monitoring to work with Filebeat
+  elasticsearchClusterUUID: ""
   # The number of Filebeat worker threads sending data to Logstash. See parameter: FILEBEAT_WORKER in env-sample
   filebeatWorker: 2
   # Injects the environment variables from the ConfigMaps and Secrets into the 
