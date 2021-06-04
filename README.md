@@ -1107,7 +1107,8 @@ If you have errors connecting from the Admin Node Manager to the API Builder, th
 Please make sure that the Admin-Node Manager has imported the correct CA.  
 If you connect to the API Builder using a hostname other than `apibuilder4elastic`, you may receive the following error message:  
 `The certificate was not issued by the domain issuer`  
-To solve the problem you can create a [remote host](https://docs.axway.com/bundle/axway-open-docs/page/docs/apim_policydev/apigw_gw_instances/general_remote_hosts/index.html) and disable the hostname validation (`Verify server’s certificate matches requested hostname`). Or you can use your own matching keys & [certificates](#custom-certificates).
+To solve the problem you can create a [remote host](https://docs.axway.com/bundle/axway-open-docs/page/docs/apim_policydev/apigw_gw_instances/general_remote_hosts/index.html) and disable the hostname validation (`Verify server’s certificate matches requested hostname`). Or you can use your own matching keys & [certificates](#custom-certificates).  
+Another reason might be a missing or expired license for the Admin-Node-Manager. Please see: https://support.axway.com/kb/178766/language/en
 
 <p align="right"><a href="#table-of-content">Top</a></p>
 
