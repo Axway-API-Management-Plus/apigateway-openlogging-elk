@@ -59,7 +59,7 @@ Sample:  `region=${env.REGION == '[invalid field]' ? "" : env.REGION}`
 
 ### Add region filter
 
-Adds the region filter, which is optional to the `http.request.rawURI` attribute.
+This `Scripting filter` using `Javascript` adds the region filter, which is optional to the `http.request.rawURI` attribute.
 
 ```javascript
 function invoke(msg) {
@@ -84,5 +84,5 @@ Sample: `${env.API_BUILDER_URL}/api/elk/v1${http.request.rawURI}${regionFilter}`
 ![Connect to ES API](../imgs/connect-to-elasticsearch-api.png)  
 
 ### Is not implemented
-Is not implemented is a `Compare attribute` filter configured like so:  
+If a certain protocol, such as `Directory`for instance, is not implemented API-Builder will return a 501 to indicate the request should be handled by the OPSDB. The `Compare attribute` filter configured like so:  
 ![Is not implemented](../imgs/is_not_implemented.png)  
