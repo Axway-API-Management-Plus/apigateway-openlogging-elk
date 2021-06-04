@@ -80,7 +80,7 @@ function invoke(msg) {
 
 The URL of the Connect to URL filter points to your running API-Builder docker container and port - **default is 8889** using the environment variable: `API_BUILDER_URL`.  
 Additionally the URL is forwarding the optional region filter based on the configured `REGION` to make sure, the Admin-Node-Manager loads the correct regional data.  
-Sample: `${env.API_BUILDER_URL}/api/elk/v1${http.request.rawURI}${regionFilter}`  
+Sample: `${env.API_BUILDER_URL}/api/elk/v1${http.request.rawURI}`  
 ![Connect to ES API](../imgs/connect-to-elasticsearch-api.png)  
 
 ### Is not implemented
