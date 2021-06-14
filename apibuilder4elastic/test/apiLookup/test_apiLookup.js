@@ -61,7 +61,7 @@ describe('Test API-Lookup endpoint', function () {
 			});
 		});
 
-		it('[apilookup-0002] Should return http 404 for an unknown API', () => {
+		it('[apilookup-0002] Should return http 200 for an unknown API', () => {
 			nock('https://mocked-api-gateway:8075').get('/api/portal/v1.3/proxies?field=name&op=eq&value=UnknownAPI').reply(200, '[]');
 			return requestAsync({
 				method: 'GET',
@@ -69,7 +69,7 @@ describe('Test API-Lookup endpoint', function () {
 				auth: auth,
 				json: true
 			}).then(({ response, body }) => {
-				expect(response.statusCode).to.equal(404);
+				expect(response.statusCode).to.equal(200);
 				expect(body).to.be.an('Object');
 				expect(body.message).to.equal(`No APIs found with name: 'UnknownAPI'`);
 				nock.cleanAll();
