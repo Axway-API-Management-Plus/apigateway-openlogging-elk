@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Helm-Chart for Filebeat now creates a dedicated ConfigMap: `...tic-filebeat-env-config` for environment properties and `...tic-filebeat-config` for the filebeat.yaml
 - Helm-Chart now expects files given in `/var/<logType>` instead of `/var/log/<logType>`, as `var/log` was causing the error: read-only file system: unknown when trying to mount the directories
 - Helm-Chart now expects the Cluster-UUID for Filebeat given in `filebeat.elasticsearchClusterUUID` instead of `filebeat.filebeatSecrets.elasticsearchClusterUUID`
+- Logstash lookup for unknown APIs should return 200 instead of 404 [#109](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/109)
 - API-Builder version changed from Madrid to Ottawa
 
 ### Fixed
