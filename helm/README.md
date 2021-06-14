@@ -85,7 +85,7 @@ kubectl apply -n apim-elk -f https://raw.githubusercontent.com/Axway-API-Managem
 
 With Elasticsearch volumes and your `myvalues.yaml` file in place, you can start the installation:  
 ```
-helm install -n apim-elk -f myvalues.yaml axway-elk https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v3.0.1/helm-chart-apim4elastic-v3.0.1.tgz
+helm install -n apim-elk -f myvalues.yaml axway-elk https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v3.1.0/helm-chart-apim4elastic-v3.1.0.tgz
 ```
 👉 __Please note:__ The Helm Release-Name: __axway-elk__ is mandatory. Read [here](#why-helm-release-name-axway-elk) why.  
 
@@ -343,7 +343,7 @@ Optionally you may change the generated Yaml file to really become a more flexib
 
 #### 3. Install or upgrade your setup chart
 ```
-helm upgrade -n apim-elk axway-elk-setup .
+helm install -n apim-elk -f myvalues.yaml axway-elk https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v3.1.0/helm-chart-apim4elastic-v3.1.0.tgz
 Release "axway-elk-setup" has been upgraded. Happy Helming!
 NAME: axway-elk-setup
 LAST DEPLOYED: Tue May  4 15:06:30 2021
@@ -537,7 +537,7 @@ Of course, this a very basic example just to explain the concept. More sophistic
 
 Example how to upgrade an existing Helm release:  
 ```
-helm upgrade -n apim-elk -f myvalues.yaml axway-elk apim4elastic-3.1.0.tgz
+helm install -n apim-elk -f myvalues.yaml axway-elk https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v3.1.0/helm-chart-apim4elastic-v3.1.0.tgz
 ```
 
 ## Required resources
