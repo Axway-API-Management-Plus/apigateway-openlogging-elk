@@ -537,7 +537,7 @@ Of course, this a very basic example just to explain the concept. More sophistic
 
 Example how to upgrade an existing Helm release:  
 ```
-helm install -n apim-elk -f myvalues.yaml axway-elk https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v3.1.0/helm-chart-apim4elastic-v3.1.0.tgz
+helm upgrade -n apim-elk -f myvalues.yaml axway-elk https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v3.1.0/helm-chart-apim4elastic-v3.1.0.tgz
 ```
 
 ## Required resources
