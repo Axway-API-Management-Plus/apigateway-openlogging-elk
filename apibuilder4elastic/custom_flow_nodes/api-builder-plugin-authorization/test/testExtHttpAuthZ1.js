@@ -29,7 +29,8 @@ describe('flow-node Authorization', () => {
 	describe('#externalHTTPAuthZFilter', () => {
 		it('should return with HTTP output', async () => {
 			const { value, output } = await flowNode.switchOnAuthZ({ });
-
+			// For external HTTP-Based AuthZ we do not load API-Manager User information
+			expect(value.getApiManagerUser).to.equal(false);
 			expect(output).to.equal('extHttp');
 		});
 

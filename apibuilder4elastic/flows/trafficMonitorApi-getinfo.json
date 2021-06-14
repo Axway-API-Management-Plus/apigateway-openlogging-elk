@@ -280,9 +280,7 @@
 				{
 					"name": "getApiManagerUser",
 					"type": "jsonpath",
-					"value": "$.authzConfig.enableUserAuthorization",
-					"metaName": "Get the API-Manager user?",
-					"metaDescription": "If set to false, the flow-node does not tries to lookup the user on the API-Manager. Set it to false, when for instance user authorization is disabled as there might be no belonging user configured in the API-Manager."
+					"value": "$.authzConfig.getApiManagerUser"
 				}
 			],
 			"outputs": {

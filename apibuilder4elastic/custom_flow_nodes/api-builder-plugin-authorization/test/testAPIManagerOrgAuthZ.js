@@ -42,7 +42,8 @@ describe('flow-node Authorization', () => {
 	describe('#apiManagerAuthZFilter', () => {
 		it('should return with API-Manager Org output', async () => {
 			const { value, output } = await flowNode.switchOnAuthZ({ });
-
+			// When using Org-Based AuthZ we need to load the user and it's organization
+			expect(value.getApiManagerUser).to.equal(true);
 			expect(output).to.equal('org');
 		});
 

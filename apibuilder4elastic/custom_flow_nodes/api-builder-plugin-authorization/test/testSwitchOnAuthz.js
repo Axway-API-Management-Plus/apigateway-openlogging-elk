@@ -36,9 +36,10 @@ describe('flow-node Authorization - All disabled', () => {
 			let plugin = await MockRuntime.loadPlugin(getPlugin);
 			plugin.setOptions({ validateOutputs: true });
 			let flowNode = plugin.getFlowNode('authorization');
-
+			
 			const { value, output } = await flowNode.switchOnAuthZ({ });
 
+			expect(value.getApiManagerUser).to.equal(false);
 			expect(output).to.equal('skip');
 		});
 	});

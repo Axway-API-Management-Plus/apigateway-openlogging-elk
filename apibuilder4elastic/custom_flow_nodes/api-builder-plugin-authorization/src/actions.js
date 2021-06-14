@@ -29,16 +29,17 @@ async function switchOnAuthZ(params, options) {
 	// No authorization config declared at all using default
 	if(!authZConfig) {
 		logger.debug(`Using API-Manager organization based authorization.`);
-		return options.setOutput('org', {});
+		return options.setOutput('org', {getApiManagerUser: true});
 	} else if(authZConfig.enableUserAuthorization==false) {	
 		logger.debug(`User authorization is disabled.`);
-		return options.setOutput('skip', authZConfig);
+		authZConfig.getApiManagerUser = false;
+		return options.setOutput('skip', {...authZConfig, getApiManagerUser: false});
 	} else if(authZConfig.externalHTTP && authZConfig.externalHTTP.enabled != false) {
 		logger.debug(`Using external HTTP based authorization.`);
-		return options.setOutput('extHttp', authZConfig.externalHTTP);
+		return options.setOutput('extHttp', {...authZConfig.externalHTTP, getApiManagerUser: false});
 	} else if(authZConfig.apimanagerOrganization && authZConfig.apimanagerOrganization.enabled != false) {
 		logger.debug(`Using API-Manager organization based authorization.`);
-		return options.setOutput('org', authZConfig.apimanagerOrganization);
+		return options.setOutput('org', { ...authZConfig.apimanagerOrganization, getApiManagerUser: true});
 	} else {
 		throw new Error('All user authorization options are disabled, but skipUserAuthorization is not set to true');
 	}

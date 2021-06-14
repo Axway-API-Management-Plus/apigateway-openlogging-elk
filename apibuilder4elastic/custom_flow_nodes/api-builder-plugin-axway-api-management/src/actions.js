@@ -40,6 +40,7 @@ const securityDeviceTypes = {
  */
 async function lookupCurrentUser(params, options) {
 	const { requestHeaders, getApiManagerUser } = params;
+	debugger;
 	const logger = options.logger;
 	cache = options.pluginContext.cache;
 	pluginConfig = options.pluginConfig;
