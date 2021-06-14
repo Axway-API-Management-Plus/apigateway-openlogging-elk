@@ -7,6 +7,9 @@
 
 - helm/values.yaml
   - `"imageTag": "v3.0.0",`
+- helm/Chart.yaml
+  - `"version": "v3.0.0",`
+  - `"appVersion": "v3.0.0",`
 - docker-compose.yml
   - `image: cwiechmann/apibuilder4elastic:v2.0.0`
 - apibuilder4elastic/package.json
