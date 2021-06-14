@@ -127,17 +127,19 @@ async function addExtHTTPAuthzFilter(params, options) {
 		logger.debug(`User authorization skippped as the user an API-Gateway Admin`);
 		return elasticQuery;
 	}
+	logger.debug(`Caching external user authorization information using key: 'ExtAuthZ###${user.loginName}'`);
 	const cacheKey = `ExtAuthZ###${user.loginName}`;
 	var cfg = authZConfig.externalHTTP;
+	var replacedUri;
 	if(!cache.has(cacheKey)) {
 		if(createRequestUri) {
-			cfg.replacedUri = await createRequestUri(user, cfg, options);
-			logger.debug(`Request URI created: ${cfg.replacedUri}`);
+			replacedUri = await createRequestUri(user, cfg, options);
+			logger.debug(`Request URI created: ${replacedUri}`);
 		} else {
 			throw new Error(`Missing method: createRequestUri. You have to defined the createRequestUri method to create the request URI.`);
 		}
-		logger.info(`External groups NOT found in cache with key: '${cacheKey}'. Going to request information from ${cfg.replacedUri}`);
-		const resp = await requester(cfg.replacedUri, cfg.headers, cfg.method, cfg.body, { logger, ...cfg.options });
+		logger.info(`External groups NOT found in cache with key: '${cacheKey}'. Going to request information from ${replacedUri}`);
+		const resp = await requester(replacedUri, cfg.headers, cfg.method, cfg.body, { logger, ...cfg.options });
 		cache.set(cacheKey, resp);
 	} else {
 		logger.debug(`External groups found in cache with key: '${cacheKey}'.`);
