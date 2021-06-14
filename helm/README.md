@@ -343,7 +343,7 @@ Optionally you may change the generated Yaml file to really become a more flexib
 
 #### 3. Install or upgrade your setup chart
 ```
-helm install -n apim-elk -f myvalues.yaml axway-elk https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v3.1.0/helm-chart-apim4elastic-v3.1.0.tgz
+helm upgrade -n apim-elk -f myvalues.yaml axway-elk https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v3.1.0/helm-chart-apim4elastic-v3.1.0.tgz
 Release "axway-elk-setup" has been upgraded. Happy Helming!
 NAME: axway-elk-setup
 LAST DEPLOYED: Tue May  4 15:06:30 2021
@@ -381,7 +381,7 @@ This tells every component to read the CA for Elasticsearch from this location.
 #### 5. Install or Upgrade the APIM4Elastic solution
 
 ```
-helm upgrade -n apim-elk -f myvalues.yaml axway-elk apim4elastic-3.0.0.tgz
+helm upgrade -n apim-elk -f myvalues.yaml axway-elk https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v3.1.0/helm-chart-apim4elastic-v3.1.0.tgz
 ```
 
 ### Example Custom-API-Builder Configuration
@@ -467,7 +467,7 @@ apibuilder4elastic:
 
 #### 5. Install or Upgrade the APIM4Elastic solution
 ```
-helm upgrade -n apim-elk -f myvalues.yaml axway-elk apim4elastic-3.0.1.tgz
+helm upgrade -n apim-elk -f myvalues.yaml axway-elk https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v3.1.0/helm-chart-apim4elastic-v3.1.0.tgz
 ```
 
 ## API-Management running in Kubernetes
