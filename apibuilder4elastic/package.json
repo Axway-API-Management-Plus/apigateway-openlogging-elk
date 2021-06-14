@@ -35,19 +35,19 @@
 		"@axway/api-builder-plugin-fn-mustache": "^1.0.7",
 		"@axway/api-builder-plugin-fn-restclient": "^2.0.22",
 		"@axway/api-builder-plugin-fn-swagger": "^2.9.3",
-		"@axway/api-builder-plugin-ft-timer": "^1.0.0",
-		"@axway/api-builder-runtime": "^4.64.1",
+		"@axway/api-builder-plugin-ft-timer": "^1.0.1",
+		"@axway/api-builder-runtime": "^4.66.8",
 		"api-builder-plugin-authorization": "file:custom_flow_nodes/api-builder-plugin-authorization",
 		"api-builder-plugin-axway-api-management": "file:custom_flow_nodes/api-builder-plugin-axway-api-management",
 		"api-builder-plugin-elk-solution-utils": "file:custom_flow_nodes/api-builder-plugin-elk-solution-utils",
 		"api-builder-plugin-traffic-monitor-api-utils": "file:custom_flow_nodes/api-builder-plugin-traffic-monitor-api-utils"
 	},
 	"devDependencies": {
-		"@axway/api-builder-admin": "^1.42.5",
+		"@axway/api-builder-admin": "^1.44.5",
 		"chai": "^4.3.4",
 		"dotenv": "^8.6.0",
 		"mocha": "^8.4.0",
-		"nock": "^13.0.11",
+		"nock": "^13.1.0",
 		"simple-mock": "^0.8.0",
 		"template-file": "^5.1.0"
 	},
