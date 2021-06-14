@@ -533,7 +533,7 @@ filebeat:
 
 Of course, this a very basic example just to explain the concept. More sophisticated options are possible and perhaps even recommended depending on your infrastructure.
 
-### Upgrade the release
+## Upgrade the release
 
 Example how to upgrade an existing Helm release:  
 ```
