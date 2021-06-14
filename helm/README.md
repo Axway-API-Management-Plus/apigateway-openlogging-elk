@@ -85,7 +85,7 @@ kubectl apply -n apim-elk -f https://raw.githubusercontent.com/Axway-API-Managem
 
 With Elasticsearch volumes and your `myvalues.yaml` file in place, you can start the installation:  
 ```
-helm install -n apim-elk -f myvalues.yaml axway-elk https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v3.0.0/helm-chart-apim4elastic-v3.0.0.tgz
+helm install -n apim-elk -f myvalues.yaml axway-elk https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v3.0.1/helm-chart-apim4elastic-v3.0.1.tgz
 ```
 👉 __Please note:__ The Helm Release-Name: __axway-elk__ is mandatory. Read [here](#why-helm-release-name-axway-elk) why.  
 
@@ -467,7 +467,7 @@ apibuilder4elastic:
 
 #### 5. Install or Upgrade the APIM4Elastic solution
 ```
-helm upgrade -n apim-elk -f myvalues.yaml axway-elk apim4elastic-3.0.0.tgz
+helm upgrade -n apim-elk -f myvalues.yaml axway-elk apim4elastic-3.0.1.tgz
 ```
 
 ## API-Management running in Kubernetes

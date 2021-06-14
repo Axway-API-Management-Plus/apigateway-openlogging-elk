@@ -10,6 +10,9 @@
 - helm/Chart.yaml
   - `"version": "v3.0.0",`
   - `"appVersion": "v3.0.0",`
+- helm/README.md
+  - Check the versions
+  - `helm install -n apim-e .... teway-openlogging-elk/releases/download/v3.0.0/helm-chart-apim4elastic-v3.0.0.tgz`
 - docker-compose.yml
   - `image: cwiechmann/apibuilder4elastic:v2.0.0`
 - apibuilder4elastic/package.json
