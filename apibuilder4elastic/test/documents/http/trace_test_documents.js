@@ -8953,5 +8953,40 @@ module.exports = [
 			"ephemeral_id": "9737ae36-dc56-4936-970a-465139166046",
 			"hostname": "345c5895f393"
 		}
+	},
+	{
+
+		"month_field": "6",
+		"level": "ERROR",
+		"@timestamp": "2020-06-29T13:26:43.687Z",
+		"fields": {
+			"logtype": "trace"
+		},
+		"ecs": {
+			"version": "1.1.0"
+		},
+		"correlationId": "8cfac8602703e3b0356039b9",
+		"log": {
+			"offset": 1506416,
+			"file": {
+				"path": "/var/log/trace/quickstartserver_20200616020614.trc"
+			}
+		},
+		"message": "            OpenAPIValidator [Path '/id'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])",
+		"host": {
+			"name": "345c5895f393"
+		},
+		"tags": [
+			"beats_input_codec_plain_applied",
+			"trace"
+		],
+
+		"agent": {
+			"id": "ac847a41-9cce-406e-94e0-4a0efc90d749",
+			"version": "7.4.0",
+			"type": "filebeat",
+			"ephemeral_id": "9737ae36-dc56-4936-970a-465139166046",
+			"hostname": "345c5895f393"
+		}
 	}
 ];

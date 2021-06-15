@@ -152,6 +152,26 @@ describe('Traffic Monitor API', function () {
 				expect(body).to.have.lengthOf(2);
 			});
 		});
+
+		it('[trace-0006] Should return entire trace message that contains some special characters', () => {
+			return requestAsync({
+				method: 'GET',
+				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/trace/8cfac8602703e3b0356039b9?format=json`,
+				headers: {
+					'cookie': 'VIDUSR=trace-0005-DAVID-1597468226-Z+qdRW4rGZnwzQ==', 
+					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
+				},
+				json: true
+			}).then(({ response, body }) => {
+				expect(response.statusCode).to.equal(200);
+				expect(body).to.be.an('Array');
+				expect(body).to.have.lengthOf(1);
+
+				expect(body[0].level).to.equal('ERROR');
+				expect(body[0].text).to.equal('OpenAPIValidator [Path \'/id\'] Instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])');
+				expect(body[0].type).to.equal('trace');
+			});
+		});
 	});
 });
 	

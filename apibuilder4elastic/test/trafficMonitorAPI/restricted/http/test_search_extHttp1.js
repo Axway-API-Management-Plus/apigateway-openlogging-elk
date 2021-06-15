@@ -50,7 +50,7 @@ describe('Endpoints', function () {
 	});
 
 	describe('Restricted search using an external HTTP AuthZ-Service', () => {
-		it.only('[Restricted-Search-ExtHttp1-0001] Execute a search for user: chris should get back 2 entries', () => {
+		it('[Restricted-Search-ExtHttp1-0001] Execute a search for user: chris should get back 2 entries', () => {
 			nock('https://mocked-api-gateway:8090').get('/api/rbac/currentuser').reply(200, { "result": "chris" });
 			nock('https://mocked-api-gateway:8090').get('/api/rbac/permissions/currentuser').replyWithFile(200, './test/mockedReplies/apigateway/operatorChris.json');
 			// Disabled API-Manager Mocks, as this AuthZ should not need the API-Manager
