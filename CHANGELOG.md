@@ -4,7 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [3.1.0]
+## [Unreleased]
+### Fixed
+- Trace message in Traffic-Monitor is truncated [#112](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/112)
+- API-Manager User looked up at API-Manager even if external HTTP-Based AuthZ is configured [#111](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/111)
+
+## [3.1.0] 2021-05-13
 ### Changed
 - Helm-Chart for Filebeat now creates a dedicated ConfigMap: `...tic-filebeat-env-config` for environment properties and `...tic-filebeat-config` for the filebeat.yaml
 - Helm-Chart now expects files given in `/var/<logType>` instead of `/var/log/<logType>`, as `var/log` was causing the error: read-only file system: unknown when trying to mount the directories
