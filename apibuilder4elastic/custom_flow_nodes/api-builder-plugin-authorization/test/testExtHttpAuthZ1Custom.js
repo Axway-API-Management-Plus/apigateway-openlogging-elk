@@ -35,7 +35,7 @@ describe('flow-node Authorization', () => {
 				.replyWithFile(200, './test/mock/extAuthZ/response1.json');
 			
 			const { value, output } = await flowNode.addExtHTTPAuthzFilter({
-				user: user, elasticQuery: elasticQuery
+				user: user, elasticQuery: elasticQuery, restrictionField: "customProperties.field1"
 			});
 			
 			expectedQuery.bool.must.push({
