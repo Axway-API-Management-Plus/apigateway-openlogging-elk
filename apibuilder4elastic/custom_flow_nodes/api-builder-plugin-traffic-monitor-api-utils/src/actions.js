@@ -130,6 +130,56 @@ async function handleFilterFields(parameters, options) {
 	return elasticSearchquery;
 }
 
+
+async function createCircuitPathQuery(parameters, options) {
+	const { params, user, authzConfig } = parameters;
+	const { logger } = options;
+	if (!params) {
+		throw new Error('Missing required parameter: params');
+	}
+	if (!user) {
+		throw new Error('Missing required parameter: user');
+	}
+	if (!authzConfig) {
+		throw new Error('Missing required parameter: authzConfig');
+	}
+	if (!params.correlationID) {
+		throw new Error('Missing required parameter: params.correlationID');
+	}
+	if (!params.serviceID) {
+		throw new Error('Missing required parameter: params.serviceID');
+	}
+	var elasticQuery = { bool: { must: [
+                { term: { correlationId: params.correlationID } },
+                { term: { 'processInfo.serviceId': params.serviceID } }
+            ] }
+    };
+	// If user is an Admin or AuthZ is disabled, return the base query
+	if (user.gatewayManager.isAdmin || authzConfig.enableUserAuthorization == false) {
+		return elasticQuery;
+	}
+	// If AuthZ based on API-Managers is enabled check if the user has an Admin-Role
+	if (authzConfig.apimanagerOrganization && authzConfig.apimanagerOrganization.enabled) {
+		var orgFilter;
+		if (user.apiManager.role == "admin") {
+			orgFilter = {
+				exists: {
+					"field": "transactionSummary.serviceContext"
+				}
+			};
+		} else {
+			orgFilter = {
+				term: {
+					"transactionSummary.serviceContext.apiOrg": user.apiManager.organizationName
+				}
+			};
+		}
+		elasticQuery.bool.must.push(orgFilter);
+	}
+	// Traffic-Details don't contain any custom properties - Hence an AuthZ based on Custom-Properties is not possible here
+    return elasticQuery;
+}
+
 async function getTransactionElementLegInfo(parameters, options) {
 	const { transactionElements, legIdParam, detailsParam, sheadersParam, rheadersParam, correlationId, timestamp } = parameters;
 	const { logger } = options;
@@ -380,5 +430,6 @@ function convertAgo(ago, logger) {
 
 module.exports = {
 	handleFilterFields,
+	createCircuitPathQuery,
 	getTransactionElementLegInfo
 };

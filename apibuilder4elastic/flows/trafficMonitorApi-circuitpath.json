@@ -162,7 +162,7 @@
 				"next": {
 					"context": "$.index",
 					"routes": [
-						"javascript.3"
+						"traffic-monitor-api-utils.1"
 					],
 					"metaName": "Next"
 				},
@@ -199,9 +199,7 @@
 			"outputs": {
 				"next": {
 					"context": "$.elasticQuery",
-					"routes": [
-						"elasticsearch.1"
-					],
+					"routes": [],
 					"metaName": "Next"
 				},
 				"error": {
@@ -216,7 +214,7 @@
 		},
 		"http.1": {
 			"type": "nodehandler://axway-flow/http",
-			"name": "HTTP Error Response",
+			"name": "HTTP 500 Error",
 			"method": "setresponse",
 			"parameters": [
 				{
@@ -228,10 +226,8 @@
 				},
 				{
 					"name": "body",
-					"type": "object",
-					"value": "{\n  \"errors\": [\n    {\n      \"code\": \"n.a\",\n      \"message\": \"error occurred\" \n    }\n  ]\n}",
-					"metaName": "Body",
-					"metaDescription": "The response payload"
+					"type": "jsonpath",
+					"value": "$.error"
 				}
 			],
 			"outputs": {
@@ -258,7 +254,9 @@
 				{
 					"name": "getApiManagerUser",
 					"type": "jsonpath",
-					"value": "$.authzConfig.getApiManagerUser"
+					"value": "$.authzConfig.getApiManagerUser",
+					"metaName": "Get the API-Manager user?",
+					"metaDescription": "If set to false, the flow-node does not tries to lookup the user on the API-Manager. Set it to false, when for instance user authorization is disabled as there might be no belonging user configured in the API-Manager."
 				}
 			],
 			"outputs": {
@@ -313,6 +311,42 @@
 				}
 			},
 			"metaMethod": "Switch on Authorization"
+		},
+		"traffic-monitor-api-utils.1": {
+			"type": "nodehandler://api-builder-plugin-traffic-monitor-api-utils/traffic-monitor-api-utils",
+			"name": "Create circuit path query",
+			"method": "createCircuitPathQuery",
+			"parameters": [
+				{
+					"name": "authzConfig",
+					"type": "jsonpath",
+					"value": "$.authzConfig"
+				},
+				{
+					"name": "params",
+					"type": "jsonpath",
+					"value": "$.params"
+				},
+				{
+					"name": "user",
+					"type": "jsonpath",
+					"value": "$.user"
+				}
+			],
+			"outputs": {
+				"next": {
+					"routes": [
+						"elasticsearch.1"
+					],
+					"context": "$.elasticsearch.query"
+				},
+				"error": {
+					"routes": [
+						"http.1"
+					],
+					"context": "$.error"
+				}
+			}
 		}
 	}
 }

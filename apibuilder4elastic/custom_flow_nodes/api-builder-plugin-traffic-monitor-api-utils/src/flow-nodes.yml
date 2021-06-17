@@ -99,3 +99,42 @@ flow-nodes:
             context: $.error
             schema:
               type: object
+
+      createCircuitPathQuery:
+        name: Create circuit path query
+        description: Creates the Elasticsearch query for circuit path requests.
+        parameters:
+          params:
+            name: Params
+            description: The object must contain the given request parameters.
+            required: true
+            schema:
+              type: object
+          user:
+            name: User
+            description: The user object using the API-Gateway Traffic-Monitor
+            required: true
+            schema:
+              type: object
+          authzConfig:
+            name: Authorization configuration
+            description: The authorization configuration object returned from Get AuthZ Config
+            required: true
+            schema:
+              type: object
+              
+        returns:
+          name: Next
+          description: Returns the created search query for the circuit path
+          context: $.elasticsearch.query
+          schema:
+            type: object
+        throws:
+          name: Error
+          description: An unexpected error was encountered.
+          context: $.error
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
