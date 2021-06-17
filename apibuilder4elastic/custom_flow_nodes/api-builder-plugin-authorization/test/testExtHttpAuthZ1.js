@@ -98,7 +98,7 @@ describe('flow-node Authorization', () => {
 				.replyWithFile(200, './test/mock/extAuthZ/response2.json');
 			
 			const { value, output } = await flowNode.addExtHTTPAuthzFilter({
-				user: user, elasticQuery: elasticQuery
+				user: user, elasticQuery: elasticQuery, restrictionField: "customProperties.field1"
 			});
 			
 			expectedQuery.bool.must.push({
@@ -119,11 +119,32 @@ describe('flow-node Authorization', () => {
 				.replyWithFile(200, './test/mock/extAuthZ/response1.json');
 			
 			const { value, output } = await flowNode.addExtHTTPAuthzFilter({
-				user: user, elasticQuery: elasticQuery
+				user: user, elasticQuery: elasticQuery, restrictionField: "customProperties.field1"
 			});
 			
 			expectedQuery.bool.must.push({
 				terms: {  "customProperties.field1" : ["DGP", "UIF", "CSPARTINT", "CORSOEDMS", "CORSOLMS", "TCL"] }
+			});
+
+			expect(value).to.be.instanceOf(Object);
+			expect(value).to.deep.equal(expectedQuery);
+			expect(output).to.equal('next');
+		});
+
+		it('should add the filter for MULTIPLE APIM-IDs for the detailed API-Request', async () => { 
+			var user = JSON.parse(fs.readFileSync('./test/mock/noAdminUserObject.json'), null);
+			var elasticQuery = JSON.parse(fs.readFileSync('./test/mock/givenElasticQuery.json'), null);
+			let expectedQuery = JSON.parse(JSON.stringify(elasticQuery));
+			nock('https://external-http:8180').defaultReplyHeaders({'Content-Type': 'application/json; charset=utf-8'})
+				.get(`/api/v1/users/anna/groups?registry=AD&caching=false&filter=apg-t`)
+				.replyWithFile(200, './test/mock/extAuthZ/response1.json');
+			
+			const { value, output } = await flowNode.addExtHTTPAuthzFilter({
+				user: user, elasticQuery: elasticQuery, restrictionField: "transactionSummary.customProperties.field1"
+			});
+			
+			expectedQuery.bool.must.push({
+				terms: {  "transactionSummary.customProperties.field1" : ["DGP", "UIF", "CSPARTINT", "CORSOEDMS", "CORSOLMS", "TCL"] }
 			});
 
 			expect(value).to.be.instanceOf(Object);

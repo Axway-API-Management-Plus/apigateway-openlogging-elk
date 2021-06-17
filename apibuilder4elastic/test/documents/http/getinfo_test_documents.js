@@ -175,7 +175,10 @@ module.exports = [
 			}
 			,
 			"protocolSrc": "8065",
-			"path": "/ars/api/todos"
+			"path": "/ars/api/todos",
+            "customProperties": {
+                "field1": "DGP"
+            },
 		},
 		"correlationId": "0455ff5e82267be8182a553d",
 		"processInfo": {

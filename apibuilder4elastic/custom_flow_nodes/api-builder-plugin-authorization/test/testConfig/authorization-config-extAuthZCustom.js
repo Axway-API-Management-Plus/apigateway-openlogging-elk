@@ -21,7 +21,7 @@ async function createRequestUri(user, cfg, options) {
 	return cfg.uri.replace("__loginName__", user.loginName);
 }
 
-async function handleResponse(response, elasticQuery, cfg, options) {
+async function handleResponse(response, elasticQuery, cfg, options, restrictionField) {
 	var filters = elasticQuery.bool.must;
 	var regex = /.{3}-.{2}-.{2}-.{3}-.{1}-(.*)-.*/;
 	var apimIds = [];
@@ -40,10 +40,10 @@ async function handleResponse(response, elasticQuery, cfg, options) {
 	}
 	var filter = {};
 	if(cfg.restrictionFieldType == "custom") {
-		filter[cfg.restrictionField] = apimIds.join(' ');
+		filter[restrictionField] = apimIds.join(' ');
 		filters.push({match: filter });
 	} else {
-		filter[cfg.restrictionField] = apimIds;
+		filter[restrictionField] = apimIds;
 		filters.push({terms: filter });
 	}
 	return elasticQuery;

@@ -39,18 +39,18 @@
 			"method": "search",
 			"parameters": [
 				{
-					"name": "query",
-					"type": "jsonpath",
-					"value": "$.elasticQuery",
-					"metaName": "Query",
-					"metaDescription": "Defines the search definition using the Query DSL. Learn more: https://www.elastic.co/guide/en/elasticsearch/reference/7.x/query-dsl.html"
-				},
-				{
 					"name": "index",
 					"type": "jsonpath",
 					"value": "$.index",
 					"metaName": "Index",
 					"metaDescription": "Comma-separated list or wildcard expression of index names used to limit the request."
+				},
+				{
+					"name": "query",
+					"type": "jsonpath",
+					"value": "$.elasticsearch.query",
+					"metaName": "Query",
+					"metaDescription": "Defines the search definition using the Query DSL. Learn more: https://www.elastic.co/guide/en/elasticsearch/reference/7.x/query-dsl.html"
 				}
 			],
 			"outputs": {
@@ -227,7 +227,9 @@
 				{
 					"name": "body",
 					"type": "jsonpath",
-					"value": "$.error"
+					"value": "$.error",
+					"metaName": "Body",
+					"metaDescription": "The response payload"
 				}
 			],
 			"outputs": {
@@ -320,17 +322,105 @@
 				{
 					"name": "authzConfig",
 					"type": "jsonpath",
-					"value": "$.authzConfig"
+					"value": "$.authzConfig",
+					"metaName": "Authorization configuration",
+					"metaDescription": "The authorization configuration object returned from Get AuthZ Config"
 				},
 				{
 					"name": "params",
 					"type": "jsonpath",
-					"value": "$.params"
+					"value": "$.params",
+					"metaName": "Params",
+					"metaDescription": "The object must contain the given request parameters."
 				},
 				{
 					"name": "user",
 					"type": "jsonpath",
-					"value": "$.user"
+					"value": "$.user",
+					"metaName": "User",
+					"metaDescription": "The user object using the API-Gateway Traffic-Monitor"
+				}
+			],
+			"outputs": {
+				"next": {
+					"routes": [
+						"authorization.2"
+					],
+					"context": "$.elasticsearch.query",
+					"metaName": "Next"
+				},
+				"error": {
+					"routes": [
+						"http.1"
+					],
+					"context": "$.error",
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Create circuit path query"
+		},
+		"authorization.2": {
+			"type": "nodehandler://api-builder-plugin-authorization/authorization",
+			"name": "Switch on Authorization",
+			"method": "switchOnAuthZ",
+			"parameters": [],
+			"outputs": {
+				"skip": {
+					"routes": [
+						"elasticsearch.1"
+					],
+					"context": "$.authzConfig",
+					"metaName": "Skip"
+				},
+				"org": {
+					"routes": [
+						"authorization.3"
+					],
+					"context": "$.authzConfig",
+					"metaName": "Organization"
+				},
+				"extHttp": {
+					"routes": [
+						"authorization.4"
+					],
+					"context": "$.authzConfig",
+					"metaName": "Ext-HTTP"
+				},
+				"error": {
+					"routes": [
+						"http.1"
+					],
+					"context": "$.error",
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Switch on Authorization"
+		},
+		"authorization.3": {
+			"type": "nodehandler://api-builder-plugin-authorization/authorization",
+			"name": "API-Manager-Org Authorization",
+			"method": "addApiManagerOrganizationFilter",
+			"parameters": [
+				{
+					"name": "user",
+					"type": "jsonpath",
+					"value": "$.user",
+					"metaName": "API-Manager user",
+					"metaDescription": "User object looked up at the API-Manager"
+				},
+				{
+					"name": "elasticQuery",
+					"type": "jsonpath",
+					"value": "$.elasticsearch.query",
+					"metaName": "Elasticsearch query",
+					"metaDescription": "The Elasticsearch query that should be enhanced with a filter."
+				},
+				{
+					"name": "indexProperty",
+					"type": "string",
+					"value": "\"transactionSummary.serviceContext.apiOrg\"",
+					"metaName": "Index property",
+					"metaDescription": "The name of the Elasticsearch property within the index to restrict the query on. If not given: serviceContext.apiOrg is used."
 				}
 			],
 			"outputs": {
@@ -338,13 +428,113 @@
 					"routes": [
 						"elasticsearch.1"
 					],
-					"context": "$.elasticsearch.query"
+					"context": "$.elasticsearch.query",
+					"metaName": "Next"
+				},
+				"error": {
+					"routes": [
+						"http.4"
+					],
+					"context": "$.error",
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "API-Manager-Org Authorization"
+		},
+		"authorization.4": {
+			"type": "nodehandler://api-builder-plugin-authorization/authorization",
+			"name": "External HTTP-Based Authorization",
+			"method": "addExtHTTPAuthzFilter",
+			"parameters": [
+				{
+					"name": "user",
+					"type": "jsonpath",
+					"value": "$.user",
+					"metaName": "API-Manager user",
+					"metaDescription": "User object that contains the loginName property"
+				},
+				{
+					"name": "elasticQuery",
+					"type": "jsonpath",
+					"value": "$.elasticsearch.query",
+					"metaName": "Elasticsearch query",
+					"metaDescription": "The Elasticsearch query that should be enhanced with a filter."
+				},
+				{
+					"name": "restrictionField",
+					"type": "jsonpath",
+					"value": "$.authzConfig.detailedRestrictionField",
+					"metaName": "Restriction field",
+					"metaDescription": "The field on which the restriction should be applied. For instance a custom property."
+				}
+			],
+			"outputs": {
+				"next": {
+					"routes": [
+						"elasticsearch.1"
+					],
+					"context": "$.elasticsearch.query",
+					"metaName": "Next"
+				},
+				"noAccess": {
+					"routes": [
+						"http.3"
+					],
+					"context": "$.noAccess",
+					"metaName": "No access"
 				},
 				"error": {
 					"routes": [
 						"http.1"
 					],
-					"context": "$.error"
+					"context": "$.error",
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "External HTTP-Based Authorization"
+		},
+		"http.3": {
+			"type": "nodehandler://axway-flow/http",
+			"name": "No access",
+			"method": "setresponse",
+			"parameters": [
+				{
+					"name": "status",
+					"type": "number",
+					"value": "403",
+					"metaName": "Status",
+					"metaDescription": "The HTTP status code"
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.response",
+					"routes": [],
+					"metaName": "Next"
+				}
+			},
+			"metaMethod": "Set HTTP Response"
+		},
+		"http.4": {
+			"type": "nodehandler://axway-flow/http",
+			"name": "HTTP 500 Error",
+			"method": "setresponse",
+			"parameters": [
+				{
+					"name": "status",
+					"type": "number",
+					"value": "500"
+				},
+				{
+					"name": "body",
+					"type": "jsonpath",
+					"value": "$.error"
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.response",
+					"routes": []
 				}
 			}
 		}

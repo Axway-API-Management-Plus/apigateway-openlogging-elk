@@ -89,7 +89,7 @@ async function addApiManagerOrganizationFilter(params, options) {
 }
 
 async function addExtHTTPAuthzFilter(params, options) {
-	var { user, elasticQuery } = params;
+	var { user, elasticQuery, restrictionField } = params;
 	const { logger, pluginConfig } = options;
 	cache = options.pluginContext.cache;
 	var authZConfig = options.pluginContext.authZConfig;
@@ -150,7 +150,8 @@ async function addExtHTTPAuthzFilter(params, options) {
 		return options.setOutput('noAccess', `User: ${user.loginName} has no access`);
 	}
 	if(responseHandler) {
-		elasticQuery = responseHandler(response, elasticQuery, cfg, options);
+		logger.debug(`Calling responseHandler with restriction field: ${restrictionField}`);
+		elasticQuery = responseHandler(response, elasticQuery, cfg, options, restrictionField);
 	} else {
 		logger.error(`Missing responseHandler method: handleResponse`);
 	}

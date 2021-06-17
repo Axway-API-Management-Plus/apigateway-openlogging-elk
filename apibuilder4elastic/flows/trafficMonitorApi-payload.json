@@ -163,18 +163,25 @@
 			"method": "Execute",
 			"parameters": [
 				{
-					"name": "code",
-					"type": "string",
-					"value": "\"let elasticQuery = ({\\n    \\\"bool\\\": {\\n      \\\"must\\\": [\\n        {\\\"term\\\": {\\\"correlationId\\\": data.params.correlationID}},\\n          {\\\"term\\\": {\\\"processInfo.serviceId\\\": data.params.serviceID}}\\n      ]\\n    }\\n  });\\n  return elasticQuery;\"",
-					"metaName": "code",
-					"metaDescription": "A JavaScript function body. Supports `await` and returning promises."
-				},
-				{
 					"name": "data",
 					"type": "jsonpath",
 					"value": "$",
 					"metaName": "data",
 					"metaDescription": "The value to apply as the `data` argument to the JavaScript code. For objects and arrays, `data` is passed by reference."
+				},
+				{
+					"name": "code",
+					"type": "string",
+					"value": "\"let elasticQuery = {\\n    \\\"bool\\\": {\\n      \\\"must\\\": [\\n        {\\\"term\\\": {\\\"correlationId\\\": data.params.correlationID}},\\n          {\\\"term\\\": {\\\"processInfo.serviceId\\\": data.params.serviceID}}\\n      ]\\n    }\\n  };\\n  return elasticQuery;\"",
+					"metaName": "code",
+					"metaDescription": "A JavaScript function body. Supports `await` and returning promises."
+				},
+				{
+					"name": "unsafe",
+					"type": "boolean",
+					"value": "true",
+					"metaName": "Unsafe mode",
+					"metaDescription": "USE WITH CAUTION. When enabled, JavaScript is not executed in a sandboxed environment and all globals are available."
 				}
 			],
 			"outputs": {
@@ -413,7 +420,9 @@
 				{
 					"name": "getApiManagerUser",
 					"type": "jsonpath",
-					"value": "$.authzConfig.getApiManagerUser"
+					"value": "$.authzConfig.getApiManagerUser",
+					"metaName": "Get the API-Manager user?",
+					"metaDescription": "If set to false, the flow-node does not tries to lookup the user on the API-Manager. Set it to false, when for instance user authorization is disabled as there might be no belonging user configured in the API-Manager."
 				}
 			],
 			"outputs": {
@@ -495,6 +504,11 @@
 					"value": "$.user",
 					"metaName": "API-Manager user",
 					"metaDescription": "User object that contains the loginName property"
+				},
+				{
+					"name": "restrictionField",
+					"type": "jsonpath",
+					"value": "$.authzConfig.detailedRestrictionField"
 				}
 			],
 			"outputs": {

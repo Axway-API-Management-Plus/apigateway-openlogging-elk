@@ -170,7 +170,9 @@
 				{
 					"name": "getApiManagerUser",
 					"type": "jsonpath",
-					"value": "$.authzConfig.getApiManagerUser"
+					"value": "$.authzConfig.getApiManagerUser",
+					"metaName": "Get the API-Manager user?",
+					"metaDescription": "If set to false, the flow-node does not tries to lookup the user on the API-Manager. Set it to false, when for instance user authorization is disabled as there might be no belonging user configured in the API-Manager."
 				}
 			],
 			"outputs": {
@@ -592,6 +594,11 @@
 					"value": "$.elasticsearch.query",
 					"metaName": "Elasticsearch query",
 					"metaDescription": "The Elasticsearch query that should be enhanced with a filter."
+				},
+				{
+					"name": "restrictionField",
+					"type": "jsonpath",
+					"value": "$.authzConfig.restrictionField"
 				}
 			],
 			"outputs": {

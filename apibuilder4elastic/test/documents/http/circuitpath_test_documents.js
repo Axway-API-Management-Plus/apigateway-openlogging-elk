@@ -154,8 +154,10 @@ module.exports = [
                 "apiVersion": "1.0.5", 
                 "apiDeprecated": false, 
                 "apiState": "published" 
-            }
-            ,
+            },
+            "customProperties": {
+                "field1": "DGP"
+            },
             "path": "/v2/pet/findByStatus",
             "protocolSrc": "8065",
             "status": "success",

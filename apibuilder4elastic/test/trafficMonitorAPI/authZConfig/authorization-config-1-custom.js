@@ -7,6 +7,10 @@ var authorizationConfig = {
 		uri: process.env.EXT_AUTHZ_URI, 
 		// e.g.: customProperty1.apimId
 		restrictionField: "customProperties.field1",
+		// When requesting details, such as CircuitPath or Payloads the Traffic-Details index is used, which stores 
+		// custom properties at a different place as part of the transactionSummary object, 
+		// hence this field must be used to limit the query. 
+		detailedRestrictionField: "transactionSummary.customProperties.field1",
 		// The type of the customProperty as it's configured in the API-Manager (custom, select, switch)
 		restrictionFieldType: "custom", 
 	}
@@ -20,7 +24,7 @@ async function createRequestUri(user, cfg, options) {
 	return cfg.uri.replace("${loginName}", user.loginName);
 }
 
-async function handleResponse(response, elasticQuery, cfg, options) {
+async function handleResponse(response, elasticQuery, cfg, options, restrictionField) {
 	var filters = elasticQuery.bool.must;
 	var regex = /.{3}-.{2}-.{2}-.{3}-.{1}-(.*)-.*/;
 	var apimIds = [];
@@ -39,10 +43,10 @@ async function handleResponse(response, elasticQuery, cfg, options) {
 	}
 	var filter = {};
 	if(cfg.restrictionFieldType == "custom") {
-		filter[cfg.restrictionField] = apimIds.join(' ');
+		filter[restrictionField] = apimIds.join(' ');
 		filters.push({match: filter });
 	} else {
-		filter[cfg.restrictionField] = apimIds;
+		filter[restrictionField] = apimIds;
 		filters.push({terms: filter });
 	}
 	return elasticQuery;

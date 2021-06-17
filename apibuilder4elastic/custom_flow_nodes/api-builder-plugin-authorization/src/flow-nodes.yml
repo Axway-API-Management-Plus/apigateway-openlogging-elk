@@ -82,6 +82,12 @@ flow-nodes:
             required: true
             schema:
               type: object
+          restrictionField:
+            name: Restriction field
+            description: The field on which the restriction should be applied. For instance a custom property.
+            required: true
+            schema:
+              type: string
           elasticQuery:
             name: Elasticsearch query
             description: The Elasticsearch query that should be enhanced with a filter.
