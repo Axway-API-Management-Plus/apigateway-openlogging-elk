@@ -14,7 +14,7 @@ async function sendRequest(url, options, data, expectedRC) {
 				response.on("end", function () {
 					var body = Buffer.concat(chunks);
 					if (statusCode < 200 || statusCode > 299 && statusCode!=expectedRC) {
-						reject({message: "Unexpected response for HTTP-Request.", statusCode: statusCode });
+						reject({message: `Unexpected response for HTTP-Request. Response: ${body.toString()}`, statusCode: statusCode });
 						return;
                     }
 					const userResponse = body.toString();
