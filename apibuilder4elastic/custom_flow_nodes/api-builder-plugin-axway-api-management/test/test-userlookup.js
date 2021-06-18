@@ -79,7 +79,7 @@ describe('Tests User-Lookup with complete configuration parameters', () => {
 			});
 
 			expect(value).to.be.instanceOf(Error);
-			expect(value.message).to.have.string('Unexpected response for HTTP-Request. Response-Code: 403');
+			expect(value.message).to.have.string('Error getting current user Request sent to');
 			expect(output).to.equal('error');
 		});
 
