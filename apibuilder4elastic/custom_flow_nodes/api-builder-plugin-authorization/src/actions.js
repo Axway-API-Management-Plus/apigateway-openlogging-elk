@@ -102,6 +102,9 @@ async function addExtHTTPAuthzFilter(params, options) {
 	if (!elasticQuery) {
 		throw new Error('Missing required parameter: elasticQuery');
 	}
+	if (!restrictionField) {
+		throw new Error('Missing required parameter: restrictionField');
+	}
 
 	if (!(user instanceof Object)) {
 		throw new Error('Parameter: user must be an object');

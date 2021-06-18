@@ -56,7 +56,7 @@ describe('flow-node Authorization', () => {
 
 		it('should error when parameter user is not an object', async () => {
 			const { value, output } = await flowNode.addExtHTTPAuthzFilter({
-				user: "A String", elasticQuery: {}
+				user: "A String", elasticQuery: {}, restrictionField: {}
 			});
 
 			expect(value).to.be.instanceOf(Error)
@@ -66,7 +66,7 @@ describe('flow-node Authorization', () => {
 
 		it('should error when parameter filters is not an array', async () => {
 			const { value, output } = await flowNode.addExtHTTPAuthzFilter({
-				user: { user: "my user"}, elasticQuery: "A String"
+				user: { user: "my user"}, elasticQuery: "A String", restrictionField: {}
 			});
 
 			expect(value).to.be.instanceOf(Error)
@@ -81,7 +81,7 @@ describe('flow-node Authorization', () => {
 				.replyWithFile(200, './test/mock/extAuthZ/unexpectedResponse.json');
 
 			const { value, output } = await flowNode.addExtHTTPAuthzFilter({
-				user: { loginName: "anna" }, elasticQuery: elasticQuery
+				user: { loginName: "anna" }, elasticQuery: elasticQuery, restrictionField: {}
 			});
 			
 			expect(value).to.be.instanceOf(Error)
@@ -160,7 +160,7 @@ describe('flow-node Authorization', () => {
 				.replyWithFile(200, './test/mock/extAuthZ/noGroupResponse.json');
 
 			var { value, output } = await flowNode.addExtHTTPAuthzFilter({
-				user: user, elasticQuery: elasticQuery
+				user: user, elasticQuery: elasticQuery, restrictionField: {}
 			});
 
 			expect(output).to.equal('noAccess');
@@ -169,7 +169,7 @@ describe('flow-node Authorization', () => {
 			nock.cleanAll();
 
 			var { value, output } = await flowNode.addExtHTTPAuthzFilter({
-				user: user, elasticQuery: elasticQuery
+				user: user, elasticQuery: elasticQuery, restrictionField: {}
 			});
 			expect(output).to.equal('noAccess');
 			expect(value).to.equal('User: anna has no access');
@@ -180,7 +180,7 @@ describe('flow-node Authorization', () => {
 			var elasticQuery = JSON.parse(fs.readFileSync('./test/mock/givenElasticQuery.json'), null);
 
 			var { value, output } = await flowNode.addExtHTTPAuthzFilter({
-				user: user, elasticQuery: elasticQuery
+				user: user, elasticQuery: elasticQuery, restrictionField: {}
 			});
 			expect(value).to.be.instanceOf(Object);
 			expect(value).to.deep.equal(elasticQuery);
