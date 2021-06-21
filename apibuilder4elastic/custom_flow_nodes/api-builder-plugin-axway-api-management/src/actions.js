@@ -129,10 +129,10 @@ async function lookupTopology(params, options) {
 	var topology;
 	if(requestHeaders.authorization) {
 		logger.debug(`Trying to get API-Gateway topology based on Authorization header.`);
-		topology = await _getTopology(headers = {'Authorization': `${requestHeaders.authorization}`});
+		topology = await _getTopology(headers = {'Authorization': `${requestHeaders.authorization}`}, options);
 	} else {
 		logger.trace(`Trying to get API-Gateway topology based on VIDUSR cookie.`);
-		topology = await _getTopology(headers = {'Cookie': requestHeaders.cookie, 'csrf-token': requestHeaders['csrf-token']});
+		topology = await _getTopology(headers = {'Cookie': requestHeaders.cookie, 'csrf-token': requestHeaders['csrf-token']}, options);
 	}
 	if(topology.services) {
 		topology.services = topology.services.filter(function(service) {
@@ -453,7 +453,7 @@ async function _getCurrentGWUser(requestHeaders) {
 	return loginName;
 }
 
-async function _getTopology(requestHeaders) {
+async function _getTopology(requestHeaders, options) {
 	var options = {
 		path: '/api/topology',
 		headers: requestHeaders,
@@ -464,7 +464,11 @@ async function _getTopology(requestHeaders) {
 			return response.body.result;
 		})
 		.catch(err => {
-			throw new Error(`Error getting API-Gateway topology from Admin-Node-Manager. Request sent to: '${pluginConfig.apigateway.url}'. Response-Code: ${err.statusCode}`);
+			options.logger.error(`Error getting API-Gateway topology from Admin-Node-Manager. Request sent to: '${pluginConfig.apigateway.url}'. Response-Code: ${err.statusCode}`);
+			options.logger.error(`This error will cause the application to fail in a future release.`);
+			return {};
+			// During a grace period it not cause the entire application to fail - Just EMT will not include all services.
+			//throw new Error(`Error getting API-Gateway topology from Admin-Node-Manager. Request sent to: '${pluginConfig.apigateway.url}'. Response-Code: ${err.statusCode}`);
 		});
 	return topology;
 }
