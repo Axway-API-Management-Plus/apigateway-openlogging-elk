@@ -56,7 +56,7 @@ describe('Payload', function () {
 	after(() => stopApiBuilder(server));
 
 	describe('Payload tests', () => {
-		it.only('[Payload-0001]  Should return sent payload for leg 0', () => {
+		it('[Payload-0001]  Should return sent payload for leg 0', () => {
 			const testPayload = fs.readFileSync(`${payloadFolder}/2020-07-03/08.55/0455ff5e82267be8182a553d-0-sent`);
 			return requestAsync({
 				method: 'GET',  // 
