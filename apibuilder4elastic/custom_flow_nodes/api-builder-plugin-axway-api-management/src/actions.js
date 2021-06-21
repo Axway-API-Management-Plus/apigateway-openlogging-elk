@@ -132,7 +132,7 @@ async function lookupTopology(params, options) {
 		topology = await _getTopology(headers = {'Authorization': `${requestHeaders.authorization}`});
 	} else {
 		logger.trace(`Trying to get API-Gateway topology based on VIDUSR cookie.`);
-		topology = await _getTopology(headers = {'Cookie': requestHeaders.cookie});
+		topology = await _getTopology(headers = {'Cookie': requestHeaders.cookie, 'csrf-token': requestHeaders['csrf-token']});
 	}
 	if(topology.services) {
 		topology.services = topology.services.filter(function(service) {
