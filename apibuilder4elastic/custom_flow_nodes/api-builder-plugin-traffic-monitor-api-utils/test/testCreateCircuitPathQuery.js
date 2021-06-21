@@ -1,6 +1,7 @@
 const { expect } = require('chai');
 const { MockRuntime } = require('@axway/api-builder-test-utils');
 const getPlugin = require('../src');
+const fs = require('fs');
 
 describe('Flow node CreateCircuitPath query', () => {
 	let plugin;
@@ -44,15 +45,15 @@ describe('Flow node CreateCircuitPath query', () => {
 		});
 
 		it('should error when required parameter params.serviceId is missing', async () => {
-			const { value, output } = await flowNode.createCircuitPathQuery({ params: { correlationID: 123 }, user: {}, authzConfig: {} } );
+			const { value, output } = await flowNode.createCircuitPathQuery({ params: { correlationID: 123 }, user: {}, authzConfig: {}, gatewayTopology: {} } );
 
 			expect(value).to.be.instanceOf(Error)
-				.and.to.have.property('message', 'Missing required parameter: params.serviceID');
+				.and.to.have.property('message', 'Missing required parameter: params.serviceID when not using EMT.');
 			expect(output).to.equal('error');
 		});
 
 		it('should succeed with valid parameters as an API-Manager User', async () => {
-			const { value, output } = await flowNode.createCircuitPathQuery( { params: { correlationID: "MyCorrelationId", serviceID: "TestServiceId" }, user: {
+			const { value, output } = await flowNode.createCircuitPathQuery( { params: { correlationID: "MyCorrelationId", serviceID: "TestServiceId" }, gatewayTopology: {}, user: {
 				apiManager: { role: "user", organizationName: "Test-Org" },  
 				gatewayManager: {}
 			}, authzConfig: { 
@@ -73,7 +74,7 @@ describe('Flow node CreateCircuitPath query', () => {
 		});
 
 		it('should succeed with valid parameters having API-Manager Org-AuthZ disabled', async () => {
-			const { value, output } = await flowNode.createCircuitPathQuery( { params: { correlationID: "MyCorrelationId", serviceID: "TestServiceId" }, user: {
+			const { value, output } = await flowNode.createCircuitPathQuery( { params: { correlationID: "MyCorrelationId", serviceID: "TestServiceId" }, gatewayTopology: {}, user: {
 				apiManager: { role: "user", organizationName: "Test-Org" },  
 				gatewayManager: {}
 			}, authzConfig: { 
@@ -93,7 +94,7 @@ describe('Flow node CreateCircuitPath query', () => {
 		});
 
 		it('should succeed with valid parameters with API-Manager Admin-Role', async () => {
-			const { value, output } = await flowNode.createCircuitPathQuery( { params: { correlationID: "MyCorrelationId", serviceID: "TestServiceId" }, user: {
+			const { value, output } = await flowNode.createCircuitPathQuery( { params: { correlationID: "MyCorrelationId", serviceID: "TestServiceId" }, gatewayTopology: {}, user: {
 				apiManager: { role: "admin", organizationName: "Test-Org" },  
 				gatewayManager: {}
 			}, authzConfig: { 
@@ -107,6 +108,27 @@ describe('Flow node CreateCircuitPath query', () => {
 					must: [
 						{ term: { correlationId: "MyCorrelationId" } },
 						{ term: { 'processInfo.serviceId': "TestServiceId" } },
+						{ exists: { field: "transactionSummary.serviceContext" } }
+					]
+				}
+			});
+		});
+
+		it('should succeed when EMT is enabled', async () => {
+			var topology = JSON.parse(fs.readFileSync('./test/mockedReplies/emtTopology.json'), null);
+			const { value, output } = await flowNode.createCircuitPathQuery( { params: { correlationID: "MyCorrelationId", serviceID: "TestServiceId" }, gatewayTopology: topology, user: {
+				apiManager: { role: "admin", organizationName: "Test-Org" },  
+				gatewayManager: {}
+			}, authzConfig: { 
+				apimanagerOrganization: { enabled: true }
+			} } );
+
+			expect(output).to.equal('next');
+			expect(value).to.be.a('object');
+			expect(value).to.deep.equal({
+				bool: {
+					must: [
+						{ term: { correlationId: "MyCorrelationId" } },
 						{ exists: { field: "transactionSummary.serviceContext" } }
 					]
 				}

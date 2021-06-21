@@ -135,7 +135,7 @@ async function handleFilterFields(parameters, options) {
 
 
 async function createCircuitPathQuery(parameters, options) {
-	const { params, user, authzConfig } = parameters;
+	const { params, user, authzConfig, gatewayTopology } = parameters;
 	const { logger } = options;
 	if (!params) {
 		throw new Error('Missing required parameter: params');
@@ -149,14 +149,21 @@ async function createCircuitPathQuery(parameters, options) {
 	if (!params.correlationID) {
 		throw new Error('Missing required parameter: params.correlationID');
 	}
-	if (!params.serviceID) {
-		throw new Error('Missing required parameter: params.serviceID');
+	if (!gatewayTopology) {
+		throw new Error('Missing required parameter: gatewayTopology');
+	}
+	if (!gatewayTopology.emtEnabled && !params.serviceID) {
+		throw new Error('Missing required parameter: params.serviceID when not using EMT.');
 	}
 	var elasticQuery = { bool: { must: [
                 { term: { correlationId: params.correlationID } },
-                { term: { 'processInfo.serviceId': params.serviceID } }
             ] }
     };
+	if(!gatewayTopology.emtEnabled) { // Don't include serviceId filter, if EMT is enabled
+		elasticQuery.bool.must.push(
+			{ term: { 'processInfo.serviceId': params.serviceID } }
+		);
+	}
 	// If user is an Admin or AuthZ is disabled, return the base query
 	if (user.gatewayManager.isAdmin || authzConfig.enableUserAuthorization == false) {
 		return elasticQuery;

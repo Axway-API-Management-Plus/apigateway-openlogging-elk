@@ -131,7 +131,12 @@ flow-nodes:
             required: true
             schema:
               type: object
-              
+          gatewayTopology:
+            name: API-Gateway Topology
+            description: "The API-Gateway topology as read by flow-node: axway-api-management->lookupTopology"
+            required: true
+            schema:
+              type: object
         returns:
           name: Next
           description: Returns the created search query for the circuit path
