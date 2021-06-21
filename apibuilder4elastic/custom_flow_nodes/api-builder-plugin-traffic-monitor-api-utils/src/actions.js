@@ -386,27 +386,27 @@ async function addServiceIdFilter(filters, serviceID, gatewayTopology, logger) {
 	if(!includeOtherServiceIDs) {
 		// For classic mode, we simply include the serviceId
 		logger.debug(`Request for serviceId: ${serviceID} is NOT including other serviceIDs.`);
-		filters.mustFilters.push({ "term": { "processInfo.serviceId.keyword": serviceID } });
+		filters.mustFilters.push({ "term": { "processInfo.serviceId": serviceID } });
 	} else {
-		logger.debug(`Request for serviceId: ${serviceID} is including other serviceIDs.`);
+		logger.info(`EMT-Mode - Request for serviceId: ${serviceID} is including other serviceIDs.`);
 		// Include a wildcard for all services no longer active
 		filters.mustFilters.push( { "bool": {
 			// Should turns into an OR condition
 			"should": [ {
 				// Include the serviceId given
-				"term": { "processInfo.serviceId.keyword": serviceID }
+				"term": { "processInfo.serviceId": serviceID }
 			},
 				// And all other services 
 			{
-				"match": { "processInfo.serviceId": prefix }
+				"match": { "processInfo.serviceId.text": prefix }
 			}
 		 ]
 		} });
 		// But ignore all other Service-IDs which are still active, as they are handled by a separate dedicated request for this service-ID
 		gatewayTopology.services.forEach(function (service) {
 			if(service.id.startsWith(prefix) && service.id!=serviceID) {
-				logger.info(`EMT-Mode - Exclude serviceID: ${service.id}`);
-				filters.mustNotFilters.push({ "term": { "processInfo.serviceId.keyword": service.id } });
+				logger.info(`EMT-Mode - Exclude serviceID: ${service.id} as it handled by another request.`);
+				filters.mustNotFilters.push({ "term": { "processInfo.serviceId": service.id } });
 			}
 		});
 	}

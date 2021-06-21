@@ -464,7 +464,7 @@ async function _getTopology(requestHeaders) {
 			return response.body.result;
 		})
 		.catch(err => {
-			throw new Error(`Error getting API-Gateway topology user. Request sent to: '${pluginConfig.apigateway.url}'. Response-Code: ${err.statusCode}`);
+			throw new Error(`Error getting API-Gateway topology from Admin-Node-Manager. Request sent to: '${pluginConfig.apigateway.url}'. Response-Code: ${err.statusCode}`);
 		});
 	return topology;
 }

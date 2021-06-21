@@ -46,7 +46,7 @@ describe('flow-node traffic-monitor-api-utils', () => {
 			expect(value).to.deep.equal({ "bool": { "must": [
 					  {"match": {"http.uri": { "query": "/v2/pet/findByStatus", "operator": "and" }}},
 					  {"exists": {"field": "http"}},
-					  {"term": {"processInfo.serviceId.keyword": "instance-1"}}
+					  {"term": {"processInfo.serviceId": "instance-1"}}
 					]}});
 		});
 
@@ -59,7 +59,7 @@ describe('flow-node traffic-monitor-api-utils', () => {
 			expect(value).to.deep.equal({ "bool": { "must": [
 					  {"match": {"http.sslSubject": { "query": "/CN=*.ngrok.io" }}},
 					  {"exists": {"field": "http"}},
-					  {"term": {"processInfo.serviceId.keyword": "instance-1"}}
+					  {"term": {"processInfo.serviceId": "instance-1"}}
 					]}});
 		});
 
@@ -73,7 +73,7 @@ describe('flow-node traffic-monitor-api-utils', () => {
 				{"match": {"http.uri": { "query": "/v2/pet/findByStatus", "operator": "and" }}},
 				{"match": {"http.method": { "query": "GET" }}},
 				{"exists": {"field": "http"}},
-				{"term": {"processInfo.serviceId.keyword": "instance-1"}}
+				{"term": {"processInfo.serviceId": "instance-1"}}
 			  ]}});
 		});
 
@@ -85,7 +85,7 @@ describe('flow-node traffic-monitor-api-utils', () => {
 			expect(value).to.be.a('object');
 			expect(value).to.deep.equal({ "bool": { "must": [
 				{ exists: { "field": "http"} },
-				{ term: {"processInfo.serviceId.keyword": "instance-1"}},
+				{ term: {"processInfo.serviceId": "instance-1"}},
 				{ range: { "duration": { "gte": "100" } } }
 			  ]}});
 		});
@@ -109,7 +109,7 @@ describe('flow-node traffic-monitor-api-utils', () => {
 
 			expect(value).to.deep.equal({ "bool": { "must": [
 				{ exists: { "field": "http"} },
-				{ term: {"processInfo.serviceId.keyword": "instance-1"}},
+				{ term: {"processInfo.serviceId": "instance-1"}},
 				{ range: { "@timestamp": { "gte": "1607010000000", "lte": "16070900000000" } } }
 			  ]}});
 		});
@@ -125,7 +125,7 @@ describe('flow-node traffic-monitor-api-utils', () => {
 			expect(value).to.deep.equal({ "bool": { "must": [
 				{"match": {"fileTransfer.serviceType": { "query": "ftps" }}},
 				{"exists": {"field": "fileTransfer"}},
-				{"term": {"processInfo.serviceId.keyword": "instance-1"}}
+				{"term": {"processInfo.serviceId": "instance-1"}}
 			  ]}});
 		});
 
@@ -138,7 +138,7 @@ describe('flow-node traffic-monitor-api-utils', () => {
 			expect(value).to.deep.equal({ "bool": { "must": [
 				{ range: {"http.status": { "gte": 200, "lte": 200 }}},
 				{ exists: { "field": "http"} },
-				{ term: {"processInfo.serviceId.keyword": "instance-1"}}
+				{ term: {"processInfo.serviceId": "instance-1"}}
 			  ]}});
 		});
 
@@ -151,7 +151,7 @@ describe('flow-node traffic-monitor-api-utils', () => {
 			expect(value).to.deep.equal({ "bool": { "must": [
 				{ range: {"http.status": { "gte": 200, "lte": 299 }}},
 				{ exists: { "field": "http"} },
-				{ term: {"processInfo.serviceId.keyword": "instance-1"}}
+				{ term: {"processInfo.serviceId": "instance-1"}}
 			  ]}});
 		});
 
@@ -164,7 +164,7 @@ describe('flow-node traffic-monitor-api-utils', () => {
 			expect(value).to.deep.equal({ "bool": 
 			{ "must": [
 				{ exists: { "field": "http"} },
-				{ term: {"processInfo.serviceId.keyword": "instance-1"}}
+				{ term: {"processInfo.serviceId": "instance-1"}}
 			],
 			"must_not": [
 				{ range: {"http.status": { "gte": 200, "lte": 200 }}},
@@ -181,7 +181,7 @@ describe('flow-node traffic-monitor-api-utils', () => {
 			expect(value).to.deep.equal({ "bool": 
 			{ "must": [
 				{ exists: { "field": "http"} },
-				{ term: {"processInfo.serviceId.keyword": "instance-1"}}
+				{ term: {"processInfo.serviceId": "instance-1"}}
 			],
 			"must_not": [
 				{ range: {"http.status": { "gte": 200, "lte": 299 }}}
@@ -218,20 +218,20 @@ describe('flow-node traffic-monitor-api-utils', () => {
 					  {"bool": {
 						  "should": [ 
 							{
-								"term": { "processInfo.serviceId.keyword": "traffic-7cb4f6989f-first"}
+								"term": { "processInfo.serviceId": "traffic-7cb4f6989f-first"}
 							},
 							{
-								"match": { "processInfo.serviceId": "traffic-" }
+								"match": { "processInfo.serviceId.text": "traffic-" }
 							}
 						 ] }
 					  }
 					],
 				"must_not": [
 					{
-						"term": { "processInfo.serviceId.keyword": "traffic-7cb4f6989f-second" }
+						"term": { "processInfo.serviceId": "traffic-7cb4f6989f-second" }
 					},
 					{
-						"term": { "processInfo.serviceId.keyword": "traffic-7cb4f6989f-third" }
+						"term": { "processInfo.serviceId": "traffic-7cb4f6989f-third" }
 					}
 				]
 				}});
@@ -247,7 +247,7 @@ describe('flow-node traffic-monitor-api-utils', () => {
 			expect(value).to.deep.equal({ "bool": { 
 				"must": [
 					  {"exists": {"field": "http"}},
-					  { term: {"processInfo.serviceId.keyword": "traffic-7cb4f6989f-second"}}
+					  { term: {"processInfo.serviceId": "traffic-7cb4f6989f-second"}}
 					]
 				}});
 		});
