@@ -407,7 +407,7 @@ async function _getCurrentGWUser(requestHeaders) {
 			return response.body.result;
 		})
 		.catch(err => {
-			throw new Error(`Error getting current user. Request sent to: '${pluginConfig.apigateway.url}' ${err.message} Response-Code: ${err.statusCode}`);
+			throw new Error(`Error getting current user. Request sent to: '${pluginConfig.apigateway.url}'. Response-Code: ${err.statusCode}`);
 		});
 	return loginName;
 }
