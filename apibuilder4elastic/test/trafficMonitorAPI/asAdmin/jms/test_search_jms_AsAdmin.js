@@ -19,7 +19,7 @@ describe('Endpoints', function () {
 		// Which is translated into false by the Policy and the ANM implementation then takes care of the request
 		nock('https://mocked-api-gateway:8090').get('/api/rbac/currentuser').reply(200, { "result": "david" });
 		nock('https://mocked-api-gateway:8090').get('/api/rbac/permissions/currentuser').replyWithFile(200, './test/mockedReplies/apigateway/adminUserDavid.json');
-		nock('https://mocked-api-gateway:8090').get('/api/topology').reply(200, { });
+		nock('https://mocked-api-gateway:8090').get('/api/topology').reply(200, { result: {} });
 	});
 
 	afterEach(() => {

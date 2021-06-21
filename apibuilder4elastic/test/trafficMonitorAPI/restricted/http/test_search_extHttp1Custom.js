@@ -13,7 +13,7 @@ describe('Endpoints', function () {
 
 	beforeEach(() => {
 		// Just return an empty topology as it's not required for the tests in this file
-		nock('https://mocked-api-gateway:8090').get('/api/topology').reply(200, { });
+		nock('https://mocked-api-gateway:8090').get('/api/topology').reply(200, { result: {} });
 	});
 
 	/**

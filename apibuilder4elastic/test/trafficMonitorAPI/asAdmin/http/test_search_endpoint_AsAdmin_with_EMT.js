@@ -67,7 +67,7 @@ describe('Endpoints', function () {
 				expect(response.statusCode).to.equal(200);
 				expect(body).to.be.an('Object');
 				expect(body).to.have.property('data');
-				debugger;
+
 				expect(body.data).to.have.lengthOf(2); // Expected two results - One for the given Service-ID and the one already GONE
 				expect(body.data[0].correlationId).to.equals('7a240f5f0e21555d2d343482');
 				expect(body.data[1].correlationId).to.equals('19250f5f4321b5ba2a4de364');

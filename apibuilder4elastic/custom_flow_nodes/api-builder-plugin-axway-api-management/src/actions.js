@@ -142,6 +142,9 @@ async function lookupTopology(params, options) {
 		cache.set( cacheKey, topology, 300);
 		return topology;
 	}
+	// Without topology, inactive serviceIDs will not be included in the Traffic-Monitor result set
+	logger.error(`Error retrieving topology from ANM. With that EMT-Mode is not fully supported.`);
+	return {};
 }
 
 async function lookupAPIDetails(params, options) {
