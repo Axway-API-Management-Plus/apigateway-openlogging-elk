@@ -16,6 +16,7 @@ describe('Traffic Monitor API', function () {
 		// 
 		nock('https://mocked-api-gateway:8090').get('/api/rbac/currentuser').reply(200, { "result": "david" });
 		nock('https://mocked-api-gateway:8090').get('/api/rbac/permissions/currentuser').replyWithFile(200, './test/mockedReplies/apigateway/adminUserDavid.json');
+		nock('https://mocked-api-gateway:8090').get('/api/topology').reply(200, { result: {} });
 	});
 
 	afterEach(() => {

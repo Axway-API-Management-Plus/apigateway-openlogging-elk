@@ -49,6 +49,7 @@ describe('Traffic Monitor API Circuitpath - Ext-HTTP-AuthZ', function () {
 		it('[restricted-circuitpath-extHttpAuthZ-0001] Should return http 200 and (API Broker/HTTP Petstore) Policy with 2 filters as the transaction belongs to users organization', () => {
 			nock('https://mocked-api-gateway:8090').get('/api/rbac/currentuser').reply(200, { "result": "chris" });
 			nock('https://mocked-api-gateway:8090').get('/api/rbac/permissions/currentuser').replyWithFile(200, './test/mockedReplies/apigateway/operatorChris.json');
+			nock('https://mocked-api-gateway:8090').get('/api/topology').reply(200, { result: {} });
 			// Disabled API-Manager Mocks, as this AuthZ should not need the API-Manager
 			//nock('https://mocked-api-gateway:8075').get(`/api/portal/v1.3/users?field=loginName&op=eq&value=chris&field=enabled&op=eq&value=enabled`).replyWithFile(200, './test/mockedReplies/apimanager/apiManagerUserChris.json');		
 			//nock('https://mocked-api-gateway:8075').get(`/api/portal/v1.3/organizations/2bfaa1c2-49ab-4059-832d-CHRIS`).replyWithFile(200, './test/mockedReplies/apimanager/organizationChris.json');

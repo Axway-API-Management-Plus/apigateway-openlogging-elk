@@ -46,6 +46,8 @@ describe('Endpoints', function () {
 		it('[Disabled-AuthZ-Getinfo-0001] Should return a result, as user authorization is disabled', () => {
 			nock('https://mocked-api-gateway:8090').get('/api/rbac/currentuser').reply(200, { "result": "chris" });
 			nock('https://mocked-api-gateway:8090').get('/api/rbac/permissions/currentuser').replyWithFile(200, './test/mockedReplies/apigateway/operatorChris.json');
+			nock('https://mocked-api-gateway:8090').get('/api/topology').reply(200, { result: {} });
+
 			return requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/http/0455ff5e82267be8182a553d/*/getinfo?format=json&details=1&rheaders=1&sheaders=1`,

@@ -157,51 +157,6 @@
 			},
 			"metaMethod": "Execute"
 		},
-		"javascript.2": {
-			"type": "nodehandler://@axway/api-builder-plugin-fn-javascript/javascript",
-			"name": "Create query",
-			"method": "Execute",
-			"parameters": [
-				{
-					"name": "data",
-					"type": "jsonpath",
-					"value": "$",
-					"metaName": "data",
-					"metaDescription": "The value to apply as the `data` argument to the JavaScript code. For objects and arrays, `data` is passed by reference."
-				},
-				{
-					"name": "code",
-					"type": "string",
-					"value": "\"let elasticQuery = {\\n    \\\"bool\\\": {\\n      \\\"must\\\": [\\n        {\\\"term\\\": {\\\"correlationId\\\": data.params.correlationID}},\\n          {\\\"term\\\": {\\\"processInfo.serviceId\\\": data.params.serviceID}}\\n      ]\\n    }\\n  };\\n  return elasticQuery;\"",
-					"metaName": "code",
-					"metaDescription": "A JavaScript function body. Supports `await` and returning promises."
-				},
-				{
-					"name": "unsafe",
-					"type": "boolean",
-					"value": "true",
-					"metaName": "Unsafe mode",
-					"metaDescription": "USE WITH CAUTION. When enabled, JavaScript is not executed in a sandboxed environment and all globals are available."
-				}
-			],
-			"outputs": {
-				"next": {
-					"context": "$.elasticsearch.query",
-					"routes": [
-						"authorization.1"
-					],
-					"metaName": "Next"
-				},
-				"error": {
-					"context": "$.error",
-					"routes": [
-						"http.3"
-					],
-					"metaName": "Error"
-				}
-			},
-			"metaMethod": "Execute"
-		},
 		"http.2": {
 			"type": "nodehandler://axway-flow/http",
 			"name": "Set HTTP Response",
@@ -428,7 +383,7 @@
 			"outputs": {
 				"next": {
 					"routes": [
-						"javascript.2"
+						"axway-api-management.2"
 					],
 					"context": "$.user",
 					"metaName": "Next"
@@ -508,7 +463,9 @@
 				{
 					"name": "restrictionField",
 					"type": "jsonpath",
-					"value": "$.authzConfig.detailedRestrictionField"
+					"value": "$.authzConfig.detailedRestrictionField",
+					"metaName": "Restriction field",
+					"metaDescription": "The field on which the restriction should be applied. For instance a custom property."
 				}
 			],
 			"outputs": {
@@ -760,6 +717,73 @@
 				}
 			},
 			"metaMethod": "Switch on Authorization"
+		},
+		"axway-api-management.2": {
+			"type": "nodehandler://api-builder-plugin-axway-api-management/axway-api-management",
+			"name": "Lookup topology",
+			"method": "lookupTopology",
+			"parameters": [
+				{
+					"name": "requestHeaders",
+					"type": "jsonpath",
+					"value": "$.request.headers"
+				}
+			],
+			"outputs": {
+				"next": {
+					"routes": [
+						"traffic-monitor-api-utils.1"
+					],
+					"context": "$.gatewayTopology"
+				},
+				"error": {
+					"routes": [
+						"http.3"
+					],
+					"context": "$.error"
+				}
+			}
+		},
+		"traffic-monitor-api-utils.1": {
+			"type": "nodehandler://api-builder-plugin-traffic-monitor-api-utils/traffic-monitor-api-utils",
+			"name": "Create Payload query",
+			"method": "createCircuitPathQuery",
+			"parameters": [
+				{
+					"name": "gatewayTopology",
+					"type": "jsonpath",
+					"value": "$.gatewayTopology"
+				},
+				{
+					"name": "authzConfig",
+					"type": "jsonpath",
+					"value": "$.authzConfig"
+				},
+				{
+					"name": "params",
+					"type": "jsonpath",
+					"value": "$.params"
+				},
+				{
+					"name": "user",
+					"type": "jsonpath",
+					"value": "$.user"
+				}
+			],
+			"outputs": {
+				"next": {
+					"routes": [
+						"authorization.1"
+					],
+					"context": "$.elasticsearch.query"
+				},
+				"error": {
+					"routes": [
+						"http.3"
+					],
+					"context": "$.error"
+				}
+			}
 		}
 	}
 }
