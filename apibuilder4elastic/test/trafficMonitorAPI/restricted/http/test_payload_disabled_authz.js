@@ -50,6 +50,8 @@ describe('Payload restricted', function () {
 		it('[Disabled-AuthZ-Payload-0001] Should return payload as the authz is disabled', () => {
 			nock('https://mocked-api-gateway:8090').get('/api/rbac/currentuser').reply(200, { "result": "chris" });
 			nock('https://mocked-api-gateway:8090').get('/api/rbac/permissions/currentuser').replyWithFile(200, './test/mockedReplies/apigateway/operatorChris.json');
+			nock('https://mocked-api-gateway:8090').get('/api/topology').reply(200, { result: {} });
+
 			return requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/stream/0455ff5e82267be8182a553d/1/received`,

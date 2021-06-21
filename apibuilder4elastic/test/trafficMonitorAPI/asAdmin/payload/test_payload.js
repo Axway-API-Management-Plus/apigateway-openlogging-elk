@@ -16,6 +16,7 @@ describe('Payload', function () {
 		// Simulate all responses in this test-file to be an admin, which will not lead to any result restriction
 		nock('https://mocked-api-gateway:8090').get('/api/rbac/currentuser').reply(200, { "result": "david" });
 		nock('https://mocked-api-gateway:8090').get('/api/rbac/permissions/currentuser').replyWithFile(200, './test/mockedReplies/apigateway/adminUserDavid.json');
+		nock('https://mocked-api-gateway:8090').get('/api/topology').reply(200, { result: {} });
 	});
 
 	afterEach(() => {
@@ -55,7 +56,7 @@ describe('Payload', function () {
 	after(() => stopApiBuilder(server));
 
 	describe('Payload tests', () => {
-		it('[Payload-0001]  Should return sent payload for leg 0', () => {
+		it.only('[Payload-0001]  Should return sent payload for leg 0', () => {
 			const testPayload = fs.readFileSync(`${payloadFolder}/2020-07-03/08.55/0455ff5e82267be8182a553d-0-sent`);
 			return requestAsync({
 				method: 'GET',  // 
