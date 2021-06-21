@@ -134,12 +134,14 @@ async function lookupTopology(params, options) {
 		logger.trace(`Trying to get API-Gateway topology based on VIDUSR cookie.`);
 		topology = await _getTopology(headers = {'Cookie': requestHeaders.cookie});
 	}
-	topology.services = topology.services.filter(function(service) {
-		return service.type!="nodemanager"; // Filter node manager service
-	});
-	logger.info(`Successfully retrieved topology from Admin-Node-Manager. Will be cached for 5 minutes.`);
-	cache.set( cacheKey, topology, 300);
-	return topology;
+	if(topology.services) {
+		topology.services = topology.services.filter(function(service) {
+			return service.type!="nodemanager"; // Filter node manager service
+		});
+		logger.info(`Successfully retrieved topology from Admin-Node-Manager. Will be cached for 5 minutes.`);
+		cache.set( cacheKey, topology, 300);
+		return topology;
+	}
 }
 
 async function lookupAPIDetails(params, options) {
