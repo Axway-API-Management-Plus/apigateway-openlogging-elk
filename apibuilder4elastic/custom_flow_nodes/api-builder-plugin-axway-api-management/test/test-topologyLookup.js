@@ -48,26 +48,6 @@ describe('Tests Topology-Lookup', () => {
 			expect(output).to.equal('error');
 		});
 
-		it('should error when requestHeaders are set, but the VIDUSR cookie is missing', async () => {
-			const { value, output } = await flowNode.lookupTopology({
-				requestHeaders: {"host":"api-gateway:8090","max-forwards":"20", "cookie":"XXX-VIDUSR=1597381095-XTawGDtJhBA7Zw%3d%3d;"}
-			});
-
-			expect(value).to.be.instanceOf(Error)
-				.and.to.have.property('message', 'The requestHeaders do not contain the required cookie VIDUSR');
-			expect(output).to.equal('error');
-		});
-
-		it('should error when requestHeaders are set, but the CSRF-Token is missing', async () => {
-			const { value, output } = await flowNode.lookupTopology({
-				requestHeaders: {"host":"api-gateway:8090","max-forwards":"20", "cookie":"VIDUSR=1597381095-XTawGDtJhBA7Zw%3d%3d;"}
-			});
-
-			expect(value).to.be.instanceOf(Error)
-				.and.to.have.property('message', 'The requestHeaders do not contain the required header csrf-token');
-			expect(output).to.equal('error');
-		});
-
 		it('should result into the API-Gateway topology', async () => {
 			nock('https://mocked-api-gateway:8190').get('/api/topology').replyWithFile(200, './test/testReplies/gateway/gatewayEMTTopology.json');
 
