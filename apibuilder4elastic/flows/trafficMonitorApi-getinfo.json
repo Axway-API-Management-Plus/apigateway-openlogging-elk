@@ -451,6 +451,11 @@
 					"value": "$.elasticsearch.query",
 					"metaName": "Elasticsearch query",
 					"metaDescription": "The Elasticsearch query that should be enhanced with a filter."
+				},
+				{
+					"name": "indexProperty",
+					"type": "string",
+					"value": "\"transactionSummary.serviceContext.apiOrg\""
 				}
 			],
 			"outputs": {
@@ -560,20 +565,26 @@
 				{
 					"name": "status",
 					"type": "number",
-					"value": "500"
+					"value": "500",
+					"metaName": "Status",
+					"metaDescription": "The HTTP status code"
 				},
 				{
 					"name": "body",
 					"type": "jsonpath",
-					"value": "$.error"
+					"value": "$.error",
+					"metaName": "Body",
+					"metaDescription": "The response payload"
 				}
 			],
 			"outputs": {
 				"next": {
 					"context": "$.response",
-					"routes": []
+					"routes": [],
+					"metaName": "Next"
 				}
-			}
+			},
+			"metaMethod": "Set HTTP Response"
 		},
 		"http.5": {
 			"type": "nodehandler://axway-flow/http",
@@ -583,20 +594,26 @@
 				{
 					"name": "status",
 					"type": "number",
-					"value": "500"
+					"value": "500",
+					"metaName": "Status",
+					"metaDescription": "The HTTP status code"
 				},
 				{
 					"name": "body",
 					"type": "jsonpath",
-					"value": "$.error"
+					"value": "$.error",
+					"metaName": "Body",
+					"metaDescription": "The response payload"
 				}
 			],
 			"outputs": {
 				"next": {
 					"context": "$.response",
-					"routes": []
+					"routes": [],
+					"metaName": "Next"
 				}
-			}
+			},
+			"metaMethod": "Set HTTP Response"
 		}
 	}
 }
