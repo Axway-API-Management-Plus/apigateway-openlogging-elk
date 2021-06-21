@@ -228,7 +228,7 @@
 			"outputs": {
 				"next": {
 					"routes": [
-						"javascript.1"
+						"axway-api-management.2"
 					],
 					"context": "$.user",
 					"metaName": "Next"
@@ -378,6 +378,11 @@
 					"value": "$.user",
 					"metaName": "User",
 					"metaDescription": "The user object using the API-Gateway Traffic-Monitor"
+				},
+				{
+					"name": "gatewayTopology",
+					"type": "jsonpath",
+					"value": "$.gatewayTopology"
 				}
 			],
 			"outputs": {
@@ -455,7 +460,9 @@
 				{
 					"name": "indexProperty",
 					"type": "string",
-					"value": "\"transactionSummary.serviceContext.apiOrg\""
+					"value": "\"transactionSummary.serviceContext.apiOrg\"",
+					"metaName": "Index property",
+					"metaDescription": "The name of the Elasticsearch property within the index to restrict the query on. If not given: serviceContext.apiOrg is used."
 				}
 			],
 			"outputs": {
@@ -614,6 +621,32 @@
 				}
 			},
 			"metaMethod": "Set HTTP Response"
+		},
+		"axway-api-management.2": {
+			"type": "nodehandler://api-builder-plugin-axway-api-management/axway-api-management",
+			"name": "Lookup topology",
+			"method": "lookupTopology",
+			"parameters": [
+				{
+					"name": "requestHeaders",
+					"type": "jsonpath",
+					"value": "$.request.headers"
+				}
+			],
+			"outputs": {
+				"next": {
+					"routes": [
+						"javascript.1"
+					],
+					"context": "$.gatewayTopology"
+				},
+				"error": {
+					"routes": [
+						"http.5"
+					],
+					"context": "$.error"
+				}
+			}
 		}
 	}
 }

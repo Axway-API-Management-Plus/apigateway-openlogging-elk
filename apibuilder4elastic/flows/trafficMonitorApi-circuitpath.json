@@ -264,13 +264,15 @@
 			"outputs": {
 				"next": {
 					"routes": [
-						"javascript.2"
+						"axway-api-management.2"
 					],
 					"context": "$.user",
 					"metaName": "Next"
 				},
 				"error": {
-					"routes": [],
+					"routes": [
+						"http.1"
+					],
 					"context": "$.error",
 					"metaName": "Error"
 				}
@@ -339,6 +341,11 @@
 					"value": "$.user",
 					"metaName": "User",
 					"metaDescription": "The user object using the API-Gateway Traffic-Monitor"
+				},
+				{
+					"name": "gatewayTopology",
+					"type": "jsonpath",
+					"value": "$.gatewayTopology"
 				}
 			],
 			"outputs": {
@@ -523,18 +530,50 @@
 				{
 					"name": "status",
 					"type": "number",
-					"value": "500"
+					"value": "500",
+					"metaName": "Status",
+					"metaDescription": "The HTTP status code"
 				},
 				{
 					"name": "body",
 					"type": "jsonpath",
-					"value": "$.error"
+					"value": "$.error",
+					"metaName": "Body",
+					"metaDescription": "The response payload"
 				}
 			],
 			"outputs": {
 				"next": {
 					"context": "$.response",
-					"routes": []
+					"routes": [],
+					"metaName": "Next"
+				}
+			},
+			"metaMethod": "Set HTTP Response"
+		},
+		"axway-api-management.2": {
+			"type": "nodehandler://api-builder-plugin-axway-api-management/axway-api-management",
+			"name": "Lookup topology",
+			"method": "lookupTopology",
+			"parameters": [
+				{
+					"name": "requestHeaders",
+					"type": "jsonpath",
+					"value": "$.request.headers"
+				}
+			],
+			"outputs": {
+				"next": {
+					"routes": [
+						"javascript.2"
+					],
+					"context": "$.gatewayTopology"
+				},
+				"error": {
+					"routes": [
+						"http.1"
+					],
+					"context": "$.error"
 				}
 			}
 		}
