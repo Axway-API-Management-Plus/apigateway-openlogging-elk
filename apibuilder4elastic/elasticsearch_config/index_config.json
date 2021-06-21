@@ -18,7 +18,7 @@
         "template": {
             "config": "elasticsearch_config/traffic-details/index_template.json",
             "name": "traffic-details", 
-            "mergeCustomProperties": false
+            "mergeCustomProperties": true
         }, 
         "ilm" : {
             "config": "elasticsearch_config/traffic-details/ilm_policy.json",
