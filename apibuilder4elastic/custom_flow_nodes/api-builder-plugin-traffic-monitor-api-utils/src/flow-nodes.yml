@@ -7,7 +7,10 @@ flow-nodes:
     methods:
       handleFilterFields:
         name: Handle filter fields
-        description: Parses the given filter fields in the request (e.g. http.uri) and creates the required Elasticsearch query.
+        description: |
+          Parses the given filter fields in the request (e.g. http.uri) and creates the required Elasticsearch query. 
+          Based on the given Service-ID it is determined if additional Services should be included, which is required in EMT-Mode where also 
+          inactive Service-IDs should be part of the result-set.
         parameters:
           params:
             name: Params
@@ -21,6 +24,12 @@ flow-nodes:
             required: true
             schema:
               type: string
+          gatewayTopology:
+            name: API-Gateway Topology
+            description: "The API-Gateway topology as read by flow-node: axway-api-management->lookupTopology"
+            required: true
+            schema:
+              type: object
         returns:
           name: Next
           description: Returns the created search query for elastic search

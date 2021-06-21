@@ -19,13 +19,16 @@
  *	 does not define "next", the first defined output).
  */
 async function handleFilterFields(parameters, options) {
-	const { params, serviceID } = parameters;
+	const { params, serviceID, gatewayTopology } = parameters;
 	const { logger } = options;
 	if (!params) {
 		throw new Error('Missing required parameter: params');
 	}
 	if (!serviceID) {
 		throw new Error('Missing required parameter: serviceID');
+	}
+	if (!gatewayTopology) {
+		throw new Error('Missing required parameter: gatewayTopology');
 	}
 
 	if (params.protocol == 'filetransfer') {
@@ -116,7 +119,7 @@ async function handleFilterFields(parameters, options) {
 		});
 	});
 	await addProtocolFilter(filters.mustFilters, params, logger);
-	await addServiceIdFilter(filters.mustFilters, serviceID, logger);
+	await addServiceIdFilter(filters, serviceID, gatewayTopology, logger);
 	await addDurationFilter(filters.mustFilters, params, logger);
 	await addAgoFilter(filters.mustFilters, params, logger);
 	await addTimestampFilter(filters.mustFilters, params, logger);
@@ -348,12 +351,65 @@ async function addProtocolFilter(filters, params, logger) {
 	filters.push({ "exists": { "field": params.protocol } });
 }
 
-async function addServiceIdFilter(filters, serviceID, logger) {
+async function addServiceIdFilter(filters, serviceID, gatewayTopology, logger) {
 	if (serviceID == undefined) {
 		throw new Error("The serviceID is missing.");
 	}
-	// Get the data from the correct API-Gateway instance
-	filters.push({ "term": { "processInfo.serviceId": serviceID } });
+	var includeOtherServiceIDs = false;
+	var prefix;
+	// If EMT is enabled, we also need to include services that no longer exists
+	if(gatewayTopology.emtEnabled) {
+		prefix = serviceID.substring(0,serviceID.indexOf("-")+1);
+		logger.info(`EMT-Mode - Is enabled. Including serviceIds with prefix: ${prefix}`);
+		logger.debug(`EMT-Mode - Topology: ${JSON.stringify(gatewayTopology)}`);
+		// Figure out, if the serviceId of this request is the first in the topology and ignore services
+		// having a totally different name. 
+		// In that case traffic-7cb4f6989f-bjw8n vs. apimgr-6c9876cb48-g4sdq, services not starting with traffic-
+		// will be ignored
+		for (var i = 0; i < gatewayTopology.services.length; i++) {
+			var service = gatewayTopology.services[i];
+			if(service.id.startsWith(prefix)) {
+				// The service belongs to the same gateways
+				if(service.id == serviceID) {
+					logger.debug(`EMT-Mode - Request for serviceID: ${serviceID} is handling other serviceIDs.`);
+					includeOtherServiceIDs = true;
+					break; 
+				} else {
+					break; // This request is not responsible to load remaining services
+				}
+			} else {
+				logger.debug(`EMT-Mode - Ignoring serviceID: ${service.id}`);
+				continue;
+			}
+		}
+	}
+	if(!includeOtherServiceIDs) {
+		// For classic mode, we simply include the serviceId
+		logger.debug(`Request for serviceId: ${serviceID} is NOT including other serviceIDs.`);
+		filters.mustFilters.push({ "term": { "processInfo.serviceId.keyword": serviceID } });
+	} else {
+		logger.debug(`Request for serviceId: ${serviceID} is including other serviceIDs.`);
+		// Include a wildcard for all services no longer active
+		filters.mustFilters.push( { "bool": {
+			// Should turns into an OR condition
+			"should": [ {
+				// Include the serviceId given
+				"term": { "processInfo.serviceId.keyword": serviceID }
+			},
+				// And all other services 
+			{
+				"match": { "processInfo.serviceId": prefix }
+			}
+		 ]
+		} });
+		// But ignore all other Service-IDs which are still active, as they are handled by a separate dedicated request for this service-ID
+		gatewayTopology.services.forEach(function (service) {
+			if(service.id.startsWith(prefix) && service.id!=serviceID) {
+				logger.info(`EMT-Mode - Exclude serviceID: ${service.id}`);
+				filters.mustNotFilters.push({ "term": { "processInfo.serviceId.keyword": service.id } });
+			}
+		});
+	}
 }
 
 async function addDurationFilter(filters, params, logger) {

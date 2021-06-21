@@ -1,5 +1,5 @@
 {
-    "version": 5,
+    "version": 6,
     "index_patterns": [
         "apigw-traffic-summary-*"
     ],
@@ -31,7 +31,13 @@
                 "norms": false
             },
             "processInfo.serviceId": {
-                "type": "keyword"
+                "type": "text",
+                "fields": {
+                    "keyword": {
+                        "type": "keyword"
+                    }
+                },
+                "norms": false
             },
             "processInfo.groupId": {
                 "type": "keyword"

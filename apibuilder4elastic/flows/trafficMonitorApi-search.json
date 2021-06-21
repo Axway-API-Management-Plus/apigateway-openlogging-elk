@@ -179,7 +179,7 @@
 				"next": {
 					"context": "$.user",
 					"routes": [
-						"utils.1"
+						"axway-api-management.2"
 					],
 					"metaName": "Next"
 				},
@@ -444,6 +444,13 @@
 					"value": "$.params.serviceID",
 					"metaName": "ServiceId",
 					"metaDescription": "The serviceId which is part of the request and given as a path parameter (r/service/instance-2/ops/)"
+				},
+				{
+					"name": "gatewayTopology",
+					"type": "jsonpath",
+					"value": "$.gatewayTopology",
+					"metaName": "API-Gateway Topology",
+					"metaDescription": "The API-Gateway topology as read by flow-node: axway-api-management->lookupTopology"
 				}
 			],
 			"outputs": {
@@ -598,7 +605,9 @@
 				{
 					"name": "restrictionField",
 					"type": "jsonpath",
-					"value": "$.authzConfig.restrictionField"
+					"value": "$.authzConfig.restrictionField",
+					"metaName": "Restriction field",
+					"metaDescription": "The field on which the restriction should be applied. For instance a custom property."
 				}
 			],
 			"outputs": {
@@ -728,6 +737,37 @@
 				}
 			},
 			"metaMethod": "Switch on Authorization"
+		},
+		"axway-api-management.2": {
+			"type": "nodehandler://api-builder-plugin-axway-api-management/axway-api-management",
+			"name": "Lookup topology",
+			"method": "lookupTopology",
+			"parameters": [
+				{
+					"name": "requestHeaders",
+					"type": "jsonpath",
+					"value": "$.request.headers",
+					"metaName": "Request Headers",
+					"metaDescription": "The request headers are used to lookup the topology using the currently logged in user."
+				}
+			],
+			"outputs": {
+				"next": {
+					"routes": [
+						"utils.1"
+					],
+					"context": "$.gatewayTopology",
+					"metaName": "Next"
+				},
+				"error": {
+					"routes": [
+						"http.4"
+					],
+					"context": "$.error",
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Lookup topology"
 		}
 	}
 }

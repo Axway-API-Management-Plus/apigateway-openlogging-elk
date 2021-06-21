@@ -38,6 +38,30 @@ flow-nodes:
             schema:
               type: object
 
+      lookupTopology:
+        name: Lookup topology
+        description: "Looks up the API-Gateway topology, as this is required when running in EMT mode. See https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/114. Admin-Node-Manager services are ignored."
+        parameters:
+          requestHeaders:
+            name: Request Headers
+            description: The request headers are used to lookup the topology using the currently logged in user.
+            required: true
+            schema:
+              type: string
+        outputs:
+          next:
+            name: Next
+            description: The API-Gateway topology
+            context: $.gatewayTopology
+            schema:
+              type: object
+          error:
+            name: Error
+            description: An unexpected error happened
+            context: $.error
+            schema:
+              type: object
+
       lookupAPIDetails:
         name: Lookup API
         description: Looks up the details of an API based on the given API-Name and API-Path. Additionally, it returns the configured custom properties for that API.

@@ -1,0 +1,154 @@
+{
+    "result": {
+        "id": "DefaultDomain",
+        "version": 44,
+        "timestamp": 1624264680386,
+        "productVersion": "7.7.0",
+        "hosts": [
+            {
+                "id": "host-24",
+                "name": "192.168.81.10"
+            },
+            {
+                "id": "host-6",
+                "name": "192.168.86.81"
+            },
+            {
+                "id": "host-23",
+                "name": "192.168.94.252"
+            },
+            {
+                "id": "host-1",
+                "name": "anm-d5574b69-qwnmj"
+            }
+        ],
+        "groups": [
+            {
+                "id": "DefaultGroup",
+                "name": "DefaultGroup",
+                "tags": {},
+                "services": [
+                    {
+                        "id": "apimgr-6c9876cb48-g4sdq",
+                        "name": "apimgr-6c9876cb48-g4sdq",
+                        "type": "gateway",
+                        "scheme": "https",
+                        "hostID": "host-6",
+                        "managementPort": 8085,
+                        "tags": {
+                            "image": "docker.pkg.github.com/cwiechmann/axway-api-management-automated/manager:77-20210330-v1-833aab9",
+                            "productVersion": "7.7.20210330"
+                        },
+                        "enabled": true
+                    },
+                    {
+                        "id": "traffic-7cb4f6989f-bjw8n",
+                        "name": "traffic-7cb4f6989f-bjw8n",
+                        "type": "gateway",
+                        "scheme": "https",
+                        "hostID": "host-24",
+                        "managementPort": 8085,
+                        "tags": {
+                            "image": "docker.pkg.github.com/cwiechmann/axway-api-management-automated/manager:77-20210330-v1-696cc6d",
+                            "productVersion": "7.7.20210330"
+                        },
+                        "enabled": true
+                    },
+                    {
+                        "id": "traffic-7cb4f6989f-jbmf7",
+                        "name": "traffic-7cb4f6989f-jbmf7",
+                        "type": "gateway",
+                        "scheme": "https",
+                        "hostID": "host-23",
+                        "managementPort": 8085,
+                        "tags": {
+                            "image": "docker.pkg.github.com/cwiechmann/axway-api-management-automated/manager:77-20210330-v1-696cc6d",
+                            "productVersion": "7.7.20210330"
+                        },
+                        "enabled": true
+                    }
+                ],
+                "lock": null
+            },
+            {
+                "id": "emt_anm_group",
+                "name": "Node Manager Group",
+                "tags": {},
+                "services": [
+                    {
+                        "id": "nodemanager-1",
+                        "name": "Admin Node Manager",
+                        "type": "nodemanager",
+                        "scheme": "https",
+                        "hostID": "host-1",
+                        "managementPort": 8090,
+                        "tags": {
+                            "internal_admin_nm": "true"
+                        },
+                        "enabled": true
+                    }
+                ],
+                "lock": null
+            }
+        ],
+        "uniqueIdCounters": {
+            "Host": 25,
+            "NodeManager": 2,
+            "Group": 2
+        },
+        "emtEnabled": true,
+        "services": [
+            {
+                "id": "nodemanager-1",
+                "name": "Admin Node Manager",
+                "type": "nodemanager",
+                "scheme": "https",
+                "hostID": "host-1",
+                "managementPort": 8090,
+                "tags": {
+                    "internal_admin_nm": "true"
+                },
+                "enabled": true
+            },
+            {
+                "id": "apimgr-6c9876cb48-g4sdq",
+                "name": "apimgr-6c9876cb48-g4sdq",
+                "type": "gateway",
+                "scheme": "https",
+                "hostID": "host-6",
+                "managementPort": 8085,
+                "tags": {
+                    "image": "docker.pkg.github.com/cwiechmann/axway-api-management-automated/manager:77-20210330-v1-833aab9",
+                    "productVersion": "7.7.20210330"
+                },
+                "enabled": true
+            },
+            {
+                "id": "traffic-7cb4f6989f-bjw8n",
+                "name": "traffic-7cb4f6989f-bjw8n",
+                "type": "gateway",
+                "scheme": "https",
+                "hostID": "host-24",
+                "managementPort": 8085,
+                "tags": {
+                    "image": "docker.pkg.github.com/cwiechmann/axway-api-management-automated/manager:77-20210330-v1-696cc6d",
+                    "productVersion": "7.7.20210330"
+                },
+                "enabled": true
+            },
+            {
+                "id": "traffic-7cb4f6989f-jbmf7",
+                "name": "traffic-7cb4f6989f-jbmf7",
+                "type": "gateway",
+                "scheme": "https",
+                "hostID": "host-23",
+                "managementPort": 8085,
+                "tags": {
+                    "image": "docker.pkg.github.com/cwiechmann/axway-api-management-automated/manager:77-20210330-v1-696cc6d",
+                    "productVersion": "7.7.20210330"
+                },
+                "enabled": true
+            }
+        ]
+    }
+}

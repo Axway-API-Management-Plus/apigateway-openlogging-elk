@@ -106,6 +106,42 @@ async function lookupCurrentUser(params, options) {
 	return user;
 }
 
+async function lookupTopology(params, options) {
+	const { requestHeaders } = params;
+	const logger = options.logger;
+	pluginConfig = options.pluginConfig;
+	
+	cache = options.pluginContext.cache;
+	if (!requestHeaders) {
+		throw new Error('You need to provide Request-Headers with Cookies or an Authorization header.');
+	}
+	if(!requestHeaders.cookie && !requestHeaders.authorization) {
+		throw new Error('You must provide either the VIDUSR cookie + csrf-token or an HTTP-Basic Authorization header.');
+	}
+	let cacheKey = requestHeaders.host;
+	if(!requestHeaders.host) {
+		logger.warn(`Host header not found, using static cache-key for the API-Gateway topology lookup.`);
+		cacheKey = "apigwTopology";
+	}
+	if(cache.has(cacheKey)) {
+		return cache.get(cacheKey);
+	}
+	var topology;
+	if(requestHeaders.authorization) {
+		logger.debug(`Trying to get API-Gateway topology based on Authorization header.`);
+		topology = await _getTopology(headers = {'Authorization': `${requestHeaders.authorization}`});
+	} else {
+		logger.trace(`Trying to get API-Gateway topology based on VIDUSR cookie.`);
+		topology = await _getTopology(headers = {'Cookie': requestHeaders.cookie});
+	}
+	topology.services = topology.services.filter(function(service) {
+		return service.type!="nodemanager"; // Filter node manager service
+	});
+	logger.info(`Successfully retrieved topology from Admin-Node-Manager. Will be cached for 5 minutes.`);
+	cache.set( cacheKey, topology, 300);
+	return topology;
+}
+
 async function lookupAPIDetails(params, options) {
 	var { apiName, apiPath, operationId, groupId, disableCustomProperties } = params;
 	const { logger } = options;
@@ -412,6 +448,22 @@ async function _getCurrentGWUser(requestHeaders) {
 	return loginName;
 }
 
+async function _getTopology(requestHeaders) {
+	var options = {
+		path: '/api/topology',
+		headers: requestHeaders,
+		agent: new https.Agent({ rejectUnauthorized: false })
+	};
+	var topology = await sendRequest(pluginConfig.apigateway.url, options)
+		.then(response => {
+			return response.body.result;
+		})
+		.catch(err => {
+			throw new Error(`Error getting API-Gateway topology user. Request sent to: '${pluginConfig.apigateway.url}'. Response-Code: ${err.statusCode}`);
+		});
+	return topology;
+}
+
 async function _addCustomProperties(apiProxy, groupId, region, options) {
 	var apiCustomProperties = await _getConfiguredCustomProperties(groupId, region, options);
 	apiProxy.customProperties = {};
@@ -653,6 +705,7 @@ async function _getConfiguredCustomProperties(groupId, region, options) {
 
 module.exports = {
 	lookupCurrentUser, 
+	lookupTopology,
 	lookupAPIDetails,
 	lookupApplication,
 	getCustomPropertiesConfig,

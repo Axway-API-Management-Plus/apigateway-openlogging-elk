@@ -46,7 +46,7 @@ describe('Endpoints', function () {
 	after(() => stopApiBuilder(server));
 
 	describe('Ext-Http AuthZ - GetInfo endpoint tests', () => {
-		it.only('[Ext-Http AuthZ-Getinfo-0001] Should return a result', () => {
+		it('[Ext-Http AuthZ-Getinfo-0001] Should return a result', () => {
 			nock('https://mocked-api-gateway:8090').get('/api/rbac/currentuser').reply(200, { "result": "chris" });
 			nock('https://mocked-api-gateway:8090').get('/api/rbac/permissions/currentuser').replyWithFile(200, './test/mockedReplies/apigateway/operatorChris.json');
 
