@@ -11,6 +11,11 @@ describe('Endpoints', function () {
 	let auth;
 	const indexName = `apigw-traffic-summary-search_count_test_${getRandomInt(9999)}`;
 
+	beforeEach(() => {
+		// Just return an empty topology as it's not required for the tests in this file
+		nock('https://mocked-api-gateway:8090').get('/api/topology').reply(200, { });
+	});
+
 	/**
 	 * Start API Builder.
 	 */
@@ -89,7 +94,7 @@ describe('Endpoints', function () {
 			});
 		});
 
-		it('[Restricted-Search-0003] Execute a search - NOT being an API-GW-Admin - Normal user in API-Manager', () => {
+		it.only('[Restricted-Search-0003] Execute a search - NOT being an API-GW-Admin - Normal user in API-Manager', () => {
 			// For this user, the result-set is limited to users organization
 			nock('https://mocked-api-gateway:8090').get('/api/rbac/currentuser').reply(200, { "result": "rene" });
 			nock('https://mocked-api-gateway:8090').get('/api/rbac/permissions/currentuser').replyWithFile(200, './test/mockedReplies/apigateway/operatorRene.json');

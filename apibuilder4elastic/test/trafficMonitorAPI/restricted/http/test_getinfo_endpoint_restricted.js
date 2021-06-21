@@ -11,6 +11,11 @@ describe('Endpoints', function () {
 	let auth;
 	const indexName = `apigw-traffic-details-getinfo_test_${getRandomInt(9999)}`;
 
+	beforeEach(() => {
+		// Just return an empty topology as it's not required for the tests in this file
+		nock('https://mocked-api-gateway:8090').get('/api/topology').reply(200, { });
+	});
+
 	/**
 	 * Start API Builder.
 	 */
