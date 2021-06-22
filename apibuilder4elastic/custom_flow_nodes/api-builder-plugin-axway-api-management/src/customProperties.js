@@ -66,17 +66,9 @@ async function mergeCustomProperties(params, options) {
 				desiredTemplate.mappings.properties[customPropertiesSettings.parent] = {};
 			}
 			if(type == "custom") {
-				if(customPropertiesSettings.parent) {
-					desiredTemplate.mappings.properties[customPropertiesSettings.parent][`customProperties.${customPropertyName}`] = { type: "text", norms: false, fields: { "keyword":  { type: "keyword"} } }; 
-				} else {
-					desiredTemplate.mappings.properties[`customProperties.${customPropertyName}`] = { type: "text", norms: false, fields: { "keyword":  { type: "keyword"} } };
-				}
+				desiredTemplate.mappings.properties[`${customPropertiesSettings.parent}customProperties.${customPropertyName}`] = { type: "text", norms: false, fields: { "keyword":  { type: "keyword"} } }; 
 			} else {
-				if(customPropertiesSettings.parent) {
-					desiredTemplate.mappings.properties[customPropertiesSettings.parent][`customProperties.${customPropertyName}`] = { type: "keyword"};
-				} else {
-					desiredTemplate.mappings.properties[`customProperties.${customPropertyName}`] = { type: "keyword"};
-				}
+				desiredTemplate.mappings.properties[`${customPropertiesSettings.parent}customProperties.${customPropertyName}`] = { type: "keyword"};
 			}
 			return true;
 		}

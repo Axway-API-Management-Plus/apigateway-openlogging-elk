@@ -22,7 +22,7 @@
             "name": "traffic-details", 
             "customProperties": {
                 "merge": true,
-                "parent": "transactionSummary"
+                "parent": "transactionSummary."
             }
         }, 
         "ilm" : {
