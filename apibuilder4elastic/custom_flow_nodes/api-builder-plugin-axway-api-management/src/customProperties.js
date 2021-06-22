@@ -19,7 +19,7 @@
  *	 does not define "next", the first defined output).
  */
 async function mergeCustomProperties(params, options) {
-	const { customProperties, desiredIndexTemplate, actualIndexTemplate, customPropertiesSettings } = params;
+	let { customProperties, desiredIndexTemplate, actualIndexTemplate, customPropertiesSettings } = params;
 	const { logger } = options;
 	if (!customProperties) {
 		throw new Error('Missing required parameter: customProperties');
@@ -54,7 +54,7 @@ async function mergeCustomProperties(params, options) {
 
 	function addMapping(customPropertyName, type, actualTemplate, desiredTemplate, customPropertiesSettings) {
 		if(desiredTemplate == undefined) return false;
-		debugger;
+
 		if(actualTemplate != undefined && actualTemplate.mappings != undefined && actualTemplate.mappings.properties[`customProperties.${customPropertyName}`] != undefined) {
 			options.logger.info(`Mapping for custom property: ${customPropertyName} already exists. No update required.`);
 			// Take over the actual custom properties mapping!
