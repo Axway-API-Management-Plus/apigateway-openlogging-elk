@@ -62,9 +62,6 @@ async function mergeCustomProperties(params, options) {
 			return false;
 		} else {
 			options.logger.info(`Update required for custom property: ${customPropertyName}.`);
-			if(customPropertiesSettings.parent && !desiredTemplate.mappings.properties[customPropertiesSettings.parent]) {
-				desiredTemplate.mappings.properties[customPropertiesSettings.parent] = {};
-			}
 			if(type == "custom") {
 				desiredTemplate.mappings.properties[`${customPropertiesSettings.parent}customProperties.${customPropertyName}`] = { type: "text", norms: false, fields: { "keyword":  { type: "keyword"} } }; 
 			} else {
