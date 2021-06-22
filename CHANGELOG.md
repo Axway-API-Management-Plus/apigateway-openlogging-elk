@@ -4,10 +4,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [3.2.0] 2021-06-22
 ### Fixed
 - Trace message in Traffic-Monitor is truncated [#112](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/112)
 - API-Manager User looked up at API-Manager even if external HTTP-Based AuthZ is configured [#111](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/111)
+- Custom-Properties in Traffic-Details Index are not indexed as they are missing in the Index-Template [#115](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/115)
+- EMT-Mode - API-Gateway-Traffic-Monitor don't show traffic when Pod is recreated [#114](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/114)
+- External-HTTP Authorization - Traffic-Details in Traffic-Monitor not working [#113](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/113)
+
+### Changed
+- Custom-Properties type custom now additionally indexed with type keyword [#116](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/116)
 
 ## [3.1.0] 2021-05-13
 ### Changed

@@ -51,6 +51,7 @@ On the other hand, the API builder Docker image, as a central component of the s
 | 2.4.2 | [X](#api-builderlogstashmemcached) | -                                  | -                                  | -             | -               | -               | -               |[X](#elastic-config)| 7.10.0  |            |
 | 3.0.0 | [X](#api-builderlogstashmemcached) | -                                  | -                                  | -             | -               | -               | [X](#parameters)|-                   | 7.12.1  |            |
 | 3.1.0 | [X](#api-builderlogstashmemcached) | -                                  | -                                  | -             | -               | -               | -               |-                   | 7.12.1  |            |
+| 3.2.0 | [X](#api-builderlogstashmemcached) | -                                  | -                                  | -             | -               | -               | -               |[X](#elastic-config)| 7.12.1  |            |
 
 ### Update from Version 1.0.0
 
@@ -63,15 +64,17 @@ If you are upgrading from Release 1.0.0 and encounter problems, please open an i
 If Filebeat changes with a version, you must update the corresponding configuration on all your API Gateway instances. It is recommended to update Filebeat as the first component, because the Filebeat configuration version is checked by the API builder process. If it does not match, Logstash will exit with an error message.
 Even if you run Filebeat as a native service, you have to copy the configuration (`filebeat/filebeat.yml`) from the release into your configuration.
 
-The following steps illustrates an update to version 2.0.2:
+The following steps illustrates an update to version 3.2.0 using the docker-compose approach:  
 ```
-wget --no-check-certificate https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v2.0.2/axway-apim-elk-v2.0.2.tar.gz -O - | tar -xvz
-cd axway-apim-elk-v2.0.2
-cp ~/axway-apim-elk-v2.0.0/.env .
-cp ~/axway-apim-elk-v2.0.0/config/all-my-custom-certificates ./config
+wget --no-check-certificate https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v3.2.0/axway-apim-elk-v3.2.0.tar.gz -O - | tar -xvz
+cd axway-apim-elk-v3.2.0
+cp ~/axway-apim-elk-v3.1.0/.env .
+cp ~/axway-apim-elk-v3.1.0/config/all-my-custom-certificates ./config
 docker-compose -f filebeat/docker-compose.filebeat.yml stop
 docker-compose -f filebeat/docker-compose.filebeat.yml up -d
 ```
+
+If you have deployed the solution on a Kubernetes-Cluster using Helm read [here](helm/README.md) for more information.
 
 ### API-Builder/Logstash/Memcached
 
@@ -79,16 +82,18 @@ If Filebeat should be updated with one of the releases that are between the curr
 
 API Builder, Logstash and Memcache work as a tight unit and should be stopped, updated together if possible. Please note, that changes to Logstash do not mean that the Logstash version has changed, but that the Logstash pipeline configuration has changed. To activate these changes the new release must be used to start Logstash.  
 
-The following steps illustrates an update to version 2.0.2:
+The following steps illustrates an update to version 3.2.0:
 ```
-wget --no-check-certificate https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v2.0.2/axway-apim-elk-v2.0.2.tar.gz -O - | tar -xvz
-cd axway-apim-elk-v2.0.2
-cp ~/axway-apim-elk-v2.0.0/.env .
-cp ~/axway-apim-elk-v2.0.0/config/all-my-custom-certificates ./config
+wget --no-check-certificate https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v3.2.0/axway-apim-elk-v3.2.0.tar.gz -O - | tar -xvz
+cd axway-apim-elk-v3.2.0
+cp ~/axway-apim-elk-v3.1.0/.env .
+cp ~/axway-apim-elk-v3.1.0/config/all-my-custom-certificates ./config
 docker-compose stop
 docker-compose up -d
 ```
-Repeat these steps on all machines running Logstash/API-Builder/Memcache.
+Repeat these steps on all machines running Logstash/API-Builder/Memcache.  
+
+If you have deployed the solution on a Kubernetes-Cluster using Helm read [here](helm/README.md) for more information.
 
 ### ANM config
 
