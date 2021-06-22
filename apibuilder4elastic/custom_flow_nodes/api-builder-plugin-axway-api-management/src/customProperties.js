@@ -19,40 +19,42 @@
  *	 does not define "next", the first defined output).
  */
 async function mergeCustomProperties(params, options) {
+	const { customProperties, desiredIndexTemplate, actualIndexTemplate, customPropertiesSettings } = params;
 	const { logger } = options;
-	if (!params.customProperties) {
+	if (!customProperties) {
 		throw new Error('Missing required parameter: customProperties');
 	}
-	if (!params.desiredIndexTemplate) {
+	if (!desiredIndexTemplate) {
 		throw new Error('Missing required parameter: desiredIndexTemplate');
 	}
-	if (!params.desiredIndexTemplate.mappings) {
+	if (!desiredIndexTemplate.mappings) {
 		throw new Error('Missing mappings properties in desiredIndexTemplate.mappings');
 	}
-	if (params.mergeCustomProperties == undefined) {
-		params.mergeCustomProperties = false;
+	if (customPropertiesSettings == undefined) {
+		customPropertiesSettings = { merge: false };
 	}
-	if (!params.mergeCustomProperties) {
+	if (!customPropertiesSettings.merge) {
 		logger.info(`Custom properties are ignore for this template.`);
-		return options.setOutput('noUpdate', params.desiredIndexTemplate);
+		return options.setOutput('noUpdate', desiredIndexTemplate);
 	}
 	var updateRequired = false;
-	for (var prop in params.customProperties) {
-		if (Object.prototype.hasOwnProperty.call(params.customProperties, prop)) {
-			var customPropertyConfig = params.customProperties[prop];
-			if(addMapping(prop, customPropertyConfig.type, params.actualIndexTemplate, params.desiredIndexTemplate)) {
+	for (var prop in customProperties) {
+		if (Object.prototype.hasOwnProperty.call(customProperties, prop)) {
+			var customPropertyConfig = customProperties[prop];
+			if(addMapping(prop, customPropertyConfig.type, actualIndexTemplate, desiredIndexTemplate, customPropertiesSettings)) {
 				if(!updateRequired) updateRequired = true;
 			}
 		}
 	}
 	if(!updateRequired) {
-		return options.setOutput('noUpdate', params.desiredIndexTemplate);
+		return options.setOutput('noUpdate', desiredIndexTemplate);
 	} else {
-		return params.desiredIndexTemplate;
+		return desiredIndexTemplate;
 	}
 
-	function addMapping(customPropertyName, type, actualTemplate, desiredTemplate) {
+	function addMapping(customPropertyName, type, actualTemplate, desiredTemplate, customPropertiesSettings) {
 		if(desiredTemplate == undefined) return false;
+		debugger;
 		if(actualTemplate != undefined && actualTemplate.mappings != undefined && actualTemplate.mappings.properties[`customProperties.${customPropertyName}`] != undefined) {
 			options.logger.info(`Mapping for custom property: ${customPropertyName} already exists. No update required.`);
 			// Take over the actual custom properties mapping!
@@ -60,10 +62,21 @@ async function mergeCustomProperties(params, options) {
 			return false;
 		} else {
 			options.logger.info(`Update required for custom property: ${customPropertyName}.`);
+			if(customPropertiesSettings.parent && !desiredTemplate.mappings.properties[customPropertiesSettings.parent]) {
+				desiredTemplate.mappings.properties[customPropertiesSettings.parent] = {};
+			}
 			if(type == "custom") {
-				desiredTemplate.mappings.properties[`customProperties.${customPropertyName}`] = { type: "text", norms: false};
+				if(customPropertiesSettings.parent) {
+					desiredTemplate.mappings.properties[customPropertiesSettings.parent][`customProperties.${customPropertyName}`] = { type: "text", norms: false, fields: { "keyword":  { type: "keyword"} } }; 
+				} else {
+					desiredTemplate.mappings.properties[`customProperties.${customPropertyName}`] = { type: "text", norms: false, fields: { "keyword":  { type: "keyword"} } };
+				}
 			} else {
-				desiredTemplate.mappings.properties[`customProperties.${customPropertyName}`] = { type: "keyword"};
+				if(customPropertiesSettings.parent) {
+					desiredTemplate.mappings.properties[customPropertiesSettings.parent][`customProperties.${customPropertyName}`] = { type: "keyword"};
+				} else {
+					desiredTemplate.mappings.properties[`customProperties.${customPropertyName}`] = { type: "keyword"};
+				}
 			}
 			return true;
 		}

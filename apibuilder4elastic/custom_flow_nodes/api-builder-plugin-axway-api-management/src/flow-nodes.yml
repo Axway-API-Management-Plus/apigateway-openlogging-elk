@@ -285,13 +285,12 @@ flow-nodes:
             initialType: object
             schema:
               type: object
-          mergeCustomProperties:
-            name: Merge custom properties
-            description: Convience flag which basically turns off this flow now. This helps to simplify the flow.
+          customPropertiesSettings:
+            name: Custom properties settings
+            description: "Controls if and how custom properties should be merged into the index template. See config file: elasticsearch_config/index_config.json"
             required: false
-            initialType: string
             schema:
-              type: string
+              type: object
         outputs:
           next:
             name: Next

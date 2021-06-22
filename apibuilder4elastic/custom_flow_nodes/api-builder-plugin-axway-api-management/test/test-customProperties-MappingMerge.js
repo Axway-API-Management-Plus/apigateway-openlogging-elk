@@ -49,7 +49,7 @@ describe('Merge custom properties tests', () => {
 			const { value, output } = await flowNode.mergeCustomProperties({ 
 				customProperties: JSON.parse(fs.readFileSync('./test/testInput/customPropertiesConfig.json'), null), 
 				desiredIndexTemplate: desiredIndexTemplate, 
-				mergeCustomProperties: false
+				customPropertiesSettings: { merge: false }
 			});
 
 			expect(output).to.equal('noUpdate');
@@ -60,12 +60,12 @@ describe('Merge custom properties tests', () => {
 			const { value, output } = await flowNode.mergeCustomProperties({ 
 				customProperties: JSON.parse(fs.readFileSync('./test/testInput/customPropertiesConfig.json'), null), 
 				desiredIndexTemplate: JSON.parse(fs.readFileSync('./test/testInput/desiredIndexTemplate.json'), null), 
-				mergeCustomProperties: true
+				customPropertiesSettings: { merge: true, parent: "" }
 			});
 
 			expect(output).to.equal('next');
 			expect(value.mappings.properties['customProperties.customProperty1']).to.be.an('Object');
-			expect(value.mappings.properties['customProperties.customProperty1'].type).to.equal('text');
+			expect(value.mappings.properties['customProperties.customProperty1']).to.deep.equal({type: "text", norms: false, fields: {keyword: { type: "keyword"}}});
 			expect(value.mappings.properties['customProperties.customProperty2']).to.be.an('Object');
 			expect(value.mappings.properties['customProperties.customProperty2'].type).to.equal('keyword');
 			expect(value.mappings.properties['customProperties.customProperty3']).to.be.an('Object');
@@ -77,11 +77,11 @@ describe('Merge custom properties tests', () => {
 				customProperties: JSON.parse(fs.readFileSync('./test/testInput/customPropertiesConfig.json'), null), 
 				desiredIndexTemplate: JSON.parse(fs.readFileSync('./test/testInput/desiredIndexTemplate.json'), null),
 				actualIndexTemplate: JSON.parse(fs.readFileSync('./test/testInput/actualIndexTemplate.json'), null), 
-				mergeCustomProperties: true
+				customPropertiesSettings: { merge: true, parent: "" }
 			});
 			expect(output).to.equal('next');
 			expect(value.mappings.properties['customProperties.customProperty1']).to.be.an('Object');
-			expect(value.mappings.properties['customProperties.customProperty1'].type).to.equal('text');
+			expect(value.mappings.properties['customProperties.customProperty1']).to.deep.equal({type: "text", norms: false, fields: {keyword: { type: "keyword"}}});
 			expect(value.mappings.properties['customProperties.customProperty2']).to.be.an('Object');
 			expect(value.mappings.properties['customProperties.customProperty2'].type).to.equal('keyword');
 			expect(value.mappings.properties['customProperties.customProperty3']).to.be.an('Object');
@@ -93,11 +93,11 @@ describe('Merge custom properties tests', () => {
 				customProperties: JSON.parse(fs.readFileSync('./test/testInput/customPropertiesConfig.json'), null), 
 				desiredIndexTemplate: JSON.parse(fs.readFileSync('./test/testInput/desiredIndexTemplateWithCustomProps.json'), null),
 				actualIndexTemplate: JSON.parse(fs.readFileSync('./test/testInput/actualIndexTemplateWithCustomProps.json'), null), 
-				mergeCustomProperties: true
+				customPropertiesSettings: { merge: true, parent: "" }
 			});
 			expect(output).to.equal('noUpdate');
 			expect(value.mappings.properties['customProperties.customProperty1']).to.be.an('Object');
-			expect(value.mappings.properties['customProperties.customProperty1'].type).to.equal('text');
+			expect(value.mappings.properties['customProperties.customProperty1']).to.deep.equal({type: "text" });
 			expect(value.mappings.properties['customProperties.customProperty2']).to.be.an('Object');
 			expect(value.mappings.properties['customProperties.customProperty2'].type).to.equal('keyword');
 			expect(value.mappings.properties['customProperties.customProperty3']).to.be.an('Object');
@@ -109,15 +109,32 @@ describe('Merge custom properties tests', () => {
 				customProperties: JSON.parse(fs.readFileSync('./test/testInput/customPropertiesConfig.json'), null), 
 				desiredIndexTemplate: JSON.parse(fs.readFileSync('./test/testInput/desiredIndexTemplate.json'), null),
 				actualIndexTemplate: JSON.parse(fs.readFileSync('./test/testInput/actualIndexTemplateWithLessCustomProps.json'), null), 
-				mergeCustomProperties: true
+				customPropertiesSettings: { merge: true, parent: "" }
 			});
 			expect(output).to.equal('next');
 			expect(value.mappings.properties['customProperties.customProperty1']).to.be.an('Object');
-			expect(value.mappings.properties['customProperties.customProperty1'].type).to.equal('text');
+			expect(value.mappings.properties['customProperties.customProperty1']).to.deep.equal({type: "text", norms: false, fields: {keyword: { type: "keyword"}}});
 			expect(value.mappings.properties['customProperties.customProperty2']).to.be.an('Object');
 			expect(value.mappings.properties['customProperties.customProperty2'].type).to.equal('keyword');
 			expect(value.mappings.properties['customProperties.customProperty3']).to.be.an('Object');
 			expect(value.mappings.properties['customProperties.customProperty3'].type).to.equal('keyword');
+		});
+
+		it('should merge into indexMappingTemplate withd a defined parent as custom properties are missing', async () => {
+			const { value, output } = await flowNode.mergeCustomProperties({ 
+				customProperties: JSON.parse(fs.readFileSync('./test/testInput/customPropertiesConfig.json'), null), 
+				desiredIndexTemplate: JSON.parse(fs.readFileSync('./test/testInput/desiredIndexTemplate.json'), null),
+				actualIndexTemplate: JSON.parse(fs.readFileSync('./test/testInput/actualIndexTemplate.json'), null), 
+				customPropertiesSettings: { merge: true, parent: "transactionSummary" }
+			});
+
+			expect(output).to.equal('next');
+			expect(value.mappings.properties.transactionSummary['customProperties.customProperty1']).to.be.an('Object');
+			expect(value.mappings.properties.transactionSummary['customProperties.customProperty1']).to.deep.equal({type: "text", norms: false, fields: {keyword: { type: "keyword"}}});
+			expect(value.mappings.properties.transactionSummary['customProperties.customProperty2']).to.be.an('Object');
+			expect(value.mappings.properties.transactionSummary['customProperties.customProperty2'].type).to.equal('keyword');
+			expect(value.mappings.properties.transactionSummary['customProperties.customProperty3']).to.be.an('Object');
+			expect(value.mappings.properties.transactionSummary['customProperties.customProperty3'].type).to.equal('keyword');
 		});
 	});
 });

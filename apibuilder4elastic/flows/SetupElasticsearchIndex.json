@@ -129,11 +129,9 @@
 					"metaDescription": "The actual Index-Template mapping loaded from Elasticsearch used to compare if new custom properties have been added. If all custom properties are already part of the mapping, the noUpdate exit is used."
 				},
 				{
-					"name": "mergeCustomProperties",
+					"name": "customPropertiesSettings",
 					"type": "jsonpath",
-					"value": "$.indexConfig.template.mergeCustomProperties",
-					"metaName": "Merge custom properties",
-					"metaDescription": "Convience flag which basically turns off this flow now. This helps to simplify the flow."
+					"value": "$.indexConfig.template.customProperties"
 				}
 			],
 			"outputs": {

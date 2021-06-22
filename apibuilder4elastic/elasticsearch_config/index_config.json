@@ -5,7 +5,9 @@
         "template": {
             "config": "elasticsearch_config/traffic-summary/index_template.json",
             "name": "traffic-summary", 
-            "mergeCustomProperties": true
+            "customProperties": {
+                "merge": true
+            }
         }, 
         "ilm" : {
             "config": "elasticsearch_config/traffic-summary/ilm_policy.json",
@@ -18,7 +20,10 @@
         "template": {
             "config": "elasticsearch_config/traffic-details/index_template.json",
             "name": "traffic-details", 
-            "mergeCustomProperties": true
+            "customProperties": {
+                "merge": true,
+                "parent": "transactionSummary"
+            }
         }, 
         "ilm" : {
             "config": "elasticsearch_config/traffic-details/ilm_policy.json",
@@ -31,7 +36,9 @@
         "template": {
             "config": "elasticsearch_config/trace-messages/index_template.json",
             "name": "trace-messages", 
-            "mergeCustomProperties": false
+            "customProperties": {
+                "merge": false
+            }
         }, 
         "ilm" : {
             "config": "elasticsearch_config/trace-messages/ilm_policy.json",
@@ -44,7 +51,9 @@
         "template": {
             "config": "elasticsearch_config/trace-messages/index_template.json",
             "name": "trace-messages", 
-            "mergeCustomProperties": false
+            "customProperties": {
+                "merge": false
+            }
         }, 
         "ilm" : {
             "config": "elasticsearch_config/trace-messages/ilm_policy.json",
@@ -57,7 +66,9 @@
         "template": {
             "config": "elasticsearch_config/apigw-domainaudit/index_template.json",
             "name": "apigw-apigw-domainaudit", 
-            "mergeCustomProperties": false
+            "customProperties": {
+                "merge": false
+            }
         }, 
         "ilm" : {
             "config": "elasticsearch_config/apigw-domainaudit/ilm_policy.json",
@@ -70,7 +81,9 @@
         "template": {
             "config": "elasticsearch_config/apigw-monitoring/index_template.json",
             "name": "apigw-monitoring", 
-            "mergeCustomProperties": false
+            "customProperties": {
+                "merge": false
+            }
         }, 
         "ilm" : {
             "config": "elasticsearch_config/apigw-monitoring/ilm_policy.json",
