@@ -358,16 +358,7 @@ elasticsearch:
     annotations: 
       nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
 
-  # Change the permissions of the data folder and increase the File-Descriptor limit
-  extraInitContainers:
-    - name: fix-permissions
-      image: busybox
-      command: ["sh", "-c", "chown -R 1000:1000 /usr/share/elasticsearch/data"]
-      securityContext:
-        privileged: true
-      volumeMounts: 
-        - name: "axway-elk-apim4elastic-elasticsearch"
-          mountPath: /usr/share/elasticsearch/data
+  extraInitContainers: []
 
   esConfig: 
     elasticsearch.yml: |
