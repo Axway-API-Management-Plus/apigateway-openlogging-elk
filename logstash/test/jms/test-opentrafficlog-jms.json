@@ -1,0 +1,135 @@
+{
+  "fields": {
+    "gatewayName": "API-Gateway 3",
+    "gatewayRegion": "US"
+  },
+  "codec": "json_lines",
+  "testcases": [
+    {
+      "description": "Test transactionSummary event for a JMS request",
+      "input": [
+        "{\"timestamp\":1625040683511,\"correlationId\":\"2927dc60e52ae8c48fb505da\",\"processInfo\":{\"hostname\":\"api-back-11\",\"domainId\":\"8591ad8b-c13d-492a-83cd-c3f937bb91bd\",\"groupId\":\"group-2\",\"groupName\":\"Back\",\"serviceId\":\"instance-1\",\"serviceName\":\"api.customer.com\",\"version\":\"7.7.20201130\"},\"transactionSummary\":{\"path\":null, \"protocol\":\"jms\", \"protocolSrc\":\"local/com.customer.APPLIC.msg.WWSWO.PROD.P44.ShipmentService_IQ\", \"status\":\"success\", \"serviceContexts\":[]}}"
+      ],
+      "expected": [
+        {
+          "@timestamp": "2020-09-02T20:10:51.272Z",
+          "correlationId": "2927dc60e52ae8c48fb505da",
+          "protocol": "jms",
+          "protocolSrc": "local/com.customer.APPLIC.msg.WWSWO.PROD.P44.ShipmentService_IQ",
+          "processInfo": {
+            "hostname": "api-back-11",
+            "groupId": "group-2",
+            "groupName": "Back",
+            "serviceId": "instance-1",
+            "version": "7.7.20201130",
+            "gatewayName": "API-Gateway 3", 
+            "gatewayRegion": "US"
+          },
+          "type": "summaryIndex"
+        },
+        {
+          "@timestamp": "2020-09-02T20:10:51.272Z",
+          "correlationId": "2927dc60e52ae8c48fb505da",
+          "processInfo": {
+            "hostname": "api-back-11",
+            "groupId": "group-2",
+            "groupName": "Back",
+            "serviceId": "instance-1",
+            "version": "7.7.20201130",
+            "gatewayName": "API-Gateway 3", 
+            "gatewayRegion": "US"
+          },
+          "transactionSummary": {
+            "path": null,
+            "protocol": "jms",
+            "protocolSrc": "local/com.customer.APPLIC.msg.WWSWO.PROD.P44.ShipmentService_IQ"
+          }
+        }
+      ]
+    },
+    {
+      "description": "Test Transaction-Element Leg0 event for a JMS request",
+      "input": [
+        "{\"timestamp\":1625040681215,\"correlationId\":\"2927dc60e52ae8c48fb505da\",\"processInfo\":{\"hostname\":\"api-back-11\",\"domainId\":\"8591ad8b-c13d-492a-83cd-c3f937bb91bd\",\"groupId\":\"group-2\",\"groupName\":\"Back\",\"serviceId\":\"instance-1\",\"serviceName\":\"api-back-11.prd.schenkerag.de.axway.cloud\",\"version\":\"7.7.20201130\"},\"transactionElement\":{\"leg\":0,\"duration\":2296,\"serviceName\":\"ShipmentService\",\"operation\":\"ShipmentService\",\"finalStatus\":\"Pass\",\"protocolInfo\":{\"jms\":{\"jmsMessageID\":\"ID:interface1-36199-1623824816079-189:755:1:1:1\",\"jmsCorrelationID\":\"\",\"jmsDestination\":\"queue://com.customer.APPLIC.msg.WWSWO.PROD.P44.ShipmentService_IQ\",\"jmsProviderURL\":\"local\",\"jmsDeliveryMode\":2,\"jmsPriority\":4,\"jmsReplyTo\":\"\",\"jmsRedelivered\":0,\"jmsTimestamp\":1625040681191,\"jmsExpiration\":0,\"jmsType\":\"TextMessage\",\"jmsStatus\":\"Success\",\"jmsStatusText\":null,\"authSubjectId\":null},\"recvHeader\":\"{ \\\"process_id\\\": \\\"JOHNTXM2JS\\\", \\\"BDID\\\": \\\"E1JOHNTXM2JS131L8181037302510000001\\\", \\\"partner_info\\\": \\\"P44\\\", \\\"receiver\\\": \\\"P44\\\", \\\"sender\\\": \\\"SWORD\\\", \\\"web_service_name\\\": \\\"ShipmentService\\\", \\\"transfer_id\\\": \\\"E1JOHNTXM2JS131L8181037302510000001\\\", \\\"direction\\\": \\\"SWORD2API\\\", \\\"timestamp\\\": \\\"1625040653\\\" }\",\"sentHeader\":null,\"recvPayload\":\"file:\/\/\/Cloud\/shared\/Openlogs\/2021-06-30\/10.11\/2927dc60e52ae8c48fb505da-0-received\",\"sentPayload\":null}}}"
+      ],
+      "expected": [
+        {
+          "@timestamp": "2020-09-02T20:10:50.348Z",
+          "correlationId": "2927dc60e52ae8c48fb505da",
+          "finalStatus": "success",
+          "duration": 924,
+          "jms": {
+            "jmsMessageID": "ID:interface1-36199-1623824816079-189:755:1:1:1",
+            "jmsCorrelationID": "",
+            "jmsDestination": "queue://com.customer.APPLIC.msg.WWSWO.PROD.P44.ShipmentService_IQ",
+            "jmsProviderURL": "local",
+            "jmsDeliveryMode": 2,
+            "jmsPriority": 4,
+            "jmsReplyTo": "",
+            "jmsRedelivered": 0,
+            "jmsTimestamp": 1625040681191,
+            "jmsExpiration": 0,
+            "jmsType": "TextMessage",
+            "jmsStatus": "Success",
+            "jmsStatusText": null,
+            "authSubjectId": null
+          },
+          "processInfo": {
+            "gatewayName": "API-Gateway 3",
+            "gatewayRegion": "US",
+            "groupId": "group-2",
+            "groupName": "Back",
+            "hostname": "api-back-11",
+            "serviceId": "instance-1",
+            "version": "7.7.20201130"
+          },
+          "type": "summaryIndex"
+        },
+        {
+          "@timestamp": "2020-09-02T20:10:50.348Z",
+          "correlationId": "2927dc60e52ae8c48fb505da",
+          "processInfo": {
+            "hostname": "api-back-11",
+            "groupId": "group-2",
+            "groupName": "Back",
+            "serviceId": "instance-1",
+            "version": "7.7.20201130",
+            "gatewayName": "API-Gateway 3", 
+            "gatewayRegion": "US"
+          },
+          "transactionElements": {
+            "leg0": {
+              "leg": 0,
+              "duration": 2296,
+              "finalStatus": "Pass",
+              "serviceName": "ShipmentService",
+              "operation": "ShipmentService",
+              "protocolInfo": {
+                "jms": {
+                  "jmsMessageID": "ID:interface1-36199-1623824816079-189:755:1:1:1",
+                  "jmsCorrelationID": "",
+                  "jmsDestination": "queue://com.customer.APPLIC.msg.WWSWO.PROD.P44.ShipmentService_IQ",
+                  "jmsProviderURL": "local",
+                  "jmsDeliveryMode": 2,
+                  "jmsPriority": 4,
+                  "jmsReplyTo": "",
+                  "jmsRedelivered": 0,
+                  "jmsTimestamp": 1625040681191,
+                  "jmsExpiration": 0,
+                  "jmsType": "TextMessage",
+                  "jmsStatus": "Success",
+                  "jmsStatusText": null,
+                  "authSubjectId": null
+                },
+                "recvHeader": "{ \"process_id\": \"JOHNTXM2JS\", \"BDID\": \"E1JOHNTXM2JS131L8181037302510000001\", \"partner_info\": \"P44\", \"receiver\": \"P44\", \"sender\": \"SWORD\", \"web_service_name\": \"ShipmentService\", \"transfer_id\": \"E1JOHNTXM2JS131L8181037302510000001\", \"direction\": \"SWORD2API\", \"timestamp\": \"1625040653\" }",
+                "sentHeader": null,
+                "recvPayload": "file:\/\/\/Cloud\/shared\/Openlogs\/2021-06-30\/10.11\/2927dc60e52ae8c48fb505da-0-received",
+                "sentPayload": null
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
