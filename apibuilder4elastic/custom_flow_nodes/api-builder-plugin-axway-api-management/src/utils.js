@@ -52,16 +52,19 @@ function _getCookie(cookies, cookieName) {
 	return;
 }
 
-function _getSession(headers) {
-    const setCookieHeaders = headers['set-cookie'];
-	for (var i = 0; i < setCookieHeaders.length; ++i) {
-        var setCookie = setCookieHeaders[i].trim();
-        if(setCookie.startsWith('APIMANAGERSESSION=')) {
-            session = setCookie.substring(setCookie.indexOf("=")+1, setCookie.indexOf(";"));
-            return session;
-        }
+function _getCookies(headers) {
+    const receivedCookies = headers['set-cookie'];
+	var parsedCookies = "";
+	var semicolon = "";
+	for (var i = 0; i < receivedCookies.length; ++i) {
+        var receivedCookie = receivedCookies[i].trim();
+		var cookieName = receivedCookie.substring(0, receivedCookie.indexOf("="));
+		var cookieValue = receivedCookie.substring(receivedCookie.indexOf("=")+1, receivedCookie.indexOf(";"));
+		parsedCookies += `${semicolon}${cookieName}=${cookieValue}`
+		semicolon = "; ";
 	}
-    throw new Error('No session found.');
+	return parsedCookies;
+    //throw new Error(`Error parsing received cookies: ${JSON.stringify(setCookies)}');
 }
 
 /**
@@ -184,11 +187,12 @@ async function checkAPIManagers(apiManagerConfig, options) {
 				.catch(err => {
 					throw new Error(`Cannot login to API-Manager: '${config.url}'. Got error: ${JSON.stringify(err)}`);
 				});
-			const session = _getSession(result.headers);
+			debugger;
+			const cookies = _getCookies(result.headers);
 			var reqOptions = {
 				path: `/api/portal/v1.3/currentuser`,
 				headers: {
-					'Cookie': `APIMANAGERSESSION=${session}`
+					'Cookie': cookies
 				},
 				agent: new https.Agent({ rejectUnauthorized: false })
 			};
@@ -197,7 +201,7 @@ async function checkAPIManagers(apiManagerConfig, options) {
 					return response;
 				})
 				.catch(err => {
-					throw new Error(`Cant get current user: ${err}`);
+					throw new Error(`Error validating API-Manager user. Error: '${JSON.stringify(err)}'`);
 				});
 			if(currentUser.body.role!='admin') {
 				options.logger.error(`User: ${currentUser.body.loginName} has no admin role on API-Manager: ${config.url}.`);

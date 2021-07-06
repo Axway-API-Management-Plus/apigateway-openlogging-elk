@@ -114,3 +114,9 @@ Retry an ILM-Step:
 ```
 POST /apigw-traffic-details-eu-000001/_ilm/retry
 ```
+
+mount failed: exit status 32 when use EBS volume at Kubernetesbe
+
+https://stackoverflow.com/questions/66090226/mount-failed-exit-status-32-when-use-ebs-volume-at-kubernetes
+
+At the end, all we need to do is were add the flag --cloud-provider=aws in the /var/lib/kubelet/kubeadm-flags.env in all nodes + master.

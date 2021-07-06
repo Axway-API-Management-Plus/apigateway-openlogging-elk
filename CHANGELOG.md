@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased] 
+### Fixed
+- Failed to validated API-Manager connection, when using Load-Balanced API-Manager instances [#117](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/117)
+
 ## [3.2.0] 2021-06-22
 ### Fixed
 - Trace message in Traffic-Monitor is truncated [#112](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/112)
