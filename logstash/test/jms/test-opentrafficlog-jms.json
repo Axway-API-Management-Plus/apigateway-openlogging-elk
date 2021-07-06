@@ -92,7 +92,7 @@
           "type": "summaryIndex"
         },
         {
-          "@timestamp": "2020-09-02T20:10:50.348Z",
+          "@timestamp": "2021-06-30T08:11:21.215Z",
           "correlationId": "2927dc60e52ae8c48fb505da",
           "processInfo": {
             "hostname": "api-back-11",
