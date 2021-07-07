@@ -47,13 +47,13 @@ jobs:
         echo Using API_BUILDER_URL: $API_BUILDER_URL
         echo Using MEMCACHED: $MEMCACHED
         ./logstash-filter-verifier --diff-command="diff -y" --keep-env=API_BUILDER_SSL_CERT --keep-env=API_BUILDER_URL --keep-env=MEMCACHED ./logstash/test/jms/test-opentrafficlog-jms.json ./logstash/pipelines/OpenTrafficPipeline.conf
-        ./logstash-filter-verifier --diff-command="diff -y" --keep-env=API_BUILDER_SSL_CERT --keep-env=API_BUILDER_URL --keep-env=MEMCACHED ./logstash/test/beatsInput/test-index-creation-lookup.json ./logstash/pipelines/BeatsInputPipeline.conf
-        ./logstash-filter-verifier --diff-command="diff -y" --keep-env=API_BUILDER_SSL_CERT --keep-env=API_BUILDER_URL --keep-env=MEMCACHED ./logstash/test/http/test-tracemessages.json ./logstash/pipelines/TraceMessagesPipeline.conf
-        ./logstash-filter-verifier --diff-command="diff -y" --keep-env=API_BUILDER_SSL_CERT --keep-env=API_BUILDER_URL --keep-env=MEMCACHED ./logstash/test/http/test-tracemessages-gmt-4.json ./logstash/pipelines/TraceMessagesPipeline.conf
-        ./logstash-filter-verifier --diff-command="diff -y" --keep-env=API_BUILDER_SSL_CERT --keep-env=API_BUILDER_URL --keep-env=MEMCACHED ./logstash/test/http/test-events.json ./logstash/pipelines/EventsPipeline.conf
-        ./logstash-filter-verifier --diff-command="diff -y" --keep-env=API_BUILDER_SSL_CERT --keep-env=API_BUILDER_URL --keep-env=MEMCACHED ./logstash/test/http/test-opentrafficlog.json ./logstash/pipelines/OpenTrafficPipeline.conf
-        ./logstash-filter-verifier --diff-command="diff -y" --keep-env=API_BUILDER_SSL_CERT --keep-env=API_BUILDER_URL --keep-env=MEMCACHED ./logstash/test/filetransfer/test-opentrafficlog-filetransfer.json ./logstash/pipelines/OpenTrafficPipeline.conf
-        ./logstash-filter-verifier --diff-command="diff -y" --keep-env=API_BUILDER_SSL_CERT --keep-env=API_BUILDER_URL --keep-env=MEMCACHED ./logstash/test/domainAudit/test-domain-audit-events.json ./logstash/pipelines/DomainAuditPipeline.conf
+#        ./logstash-filter-verifier --diff-command="diff -y" --keep-env=API_BUILDER_SSL_CERT --keep-env=API_BUILDER_URL --keep-env=MEMCACHED ./logstash/test/beatsInput/test-index-creation-lookup.json ./logstash/pipelines/BeatsInputPipeline.conf
+#        ./logstash-filter-verifier --diff-command="diff -y" --keep-env=API_BUILDER_SSL_CERT --keep-env=API_BUILDER_URL --keep-env=MEMCACHED ./logstash/test/http/test-tracemessages.json ./logstash/pipelines/TraceMessagesPipeline.conf
+#        ./logstash-filter-verifier --diff-command="diff -y" --keep-env=API_BUILDER_SSL_CERT --keep-env=API_BUILDER_URL --keep-env=MEMCACHED ./logstash/test/http/test-tracemessages-gmt-4.json ./logstash/pipelines/TraceMessagesPipeline.conf
+#        ./logstash-filter-verifier --diff-command="diff -y" --keep-env=API_BUILDER_SSL_CERT --keep-env=API_BUILDER_URL --keep-env=MEMCACHED ./logstash/test/http/test-events.json ./logstash/pipelines/EventsPipeline.conf
+#        ./logstash-filter-verifier --diff-command="diff -y" --keep-env=API_BUILDER_SSL_CERT --keep-env=API_BUILDER_URL --keep-env=MEMCACHED ./logstash/test/http/test-opentrafficlog.json ./logstash/pipelines/OpenTrafficPipeline.conf
+#        ./logstash-filter-verifier --diff-command="diff -y" --keep-env=API_BUILDER_SSL_CERT --keep-env=API_BUILDER_URL --keep-env=MEMCACHED ./logstash/test/filetransfer/test-opentrafficlog-filetransfer.json ./logstash/pipelines/OpenTrafficPipeline.conf
+#        ./logstash-filter-verifier --diff-command="diff -y" --keep-env=API_BUILDER_SSL_CERT --keep-env=API_BUILDER_URL --keep-env=MEMCACHED ./logstash/test/domainAudit/test-domain-audit-events.json ./logstash/pipelines/DomainAuditPipeline.conf
       env:
         API_BUILDER_URL: 'http://localhost:8080'
         MEMCACHED: 'localhost:11211'
