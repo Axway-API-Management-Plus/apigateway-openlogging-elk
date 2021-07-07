@@ -136,6 +136,224 @@
           }
         }
       ]
+    },
+    {
+      "description": "Test ciruitPath event for a JMS-Call",
+      "input": [
+        "{\"timestamp\":1625040683511,\"correlationId\":\"2927dc60e52ae8c48fb505da\",\"processInfo\":{\"hostname\":\"api-back-11\",\"domainId\":\"8591ad8b-c13d-492a-83cd-c3f937bb91bd\",\"groupId\":\"group-2\",\"groupName\":\"Back\",\"serviceId\":\"instance-1\",\"serviceName\":\"api.customer.com\",\"version\":\"7.7.20201130\"},\"circuitPath\":[ { \"policy\": \"00_ShipmentService\", \"execTime\": 2291, \"filters\": [  { \"espk\": \"PrimaryStore-d92bb672-79b7-4d00-85a4-3547a2444dd8:-5396281607639671122\", \"name\": \"Set - key\", \"type\": \"SetAttributeFilter\", \"class\": \"com.vordel.circuit.attribute.SetAttributeFilter\", \"status\": \"Pass\", \"filterTime\": 1625040681216, \"execTime\": 0 } , { \"espk\": \"PrimaryStore-d92bb672-79b7-4d00-85a4-3547a2444dd8:-5942577138987035507\", \"name\": \"Set - Basic Attributes\", \"type\": \"CopyAttributeFilter\", \"class\": \"com.vordel.circuit.attribute.CopyAttributeFilter\", \"status\": \"Pass\", \"filterTime\": 1625040681238, \"execTime\": 22 } , { \"espk\": \"PrimaryStore-d92bb672-79b7-4d00-85a4-3547a2444dd8:4940180609505774989\", \"name\": \"Set Message\", \"type\": \"ChangeMessageFilter\", \"class\": \"com.vordel.circuit.conversion.ChangeMessageFilter\", \"status\": \"Pass\", \"filterTime\": 1625040681238, \"execTime\": 0 } , { \"espk\": \"PrimaryStore-d92bb672-79b7-4d00-85a4-3547a2444dd8:6307403763070206013\", \"name\": \"Add HTTP Header - partner_info\", \"type\": \"AddHTTPHeaderFilter\", \"class\": \"com.vordel.circuit.conversion.AddHTTPHeaderFilter\", \"status\": \"Pass\", \"filterTime\": 1625040681238, \"execTime\": 0 } , { \"espk\": \"PrimaryStore-d92bb672-79b7-4d00-85a4-3547a2444dd8:2019738613510448701\", \"name\": \"Connect to URL\", \"type\": \"ConnectToURLFilter\", \"class\": \"com.vordel.circuit.net.ConnectToURLFilter\", \"status\": \"Pass\", \"filterTime\": 1625040683495, \"execTime\": 2257 } , { \"espk\": \"PrimaryStore-d92bb672-79b7-4d00-85a4-3547a2444dd8:-5891680441665751760\", \"name\": \"Call 'Shared_OutboundServiceHandler'\", \"type\": \"CircuitDelegateFilter\", \"class\": \"com.vordel.circuit.CircuitDelegateFilter\", \"status\": \"Pass\", \"filterTime\": 1625040683507, \"execTime\": 12, \"subPaths\": [  { \"policy\": \"Shared_OutboundServiceHandler\", \"execTime\": 12, \"filters\": [  { \"espk\": \"PrimaryStore-d92bb672-79b7-4d00-85a4-3547a2444dd8:-2338640681586944591\", \"name\": \"Compare - HTTP Status\", \"type\": \"CompareAttributeFilter\", \"class\": \"com.vordel.circuit.attribute.CompareAttributeFilter\", \"status\": \"Pass\", \"filterTime\": 1625040683495, \"execTime\": 0 } , { \"espk\": \"PrimaryStore-d92bb672-79b7-4d00-85a4-3547a2444dd8:2526808618180894365\", \"name\": \"Set Attribute Filter - Success\", \"type\": \"SetAttributeFilter\", \"class\": \"com.vordel.circuit.attribute.SetAttributeFilter\", \"status\": \"Pass\", \"filterTime\": 1625040683495, \"execTime\": 0 } , { \"espk\": \"PrimaryStore-d92bb672-79b7-4d00-85a4-3547a2444dd8:5262489578731853390\", \"name\": \"Compare Attribute\", \"type\": \"CompareAttributeFilter\", \"class\": \"com.vordel.circuit.attribute.CompareAttributeFilter\", \"status\": \"Pass\", \"filterTime\": 1625040683495, \"execTime\": 0 } , { \"espk\": \"PrimaryStore-d92bb672-79b7-4d00-85a4-3547a2444dd8:-5970641510858578678\", \"name\": \"Validate - \\\"customer.event.parameter5\\\"\", \"type\": \"MessageAttrContentFilter\", \"class\": \"com.vordel.circuit.attribute.MessageAttrContentFilter\", \"status\": \"Fail\", \"filterMessage\": \"Message attribute content check failed\", \"filterTime\": 1625040683495, \"execTime\": 0 } , { \"espk\": \"PrimaryStore-d92bb672-79b7-4d00-85a4-3547a2444dd8:-1182498594500769284\", \"name\": \"Set Attribute - Success\", \"type\": \"CopyAttributeFilter\", \"class\": \"com.vordel.circuit.attribute.CopyAttributeFilter\", \"status\": \"Pass\", \"filterTime\": 1625040683495, \"execTime\": 0 } , { \"espk\": \"PrimaryStore-d92bb672-79b7-4d00-85a4-3547a2444dd8:-4440931558129935503\", \"name\": \"Call 'Shared - SwingEvents' - Success\", \"type\": \"CircuitDelegateFilter\", \"class\": \"com.vordel.circuit.CircuitDelegateFilter\", \"status\": \"Pass\", \"filterTime\": 1625040683507, \"execTime\": 12, \"subPaths\": [  { \"policy\": \"Shared_SwingEvents\", \"execTime\": 12, \"filters\": [  { \"espk\": \"PrimaryStore-d92bb672-79b7-4d00-85a4-3547a2444dd8:-3026969076974876721\", \"name\": \"Validate Swing Flag value\", \"type\": \"MessageAttrContentFilter\", \"class\": \"com.vordel.circuit.attribute.MessageAttrContentFilter\", \"status\": \"Pass\", \"filterTime\": 1625040683495, \"execTime\": 0 } , { \"espk\": \"PrimaryStore-d92bb672-79b7-4d00-85a4-3547a2444dd8:1912072486853418648\", \"name\": \"'Check - If Swing Event is required?'\", \"type\": \"CompareAttributeFilter\", \"class\": \"com.vordel.circuit.attribute.CompareAttributeFilter\", \"status\": \"Fail\", \"filterMessage\": \"Filter failed\", \"filterTime\": 1625040683495, \"execTime\": 0 } , { \"espk\": \"PrimaryStore-d92bb672-79b7-4d00-85a4-3547a2444dd8:-2691742285633798765\", \"name\": \"Scripting Language\", \"type\": \"ScriptFilter\", \"class\": \"com.vordel.circuit.script.ScriptFilter\", \"status\": \"Pass\", \"filterTime\": 1625040683495, \"execTime\": 0 } , { \"espk\": \"PrimaryStore-d92bb672-79b7-4d00-85a4-3547a2444dd8:1926784617993230420\", \"name\": \"Set Message JSON\", \"type\": \"ChangeMessageFilter\", \"class\": \"com.vordel.circuit.conversion.ChangeMessageFilter\", \"status\": \"Pass\", \"filterTime\": 1625040683495, \"execTime\": 0 } , { \"espk\": \"PrimaryStore-d92bb672-79b7-4d00-85a4-3547a2444dd8:8363694728869980543\", \"name\": \"Send to JMS SWING\", \"type\": \"JMSFilter\", \"class\": \"com.vordel.circuit.jms.JMSFilter\", \"status\": \"Pass\", \"filterTime\": 1625040683507, \"execTime\": 12 } , { \"espk\": \"PrimaryStore-d92bb672-79b7-4d00-85a4-3547a2444dd8:-5244762290208881385\", \"name\": \"Set - swing_flag\", \"type\": \"SetAttributeFilter\", \"class\": \"com.vordel.circuit.attribute.SetAttributeFilter\", \"status\": \"Pass\", \"filterTime\": 1625040683507, \"execTime\": 0 }  ] }  ]  } , { \"espk\": \"PrimaryStore-d92bb672-79b7-4d00-85a4-3547a2444dd8:8191721305514148511\", \"name\": \"Success\", \"type\": \"True\", \"class\": \"com.vordel.circuit.basic.True\", \"status\": \"Pass\", \"filterTime\": 1625040683507, \"execTime\": 0 }  ] }  ]  }  ] } ]}"
+      ],
+      "expected": [
+        {
+          "@timestamp": "2021-06-30T08:11:23.511Z",
+          "correlationId": "2927dc60e52ae8c48fb505da",
+          "processInfo": {
+            "hostname": "api-back-11",
+            "groupId": "group-2",
+            "groupName": "Back",
+            "serviceId": "instance-1",
+            "version": "7.7.20201130",
+            "gatewayName": "API-Gateway 3", 
+            "gatewayRegion": "US"
+          },
+          "circuitPath": [
+            {
+              "policy": "00_ShipmentService",
+              "execTime": 2291,
+              "filters": [
+                {
+                  "espk": "PrimaryStore-d92bb672-79b7-4d00-85a4-3547a2444dd8:-5396281607639671122",
+                  "name": "Set - key",
+                  "type": "SetAttributeFilter",
+                  "class": "com.vordel.circuit.attribute.SetAttributeFilter",
+                  "status": "Pass",
+                  "filterTime": 1625040681216,
+                  "execTime": 0
+                },
+                {
+                  "espk": "PrimaryStore-d92bb672-79b7-4d00-85a4-3547a2444dd8:-5942577138987035507",
+                  "name": "Set - Basic Attributes",
+                  "type": "CopyAttributeFilter",
+                  "class": "com.vordel.circuit.attribute.CopyAttributeFilter",
+                  "status": "Pass",
+                  "filterTime": 1625040681238,
+                  "execTime": 22
+                },
+                {
+                  "espk": "PrimaryStore-d92bb672-79b7-4d00-85a4-3547a2444dd8:4940180609505774989",
+                  "name": "Set Message",
+                  "type": "ChangeMessageFilter",
+                  "class": "com.vordel.circuit.conversion.ChangeMessageFilter",
+                  "status": "Pass",
+                  "filterTime": 1625040681238,
+                  "execTime": 0
+                },
+                {
+                  "espk": "PrimaryStore-d92bb672-79b7-4d00-85a4-3547a2444dd8:6307403763070206013",
+                  "name": "Add HTTP Header - partner_info",
+                  "type": "AddHTTPHeaderFilter",
+                  "class": "com.vordel.circuit.conversion.AddHTTPHeaderFilter",
+                  "status": "Pass",
+                  "filterTime": 1625040681238,
+                  "execTime": 0
+                },
+                {
+                  "espk": "PrimaryStore-d92bb672-79b7-4d00-85a4-3547a2444dd8:2019738613510448701",
+                  "name": "Connect to URL",
+                  "type": "ConnectToURLFilter",
+                  "class": "com.vordel.circuit.net.ConnectToURLFilter",
+                  "status": "Pass",
+                  "filterTime": 1625040683495,
+                  "execTime": 2257
+                },
+                {
+                  "espk": "PrimaryStore-d92bb672-79b7-4d00-85a4-3547a2444dd8:-5891680441665751760",
+                  "name": "Call 'Shared_OutboundServiceHandler'",
+                  "type": "CircuitDelegateFilter",
+                  "class": "com.vordel.circuit.CircuitDelegateFilter",
+                  "status": "Pass",
+                  "filterTime": 1625040683507,
+                  "execTime": 12,
+                  "subPaths": [
+                    {
+                      "policy": "Shared_OutboundServiceHandler",
+                      "execTime": 12,
+                      "filters": [
+                        {
+                          "espk": "PrimaryStore-d92bb672-79b7-4d00-85a4-3547a2444dd8:-2338640681586944591",
+                          "name": "Compare - HTTP Status",
+                          "type": "CompareAttributeFilter",
+                          "class": "com.vordel.circuit.attribute.CompareAttributeFilter",
+                          "status": "Pass",
+                          "filterTime": 1625040683495,
+                          "execTime": 0
+                        },
+                        {
+                          "espk": "PrimaryStore-d92bb672-79b7-4d00-85a4-3547a2444dd8:2526808618180894365",
+                          "name": "Set Attribute Filter - Success",
+                          "type": "SetAttributeFilter",
+                          "class": "com.vordel.circuit.attribute.SetAttributeFilter",
+                          "status": "Pass",
+                          "filterTime": 1625040683495,
+                          "execTime": 0
+                        },
+                        {
+                          "espk": "PrimaryStore-d92bb672-79b7-4d00-85a4-3547a2444dd8:5262489578731853390",
+                          "name": "Compare Attribute",
+                          "type": "CompareAttributeFilter",
+                          "class": "com.vordel.circuit.attribute.CompareAttributeFilter",
+                          "status": "Pass",
+                          "filterTime": 1625040683495,
+                          "execTime": 0
+                        },
+                        {
+                          "espk": "PrimaryStore-d92bb672-79b7-4d00-85a4-3547a2444dd8:-5970641510858578678",
+                          "name": "Validate - \"customer.event.parameter5\"",
+                          "type": "MessageAttrContentFilter",
+                          "class": "com.vordel.circuit.attribute.MessageAttrContentFilter",
+                          "status": "Fail",
+                          "filterMessage": "Message attribute content check failed",
+                          "filterTime": 1625040683495,
+                          "execTime": 0
+                        },
+                        {
+                          "espk": "PrimaryStore-d92bb672-79b7-4d00-85a4-3547a2444dd8:-1182498594500769284",
+                          "name": "Set Attribute - Success",
+                          "type": "CopyAttributeFilter",
+                          "class": "com.vordel.circuit.attribute.CopyAttributeFilter",
+                          "status": "Pass",
+                          "filterTime": 1625040683495,
+                          "execTime": 0
+                        },
+                        {
+                          "espk": "PrimaryStore-d92bb672-79b7-4d00-85a4-3547a2444dd8:-4440931558129935503",
+                          "name": "Call 'Shared - SwingEvents' - Success",
+                          "type": "CircuitDelegateFilter",
+                          "class": "com.vordel.circuit.CircuitDelegateFilter",
+                          "status": "Pass",
+                          "filterTime": 1625040683507,
+                          "execTime": 12,
+                          "subPaths": [
+                            {
+                              "policy": "Shared_SwingEvents",
+                              "execTime": 12,
+                              "filters": [
+                                {
+                                  "espk": "PrimaryStore-d92bb672-79b7-4d00-85a4-3547a2444dd8:-3026969076974876721",
+                                  "name": "Validate Swing Flag value",
+                                  "type": "MessageAttrContentFilter",
+                                  "class": "com.vordel.circuit.attribute.MessageAttrContentFilter",
+                                  "status": "Pass",
+                                  "filterTime": 1625040683495,
+                                  "execTime": 0
+                                },
+                                {
+                                  "espk": "PrimaryStore-d92bb672-79b7-4d00-85a4-3547a2444dd8:1912072486853418648",
+                                  "name": "'Check - If Swing Event is required?'",
+                                  "type": "CompareAttributeFilter",
+                                  "class": "com.vordel.circuit.attribute.CompareAttributeFilter",
+                                  "status": "Fail",
+                                  "filterMessage": "Filter failed",
+                                  "filterTime": 1625040683495,
+                                  "execTime": 0
+                                },
+                                {
+                                  "espk": "PrimaryStore-d92bb672-79b7-4d00-85a4-3547a2444dd8:-2691742285633798765",
+                                  "name": "Scripting Language",
+                                  "type": "ScriptFilter",
+                                  "class": "com.vordel.circuit.script.ScriptFilter",
+                                  "status": "Pass",
+                                  "filterTime": 1625040683495,
+                                  "execTime": 0
+                                },
+                                {
+                                  "espk": "PrimaryStore-d92bb672-79b7-4d00-85a4-3547a2444dd8:1926784617993230420",
+                                  "name": "Set Message JSON",
+                                  "type": "ChangeMessageFilter",
+                                  "class": "com.vordel.circuit.conversion.ChangeMessageFilter",
+                                  "status": "Pass",
+                                  "filterTime": 1625040683495,
+                                  "execTime": 0
+                                },
+                                {
+                                  "espk": "PrimaryStore-d92bb672-79b7-4d00-85a4-3547a2444dd8:8363694728869980543",
+                                  "name": "Send to JMS SWING",
+                                  "type": "JMSFilter",
+                                  "class": "com.vordel.circuit.jms.JMSFilter",
+                                  "status": "Pass",
+                                  "filterTime": 1625040683507,
+                                  "execTime": 12
+                                },
+                                {
+                                  "espk": "PrimaryStore-d92bb672-79b7-4d00-85a4-3547a2444dd8:-5244762290208881385",
+                                  "name": "Set - swing_flag",
+                                  "type": "SetAttributeFilter",
+                                  "class": "com.vordel.circuit.attribute.SetAttributeFilter",
+                                  "status": "Pass",
+                                  "filterTime": 1625040683507,
+                                  "execTime": 0
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "espk": "PrimaryStore-d92bb672-79b7-4d00-85a4-3547a2444dd8:8191721305514148511",
+                          "name": "Success",
+                          "type": "True",
+                          "class": "com.vordel.circuit.basic.True",
+                          "status": "Pass",
+                          "filterTime": 1625040683507,
+                          "execTime": 0
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   ]
 }
