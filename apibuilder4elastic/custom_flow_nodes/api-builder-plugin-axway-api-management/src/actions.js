@@ -143,7 +143,7 @@ async function lookupTopology(params, options) {
 		return topology;
 	}
 	// Without topology, inactive serviceIDs will not be included in the Traffic-Monitor result set
-	logger.error(`Error retrieving topology from ANM. With that EMT-Mode is not fully supported.`);
+	logger.error(`Error retrieving topology from ANM. Without API-Gateway topology, inactive serviceIDs (removed instances) will not be included in the Traffic-Monitor result set.`);
 	return {};
 }
 

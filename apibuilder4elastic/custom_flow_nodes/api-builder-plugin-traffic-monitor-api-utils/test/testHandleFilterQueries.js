@@ -251,5 +251,111 @@ describe('flow-node traffic-monitor-api-utils', () => {
 					]
 				}});
 		});
+
+		// Test JMS - Filter fields
+
+		// Example .../search?format=json&field=leg,jmsDeliveryMode&value=0,2&protocol=jms
+		it('should succeed with a JMS-Search based on the JMS-DeliveryMode set to PERSISTENT (2)', async () => {
+			const { value, output } = await flowNode.handleFilterFields({ params: { field: "jmsDeliveryMode", value: "2", protocol: "jms" }, serviceID: "instance-1", gatewayTopology: {} });
+
+			expect(output).to.equal('next');
+			expect(value).to.be.a('object');
+			expect(value).to.deep.equal({ "bool": { "must": [
+					  {"match": {"jms.jmsDeliveryMode": { "query": "2" }}},
+					  {"exists": {"field": "jms"}},
+					  {"term": {"processInfo.serviceId": "instance-1"}}
+					]}});
+		});
+
+		// Example .../search?format=json&field=leg,jmsDestination&value=0,6543643&count=1000&ago=24h&protocol=jms
+		it('should succeed with a JMS-Search based on the JMS-Destination', async () => {
+			const { value, output } = await flowNode.handleFilterFields({ params: { field: "jmsDestination", value: "6543643", protocol: "jms" }, serviceID: "instance-1", gatewayTopology: {} });
+
+			expect(output).to.equal('next');
+			expect(value).to.be.a('object');
+			expect(value).to.deep.equal({ "bool": { "must": [
+					  {"match": {"jms.jmsDestination": { "query": "6543643" }}},
+					  {"exists": {"field": "jms"}},
+					  {"term": {"processInfo.serviceId": "instance-1"}}
+					]}});
+		});
+
+		// Example .../search?format=json&field=leg,jmsMessageID&value=0,423423&count=1000&ago=24h&protocol=jms
+		it('should succeed with a JMS-Search based on the JMS-MessageID', async () => {
+			const { value, output } = await flowNode.handleFilterFields({ params: { field: "jmsMessageID", value: "Some-JMS-Message-ID", protocol: "jms" }, serviceID: "instance-1", gatewayTopology: {} });
+
+			expect(output).to.equal('next');
+			expect(value).to.be.a('object');
+			expect(value).to.deep.equal({ "bool": { "must": [
+					  {"match": {"jms.jmsMessageID": { "query": "Some-JMS-Message-ID" }}},
+					  {"exists": {"field": "jms"}},
+					  {"term": {"processInfo.serviceId": "instance-1"}}
+					]}});
+		});
+
+		// Example .../search?format=json&field=leg,jmsPriority&value=0,6&count=1000&ago=24h&protocol=jms
+		it('should succeed with a JMS-Search based on the JMS-Priority', async () => {
+			const { value, output } = await flowNode.handleFilterFields({ params: { field: "jmsPriority", value: "6", protocol: "jms" }, serviceID: "instance-1", gatewayTopology: {} });
+
+			expect(output).to.equal('next');
+			expect(value).to.be.a('object');
+			expect(value).to.deep.equal({ "bool": { "must": [
+					  {"match": {"jms.jmsPriority": { "query": "6" }}},
+					  {"exists": {"field": "jms"}},
+					  {"term": {"processInfo.serviceId": "instance-1"}}
+					]}});
+		});
+		
+		// Example .../search?format=json&field=leg,jmsRedelivered&value=0,787&count=1000&ago=24h&protocol=jms
+		it('should succeed with a JMS-Search based on the JMS-Redelivered value', async () => {
+			const { value, output } = await flowNode.handleFilterFields({ params: { field: "jmsRedelivered", value: "99", protocol: "jms" }, serviceID: "instance-1", gatewayTopology: {} });
+
+			expect(output).to.equal('next');
+			expect(value).to.be.a('object');
+			expect(value).to.deep.equal({ "bool": { "must": [
+					  {"match": {"jms.jmsRedelivered": { "query": "99" }}},
+					  {"exists": {"field": "jms"}},
+					  {"term": {"processInfo.serviceId": "instance-1"}}
+					]}});
+		});
+
+		// Example .../search?format=json&field=leg,jmsReplyTojmsReplyTo&value=0,ABC&count=1000&ago=24h&protocol=jms
+		it('should succeed with a JMS-Search based on the JMS-ReplyTo value', async () => {
+			const { value, output } = await flowNode.handleFilterFields({ params: { field: "jmsReplyTojmsReplyTo", value: "ABC", protocol: "jms" }, serviceID: "instance-1", gatewayTopology: {} });
+
+			expect(output).to.equal('next');
+			expect(value).to.be.a('object');
+			expect(value).to.deep.equal({ "bool": { "must": [
+					  {"match": {"jms.jmsReplyTo": { "query": "ABC" }}},
+					  {"exists": {"field": "jms"}},
+					  {"term": {"processInfo.serviceId": "instance-1"}}
+					]}});
+		});
+
+		// Example .../search?format=json&field=leg,jmsStatus&value=0,Success&count=1000&ago=24h&protocol=jms
+		it('should succeed with a JMS-Search based on the JMS-Status value', async () => {
+			const { value, output } = await flowNode.handleFilterFields({ params: { field: "jmsStatus", value: "Success", protocol: "jms" }, serviceID: "instance-1", gatewayTopology: {} });
+
+			expect(output).to.equal('next');
+			expect(value).to.be.a('object');
+			expect(value).to.deep.equal({ "bool": { "must": [
+					  {"match": {"jms.jmsStatus": { "query": "Success" }}},
+					  {"exists": {"field": "jms"}},
+					  {"term": {"processInfo.serviceId": "instance-1"}}
+					]}});
+		});
+
+		// Example .../search?format=json&field=leg,jmsType&value=0,3312&count=1000&ago=24h&protocol=jms
+		it('should succeed with a JMS-Search based on the JMS-Type value', async () => {
+			const { value, output } = await flowNode.handleFilterFields({ params: { field: "jmsType", value: "3312", protocol: "jms" }, serviceID: "instance-1", gatewayTopology: {} });
+
+			expect(output).to.equal('next');
+			expect(value).to.be.a('object');
+			expect(value).to.deep.equal({ "bool": { "must": [
+					  {"match": {"jms.jmsType": { "query": "3312" }}},
+					  {"exists": {"field": "jms"}},
+					  {"term": {"processInfo.serviceId": "instance-1"}}
+					]}});
+		});
 	});
 });

@@ -35,6 +35,8 @@ async function handleFilterFields(parameters, options) {
 		params.protocol = 'fileTransfer';
 	}
 
+	debugger;
+
 	var fields = [
 		// This Object-Array declares for each field how to query it in ES
 		{ fieldName: 'uri', queryType: 'match', queryLocation: 'http.uri', params: { operator: 'and' } },
@@ -51,7 +53,16 @@ async function handleFilterFields(parameters, options) {
 		{ fieldName: 'method', queryType: 'match', queryLocation: 'http.method' },
 		{ fieldName: 'correlationId', queryType: 'match', queryLocation: 'correlationId' },
 		{ fieldName: 'serviceName', queryType: 'match', queryLocation: 'serviceContext.service' },
-		{ fieldName: 'servicetype', queryType: 'match', queryLocation: `${params.protocol}.serviceType` }
+		{ fieldName: 'servicetype', queryType: 'match', queryLocation: `${params.protocol}.serviceType` },
+		// Fields for JMS
+		{ fieldName: 'jmsDeliveryMode', queryType: 'match', queryLocation: `${params.protocol}.jmsDeliveryMode` },
+		{ fieldName: 'jmsDestination', queryType: 'match', queryLocation: `${params.protocol}.jmsDestination` },
+		{ fieldName: 'jmsMessageID', queryType: 'match', queryLocation: `${params.protocol}.jmsMessageID` },
+		{ fieldName: 'jmsPriority', queryType: 'match', queryLocation: `${params.protocol}.jmsPriority` },
+		{ fieldName: 'jmsRedelivered', queryType: 'match', queryLocation: `${params.protocol}.jmsRedelivered` },
+		{ fieldName: 'jmsReplyTojmsReplyTo', queryType: 'match', queryLocation: `${params.protocol}.jmsReplyTo` },
+		{ fieldName: 'jmsStatus', queryType: 'match', queryLocation: `${params.protocol}.jmsStatus` },
+		{ fieldName: 'jmsType', queryType: 'match', queryLocation: `${params.protocol}.jmsType` }
 	];
 
 	/* 

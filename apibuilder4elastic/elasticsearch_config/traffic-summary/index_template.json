@@ -1,5 +1,5 @@
 {
-    "version": 7,
+    "version": 8,
     "index_patterns": [
         "apigw-traffic-summary-*"
     ],
@@ -220,6 +220,57 @@
             },
             "fileTransfer.serviceType": {
                 "type": "keyword"
+            },
+            "jms.jmsMessageID": {
+                "type": "text", 
+                "norms": false               
+            },
+            "jms.jmsCorrelationID": {
+                "type": "text", 
+                "norms": false               
+            },
+            "jms.jmsDestination": {
+                "type": "text",
+                "fields": {
+                    "keyword": {
+                        "type": "keyword"
+                    }
+                },
+                "norms": false
+            }, 
+            "jms.jmsReplyTo": {
+                "type": "text",
+                "fields": {
+                    "keyword": {
+                        "type": "keyword"
+                    }
+                },
+                "norms": false
+            },
+            "jms.jmsProviderURL": {
+                "type": "keyword"
+            }, 
+            "jms.jmsDeliveryMode": {
+                "type": "integer"
+            }, 
+            "jms.jmsPriority": {
+                "type": "integer"
+            }, 
+            "jms.jmsRedelivered": {
+                "type": "integer"
+            }, 
+            "jms.jmsExpiration": {
+                "type": "integer"
+            }, 
+            "jms.jmsType": {
+                "type": "keyword"
+            }, 
+            "jms.jmsStatus": {
+                "type": "keyword"
+            }, 
+            "jms.jmsStatusText": {
+                "type": "text",
+                "norms": false
             }
         }
     }

@@ -13,7 +13,7 @@ describe('Endpoints', function () {
 	const indexName = `apigw-traffic-summary-filetransfer_search_test_${getRandomInt(9999)}`;
 
 	beforeEach(() => {
-		// Simulate all responses in this test-file to be an admin, which will not lead to any result restriction
+		// Simulate all responses in this test-file to be an operator, which will lead to a restriction of the result
 		nock('https://mocked-api-gateway:8090').get('/api/rbac/currentuser').reply(200, { "result": "chris" });
 		nock('https://mocked-api-gateway:8090').get('/api/rbac/permissions/currentuser').replyWithFile(200, './test/mockedReplies/apigateway/operatorChris.json');
 		nock('https://mocked-api-gateway:8075').get(`/api/portal/v1.3/users?field=loginName&op=eq&value=chris&field=enabled&op=eq&value=enabled`).replyWithFile(200, './test/mockedReplies/apimanager/apiManagerUserChris.json');

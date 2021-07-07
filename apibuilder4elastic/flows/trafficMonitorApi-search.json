@@ -114,7 +114,7 @@
 		},
 		"javascript.1": {
 			"type": "nodehandler://@axway/api-builder-plugin-fn-javascript/javascript",
-			"name": "Format Search result",
+			"name": "Format result",
 			"method": "Execute",
 			"parameters": [
 				{
@@ -134,7 +134,7 @@
 				{
 					"name": "code",
 					"type": "string",
-					"value": "\"var result = {};\\n  var hits = data.elasticsearch.result.body.hits.hits;\\n  var protocol = data.params.protocol;\\n  result.processId = \\\"\\\";\\n  result.data = [];\\n  hits.map(function(entry) {\\n    var dataObject = {};\\n    var _source = entry._source;\\n    dataObject.correlationId = _source.correlationId;\\n    dataObject.timestamp = Date.parse(_source['@timestamp']);\\n    if(_source.serviceContext) {\\n      dataObject.serviceName = _source.serviceContext.service;\\n      dataObject.operation = _source.serviceContext.method;\\n    }\\n    dataObject.type = protocol;\\n    switch (protocol) {\\n      case \\\"http\\\":\\n        formatHttpFields(dataObject, _source);\\n        break;\\n      case \\\"fileTransfer\\\":\\n        formatFiletransferFields(dataObject, _source);\\n        break;\\n    }\\n    result.data.push(dataObject);\\n  });\\n  \\n  function formatHttpFields(dataObject, _source) {    \\n      if(!_source.http.sslSubject) {\\n        _source.http.sslSubject = \\\"null\\\";\\n      }\\n      dataObject.statustext = _source.http.statusText;\\n      dataObject.method = _source.http.method;\\n      dataObject.status = _source.http.status;\\n      dataObject.wafStatus = _source.http.wafStatus;\\n      dataObject.subject = _source.http.authSubjectId;\\n      dataObject.sslsubject = _source.http.sslSubject;\\n      dataObject.localPort = _source.http.localPort;\\n      dataObject.uri = _source.http.uri;\\n      dataObject.vhost = _source.http.vhost;\\n      dataObject.duration = _source.duration;\\n      dataObject.finalStatus = _source.finalStatus;\\n      dataObject.bytesReceived = _source.http.bytesReceived;\\n      dataObject.bytesSent = _source.http.bytesSent;\\n      dataObject.remoteName = _source.http.remoteName;\\n      dataObject.remoteAddr = _source.http.remoteAddr;\\n      dataObject.remotePort = _source.http.remotePort;\\n      dataObject.localAddr = _source.http.localAddr;\\n      dataObject.localPort = _source.http.localPort;\\n      dataObject.leg = 0;\\n  }\\n  \\n  function formatFiletransferFields(dataObject, _source) {\\n      dataObject.remoteAddr = _source.fileTransfer.remoteAddr;\\n      dataObject.uploadFile = _source.fileTransfer.uploadFile;\\n      dataObject.direction = _source.fileTransfer.direction;\\n      dataObject.servicetype = _source.fileTransfer.serviceType;\\n      dataObject.size = _source.fileTransfer.size;\\n      dataObject.duration = _source.duration;\\n      dataObject.subject = _source.fileTransfer.authSubjectId;\\n      dataObject.finalStatus = _source.finalStatus;\\n  }\\n\\n  \\n  return result;\"",
+					"value": "\"var result = {};\\n  var hits = data.elasticsearch.result.body.hits.hits;\\n  var protocol = data.params.protocol;\\n  result.processId = \\\"\\\";\\n  result.data = [];\\n  hits.map(function(entry) {\\n    var dataObject = {};\\n    var _source = entry._source;\\n    dataObject.correlationId = _source.correlationId;\\n    dataObject.timestamp = Date.parse(_source['@timestamp']);\\n    if(_source.serviceContext) {\\n      dataObject.serviceName = _source.serviceContext.service;\\n      dataObject.operation = _source.serviceContext.method;\\n    }\\n    dataObject.type = protocol;\\n    switch (protocol) {\\n      case \\\"http\\\":\\n        formatHttpFields(dataObject, _source);\\n        break;\\n      case \\\"fileTransfer\\\":\\n        formatFiletransferFields(dataObject, _source);\\n        break;\\n      case \\\"jms\\\":\\n        formatJMSFields(dataObject, _source);\\n        break;\\n    }\\n    result.data.push(dataObject);\\n  });\\n  \\n  function formatHttpFields(dataObject, _source) {    \\n      if(!_source.http.sslSubject) {\\n        _source.http.sslSubject = \\\"null\\\";\\n      }\\n      dataObject.statustext = _source.http.statusText;\\n      dataObject.method = _source.http.method;\\n      dataObject.status = _source.http.status;\\n      dataObject.wafStatus = _source.http.wafStatus;\\n      dataObject.subject = _source.http.authSubjectId;\\n      dataObject.sslsubject = _source.http.sslSubject;\\n      dataObject.localPort = _source.http.localPort;\\n      dataObject.uri = _source.http.uri;\\n      dataObject.vhost = _source.http.vhost;\\n      dataObject.duration = _source.duration;\\n      dataObject.finalStatus = _source.finalStatus;\\n      dataObject.bytesReceived = _source.http.bytesReceived;\\n      dataObject.bytesSent = _source.http.bytesSent;\\n      dataObject.remoteName = _source.http.remoteName;\\n      dataObject.remoteAddr = _source.http.remoteAddr;\\n      dataObject.remotePort = _source.http.remotePort;\\n      dataObject.localAddr = _source.http.localAddr;\\n      dataObject.localPort = _source.http.localPort;\\n      dataObject.leg = 0;\\n  }\\n  \\n  function formatFiletransferFields(dataObject, _source) {\\n      dataObject.remoteAddr = _source.fileTransfer.remoteAddr;\\n      dataObject.uploadFile = _source.fileTransfer.uploadFile;\\n      dataObject.direction = _source.fileTransfer.direction;\\n      dataObject.servicetype = _source.fileTransfer.serviceType;\\n      dataObject.size = _source.fileTransfer.size;\\n      dataObject.duration = _source.duration;\\n      dataObject.subject = _source.fileTransfer.authSubjectId;\\n      dataObject.finalStatus = _source.finalStatus;\\n  }\\n  \\n  function formatJMSFields(dataObject, _source) {\\n    dataObject.jmsMessageID = _source.jms.jmsMessageID;\\n    dataObject.jmsCorrelationID = _source.jms.jmsCorrelationID;\\n    dataObject.jmsDestination = _source.jms.jmsDestination;\\n    dataObject.jmsProviderURL = _source.jms.jmsProviderURL;\\n    dataObject.jmsDeliveryMode = _source.jms.jmsDeliveryMode;\\n    dataObject.jmsPriority = _source.jms.jmsPriority;\\n    dataObject.jmsReplyTo = _source.jms.jmsReplyTo;\\n    dataObject.jmsRedelivered = _source.jms.jmsRedelivered;\\n    dataObject.jmsTimestamp = _source.jms.jmsTimestamp;\\n    dataObject.jmsExpiration = _source.jms.jmsExpiration;\\n    dataObject.jmsType = _source.jms.jmsType;\\n    dataObject.jmsStatus = _source.jms.jmsStatus;\\n    dataObject.jmsStatusText = _source.jms.jmsStatusText;\\n    dataObject.leg = 0;\\n    dataObject.duration = _source.duration;\\n    dataObject.subject = _source.jms.authSubjectId;\\n    dataObject.finalStatus = _source.finalStatus;\\n  }\\n\\n  \\n  return result;\"",
 					"metaName": "code",
 					"metaDescription": "A JavaScript function body. Supports `await` and returning promises."
 				}
@@ -360,13 +360,6 @@
 					"metaDescription": "The input to test."
 				},
 				{
-					"name": "value2",
-					"type": "string",
-					"value": "\"jms\"",
-					"metaName": "Value 2",
-					"metaDescription": "The second value to test input against. If this matches exit 2 is used."
-				},
-				{
 					"name": "notMatchDefault",
 					"type": "boolean",
 					"value": "true",
@@ -391,9 +384,7 @@
 				},
 				"2": {
 					"context": "$.source",
-					"routes": [
-						"http.3"
-					],
+					"routes": [],
 					"metaName": "2"
 				},
 				"3": {
