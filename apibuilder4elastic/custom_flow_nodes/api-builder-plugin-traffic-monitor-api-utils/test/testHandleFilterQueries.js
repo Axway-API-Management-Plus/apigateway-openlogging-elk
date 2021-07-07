@@ -357,5 +357,21 @@ describe('flow-node traffic-monitor-api-utils', () => {
 					  {"term": {"processInfo.serviceId": "instance-1"}}
 					]}});
 		});
+
+		// Example .../search?format=json&field=leg&value=0&jmsPropertyName=propertyA&jmsPropertyValue=propertyAValue&protocol=jms
+		it('should succeed with a JMS-Search based on a JMS-Property', async () => {
+			const { value, output } = await flowNode.handleFilterFields({ params: { jmsPropertyName: "propertyA", jmsPropertyValue: "propertyAValue", protocol: "jms" }, serviceID: "instance-1", gatewayTopology: {} });
+
+			expect(output).to.equal('next');
+			expect(value).to.be.a('object');
+			expect(value).to.deep.equal({ "bool": { "must": [
+				{"exists": {"field": "jms"}},
+				{"term": {"processInfo.serviceId": "instance-1"}},
+				{"match": {"recvHeader": { 
+					"query": "propertyA propertyAValue", 
+					"operator": "and" 
+				}}}		
+			]}});
+		});
 	});
 });

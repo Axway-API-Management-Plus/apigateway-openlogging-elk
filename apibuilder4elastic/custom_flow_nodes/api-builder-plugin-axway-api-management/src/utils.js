@@ -187,7 +187,6 @@ async function checkAPIManagers(apiManagerConfig, options) {
 				.catch(err => {
 					throw new Error(`Cannot login to API-Manager: '${config.url}'. Got error: ${JSON.stringify(err)}`);
 				});
-			debugger;
 			const cookies = _getCookies(result.headers);
 			var reqOptions = {
 				path: `/api/portal/v1.3/currentuser`,

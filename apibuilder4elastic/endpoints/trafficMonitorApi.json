@@ -84,6 +84,18 @@
             "in": "query",
             "name": "region",
             "description": "If given, the search will be performed on regional index."
+          },
+          {
+            "type": "string",
+            "in": "query",
+            "name": "jmsPropertyName",
+            "description": "Name of a JMS-Request property"
+          },
+          {
+            "type": "string",
+            "in": "query",
+            "name": "jmsPropertyValue",
+            "description": "Value of a JMS-Request property"
           }
         ],
         "summary": "Seach requests to build Traffic-Overview table",

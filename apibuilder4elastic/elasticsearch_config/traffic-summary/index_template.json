@@ -271,6 +271,14 @@
             "jms.jmsStatusText": {
                 "type": "text",
                 "norms": false
+            },
+            "recvHeader": {
+                "type": "text",
+                "norms": false
+            },
+            "sentHeader": {
+                "type": "text",
+                "norms": false
             }
         }
     }

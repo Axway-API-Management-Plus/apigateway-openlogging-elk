@@ -33,7 +33,6 @@ describe('Endpoints', function () {
 				envLoader.config({ path: envFilePath });
 			}
 			server = startApiBuilder();
-			debugger;
 			server.apibuilder.config.testElasticIndex = indexName;
 			elasticConfig = server.apibuilder.config.pluginConfig['@axway-api-builder-ext/api-builder-plugin-fn-elasticsearch'].elastic;
 			server.started
@@ -87,7 +86,7 @@ describe('Endpoints', function () {
 			});
 		});
 
-		it.only('[JMS-Search-0002] Execute a search for JMS Traffic including all filter which should match to one result', () => {
+		it('[JMS-Search-0002] Execute a search for JMS Traffic including all filter which should match to one result', () => {
 			return requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?field=leg&value=0&field=jmsType&value=TextMessageToTestWith&field=jmsDeliveryMode&value=185&field=jmsRedelivered&value=800&field=jmsStatus&value=SuccessToTest&field=jmsDestination&value=queue%3A%2F%2Fcom.customer.APPLIC.msg.WWSWO.PROD.P44.XXX_ShipmentService&field=jmsMessageID&value=ID%3Ainterface1-36199-1111111111111-189%3A755%3A1%3A1%3A1&field=jmsReplyTojmsReplyTo&value=A-Sample-Reply-To&field=jmsPriority&value=4&count=1000&protocol=jms`,
@@ -116,6 +115,24 @@ describe('Endpoints', function () {
 				expect(body.data[0].jmsStatus).to.equals('SuccessToTest');
 				expect(body.data[0].jmsStatusText).to.equals('A great status text');
 				expect(body.data[0].subject).to.equals('A test subject id');
+			});
+		});
+
+		it('[JMS-Search-0003] Execute a search for JMS Traffic using the JMS-Property filter', () => {
+			return requestAsync({
+				method: 'GET',
+				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?jmsPropertyName=process_id&jmsPropertyValue=CHRISTXM2JS&protocol=jms`,
+				headers: {
+					'cookie': 'VIDUSR=Search-0001-DAVID-1597468226-Z+qdRW4rGZnwzQ==', 
+					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
+				},
+				json: true
+			}).then(({ response, body }) => {
+				expect(response.statusCode).to.equal(200);
+				expect(body).to.be.an('Object');
+				expect(body).to.have.property('data');
+				expect(body.data).to.have.lengthOf(1);
+				expect(body.data[0].correlationId).to.equals('222222222222222222222222');
 			});
 		});
 	});

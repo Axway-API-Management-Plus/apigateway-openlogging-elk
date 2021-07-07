@@ -23,6 +23,8 @@ module.exports = [
           "jmsStatusText": null,
           "authSubjectId": null
         },
+        "recvHeader": "{ \"process_id\": \"JOHNTXM2JS\", \"BDID\": \"E1JOHNTXM2JS131L8181037302510000001\", \"partner_info\": \"P44\", \"receiver\": \"P44\", \"sender\": \"SWORD\", \"web_service_name\": \"ShipmentService\", \"transfer_id\": \"E1JOHNTXM2JS131L8181037302510000001\", \"direction\": \"SWORD2API\", \"timestamp\": \"1625040653\" }",
+        "sentHeader": null,
         "processInfo": {
           "gatewayName": "API-Gateway 3",
           "gatewayRegion": "US",
@@ -59,6 +61,8 @@ module.exports = [
           "jmsStatusText": "A great status text",
           "authSubjectId": "A test subject id"
         },
+        "recvHeader": "{ \"process_id\": \"CHRISTXM2JS\", \"BDID\": \"E1CHRISTXM2JS131L8181037302510000001\", \"partner_info\": \"P44\", \"receiver\": \"P44\", \"sender\": \"SWORD\", \"web_service_name\": \"ShipmentService\", \"transfer_id\": \"E1JOHNTXM2JS131L8181037302510000001\", \"direction\": \"SWORD2API\", \"timestamp\": \"1625040653\" }",
+        "sentHeader": null,
         "processInfo": {
           "gatewayName": "API-Gateway 3",
           "gatewayRegion": "US",

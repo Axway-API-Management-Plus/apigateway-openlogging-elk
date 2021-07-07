@@ -35,8 +35,6 @@ async function handleFilterFields(parameters, options) {
 		params.protocol = 'fileTransfer';
 	}
 
-	debugger;
-
 	var fields = [
 		// This Object-Array declares for each field how to query it in ES
 		{ fieldName: 'uri', queryType: 'match', queryLocation: 'http.uri', params: { operator: 'and' } },
@@ -134,6 +132,7 @@ async function handleFilterFields(parameters, options) {
 	await addDurationFilter(filters.mustFilters, params, logger);
 	await addAgoFilter(filters.mustFilters, params, logger);
 	await addTimestampFilter(filters.mustFilters, params, logger);
+	await addJMSPropertyFilter(filters.mustFilters, params, logger);
 	if(filters.mustFilters.length != 0) {
 		elasticSearchquery.bool.must = filters.mustFilters;
 	}
@@ -446,6 +445,23 @@ async function addDurationFilter(filters, params, logger) {
 			return filters;
 		}
 	});
+}
+
+async function addJMSPropertyFilter(filters, params, logger) {
+	if(!params.jmsPropertyName) return;
+	
+	var propertyName = params.jmsPropertyName;
+	var propertyValue = params.jmsPropertyValue;
+	var filter = {
+		match: {
+			"recvHeader": {
+				"query": `${propertyName} ${propertyValue}`,
+				"operator": "and"
+			}
+		}
+	};
+	filters.push(filter);
+	return filters;
 }
 
 async function addAgoFilter(filters, params, logger) {
