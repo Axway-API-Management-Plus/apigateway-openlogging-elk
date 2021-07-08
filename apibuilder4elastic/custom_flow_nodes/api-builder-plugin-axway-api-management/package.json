@@ -17,19 +17,19 @@
 		"README.md"
 	],
 	"dependencies": {
-		"@axway/api-builder-sdk": "^1.0.0",
+		"@axway/api-builder-sdk": "^1.1.10",
 		"node-cache": "^5.1.2"
 	},
 	"peerDependencies": {
 		"@axway/api-builder-runtime": "^4.5.0"
 	},
 	"devDependencies": {
-		"@axway/api-builder-test-utils": "^1.1.0",
-		"chai": "^4.1.2",
+		"@axway/api-builder-test-utils": "^1.2.0",
+		"chai": "^4.3.4",
 		"decache": "^4.6.0",
-		"dotenv": "^8.2.0",
-		"mocha": "^8.3.2",
-		"nock": "^13.0.4",
+		"dotenv": "^8.6.0",
+		"mocha": "^8.4.0",
+		"nock": "^13.1.1",
 		"simple-mock": "^0.8.0"
 	},
 	"scripts": {

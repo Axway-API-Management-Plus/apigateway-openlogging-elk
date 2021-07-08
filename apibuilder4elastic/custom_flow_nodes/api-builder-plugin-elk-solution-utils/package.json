@@ -18,7 +18,7 @@
 	],
 	"dependencies": {
 		"@axway-api-builder-ext/api-builder-plugin-fn-elasticsearch": "^1.0.19",
-		"@axway/api-builder-sdk": "^1.1.5"
+		"@axway/api-builder-sdk": "^1.1.10"
 	},
 	"peerDependencies": {
 		"@axway/api-builder-runtime": "^4.5.0"

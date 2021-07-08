@@ -18,7 +18,7 @@
 		"scripts"
 	],
 	"dependencies": {
-		"@axway/api-builder-sdk": "^1.1.5",
+		"@axway/api-builder-sdk": "^1.1.10",
 		"@axway/requester": "4.0.5",
 		"node-cache": "^5.1.2"
 	},
