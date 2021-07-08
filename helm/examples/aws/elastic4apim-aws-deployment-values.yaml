@@ -1,0 +1,50 @@
+
+
+# A sample myvalues.yaml file
+apibuilder4elastic: 
+  anmUrl: "https://anm.axway-apim-on-eks.de:443"
+  apimgrUrl: "https://manager.axway-apim-on-eks.de:443"
+  secrets: 
+    apimgrUsername: "apiadmin"
+    apimgrPassword: "axway123"
+# Enable, if you would like to deploy a new Elasticsearch cluster for the solution
+elasticsearch:
+  enabled: true
+  extraInitContainers: [] # To be removed on release after 3.2.0
+  volumeClaimTemplate:
+    accessModes: [ "ReadWriteOnce" ]
+    storageClassName: gp2
+    resources:
+      requests:
+        storage: 100Gi
+  nodeSelector:
+    eks.amazonaws.com/nodegroup: ng-elastic
+
+# Enable, if you would like to deploy Kibana for the solution
+kibana:
+  enabled: true
+  ingress:
+    # Annotations used to expose Kibana on an AWS-ALB
+    # See here for more information
+    # https://kubernetes-sigs.github.io/aws-load-balancer-controller/v2.1/guide/ingress/annotations
+    annotations:
+      kubernetes.io/ingress.class: alb
+      alb.ingress.kubernetes.io/scheme: internet-facing
+      alb.ingress.kubernetes.io/target-type: ip
+      alb.ingress.kubernetes.io/group.name: axway-apim-on-eks
+      alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS": 443}]'
+      alb.ingress.kubernetes.io/backend-protocol: "HTTPS"
+      # 302 is also accepted, as Kibana is performing a redirect
+      alb.ingress.kubernetes.io/success-codes: 200,302
+    hosts:
+      - host: kibana.axway-apim-on-eks.de
+        paths:
+          - path: /*
+
+filebeat: 
+  createFilebeatConfig: true
+
+  elasticsearchClusterUUID: bTnfjVX9TA67WYl0whZ_5w
+
+  filebeatSecrets: 
+    beatsSystemUsername: ""

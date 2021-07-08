@@ -1,0 +1,66 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: external-dns
+rules:
+  - apiGroups: ['']
+    resources: ['endpoints', 'pods', 'services']
+    verbs: ['get', 'watch', 'list']
+  - apiGroups: ['extensions']
+    resources: ['ingresses']
+    verbs: ['get', 'watch', 'list']
+  - apiGroups: ['']
+    resources: ['nodes']
+    verbs: ['list', 'watch']
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: external-dns-viewer
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: external-dns
+subjects:
+- kind: ServiceAccount
+  name: external-dns
+  namespace: kube-system
+# Without this additional RoleBinding to the Default Service-Account in the same namespace the following error appeared:
+# failed to sync cache: timed out waiting for the condition
+# This account has the same IAM-Policy attached
+- kind: ServiceAccount
+  name: default
+  namespace: kube-system
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: external-dns
+spec:
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: external-dns
+  template:
+    metadata:
+      labels:
+        app: external-dns
+      # If you're using kiam or kube2iam, specify the following annotation.
+      # Otherwise, you may safely omit it.
+      #annotations:
+      #  iam.amazonaws.com/role: arn:aws:iam::343943056565:role/eksctl-apim-eks-addon-iamserviceaccount-defa-Role1-1T0CK526X37B6
+    spec:
+      containers:
+      - name: external-dns
+        image: k8s.gcr.io/external-dns/external-dns:v0.8.0
+        args:
+        - --source=service
+        - --source=ingress
+        - --domain-filter=axway-apim-on-eks.de # will make ExternalDNS see only the hosted zones matching provided domain, omit to process all available hosted zones
+        - --provider=aws
+        #- --policy=upsert-only # would prevent ExternalDNS from deleting any records, omit to enable full synchronization
+        - --aws-zone-type=public # only look at public hosted zones (valid values are public, private or no value for both)
+        - --registry=txt
+        #- --log-level=trace
+        - --txt-owner-id=Z08429631LDF13ELQHYPE
