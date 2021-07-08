@@ -477,6 +477,10 @@ kibana:
 filebeat:
   # Deploy Filebeat or not
   enabled: false
+  # Set this to true, to create the filebeat ConfigMaps & Secret including the filebeat.yaml 
+  # This is useful, if you would like to run filebeat as a sidecar along with the API-Gateways and just 
+  # reference these config maps
+  createFilebeatConfig: false
   fullnameOverride: "axway-elk-apim4elastic"
   # Secrets used to generate the secret <releaseName>-apim4elastic-filebeat-secret
   # which is referenced below. 
@@ -555,7 +559,7 @@ filebeat:
   # Filebeat configuration is added as part of the values.yaml, because the existing filebeatConfig 
   # cannot be be overridden due to a bug in Helm. 
   # https://github.com/helm/helm/issues/9136
-  # When this is fixed, the FilebeatConfig should become a ConfigMap using Files.get to make maintanance easier.
+  # When this is fixed, the FilebeatConfig should become a ConfigMap using Files.get to make maintenance easier.
   filebeatConfig: 
     filebeat.yml: |
       # Please don't change this file as it is supposed to be overwritten as
@@ -563,7 +567,7 @@ filebeat:
       #
       # If you are missing a certain feature or discover a bug, please raise an issue instead:
       # https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues
-      name: Filebeat ${GATEWAY_NAME:API-Gateway}
+      # name: Filebeat ${GATEWAY_NAME:API-Gateway}
 
       # Wait for max 60 seconds before stopping - This helps to avoid data loss, when stopping filebeat!
       filebeat.shutdown_timeout: 60s
@@ -654,8 +658,8 @@ filebeat:
           hosts: ${ELASTICSEARCH_HOSTS}
           ssl.enabled: true
           ssl.certificate_authorities: ["${ELASTICSEARCH_CRT:ELASTICSEARCH_CRT-NOT-SET}"]
-          username: "${BEATS_SYSTEM_USERNAME:beats_system}"
-          password: "${BEATS_SYSTEM_PASSWORD:BEATS_SYSTEM_PASSWORD-NOT-SET}"
+          username: "${BEATS_SYSTEM_USERNAME:''}"
+          password: "${BEATS_SYSTEM_PASSWORD:''}"
 
       logging.level: info
       logging.to_stderr: true

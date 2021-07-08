@@ -29,3 +29,16 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{ $key }}: {{ $value | quote }}
 {{- end }}
 {{- end }}
+
+{{/*
+Helper to decide if Filebeat secret should be generated
+*/}}
+{{- define "filebeat.generateSecret" -}}
+{{- if and (eq .Values.filebeat.enabled true .Values.filebeat.filebeatSecrets.enabled true) }}
+true
+{{- else if .Values.filebeat.createFilebeatConfig }}
+true
+{{- else }}
+false
+{{- end }}
+{{- end }}

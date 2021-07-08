@@ -1,0 +1,19 @@
+{{- if .Values.filebeat.createFilebeatConfig }}
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "filebeat.fullname" . }}-config
+  labels:
+    app: "{{ template "filebeat.fullname" . }}"
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+data:
+{{- range $path, $config := .Values.filebeat.filebeatConfig }}
+  {{ $path }}: |
+{{ $config | indent 4 -}}
+{{- end -}}
+
+{{- end }}

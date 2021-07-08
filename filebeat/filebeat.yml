@@ -95,8 +95,8 @@ monitoring:
     hosts: ${ELASTICSEARCH_HOSTS}
     ssl.enabled: true
     ssl.certificate_authorities: ["${ELASTICSEARCH_CRT:ELASTICSEARCH_CRT-NOT-SET}"]
-    username: "${BEATS_SYSTEM_USERNAME:beats_system}"
-    password: "${BEATS_SYSTEM_PASSWORD:BEATS_SYSTEM_PASSWORD-NOT-SET}"
+    username: "${BEATS_SYSTEM_USERNAME:''}"
+    password: "${BEATS_SYSTEM_PASSWORD:''}"
 
 logging.level: info
 logging.to_stderr: true
