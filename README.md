@@ -1238,6 +1238,12 @@ When Filebeat is reporting errors like: `Harvester could not be started on new f
 
 JMS requests are not controlled by the API-Manager, therefore there is no association with an organization and therefore the result cannot be restricted accordingly. If you want, you can disable the complete user authorization by setting the parameter: enableUserAuthorization to false. See here: https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk#customize-user-authorization
 
+### Is EMT-Mode supported?
+
+Yes, the solution can be used when the API-;anagement platform is deployed in a Docker orchestration platform in [EMT mode](https://docs.axway.com/bundle/axway-open-docs/page/docs/apim_installation/apigw_containers/container_intro/index.html). With that, it is for instance possible to see traffic from containers (PODs) that have already been removed again in the traffic monitor. However, there is a limitation here that the server name is not displayed correctly. [Learn more](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/114#issuecomment-864941677) on this limitation.
+
+
+
 ## Known issues
 N/A
   
