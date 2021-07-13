@@ -41,6 +41,10 @@ describe('Endpoints', function () {
 		});
 	});
 
+	afterEach(() => {
+		nock.cleanAll();
+	});
+
 	/**
 	 * Stop API Builder after the tests.
 	 */
