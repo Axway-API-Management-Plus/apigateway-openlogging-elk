@@ -324,7 +324,22 @@ async function getCustomPropertiesConfig(params, options) {
 	pluginConfig = options.pluginConfig;
 	const { logger } = options;
 	cache = options.pluginContext.cache;
-	return await _getConfiguredCustomProperties(groupId, params.region, options);
+	let apiManagerConfig;
+	debugger;
+	var mergedCustomProperties = {};
+	// If multiple API-Managers are configured get custom-properties from all API-Managers and merge them together
+	if(!pluginConfig.apimanager.perGroupAndRegion) {
+		apiManagerConfig = getManagerConfig(pluginConfig.apimanager, groupId, region);
+		return await _getConfiguredCustomProperties(apiManagerConfig, options);
+	} else {
+		for (const [key, val] of Object.entries(pluginConfig.apimanager.configs)) { 
+			logger.debug(`Trying to get custom properties from API-Manager with configuration: '${val}'`);
+			apiManagerConfig = getManagerConfig(pluginConfig.apimanager, key, null);
+			var managerCustomProperties = await _getConfiguredCustomProperties(apiManagerConfig, options);
+			mergedCustomProperties = {...mergedCustomProperties, ...managerCustomProperties};
+		}
+	}
+	return mergedCustomProperties;
 }
 
 async function _getAPILocalProxies(params, options) {
@@ -474,7 +489,8 @@ async function _getTopology(requestHeaders, logger) {
 }
 
 async function _addCustomProperties(apiProxy, groupId, region, options) {
-	var apiCustomProperties = await _getConfiguredCustomProperties(groupId, region, options);
+	const apiManagerConfig = getManagerConfig(pluginConfig.apimanager, groupId, region);
+	var apiCustomProperties = await _getConfiguredCustomProperties(apiManagerConfig, options);
 	apiProxy.customProperties = {};
 	for (var prop in apiCustomProperties) {
 		if (Object.prototype.hasOwnProperty.call(apiCustomProperties, prop)) {
@@ -680,17 +696,16 @@ async function _getOrganization(apiProxy, groupId, region, options) {
 	return org;
 }
 
-async function _getConfiguredCustomProperties(groupId, region, options) {
+async function _getConfiguredCustomProperties(apiManagerConfig, options) {
 	const { logger } = options;
-	const apiManagerConfig = getManagerConfig(pluginConfig.apimanager, groupId, region);
-	const customPropCacheKey = `CUSTOM_PROPERTIES###${groupId}###${region}`
+	const customPropCacheKey = `CUSTOM_PROPERTIES###${apiManagerConfig.url}`
 	var propertiesConfig;
 	if(cache.has(customPropCacheKey)) {
 		propertiesConfig = cache.get(customPropCacheKey);
-		logger.debug(`Custom properties found in cache with groupId: ${groupId} and region ${region}.`);
+		logger.debug(`Custom properties found in cache with url: ${apiManagerConfig.url}.`);
 		return propertiesConfig;
 	}
-	logger.debug(`Reading custom properties for groupId: ${groupId}. from API-Manager: ${apiManagerConfig.url}`);
+	logger.debug(`Reading custom properties from API-Manager: ${apiManagerConfig.url}`);
 	var options = {
 		path: `/api/portal/v1.3/config/customproperties`,
 		headers: {
