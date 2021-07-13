@@ -40,12 +40,13 @@ const securityDeviceTypes = {
  */
 async function lookupCurrentUser(params, options) {
 	const { requestHeaders, getApiManagerUser } = params;
+	var { unrestrictedPermissions } = params;
 	const logger = options.logger;
 	cache = options.pluginContext.cache;
 	pluginConfig = options.pluginConfig;
 	var user = {};
 	// default the user to be a Non-Admin user
-	user.gatewayManager = {isAdmin : false};
+	user.gatewayManager = {isUnrestricted : false};
 	var permissions = {};
 	var VIDUSR;
 	if (!requestHeaders) {
@@ -53,6 +54,10 @@ async function lookupCurrentUser(params, options) {
 	}
 	if(!requestHeaders.cookie && !requestHeaders.authorization) {
 		throw new Error('You must provide either the VIDUSR cookie + csrf-token or an HTTP-Basic Authorization header.');
+	}
+	debugger;
+	if (!unrestrictedPermissions || unrestrictedPermissions=="") {
+		unrestrictedPermissions = "adminusers_modify";
 	}
 	if(requestHeaders.authorization) {
 		logger.debug(`Trying to authorize user based on Authorization header.`);
@@ -77,15 +82,15 @@ async function lookupCurrentUser(params, options) {
 		logger.trace(`Current user is: ${user.loginName}`);
 		permissions = await _getCurrentGWPermissions(headers = {'Cookie': requestHeaders.cookie, 'csrf-token': requestHeaders['csrf-token']}, user.loginName);
 	}
-	if(permissions.includes("adminusers_modify")) {
-		user.gatewayManager.isAdmin = true;
-		logger.debug(`Current user is: '${user.loginName}' Is Gateway admin: ${user.gatewayManager.isAdmin}`);
+	if(unrestrictedPermissions.split(",").every( function(perm) { return permissions.includes(perm); })) {
+		user.gatewayManager.isUnrestricted = true;
+		logger.debug(`Current user is: '${user.loginName}'. Unrestricted Traffic-Monitor access: ${user.gatewayManager.isUnrestricted}`);
 		if(VIDUSR) {
 			cache.set( VIDUSR, user);
 		}
 		return user;
 	} else if(getApiManagerUser==false) {
-		logger.debug(`Current user is: '${user.loginName}' Is Gateway admin: ${user.gatewayManager.isAdmin}. Don't try to get user on API-Manager.`);
+		logger.debug(`Current user is: '${user.loginName}'. Unrestricted Traffic-Monitor access: ${user.gatewayManager.isUnrestricted}. Don't try to get user on API-Manager.`);
 		if(VIDUSR) {
 			cache.set( VIDUSR, user);
 		}
@@ -327,11 +332,12 @@ async function getCustomPropertiesConfig(params, options) {
 	let apiManagerConfig;
 	debugger;
 	var mergedCustomProperties = {};
-	// If multiple API-Managers are configured get custom-properties from all API-Managers and merge them together
 	if(!pluginConfig.apimanager.perGroupAndRegion) {
+		// Using a single API-Manager only.
 		apiManagerConfig = getManagerConfig(pluginConfig.apimanager, groupId, region);
 		return await _getConfiguredCustomProperties(apiManagerConfig, options);
 	} else {
+		// If multiple API-Managers are configured get custom-properties from all API-Managers and merge them together
 		for (const [key, val] of Object.entries(pluginConfig.apimanager.configs)) { 
 			logger.debug(`Trying to get custom properties from API-Manager with configuration: '${val}'`);
 			apiManagerConfig = getManagerConfig(pluginConfig.apimanager, key, null);

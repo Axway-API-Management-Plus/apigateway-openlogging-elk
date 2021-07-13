@@ -1,0 +1,16 @@
+{
+    "result": {
+        "user": "david",
+        "permissions": [
+            "ama_modify",
+            "fips_modify",
+            "group_force_unlock",
+            "traffic_monitor",
+            "deploy",
+            "domain_audit",
+            "domain_audit_modify",
+            "logs",
+            "mgmt"
+        ]
+    }
+}

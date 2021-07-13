@@ -330,6 +330,19 @@ ELASTIC_VERSION=7.12.1
 # AUTHZ_CONFIG=./config/my-authorization-config.js
 
 # ----------------------------------------------------------------------------------------------
+# With this parameter you control which user gets an unrestricted access to the traffic in the 
+# API gateway traffic monitor.  This means that these users will see all traffic, regardless of 
+# which API Manager organization. Users who have these rights in the API Gateway traffic monitor 
+# do not need to be configured on the API Manager.
+# If the parameter is not configured, then the default permission is: adminusers_modify, which 
+# in principle only full API Gateway administrators have.
+# Example of multiple permissions. The user must have all these permissions:
+# Used-By: API-Builder
+# UNRESTRICTED_PERMISSIONS=traffic_monitor,adminusers,settings
+# Example of a single permissions. Take care, as many people will have this permissions: 
+# UNRESTRICTED_PERMISSIONS=traffic_monitor
+
+# ----------------------------------------------------------------------------------------------
 # By default, the solution also provides the payload to the API gateway traffic monitor based on
 # the exported payload.
 # In other words, if the traffic monitor is first connected to the API Builder/Elasticsearch via

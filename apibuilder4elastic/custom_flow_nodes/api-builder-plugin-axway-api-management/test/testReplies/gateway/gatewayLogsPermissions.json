@@ -1,0 +1,8 @@
+{
+    "result": {
+        "user": "operator",
+        "permissions": [
+            "logs"
+        ]
+    }
+}

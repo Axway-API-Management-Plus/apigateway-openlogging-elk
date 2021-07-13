@@ -1,0 +1,16 @@
+{
+    "result": {
+        "user": "operator",
+        "permissions": [
+            "logs",
+            "mgmt",
+            "AND_SOME_OTHER_PERMISSIONS",
+            "dashboard",
+            "events",
+            "adminusers_passwordpolicy_modify",
+            "settings_modify",
+            "adminusers",
+            "settings"
+        ]
+    }
+}

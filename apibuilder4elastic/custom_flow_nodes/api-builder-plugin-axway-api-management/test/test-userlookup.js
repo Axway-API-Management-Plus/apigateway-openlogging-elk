@@ -108,7 +108,43 @@ describe('Tests User-Lookup with complete configuration parameters', () => {
 			expect(value).to.deep.equal({
 				"loginName": "gwadmin",
 				"gatewayManager": {
-					"isAdmin": true
+					"isUnrestricted": true
+				}
+			});
+			expect(output).to.equal('next');
+		});
+
+		it('should result into an unrestricted API-Gateway User (based on permission: logs), which requires no lookup to the API-Manager', async () => {
+			nock('https://mocked-api-gateway:8190').get('/api/rbac/currentuser').reply(200, { "result": "operator" });
+			nock('https://mocked-api-gateway:8190').get('/api/rbac/permissions/currentuser').replyWithFile(200, './test/testReplies/gateway/gatewayLogsPermissions.json');
+
+			const { value, output } = await flowNode.lookupCurrentUser({ 
+				requestHeaders: {"host":"api-gateway:8090","max-forwards":"20", "cookie":"VIDUSR=1597381095-XTawGDtJhBA7Zw==;", "csrf-token": "CF2796B3BD18C1B0B5AB1C8E95B75662E92FBC04BD799DEB97838FC5B9C39348"},
+				unrestrictedPermissions: "logs"
+			});
+
+			expect(value).to.deep.equal({
+				"loginName": "operator",
+				"gatewayManager": {
+					"isUnrestricted": true
+				}
+			});
+			expect(output).to.equal('next');
+		});
+
+		it('should result into an unrestricted API-Gateway User (based on permission: logs,mgmt), which requires no lookup to the API-Manager', async () => {
+			nock('https://mocked-api-gateway:8190').get('/api/rbac/currentuser').reply(200, { "result": "operator" });
+			nock('https://mocked-api-gateway:8190').get('/api/rbac/permissions/currentuser').replyWithFile(200, './test/testReplies/gateway/gatewayLogsMgmtPermissions.json');
+
+			const { value, output } = await flowNode.lookupCurrentUser({ 
+				requestHeaders: {"host":"api-gateway:8090","max-forwards":"20", "cookie":"VIDUSR=1597381095-XTawGDtJhBA7Zw==;", "csrf-token": "CF2796B3BD18C1B0B5AB1C8E95B75662E92FBC04BD799DEB97838FC5B9C39348"},
+				unrestrictedPermissions: "logs,mgmt"
+			});
+
+			expect(value).to.deep.equal({
+				"loginName": "operator",
+				"gatewayManager": {
+					"isUnrestricted": true
 				}
 			});
 			expect(output).to.equal('next');
@@ -125,7 +161,7 @@ describe('Tests User-Lookup with complete configuration parameters', () => {
 			expect(value).to.deep.equal({
 				"loginName": "chris",
 				"gatewayManager": {
-					"isAdmin": false
+					"isUnrestricted": false
 				}
 			});
 			expect(output).to.equal('next');
@@ -144,7 +180,7 @@ describe('Tests User-Lookup with complete configuration parameters', () => {
 			expect(value).to.deep.equal({
 				"loginName": "chris",
 				"gatewayManager": {
-					"isAdmin": false
+					"isUnrestricted": false
 				},
 				"apiManager": {
 					"id": "d66a42d6-b9c7-4efd-b33a-de8b88545861",
@@ -177,7 +213,7 @@ describe('Tests User-Lookup with complete configuration parameters', () => {
 			expect(value).to.deep.equal({
 				"loginName": "chris",
 				"gatewayManager": {
-					"isAdmin": false
+					"isUnrestricted": false
 				},
 				"apiManager": {
 					"id": "d66a42d6-b9c7-4efd-b33a-de8b88545861",

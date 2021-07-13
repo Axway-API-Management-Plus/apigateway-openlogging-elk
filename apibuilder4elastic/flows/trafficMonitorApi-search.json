@@ -173,6 +173,11 @@
 					"value": "$.authzConfig.getApiManagerUser",
 					"metaName": "Get the API-Manager user?",
 					"metaDescription": "If set to false, the flow-node does not tries to lookup the user on the API-Manager. Set it to false, when for instance user authorization is disabled as there might be no belonging user configured in the API-Manager."
+				},
+				{
+					"name": "unrestrictedPermissions",
+					"type": "jsonpath",
+					"value": "$.config.unrestrictedPermissions"
 				}
 			],
 			"outputs": {
@@ -195,13 +200,13 @@
 		},
 		"condition.1": {
 			"type": "nodehandler://axway-flow/condition",
-			"name": "Is Gateway Admin?",
+			"name": "Is unrestricted?",
 			"method": "equals",
 			"parameters": [
 				{
 					"name": "source",
 					"type": "jsonpath",
-					"value": "$.user.gatewayManager.isAdmin",
+					"value": "$.user.gatewayManager.isUnrestricted",
 					"metaName": "Source",
 					"metaDescription": "The input to test."
 				},

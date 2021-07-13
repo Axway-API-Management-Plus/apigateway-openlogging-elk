@@ -26,6 +26,9 @@ module.exports = {
 	// Disables custom properties lookup
 	disableCustomProperties: process.env.DISABLE_CUSTOM_PROPERTIES,
 
+	// A list of permissions a user must have to get unrestricted access to the Traffic-Monitor result set
+	unrestrictedPermissions: process.env.UNRESTRICTED_PERMISSIONS,
+
 	// These version are used, that Filebeat and Logstash are configured as required 
 	// by the API-Builder release
 	versions: {

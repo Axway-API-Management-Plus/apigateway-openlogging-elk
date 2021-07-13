@@ -24,6 +24,12 @@ flow-nodes:
             schema:
               default: true
               type: boolean
+          unrestrictedPermissions:
+            name: Unrestricted Permissions
+            description: 'A comma separated list of the permission(s) to check, if a user should get unrestricted traffic view access. For example: "logs" or "logs,mgmt". The second option requires are user to have both permissions to get the unrestricted view. Defaults to adminusers_modify.'
+            required: false
+            schema:
+              type: string
         outputs:
           next:
             name: Next

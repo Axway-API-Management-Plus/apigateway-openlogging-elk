@@ -64,7 +64,7 @@ async function addApiManagerOrganizationFilter(params, options) {
 		indexProperty = "serviceContext.apiOrg";
 	}
 	// Skip, if the user an API-Gateway Admin
-	if (user.gatewayManager.isAdmin) {
+	if (user.gatewayManager.isUnrestricted) {
 		return elasticQuery;
 	}
 	var filters = elasticQuery.bool.must;
@@ -127,8 +127,8 @@ async function addExtHTTPAuthzFilter(params, options) {
 		throw new Error(`Invalid configuration: externalHTTP.restrictionFieldType: ${authZConfig.externalHTTP.restrictionFieldType}`);
 	}
 	// Skip, if the user an API-Gateway Admin
-	if (user.gatewayManager && user.gatewayManager.isAdmin) {
-		logger.debug(`User authorization skippped as the user an API-Gateway Admin`);
+	if (user.gatewayManager && user.gatewayManager.isUnrestricted) {
+		logger.debug(`User authorization skippped as the user has unrestricted traffic view access.`);
 		return elasticQuery;
 	}
 	logger.debug(`Caching external user authorization information using key: 'ExtAuthZ###${user.loginName}'`);

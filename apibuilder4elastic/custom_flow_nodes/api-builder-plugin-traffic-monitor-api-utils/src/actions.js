@@ -175,7 +175,7 @@ async function createCircuitPathQuery(parameters, options) {
 		);
 	}
 	// If user is an Admin or AuthZ is disabled, return the base query
-	if (user.gatewayManager.isAdmin || authzConfig.enableUserAuthorization == false) {
+	if (user.gatewayManager.isUnrestricted || authzConfig.enableUserAuthorization == false) {
 		return elasticQuery;
 	}
 	// If AuthZ based on API-Managers is enabled check if the user has an Admin-Role

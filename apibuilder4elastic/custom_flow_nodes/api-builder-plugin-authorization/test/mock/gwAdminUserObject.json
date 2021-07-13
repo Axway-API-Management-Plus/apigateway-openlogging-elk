@@ -1,6 +1,6 @@
 {
     "gatewayManager": {
-      "isAdmin": true
+      "isUnrestricted": true
     },
     "loginName": "admin",
     "apiManager": {
