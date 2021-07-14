@@ -50,11 +50,13 @@ describe('Endpoints', function () {
 	});
 
 	describe('Search', async () => {
-		it('[RestrictedPermissions-0001] Execute a search using a custom restricted permission configuration', async () => {
-			// Permissions returned include mgmt & logs
-			nock('https://mocked-api-gateway:8090').get('/api/rbac/currentuser').reply(200, { "result": "david" });
+		it('[RestrictedPermissions-0002] Custom restriction permission configuration - User has with monitoring permission a restricted access', async () => {
+			// Configured permissions: mgmt,logs - Not enough for user rene only having permission monitoring
+			nock('https://mocked-api-gateway:8090').get('/api/rbac/currentuser').reply(200, { "result": "rene" });
 			nock('https://mocked-api-gateway:8090').get('/api/topology').reply(200, { result: {} });
-			nock('https://mocked-api-gateway:8090').get('/api/rbac/permissions/currentuser').replyWithFile(200, './test/mockedReplies/apigateway/permissionLogsMgmt.json');
+			nock('https://mocked-api-gateway:8090').get('/api/rbac/permissions/currentuser').replyWithFile(200, './test/mockedReplies/apigateway/permissionMonitoring.json');
+			nock('https://mocked-api-gateway:8075').get(`/api/portal/v1.3/users?field=loginName&op=eq&value=rene&field=enabled&op=eq&value=enabled`).replyWithFile(200, './test/mockedReplies/apimanager/apiManagerUserRene.json');		
+			nock('https://mocked-api-gateway:8075').get(`/api/portal/v1.3/organizations/2bfaa1c2-49ab-4059-832d-MAX`).replyWithFile(200, './test/mockedReplies/apimanager/organizationMax.json');
 			return await requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?count=20`,
@@ -67,7 +69,7 @@ describe('Endpoints', function () {
 				expect(response.statusCode).to.equal(200);
 				expect(body).to.be.an('Object');
 				expect(body).to.have.property('data');
-				expect(body.data).to.have.lengthOf(13); // Expect the entire result set
+				expect(body.data).to.have.lengthOf(2); // Expect only two results as the user is restricted
 			});
 		});
 	});
