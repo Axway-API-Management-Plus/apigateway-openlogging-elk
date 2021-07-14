@@ -1172,7 +1172,7 @@ No, as it is not a 7.x version and not tested with this solution at all.
 
 ### Can I run Filebeat as a native process?
 
-Yes, you can run Filebeat natively instead of a Docker-Container if you prefer. As long as you are using the filebeat.yml and correct configuration that is supported. However, the solution has been tested with Filebeat 7.9 & 7.10. If you see performance degregation with an 'old' Filebeat the first advice would be to upgrade the Filebeat version.
+Yes, you can run Filebeat natively instead of a Docker-Container if you prefer. As long as you are using the filebeat.yml and correct configuration that is supported. However, the solution has been tested with Filebeat 7.9, 7.10, 7.11 & 7.12. If you see performance degregation with an 'old' Filebeat the first advice would be to upgrade the Filebeat version.
 
 ### What happens if Logstash is down for a while?
 
@@ -1180,7 +1180,7 @@ In case Logstash is stopped, Filebeat cannot sent events any longer to Logstash.
 
 ### What happens if Filebeat is down for a while?
 
-Filebeat stores the current position in a file and which events have already been passed on. If Filebeat is shut down cleanly and then restarted, Filebeat will pick up where it left off.
+Filebeat stores the current position in a file (registry) storeing which events have already been passed on. If Filebeat is shut down cleanly and then restarted, Filebeat will pick up where it left off.
 Tests have shown that it can still be that a few events are lost.
 
 ### Can I run multiple Logstash instances?
@@ -1189,11 +1189,11 @@ Yes, Logstash is stateless (besides what is stored is Memcache), hence you can r
 
 ### Can I run multiple API-Builder instances?
 
-Yes, and just provide the same configuration for each API-Builder Docker-Container. It's recommended to run the API-Builder process along Logstash & Memcache as these components are working closely together.
+Yes, and just provide the same configuration for each API-Builder Docker-Container. It's recommended to run the API-Builder process along Logstash & Memcache as these components are working closely together. Especially a low latency between Logstash & Memcache is crucial.
 
 ### Are there any limits in terms of TPS?
 
-The solution was tested up to a maximum of 1,000 TPS and was thus able to process the events that occurred in real time. You can read more details in the Infrastructure Sizing section. 
+The solution was tested up to a maximum of 1,000 TPS and was thus able to process the events that occurred in real time. You can read more details in the [Infrastructure Sizing](#size-your-infrastructure) section. 
 The solution is designed to scale to 5 Elasticsearch nodes as the indicies are configured on 5 shards. This means that Elasticsearch distributes each index evenly across the available nodes. 
 More Elasticsearch nodes can also have an impact as there are a number of indices (e.g. per region, per type) and this allows Elasticsearch to balance the cluster even better.
 So in principle, there is no limit. Of course, the components like Logstash/API builder then need to scale as well.
@@ -1210,17 +1210,17 @@ Yes. Trace-Messages you see in the Traffic-Monitor for an API-Request are retrie
 
 No, but this file is used by docker-compose only. If you would like to avoid to have sensitive data stored, the recommended approach it deploy the solution in Kubernetes environment and store passwords in the Secure-Vault. With that, sensitive data is injected into the containers from a secure source.
 
-### Why does Kibana a Kibana dashboards show different volumes than the Traffic Monitor?
+### Why does Kibana dashboards show different volumes than the Traffic Monitor?
 
 If the traffic monitor dashboard shows significantly more transactions than the Kibana dashboards, for example for the last 10 minutes, very likely the ingestion rate is not high enough. In other words, the ELK stack cannot process the data fast enough. If the behavior does not recover, you may need to add more Logstash and/or Elasticsearch nodes.
 
 ### Can I increase the disk volume on an Elasticsearch machine?
 
-Yes, all indicies are configured to have one replica and therefore it's safe to stop machine, increae the disk-space and restart it. Please make sure, the cluster state is green, before stopping an instance. The increased volume will be automatically detected by Elasticsearch and used to assign more shards to it.
+Yes, all indicies are configured to have one replica and therefore it's safe to stop a machine, increase the disk-space and restart it. Please make sure, the cluster state is green, before stopping an instance. The increased volume will be automatically detected by Elasticsearch and used to assign more shards to it. It's recommended to assign the same disk space to all Elasticsearch-Cluster nodes.
 
 ### During catch up, what should be the total events rate for Filebeat?
 
-Tests show that Filebeat can send more than 3,000 events per second to Logstash instances. Tests show that Filebeat can send more than 2,200 events per second to Logstash instances. Of course, this number also depends on the event type. Trace messages can be processed faster than OpenTraffic event logs, for example. You can find an example [here](#imgs/stack-monitoring/stack-monitoring-beats-instances.png).
+Tests show that Filebeat can send more than 3,000 events per second to Logstash instances. Of course, this number also depends on the event type. Trace messages can be processed faster than OpenTraffic event logs, for example. You can find an example [here](#imgs/stack-monitoring/stack-monitoring-beats-instances.png).
 
 ### Can I use AWS Elasticsearch service?
 
@@ -1232,16 +1232,15 @@ In a healthy environment, the event latency shown for Logstash event processing 
 
 ### Filebeat is reporting errors?
 
-When Filebeat is reporting errors like: `Harvester could not be started on new file: /var/log/opentraffic/group-2_instance-1_traffic.log, Err: error setting up harvester: Harvester setup failed. Unexpected file opening error: file info is not identical with opened file. Aborting harvesting and retrying file later again`, it might be, that the registry is corrupt for any reason. When this happens, Filebeat basically stops for a second to send events, which may cause issues to stay real-time when running very high volume. If possible 
+When Filebeat is reporting errors like: `Harvester could not be started on new file: /var/log/opentraffic/group-2_instance-1_traffic.log, Err: error setting up harvester: Harvester setup failed. Unexpected file opening error: file info is not identical with opened file. Aborting harvesting and retrying file later again`, it might be, that the registry is corrupt for any reason. When this happens, Filebeat basically stops for a second to send events, which may cause issues to stay real-time when running very high volume. 
 
 ### Why only Administrators see JMS-Traffic?
 
-JMS requests are not controlled by the API-Manager, therefore there is no association with an organization and therefore the result cannot be restricted accordingly. If you want, you can disable the complete user authorization by setting the parameter: enableUserAuthorization to false. See here: https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk#customize-user-authorization
+JMS requests are not controlled by the API-Manager, therefore there is no association with an organization and therefore the result cannot be restricted accordingly. If you want, you can disable the complete user authorization by setting the parameter: enableUserAuthorization to false. See here: https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk#customize-user-authorization or you can use the parameter: `UNRESTRICTED_PERMISSIONS` to configure which users should see the entire traffic.
 
 ### Is EMT-Mode supported?
 
-Yes, the solution can be used when the API-;anagement platform is deployed in a Docker orchestration platform in [EMT mode](https://docs.axway.com/bundle/axway-open-docs/page/docs/apim_installation/apigw_containers/container_intro/index.html). With that, it is for instance possible to see traffic from containers (PODs) that have already been removed again in the traffic monitor. However, there is a limitation here that the server name is not displayed correctly. [Learn more](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/114#issuecomment-864941677) on this limitation.
-
+Yes, the solution can be used when the API-Mnagement platform is deployed in a Docker orchestration platform in [EMT mode](https://docs.axway.com/bundle/axway-open-docs/page/docs/apim_installation/apigw_containers/container_intro/index.html). With that, it is for instance possible to see traffic from containers (PODs) that have already being removed again in the traffic monitor. However, there is a limitation here that the server name is not displayed correctly. [Learn more](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/114#issuecomment-864941677) on this limitation.
 
 
 ## Known issues
