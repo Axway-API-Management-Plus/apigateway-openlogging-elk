@@ -131,10 +131,10 @@ describe('Payload', function () {
 		});
 
 		it('[Payload-0005] Should return REGIONAL sent payload for leg 0', () => {
-			const testPayload  = fs.readFileSync(`${payloadFolder}/US-DC1/2020-07-03/08.55/0455ff5e82267be8182a553d-0-sent`, { encoding: "UTF-8" });
+			const testPayload  = fs.readFileSync(`${payloadFolder}/us-dc2/2020-07-03/08.55/0455ff5e82267be8182a553d-0-sent`, { encoding: "UTF-8" });
 			return requestAsync({
 				method: 'GET',  // 
-				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/stream/0455ff5e82267be8182a553d/0/sent?region=US-DC1`,
+				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/stream/0455ff5e82267be8182a553d/0/sent?region=US-DC2`,
 				headers: {
 					'cookie': 'VIDUSR=Getinfo-0001-DAVID-1597762865-iUI5a8+v+zLkNA%3d%3d; APIMANAGERSTATIC=92122e5c-6bb3-4fd1-ad2f-08b65554d116', 
 					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
