@@ -131,7 +131,7 @@ describe('Payload', function () {
 		});
 
 		it('[Payload-0005] Should return REGIONAL sent payload for leg 0', () => {
-			const testPayload = fs.readFileSync(`${payloadFolder}/US-DC1/2020-07-03/08.55/0455ff5e82267be8182a553d-0-sent`, { encoding: "UTF-8" });
+			const testPayload  = fs.readFileSync(`${payloadFolder}/US-DC1/2020-07-03/08.55/0455ff5e82267be8182a553d-0-sent`, { encoding: "UTF-8" });
 			return requestAsync({
 				method: 'GET',  // 
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/stream/0455ff5e82267be8182a553d/0/sent?region=US-DC1`,
