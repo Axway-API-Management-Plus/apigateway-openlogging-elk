@@ -533,7 +533,7 @@ API manager user (API_MANAGER_USERNAME/API_MANAGER_PASSWORD) is used for each AP
 
 If you use the solution with multiple regions and different domains, all events/documents are stored in ONE Elasticsearch. Therefore you also need to tell the Admin-Node-Manager in each region, which data (indices) to use. If you don't do that, the Admin-Node-Manager will show the entire traffic from all regions which may not be desired but is also possible.  
 To do this, you need to store the appropriate region, which is also specified in the [Filebeats](#filebeat) for the API gateways, in the `conf/envSettings.props` file and restart the node manager. Example: `REGION=US`  
-This way the Admin-Node-Manager will only select data from these regional indexes. Learn more about the [Admin-Node-Manager configuration](#admin-node-manager).
+This way the Admin-Node-Manager will only select data from these regional indexes. Learn more about the [Admin-Node-Manager configuration](nodemanager).
 
 <p align="right"><a href="#table-of-content">Top</a></p>
 
