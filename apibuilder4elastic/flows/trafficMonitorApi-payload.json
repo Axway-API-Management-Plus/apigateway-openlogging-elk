@@ -227,6 +227,11 @@
 					"value": "$.params.legID",
 					"metaName": "Leg-Number",
 					"metaDescription": "The Leg-Number"
+				},
+				{
+					"name": "region",
+					"type": "jsonpath",
+					"value": "$.params.region"
 				}
 			],
 			"outputs": {
@@ -726,7 +731,9 @@
 				{
 					"name": "requestHeaders",
 					"type": "jsonpath",
-					"value": "$.request.headers"
+					"value": "$.request.headers",
+					"metaName": "Request Headers",
+					"metaDescription": "The request headers are used to lookup the topology using the currently logged in user."
 				}
 			],
 			"outputs": {
@@ -734,15 +741,18 @@
 					"routes": [
 						"traffic-monitor-api-utils.1"
 					],
-					"context": "$.gatewayTopology"
+					"context": "$.gatewayTopology",
+					"metaName": "Next"
 				},
 				"error": {
 					"routes": [
 						"http.3"
 					],
-					"context": "$.error"
+					"context": "$.error",
+					"metaName": "Error"
 				}
-			}
+			},
+			"metaMethod": "Lookup topology"
 		},
 		"traffic-monitor-api-utils.1": {
 			"type": "nodehandler://api-builder-plugin-traffic-monitor-api-utils/traffic-monitor-api-utils",
@@ -752,22 +762,30 @@
 				{
 					"name": "gatewayTopology",
 					"type": "jsonpath",
-					"value": "$.gatewayTopology"
+					"value": "$.gatewayTopology",
+					"metaName": "API-Gateway Topology",
+					"metaDescription": "The API-Gateway topology as read by flow-node: axway-api-management->lookupTopology"
 				},
 				{
 					"name": "authzConfig",
 					"type": "jsonpath",
-					"value": "$.authzConfig"
+					"value": "$.authzConfig",
+					"metaName": "Authorization configuration",
+					"metaDescription": "The authorization configuration object returned from Get AuthZ Config"
 				},
 				{
 					"name": "params",
 					"type": "jsonpath",
-					"value": "$.params"
+					"value": "$.params",
+					"metaName": "Params",
+					"metaDescription": "The object must contain the given request parameters."
 				},
 				{
 					"name": "user",
 					"type": "jsonpath",
-					"value": "$.user"
+					"value": "$.user",
+					"metaName": "User",
+					"metaDescription": "The user object using the API-Gateway Traffic-Monitor"
 				}
 			],
 			"outputs": {
@@ -775,15 +793,18 @@
 					"routes": [
 						"authorization.1"
 					],
-					"context": "$.elasticsearch.query"
+					"context": "$.elasticsearch.query",
+					"metaName": "Next"
 				},
 				"error": {
 					"routes": [
 						"http.3"
 					],
-					"context": "$.error"
+					"context": "$.error",
+					"metaName": "Error"
 				}
-			}
+			},
+			"metaMethod": "Create circuit path query"
 		}
 	}
 }

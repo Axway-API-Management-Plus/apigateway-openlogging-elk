@@ -153,7 +153,6 @@ function getManagerConfig(apiManagerConfig, groupId, region) {
 	if(region != undefined && region != "N/A" && region != "n/a") {
 		key = `${groupId}###${region}`.toLowerCase();
 	}
-	debugger;
 	// Check if the requested combination based on groupId and region exists and return it directly
 	if (apiManagerConfig.configs && apiManagerConfig.configs[key]) {
 		return apiManagerConfig.configs[key];
@@ -167,7 +166,6 @@ function getManagerConfig(apiManagerConfig, groupId, region) {
 
 async function checkAPIManagers(apiManagerConfig, options) {
 	var finalResult = { isValid: true };
-	debugger;
 	for (const [key, config] of Object.entries(apiManagerConfig.configs)) {
 		if(typeof config != 'object') continue;
 		finalResult[key] = config;

@@ -57,7 +57,7 @@ describe('Payload', function () {
 
 	describe('Payload tests', () => {
 		it('[Payload-0001]  Should return sent payload for leg 0', () => {
-			const testPayload = fs.readFileSync(`${payloadFolder}/2020-07-03/08.55/0455ff5e82267be8182a553d-0-sent`);
+			const testPayload = fs.readFileSync(`${payloadFolder}/2020-07-03/08.55/0455ff5e82267be8182a553d-0-sent`, { encoding: "UTF-8" });
 			return requestAsync({
 				method: 'GET',  // 
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/stream/0455ff5e82267be8182a553d/0/sent`,
@@ -75,7 +75,7 @@ describe('Payload', function () {
 		});
 
 		it('[Payload-0002] Should return the received payload from leg 1', () => {
-			const testPayload = fs.readFileSync(`${payloadFolder}/2020-07-03/08.55/0455ff5e82267be8182a553d-1-received`);
+			const testPayload = fs.readFileSync(`${payloadFolder}/2020-07-03/08.55/0455ff5e82267be8182a553d-1-received`, { encoding: "UTF-8" });
 			return requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/stream/0455ff5e82267be8182a553d/1/received`,
@@ -112,7 +112,7 @@ describe('Payload', function () {
 		});
 
 		it('[Payload-0004] Payload should be SAVED and is NOT limited to a certain size (request is missing a CSRF-Token)', () => {
-			const testPayload = fs.readFileSync(`${payloadFolder}/2021-01-09/10.00/LargePayloadTest-1-received`);
+			const testPayload = fs.readFileSync(`${payloadFolder}/2021-01-09/10.00/LargePayloadTest-1-received`, { encoding: "UTF-8" });
 			return requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/stream/LargePayloadTest/1/received`,
@@ -129,6 +129,23 @@ describe('Payload', function () {
 				expect(body).to.include(testPayload);
 			});
 		});
+
+		it('[Payload-0005] Should return REGIONAL sent payload for leg 0', () => {
+			const testPayload = fs.readFileSync(`${payloadFolder}/US-DC1/2020-07-03/08.55/0455ff5e82267be8182a553d-0-sent`, { encoding: "UTF-8" });
+			return requestAsync({
+				method: 'GET',  // 
+				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/stream/0455ff5e82267be8182a553d/0/sent?region=US-DC1`,
+				headers: {
+					'cookie': 'VIDUSR=Getinfo-0001-DAVID-1597762865-iUI5a8+v+zLkNA%3d%3d; APIMANAGERSTATIC=92122e5c-6bb3-4fd1-ad2f-08b65554d116', 
+					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
+				},
+				json: true
+			}).then(({ response, body }) => {
+				expect(response.statusCode).to.equal(200);
+				expect(response.headers["content-type"]).to.equal("application/vordel-xact-data; charset=utf-8");
+				expect(body).to.be.an('String');
+				expect(body).to.include(testPayload);
+			});
+		});
 	});
 });
-	

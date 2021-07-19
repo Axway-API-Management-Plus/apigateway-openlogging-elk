@@ -55,7 +55,6 @@ async function lookupCurrentUser(params, options) {
 	if(!requestHeaders.cookie && !requestHeaders.authorization) {
 		throw new Error('You must provide either the VIDUSR cookie + csrf-token or an HTTP-Basic Authorization header.');
 	}
-	debugger;
 	if (!unrestrictedPermissions || unrestrictedPermissions=="") {
 		unrestrictedPermissions = "adminusers_modify";
 	}
@@ -330,7 +329,6 @@ async function getCustomPropertiesConfig(params, options) {
 	const { logger } = options;
 	cache = options.pluginContext.cache;
 	let apiManagerConfig;
-	debugger;
 	var mergedCustomProperties = {};
 	if(!pluginConfig.apimanager.perGroupAndRegion) {
 		// Using a single API-Manager only.

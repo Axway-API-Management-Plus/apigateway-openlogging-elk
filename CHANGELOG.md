@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Failed to validated API-Manager connection, when using Load-Balanced API-Manager instances [#117](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/117)
 - For JMS-Traffic the fields: leg0.protocolInfo.recvHeader and leg0.protocolInfo.sentHeader are copied into the summary index, as they are used for JMS-Property filtering
 - Error when setting up Traffic-Summary index without having a Default-API-Manager configured [#119](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/119)
+- Region is not used to load the payload [#121](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/121)
 
 ### Changed
 - Added new optional parameter: UNRESTRICTED_PERMISSIONS to control which users see all traffic [#120](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/120)
