@@ -420,7 +420,7 @@ You have defined the region as follows:
 `REGION=US-DC1`  
 All traffic payload from these API-Gateways must be made available to the API-Builder as follows:  
 `/var/log/payloads/us-dc1/<YYY-MM-DD>/<HH.MI>/<payloadfile>`  
-So you need to make the existing structure available in a regional folder. For this, the region must be in lower case.  
+So you need to make the existing structure available in a regional folder. For this, the region must be in lower case. And you have to configure each [Admin-Node-Manager with the correct region](#admin-node-manager-per-region).    
 
 Please note:  
 :point_right: Payload handling is enabled by default. So it is assumed that you provide the payload to the API Builder container. Set the parameter: `PAYLOAD_HANDLING_ENABLED=false` if you do not need this.  
@@ -512,7 +512,7 @@ In this example, all events of `group-2` are enriched with the help of the API m
 
 #### Different Topologies/Domains
 
-From version 2.0.0 it is additionally possible to use the solution with different domains/topologies. An example are different hubs (e.g. US, EMEA, APAC) each having their own Admin-Node-Manager & API-Manager, but still all API-Events should be stored in a central Elasticsearch instance.  
+From version 2.0.0 it is additionally possible to use the solution with __different domains/topologies__. An example are different hubs (e.g. US, EMEA, APAC) each having their own Admin-Node-Manager & API-Manager, but still all API-Events should be stored in a central Elasticsearch instance.  
 
 For this purpose the configurable `GATEWAY_REGION` in [Filebeat](#filebeat) is used. If this region is configured (e.g. US-DC1), all documents from this region are stored in separate indices, which nevertheless enable global analytics in the Kibana dashboards.  
 
