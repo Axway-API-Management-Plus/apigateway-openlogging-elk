@@ -25,11 +25,11 @@ services:
     ports:
       - 5044:5044
     volumes:
-      - ${PWD}/logstash/config/pipelines.yml:/usr/share/logstash/config/pipelines.yml
-      - ${PWD}/logstash/pipelines:/usr/share/logstash/pipelines
-      - ${PWD}/logstash/index_templates:/usr/share/logstash/index_templates
-      - ${PWD}/config/certificates:/usr/share/logstash/config/certificates
-      - ${PWD}/logstash/scripts:/usr/share/logstash/scripts
+      - ./logstash/config/pipelines.yml:/usr/share/logstash/config/pipelines.yml
+      - ./logstash/pipelines:/usr/share/logstash/pipelines
+      - ./logstash/index_templates:/usr/share/logstash/index_templates
+      - ./config/certificates:/usr/share/logstash/config/certificates
+      - ./logstash/scripts:/usr/share/logstash/scripts
     #command: logstash --path.config /usr/share/logstash/pipelines/pipelines.yml
     depends_on:
       - apibuilder4elastic
@@ -83,7 +83,7 @@ services:
     networks:
       - elastic
     volumes:
-      - ${PWD}/config:/app/config
+      - ./config:/app/config
       - ${APIGATEWAY_PAYLOADS_FOLDER}:/var/log/payloads
     logging:
       options:

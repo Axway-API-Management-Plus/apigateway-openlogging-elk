@@ -25,9 +25,9 @@ services:
       - type: volume
         source: logs
         target: /var/log
-      - ${PWD}/kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml
-      - ${PWD}/config/certificates:/usr/share/kibana/config/certificates
-      - ${PWD}/kibana/scripts:/usr/share/kibana/scripts
+      - ./config/kibana.yml:/usr/share/kibana/config/kibana.yml
+      - ../config/certificates:/usr/share/kibana/config/certificates
+      - ./scripts:/usr/share/kibana/scripts
     ulimits:
       memlock:
         soft: -1

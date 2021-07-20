@@ -45,9 +45,9 @@ services:
       - type: volume
         source: esdata3
         target: /usr/share/elasticsearch/data
-      - ${PWD}/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
-      - ${PWD}/config/certificates:/usr/share/elasticsearch/config/certificates
-      - ${PWD}/elasticsearch/scripts:/usr/share/elasticsearch/scripts
+      - ./config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+      - ../config/certificates:/usr/share/elasticsearch/config/certificates
+      - ./scripts:/usr/share/elasticsearch/scripts
     networks:
       - elastic
     ports:

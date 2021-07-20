@@ -29,12 +29,12 @@ services:
         source: metricbeatdata
         target: /usr/share/metricbeat/data # Required to make sure that Filebeat remembers the last position, even if the container is recreated
       - /etc/localtime:/etc/localtime:ro # Required to sync timezone of the server into the Filebeat Docker-Container
-      - ${PWD}/metricbeat/config:/usr/share/metricbeat/config
-      - ${PWD}/metricbeat/activeDashboards:/usr/share/metricbeat/activeDashboards
+      - ./config:/usr/share/metricbeat/config
+      - ./activeDashboards:/usr/share/metricbeat/activeDashboards
       - /var/lib/docker/containers:/var/lib/docker/containers:ro
       - /var/run/docker.sock:/var/run/docker.sock
-      - ${PWD}/config/certificates:/usr/share/metricbeat/config/certificates
-      - ${PWD}/metricbeat/scripts:/usr/local/scripts
+      - ../config/certificates:/usr/share/metricbeat/config/certificates
+      - ./scripts:/usr/local/scripts
     networks:
       - elastic
     logging:

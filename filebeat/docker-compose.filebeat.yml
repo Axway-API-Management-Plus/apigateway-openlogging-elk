@@ -29,15 +29,15 @@ services:
         source: filebeatdata
         target: /usr/share/filebeat/data # Required to make sure that Filebeat remembers the last position, even if the container is recreated
       - /etc/localtime:/etc/localtime:ro # Required to sync timezone of API-Gateway into the Filebeat Docker-Container
-      - ${PWD}/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml
+      - ./filebeat.yml:/usr/share/filebeat/filebeat.yml
+      - ../config/certificates:/usr/share/filebeat/config/certificates
+      - ./scripts:/usr/local/scripts
       - ${APIGATEWAY_OPENTRAFFIC_FOLDER}:/var/log/opentraffic
       - ${APIGATEWAY_TRACES_FOLDER}:/var/log/trace
       - ${APIGATEWAY_EVENTS_FOLDER}:/var/log/events
       - ${APIGATEWAY_AUDITLOGS_FOLDER}:/var/log/audit
       - /var/lib/docker/containers:/var/lib/docker/containers:ro
       - /var/run/docker.sock:/var/run/docker.sock
-      - ${PWD}/config/certificates:/usr/share/filebeat/config/certificates
-      - ${PWD}/filebeat/scripts:/usr/local/scripts
     networks:
       - elastic
     logging:

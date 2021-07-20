@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Added new optional parameter: UNRESTRICTED_PERMISSIONS to control which users see all traffic [#120](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/120)
 - API-Builder version changed from Ottawa to Quezon
 - Updated Custom-Flow Nodes dependencies
+- Now using relative paths instead of using $PWD to mount volumes [#122](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/122)
 
 ## [3.2.0] 2021-06-22
 ### Fixed
