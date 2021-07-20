@@ -32,6 +32,19 @@
 
 5. Merge back master to developer for next development iteration
 
+## Run tests
+
+### Run Integration-Tests
+
+Clone the project
+change the elasticsearch/docker-compose.es01.yml --> - xpack.security.enabled=true to - xpack.security.enabled=false
+docker-compose -f elasticsearch/docker-compose.es01.yml -f elasticsearch/docker-compose.es01init.yml up -d
+cd apibuilder4elastic
+npm install 
+npm test
+
+To run only individual tests you may set `it.only(.....)`
+
 ## Create the shipped certificates
 
 To generate the sample keys and certificates we are using the Elasticsearch cert-util: 
