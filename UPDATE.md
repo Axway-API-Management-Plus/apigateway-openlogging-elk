@@ -4,7 +4,7 @@ This document contains information on how to upgrade the solution from one versi
 
 The basic principle of the solution is that no files delivered with a release are changed. This is the best way to ensure that the solution can be updated without any problems. Only your .env file(s) must be carried over from one release to the next. It is not planned to backport bugfixes or enhancements in older releases.  
 
-Currently, we describe how to update based on Docker Compose. As soon as a deployment via HELM charts on a Kubernetes cluster is supported, that will also be documented here.
+This documents describes how to update based on Docker Compose deployment. If you have deployed the solution on a Kubernetes-Cluster using Helm, please follow the instructions here: [Upgrade a Helm-Deployment](helm#upgrade-the-release)
 
 ## Zero-downtime upgrade
 
