@@ -316,7 +316,7 @@ ELASTICSEARCH_CLUSTERNAME=Axway APIM
 # ----------------------------------------------------------------------------------------------
 # Define the version of the Elastic-Stack to use. Based on this version Docker images are pulled
 # Used-By: Elasticsearch, Filebeat, Kibana, Logstash
-ELASTIC_VERSION=7.12.1
+ELASTIC_VERSION=7.13.3
 
 # ----------------------------------------------------------------------------------------------
 # With these parameters you can change the way the authorization for the traffic monitor is
