@@ -11,8 +11,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Error when setting up Traffic-Summary index without having a Default-API-Manager configured [#119](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/119)
 - Region is not used to load the payload [#121](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/121)
 
+### Added
+- New optional parameter: UNRESTRICTED_PERMISSIONS to control which users see all traffic [#120](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/120)
+
 ### Changed
-- Added new optional parameter: UNRESTRICTED_PERMISSIONS to control which users see all traffic [#120](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/120)
 - API-Builder version changed from Ottawa to Quezon
 - Updated Custom-Flow Nodes dependencies
 - In docker-compose files, now using relative paths instead of ${PWD} to mount volumes [#122](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/122)
