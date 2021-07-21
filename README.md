@@ -765,7 +765,7 @@ You can find more information about the individual certificates in the `.env` fi
 ### Secure API-Builder Traffic-Monitor API
 The API-Builder project for providing access to Elasticsearch data has no access restrictions right now. To ensure only API-Gateway Manager users (topology administrators with proper RBAC role) or other users with appropriate access rights can query the log data, one can expose this API via API-Manager and add security here.
 
-To import the API Builder project REST-API into your API-Manager, you can access the Swagger/OpenAPI definition here (replace docker-host and port appropriately for the container that is hosting the API-Builder project):  
+To import the API Builder application REST-API into your API-Manager, you can access the Swagger/OpenAPI definition here (replace docker-host and port appropriately for the container that is hosting the API-Builder project):  
 https://docker-host:8443/apidoc/swagger.json?endpoints/trafficMonitorApi
 
 <p align="right"><a href="#table-of-content">Top</a></p>
