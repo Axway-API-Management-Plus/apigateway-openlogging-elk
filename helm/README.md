@@ -576,7 +576,7 @@ be changed in a later release to get more flexibility.
 
 ### Can I use Auto-Scaling?
 
-Apart from API-Builder4Elastic, this is unfortunately not possible. Elasticsearch automatically stores the data on multiple cluster nodes and would have to rebalance the cluster again and again when adding or removing nodes. Logstash also does not offer the option of autoscaling.
+Apart from API-Builder4Elastic, this is unfortunately not possible. Elasticsearch automatically stores the data on multiple cluster nodes and would have to rebalance the cluster again and again when adding or removing nodes/pods. Logstash also does not offer the option of autoscaling. However you can change the number of PODs for, lets say, Elasticsearch, Logstash at any time. The condition is that they do not change within a short time, otherwise no advantage is gained.
 
 ### Can I easily add or remove instances?
 
