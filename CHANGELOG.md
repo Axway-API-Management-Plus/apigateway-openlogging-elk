@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased] 
+## [3.3.0] 2021-07-21
 ### Fixed
 - Failed to validated API-Manager connection, when using Load-Balanced API-Manager instances [#117](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/117)
 - For JMS-Traffic the fields: leg0.protocolInfo.recvHeader and leg0.protocolInfo.sentHeader are copied into the summary index, as they are used for JMS-Property filtering
