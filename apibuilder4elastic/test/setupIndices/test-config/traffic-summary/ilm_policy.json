@@ -14,7 +14,7 @@
         }
       },
       "warm": {
-        "min_age": "15d",
+        "min_age": "0ms",
         "actions": {
           "allocate": {
             "number_of_replicas": 1,
@@ -31,15 +31,15 @@
         }
       },
       "cold": {
-        "min_age": "30d",
+        "min_age": "12d",
         "actions": {
           "set_priority": {
-            "priority": 0
+            "priority": 20
           }
         }
       },
       "delete": {
-        "min_age": "10d",
+        "min_age": "15d",
         "actions": {
           "delete": {
             "delete_searchable_snapshot": true
