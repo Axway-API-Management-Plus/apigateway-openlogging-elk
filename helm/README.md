@@ -583,3 +583,24 @@ Apart from API-Builder4Elastic, this is unfortunately not possible. Elasticsearc
 Yes, they can change the number of nodes via the scaling function or via their values.yaml using replicas. This works for API-Builder4Elastic, Logstash, Elasticsearch and Kibana.  
 For Elasticsearch, make sure the cluster is in Green state before removing a node to avoid data loss. 
 If you change the Logstash instances, it is recommended to restart all Filebeat instances afterwards. The reason for this are the persistent connections. You may also need to adjust the filebeat configuration.
+
+### How can I increase the disk space for Elasticsearch?
+
+If Elasticsearch is running in Kubernetes as a StatefulSet, you can increase the disk space as follows. 
+1. Make sure that the StorageClass you are using supports volumeExpansion. 
+allowVolumeExpansion: true
+2. Edit existing PVC for already running PoDs and increase the capacity
+3. Update the VolumeClaimTemplate in your Helm values  
+```
+  volumeClaimTemplate:
+    accessModes: [ "ReadWriteOnce" ]
+    storageClassName: gp2
+    resources:
+      requests:
+        storage: 100Gi
+```
+4. Now delete the StatefulSet without deleting the pods.  
+   `kubectl -n apim delete sts axway-elk-apim4elastic-elasticsearch --cascade=orphan`
+5. Perform a helm upgrade to reinstall the modified StatefulSet
+6. Redeploy the PODs of the stateful set  
+   `kubectl -n apim rollout restart sts axway-elk-apim4elastic-elasticsearch`
