@@ -554,7 +554,7 @@ filebeat:
       memory: "150Mi"
     limits:
       cpu: "1000m"
-      memory: "200Mi"
+      memory: "250Mi"
   
   # Filebeat configuration is added as part of the values.yaml, because the existing filebeatConfig 
   # cannot be be overridden due to a bug in Helm. 

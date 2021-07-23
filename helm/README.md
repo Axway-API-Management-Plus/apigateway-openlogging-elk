@@ -561,7 +561,7 @@ If you have fewer transactions per second, then you can make the platform smalle
 | Kibana                   | 300Mi            | 500Mi        | 500m        | 1000m         |                                       |
 | __Total__                | __~97Gi__        | __~140Gi__   | __~19__     | __~38__       | __Supposed to handle up to 1.000 TPS__|
 
-Filebeat is not yet tested as part of the Kubernetes deployment. Memory is ap. between 150Mi and 200Mi. CPU between 500m and 1000m.  
+Filebeat is not yet tested as part of the Kubernetes deployment. Memory is ap. between 150Mi and 250Mi. CPU between 500m and 1000m.  
 
 For Elasticsearch the maximum number of file descriptors must be at least 65536. (See for instance here: https://documentation.sisense.com/latest/linux/dockerlimits.htm)  
 
