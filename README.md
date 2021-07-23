@@ -1220,7 +1220,7 @@ Yes, all indicies are configured to have one replica and therefore it's safe to 
 
 ### During catch up, what should be the total events rate for Filebeat?
 
-Tests show that Filebeat can send more than 3,000 events per second to Logstash instances. Of course, this number also depends on the event type. Trace messages can be processed faster than OpenTraffic event logs, for example. You can find an example [here](#imgs/stack-monitoring/stack-monitoring-beats-instances.png).
+Tests show that Filebeat can send more than 3,000 events per second to Logstash instances. Of course, this number also depends on the event type. Trace messages can be processed faster than OpenTraffic event logs, for example. You can find an example [here](imgs/stack-monitoring/stack-monitoring-beats-instances.png).
 
 ### Can I use AWS Elasticsearch service?
 
