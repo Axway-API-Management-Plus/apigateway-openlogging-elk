@@ -188,7 +188,7 @@ docker-compose -f elasticsearch/docker-compose.es01.yml -f elasticsearch/docker-
 ```
 Wait until the cluster has started and then call the following URL:
 ```
-GET https://my-elasticsearch-host.com:9200
+curl -k GET https://my-elasticsearch-host.com:9200
 {
   "name" : "elasticsearch1",
   "cluster_name" : "axway-apim-elasticsearch",
