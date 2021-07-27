@@ -353,7 +353,7 @@ ELASTIC_VERSION=7.13.3
 # process with this parameter. The traffic monitor will then retrieve the payload from the OBSDB
 # as long as it is available.
 # Used-By: API-Builder
-# Defaults to false.
+# Defaults to true.
 # PAYLOAD_HANDLING_ENABLED=false
 
 # ----------------------------------------------------------------------------------------------
