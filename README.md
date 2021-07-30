@@ -972,13 +972,17 @@ If you see the following or similar error message during processing of events th
 ```
 
 ### Check ANM 
-If the admin node manager, i.e. the traffic monitor UI, does not fetch the data from Elasticsearch via API builder, it is recommended to check the ANM trace file.
+If the Admin-Node-Manager, i.e. the Traffic-Monitor UI, does not fetch the data from Elasticsearch via API-Builder, it is recommended to check the ANM trace file.
 Possibly errors like the following are logged there:
 ```
 ERROR   07/Dec/2020:01:43:19.769 [262e:27ebcd5f0601b4bda7f620b5]         java exception: 
 java.lang.RuntimeException: java.net.URISyntaxException: Illegal character in path at index 0: [invalid field]/api/elk/v1/api/router/service/instance-1/ops/search?format=json&field=leg&value=0&count=1000&ago=24h&protocol=http
 ```
-In this case, the environment variable: [API_BUILDER_URL](#admin-node-manager) is not set for the ANM process.
+In this case, the environment variable: [API_BUILDER_URL](#admin-node-manager) is not set for the ANM process.  
+
+It can also be useful to use the Developer tools (Network monitor) in your browser (e.g. [Chrome](https://developer.chrome.com/docs/devtools/network/reference/) or [Firefox](https://developer.mozilla.org/en-US/docs/Tools/Network_Monitor)) to check the result of API requests in the Traffic Monitor. This way you can directly see the error when the API-Builder could not perform the request.
+Here is an example:  
+![ANM Traffic-Monitor Network](imgs/anm-troubleshoot-network-response.png)  
 
 ### Check Elasticsearch processing
 It takes a while until Elasticsearch is finally started and reports it with the following line: 
