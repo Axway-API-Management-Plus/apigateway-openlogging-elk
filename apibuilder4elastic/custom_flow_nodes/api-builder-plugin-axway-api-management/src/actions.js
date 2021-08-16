@@ -321,9 +321,6 @@ async function getCustomPropertiesConfig(params, options) {
 	}
 	if(params.region) {
 		params.region = params.region.toLowerCase();
-		if(params.region=="n/a") {
-			delete params.region;
-		}
 	}
 	pluginConfig = options.pluginConfig;
 	const { logger } = options;
@@ -332,7 +329,7 @@ async function getCustomPropertiesConfig(params, options) {
 	var mergedCustomProperties = {};
 	if(!pluginConfig.apimanager.perGroupAndRegion) {
 		// Using a single API-Manager only.
-		apiManagerConfig = getManagerConfig(pluginConfig.apimanager, groupId, region);
+		apiManagerConfig = getManagerConfig(pluginConfig.apimanager, groupId, params.region);
 		return await _getConfiguredCustomProperties(apiManagerConfig, options);
 	} else {
 		// If multiple API-Managers are configured get custom-properties from all API-Managers and merge them together
