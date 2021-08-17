@@ -698,7 +698,9 @@
 			"outputs": {
 				"next": {
 					"context": "$.response",
-					"routes": [],
+					"routes": [
+						"power.3"
+					],
 					"metaName": "Next"
 				}
 			},
@@ -758,7 +760,9 @@
 			"outputs": {
 				"next": {
 					"context": "$.response",
-					"routes": [],
+					"routes": [
+						"power.2"
+					],
 					"metaName": "Next"
 				}
 			},
@@ -873,8 +877,76 @@
 				{
 					"name": "skipInDevelopment",
 					"type": "boolean",
-					"value": "true"
+					"value": "true",
+					"metaName": "Skip in development",
+					"metaDescription": "If set to true, the API-Builder process will not be stopped, when in development mode. Instead only the errorCode and errorMessage is logged."
 				},
+				{
+					"name": "errorMessage",
+					"type": "jsonpath",
+					"value": "$.error",
+					"metaName": "Error message",
+					"metaDescription": "An optional message which is logged when the process is terminated. Helpful to make clear the reason for the shutdown."
+				},
+				{
+					"name": "errorCode",
+					"type": "number",
+					"value": "99",
+					"metaName": "Error code",
+					"metaDescription": "An integer number used for the process to exit. Defaults to -1."
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.errorMessage",
+					"routes": [],
+					"metaName": "Next"
+				},
+				"error": {
+					"context": "$.error",
+					"routes": [],
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Shutdown"
+		},
+		"power.2": {
+			"type": "nodehandler://@axway-api-builder-ext/api-builder-plugin-fn-power/power",
+			"name": "Shutdown",
+			"method": "shutdown",
+			"parameters": [
+				{
+					"name": "errorCode",
+					"type": "number",
+					"value": "98"
+				},
+				{
+					"name": "errorMessage",
+					"type": "jsonpath",
+					"value": "$.error"
+				},
+				{
+					"name": "skipInDevelopment",
+					"type": "boolean",
+					"value": "true"
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.errorMessage",
+					"routes": []
+				},
+				"error": {
+					"context": "$.error",
+					"routes": []
+				}
+			}
+		},
+		"power.3": {
+			"type": "nodehandler://@axway-api-builder-ext/api-builder-plugin-fn-power/power",
+			"name": "Shutdown",
+			"method": "shutdown",
+			"parameters": [
 				{
 					"name": "errorMessage",
 					"type": "jsonpath",
@@ -883,7 +955,12 @@
 				{
 					"name": "errorCode",
 					"type": "number",
-					"value": "99"
+					"value": "97"
+				},
+				{
+					"name": "skipInDevelopment",
+					"type": "boolean",
+					"value": "true"
 				}
 			],
 			"outputs": {
