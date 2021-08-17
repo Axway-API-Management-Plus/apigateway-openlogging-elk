@@ -142,6 +142,10 @@ async function addExtHTTPAuthzFilter(params, options) {
 		} else {
 			throw new Error(`Missing method: createRequestUri. You have to defined the createRequestUri method to create the request URI.`);
 		}
+		if(!replacedUri) {
+			logger.info(`User authorization for user: ${user.loginName} is skipped, as returned URI is undefined.`);
+			return elasticQuery;
+		}
 		logger.info(`External groups NOT found in cache with key: '${cacheKey}'. Going to request information from ${replacedUri}`);
 		const resp = await requester(replacedUri, cfg.headers, cfg.method, cfg.body, { logger, ...cfg.options });
 		cache.set(cacheKey, resp);

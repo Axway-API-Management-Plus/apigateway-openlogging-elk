@@ -18,6 +18,8 @@ var authorizationConfig = {
 
 async function createRequestUri(user, cfg, options) {
 	// Replace the loginName which is part of the URI
+	if(user.loginName == "SKIP-AUTHZ") return undefined;
+	if(user.loginName == "SKIP-AUTHZ-BOOLEAN") return false;
 	return cfg.uri.replace("__loginName__", user.loginName);
 }
 

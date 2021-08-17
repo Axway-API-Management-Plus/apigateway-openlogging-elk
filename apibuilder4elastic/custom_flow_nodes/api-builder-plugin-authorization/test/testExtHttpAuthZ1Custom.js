@@ -46,5 +46,29 @@ describe('flow-node Authorization', () => {
 			expect(value).to.deep.equal(expectedQuery);
 			expect(output).to.equal('next');
 		});
+
+		it('should skip the user authorization based on undefined URI', async () => { 
+			var elasticQuery = JSON.parse(fs.readFileSync('./test/mock/givenElasticQuery.json'), null);
+			
+			const { value, output } = await flowNode.addExtHTTPAuthzFilter({
+				user: { loginName: "SKIP-AUTHZ" }, elasticQuery: elasticQuery, restrictionField: "customProperties.field1"
+			});
+
+			expect(value).to.be.instanceOf(Object);
+			expect(value).to.deep.equal(elasticQuery);
+			expect(output).to.equal('next');
+		});
+
+		it('should skip the user authorization based on a returned boolean false as an URI', async () => { 
+			var elasticQuery = JSON.parse(fs.readFileSync('./test/mock/givenElasticQuery.json'), null);
+			
+			const { value, output } = await flowNode.addExtHTTPAuthzFilter({
+				user: { loginName: "SKIP-AUTHZ-BOOLEAN" }, elasticQuery: elasticQuery, restrictionField: "customProperties.field1"
+			});
+
+			expect(value).to.be.instanceOf(Object);
+			expect(value).to.deep.equal(elasticQuery);
+			expect(output).to.equal('next');
+		});
 	});
 });

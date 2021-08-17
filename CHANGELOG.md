@@ -5,8 +5,16 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+- Index-Templates failed to install without using a region [#124](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/124)
+
+### Added
+- Skip Ext-HTTP-User-AuthZ if returned URL is undefined [#126](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/126)
+
 ### Changed
 - Updated Elastic-Stack from version 7.12.1 to 7.13.3
+- API-Builder stops/terminates with an error-message and error-code, if Elasticsearch cannot be configured (e.g. Index-Templates cannot be installed)
+
 
 ## [3.3.0] 2021-07-21
 ### Fixed
