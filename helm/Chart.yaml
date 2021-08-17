@@ -4,24 +4,24 @@ description: A Helm chart for the Axway APIM Elasticsearch integration.
 
 type: application
 
-version: 3.3.0
+version: 3.3.1
 
-appVersion: "3.3.0"
+appVersion: "3.3.1"
 
 dependencies:
   - name: logstash
-    version: "7.13.3"
+    version: "7.12.1"
     repository: https://helm.elastic.co
     condition: logstash.enabled
   - name: filebeat
-    version: "7.13.3"
+    version: "7.12.1"
     repository: https://helm.elastic.co
     condition: filebeat.enabled
   - name: elasticsearch
-    version: "7.13.3"
+    version: "7.12.1"
     repository: https://helm.elastic.co
     condition: elasticsearch.enabled
   - name: kibana
-    version: "7.13.3"
+    version: "7.12.1"
     repository: https://helm.elastic.co
     condition: kibana.enabled
