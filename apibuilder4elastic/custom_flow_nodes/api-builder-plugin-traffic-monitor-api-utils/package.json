@@ -17,15 +17,15 @@
 		"README.md"
 	],
 	"dependencies": {
-		"@axway/api-builder-sdk": "^1.1.10"
+		"@axway/api-builder-sdk": "^1.1.12"
 	},
 	"peerDependencies": {
-		"@axway/api-builder-runtime": "^4.5.0"
+		"@axway/api-builder-runtime": "^4.68.0"
 	},
 	"devDependencies": {
-		"@axway/api-builder-test-utils": "^1.2.0",
+		"@axway/api-builder-test-utils": "^1.3.0",
 		"chai": "^4.3.4",
-		"mocha": "^8.3.2"
+		"mocha": "^9.0.3"
 	},
 	"scripts": {
 		"test": "mocha ./test --recursive -R spec"
