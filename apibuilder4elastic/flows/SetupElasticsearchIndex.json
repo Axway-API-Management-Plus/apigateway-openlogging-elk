@@ -131,7 +131,9 @@
 				{
 					"name": "customPropertiesSettings",
 					"type": "jsonpath",
-					"value": "$.indexConfig.template.customProperties"
+					"value": "$.indexConfig.template.customProperties",
+					"metaName": "Custom properties settings",
+					"metaDescription": "Controls if and how custom properties should be merged into the index template. See config file: elasticsearch_config/index_config.json"
 				}
 			],
 			"outputs": {
@@ -725,7 +727,9 @@
 			"outputs": {
 				"next": {
 					"context": "$.response",
-					"routes": [],
+					"routes": [
+						"power.1"
+					],
 					"metaName": "Next"
 				}
 			},
@@ -860,6 +864,38 @@
 				}
 			},
 			"metaMethod": "Execute"
+		},
+		"power.1": {
+			"type": "nodehandler://@axway-api-builder-ext/api-builder-plugin-fn-power/power",
+			"name": "Shutdown",
+			"method": "shutdown",
+			"parameters": [
+				{
+					"name": "skipInDevelopment",
+					"type": "boolean",
+					"value": "true"
+				},
+				{
+					"name": "errorMessage",
+					"type": "jsonpath",
+					"value": "$.error"
+				},
+				{
+					"name": "errorCode",
+					"type": "number",
+					"value": "99"
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.errorMessage",
+					"routes": []
+				},
+				"error": {
+					"context": "$.error",
+					"routes": []
+				}
+			}
 		}
 	}
 }
