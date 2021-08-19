@@ -72,7 +72,7 @@ describe('Test API-Lookup endpoint', function () {
 				expect(response.statusCode).to.equal(200);
 				expect(body).to.be.an('Object');
 				expect(body.name).to.equal(`Unknown API`);
-				expect(body.name).to.equal(`Unknown Method`);
+				expect(body.method).to.equal(`Unknown Method`);
 				nock.cleanAll();
 			});
 		});
