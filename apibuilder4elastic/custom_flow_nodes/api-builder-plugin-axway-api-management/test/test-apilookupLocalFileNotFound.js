@@ -35,12 +35,12 @@ describe('Test API Lookup', () => {
 	after(() => delete process.env.API_BUILDER_LOCAL_API_LOOKUP_FILE );
 
 	describe('#constructor', () => {
-		it('[local-apilookup-0004] should return API-Name with the best match (/api/configured/locally)', async () => {
+		it('[local-api-file-not-found-0001] should return Unknown API details object even if the config file is not found', async () => {
 			const { value, output } = await flowNode.lookupAPIDetails({ apiPath: "/api/configured/locally/something" });
 
-			expect(value).to.be.instanceOf(Error)
-				.and.to.have.property('message', 'API not configured locally, based on path: /api/configured/locally/something. The API cannot be queried at the API Manager as no API name is given. Please configure this API path locally.');
-			expect(output).to.equal('error');
+			expect(value.name).to.equal(`Unknown API`);
+			expect(value.method).to.equal(`Unknown Method`);
+			expect(output).to.equal('next');
 		});
 	});
 });

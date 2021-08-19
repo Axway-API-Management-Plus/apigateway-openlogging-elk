@@ -70,7 +70,7 @@ flow-nodes:
 
       lookupAPIDetails:
         name: Lookup API
-        description: Looks up the details of an API based on the given API-Name and API-Path. Additionally, it returns the configured custom properties for that API.
+        description: Looks up the details of an API based on the given API-Name and API-Path. Additionally, it returns the configured custom properties for that API. If the API could not be found locally or at the API-Manager unknown API-Details are returned.
         parameters:
           apiName:
             name: API-Name
