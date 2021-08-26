@@ -386,6 +386,11 @@
 					"value": "$.indexConfig.rollup.idSuffix",
 					"metaName": "Job-ID Suffix",
 					"metaDescription": "Mandatory if an existing job is to be replaced. The Job-ID suffix is used to generate the final Job-ID, which is used to create the job.  This suffix is especially necessary if an existing job is to be replaced. Existing jobs with the primary job ID are searched for, stopped/deleted and a new job with job ID + suffix is created."
+				},
+				{
+					"name": "deletePreviousJob",
+					"type": "boolean",
+					"value": "true"
 				}
 			],
 			"outputs": {
@@ -918,29 +923,38 @@
 				{
 					"name": "errorCode",
 					"type": "number",
-					"value": "98"
+					"value": "98",
+					"metaName": "Error code",
+					"metaDescription": "An integer number used for the process to exit. Defaults to -1."
 				},
 				{
 					"name": "errorMessage",
 					"type": "jsonpath",
-					"value": "$.error"
+					"value": "$.error",
+					"metaName": "Error message",
+					"metaDescription": "An optional message which is logged when the process is terminated. Helpful to make clear the reason for the shutdown."
 				},
 				{
 					"name": "skipInDevelopment",
 					"type": "boolean",
-					"value": "true"
+					"value": "true",
+					"metaName": "Skip in development",
+					"metaDescription": "If set to true, the API-Builder process will not be stopped, when in development mode. Instead only the errorCode and errorMessage is logged."
 				}
 			],
 			"outputs": {
 				"next": {
 					"context": "$.errorMessage",
-					"routes": []
+					"routes": [],
+					"metaName": "Next"
 				},
 				"error": {
 					"context": "$.error",
-					"routes": []
+					"routes": [],
+					"metaName": "Error"
 				}
-			}
+			},
+			"metaMethod": "Shutdown"
 		},
 		"power.3": {
 			"type": "nodehandler://@axway-api-builder-ext/api-builder-plugin-fn-power/power",
@@ -950,29 +964,38 @@
 				{
 					"name": "errorMessage",
 					"type": "jsonpath",
-					"value": "$.error"
+					"value": "$.error",
+					"metaName": "Error message",
+					"metaDescription": "An optional message which is logged when the process is terminated. Helpful to make clear the reason for the shutdown."
 				},
 				{
 					"name": "errorCode",
 					"type": "number",
-					"value": "97"
+					"value": "97",
+					"metaName": "Error code",
+					"metaDescription": "An integer number used for the process to exit. Defaults to -1."
 				},
 				{
 					"name": "skipInDevelopment",
 					"type": "boolean",
-					"value": "true"
+					"value": "true",
+					"metaName": "Skip in development",
+					"metaDescription": "If set to true, the API-Builder process will not be stopped, when in development mode. Instead only the errorCode and errorMessage is logged."
 				}
 			],
 			"outputs": {
 				"next": {
 					"context": "$.errorMessage",
-					"routes": []
+					"routes": [],
+					"metaName": "Next"
 				},
 				"error": {
 					"context": "$.error",
-					"routes": []
+					"routes": [],
+					"metaName": "Error"
 				}
-			}
+			},
+			"metaMethod": "Shutdown"
 		}
 	}
 }
