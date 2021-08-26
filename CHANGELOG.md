@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 - API-Builder stops/terminates with an error-message and error-code, if Elasticsearch cannot be configured (e.g. Index-Templates cannot be installed)
+- Events Logstash-Pipeline is now processing Transaction-Events with a customMsgAtts.transactionId into the Traffic-Summary index
 
 
 ## [3.3.0] 2021-07-21
