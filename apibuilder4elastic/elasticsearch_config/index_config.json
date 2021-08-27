@@ -12,6 +12,11 @@
         "ilm" : {
             "config": "elasticsearch_config/traffic-summary/ilm_policy.json",
             "name": "apigw-traffic-summary-ilm"
+        },
+        "rollup" : {
+            "config": "elasticsearch_config/traffic-summary/rollup_job.json",
+            "id": "apigw-traffic-summary-rollup",
+            "idSuffix": "1"
         }
     }, 
     "apigw-traffic-details": {

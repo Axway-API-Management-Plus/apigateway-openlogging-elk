@@ -1,16 +1,16 @@
 {
     "index_pattern": "apigw-traffic-summary*",
     "rollup_index": "apigw-traffic-sum-hourly-rolledup",
-    "cron": "0 * * * * ?",
+    "cron": "0 45 * * * ?",
     "groups": {
     "date_histogram": {
-        "fixed_interval": "15m",
+        "fixed_interval": "60m",
         "field": "@timestamp",
-        "delay": "5m",
+        "delay": "240m",
         "time_zone": "UTC"
     },
     "histogram": {
-        "interval": 10,
+        "interval": 5,
         "fields": [
         "http.bytesSent",
         "http.bytesReceived"
@@ -37,7 +37,8 @@
         "serviceContext.requestPolicy",
         "serviceContext.responsePolicy",
         "serviceContext.routingPolicy",
-        "serviceContext.service.keyword"
+        "serviceContext.service.keyword",
+        "transactionId"
         ]
     }
     },
@@ -61,6 +62,5 @@
         ]
     }
     ],
-    "timeout": "20s",
     "page_size": 1000
 }
