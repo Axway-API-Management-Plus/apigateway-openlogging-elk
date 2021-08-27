@@ -74,6 +74,12 @@
             "field": "serviceContext.method.keyword",
             "missing_bucket": true
           }
+        },
+        "serviceContext.service.keyword": {
+          "terms": {
+            "field": "serviceContext.service.keyword",
+            "missing_bucket": true
+          }
         }
       },
       "aggregations": {
