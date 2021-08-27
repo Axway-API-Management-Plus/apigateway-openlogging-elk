@@ -86,6 +86,12 @@
             "field": "serviceContext.appOrg",
             "missing_bucket": true
           }
+        },
+        "http.statusText": {
+          "terms": {
+            "field": "http.statusText",
+            "missing_bucket": true
+          }
         }
       },
       "aggregations": {
