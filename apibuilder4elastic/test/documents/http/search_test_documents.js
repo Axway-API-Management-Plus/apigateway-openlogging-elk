@@ -70,7 +70,8 @@ module.exports = [
             "remotePort": "60041",
             "localPort": "8065",
             "sslSubject": "null",
-            "authSubjectId": null
+            "authSubjectId": null,
+            "vhost": "api.other-customer.com:8065"
         }
     },
     // Healthcheck call - 65 minutes 
@@ -175,9 +176,9 @@ module.exports = [
         "serviceContext" : {
             "duration" : 897,
             "app" : "Client App",
-            "method" : "findPetsByStatus",
+            "method" : "findPetsBy Status",
             "org" : "API Development",
-            "service" : "Petstore",
+            "service" : "Petstore B",
             "client" : "4e8634ba-6762-45ca-bbe5-7ca4e99192ac",
             "monitor" : true,
             "status" : "success",
@@ -228,9 +229,9 @@ module.exports = [
         "serviceContext" : {
             "duration" : 897,
             "app" : "Client App",
-            "method" : "findPetsByTag",
+            "method" : "findPetsBy Tag",
             "org" : "API Development",
-            "service" : "Petstore",
+            "service" : "Petstore A",
             "client" : "4e8634ba-6762-45ca-bbe5-7ca4e99192ac",
             "monitor" : true,
             "status" : "success",
