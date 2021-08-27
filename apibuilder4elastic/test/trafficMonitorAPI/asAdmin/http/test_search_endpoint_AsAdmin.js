@@ -639,6 +639,26 @@ describe('Endpoints', function () {
 				expect(body.data[0].sslsubject).to.equals('/CN=*.ngrok.io');
 			});
 		});
+
+		it('[Endpoint-0031] Should return a single result based on the given VHost', async () => {
+			return await requestAsync({
+				method: 'GET',
+				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?field=vhost&value=api.customer.com`,
+				headers: {
+					'cookie': 'VIDUSR=Search-0022-DAVID-1597468226-Z+qdRW4rGZnwzQ==', 
+					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
+				},
+				json: true
+			}).then(({ response, body }) => {
+				expect(response.statusCode).to.equal(200);
+				expect(body).to.be.an('Object');
+				expect(body).to.have.property('data');
+				expect(body.data).to.have.lengthOf(1); // We expect ONE API as a result
+				expect(body.data[0].uri).to.equals('/favicon.ico');
+				expect(body.data[0].correlationId).to.equals('7a240f5f0e21555d2d343482');
+				expect(body.data[0].vhost).to.equals('api.customer.com:443');
+			});
+		});
 	});
 });
 

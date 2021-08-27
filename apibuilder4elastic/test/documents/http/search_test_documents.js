@@ -70,7 +70,8 @@ module.exports = [
             "remotePort": "60041",
             "localPort": "8065",
             "sslSubject": "null",
-            "authSubjectId": null
+            "authSubjectId": null,
+            "vhost": "api.other-customer.com:8065"
         }
     },
     // Healthcheck call - 65 minutes 
