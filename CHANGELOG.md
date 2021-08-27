@@ -16,8 +16,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - API-Builder now always returns an Unknown API object if an API could not be found [#128](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/128)
 
 ### Added
-- Added support for Long-Term API-Analytics based on Rollup-Jobs
-- Added support for Transations [#83](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/83)
+- Added support for Long-Term API-Analytics based on transformation jobs
+- Added support for Transactions [#83](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/83)
 
 ## [3.3.1] 2021-08-17
 ### Fixed

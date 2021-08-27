@@ -82,3 +82,15 @@ triggers:
       parameters:
         config: $.config
         env: $.env
+  setup-traffic-summary-transform:
+    name: Setup Traffic-Summary Transform
+    parameters:
+      interval: '3600000'
+      startImmediately: 'false'
+    enabled: true
+    invoke:
+      flow: SetupElasticsearchTransform
+      parameters:
+        config: $.config
+        env: $.env
+        indexName: apigw-traffic-summary

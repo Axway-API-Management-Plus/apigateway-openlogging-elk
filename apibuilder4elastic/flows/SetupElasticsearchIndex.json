@@ -304,116 +304,6 @@
 			},
 			"metaMethod": "Read file"
 		},
-		"file.3": {
-			"type": "nodehandler://@axway-api-builder-ext/api-builder-plugin-fn-file/file",
-			"name": "Read Rollup job",
-			"method": "readFile",
-			"parameters": [
-				{
-					"name": "parseJson",
-					"type": "boolean",
-					"value": "true",
-					"metaName": "Parse JSON",
-					"metaDescription": "Turn this option if you are reading s JSON-File and would like to parse it into a JS-Object."
-				},
-				{
-					"name": "filename",
-					"type": "jsonpath",
-					"value": "$.indexConfig.rollup.config",
-					"metaName": "Source filename",
-					"metaDescription": "The filename to read."
-				},
-				{
-					"name": "notFoundFails",
-					"type": "boolean",
-					"value": "false",
-					"metaName": "Not found fails",
-					"metaDescription": "Set this flag, if you would like to have this flow node failed (Error) if the file cannot be found."
-				}
-			],
-			"outputs": {
-				"next": {
-					"routes": [
-						"elasticsearch.5"
-					],
-					"context": "$.rollupJobBody",
-					"metaName": "Next"
-				},
-				"notFound": {
-					"routes": [],
-					"context": "$.result",
-					"metaName": "Not found"
-				},
-				"error": {
-					"routes": [
-						"http.1"
-					],
-					"context": "$.error",
-					"metaName": "Error"
-				}
-			},
-			"metaMethod": "Read file"
-		},
-		"elasticsearch.5": {
-			"type": "nodehandler://@axway-api-builder-ext/api-builder-plugin-fn-elasticsearch/elasticsearch",
-			"name": "Put Rollup job",
-			"method": "putRollupJob",
-			"parameters": [
-				{
-					"name": "body",
-					"type": "jsonpath",
-					"value": "$.rollupJobBody",
-					"metaName": "Job configuration",
-					"metaDescription": "The rollup job configuration"
-				},
-				{
-					"name": "replaceWhenChanged",
-					"type": "boolean",
-					"value": "true",
-					"metaName": "Recreate only when changed",
-					"metaDescription": "If set, a possibly existing roll-up job is only replaced if the configuration is different. For this purpose, the entire job configuration is compared. If no roll-up job exists, this parameter is ignored and a new job is created."
-				},
-				{
-					"name": "id",
-					"type": "jsonpath",
-					"value": "$.indexConfig.rollup.id",
-					"metaName": "Job-ID",
-					"metaDescription": "Identifier for the rollup job. This can be any alphanumeric string and uniquely identifies the data that is associated with the rollup job. The ID is persistent; it is stored with the rolled up data. If you create a job, let it run for a while, then delete the job, the data that the job rolled up is still be associated with this job ID. You cannot create a new job with the same ID since that could lead to problems with mismatched job configurations."
-				},
-				{
-					"name": "idSuffix",
-					"type": "jsonpath",
-					"value": "$.indexConfig.rollup.idSuffix",
-					"metaName": "Job-ID Suffix",
-					"metaDescription": "Mandatory if an existing job is to be replaced. The Job-ID suffix is used to generate the final Job-ID, which is used to create the job.  This suffix is especially necessary if an existing job is to be replaced. Existing jobs with the primary job ID are searched for, stopped/deleted and a new job with job ID + suffix is created."
-				},
-				{
-					"name": "deletePreviousJob",
-					"type": "boolean",
-					"value": "true"
-				}
-			],
-			"outputs": {
-				"next": {
-					"routes": [],
-					"context": "$.rollupJob",
-					"metaName": "Next"
-				},
-				"noUpdate": {
-					"routes": [],
-					"context": "$.message",
-					"metaName": "No update"
-				},
-				"error": {
-					"routes": [
-						"http.1"
-					],
-					"context": "$.error",
-					"metaName": "Error"
-				}
-			},
-			"metaMethod": "Put Rollup job"
-		},
 		"elasticsearch.6": {
 			"type": "nodehandler://@axway-api-builder-ext/api-builder-plugin-fn-elasticsearch/elasticsearch",
 			"name": "Put ILM policy",
@@ -533,9 +423,7 @@
 					"metaName": "Not found"
 				},
 				"error": {
-					"routes": [
-						"http.1"
-					],
+					"routes": [],
 					"context": "$.error",
 					"metaName": "Error"
 				}
@@ -559,7 +447,6 @@
 				"next": {
 					"context": "$.delayed",
 					"routes": [
-						"file.3",
 						"file.2"
 					],
 					"metaName": "Next"
@@ -672,44 +559,11 @@
 				},
 				"error": {
 					"context": "$.error",
-					"routes": [
-						"http.1"
-					],
+					"routes": [],
 					"metaName": "Error"
 				}
 			},
 			"metaMethod": "Get index config"
-		},
-		"http.1": {
-			"type": "nodehandler://axway-flow/http",
-			"name": "Response error",
-			"method": "setresponse",
-			"parameters": [
-				{
-					"name": "body",
-					"type": "jsonpath",
-					"value": "$.error",
-					"metaName": "Body",
-					"metaDescription": "The response payload"
-				},
-				{
-					"name": "status",
-					"type": "number",
-					"value": "400",
-					"metaName": "Status",
-					"metaDescription": "The HTTP status code"
-				}
-			],
-			"outputs": {
-				"next": {
-					"context": "$.response",
-					"routes": [
-						"power.3"
-					],
-					"metaName": "Next"
-				}
-			},
-			"metaMethod": "Set HTTP Response"
 		},
 		"http.2": {
 			"type": "nodehandler://axway-flow/http",
@@ -933,47 +787,6 @@
 					"value": "$.error",
 					"metaName": "Error message",
 					"metaDescription": "An optional message which is logged when the process is terminated. Helpful to make clear the reason for the shutdown."
-				},
-				{
-					"name": "skipInDevelopment",
-					"type": "boolean",
-					"value": "true",
-					"metaName": "Skip in development",
-					"metaDescription": "If set to true, the API-Builder process will not be stopped, when in development mode. Instead only the errorCode and errorMessage is logged."
-				}
-			],
-			"outputs": {
-				"next": {
-					"context": "$.errorMessage",
-					"routes": [],
-					"metaName": "Next"
-				},
-				"error": {
-					"context": "$.error",
-					"routes": [],
-					"metaName": "Error"
-				}
-			},
-			"metaMethod": "Shutdown"
-		},
-		"power.3": {
-			"type": "nodehandler://@axway-api-builder-ext/api-builder-plugin-fn-power/power",
-			"name": "Shutdown",
-			"method": "shutdown",
-			"parameters": [
-				{
-					"name": "errorMessage",
-					"type": "jsonpath",
-					"value": "$.error",
-					"metaName": "Error message",
-					"metaDescription": "An optional message which is logged when the process is terminated. Helpful to make clear the reason for the shutdown."
-				},
-				{
-					"name": "errorCode",
-					"type": "number",
-					"value": "97",
-					"metaName": "Error code",
-					"metaDescription": "An integer number used for the process to exit. Defaults to -1."
 				},
 				{
 					"name": "skipInDevelopment",

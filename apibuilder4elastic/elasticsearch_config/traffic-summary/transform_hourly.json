@@ -1,0 +1,110 @@
+{
+    "source": {
+      "index": [
+        "apigw-traffic-summary*"
+      ],
+      "query": {
+        "match_all": {}
+      }
+    },
+    "dest": {
+      "index": "apigw-hourly-traffic-summary-000001"
+    },
+    "sync": {
+      "time": {
+        "field": "@timestamp",
+        "delay": "180m"
+      }
+    },
+    "description": "Aggregates the API traffic information into 60 minute buckets. The information is used for long term analytics dashboards. The lastest version should be started/running.",
+    "frequency": "4m",
+    "pivot": {
+      "group_by": {
+        "@timestamp": {
+          "date_histogram": {
+            "field": "@timestamp",
+            "calendar_interval": "1h",
+            "missing_bucket": false
+          }
+        },
+        "serviceContext.app.keyword": {
+          "terms": {
+            "field": "serviceContext.app.keyword",
+            "missing_bucket": true
+          }
+        },
+        "finalStatus": {
+          "terms": {
+            "field": "finalStatus",
+            "missing_bucket": true
+          }
+        },
+        "serviceContext.apiOrg": {
+          "terms": {
+            "field": "serviceContext.apiOrg",
+            "missing_bucket": true
+          }
+        },
+        "serviceContext.apiVersion": {
+          "terms": {
+            "field": "serviceContext.apiVersion",
+            "missing_bucket": true
+          }
+        },
+        "processInfo.gatewayRegion": {
+          "terms": {
+            "field": "processInfo.gatewayRegion",
+            "missing_bucket": true
+          }
+        },
+        "processInfo.gatewayName.keyword": {
+          "terms": {
+            "field": "processInfo.gatewayName.keyword",
+            "missing_bucket": true
+          }
+        },
+        "http.method": {
+          "terms": {
+            "field": "http.method",
+            "missing_bucket": true
+          }
+        },
+        "serviceContext.method.keyword": {
+          "terms": {
+            "field": "serviceContext.method.keyword",
+            "missing_bucket": true
+          }
+        }
+      },
+      "aggregations": {
+        "correlationId.value_count": {
+          "value_count": {
+            "field": "correlationId"
+          }
+        },
+        "transactionId.value_count": {
+          "value_count": {
+            "field": "transactionId"
+          }
+        },
+        "duration.avg": {
+          "avg": {
+            "field": "duration"
+          }
+        },
+        "http.bytesReceived.sum": {
+          "sum": {
+            "field": "http.bytesReceived"
+          }
+        },
+        "http.bytesSent.sum": {
+          "sum": {
+            "field": "http.bytesSent"
+          }
+        }
+      }
+    },
+    "settings": {
+      "max_page_search_size": 500
+    }
+  }
