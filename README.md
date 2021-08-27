@@ -136,7 +136,7 @@ It is also possible to use existing components such as an Elasticsearch cluster 
 
 The basic setup explains the individual components, how they can be deployed and play together. After completing the basic setup you will have a single node Elasticsearch cluster including a Kibana instance running. This cluster receives data from 1 to N API-Gateways via Filebeat, Logstash, API-Builder and is accessible via the Traffic Monitor. You can also use the sample Kibana Dashboard or create your own visualizations.  
 You can extend this setup, then expand it to a production cluster.
-To test this solution, it is possible to deploy all components on a single machine, which should then have at least 16 GB RAM available. _(For instance like the Axway internal API-Management reference environment.)_
+To test this solution, it is possible to deploy all components, incl. API-Management on a single machine, which should then have at least 18 GB RAM available. _(For instance like the Axway internal API-Management reference environment.)_
 
 ### Preparations
 
