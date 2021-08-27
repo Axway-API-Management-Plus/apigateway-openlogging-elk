@@ -50,7 +50,7 @@ async function handleFilterFields(parameters, options) {
 		{ fieldName: 'localPort', queryType: 'match', queryLocation: 'http.localPort' },
 		{ fieldName: 'method', queryType: 'match', queryLocation: 'http.method' },
 		{ fieldName: 'correlationId', queryType: 'match', queryLocation: 'correlationId' },
-		{ fieldName: 'serviceName', queryType: 'match', queryLocation: 'serviceContext.service' },
+		{ fieldName: 'serviceName', queryType: 'match', queryLocation: 'serviceContext.service', params: { operator: 'and' } },
 		{ fieldName: 'servicetype', queryType: 'match', queryLocation: `${params.protocol}.serviceType` },
 		// Fields for JMS
 		{ fieldName: 'jmsDeliveryMode', queryType: 'match', queryLocation: `${params.protocol}.jmsDeliveryMode` },

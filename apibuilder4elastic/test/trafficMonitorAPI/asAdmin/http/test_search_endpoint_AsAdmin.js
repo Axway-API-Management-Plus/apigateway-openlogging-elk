@@ -372,10 +372,10 @@ describe('Endpoints', function () {
 				expect(body.data[0].uri).to.equals('/favicon.ico');
 			});
 		});
-		it('[Endpoint-0016] should return one entry with service name Petstore HTTP', async () => {
+		it('[Endpoint-0016] should return one entry with service name Petstore A', async () => {
 			return await requestAsync({
 				method: 'GET',
-				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?field=serviceName&value=Petstore%20HTTP`,
+				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?field=serviceName&value=Petstore%20A`,
 				headers: {
 					'cookie': 'VIDUSR=Search-0015-DAVID-1597468226-Z+qdRW4rGZnwzQ==', 
 					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
@@ -385,10 +385,9 @@ describe('Endpoints', function () {
 				expect(response.statusCode).to.equal(200);
 				expect(body).to.be.an('Object');
 				expect(body).to.have.property('data');
-				expect(body.data).to.have.lengthOf(2);
+				expect(body.data).to.have.lengthOf(1);
 				expect(body.data[0].status).to.equals(200);
 				expect(body.data[0].uri).to.equals('/petstore/v2/pet/findByTag');
-				expect(body.data[1].uri).to.equals('/petstore/v2/pet/findByStatus');
 			});
 		});
 		it('[Endpoint-0017] should return one entry WAF-Status 1', async () => {
