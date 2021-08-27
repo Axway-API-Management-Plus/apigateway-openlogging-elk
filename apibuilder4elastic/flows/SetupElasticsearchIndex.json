@@ -561,7 +561,9 @@
 				},
 				"error": {
 					"context": "$.error",
-					"routes": [],
+					"routes": [
+						"http.5"
+					],
 					"metaName": "Error"
 				}
 			},
