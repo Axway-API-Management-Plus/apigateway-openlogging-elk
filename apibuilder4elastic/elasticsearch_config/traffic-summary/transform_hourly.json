@@ -81,9 +81,9 @@
             "missing_bucket": true
           }
         },
-        "serviceContext.appOrg.keyword": {
+        "serviceContext.appOrg": {
           "terms": {
-            "field": "serviceContext.appOrg.keyword",
+            "field": "serviceContext.appOrg",
             "missing_bucket": true
           }
         }
