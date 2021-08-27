@@ -80,6 +80,12 @@
             "field": "serviceContext.service.keyword",
             "missing_bucket": true
           }
+        },
+        "serviceContext.appOrg.keyword": {
+          "terms": {
+            "field": "serviceContext.appOrg.keyword",
+            "missing_bucket": true
+          }
         }
       },
       "aggregations": {
