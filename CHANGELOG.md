@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Fixed
 - Service name filtering is not working as expected [#129](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/129)
+- API Operation filter not working as expected [#131](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/131)
 - V-Host filter is ignored [#130](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/130)
 
 ### Changed

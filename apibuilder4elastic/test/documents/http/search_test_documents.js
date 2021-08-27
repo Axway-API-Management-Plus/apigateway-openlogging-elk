@@ -176,7 +176,7 @@ module.exports = [
         "serviceContext" : {
             "duration" : 897,
             "app" : "Client App",
-            "method" : "findPetsByStatus",
+            "method" : "findPetsBy Status",
             "org" : "API Development",
             "service" : "Petstore B",
             "client" : "4e8634ba-6762-45ca-bbe5-7ca4e99192ac",
@@ -229,7 +229,7 @@ module.exports = [
         "serviceContext" : {
             "duration" : 897,
             "app" : "Client App",
-            "method" : "findPetsByTag",
+            "method" : "findPetsBy Tag",
             "org" : "API Development",
             "service" : "Petstore A",
             "client" : "4e8634ba-6762-45ca-bbe5-7ca4e99192ac",

@@ -148,7 +148,7 @@ describe('Endpoints', function () {
 			};
 			return await requestAsync({
 				method: 'GET',
-				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?field=operation&value=findPetsByStatus`,
+				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-1/ops/search?field=operation&value=findPetsBy%20Status`,
 				headers: {
 					'cookie': 'VIDUSR=Search-0005-DAVID-1597468226-Z+qdRW4rGZnwzQ==', 
 					'csrf-token': '04F9F07E59F588CDE469FC367A12ED3A4B845FDA9A9AE2D9A77686823067CDDC'
@@ -159,7 +159,7 @@ describe('Endpoints', function () {
 				expect(body).to.be.an('Object');
 				expect(body).to.have.property('data');
 				expect(body.data).to.have.lengthOf(1);
-				expect(body.data[0].operation).to.equals('findPetsByStatus');
+				expect(body.data[0].operation).to.equals('findPetsBy Status');
 				checkFields(body.data, true, false);
 			});
 		});

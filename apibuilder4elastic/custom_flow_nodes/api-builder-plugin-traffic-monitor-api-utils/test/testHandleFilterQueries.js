@@ -66,14 +66,15 @@ describe('flow-node traffic-monitor-api-utils', () => {
 		// Example .../search?field=uri&value=/v2/pet/findByStatus&field=method&value=GET
 		it('should succeed with multiple filter fields', async () => {
 			const { value, output } = await flowNode.handleFilterFields({ params: { 
-				field: ["uri","method", "serviceName", "vhost"], 
-				value: ["/v2/pet/findByStatus","GET", "Petstore A", "api.customer.com"] }, 
+				field: ["uri","method", "serviceName", "vhost", "operation"], 
+				value: ["/v2/pet/findByStatus","GET", "Petstore A", "api.customer.com", "Get a pet"] }, 
 				serviceID: "instance-1", gatewayTopology: {} });
 
 			expect(output).to.equal('next');
 			expect(value).to.be.a('object');
 			expect(value).to.deep.equal({ "bool": { "must": [
 				{"match": {"http.uri": { "query": "/v2/pet/findByStatus", "operator": "and" }}},
+				{"match": {"serviceContext.method": { "query": "Get a pet", "operator": "and" }}},
 				{"match": {"http.method": { "query": "GET" }}},
 				{"match": {"serviceContext.service": { "query": "Petstore A", "operator": "and" }}},
 				{"match": {"http.vhost.text": { "query": "api.customer.com", "operator": "and" }}},
