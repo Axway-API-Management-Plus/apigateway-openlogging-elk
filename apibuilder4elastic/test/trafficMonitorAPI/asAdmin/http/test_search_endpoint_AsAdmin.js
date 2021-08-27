@@ -423,7 +423,7 @@ describe('Endpoints', function () {
 				expect(body).to.have.property('data');
 				expect(body.data).to.have.lengthOf(1);
 				expect(body.data[0].status).to.equals(200);
-				expect(body.data[0].serviceName).to.equals('Petstore');
+				expect(body.data[0].serviceName).to.equals('Petstore B');
 			});
 		});
 		it('[Endpoint-0019] should return one entry with final status Error', async () => {

@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+- Service name filtering is not working as expected [#129](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/129)
+
 ### Changed
 - Updated Elastic-Stack from version 7.12.1 to 7.14.0
 - Updated API-Builder version changed from Quezon to Timbuktu
