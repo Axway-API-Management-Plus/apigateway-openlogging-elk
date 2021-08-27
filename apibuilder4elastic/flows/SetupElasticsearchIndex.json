@@ -423,7 +423,9 @@
 					"metaName": "Not found"
 				},
 				"error": {
-					"routes": [],
+					"routes": [
+						"http.5"
+					],
 					"context": "$.error",
 					"metaName": "Error"
 				}
