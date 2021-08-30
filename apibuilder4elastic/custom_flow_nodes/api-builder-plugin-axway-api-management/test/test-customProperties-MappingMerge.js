@@ -72,12 +72,12 @@ describe('Merge custom properties tests', () => {
 			expect(value.mappings.properties['customProperties.customProperty3'].type).to.equal('keyword');
 		});
 
-		it('should merge into indexMappingTemplate as custom properties are missing', async () => {
+		it('should merge into indexMappingTemplate as custom properties are missing and parent is not set', async () => {
 			const { value, output } = await flowNode.mergeCustomProperties({ 
 				customProperties: JSON.parse(fs.readFileSync('./test/testInput/customPropertiesConfig.json'), null), 
 				desiredIndexTemplate: JSON.parse(fs.readFileSync('./test/testInput/desiredIndexTemplate.json'), null),
 				actualIndexTemplate: JSON.parse(fs.readFileSync('./test/testInput/actualIndexTemplate.json'), null), 
-				customPropertiesSettings: { merge: true, parent: "" }
+				customPropertiesSettings: { merge: true }
 			});
 			expect(output).to.equal('next');
 			expect(value.mappings.properties['customProperties.customProperty1']).to.be.an('Object');
