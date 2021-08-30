@@ -37,6 +37,10 @@ async function mergeCustomProperties(params, options) {
 		logger.info(`Custom properties are ignore for this template.`);
 		return options.setOutput('noUpdate', desiredIndexTemplate);
 	}
+	if (!customPropertiesSettings.parent) {
+		customPropertiesSettings.parent = ""; // Use no parent as default
+	}
+	
 	var updateRequired = false;
 	for (var prop in customProperties) {
 		if (Object.prototype.hasOwnProperty.call(customProperties, prop)) {
