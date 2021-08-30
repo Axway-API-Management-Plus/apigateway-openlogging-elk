@@ -4,9 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
-### Changed
-- Updated Elastic-Stack from version 7.12.1 to 7.13.3
+## [3.3.2] 2021-08-30
+### Fixed
+- Custom-Property mapping created as undefinedCustomProperties.myProp [#133](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/133)
 
 ## [3.3.1] 2021-08-17
 ### Fixed
