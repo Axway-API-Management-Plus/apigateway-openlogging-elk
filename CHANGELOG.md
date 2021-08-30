@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Updated Elastic-Stack from version 7.12.1 to 7.14.0
 - Updated API-Builder version changed from Quezon to Timbuktu
 - API-Builder now always returns an Unknown API object if an API could not be found [#128](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/128)
+- Field http.status now additionally indexed as a keyword additionally to Integer
 
 ### Added
 - Added support for Long-Term API-Analytics based on transformation jobs

@@ -92,7 +92,12 @@
                 "type": "keyword"
             },
             "http.status": {
-                "type": "integer"
+                "type": "integer",
+                "fields": {
+                    "keyword": {
+                        "type": "keyword"
+                    }
+                }
             },
             "http.bytesSent": {
                 "type": "integer"
