@@ -16,7 +16,7 @@
         "transform": {
             "config": "elasticsearch_config/traffic-summary/transform_hourly.json",
             "id": "apigw-traffic-summary-hourly",
-            "idSuffix": "v4"
+            "idSuffix": "v5"
         }
     }, 
     "apigw-traffic-details": {
