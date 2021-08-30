@@ -87,9 +87,9 @@
             "missing_bucket": true
           }
         },
-        "http.statusText": {
+        "http.status.keyword": {
           "terms": {
-            "field": "http.statusText",
+            "field": "http.status.keyword",
             "missing_bucket": true
           }
         }
