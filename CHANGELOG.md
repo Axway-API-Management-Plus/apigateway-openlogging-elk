@@ -20,6 +20,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Added support for Long-Term API-Analytics based on transformation jobs
 - Added support for Transactions [#83](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/83)
 
+## [3.3.2] 2021-08-30
+### Fixed
+- Custom-Property mapping created as undefinedCustomProperties.myProp [#133](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/133)
+
 ## [3.3.1] 2021-08-17
 ### Fixed
 - Index-Templates failed to install without using a region [#124](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/124)
