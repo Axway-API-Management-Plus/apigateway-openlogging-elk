@@ -128,7 +128,7 @@ Version __7.7-20200130__ is required due to some Dateformat changes in the Open-
 ### Elastic stack
 
 The solution is based on the Elastic-Stack (Elasticsearch, Logstash, Beats and Kibana). It can run completely in docker containers, which for example are started on the basis of docker-compose.yaml or run in a Docker Orchestration Framework.  
-It is also possible to use existing components such as an Elasticsearch cluster or a Kibana instance. With that you have the flexiblity to used for instance an Elasticsearch service at AWS or Azure or use Filebeat manually installed on the API-Gateway machines. The solution has been tested with Elasticsearch 7.x version.
+It is also possible to use existing components such as an Elasticsearch cluster or a Kibana instance. With that you have the flexiblity to used for instance an Elasticsearch service at AWS or Azure or use Filebeat manually installed on the API-Gateway machines. The solution has been tested with Elasticsearch >7.10.x version.
 
 ## Getting started
 
@@ -194,7 +194,7 @@ curl -k GET https://my-elasticsearch-host.com:9200
   "cluster_name" : "axway-apim-elasticsearch",
   "cluster_uuid" : "nCFt9WhpQr6JSOVY_h48gg",
   "version" : {
-    "number" : "7.9.2",
+    "number" : "7.14.0",
     "build_flavor" : "default",
     "build_type" : "docker",
     "build_hash" : "d34da0ea4a966c4e49417f2da2f244e3e97b4e6e",
@@ -251,7 +251,7 @@ Check that the docker containers for Logstash, API Builder and Memached are runn
 ```
 [ec2-user@ip-172-31-61-59 axway-apim-elk-v1.0.0]$ docker ps
 CONTAINER ID        IMAGE                                       COMMAND                  CREATED             STATUS                 PORTS                              NAMES
-d1fcd2eeab4e        docker.elastic.co/logstash/logstash:7.9.2   "/usr/share/logstash…"   4 hours ago         Up 4 hours             0.0.0.0:5044->5044/tcp, 9600/tcp   logstash
+d1fcd2eeab4e        docker.elastic.co/logstash/logstash:7.12.2  "/usr/share/logstash…"   4 hours ago         Up 4 hours             0.0.0.0:5044->5044/tcp, 9600/tcp   logstash
 4ce446cafda1        cwiechmann/apibuilder4elastic:v1.0.0        "docker-entrypoint.s…"   4 hours ago         Up 4 hours (healthy)   0.0.0.0:8443->8443/tcp             apibuilder4elastic
 d672f2983c86        memcached:1.6.6-alpine                      "docker-entrypoint.s…"   4 hours ago         Up 4 hours             11211/tcp                          memcached
 ```
@@ -793,17 +793,21 @@ Please note:
 
 <p align="right"><a href="#table-of-content">Top</a></p>
 
-## Size your infrastructure
+## Requirements
+
+The minimum Elastic Stack version is 7.10.x. This applies to Elasticsearch, Kibana, Logstash and Filebeat.
+
+### Size your infrastructure
 
 The solution is designed to process and store millions of transactions per day and make them quickly available for traffic monitoring and analytics. 
 This advantage of being able to access millions of transactions is not free of charge with Elasticsearch, but is available in the size of the disc space provided.
 The solution has been extensively tested, especially for high-volume requirements. It processed 1010 transactions per second, up to 55 million transactions per day on the following infrastructure.
 
-### Sizing recommendations
+#### Sizing recommendations
 
 There are two important aspects for sizing the platform. The [transactions per second](#transactions-per-second), which are to be processed in real time, and the [retention period](#retention-period), which is reflected in the required disk space.
 
-#### Transactions per Second
+##### Transactions per Second
 
 The number of concurrent transactions per second (TPS) that the entire platform must handle. The platform must therefore be scaled so that the events that occur on the basis of the transactions can be processed (Ingested) in real time. It is important to consider the permanent load. As a general rule, more capacity should be planned in order to also quickly enable catch-up operation after a downtime or maintenance.  
 
@@ -821,7 +825,7 @@ Please note:
 - Logstash, API-Builder, Filebeat (for monitoring only) and Kibana are load balanced across all available Elasticsearch nodes. An external Load-Balancer is not required as this is handled internally by each of the Elasticsearch clients.
 - do not size the Elasticsearch Cluster-Node too large. The servers should not have more than 32GB memory, because after that the memory management kills the advantage again. It is better to add another server. See the [Test-Infrastructure](#test-infrastructure) for reference.
 
-#### Retention period
+##### Retention period
 
 The second important aspect for sizing is the retention period, which defines how long data should be available. Accordingly, disk space must be made available.  
 In particular the Traffic-Summary and Traffic-Details indicies become huge and therefore play a particularly important role here. The solution is delivered with default values which you can read [here](#lifecycle-management). Based on the these default values which result in ap. __14 days__ the following disk space is required.
@@ -847,7 +851,7 @@ If the required storage space is unexpectedly higher, then you can do the follow
   - if the cluster state is green, you can stop a node, allocate more disk space, and then start it again
   - the available disk space is used automatically by allocating shards  
 
-### Test infrastructure
+#### Test infrastructure
 
 The following test infrastructure was used to determine the [maximum capacity or throughput](#transactions-per-second). The information is presented here so that you can derive your own sizing from it.
 
@@ -859,7 +863,7 @@ The following test infrastructure was used to determine the [maximum capacity or
 
 There is no specific reason that EC2 t2.xlarge instances were used for the test setup. The deciding factor was simply the number of CPU cores and 16 GB RAM.  
 
-#### Memory usage
+##### Memory usage
 
 To give you a good feel for the memory usage of the individual components, the following table shows the memory usage at around 330 transactions per second.
 
@@ -1011,7 +1015,7 @@ Or the following:
 ```
 
 ### No results from Elasticsearch
-If you don't get any results from Elasticsearch for valid queries an [index template](https://www.elastic.co/guide/en/elasticsearch/reference/7.10/index-templates.html) might not be applied correctly during index creation. You need to know, that Elasticsearch does not execute queries on the original document, rather on the indexed fields. How these were indexed is defined by an index mapping.  
+If you don't get any results from Elasticsearch for valid queries an [index template](https://www.elastic.co/guide/en/elasticsearch/reference/7.14/index-templates.html) might not be applied correctly during index creation. You need to know, that Elasticsearch does not execute queries on the original document, rather on the indexed fields. How these were indexed is defined by an index mapping.  
 For this purpose, the solution delivers an index template for each index, which is used when the index is created.  
 You can find the index mapping in the API-Builder container: `elasticsearch_config/<index-name>/index_template.json` or you can review them [here](apibuilder4elastic/elasticsearch_config).  
 To check if the index mapping was applied correctly to an index execute the following request. For example the Traffic-Summary index:  
@@ -1163,7 +1167,7 @@ Another reason are updates of the solution which should certainly be done on a t
 
 ### Can I use my own existing Elasticsearch cluster?
 
-Yes, you can use your own Elasticsearch cluster. As long as it's a 7.x version with X-Pack features enabled it's supported. For instance AWS-Elasticsearch service does not provide X-Pack is therefore not supported.
+Yes, you can use your own Elasticsearch cluster. As long as it's a >7.10.x version with X-Pack features enabled it's supported. For instance AWS-Elasticsearch service does not provide X-Pack is therefore not supported. Additionally >7.10 is required to run the transformation job correctly (See [here](https://github.com/elastic/elasticsearch/pull/59591) for more details about missing buckets).
 
 ### Does the solution support high availability?
 
