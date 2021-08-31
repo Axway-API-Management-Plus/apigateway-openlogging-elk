@@ -932,6 +932,7 @@ However, if you need to change files, it is recommended to make this change auto
 - [Check Caching](#check-caching)
 - [Certificate error Admin-Node Manager to API-Builder](#certificate-error-admin-node-manager-to-api-builder)
 - [Filebeat - Failed to publish events](#filebeat-failed-to-publish-events)
+- [Kibana - Missing Long-Term-Statistics](#kibana-missing-long-term-statistics)
 
 ### Check processes/containers are running
 From within the folder where the docker-compose.yml file is located (git project folder) execute: 
@@ -1142,6 +1143,17 @@ The following options:
 - It sounds crazy, but it can help not to specify the logstash hosts in the same order on every filebeat.  
 - Check that the Logstash instances have configured all available Elasticsearch nodes.  
 - Add more Logstash nodes on a test basis, if that doesn't improve things, add an Elasticsearch node.  
+
+<p align="right"><a href="#table-of-content">Top</a></p>
+
+### Kibana - Missing Long-Term-Statistics
+
+If the Quarterly and Yearly API request processing dashboards do not display any data, check if the transform job: `apigw-traffic-summary-hourly-v<n>` is running and started. The API-Builder4Elastic application tries to create this job every hour. You can also start this with the following API request in the API-Builder container:
+```
+wget --no-check-certificate https://localhost:8443/api/elk/v1/api/setup/transform/apigw-traffic-summary
+```
+If the job exists, check if the index: `apigw-hourly-traffic-summary-00000<n>` exists. If not, please stop the transform job and start it again. If necessary check the messages of the transform job. If the index exists but does not contain any documents, please delete it and restart the transform job.  
+Finally you can check if the index pattern: `apigw-hourly-traffic-summary*` exists. If not, please re-import the Kibana dashboard configuration: `Axway-api-overview.ndjson`.
 
 <p align="right"><a href="#table-of-content">Top</a></p>
 
