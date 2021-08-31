@@ -8,7 +8,7 @@
       }
     },
     "dest": {
-      "index": "apigw-hourly-traffic-summary-000007"
+      "index": "apigw-hourly-traffic-summary-000001"
     },
     "sync": {
       "time": {
