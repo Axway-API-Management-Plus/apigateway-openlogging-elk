@@ -1,7 +1,7 @@
 {
     "source": {
       "index": [
-        "apigw-raffic-summary*"
+        "apigw-traffic-summary*"
       ],
       "query": {
         "match_all": {}
