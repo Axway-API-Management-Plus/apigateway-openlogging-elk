@@ -383,6 +383,14 @@ Please note:
 
 <p align="right"><a href="#table-of-content">Top</a></p>
 
+## Analytics
+
+Since version 3.4.0, the solution supports long-term analytics capabilities in addition to relatively short-term operations and the corresponding dashboard.  
+For this purpose, the highly granular raw data is transformed into entity-centric indices, which require only a fraction of the necessary disk space. Of course, this reduces the ability to analyze data down to the minute.
+To transform the raw data, the solution delivers a ready-made transformation job and provides corresponding dashboards.
+
+<p align="right"><a href="#table-of-content">Top</a></p>
+
 ## Advanced and production Setup
 
 This section covers advanced configuration topics that are required for a production environment. It is assumed that you have already familiarized yourself with the solution using the Basic setup.  
@@ -886,16 +894,16 @@ With each release the following artifacts may change:
 - All Docker-Compose files
 - Elasticstack Version
 - Logstash Pipelines
-- Elasticsearch Index Templates
+- Elasticsearch Configuration (e.g. Index Templates, ILM-Policies, Transformations)
 - Filebeat Configuration
 - API Builder Docker Container Version
-- Kibana Dashboards, Config (e.g. ILM-Policies, Transformations)
+- Kibana Dashboards
 - Scripts, etc. 
 
-All components of this solution play together and only work if they are from the same release. The solution will check if for example the index templates have the required version. 
-With each update there will be a changelog, release notes and instructions for the update. For each component it will be explained whether there have been changes and how to apply them if necessary.  
+All components of this solution play together and only work if they are from the same release. The solution checks if for example the index templates have the required version. 
+With each update there will be a changelog, release notes and instructions for the update. For each component it is explained whether there have been changes and how to apply them if necessary.  
 
-:exclamation: It is strongly discouraged to make changes in any files of the project, except the `.env` file. These will be overwritten with the next release. This is the only way to easily update from one version to the next.
+:exclamation: It is strongly discouraged to make changes in any files of the project, except the `.env` file and the config folder. These will be overwritten with the next release. This is the only way to easily update from one version to the next.
 If you encounter a problem or need a feature, please open an issue that can be integrated directly into the solution.  
 Of course you are welcome to create your own Kibana dashboards or clone and customize existing ones.  
 However, if you need to change files, it is recommended to make this change automatically and repeatable (e.g. https://www.ansible.com). 
