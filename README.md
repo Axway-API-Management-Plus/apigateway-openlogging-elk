@@ -43,6 +43,7 @@ This shows a sample dashboard created in Kibana based on the indexed documents:
 - [Configure Axway API-Management](#configure-axway-api-management)
   - [Setup Admin-Node-Manager](#setup-admin-node-manager)
   - [Traffic-Monitor for API-Manager Users](#traffic-monitor-for-api-manager-users)
+  - [Analytics](#analytics)
 - [Advanced and production Setup](#advanced-and-production-setup)
   - [Architecture examples](#architecture-examples)
   - [Traffic-Payload](#traffic-payload)
@@ -385,9 +386,13 @@ Please note:
 
 ## Analytics
 
-Since version 3.4.0, the solution supports long-term analytics capabilities in addition to relatively short-term operations and the corresponding dashboard.  
-For this purpose, the highly granular raw data is transformed into entity-centric indices, which require only a fraction of the necessary disk space. Of course, this reduces the ability to analyze data down to the minute.
-To transform the raw data, the solution delivers a ready-made transformation job and provides corresponding dashboards.
+Since version 3.4.0, the solution supports long-term analytics capabilities in addition to relatively short-term operations and the corresponding Real-Time dashboard.  
+For this purpose, the highly granular raw data received from the API-Gateways is transformed into entity-centric indices that are pre-aggregated and require only a fraction of the necessary disk space. Of course, this reduces the ability to analyze data down to the minute.  
+To transform the raw data, the solution delivers and installs a ready-made transformation job and provides corresponding dashboards.  
+
+![Transformation into Hourly-Buckets](imgs/hourly-transformation.png)  
+
+It is important to know that the transformation works with a delay of 3 hours. This means that real-time data will appear in the Quartely/Yearly dashboards only after this time. This delay allows you to suspend/interrupt ingesting data for a max. of 3 hours without losing data for the transform and thus long term analytics.  
 
 <p align="right"><a href="#table-of-content">Top</a></p>
 
