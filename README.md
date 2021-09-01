@@ -1153,7 +1153,14 @@ If the Quarterly and Yearly API request processing dashboards do not display any
 docker exec apibuilder4elastic wget --no-check-certificate https://localhost:8443/api/elk/v1/api/setup/transform/apigw-traffic-summary
 ```
 If the job exists, check if the index: `apigw-hourly-traffic-summary-00000<n>` exists. If not, please stop the transform job and start it again. If necessary check the messages of the transform job. If the index exists but does not contain any documents, please delete it and restart the transform job.  
-Finally you can check if the index pattern: `apigw-hourly-traffic-summary*` exists. If not, please re-import the Kibana dashboard configuration: `Axway-api-overview.ndjson`.
+Finally you can check if the index pattern: `apigw-hourly-traffic-summary*` exists. If not, please re-import the Kibana dashboard configuration: `Axway-api-overview.ndjson`.  
+
+If the __API-Status history__ and __API-Gateway status history__ in the Quarterly or Yearly-Dashboards are not shown, please do the following.  
+- Stop and Delete the Transform-Job: `apigw-traffic-summary-hourly-v<n>`
+- Delete the hourly index: `apigw-hourly-traffic-summary-00000<n>` 
+- and either wait for max. 60 minutes until API-Builder has re-created the transform or call the REST-API as shown above
+
+The main cause of this problem is the way the `http.status` field is indexed, which was changed in the update to version 3.4.0. If no documents have been received after the upgrade and initial creation of the transformation job, the transformation does not correctly index the `http.status.keyword` field.  
 
 <p align="right"><a href="#table-of-content">Top</a></p>
 
