@@ -358,10 +358,22 @@ ELASTIC_VERSION=7.14.0
 # PAYLOAD_HANDLING_ENABLED=false
 
 # ----------------------------------------------------------------------------------------------
-# Disables the Elasticsearch setup flows in API-Builder that are used to configure.
+# By default, all generated trace messages are forwarded to Elasticsearch. No matter if DEBUG 
+# or DATA. 
+# If you do not want this, you can configure which trace levels should be dropped. 
+# For example, if you set DEBUG,DATA these two log levels will not be stored in ElasticSearch.
+# Please note that this will of course result in the messages not appearing in the 
+# API Gateway traffic monitor. Also it is not possible to change this parameter afterwards and 
+# expect Trace-Messages are re-processed.
+# Used-By: Logstash for Traffic and General-Trace messages
+# Defaults to all levels are forwarded.
+# DROP_TRACE_MESSAGE_LEVELS=DEBUG,DATA
+
+# ----------------------------------------------------------------------------------------------
+# Disables the setup flows in API-Builder that are used to configure Elasticsearch.
 # If you run more than one API builder, you can set this parameter to true, as it is not
-# necessary. However, it is technically not a problem to have multiple API builders running
-# with setup flow enabled.
+# necessary. However, it is technically not a problem to have multiple API-Builders running
+# with setup flows enabled.
 # Used-By: API-Builder
 # Defaults to false.
 # DISABLE_SETUP_FLOWS=true

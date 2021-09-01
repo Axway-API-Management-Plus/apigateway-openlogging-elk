@@ -48,7 +48,7 @@ jobs:
         echo Using MEMCACHED: $MEMCACHED
         ./logstash-filter-verifier --diff-command="diff -y" --keep-env=API_BUILDER_SSL_CERT --keep-env=API_BUILDER_URL --keep-env=MEMCACHED ./logstash/test/jms/test-opentrafficlog-jms.json ./logstash/pipelines/OpenTrafficPipeline.conf
         ./logstash-filter-verifier --diff-command="diff -y" --keep-env=API_BUILDER_SSL_CERT --keep-env=API_BUILDER_URL --keep-env=MEMCACHED ./logstash/test/beatsInput/test-index-creation-lookup.json ./logstash/pipelines/BeatsInputPipeline.conf
-        ./logstash-filter-verifier --diff-command="diff -y" --keep-env=API_BUILDER_SSL_CERT --keep-env=API_BUILDER_URL --keep-env=MEMCACHED ./logstash/test/http/test-tracemessages.json ./logstash/pipelines/TraceMessagesPipeline.conf
+        ./logstash-filter-verifier --diff-command="diff -y" --keep-env=API_BUILDER_SSL_CERT --keep-env=API_BUILDER_URL --keep-env=MEMCACHED --keep-env=DROP_TRACE_MESSAGE_LEVELS ./logstash/test/http/test-tracemessages.json ./logstash/pipelines/TraceMessagesPipeline.conf
         ./logstash-filter-verifier --diff-command="diff -y" --keep-env=API_BUILDER_SSL_CERT --keep-env=API_BUILDER_URL --keep-env=MEMCACHED ./logstash/test/http/test-tracemessages-gmt-4.json ./logstash/pipelines/TraceMessagesPipeline.conf
         ./logstash-filter-verifier --diff-command="diff -y" --keep-env=API_BUILDER_SSL_CERT --keep-env=API_BUILDER_URL --keep-env=MEMCACHED ./logstash/test/http/test-events.json ./logstash/pipelines/EventsPipeline.conf
         ./logstash-filter-verifier --diff-command="diff -y" --keep-env=API_BUILDER_SSL_CERT --keep-env=API_BUILDER_URL --keep-env=MEMCACHED ./logstash/test/http/test-opentrafficlog.json ./logstash/pipelines/OpenTrafficPipeline.conf
@@ -57,6 +57,7 @@ jobs:
       env:
         API_BUILDER_URL: 'http://localhost:8080'
         MEMCACHED: 'localhost:11211'
+        DROP_TRACE_MESSAGE_LEVELS: DEBUG
         # This is not relevant as we test with HTTP
         # But it's required by Logstash to be a valid certificate
         API_BUILDER_SSL_CERT: "./config/certificates/apibuilder4elastic.crt"
