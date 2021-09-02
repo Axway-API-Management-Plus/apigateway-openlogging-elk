@@ -388,7 +388,7 @@ Please note:
 
 Since version 3.4.0, the solution supports long-term analytics capabilities out of the box in addition to relatively short-term operations and the corresponding Real-Time dashboard.  
 For this purpose, the highly granular raw data received from the API-Gateways is transformed into entity-centric indices that are pre-aggregated and require only a fraction of the necessary disk space. Of course, this reduces the ability to analyze data down to the minute.  
-To transform the raw data, the solution delivers and automatically installs a ready-made transformation job and provides corresponding dashboards.  
+To transform the raw data, the solution delivers and automatically installs a ready-made transformation job and provides corresponding [dashboards](imgs/api-requests-quartely-dashboard.png).  
 
 ![Transformation into Hourly-Buckets](imgs/hourly-transformation.png)  
 
