@@ -37,9 +37,10 @@ This shows a sample dashboard created in Kibana based on the indexed documents:
 - [Basic setup](#basic-setup)
   - [Preparations](#preparations)
   - [Elasticsearch](#setup-elasticsearch)
-  - [Setup Kibana](#setup-kibana)
+  - [Kibana](#setup-kibana)
   - [Logstash / API-Builder / Memcached](#logstash--api-builder--memcached)
   - [Filebeat](#setup-filebeat)
+  - [Kibana Dashboards](#kibana-dashboards)
 - [Configure Axway API-Management](#configure-axway-api-management)
   - [Setup Admin-Node-Manager](#setup-admin-node-manager)
   - [Traffic-Monitor for API-Manager Users](#traffic-monitor-for-api-manager-users)
@@ -294,6 +295,18 @@ Use docker logs filebeat to check that no error is displayed. If everything is o
 Check in Kibana (Menu --> Management --> Stack Management --> Index Management) that the indexes are filled with data.
 
 If you encounter issues please see the [Troubleshooting](#troubleshooting) section for help or create an [issue](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues). 
+
+<p align="right"><a href="#table-of-content">Top</a></p>
+
+### Kibana Dashboards
+
+To install the Kibana dashboards please use the _Kibana Menu --> Stack Management --> Saved Objects --> Import saved objects_ and select the following file from the release package:  
+_kibana/dashboards/7/*.ndjson_  
+
+No matter if you import the dashboards initially or after an update please use the default settings:  
+![Kibana Import options](imgs/kibana-import-options.png)  
+
+You are welcome to create additional visualizations and dashboards, but do not adapt the existing ones, as they will be overwritten with the next update. If you have created your own visualizations/dashboards, they will not be changed by the import.  
 
 <p align="right"><a href="#table-of-content">Top</a></p>
 
