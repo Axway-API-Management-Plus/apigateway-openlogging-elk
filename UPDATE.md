@@ -105,7 +105,7 @@ Please follow the instructions to [setup the Admin-Node-Manager](README.md#setup
 
 ### Dashboards
 
-Please follow the instructions to [import Kibana-Dashboards](README.md#setup-kibana) based on the most recent Dashboards shipped with the release. Select that existing objects are overwritten.
+Please follow the instructions to [import Kibana-Dashboards](README.md#kibana-dashboards) based on the most recent Dashboards shipped with the release. Select that existing objects are overwritten.
 
 ### Parameters
 
