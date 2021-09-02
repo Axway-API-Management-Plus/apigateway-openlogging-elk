@@ -226,10 +226,6 @@ https://my-kibana-host:5601
 ```
 If Kibana doesn't start (>3-4 minutes) or doesn't report to be ready, please use docker logs Kibana to check for errors.  
 
-At this point you can already import the sample dashboard: `kibana/dashboards/7/*.ndjson` into Kibana. Menu --> Stack Management --> Saved Objects.  
-
-:exclamation: You are welcome to create additional visualizations and dashboards, but do not adapt the existing ones, as they will be overwritten with the next update.
-
 <p align="right"><a href="#table-of-content">Top</a></p>
 
 ### Logstash / API-Builder / Memcached
@@ -262,9 +258,9 @@ docker logs logstash
 Pipelines running {:count=>6, :running_pipelines=>[:".monitoring-logstash", :BeatsInput, :Events, :DomainAudit, :TraceMessages, :OpenTraffic], :non_running_pipelines=>[]}
 Successfully started Logstash API endpoint {:port=>9600}
 ```
-Please note that the Logstash API endpoint (9600) is not exposed outside of the docker container.  
-
-At startup Logstash installs Index-Templates and creates indexes in Elasticsearch. Please check that they exits with either Kibana or REST API calls. Using Kibana: Menu --> Stack Management --> Index Management. Check apigw-* indices (7x apigw-*) and index templates (apigw-domainaudit, apigw-monitoring, apigw-traffic-scheduled, trace-messages, traffic-details and traffic-summary) exists.  
+Please note:
+- that the Logstash API endpoint (9600) is not exposed outside of the docker container.  
+- Logstash is configured not to create indexes or index templates in Elasticsearch. These will be installed later by the API Builder application when the first events are received. The reason is that they may need to be created according to the region.  
 
 <p align="right"><a href="#table-of-content">Top</a></p>
 
