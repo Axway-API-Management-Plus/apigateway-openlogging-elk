@@ -36,10 +36,10 @@ This shows a sample dashboard created in Kibana based on the indexed documents:
 - [Getting started](#getting-started)
 - [Basic setup](#basic-setup)
   - [Preparations](#preparations)
-  - [Elasticsearch](#elasticsearch)
-  - [Kibana](#kibana)
+  - [Elasticsearch](#setup-elasticsearch)
+  - [Setup Kibana](#setup-kibana)
   - [Logstash / API-Builder / Memcached](#logstash--api-builder--memcached)
-  - [Filebeat](#filebeat)
+  - [Filebeat](#setup-filebeat)
 - [Configure Axway API-Management](#configure-axway-api-management)
   - [Setup Admin-Node-Manager](#setup-admin-node-manager)
   - [Traffic-Monitor for API-Manager Users](#traffic-monitor-for-api-manager-users)
@@ -170,7 +170,7 @@ Even if otherwise possible, it is recommended to deploy the individual component
 
 <p align="right"><a href="#table-of-content">Top</a></p>
 
-### Elasticsearch
+### Setup Elasticsearch
 
 Watch this video for a demonstration: [Setup Single Node Elasticsearch cluster](https://youtu.be/x-OdAdV2N7I)  
 
@@ -212,7 +212,7 @@ At this point you can already add the cluster UUID to the `.env` (`ELASTICSEARCH
 
 <p align="right"><a href="#table-of-content">Top</a></p>
 
-### Kibana
+### Setup Kibana
 
 Watch this video for a demonstration: [Setup Kibana](https://youtu.be/aLODAuXDMzY)  
 
@@ -268,7 +268,7 @@ At startup Logstash installs Index-Templates and creates indexes in Elasticsearc
 
 <p align="right"><a href="#table-of-content">Top</a></p>
 
-### Filebeat
+### Setup Filebeat
 
 Watch this video for a demonstration: [Setup Filebeat](https://youtu.be/h0AdztZ2bSE)  
 
