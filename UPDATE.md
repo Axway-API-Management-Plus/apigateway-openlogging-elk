@@ -2,7 +2,7 @@
 
 This document contains information on how to upgrade the solution from one version to the next. It is also possible to skip multiple versions.  
 
-The basic principle of the solution is that no files delivered with a release are changed. This is the best way to ensure that the solution can be updated without any problems. Only your .env file(s) must be carried over from one release to the next. It is not planned to backport bugfixes or enhancements in older releases.  
+The basic principle of the solution is that no files delivered with a release are changed. This is the best way to ensure that the solution can be updated without any problems. Only your .env file must be carried over from one release to the next. It is not planned to backport bugfixes (besides for the Axway Supported version) or enhancements in older releases.  
 
 This documents describes how to update based on Docker Compose deployment. If you have deployed the solution on a Kubernetes-Cluster using Helm, please follow the instructions here: [Upgrade a Helm-Deployment](helm#upgrade-the-release)
 
