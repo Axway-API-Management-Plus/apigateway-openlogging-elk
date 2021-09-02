@@ -1182,7 +1182,7 @@ Yes, the solution is supported by Axway. A distinction is made between Community
 
 #### Axway Supported Release
 
-Aligned with the Axway API-Management release cycle, 1 community release is selected at a time, tested with the Axway API management solution, and finally marked as Axway supported. From this point on, this will be the Axway Supported Release and there will be bug fixes for it as needed, but no new features. Therefore, there is always only 1 Axway supported release.  
+Aligned with the Axway API-Management release cycle, 1 community release is selected at a time, tested with the Axway API-Management solution, and finally marked as Axway supported. From this point on, this will be the Axway Supported Release and there will be bug fixes for it as needed, but no new features. Therefore, there is always only 1 Axway supported release.  
 However, this does __not__ mean that the Elastic solution will only work with the corresponding Axway API-Management release, but rather that there will be no more bug fixes for other releases. If you find a bug in a release that is no longer supported, you will need to upgrade to the next Axway Supported version to get a bug fix.  
 
 #### Community Releases
