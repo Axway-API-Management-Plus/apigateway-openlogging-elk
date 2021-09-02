@@ -11,7 +11,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - V-Host filter is ignored / Index-Template changed to index VHost additionally as text [#130](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/130)
 
 ### Changed
-- Updated Elastic-Stack from version 7.12.1 to 7.14.0 (with that increased the min. amount of memory from 16GB to 18GB)
+- Updated Elastic-Stack from version 7.12.1 to 7.14.0
+  - with that increased the min. amount of memory from 16GB to 18GB
+  - minimum Elasticsearch version is 7.10.x
 - Updated API-Builder version from Quezon to Timbuktu
 - API-Builder now always returns an Unknown API object if an API could not be found [#128](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/128)
 - Field http.status now indexed as a keyword additionally to Integer, which is required for Long-Term-Analytics (Transformation-Job)
