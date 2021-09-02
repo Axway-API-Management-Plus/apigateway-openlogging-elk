@@ -113,19 +113,21 @@ Sometimes it may be necessary to include newly introduced parameters in your `.e
 
 ### Elastic-Stack version
 
-If the Elasticsearch version needs to be updated, for example because a problem has been fixed, please follow these steps:
+The solution uses the latest available Elastic version with new releases. However, this does not force you to update to the appropriate Elastic version with each update. So, for example, if version 3.4.0 ships with Elastic version 7.14.0, you can still stay on version 7.12.1. You can find the minimum required Elastic version here.  
+
+Please follow these steps to update the Elasticversion:  
 - Open your `.env` file and change the parameter: `ELASTIC_VERSION` to the necessary version as specified in the release or the version you would like to use
   - Make sure that the `.env` file contains the correct/same version on all machines
-- To avoid any downtime, double check all Elasticsearch clients have multiple or all Elasticsearch nodes configured so that they can fail over  
+- To avoid any downtime, double check all Elasticsearch clients (API-Builder, Logstash, Filebeat) have multiple or all Elasticsearch nodes configured so that they can fail over  
 
 __1. Update Elasticsearch cluster__   
 
 Updating the Elasticsearch cluster happens one node after next. Before updating the next node it's strongly recommended that the cluster state is green and remaining nodes have enough disk space to take over the shards from the node to be upgraded.
 ```
-wget --no-check-certificate https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v2.0.2/axway-apim-elk-v2.0.2.tar.gz -O - | tar -xvz
-cd axway-apim-elk-v2.0.2
-cp ~/axway-apim-elk-v2.0.0/.env .
-cp ~/axway-apim-elk-v2.0.0/config/all-my-custom-certificates ./config
+wget --no-check-certificate https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v3.4.0/axway-apim-elk-v3.4.0.tar.gz -O - | tar -xvz
+cd axway-apim-elk-v3.4.0
+cp ~/axway-apim-elk-v3.2.0/.env .
+cp ~/axway-apim-elk-v3.2.0/config/all-my-custom-certificates ./config
 docker-compose -f elasticsearch/docker-compose.es01.yml stop
 docker-compose -f elasticsearch/docker-compose.es01.yml up -d
 ```
@@ -133,12 +135,12 @@ Repeat these steps on the remaining Eleasticsearch nodes, but only after the Ela
 
 __2. Update Kibana__   
 
-To update Kibana you need to perform the following steps after adjusting the `ELASTIC_VERSION` accordingly.
+It is recommended to run the entire Elastic stack with the same version, so Kibana should/must be updated as well. To update Kibana you need to perform the following steps after adjusting the `ELASTIC_VERSION` accordingly.
 
 ```
-wget --no-check-certificate https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v2.0.2/axway-apim-elk-v2.0.2.tar.gz -O - | tar -xvz
-cd axway-apim-elk-v2.0.2
-cp ~/axway-apim-elk-v2.0.0/.env .
+wget --no-check-certificate https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v3.4.0/axway-apim-elk-v3.4.0.tar.gz -O - | tar -xvz
+cd axway-apim-elk-v3.4.0
+cp ~/axway-apim-elk-v3.2.0/.env .
 cp ~/axway-apim-elk-v2.0.0/config/all-my-custom-certificates ./config
 docker-compose -f kibana/docker-compose.kibana.yml stop
 docker-compose -f kibana/docker-compose.kibana.yml up -d
@@ -146,22 +148,23 @@ docker-compose -f kibana/docker-compose.kibana.yml up -d
 
 __3. Update Logstash__   
 
-Same procedure as for Kibana but repeat this on all Logstash nodes.
+It is recommended to run the entire Elastic stack with the same version, so Logstash should/must be updated as well. Same procedure as for Kibana but repeat this on all Logstash nodes.
 ```
-wget --no-check-certificate https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v2.0.2/axway-apim-elk-v2.0.2.tar.gz -O - | tar -xvz
-cd axway-apim-elk-v2.0.2
-cp ~/axway-apim-elk-v2.0.0/.env .
+wget --no-check-certificate https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v3.4.0/axway-apim-elk-v3.4.0.tar.gz -O - | tar -xvz
+cd axway-apim-elk-v3.4.0
+cp ~/axway-apim-elk-v3.2.0/.env .
+cp ~/axway-apim-elk-v2.0.0/config/all-my-custom-certificates ./config
 docker-compose stop
 docker-compose up -d
 ```
 
 __4. Update Filebeat__   
 
-Same procedure as for Kibana and Logstash but repeat this on all Filebeat nodes.
+It is recommended to run the entire Elastic stack with the same version, so Filebeat should/must be updated as well. Same procedure as for Kibana and Logstash but repeat this on all Filebeat nodes.
 ```
-wget --no-check-certificate https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v2.0.2/axway-apim-elk-v2.0.2.tar.gz -O - | tar -xvz
-cd axway-apim-elk-v2.0.2
-cp ~/axway-apim-elk-v2.0.0/.env .
+wget --no-check-certificate https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v3.4.0/axway-apim-elk-v3.4.0.tar.gz -O - | tar -xvz
+cd axway-apim-elk-v3.4.0
+cp ~/axway-apim-elk-v3.2.0/.env .
 cp ~/axway-apim-elk-v2.0.0/config/all-my-custom-certificates ./config
 docker-compose -f filebeat/docker-compose.filebeat.yml stop
 docker-compose -f filebeat/docker-compose.filebeat.yml up -d
@@ -170,15 +173,15 @@ docker-compose -f filebeat/docker-compose.filebeat.yml up -d
 ### Elastic Config
 
 Whether the Elastic configuration has changed is for information only and does not require any steps during the update.  
-The required Elasticsearch configuration is built into the API Builder image and Elasticsearch will be updated accordingly if necessary.  
+The required Elasticsearch configuration is built into the API Builder application and Elasticsearch will be updated accordingly if necessary.  
 This includes the following components:  
 
 - Index configuration
 - Index templates
 - Index lifecycle policies
-- Rollup jobs  
+- Transform jobs  
 
-You can find the current configuration here: [elasticsearch_config](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/tree/develop/apibuilder4elastic/elasticsearch_config)
+FYI. You can find the current configuration here: [elasticsearch_config](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/tree/develop/apibuilder4elastic/elasticsearch_config)
 
 ## Update FAQ
 
