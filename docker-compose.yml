@@ -57,7 +57,7 @@ services:
 
   # This is the API-Builder project exposing the API-Gateway Manager REST-API
   apibuilder4elastic:
-    image: cwiechmann/apibuilder4elastic:v3.3.2
+    image: cwiechmann/apibuilder4elastic:v3.4.0
     restart: on-failure:10
     container_name: apibuilder4elastic
     environment:
