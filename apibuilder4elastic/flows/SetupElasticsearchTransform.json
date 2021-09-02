@@ -1,0 +1,311 @@
+{
+	"schemaVersion": "4",
+	"info": {
+		"name": "Setup Transforms",
+		"description": "Maintains Elasticsearch Transformations"
+	},
+	"parameter": {
+		"properties": {
+			"request": {
+				"description": "The request"
+			},
+			"config": {
+				"type": "object",
+				"description": "The service's configuration"
+			},
+			"env": {
+				"type": "object",
+				"description": "The host OS environment"
+			},
+			"indexName": {
+				"type": "string",
+				"description": "The name of the index used as a prefix to name required ES config assets."
+			},
+			"params": {
+				"type": "object",
+				"description": "The parameters from the endpoint."
+			}
+		},
+		"additionalProperties": false
+	},
+	"start": "condition.1",
+	"nodes": {
+		"condition.1": {
+			"type": "nodehandler://axway-flow/condition",
+			"name": "Is transform setup disabled?",
+			"method": "equals",
+			"parameters": [
+				{
+					"name": "source",
+					"type": "jsonpath",
+					"value": "$.env.DISABLE_SETUP_FLOWS",
+					"metaName": "Source",
+					"metaDescription": "The input to test."
+				},
+				{
+					"name": "value",
+					"type": "string",
+					"value": "\"true\"",
+					"metaName": "Value",
+					"metaDescription": "The value to test input against."
+				}
+			],
+			"outputs": {
+				"true": {
+					"routes": [],
+					"context": "$.equals",
+					"metaName": "True"
+				},
+				"false": {
+					"routes": [
+						"file.1"
+					],
+					"context": "$.equals",
+					"metaName": "False"
+				}
+			},
+			"metaMethod": "Equals"
+		},
+		"file.1": {
+			"type": "nodehandler://@axway-api-builder-ext/api-builder-plugin-fn-file/file",
+			"name": "Read Index-Config",
+			"method": "readFile",
+			"parameters": [
+				{
+					"name": "filename",
+					"type": "jsonpath",
+					"value": "$.config.indexConfigFile",
+					"metaName": "Source filename",
+					"metaDescription": "The filename to read."
+				},
+				{
+					"name": "notFoundFails",
+					"type": "boolean",
+					"value": "true",
+					"metaName": "Not found fails",
+					"metaDescription": "Set this flag, if you would like to have this flow node failed (Error) if the file cannot be found."
+				},
+				{
+					"name": "parseJson",
+					"type": "boolean",
+					"value": "true",
+					"metaName": "Parse JSON",
+					"metaDescription": "Turn this option if you are reading s JSON-File and would like to parse it into a JS-Object."
+				}
+			],
+			"outputs": {
+				"next": {
+					"routes": [
+						"elk-solution-utils.1"
+					],
+					"context": "$.configFile",
+					"metaName": "Next"
+				},
+				"notFound": {
+					"routes": [],
+					"context": "$.result",
+					"metaName": "Not found"
+				},
+				"error": {
+					"routes": [
+						"power.1"
+					],
+					"context": "$.error",
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Read file"
+		},
+		"elk-solution-utils.1": {
+			"type": "nodehandler://api-builder-plugin-elk-solution-utils/elk-solution-utils",
+			"name": "Get index config",
+			"method": "getIndexConfig",
+			"parameters": [
+				{
+					"name": "data",
+					"type": "jsonpath",
+					"value": "$",
+					"metaName": "Data",
+					"metaDescription": "Object that contains either the property indexName or params.indexName."
+				},
+				{
+					"name": "indexConfigs",
+					"type": "jsonpath",
+					"value": "$.configFile",
+					"metaName": "Index configs",
+					"metaDescription": "Object that contains all index configurations"
+				}
+			],
+			"outputs": {
+				"next": {
+					"routes": [
+						"file.2"
+					],
+					"context": "$.indexConfig",
+					"metaName": "Next"
+				},
+				"error": {
+					"routes": [
+						"power.1"
+					],
+					"context": "$.error",
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Get index config"
+		},
+		"file.2": {
+			"type": "nodehandler://@axway-api-builder-ext/api-builder-plugin-fn-file/file",
+			"name": "Read transform config",
+			"method": "readFile",
+			"parameters": [
+				{
+					"name": "notFoundFails",
+					"type": "boolean",
+					"value": "false",
+					"metaName": "Not found fails",
+					"metaDescription": "Set this flag, if you would like to have this flow node failed (Error) if the file cannot be found."
+				},
+				{
+					"name": "parseJson",
+					"type": "boolean",
+					"value": "true",
+					"metaName": "Parse JSON",
+					"metaDescription": "Turn this option if you are reading s JSON-File and would like to parse it into a JS-Object."
+				},
+				{
+					"name": "filename",
+					"type": "jsonpath",
+					"value": "$.indexConfig.transform.config",
+					"metaName": "Source filename",
+					"metaDescription": "The filename to read."
+				}
+			],
+			"outputs": {
+				"next": {
+					"routes": [
+						"elasticsearch.1"
+					],
+					"context": "$.transformBody",
+					"metaName": "Next"
+				},
+				"notFound": {
+					"routes": [],
+					"context": "$.result",
+					"metaName": "Not found"
+				},
+				"error": {
+					"routes": [
+						"power.1"
+					],
+					"context": "$.error",
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Read file"
+		},
+		"elasticsearch.1": {
+			"type": "nodehandler://@axway-api-builder-ext/api-builder-plugin-fn-elasticsearch/elasticsearch",
+			"name": "Create transform",
+			"method": "putTransform",
+			"parameters": [
+				{
+					"name": "body",
+					"type": "jsonpath",
+					"value": "$.transformBody",
+					"metaName": "Transform configuration",
+					"metaDescription": "The transform job configuration"
+				},
+				{
+					"name": "deletePreviousTransform",
+					"type": "boolean",
+					"value": "false",
+					"metaName": "Delete previous transform",
+					"metaDescription": "If an existing transform with the same primary ID has been found which should be replaced, this switch decides whether the old transform should be deleted. If the previous transform is running, it will be stopped automatically."
+				},
+				{
+					"name": "idSuffix",
+					"type": "jsonpath",
+					"value": "$.indexConfig.transform.idSuffix",
+					"metaName": "Transform-ID Suffix",
+					"metaDescription": "Mandatory if an existing transform is to be replaced. The Transform-ID suffix is used to generate the final Transform-ID, which is used to create the transform. Existing transforms with the primary transforms ID are searched for, stopped/deleted and a new transform with transform ID + suffix is created."
+				},
+				{
+					"name": "startTransform",
+					"type": "boolean",
+					"value": "true",
+					"metaName": "Start transform",
+					"metaDescription": "This toggle controls if the created transform job should be started automatically after creation."
+				},
+				{
+					"name": "transformId",
+					"type": "jsonpath",
+					"value": "$.indexConfig.transform.id",
+					"metaName": "Transform-ID",
+					"metaDescription": "The id of the new transform."
+				}
+			],
+			"outputs": {
+				"next": {
+					"routes": [],
+					"context": "$.transform",
+					"metaName": "Next"
+				},
+				"noUpdate": {
+					"routes": [],
+					"context": "$.message",
+					"metaName": "No update"
+				},
+				"error": {
+					"routes": [
+						"power.1"
+					],
+					"context": "$.error",
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Create transform"
+		},
+		"power.1": {
+			"type": "nodehandler://@axway-api-builder-ext/api-builder-plugin-fn-power/power",
+			"name": "Shutdown",
+			"method": "shutdown",
+			"parameters": [
+				{
+					"name": "errorCode",
+					"type": "number",
+					"value": "55",
+					"metaName": "Error code",
+					"metaDescription": "An integer number used for the process to exit. Defaults to -1."
+				},
+				{
+					"name": "errorMessage",
+					"type": "jsonpath",
+					"value": "$.error",
+					"metaName": "Error message",
+					"metaDescription": "An optional message which is logged when the process is terminated. Helpful to make clear the reason for the shutdown."
+				},
+				{
+					"name": "skipInDevelopment",
+					"type": "boolean",
+					"value": "true",
+					"metaName": "Skip in development",
+					"metaDescription": "If set to true, the API-Builder process will not be stopped, when in development mode. Instead only the errorCode and errorMessage is logged."
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.errorMessage",
+					"routes": [],
+					"metaName": "Next"
+				},
+				"error": {
+					"context": "$.error",
+					"routes": [],
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Shutdown"
+		}
+	}
+}

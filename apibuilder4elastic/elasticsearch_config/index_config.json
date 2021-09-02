@@ -12,6 +12,11 @@
         "ilm" : {
             "config": "elasticsearch_config/traffic-summary/ilm_policy.json",
             "name": "apigw-traffic-summary-ilm"
+        }, 
+        "transform": {
+            "config": "elasticsearch_config/traffic-summary/transform_hourly.json",
+            "id": "apigw-traffic-summary-hourly",
+            "idSuffix": "v1"
         }
     }, 
     "apigw-traffic-details": {

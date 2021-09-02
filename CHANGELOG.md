@@ -4,6 +4,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Fixed
+- Service name filtering is not working as expected [#129](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/129)
+- API Operation filter not working as expected [#131](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/131)
+- V-Host filter is ignored / Index-Template changed to index VHost additionally as text [#130](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/130)
+
+### Changed
+- Updated Elastic-Stack from version 7.12.1 to 7.14.0
+- Updated API-Builder version changed from Quezon to Timbuktu
+- API-Builder now always returns an Unknown API object if an API could not be found [#128](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/128)
+- Field http.status now indexed as a keyword additionally to Integer
+
+### Added
+- Added support for Long-Term API-Analytics based on transformation jobs
+- Added Quartely- and Yearly-API-Request dashboars in addition to the existing Real-Time Dashboard
+- Added support for Transactions [#83](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/83)
+- If Current-User request to ANM fails, API-Builder is now trying it again [#135](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/135)
+- New optional parameter: DROP_TRACE_MESSAGE_LEVELS to skip indexing of certain trace messages [#136](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/136)
+
 ## [3.3.2] 2021-08-30
 ### Fixed
 - Custom-Property mapping created as undefinedCustomProperties.myProp [#133](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/133)
@@ -17,6 +36,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 - API-Builder stops/terminates with an error-message and error-code, if Elasticsearch cannot be configured (e.g. Index-Templates cannot be installed)
+- Events Logstash-Pipeline is now processing Transaction-Events with a customMsgAtts.transactionId into the Traffic-Summary index
 
 
 ## [3.3.0] 2021-07-21

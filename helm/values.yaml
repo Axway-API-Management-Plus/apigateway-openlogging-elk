@@ -206,6 +206,7 @@ logstash:
   # See parameter LS_JAVA_OPTS in env-sample for more details
   logstashJavaOpts: "-Xmx6g -Xms6g"
   fullnameOverride: "axway-elk-apim4elastic"
+  dropTraceMessageLevels: "DEBUG,DATA"
   # Number of replicas for Logstash
   replicas: 2
   # Injects the environment variables from the ConfigMaps and Secrets into the 

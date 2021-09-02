@@ -26,14 +26,14 @@
   "paths": {
     "/setup/index/{indexName}": {
       "get": {
-        "summary": "",
+        "summary": "Setup index",
         "operationId": "run-setup",
         "responses": {
           "200": {
             "description": "OK"
           }
         },
-        "description": "Triggers the setup and update (Index-Template, ILM and Rollup-Job) for the given indexName.",
+        "description": "Triggers the setup and update (Index-Template and ILM) for the given indexName.",
         "parameters": [],
         "tags": [
           "setup"
@@ -49,6 +49,35 @@
           "description": "The name of the index to be configured in ES"
         }
       ]
+    },
+    "/setup/transform/{indexName}": {
+      "parameters": [
+        {
+          "type": "string",
+          "name": "indexName",
+          "in": "path",
+          "required": true,
+          "description": "The name of the index belonging transforms should be configured"
+        }
+      ],
+      "get": {
+        "summary": "Setup Transform",
+        "tags": [
+          "setup"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          }
+        },
+        "operationId": "run-transform-setup",
+        "description": "Triggers the setup and update of the Transform in Elasticsearch, which normally runs every hour.",
+        "x-flow": "SetupElasticsearchTransform"
+      }
     },
     "/index/{logtype}": {
       "parameters": [

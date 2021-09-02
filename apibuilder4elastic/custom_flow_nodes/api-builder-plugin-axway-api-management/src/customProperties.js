@@ -59,13 +59,13 @@ async function mergeCustomProperties(params, options) {
 	function addMapping(customPropertyName, type, actualTemplate, desiredTemplate, customPropertiesSettings) {
 		if(desiredTemplate == undefined) return false;
 
-		if(actualTemplate != undefined && actualTemplate.mappings != undefined && actualTemplate.mappings.properties[`customProperties.${customPropertyName}`] != undefined) {
-			options.logger.info(`Mapping for custom property: ${customPropertyName} already exists. No update required.`);
+		if(actualTemplate != undefined && actualTemplate.mappings != undefined && actualTemplate.mappings.properties[`${customPropertiesSettings.parent}customProperties.${customPropertyName}`] != undefined) {
+			options.logger.info(`Mapping for custom property: ${customPropertyName} with parent: "${customPropertiesSettings.parent}" already exists. No update required.`);
 			// Take over the actual custom properties mapping!
-			desiredTemplate.mappings.properties[`customProperties.${customPropertyName}`] = actualTemplate.mappings.properties[`customProperties.${customPropertyName}`];
+			desiredTemplate.mappings.properties[`${customPropertiesSettings.parent}customProperties.${customPropertyName}`] = actualTemplate.mappings.properties[`${customPropertiesSettings.parent}customProperties.${customPropertyName}`];
 			return false;
 		} else {
-			options.logger.info(`Update required for custom property: ${customPropertyName}.`);
+			options.logger.info(`Update required for custom property: ${customPropertyName} with parent: "${customPropertiesSettings.parent}".`);
 			if(type == "custom") {
 				desiredTemplate.mappings.properties[`${customPropertiesSettings.parent}customProperties.${customPropertyName}`] = { type: "text", norms: false, fields: { "keyword":  { type: "keyword"} } }; 
 			} else {

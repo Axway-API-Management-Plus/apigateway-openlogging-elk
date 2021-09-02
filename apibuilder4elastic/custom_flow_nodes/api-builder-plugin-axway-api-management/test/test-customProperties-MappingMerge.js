@@ -136,5 +136,16 @@ describe('Merge custom properties tests', () => {
 			expect(value.mappings.properties['transactionSummary.customProperties.customProperty3']).to.be.an('Object');
 			expect(value.mappings.properties['transactionSummary.customProperties.customProperty3'].type).to.equal('keyword');
 		});
+
+		it('should result into a noUpdate as customProperties with the the given parent already exists', async () => {
+			const { value, output } = await flowNode.mergeCustomProperties({ 
+				customProperties: JSON.parse(fs.readFileSync('./test/testInput/customPropertiesConfig.json'), null), 
+				desiredIndexTemplate: JSON.parse(fs.readFileSync('./test/testInput/desiredIndexTemplate.json'), null),
+				actualIndexTemplate: JSON.parse(fs.readFileSync('./test/testInput/actualIndexTemplateWithParentCustomProps.json'), null), 
+				customPropertiesSettings: { merge: true, parent: "transactionSummary." }
+			});
+
+			expect(output).to.equal('noUpdate');
+		});
 	});
 });

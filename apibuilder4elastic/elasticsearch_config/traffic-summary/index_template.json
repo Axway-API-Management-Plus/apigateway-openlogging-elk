@@ -1,5 +1,5 @@
 {
-    "version": 8,
+    "version": 9,
     "index_patterns": [
         "apigw-traffic-summary-*"
     ],
@@ -92,7 +92,12 @@
                 "type": "keyword"
             },
             "http.status": {
-                "type": "integer"
+                "type": "integer",
+                "fields": {
+                    "keyword": {
+                        "type": "keyword"
+                    }
+                }
             },
             "http.bytesSent": {
                 "type": "integer"
@@ -116,7 +121,13 @@
                 "type": "keyword"
             },
             "http.vhost": {
-                "type": "keyword"
+                "type": "keyword",
+                "fields": {
+                    "text": {
+                        "type": "text",
+                        "norms": false
+                    }
+                }
             },
             "http.authSubjectId": {
                 "type": "text",

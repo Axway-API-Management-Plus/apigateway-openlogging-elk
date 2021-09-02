@@ -77,7 +77,14 @@ async function lookupCurrentUser(params, options) {
 			throw new Error('The requestHeaders do not contain the required header csrf-token');
 		}
 		logger.trace(`Trying to get current user based on VIDUSR cookie.`);
-		user.loginName = await _getCurrentGWUser(headers = {'Cookie': requestHeaders.cookie});
+		try {
+			user.loginName = await _getCurrentGWUser(headers = {'Cookie': requestHeaders.cookie});
+		} catch (err) { 
+			// Might happen if the request has been sent to the wrong ANM by a Load-Balancer in between. (Session Stickyness not working as expected)
+			// Only mitigating the problem, but not really fully solving the issue - Load-Balanced request must be investigated
+			logger.warn(`Unexpected error while trying to get current user from the ANM. Using a Load-Balancer which is not sticky?! Try again at least once.`);
+			user.loginName = await _getCurrentGWUser(headers = {'Cookie': requestHeaders.cookie});
+		}
 		logger.trace(`Current user is: ${user.loginName}`);
 		permissions = await _getCurrentGWPermissions(headers = {'Cookie': requestHeaders.cookie, 'csrf-token': requestHeaders['csrf-token']}, user.loginName);
 	}
@@ -182,7 +189,8 @@ async function lookupAPIDetails(params, options) {
 	if(proxies == undefined) {
 		// To lookup the API in API-Manager the API-Name is required
 		if (!apiName) {
-			throw new Error(`API not configured locally, based on path: ${apiPath}. The API cannot be queried at the API Manager as no API name is given. Please configure this API path locally.`);
+			logger.info(`API not configured locally, based on path: ${apiPath}. The API cannot be queried at the API Manager as no API name is given. Please configure this API path locally.`);
+			return { name: 'Unknown API', method: 'Unknown Method'};
 		}
 		logger.debug(`API not configured locally, trying to get details from API-Manager.`);
 		proxies = await _getAPIProxy(apiName, groupId, params.region);
@@ -190,7 +198,8 @@ async function lookupAPIDetails(params, options) {
 		logger.info(`API-Details for API with path: '${apiPath}' looked up locally.`);
 	}
 	if(!proxies || proxies.length == 0) {
-		throw new Error(`No APIs found with name: '${apiName}'`);
+		logger.warn(`No APIs found with name: '${apiName}'`);
+		return { name: 'Unknown API', method: 'Unknown Method'};
 	}
 	var apiProxy = undefined;
 	for (i = 0; i < proxies.length; i++) {
@@ -201,7 +210,8 @@ async function lookupAPIDetails(params, options) {
 		}
 	}
 	if(!apiProxy) {
-		throw new Error(`No APIs found with name: '${apiName}' and apiPath: '${apiPath}'`);
+		logger.warn(`No APIs found with name: '${apiName}' and apiPath: '${apiPath}'`);
+		return { name: 'Unknown API', method: 'Unknown Method'};
 	}
 	// Skip  the lookups if the API is locally configured and just take it as it is
 	if(!apiProxy.locallyConfigured) {

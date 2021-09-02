@@ -53,9 +53,9 @@ On the other hand, the API builder Docker image, as a central component of the s
 | 3.1.0 | [X](#api-builderlogstashmemcached) | -                                  | -                                  | -             | -               | -               | -               |-                   | 7.12.1  |            |
 | 3.2.0 | [X](#api-builderlogstashmemcached) | -                                  | -                                  | -             | -               | -               | -               |[X](#elastic-config)| 7.12.1  |            |
 | 3.3.0 | [X](#api-builderlogstashmemcached) | [X](#api-builderlogstashmemcached) | -                                  | -             | -               | -               | [X](#parameters)|-                   | 7.12.1  |            |
-| 3.3.1 | [X](#api-builderlogstashmemcached) | [X](#api-builderlogstashmemcached) | -                                  | -             | -               | -               | [X](#parameters)|-                   | 7.12.1  |            |
+| 3.3.1 | [X](#api-builderlogstashmemcached) | -                                  | -                                  | -             | -               | -               | [X](#parameters)|-                   | 7.12.1  |            |
 | 3.3.2 | [X](#api-builderlogstashmemcached) | -                                  | -                                  | -             | -               | -               | -               |-                   | 7.12.1  |            |
-| 4.0.0 | [X](#api-builderlogstashmemcached) | -                                  | -                                  | -             | -               | -               | -               |-                   | 7.13.3  | Unreleased |
+| 3.4.0 | [X](#api-builderlogstashmemcached) | [X](#api-builderlogstashmemcached) | -                                  | -             | -               | [X](#dashboards)| [X](#parameters)|[X](#elastic-config)| 7.14.0  | Unreleased |
 
 ### Update from Version 1.0.0
 
@@ -65,7 +65,7 @@ If you are upgrading from Release 1.0.0 and encounter problems, please open an i
 
 ### Filebeat
 
-If Filebeat changes with a version, you must update the corresponding configuration on all your API Gateway instances. It is recommended to update Filebeat as the first component, because the Filebeat configuration version is checked by the API builder process. If it does not match, Logstash will exit with an error message.
+If Filebeat changes with a version, you must update the corresponding configuration on all your API Gateway instances. It is recommended to update Filebeat as the first component, because the Filebeat configuration version is checked by the API-Builder application. If it does not match, Logstash will exit with an error message.
 Even if you run Filebeat as a native service, you have to copy the configuration (`filebeat/filebeat.yml`) from the release into your configuration.
 
 The following steps illustrates an update to version 3.2.0 using the docker-compose approach:  

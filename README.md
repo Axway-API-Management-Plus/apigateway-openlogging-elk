@@ -43,6 +43,7 @@ This shows a sample dashboard created in Kibana based on the indexed documents:
 - [Configure Axway API-Management](#configure-axway-api-management)
   - [Setup Admin-Node-Manager](#setup-admin-node-manager)
   - [Traffic-Monitor for API-Manager Users](#traffic-monitor-for-api-manager-users)
+- [Long Term Analytics](#long-term-analytics)
 - [Advanced and production Setup](#advanced-and-production-setup)
   - [Architecture examples](#architecture-examples)
   - [Traffic-Payload](#traffic-payload)
@@ -128,7 +129,7 @@ Version __7.7-20200130__ is required due to some Dateformat changes in the Open-
 ### Elastic stack
 
 The solution is based on the Elastic-Stack (Elasticsearch, Logstash, Beats and Kibana). It can run completely in docker containers, which for example are started on the basis of docker-compose.yaml or run in a Docker Orchestration Framework.  
-It is also possible to use existing components such as an Elasticsearch cluster or a Kibana instance. With that you have the flexiblity to used for instance an Elasticsearch service at AWS or Azure or use Filebeat manually installed on the API-Gateway machines. The solution has been tested with Elasticsearch 7.x version.
+It is also possible to use existing components such as an Elasticsearch cluster or a Kibana instance. With that you have the flexiblity to used for instance an Elasticsearch service at AWS or Azure or use Filebeat manually installed on the API-Gateway machines. The solution has been tested with Elasticsearch >7.10.x version.
 
 ## Getting started
 
@@ -136,7 +137,7 @@ It is also possible to use existing components such as an Elasticsearch cluster 
 
 The basic setup explains the individual components, how they can be deployed and play together. After completing the basic setup you will have a single node Elasticsearch cluster including a Kibana instance running. This cluster receives data from 1 to N API-Gateways via Filebeat, Logstash, API-Builder and is accessible via the Traffic Monitor. You can also use the sample Kibana Dashboard or create your own visualizations.  
 You can extend this setup, then expand it to a production cluster.
-To test this solution, it is possible to deploy all components on a single machine, which should then have at least 16 GB RAM available. _(For instance like the Axway internal API-Management reference environment.)_
+To test this solution, it is possible to deploy all components, incl. API-Management on a single machine, which should then have at least 18 GB RAM available. _(For instance like the Axway internal API-Management reference environment.)_
 
 ### Preparations
 
@@ -194,7 +195,7 @@ curl -k GET https://my-elasticsearch-host.com:9200
   "cluster_name" : "axway-apim-elasticsearch",
   "cluster_uuid" : "nCFt9WhpQr6JSOVY_h48gg",
   "version" : {
-    "number" : "7.9.2",
+    "number" : "7.14.0",
     "build_flavor" : "default",
     "build_type" : "docker",
     "build_hash" : "d34da0ea4a966c4e49417f2da2f244e3e97b4e6e",
@@ -251,7 +252,7 @@ Check that the docker containers for Logstash, API Builder and Memached are runn
 ```
 [ec2-user@ip-172-31-61-59 axway-apim-elk-v1.0.0]$ docker ps
 CONTAINER ID        IMAGE                                       COMMAND                  CREATED             STATUS                 PORTS                              NAMES
-d1fcd2eeab4e        docker.elastic.co/logstash/logstash:7.9.2   "/usr/share/logstash…"   4 hours ago         Up 4 hours             0.0.0.0:5044->5044/tcp, 9600/tcp   logstash
+d1fcd2eeab4e        docker.elastic.co/logstash/logstash:7.12.2  "/usr/share/logstash…"   4 hours ago         Up 4 hours             0.0.0.0:5044->5044/tcp, 9600/tcp   logstash
 4ce446cafda1        cwiechmann/apibuilder4elastic:v1.0.0        "docker-entrypoint.s…"   4 hours ago         Up 4 hours (healthy)   0.0.0.0:8443->8443/tcp             apibuilder4elastic
 d672f2983c86        memcached:1.6.6-alpine                      "docker-entrypoint.s…"   4 hours ago         Up 4 hours             11211/tcp                          memcached
 ```
@@ -380,6 +381,18 @@ Please note:
 - Only 1 authorization method can be enabled
 - It is also possible to disable user authorization completely. To do this, set the parameter: `enableUserAuthorization: false`. 
 - If you have further use-cases please create an issue describing the use-case/requirements.  
+
+<p align="right"><a href="#table-of-content">Top</a></p>
+
+## Long Term Analytics
+
+Since version 3.4.0, the solution supports long-term analytics capabilities out of the box in addition to relatively short-term operations and the corresponding Real-Time dashboard.  
+For this purpose, the highly granular raw data received from the API-Gateways is transformed into entity-centric indices that are pre-aggregated and require only a fraction of the necessary disk space. Of course, this reduces the ability to analyze data down to the minute.  
+To transform the raw data, the solution delivers and automatically installs a ready-made transformation job and provides corresponding dashboards.  
+
+![Transformation into Hourly-Buckets](imgs/hourly-transformation.png)  
+
+It is important to know that the transformation works with a delay of 3 hours. This means that real-time data will appear in the Quartely/Yearly dashboards only after this time. This delay allows you to suspend/interrupt ingesting data for a max. of 3 hours without losing data for the transform and thus long term analytics.  
 
 <p align="right"><a href="#table-of-content">Top</a></p>
 
@@ -790,21 +803,24 @@ The configuration is defined here per data type (e.g. Summary, Details, Audit, .
 Please note:  
 :point_right: It's optional to use different hardware per stage  
 :point_right: Do not change the ILM/Modify the ILM-Policies manually, as they are configured automatically. In a later version, the solution will provide options to customize the time range as needed without breaking updates.  
-:point_right: To support long term analytics (e.g. 5 years) it's planned to use Elasticsearch [Rollup-Jobs](https://www.elastic.co/guide/en/kibana/current/data-rollups.html) in a future release of this solution  
 
 <p align="right"><a href="#table-of-content">Top</a></p>
 
-## Size your infrastructure
+## Requirements
+
+The minimum Elastic Stack version is 7.10.x. This applies to Elasticsearch, Kibana, Logstash and Filebeat.
+
+### Size your infrastructure
 
 The solution is designed to process and store millions of transactions per day and make them quickly available for traffic monitoring and analytics. 
 This advantage of being able to access millions of transactions is not free of charge with Elasticsearch, but is available in the size of the disc space provided.
 The solution has been extensively tested, especially for high-volume requirements. It processed 1010 transactions per second, up to 55 million transactions per day on the following infrastructure.
 
-### Sizing recommendations
+#### Sizing recommendations
 
 There are two important aspects for sizing the platform. The [transactions per second](#transactions-per-second), which are to be processed in real time, and the [retention period](#retention-period), which is reflected in the required disk space.
 
-#### Transactions per Second
+##### Transactions per Second
 
 The number of concurrent transactions per second (TPS) that the entire platform must handle. The platform must therefore be scaled so that the events that occur on the basis of the transactions can be processed (Ingested) in real time. It is important to consider the permanent load. As a general rule, more capacity should be planned in order to also quickly enable catch-up operation after a downtime or maintenance.  
 
@@ -822,7 +838,7 @@ Please note:
 - Logstash, API-Builder, Filebeat (for monitoring only) and Kibana are load balanced across all available Elasticsearch nodes. An external Load-Balancer is not required as this is handled internally by each of the Elasticsearch clients.
 - do not size the Elasticsearch Cluster-Node too large. The servers should not have more than 32GB memory, because after that the memory management kills the advantage again. It is better to add another server. See the [Test-Infrastructure](#test-infrastructure) for reference.
 
-#### Retention period
+##### Retention period
 
 The second important aspect for sizing is the retention period, which defines how long data should be available. Accordingly, disk space must be made available.  
 In particular the Traffic-Summary and Traffic-Details indicies become huge and therefore play a particularly important role here. The solution is delivered with default values which you can read [here](#lifecycle-management). Based on the these default values which result in ap. __14 days__ the following disk space is required.
@@ -848,7 +864,7 @@ If the required storage space is unexpectedly higher, then you can do the follow
   - if the cluster state is green, you can stop a node, allocate more disk space, and then start it again
   - the available disk space is used automatically by allocating shards  
 
-### Test infrastructure
+#### Test infrastructure
 
 The following test infrastructure was used to determine the [maximum capacity or throughput](#transactions-per-second). The information is presented here so that you can derive your own sizing from it.
 
@@ -860,7 +876,7 @@ The following test infrastructure was used to determine the [maximum capacity or
 
 There is no specific reason that EC2 t2.xlarge instances were used for the test setup. The deciding factor was simply the number of CPU cores and 16 GB RAM.  
 
-#### Memory usage
+##### Memory usage
 
 To give you a good feel for the memory usage of the individual components, the following table shows the memory usage at around 330 transactions per second.
 
@@ -883,16 +899,16 @@ With each release the following artifacts may change:
 - All Docker-Compose files
 - Elasticstack Version
 - Logstash Pipelines
-- Elasticsearch Index Templates
+- Elasticsearch Configuration (e.g. Index Templates, ILM-Policies, Transformations)
 - Filebeat Configuration
 - API Builder Docker Container Version
-- Kibana Dashboards, Config (e.g. ILM-Policies, Roll-Up Jobs)
+- Kibana Dashboards
 - Scripts, etc. 
 
-All components of this solution play together and only work if they are from the same release. The solution will check if for example the index templates have the required version. 
-With each update there will be a changelog, release notes and instructions for the update. For each component it will be explained whether there have been changes and how to apply them if necessary.  
+All components of this solution play together and only work if they are from the same release. The solution checks if for example the index templates have the required version. 
+With each update there will be a changelog, release notes and instructions for the update. For each component it is explained whether there have been changes and how to apply them if necessary.  
 
-:exclamation: It is strongly discouraged to make changes in any files of the project, except the `.env` file. These will be overwritten with the next release. This is the only way to easily update from one version to the next.
+:exclamation: It is strongly discouraged to make changes in any files of the project, except the `.env` file and the config folder. These will be overwritten with the next release. This is the only way to easily update from one version to the next.
 If you encounter a problem or need a feature, please open an issue that can be integrated directly into the solution.  
 Of course you are welcome to create your own Kibana dashboards or clone and customize existing ones.  
 However, if you need to change files, it is recommended to make this change automatically and repeatable (e.g. https://www.ansible.com). 
@@ -916,6 +932,7 @@ However, if you need to change files, it is recommended to make this change auto
 - [Check Caching](#check-caching)
 - [Certificate error Admin-Node Manager to API-Builder](#certificate-error-admin-node-manager-to-api-builder)
 - [Filebeat - Failed to publish events](#filebeat-failed-to-publish-events)
+- [Kibana - Missing Long-Term-Statistics](#kibana-missing-long-term-statistics)
 
 ### Check processes/containers are running
 From within the folder where the docker-compose.yml file is located (git project folder) execute: 
@@ -1012,7 +1029,7 @@ Or the following:
 ```
 
 ### No results from Elasticsearch
-If you don't get any results from Elasticsearch for valid queries an [index template](https://www.elastic.co/guide/en/elasticsearch/reference/7.10/index-templates.html) might not be applied correctly during index creation. You need to know, that Elasticsearch does not execute queries on the original document, rather on the indexed fields. How these were indexed is defined by an index mapping.  
+If you don't get any results from Elasticsearch for valid queries an [index template](https://www.elastic.co/guide/en/elasticsearch/reference/7.14/index-templates.html) might not be applied correctly during index creation. You need to know, that Elasticsearch does not execute queries on the original document, rather on the indexed fields. How these were indexed is defined by an index mapping.  
 For this purpose, the solution delivers an index template for each index, which is used when the index is created.  
 You can find the index mapping in the API-Builder container: `elasticsearch_config/<index-name>/index_template.json` or you can review them [here](apibuilder4elastic/elasticsearch_config).  
 To check if the index mapping was applied correctly to an index execute the following request. For example the Traffic-Summary index:  
@@ -1129,6 +1146,24 @@ The following options:
 
 <p align="right"><a href="#table-of-content">Top</a></p>
 
+### Kibana - Missing Long-Term-Statistics
+
+If the Quarterly and Yearly API request processing dashboards do not display any data, check if the transform job: `apigw-traffic-summary-hourly-v<n>` is running and started. The API-Builder4Elastic application tries to create this job every hour. You can also start this with the following API request in the API-Builder container:
+```
+docker exec apibuilder4elastic wget --no-check-certificate https://localhost:8443/api/elk/v1/api/setup/transform/apigw-traffic-summary
+```
+If the job exists, check if the index: `apigw-hourly-traffic-summary-00000<n>` exists. If not, please stop the transform job and start it again. If necessary check the messages of the transform job. If the index exists but does not contain any documents, please delete it and restart the transform job.  
+Finally you can check if the index pattern: `apigw-hourly-traffic-summary*` exists. If not, please re-import the Kibana dashboard configuration: `Axway-api-overview.ndjson`.  
+
+If the __API-Status history__ and __API-Gateway status history__ in the Quarterly or Yearly-Dashboards are not shown, please do the following.  
+- Stop and Delete the Transform-Job: `apigw-traffic-summary-hourly-v<n>`
+- Delete the hourly index: `apigw-hourly-traffic-summary-00000<n>` 
+- and either wait for max. 60 minutes until API-Builder has re-created the transform or call the REST-API as shown above
+
+The main cause of this problem is the way the `http.status` field is indexed, which was changed in the update to version 3.4.0. If no documents have been received after the upgrade and initial creation of the transformation job, the transformation does not correctly index the `http.status.keyword` field.  
+
+<p align="right"><a href="#table-of-content">Top</a></p>
+
 ## FAQ
 
 ### Do I need an API-Builder subscription?
@@ -1143,7 +1178,16 @@ You can find more information here: https://www.elastic.co/pricing/
 
 ### Is this solution officially supported by Axway?
 
-Currently this solution is not officially supported by Axway. However, it is on the roadmap to officially support the solution in the future. You can find the current roadmap in the Axway Community Portal: https://community.axway.com
+Yes, the solution is supported by Axway. A distinction is made between Community and Axway Supported releases, which are marked accordingly in the release directory. For example, currently version 3.2.0 is Axway supported and accordingly you can create normal Axway support cases.  
+
+#### Axway Supported Release
+
+Aligned with the Axway API-Management release cycle, 1 community release is selected at a time, tested with the Axway API-Management solution, and finally marked as Axway supported. From this point on, this will be the Axway Supported Release and there will be bug fixes for it as needed, but no new features. Therefore, there is always only 1 Axway supported release.  
+However, this does __not__ mean that the Elastic solution will only work with the corresponding Axway API-Management release, but rather that there will be no more bug fixes for other releases. If you find a bug in a release that is no longer supported, you will need to upgrade to the next Axway Supported version to get a bug fix.  
+
+#### Community Releases
+
+All other releases are community releases, which are released independently of the Axway API-Management release cycle. These always represent the latest state of features and bug fixes. For these releases, you receive community support according to the best-effort approach. Report issues, feature requests, etc. as an issue directly on the GitHub project.
 
 ### Do I need to be an Elastic-Stack expert?
 
@@ -1164,7 +1208,7 @@ Another reason are updates of the solution which should certainly be done on a t
 
 ### Can I use my own existing Elasticsearch cluster?
 
-Yes, you can use your own Elasticsearch cluster. As long as it's a 7.x version with X-Pack features enabled it's supported. For instance AWS-Elasticsearch service does not provide X-Pack is therefore not supported.
+Yes, you can use your own Elasticsearch cluster. As long as it's a >7.10.x version with X-Pack features enabled it's supported. For instance AWS-Elasticsearch service does not provide X-Pack is therefore not supported. Additionally >7.10 is required to run the transformation job correctly (See [here](https://github.com/elastic/elasticsearch/pull/59591) for more details about missing buckets).
 
 ### Does the solution support high availability?
 
@@ -1232,7 +1276,7 @@ No, the solution does not support AWS Elasticsearch Service because some importa
 
 ### What should be avg. event latency for Logstash to process?
 
-In a healthy environment, the event latency shown for Logstash event processing should be between 3-5ms. If latency is higher, please check that Memcached has enough resources and Filebeat is not reporting this error: https://www.elastic.co/guide/en/beats/filebeat/current/publishing-ls-fails-connection-reset-by-peer.html. 
+In a healthy environment, the event latency shown for Logstash event processing should be between 3-5ms. If latency is higher, please check that Memcached has enough resources and Filebeat is not reporting this error: https://www.elastic.co/guide/en/beats/filebeat/current/publishing-ls-fails-connection-reset-by-peer.html. See the following examples for reference: https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/tree/develop/imgs/stack-monitoring
 
 ### Filebeat is reporting errors?
 

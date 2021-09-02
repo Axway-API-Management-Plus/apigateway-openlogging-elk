@@ -10,18 +10,18 @@ appVersion: "3.3.2"
 
 dependencies:
   - name: logstash
-    version: "7.12.1"
+    version: "7.14.0"
     repository: https://helm.elastic.co
     condition: logstash.enabled
   - name: filebeat
-    version: "7.12.1"
+    version: "7.14.0"
     repository: https://helm.elastic.co
     condition: filebeat.enabled
   - name: elasticsearch
-    version: "7.12.1"
+    version: "7.14.0"
     repository: https://helm.elastic.co
     condition: elasticsearch.enabled
   - name: kibana
-    version: "7.12.1"
+    version: "7.14.0"
     repository: https://helm.elastic.co
     condition: kibana.enabled

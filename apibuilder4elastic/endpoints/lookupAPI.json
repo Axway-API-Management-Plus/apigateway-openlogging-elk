@@ -18,10 +18,14 @@
       "get": {
         "responses": {
           "200": {
-            "description": "Returned if the API has been found"
+            "description": "Returned if the retrieved API-Details or an API-Details for an unknown API."
           },
-          "404": {
-            "description": "Returned if the API can't be found."
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
           }
         },
         "parameters": [
@@ -35,7 +39,7 @@
             "type": "string",
             "in": "query",
             "name": "apiName",
-            "description": "The name of the API to look up"
+            "description": "The name of the API to look up at the API-Manager"
           },
           {
             "type": "string",
@@ -63,7 +67,7 @@
           }
         ],
         "summary": "Looks up an API based on the API-Path",
-        "description": "This endpoint returns based on parameters such as the API name, API path, and other additional API details. These are either based on the API manager and in a locally configured file. \nThe locally configured file takes precedence over using the API manager to retrieve the details.\nFirst, the specified API path is used to look up the API details locally, and if the API is not found there, then the API name is also needed, since the specified API path (e.g. /v1/my/api/some/data/hello) does not necessarily have to match the API registered in the API manager. Then all APIs with the name are searched for and additionally it is checked that the start of the API path matches the API found and searched for.",
+        "description": "This endpoint returns based on parameters such as the API name, API path some other required additional API details, like configured Security, Policies, etc. These are either based on the API manager and in a locally configured file. \nThe locally configured file takes precedence over using the API manager to retrieve the details.\nFirst, the specified API path is used to look up the API details locally, and if the API is not found there, then the API name is also needed, since the specified API path (e.g. /v1/my/api/some/data/hello) does not necessarily have to match the API registered in the API manager. Then all APIs with the name are searched for and additionally it is checked that the start of the API path matches the API found and searched for.",
         "operationId": "search",
         "x-flow": "lookupAPI-search"
       },

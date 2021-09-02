@@ -100,6 +100,7 @@ jobs:
         npm test
 
   test-traffic-monitor-api:
+    name: Test Traffic-Monitor API
     needs: [test-elk-util-flow-node, apim-util-flow-node, traffic-monitor-util-flow-node, authorization-plugin]
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     env:
@@ -108,7 +109,7 @@ jobs:
     runs-on: ubuntu-latest
     services:
       elasticsearch:
-        image: docker.elastic.co/elasticsearch/elasticsearch:7.13.3
+        image: docker.elastic.co/elasticsearch/elasticsearch:7.14.0
         ports: 
           - 9200:9200
           - 9300:9300
@@ -140,6 +141,18 @@ jobs:
         npm ci
         npm run build --if-present
         npm test
+
+
+  push-latest-apibuilder4elastic:
+    name: Push latest APIBuilder4Elastic
+    needs: [test-traffic-monitor-api]
+    if: "!contains(github.event.head_commit.message, 'skip ci')"
+    env:
+      workingDirectory: 'apibuilder4elastic'
+
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
     - name: Publish Docker image (latest)
       uses: elgohr/Publish-Docker-Github-Action@2.13
       with:

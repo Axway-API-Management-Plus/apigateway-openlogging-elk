@@ -18,19 +18,19 @@
 		"scripts"
 	],
 	"dependencies": {
-		"@axway/api-builder-sdk": "^1.1.10",
-		"@axway/requester": "4.0.5",
+		"@axway/api-builder-sdk": "^1.1.12",
+		"@axway/requester": "4.0.6",
 		"node-cache": "^5.1.2"
 	},
 	"peerDependencies": {
-		"@axway/api-builder-runtime": "^4.5.0"
+		"@axway/api-builder-runtime": "^4.68.0"
 	},
 	"devDependencies": {
-		"@axway/api-builder-test-utils": "^1.1.12",
+		"@axway/api-builder-test-utils": "^1.3.0",
 		"chai": "^4.3.4",
-		"dotenv": "^8.6.0",
-		"mocha": "^8.3.2",
-		"nock": "^13.0.11"
+		"dotenv": "^10.0.0",
+		"mocha": "^9.0.3",
+		"nock": "^13.1.1"
 	},
 	"scripts": {
 		"test": "mocha ./test --recursive -R spec"

@@ -55,14 +55,14 @@ describe('Test API Lookup', () => {
 			expect(output).to.equal('error');
 		});
 
-		it('should error when API-Name is not set', async () => {
+		it('should return Unknown API-Details even if the API-Name is not set', async () => {
 			const { value, output } = await flowNode.lookupAPIDetails({
 				apiPath: '/v1/unkownAPI', apiName: null
 			});
 
-			expect(value).to.be.instanceOf(Error)
-				.and.to.have.property('message', 'API not configured locally, based on path: /v1/unkownAPI. The API cannot be queried at the API Manager as no API name is given. Please configure this API path locally.');
-			expect(output).to.equal('error');
+			expect(value.name).to.equal(`Unknown API`);
+			expect(value.method).to.equal(`Unknown Method`);
+			expect(output).to.equal('next');
 		});
 
 		it('should follow the Error path if the API-Manager host cannot be reached/communicated', async () => {
@@ -75,26 +75,26 @@ describe('Test API Lookup', () => {
 			expect(output).to.equal('error');
 		});
 
-		it('should error with an unknown API', async () => {
-			nock('https://mocked-api-gateway:8175').get('/api/portal/v1.3/proxies?field=name&op=eq&value=Unknown API').reply(200, '[]');
+		it('should return API-Details for an unknown API', async () => {
+			nock('https://mocked-api-gateway:8175').get('/api/portal/v1.3/proxies?field=name&op=eq&value=XXX Unknown API').reply(200, '[]');
 			const { value, output } = await flowNode.lookupAPIDetails({
-				apiName: 'Unknown API', apiPath: '/v1/unkownAPI', region: "n/a" // n/a for region considered as not set in case Logstash is providing it anyway
+				apiName: 'XXX Unknown API', apiPath: '/v1/xxxUnkownAPI', region: "n/a" // n/a for region considered as not set in case Logstash is providing it anyway
 			});
 
-			expect(value).to.be.instanceOf(Error);
-			expect(value.message).to.equal(`No APIs found with name: 'Unknown API'`);
-			expect(output).to.equal('error');
+			expect(value.name).to.equal(`Unknown API`);
+			expect(value.method).to.equal(`Unknown Method`);
+			expect(output).to.equal('next');
 		});
 
-		it('should error if the API-Name is found, but the API-Path doesnt match', async () => {
+		it('should return Unknown API-Details even if the API-Name is found, but the API-Path doesnt match', async () => {
 			nock('https://mocked-api-gateway:8175').get('/api/portal/v1.3/proxies?field=name&op=eq&value=Petstore HTTPS').replyWithFile(200, './test/testReplies/apimanager/apiProxyFound.json');
 			const { value, output } = await flowNode.lookupAPIDetails({
 				apiName: 'Petstore HTTPS', apiPath: '/v1/wrong'
 			});
 
-			expect(value).to.be.instanceOf(Error);
-			expect(value.message).to.have.string(`No APIs found with name: 'Petstore HTTPS' and apiPath: '/v1/wrong'`);
-			expect(output).to.equal('error');
+			expect(value.name).to.equal(`Unknown API`);
+			expect(value.method).to.equal(`Unknown Method`);
+			expect(output).to.equal('next');
 		});
 
 		it('should return the resolved API proxy details (cache is tested as well), Region N/A considered as not set', async () => {
