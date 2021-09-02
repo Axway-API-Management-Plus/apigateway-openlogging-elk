@@ -21,7 +21,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Added Quartely- and Yearly-API-Request dashboars in addition to the existing Real-Time Dashboard
 - Added support for Transactions [#83](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/83)
 - If Current-User request to ANM fails, API-Builder is now trying it again [#135](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/135)
-- New optional parameter: DROP_TRACE_MESSAGE_LEVELS to skip indexing of certain trace messages [#XXX](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/XXX)
+- New optional parameter: DROP_TRACE_MESSAGE_LEVELS to skip indexing of certain trace messages [#136](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/136)
 
 ## [3.3.2] 2021-08-30
 ### Fixed
