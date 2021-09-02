@@ -113,7 +113,7 @@ Sometimes it may be necessary to include newly introduced parameters in your `.e
 
 ### Elastic-Stack version
 
-The solution uses the latest available Elastic version with new releases. However, this does not force you to update to the appropriate Elastic version with each update. So, for example, if version 3.4.0 ships with Elastic version 7.14.0, you can still stay on version 7.12.1. You can find the minimum required Elastic version here.  
+The solution uses the latest available Elastic version with new releases. However, this does not force you to update to the appropriate Elastic version with each update. So, for example, if version 3.4.0 ships with Elastic version 7.14.0, you can still stay on version 7.12.1. You can find the minimum required Elastic version [here](README.md#requirements).  
 
 Please follow these steps to update the Elasticversion:  
 - Open your `.env` file and change the parameter: `ELASTIC_VERSION` to the necessary version as specified in the release or the version you would like to use
