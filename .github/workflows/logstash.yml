@@ -57,7 +57,7 @@ jobs:
       env:
         API_BUILDER_URL: 'http://localhost:8080'
         MEMCACHED: 'localhost:11211'
-        DROP_TRACE_MESSAGE_LEVELS: DEBUG
+        DROP_TRACE_MESSAGE_LEVELS: 'DEBUG'
         # This is not relevant as we test with HTTP
         # But it's required by Logstash to be a valid certificate
         API_BUILDER_SSL_CERT: "./config/certificates/apibuilder4elastic.crt"
