@@ -1178,7 +1178,16 @@ You can find more information here: https://www.elastic.co/pricing/
 
 ### Is this solution officially supported by Axway?
 
-Currently this solution is not officially supported by Axway. However, it is on the roadmap to officially support the solution in the future. You can find the current roadmap in the Axway Community Portal: https://community.axway.com
+Yes, the solution is supported by Axway. A distinction is made between Community and Axway Supported releases, which are marked accordingly in the release directory. For example, currently version 3.2.0 is Axway supported and accordingly you can create normal Axway support cases.  
+
+#### Axway Supported Release
+
+Aligned with the Axway API management release cycle, 1 community release is selected at a time, tested with the Axway API management solution, and finally marked as Axway supported. From this point on, this will be the Axway Supported Release and there will be bug fixes for it as needed, but no new features.  
+However, this does __not__ mean that the Elastic solution will only work with the corresponding Axway API-Management release, but rather that there will be no more bug fixes for other releases. If you find a bug in a release that is no longer supported, you will need to upgrade to the next Axway Supported version to get a bug fix.  
+
+#### Community Releases
+
+All other releases are community releases, which are released independently of the Axway API Management release cycle. These always represent the latest state of features and bug fixes. For these releases, you receive community support according to the best-effort approach. Report issues, feature requests, etc. as an issue directly on the GitHub project.
 
 ### Do I need to be an Elastic-Stack expert?
 
