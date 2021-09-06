@@ -1302,7 +1302,7 @@ Yes, the solution can be used when the API-Mnagement platform is deployed in a D
 ### Can is disable the OBSDB-Traffic-Monitor?
 
 No. The monitoring settings can be found in Policy Studio Server Settings --> Monitoring. Please make sure that you have enabled the "Real Time Monitoring" and especially the "Traffic Monitor".  
-For your information, if you do not see a policy execution path in the traffic monitor, please make sure that the traffic monitor is enabled.
+For your information, if you do not see a Policy Execution Path in the Traffic Monitor, please make sure that the Traffic Monitor is enabled.
 
 ## Known issues
 N/A
