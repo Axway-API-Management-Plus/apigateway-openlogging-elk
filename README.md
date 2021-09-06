@@ -1291,7 +1291,7 @@ In a healthy environment, the event latency shown for Logstash event processing 
 
 When Filebeat is reporting errors like: `Harvester could not be started on new file: /var/log/opentraffic/group-2_instance-1_traffic.log, Err: error setting up harvester: Harvester setup failed. Unexpected file opening error: file info is not identical with opened file. Aborting harvesting and retrying file later again`, it might be, that the registry is corrupt for any reason. When this happens, Filebeat basically stops for a second to send events, which may cause issues to stay real-time when running very high volume. 
 
-### Are all protocols supported?
+### Which protocols are supported?
 
 The following protocols are supported so far: HTTP, JMS and file transfer. This means that whenever you run a query via the API Gateway Traffic Monitor for one of these protocols, the data will come from Elasticsearch, otherwise it will continue to come from the OBSDB.
 
@@ -1305,7 +1305,7 @@ Yes, the solution can be used when the API-Mnagement platform is deployed in a D
 
 ### Can is disable the OBSDB-Traffic-Monitor?
 
-No. The settings can be found in Policy Studio Server Settings --> Monitoring --> Traffic Monitor. Please make sure that the "Traffic Monitor" is enabled, otherwise the policy execution path will not appear in the Traffic-Monitor. If you only use the protocols supported by the Elastic solution, you can gladly reduce the size of the OBSDB is you like, since the data comes from the Elasticsearch database.
+No. The settings can be found in Policy Studio Server Settings --> Monitoring --> Traffic Monitor. Please make sure that the "Traffic Monitor" is enabled, otherwise the policy execution path will not appear in the Traffic-Monitor. If you only use the [protocols supported](#which-protocols-are-supported) by the Elastic solution, you can gladly reduce the size of the OBSDB is you like, since the data comes from the Elasticsearch database.
 
 ## Known issues
 N/A
