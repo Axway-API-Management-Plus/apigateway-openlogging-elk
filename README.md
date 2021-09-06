@@ -1303,7 +1303,7 @@ JMS requests are not controlled by the API-Manager, therefore there is no associ
 
 Yes, the solution can be used when the API-Mnagement platform is deployed in a Docker orchestration platform in [EMT mode](https://docs.axway.com/bundle/axway-open-docs/page/docs/apim_installation/apigw_containers/container_intro/index.html). With that, it is for instance possible to see traffic from containers (PODs) that have already being removed again in the traffic monitor. However, there is a limitation here that the server name is not displayed correctly. [Learn more](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/114#issuecomment-864941677) on this limitation.
 
-### Can is disable the OBSDB-Traffic-Monitor?
+### Can I disable the OBSDB-Traffic-Monitor?
 
 No. The settings can be found in Policy Studio Server Settings --> Monitoring --> Traffic Monitor. Please make sure that the "Traffic Monitor" is enabled, otherwise the policy execution path will not appear in the Traffic-Monitor. If you only use the [protocols supported](#which-protocols-are-supported) by the Elastic solution, you can gladly reduce the size of the OBSDB if you like, since the data comes from the Elasticsearch database.
 
