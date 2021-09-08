@@ -108,6 +108,7 @@ async function lookupCurrentUser(params, options) {
 		throw new Error(`User: '${user.loginName}' not found in API-Manager.`);
 	}
 	user.apiManager = users[0];
+	// Get the name of the primary organization
 	var org = await _getOrganization(user.apiManager, null, null, options);
 	user.apiManager.organizationName = org.name;
 	logger.debug(`User: '${user.loginName}' (Role: ${user.apiManager.role}) found in API-Manager. Organization: '${user.apiManager.organizationName}'`);

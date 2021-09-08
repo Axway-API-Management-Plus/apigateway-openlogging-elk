@@ -67,24 +67,37 @@ async function addApiManagerOrganizationFilter(params, options) {
 	if (user.gatewayManager.isUnrestricted) {
 		return elasticQuery;
 	}
-	var filters = elasticQuery.bool.must;
+	// Initialize the filter array, if not given
+	if(!elasticQuery.bool.filter) {
+		elasticQuery.bool.filter = [];
+	}
+	var filters = elasticQuery.bool.filter;
 	var filter;
 	// If the user is an API-Manager Admin, he should see all traffic passed API-Manager (has a ServiceContext)
 	if (user.apiManager.role == "admin") {
 		// The serviceContext may be at different places depending on the queried index
-		filter = {
+		
+		filters.push( {
 			bool: {
 				should: [
+					// Either transactionSummary.serviceContext or serviceContext should be found
 					{ exists: {  "field" : "transactionSummary.serviceContext" } },
 					{ exists: {  "field" : "serviceContext" } }
 				]
 			}
-		};
+		});
 	} else {
-		filter = { term: {} };
-		filter.term[indexProperty] = user.apiManager.organizationName;
+		filter = { terms: {} };
+		filter.terms[indexProperty] = [user.apiManager.organizationName];
+		// If the user has multiple organizations add them all to the terms filter
+		// This might even include Non-Dev Orgs - It doesn't harm as they just never match to any of the documents
+		if(user.apiManager.orgs2Name) {
+			for (const [key, val] of Object.entries(user.apiManager.orgs2Name)) { 
+				filter.terms[indexProperty].push(val);
+			}
+		}
+		filters.push(filter);
 	}
-	filters.push(filter);
 	return elasticQuery;
 }
 

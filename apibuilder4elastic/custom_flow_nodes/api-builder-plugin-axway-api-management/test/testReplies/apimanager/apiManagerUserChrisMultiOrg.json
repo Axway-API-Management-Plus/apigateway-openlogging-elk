@@ -1,0 +1,23 @@
+[
+    {
+        "id": "d66a42d6-b9c7-4efd-b33a-de8b88545861",
+        "organizationId": "2bfaa1c2-49ab-4059-832d-f833ca1c0a74",
+        "name": "Chris",
+        "loginName": "chris",
+        "email": "chris@axway.com",
+        "role": "oadmin",
+        "enabled": true,
+        "createdOn": 1597338071490,
+        "state": "approved",
+        "type": "internal",
+        "dn": "cn=chris,o=API Development,ou=organizations,ou=APIPortal",
+        "orgs2Role": {
+            "ea62bff5-2859-46d7-a29e-1731b2717795": "user",
+            "3fec2611-17a1-46fa-be9f-dd00862ace7c": "oadmin"
+        },
+          "orgs2Name": {
+            "ea62bff5-2859-46d7-a29e-1731b2717795": "Partners",
+            "3fec2611-17a1-46fa-be9f-dd00862ace7c": "API Development"
+        }
+    }
+]
