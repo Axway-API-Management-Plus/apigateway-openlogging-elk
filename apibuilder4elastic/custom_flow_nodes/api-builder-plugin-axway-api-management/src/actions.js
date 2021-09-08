@@ -108,7 +108,8 @@ async function lookupCurrentUser(params, options) {
 		throw new Error(`User: '${user.loginName}' not found in API-Manager.`);
 	}
 	user.apiManager = users[0];
-	// Get the name of the primary organization
+	// Get the name of the primary organization, ignore the Dev-Status if the user has multiple organizations
+	options.mustBeDevelopmentOrg = (user.apiManager.orgs2Name) ? false : true;
 	var org = await _getOrganization(user.apiManager, null, null, options);
 	user.apiManager.organizationName = org.name;
 	logger.debug(`User: '${user.loginName}' (Role: ${user.apiManager.role}) found in API-Manager. Organization: '${user.apiManager.organizationName}'`);
@@ -667,7 +668,7 @@ async function _getApplication(applicationId, groupId, region) {
 }
 
 async function _getOrganization(apiProxy, groupId, region, options) {
-	const { logger } = options;
+	const { logger, mustBeDevelopmentOrg } = options;
 	if(apiProxy.locallyConfigured) {
 		if(apiProxy.organizationName == undefined) apiProxy.organizationName = "N/A";
 		return apiProxy;
@@ -701,7 +702,7 @@ async function _getOrganization(apiProxy, groupId, region, options) {
 	if(!org.enabled) {
 		throw new Error(`Organization: '${org.name}' is disabled.`);
 	}
-	if(!org.development) {
+	if(!org.development && mustBeDevelopmentOrg) {
 		throw new Error(`Organization: '${org.name}' is not a development organization.`);
 	}
 	cache.set(orgCacheKey, org)

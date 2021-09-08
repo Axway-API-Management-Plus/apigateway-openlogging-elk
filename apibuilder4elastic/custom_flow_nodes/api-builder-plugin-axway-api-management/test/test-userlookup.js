@@ -308,5 +308,18 @@ describe('Tests User-Lookup with complete configuration parameters', () => {
 				.and.to.have.property('message', 'Organization: \'API Development\' is not a development organization.');
 			expect(output).to.equal('error');
 		});
+
+		it('should NOT error even if belonging organization has no development flag if the user has multiple organizations-', async () => {
+			nock('https://mocked-api-gateway:8190').get('/api/rbac/currentuser').reply(200, { "result": "chris" });
+			nock('https://mocked-api-gateway:8190').get('/api/rbac/permissions/currentuser').replyWithFile(200, './test/testReplies/gateway/operatorRoleOnlyPermissions.json');
+			nock('https://mocked-api-gateway:8175').get(`/api/portal/v1.3/users?field=loginName&op=eq&value=chris${enabledField}`).replyWithFile(200, './test/testReplies/apimanager/apiManagerUserChrisMultiOrg.json');
+			nock('https://mocked-api-gateway:8175').get(`/api/portal/v1.3/organizations/2bfaa1c2-49ab-4059-832d-f833ca1c0a74`).replyWithFile(200, './test/testReplies/apimanager/noDevelopmentOrg.json');
+
+			const { value, output } = await flowNode.lookupCurrentUser({ 
+				requestHeaders: {"host":"api-gateway:8090","max-forwards":"20", "cookie":"VIDUSR=1597381095-XTawGDtJhBA7Zw==;", "csrf-token": "CF2796B3BD18C1B0B5AB1C8E95B75662E92FBC04BD799DEB97838FC5B9C39348"}
+			});
+
+			expect(output).to.equal('next');
+		});
 	});
 });
