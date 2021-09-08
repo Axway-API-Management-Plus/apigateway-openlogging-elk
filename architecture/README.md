@@ -1,7 +1,7 @@
 # Architecture overview
 
 The solution was designed to scale with growing requirements. Therefore, each component (Logstash, API-Builder4Elastic, etc.) can be scaled in isolation. For example, if more Logstash capacity is needed, but no additional API-Builder4Elastic, Logstash can be scaled individually. This is the main reason why the solution is deployed based on Docker containers.
-Another reason is to make setup and update as easy as possible. In the medium term, this should also be possible based on HELM charts for Kubernetes & OpenShift.
+Another reason is to make setup and update as easy as possible. It is also possible to deploy the solution on Kubernetes & OpenShift using the provided [HELM charts](/helm/README.md).
 
 # Architecture examples
 
@@ -27,7 +27,11 @@ No, the solution is designed to run based on Docker containers. It is also plann
 
 No, a large part of the logic of the solution is in the API Builder application. Implementing this in policies might be possible, but managing & updating the individual customer installations would be very time-consuming and error-prone. So the customer has to reference the appropriate API-Builder image and you know by version exactly what code base the customer is running.
 
-## Can we minimize the number of dependencies? Elastic Search, Logstash, Kibana and FileBeat agents are mandatory. Can API Builder and MemCache be made optional?
+## Can we minimize the number of dependencies? 
+
+Elastic Search, Logstash, Kibana and FileBeat agents are mandatory. 
+
+## Can API Builder be made optional?
 
 No, API-Builder is a substantial part of the solution. It’s exposing the fully tested Traffic-Monitor API, manages Elasticsearch, provides Lookup-APIs. Everything fully automated tested.
 
