@@ -110,9 +110,7 @@ describe('flow-node Authorization', () => {
 				user: user, elasticQuery: elasticQuery
 			});
 			
-			expectedQuery.bool.must.push({
-				term: {  "serviceContext.apiOrg" : "API Development" }
-			});
+			expectedQuery.bool.filter = [ { terms: { "serviceContext.apiOrg": ["API Development"]} } ];
 
 			expect(value).to.be.instanceOf(Object);
 			expect(value).to.deep.equal(expectedQuery);
@@ -127,15 +125,11 @@ describe('flow-node Authorization', () => {
 			const { value, output } = await flowNode.addApiManagerOrganizationFilter({
 				user: adminUser, elasticQuery: elasticQuery
 			});
-			
-			expectedQuery.bool.must.push({
-				bool: {
-					should: [
-						{ exists: {  "field" : "transactionSummary.serviceContext" } },
-						{ exists: {  "field" : "serviceContext" } }
-					]
-				}
-			});
+
+			expectedQuery.bool.filter = [{bool: { should: [
+				{ "exists": { "field": "transactionSummary.serviceContext" }},
+				{ "exists": { "field": "serviceContext" }}
+			] } }];
 
 			expect(value).to.be.instanceOf(Object);
 			expect(value).to.deep.equal(expectedQuery);
@@ -151,10 +145,23 @@ describe('flow-node Authorization', () => {
 				user: user, elasticQuery: elasticQuery, indexProperty: "transactionSummary.serviceContext.apiOrg"
 			});
 			
-			expectedQuery.bool.must.push({
-				term: {  "transactionSummary.serviceContext.apiOrg" : "API Development" }
+			expectedQuery.bool.filter = [{ "terms" : {"transactionSummary.serviceContext.apiOrg" : ["API Development"] } }];
+
+			expect(value).to.be.instanceOf(Object);
+			expect(value).to.deep.equal(expectedQuery);
+			expect(output).to.equal('next');
+		});
+
+		it('should add the filter for Multiple Organizations for a Non-Admin user to the query', async () => { 
+			var user = JSON.parse(fs.readFileSync('./test/mock/noAdminUserObjectMultiOrg.json'), null);
+			var elasticQuery = JSON.parse(fs.readFileSync('./test/mock/givenElasticQuery.json'), null);
+			let expectedQuery = JSON.parse(JSON.stringify(elasticQuery));
+			
+			const { value, output } = await flowNode.addApiManagerOrganizationFilter({
+				user: user, elasticQuery: elasticQuery
 			});
 
+			expectedQuery.bool.filter = [ { "terms": { "serviceContext.apiOrg": [ "API Development", "FastCars", "Partners" ] } } ];
 			expect(value).to.be.instanceOf(Object);
 			expect(value).to.deep.equal(expectedQuery);
 			expect(output).to.equal('next');

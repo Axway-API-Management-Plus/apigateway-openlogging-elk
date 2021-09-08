@@ -1,0 +1,30 @@
+{
+    "gatewayManager": {
+      "isUnrestricted": false
+    },
+    "loginName": "anna",
+    "apiManager": {
+      "id": "0dded6b7-98da-4af0-b4c7-799fbadb7e8d",
+      "organizationId": "f5e79a5a-eadf-48ce-a8c2-c23f7b111f85",
+      "name": "Anna Owen",
+      "description": "Anna is the Application Owner",
+      "loginName": "anna",
+      "email": "anna@demo.axway.com",
+      "role": "oadmin",
+      "image": "/api/portal/v1.3/users/0dded6b7-98da-4af0-b4c7-799fbadb7e8d/image",
+      "enabled": true,
+      "createdOn": 1557135802934,
+      "state": "approved",
+      "type": "external",
+      "dn": "cn=anna,o=API Development,ou=organizations,ou=APIPortal",
+      "organizationName": "API Development",
+      "orgs2Name": {
+        "3fec2611-17a1-46fa-be9f-dd00862ace7c": "FastCars", 
+        "ea62bff5-2859-46d7-a29e-1731b2717795": "Partners"
+      },
+      "orgs2Role": {
+        "3fec2611-17a1-46fa-be9f-dd00862ace7c": "oadmin",
+        "ea62bff5-2859-46d7-a29e-1731b2717795": "user"
+      }
+    }
+}
