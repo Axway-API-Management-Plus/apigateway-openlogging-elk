@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased] 
+### Added
+- Traffic-Monitor Authorization should support Multi-Organization [#141](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/141)
+
 ## [3.4.0] 2021-09-02
 ### Fixed
 - Service name filtering is not working as expected [#129](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/129)
