@@ -378,6 +378,14 @@ ELASTIC_VERSION=7.14.0
 # Defaults to false.
 # DISABLE_SETUP_FLOWS=true
 
+# ----------------------------------------------------------------------------------------------
+# The gzip compression level. Setting this value to 0 disables compression. The compression level 
+# must be in the range of 1 (best speed) to 9 (best compression).
+# Increasing the compression level will reduce the network usage but will increase the CPU usage.
+# Used-By: Filebeat
+# Defaults to 3
+# FILEBEAT_COMPRESSION_LEVEL=6
+
 ################################################################################################
 #                         Metricbeat
 ################################################################################################

@@ -495,6 +495,10 @@ filebeat:
   elasticsearchClusterUUID: ""
   # The number of Filebeat worker threads sending data to Logstash. See parameter: FILEBEAT_WORKER in env-sample
   filebeatWorker: 2
+  # The gzip compression level. Setting this value to 0 disables compression. The compression level must be in the 
+  # range of 1 (best speed) to 9 (best compression). Increasing the compression level will reduce the network usage but will 
+  # increase the CPU usage.
+  compressionLevel: 3
   # Injects the environment variables from the ConfigMaps and Secrets into the 
   # Filebeat container. Specify your own ConfigMaps or Secrets if you don't
   # provide Configuration and Secrets as part of this values.yaml.
@@ -644,6 +648,7 @@ filebeat:
         hosts: ${LOGSTASH_HOSTS}
         worker: ${FILEBEAT_WORKERS:2}
         bulk_max_size: ${FILEBEAT_BULK_MAX_SIZE:3072}
+        compression_level: ${FILEBEAT_COMPRESSION_LEVEL:3}
         loadbalance: true
         ttl: 2m
         # Required to make TTL working

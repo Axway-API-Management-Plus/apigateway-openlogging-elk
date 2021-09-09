@@ -79,6 +79,7 @@ output.logstash:
   hosts: ${LOGSTASH_HOSTS}
   worker: ${FILEBEAT_WORKERS:2}
   bulk_max_size: ${FILEBEAT_BULK_MAX_SIZE:3072}
+  compression_level: ${FILEBEAT_COMPRESSION_LEVEL:3}
   loadbalance: true
   # TTL is only required for a Kubernetes deployment
   # ttl: 2m

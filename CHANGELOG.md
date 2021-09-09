@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased] 
 ### Added
 - Traffic-Monitor Authorization should support Multi-Organization [#141](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/141)
+- New optional parameter: `FILEBEAT_COMPRESSION_LEVEL` for Filebeat to Logstash compression rate [#143](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/143)
 
 ## [3.4.0] 2021-09-02
 ### Fixed
