@@ -4,11 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased] 
+## [3.5.0] 2021-09-13
 ### Added
 - Traffic-Monitor Authorization should support Multi-Organization [#141](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/141)
 - New optional parameter: `FILEBEAT_COMPRESSION_LEVEL` for Filebeat to Logstash compression rate [#143](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/143)
 - A warning is now logged if unexpectly no Circuit-Path for an API-Request is found [#140](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/140)
+
+### Fixed
+- Filter for Authentication Subject ID filter is not working as expected [#138](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/138)
 
 ## [3.4.0] 2021-09-02
 ### Fixed
