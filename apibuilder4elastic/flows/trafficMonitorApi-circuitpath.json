@@ -109,15 +109,13 @@
 					"name": "data",
 					"type": "jsonpath",
 					"value": "$.elasticsearch.result.body.hits",
-					"metaName": "data",
-					"metaDescription": "The value to apply as the `data` argument to the JavaScript code. For objects and arrays, `data` is passed by reference."
+					"metaName": "Data",
+					"metaDescription": "The value to apply as the `data` argument of the JavaScript code. For objects and arrays, `data` is passed by reference."
 				},
 				{
 					"name": "code",
 					"type": "string",
-					"value": "\"let result = [];\\n  //console.log(data);\\n  \\n  if(typeof data.hits[0] != \\\"undefined\\\"){\\n  \\tresult = data.hits[0]._source.circuitPath;\\n  }\\n  \\n  return result;\"",
-					"metaName": "code",
-					"metaDescription": "A JavaScript function body. Supports `await` and returning promises."
+					"value": "\"let result = [];\\n  //console.log(data);\\n  \\n  if(typeof data.hits[0] != \\\"undefined\\\"){\\n    var source = data.hits[0]._source;\\n    if(source.circuitPath) {\\n      return source.circuitPath;\\n    } else {\\n      logger.warn(`Unexpectedly no CircuitPath information found for API request: '${source.correlationId}'`);\\n      return [];\\n    }\\n  }\""
 				}
 			],
 			"outputs": {
@@ -147,15 +145,15 @@
 					"name": "data",
 					"type": "jsonpath",
 					"value": "$",
-					"metaName": "data",
-					"metaDescription": "The value to apply as the `data` argument to the JavaScript code. For objects and arrays, `data` is passed by reference."
+					"metaName": "Data",
+					"metaDescription": "The value to apply as the `data` argument of the JavaScript code. For objects and arrays, `data` is passed by reference."
 				},
 				{
 					"name": "code",
 					"type": "string",
 					"value": "\"// Perhaps there is a region given\\n  let region = data.params.region;\\n  let index = 'apigw-traffic-details';\\n  // Atach the region if given\\n  if(region) {\\n    index = `${index}-${region.toLowerCase()}`;\\n  }\\n  index = `${index}-*`;\\n  \\n  if(data.config.testElasticIndex) {\\n    index = data.config.testElasticIndex;\\n  }\\n  return index;\"",
-					"metaName": "code",
-					"metaDescription": "A JavaScript function body. Supports `await` and returning promises."
+					"metaName": "Code",
+					"metaDescription": "A JavaScript function body. Supports `await` and returning promises. `data` is the value of the Data parameter. `logger` is the API Builder logger. See the docs for more info: https://docs.axway.com/bundle/API_Builder_4x_allOS_en/page/javascript_flow-node.html"
 				}
 			],
 			"outputs": {
@@ -164,42 +162,6 @@
 					"routes": [
 						"traffic-monitor-api-utils.1"
 					],
-					"metaName": "Next"
-				},
-				"error": {
-					"context": "$.error",
-					"routes": [
-						"http.1"
-					],
-					"metaName": "Error"
-				}
-			},
-			"metaMethod": "Execute"
-		},
-		"javascript.3": {
-			"type": "nodehandler://@axway/api-builder-plugin-fn-javascript/javascript",
-			"name": "Build Circuitpath Query",
-			"method": "Execute",
-			"parameters": [
-				{
-					"name": "data",
-					"type": "jsonpath",
-					"value": "$",
-					"metaName": "data",
-					"metaDescription": "The value to apply as the `data` argument to the JavaScript code. For objects and arrays, `data` is passed by reference."
-				},
-				{
-					"name": "code",
-					"type": "string",
-					"value": "\"let elasticQuery = ({\\n        \\\"bool\\\": {\\n            \\\"must\\\": [\\n                {\\n                    \\\"term\\\": {\\n                        \\\"correlationId\\\": data.params.correlationID\\n                    }\\n                },\\n                {\\n                    \\\"term\\\": {\\n                        \\\"processInfo.serviceId\\\": data.params.serviceID\\n                    }\\n                }\\n            ]\\n        }\\n    });\\n    if (data.user.gatewayManager.isUnrestricted || data.authzConfig.enableUserAuthorization == false) {\\n        return elasticQuery;\\n    }\\n\\n    var orgFilter;\\n    if (data.user.apiManager.role == \\\"admin\\\") {\\n        orgFilter = {\\n            exists: {\\n                \\\"field\\\": \\\"transactionSummary.serviceContext\\\"\\n            }\\n        };\\n    } else {\\n        orgFilter = {\\n            term: {\\n                \\\"transactionSummary.serviceContext.apiOrg\\\": data.user.apiManager.organizationName\\n            }\\n        };\\n    }\\n    elasticQuery.bool.must.push(orgFilter);\\n\\n    return elasticQuery;\"",
-					"metaName": "code",
-					"metaDescription": "A JavaScript function body. Supports `await` and returning promises."
-				}
-			],
-			"outputs": {
-				"next": {
-					"context": "$.elasticQuery",
-					"routes": [],
 					"metaName": "Next"
 				},
 				"error": {
@@ -345,7 +307,9 @@
 				{
 					"name": "gatewayTopology",
 					"type": "jsonpath",
-					"value": "$.gatewayTopology"
+					"value": "$.gatewayTopology",
+					"metaName": "API-Gateway Topology",
+					"metaDescription": "The API-Gateway topology as read by flow-node: axway-api-management->lookupTopology"
 				}
 			],
 			"outputs": {
@@ -559,7 +523,9 @@
 				{
 					"name": "requestHeaders",
 					"type": "jsonpath",
-					"value": "$.request.headers"
+					"value": "$.request.headers",
+					"metaName": "Request Headers",
+					"metaDescription": "The request headers are used to lookup the topology using the currently logged in user."
 				}
 			],
 			"outputs": {
@@ -567,15 +533,18 @@
 					"routes": [
 						"javascript.2"
 					],
-					"context": "$.gatewayTopology"
+					"context": "$.gatewayTopology",
+					"metaName": "Next"
 				},
 				"error": {
 					"routes": [
 						"http.1"
 					],
-					"context": "$.error"
+					"context": "$.error",
+					"metaName": "Error"
 				}
-			}
+			},
+			"metaMethod": "Lookup topology"
 		}
 	}
 }

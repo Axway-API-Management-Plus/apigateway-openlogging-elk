@@ -118,13 +118,6 @@
 			"method": "Execute",
 			"parameters": [
 				{
-					"name": "unsafe",
-					"type": "boolean",
-					"value": "false",
-					"metaName": "Unsafe mode",
-					"metaDescription": "USE WITH CAUTION. When enabled, JavaScript is not executed in a sandboxed environment and all globals are available."
-				},
-				{
 					"name": "data",
 					"type": "jsonpath",
 					"value": "$",

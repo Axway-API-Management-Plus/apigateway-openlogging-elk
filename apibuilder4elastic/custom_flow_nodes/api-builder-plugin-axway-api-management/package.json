@@ -9,7 +9,7 @@
 		"api-builder"
 	],
 	"engines": {
-		"node": ">= 12.15"
+		"node": ">= 12"
 	},
 	"main": "src/index.js",
 	"files": [

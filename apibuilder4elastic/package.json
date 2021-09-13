@@ -31,7 +31,7 @@
 		"@axway-api-builder-ext/api-builder-plugin-fn-power": "^1.0.0",
 		"@axway-api-builder-ext/api-builder-plugin-utils": "^1.0.1",
 		"@axway/api-builder-plugin-fn-base64": "^2.1.5",
-		"@axway/api-builder-plugin-fn-javascript": "^1.2.7",
+		"@axway/api-builder-plugin-fn-javascript": "^3.0.2",
 		"@axway/api-builder-plugin-fn-json": "^2.0.16",
 		"@axway/api-builder-plugin-fn-mustache": "^1.0.9",
 		"@axway/api-builder-plugin-fn-restclient": "^2.0.23",
