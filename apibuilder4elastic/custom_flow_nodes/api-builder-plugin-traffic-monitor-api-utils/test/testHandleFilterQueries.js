@@ -57,7 +57,7 @@ describe('flow-node traffic-monitor-api-utils', () => {
 			expect(output).to.equal('next');
 			expect(value).to.be.a('object');
 			expect(value).to.deep.equal({ "bool": { "must": [
-					  {"match": {"http.sslSubject": { "query": "/CN=*.ngrok.io" }}},
+					  {"match": {"http.sslSubject": { "query": "/CN=*.ngrok.io", "operator": "and" }}},
 					  {"exists": {"field": "http"}},
 					  {"term": {"processInfo.serviceId": "instance-1"}}
 					]}});
