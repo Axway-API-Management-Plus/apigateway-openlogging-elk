@@ -115,7 +115,7 @@
 				{
 					"name": "code",
 					"type": "string",
-					"value": "\"let result = [];\\n  //console.log(data);\\n  \\n  if(typeof data.hits[0] != \\\"undefined\\\"){\\n    var source = data.hits[0]._source;\\n    if(source.circuitPath) {\\n      return source.circuitPath;\\n    } else {\\n      logger.warn(`Unexpectedly no CircuitPath information found for API request: '${source.correlationId}'`);\\n      return [];\\n    }\\n  }\""
+					"value": "\"let result = [];\\n  //console.log(data);\\n  \\n  if(typeof data.hits[0] != \\\"undefined\\\"){\\n    var source = data.hits[0]._source;\\n    if(source.circuitPath) {\\n      result = source.circuitPath;\\n    } else {\\n      logger.warn(`Unexpectedly no CircuitPath information found for API request: '${source.correlationId}'`);\\n    }\\n  }\\n  return result;\""
 				}
 			],
 			"outputs": {
