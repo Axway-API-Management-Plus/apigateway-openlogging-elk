@@ -98,18 +98,20 @@
 			],
 			"outputs": {
 				"next": {
-					"context": "$.elasticsearch.result",
-					"routes": [
-						"javascript.1"
-					],
-					"metaName": "Next"
+					"routes": ["javascript.1"],
+					"context": "$.elasticsearch.result"
+				},
+				"noResult": {
+					"routes": ["javascript.1"],
+					"context": "$.elasticsearch.result"
+				},
+				"missingIndex": {
+					"routes": ["http.2"],
+					"context": "$.error"
 				},
 				"error": {
-					"context": "$.error",
-					"routes": [
-						"http.2"
-					],
-					"metaName": "Error"
+					"routes": ["http.2"],
+					"context": "$.error"
 				}
 			},
 			"metaMethod": "Search"

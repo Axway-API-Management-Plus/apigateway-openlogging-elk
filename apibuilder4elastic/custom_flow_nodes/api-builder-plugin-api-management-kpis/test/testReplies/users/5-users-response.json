@@ -1,0 +1,81 @@
+[
+    {
+      "id": "1e0df2bd-4444-4dff-ac29-aefcfcb3f4cb",
+      "organizationId": "231e0163-fd0c-4ef3-bd2e-809ce07ad4ad",
+      "name": "Alice",
+      "loginName": "alice",
+      "email": "alice@partnerb.com",
+      "role": "user",
+      "enabled": true,
+      "createdOn": 1630939293826,
+      "state": "approved",
+      "type": "internal",
+      "dn": "cn=alice,o=Plexus Health,ou=organizations,ou=APIPortal"
+    },
+    {
+      "id": "e8005bdd-20ec-48a4-9bce-4d18dff4b6a9",
+      "organizationId": "b932cbb5-d4be-4bce-aca7-c5daac14f187",
+      "name": "Alex",
+      "loginName": "alex",
+      "email": "alex@partnera.com",
+      "role": "user",
+      "enabled": true,
+      "createdOn": 1631027773452,
+      "state": "approved",
+      "type": "internal",
+      "orgs2Role": {
+        "31c9314a-e195-40b6-a6b9-0bf9dfecd31c": "user"
+      },
+      "orgs2Name": {
+        "31c9314a-e195-40b6-a6b9-0bf9dfecd31c": "Partners"
+      },
+      "dn": "cn=alex,o=FastCars,ou=organizations,ou=APIPortal"
+    },
+    {
+      "id": "2d1d3a61-a670-4e3f-bbb9-05147b5acf20",
+      "organizationId": "38a35dc9-e5a1-465d-988a-64932c5d2d59",
+      "name": "Susan",
+      "loginName": "susan",
+      "email": "susan@axway.com",
+      "role": "oadmin",
+      "enabled": true,
+      "createdOn": 1631027694159,
+      "state": "approved",
+      "type": "internal",
+      "dn": "cn=susan,o=Axway,ou=organizations,ou=APIPortal"
+    },
+    {
+      "id": "9397622f-73c1-45fc-a14a-4731ec24faca",
+      "organizationId": "31c9314a-e195-40b6-a6b9-0bf9dfecd31c",
+      "name": "Chris",
+      "loginName": "chris",
+      "email": "chris@axway.com",
+      "role": "user",
+      "enabled": true,
+      "createdOn": 1630928584159,
+      "state": "approved",
+      "type": "internal",
+      "orgs2Role": {
+        "9f1df42a-faf3-4c95-be07-d2fa0879f194": "oadmin",
+        "b932cbb5-d4be-4bce-aca7-c5daac14f187": "user"
+      },
+      "orgs2Name": {
+        "b932cbb5-d4be-4bce-aca7-c5daac14f187": "FastCars",
+        "9f1df42a-faf3-4c95-be07-d2fa0879f194": "API Development"
+      },
+      "dn": "cn=chris,o=Partners,ou=organizations,ou=APIPortal"
+    },
+    {
+      "id": "1961d5a1-d17f-4289-a825-bf3f1fd51660",
+      "organizationId": "31c9314a-e195-40b6-a6b9-0bf9dfecd31c",
+      "name": "Bob",
+      "loginName": "bob",
+      "email": "bob@partnera.com",
+      "role": "user",
+      "enabled": true,
+      "createdOn": 1631027837052,
+      "state": "approved",
+      "type": "internal",
+      "dn": "cn=bob,o=Partners,ou=organizations,ou=APIPortal"
+    }
+  ]

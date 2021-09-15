@@ -1,0 +1,12 @@
+triggers:
+  flow-listener-1:
+    name: Flow Listener
+    parameters:
+      id: index-api-management-kpis
+    enabled: true
+    invoke:
+      flow: IndexSingleAPI-ManagerKPIs
+      parameters:
+        request: $.request
+        config: $.config
+        env: $.env

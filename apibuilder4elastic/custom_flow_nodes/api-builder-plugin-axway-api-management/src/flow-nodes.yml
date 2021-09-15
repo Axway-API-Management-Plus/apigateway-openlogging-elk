@@ -316,3 +316,22 @@ flow-nodes:
             context: $.error
             schema:
               type: object
+
+      getAPIManagerConfig:
+        name: Get API-Manager configuration
+        description: Get the configuration from all configured API-Managers.
+        returns:
+          name: Next
+          description: Returns all API-Manager settings as an array.
+          context: $.apiManagerSetttings
+          schema:
+            type: array
+        throws:
+          name: Error
+          description: An unexpected error was encountered.
+          context: $.error
+          schema:
+            type: object
+            properties:
+              message:
+                type: string

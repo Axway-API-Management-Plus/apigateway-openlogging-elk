@@ -1,0 +1,71 @@
+{
+    "version": 1,
+    "index_patterns": [
+        "apigw-management-kpis*"
+    ],
+    "settings": {
+        "number_of_shards": 1, 
+        "number_of_replicas": 1,
+        "index": {
+            "codec": "best_compression"
+        }
+    },
+    "aliases": { },
+    "mappings": {
+        "dynamic": false,
+        "_source": {
+            "enabled": true
+        },
+        "properties": {
+            "@timestamp": {
+                "type" : "date"
+            },
+            "meta": {
+                "properties": {
+                    "apiManagerName": {
+                        "type": "keyword",
+                        "norms": false
+                    },
+                    "apiManagerVersion": {
+                        "type": "keyword",
+                        "norms": false
+                    },
+                    "apiBuilderHostname": {
+                        "type": "keyword",
+                        "norms": false
+                    }
+                }
+            },
+            "apis_total": {
+                "type": "integer"
+            },
+            "apis_total_diff": {
+                "type": "integer"
+            },
+            "apps_total": {
+                "type": "integer"
+            },
+            "apps_total_diff": {
+                "type": "integer"
+            },
+            "orgs_total": {
+                "type": "integer"
+            },
+            "orgs_total_diff": {
+                "type": "integer"
+            },
+            "users_total": {
+                "type": "integer"
+            },
+            "users_total_diff": {
+                "type": "integer"
+            },
+            "subscriptions_total": {
+                "type": "integer"
+            },
+            "subscriptions_total_diff": {
+                "type": "integer"
+            }
+        }
+    }
+}

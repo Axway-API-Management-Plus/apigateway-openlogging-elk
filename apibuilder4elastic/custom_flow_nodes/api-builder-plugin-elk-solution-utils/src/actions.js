@@ -1,5 +1,5 @@
 const { ElasticsearchClient } = require('@axway-api-builder-ext/api-builder-plugin-fn-elasticsearch/src/actions/ElasticsearchClient.js');
-const { values } = require('../../../test/documents/http/getinfo_test_documents');
+const os = require("os");
 /**
  * Action method.
  *
@@ -245,10 +245,17 @@ async function getPayloadFilename(params, options) {
 	return extractedFileName;
 }
 
+async function getHostname(params, options) {
+	const hostname = os.hostname();
+	options.logger.debug(`API-Builder process is running on host: ${hostname}`);
+	return hostname;
+}
+
 module.exports = {
 	getIndexConfig,
 	getIndicesForLogtype,
 	createIndices, 
 	updateRolloverAlias,
-	getPayloadFilename
+	getPayloadFilename,
+	getHostname
 };

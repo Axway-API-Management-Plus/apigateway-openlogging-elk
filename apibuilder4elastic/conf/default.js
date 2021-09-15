@@ -29,6 +29,10 @@ module.exports = {
 	// A list of permissions a user must have to get unrestricted access to the Traffic-Monitor result set
 	unrestrictedPermissions: process.env.UNRESTRICTED_PERMISSIONS,
 
+	// The interval in milliseconds in which API-Builder will poll all configured API-Managers for their KPIs. Defaults to 3600000 (which is 1 hour)
+	managementKPIsInterval: process.env.MANAGEMENT_KPIS_INTERVAL || '3600000',
+	managementKPIsEnabled: ("false" == process.env.MANAGEMENT_KPIS_ENABLED) ? false : true, 
+
 	// These version are used, that Filebeat and Logstash are configured as required 
 	// by the API-Builder release
 	versions: {

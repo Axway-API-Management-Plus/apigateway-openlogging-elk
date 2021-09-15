@@ -131,18 +131,20 @@
 			],
 			"outputs": {
 				"next": {
-					"context": "$.elasticsearch.result",
-					"routes": [
-						"traffic-monitor-api-utils.1"
-					],
-					"metaName": "Next"
+					"routes": ["traffic-monitor-api-utils.1"],
+					"context": "$.elasticsearch.result"
+				},
+				"noResult": {
+					"routes": ["traffic-monitor-api-utils.1"],
+					"context": "$.elasticsearch.result"
+				},
+				"missingIndex": {
+					"routes": ["http.1"],
+					"context": "$.error"
 				},
 				"error": {
-					"context": "$.error",
-					"routes": [
-						"http.1"
-					],
-					"metaName": "Error"
+					"routes": ["http.1"],
+					"context": "$.error"
 				}
 			},
 			"metaMethod": "Search"

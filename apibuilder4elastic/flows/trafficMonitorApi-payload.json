@@ -105,18 +105,20 @@
 			],
 			"outputs": {
 				"next": {
-					"routes": [
-						"elk-solution-utils.1"
-					],
-					"context": "$.transactionDetails",
-					"metaName": "Next"
+					"routes": ["elk-solution-utils.1"],
+					"context": "$.transactionDetails"
+				},
+				"noResult": {
+					"routes": ["elk-solution-utils.1"],
+					"context": "$.transactionDetails"
+				},
+				"missingIndex": {
+					"routes": ["http.3"],
+					"context": "$.error"
 				},
 				"error": {
-					"routes": [
-						"http.3"
-					],
-					"context": "$.error",
-					"metaName": "Error"
+					"routes": ["http.3"],
+					"context": "$.error"
 				}
 			},
 			"metaMethod": "Search"

@@ -1,0 +1,409 @@
+{
+	"schemaVersion": "4",
+	"info": {
+		"name": "KPIs - Index Single API-Manager (Sub-Flow)",
+		"description": "This flow is started per API manager, reads the corresponding KPIs, prepares them and indexes them in Elasticsearch."
+	},
+	"parameter": {
+		"properties": {
+			"request": {
+				"description": "The request"
+			},
+			"config": {
+				"type": "object",
+				"description": "The service's configuration"
+			},
+			"env": {
+				"type": "object",
+				"description": "The host OS environment"
+			}
+		},
+		"additionalProperties": false
+	},
+	"start": "javascript.1",
+	"nodes": {
+		"invoke-flow-response.1": {
+			"type": "nodehandler://@axway/api-builder-plugin-invoke-flow/invoke-flow-response",
+			"name": "Set Response",
+			"method": "setResponse",
+			"parameters": [
+				{
+					"name": "data",
+					"type": "jsonpath",
+					"value": "$.result",
+					"metaName": "Data",
+					"metaDescription": "The result to be returned to the flow that called `Invoke Flow`."
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.response",
+					"routes": [],
+					"metaName": "Next"
+				},
+				"error": {
+					"context": "$.error",
+					"routes": [],
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Set Response"
+		},
+		"elasticsearch.1": {
+			"type": "nodehandler://@axway-api-builder-ext/api-builder-plugin-fn-elasticsearch/elasticsearch",
+			"name": "Get prev. KPI for Manager",
+			"method": "search",
+			"parameters": [
+				{
+					"name": "index",
+					"type": "string",
+					"value": "\"apigw-management-kpis\"",
+					"metaName": "Index",
+					"metaDescription": "Comma-separated list or wildcard expression of index names used to limit the request."
+				},
+				{
+					"name": "sort",
+					"type": "string",
+					"value": "\"@timestamp:desc\"",
+					"metaName": "Sort",
+					"metaDescription": "A comma-separated list of <field>:<direction> pairs."
+				},
+				{
+					"name": "query",
+					"type": "jsonpath",
+					"value": "$.elasticsearch.query",
+					"metaName": "Query",
+					"metaDescription": "Defines the search definition using the Query DSL. Learn more: https://www.elastic.co/guide/en/elasticsearch/reference/7.x/query-dsl.html"
+				},
+				{
+					"name": "size",
+					"type": "number",
+					"value": "1",
+					"metaName": "Size",
+					"metaDescription": "Defines the number of hits to return. Defaults to 10."
+				},
+				{
+					"name": "_source",
+					"type": "boolean",
+					"value": "true",
+					"metaName": "Include source",
+					"metaDescription": "True or false to return the _source field or not, or a list of fields to return."
+				}
+			],
+			"outputs": {
+				"next": {
+					"routes": [
+						"javascript.2"
+					],
+					"context": "$.result",
+					"metaName": "Next"
+				},
+				"noResult": {
+					"routes": [
+						"javascript.2"
+					],
+					"context": "$.result",
+					"metaName": "No result"
+				},
+				"missingIndex": {
+					"routes": [],
+					"context": "$.error",
+					"metaName": "Missing index"
+				},
+				"error": {
+					"routes": [],
+					"context": "$.error",
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Search"
+		},
+		"javascript.1": {
+			"type": "nodehandler://@axway/api-builder-plugin-fn-javascript/javascript",
+			"name": "Define query for given Manager",
+			"method": "Execute",
+			"parameters": [
+				{
+					"name": "data",
+					"type": "jsonpath",
+					"value": "$.request",
+					"metaName": "Data",
+					"metaDescription": "The value to apply as the `data` argument of the JavaScript code. For objects and arrays, `data` is passed by reference."
+				},
+				{
+					"name": "code",
+					"type": "string",
+					"value": "\"var query = \\n    {\\n      bool: {\\n        filter: [\\n          {\\n            term: {\\n              \\\"meta.apiManagerName\\\": data.portalName\\n            }\\n          }\\n        ]\\n      }\\n    };\\n  return query;\"",
+					"metaName": "Code",
+					"metaDescription": "A JavaScript function body. Supports `await` and returning promises. `data` is the value of the Data parameter. `logger` is the API Builder logger. See the docs for more info: https://docs.axway.com/bundle/API_Builder_4x_allOS_en/page/javascript_flow-node.html"
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.elasticsearch.query",
+					"routes": [
+						"elasticsearch.1"
+					],
+					"metaName": "Next"
+				},
+				"error": {
+					"context": "$.error",
+					"routes": [],
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Execute"
+		},
+		"api-management-kpis.1": {
+			"type": "nodehandler://api-builder-plugin-api-management-kpis/api-management-kpis",
+			"name": "Get API-KPIs",
+			"method": "getAPIKPIs",
+			"parameters": [
+				{
+					"name": "previousKPIs",
+					"type": "jsonpath",
+					"value": "$.previousKPIs",
+					"metaName": "Previous KPIs",
+					"metaDescription": "This object contains the previous stored KPIs for this API-Manager. It's used to compute relevant differences between the previous and current state. If not given, no differences are computed."
+				},
+				{
+					"name": "apiManagerConfig",
+					"type": "jsonpath",
+					"value": "$.request",
+					"metaName": "API-Manager configuration",
+					"metaDescription": "The API Manager configuration including API-ManagerName and connection details such as URL, name, username. The API Manager name is merged into the KPI object."
+				}
+			],
+			"outputs": {
+				"next": {
+					"routes": [
+						"api-management-kpis.2"
+					],
+					"context": "$.kpis",
+					"metaName": "Next"
+				},
+				"error": {
+					"routes": [],
+					"context": "$.error",
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Get API-KPIs"
+		},
+		"api-management-kpis.2": {
+			"type": "nodehandler://api-builder-plugin-api-management-kpis/api-management-kpis",
+			"name": "Get Application-KPIs",
+			"method": "getAppKPIs",
+			"parameters": [
+				{
+					"name": "apiManagerConfig",
+					"type": "jsonpath",
+					"value": "$.request",
+					"metaName": "API-Manager configuration",
+					"metaDescription": "The API Manager configuration including API-ManagerName and connection details such as URL, name, username. The API Manager name is merged into the KPI object."
+				},
+				{
+					"name": "kpis",
+					"type": "jsonpath",
+					"value": "$.kpis",
+					"metaName": "KPIs",
+					"metaDescription": "The eventually already existing KPIs object, that should be extended about API-KPIs. If not given, a new object is created."
+				},
+				{
+					"name": "previousKPIs",
+					"type": "jsonpath",
+					"value": "$.previousKPIs",
+					"metaName": "Previous KPIs",
+					"metaDescription": "This object contains the previous stored KPIs for this API-Manager. It's used to compute relevant differences between the previous and current state. If not given, no differences are computed."
+				},
+				{
+					"name": "includeSubscriptions",
+					"type": "boolean",
+					"value": "true",
+					"metaName": "Include subscriptions",
+					"metaDescription": "If true, the returned KPI will contain subscription information."
+				}
+			],
+			"outputs": {
+				"next": {
+					"routes": [
+						"api-management-kpis.3"
+					],
+					"context": "$.kpis",
+					"metaName": "Next"
+				},
+				"error": {
+					"routes": [],
+					"context": "$.error",
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Get Application-KPIs"
+		},
+		"api-management-kpis.3": {
+			"type": "nodehandler://api-builder-plugin-api-management-kpis/api-management-kpis",
+			"name": "Get Organization-KPIs",
+			"method": "getOrgKPIs",
+			"parameters": [
+				{
+					"name": "apiManagerConfig",
+					"type": "jsonpath",
+					"value": "$.request",
+					"metaName": "API-Manager configuration",
+					"metaDescription": "The API Manager configuration including API-ManagerName and connection details such as URL, name, username. The API Manager name is merged into the KPI object."
+				},
+				{
+					"name": "kpis",
+					"type": "jsonpath",
+					"value": "$.kpis",
+					"metaName": "KPIs",
+					"metaDescription": "The eventually already existing KPIs object, that should be extended about API-KPIs. If not given, a new object is created."
+				},
+				{
+					"name": "previousKPIs",
+					"type": "jsonpath",
+					"value": "$.previousKPIs",
+					"metaName": "Previous KPIs",
+					"metaDescription": "This object contains the previous stored KPIs for this API-Manager. It's used to compute relevant differences between the previous and current state. If not given, no differences are computed."
+				}
+			],
+			"outputs": {
+				"next": {
+					"routes": [
+						"api-management-kpis.4"
+					],
+					"context": "$.kpis",
+					"metaName": "Next"
+				},
+				"error": {
+					"routes": [],
+					"context": "$.error",
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Get Organization-KPIs"
+		},
+		"api-management-kpis.4": {
+			"type": "nodehandler://api-builder-plugin-api-management-kpis/api-management-kpis",
+			"name": "Get User-KPIs",
+			"method": "getUserKPIs",
+			"parameters": [
+				{
+					"name": "apiManagerConfig",
+					"type": "jsonpath",
+					"value": "$.request",
+					"metaName": "API-Manager configuration",
+					"metaDescription": "The API Manager configuration including API-ManagerName and connection details such as URL, name, username. The API Manager name is merged into the KPI object."
+				},
+				{
+					"name": "kpis",
+					"type": "jsonpath",
+					"value": "$.kpis",
+					"metaName": "KPIs",
+					"metaDescription": "The eventually already existing KPIs object, that should be extended about API-KPIs. If not given, a new object is created."
+				},
+				{
+					"name": "previousKPIs",
+					"type": "jsonpath",
+					"value": "$.previousKPIs",
+					"metaName": "Previous KPIs",
+					"metaDescription": "This object contains the previous stored KPIs for this API-Manager. It's used to compute relevant differences between the previous and current state. If not given, no differences are computed."
+				}
+			],
+			"outputs": {
+				"next": {
+					"routes": [
+						"elasticsearch.2"
+					],
+					"context": "$.kpis",
+					"metaName": "Next"
+				},
+				"error": {
+					"routes": [],
+					"context": "$.error",
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Get User-KPIs"
+		},
+		"elasticsearch.2": {
+			"type": "nodehandler://@axway-api-builder-ext/api-builder-plugin-fn-elasticsearch/elasticsearch",
+			"name": "Index Management KPIs",
+			"method": "indexDocument",
+			"parameters": [
+				{
+					"name": "body",
+					"type": "jsonpath",
+					"value": "$.kpis",
+					"metaName": "Body",
+					"metaDescription": "Body of the document to index"
+				},
+				{
+					"name": "index",
+					"type": "string",
+					"value": "\"apigw-management-kpis\"",
+					"metaName": "Index-Name",
+					"metaDescription": "The name of the index"
+				},
+				{
+					"name": "addTimestamp",
+					"type": "string",
+					"value": "\"@timestamp\"",
+					"metaName": "Add timestamp",
+					"metaDescription": "If a field name (e.g. @timestamp) is given, the flow-node will add the current Unix epoch time to the body of the document."
+				}
+			],
+			"outputs": {
+				"next": {
+					"routes": [
+						"invoke-flow-response.1"
+					],
+					"context": "$.result",
+					"metaName": "Next"
+				},
+				"error": {
+					"routes": [],
+					"context": "$.error",
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Index document"
+		},
+		"javascript.2": {
+			"type": "nodehandler://@axway/api-builder-plugin-fn-javascript/javascript",
+			"name": "Get last KPI",
+			"method": "Execute",
+			"parameters": [
+				{
+					"name": "code",
+					"type": "string",
+					"value": "\"var result = data.result;\\n  if(result.body.hits.total.value != 0) {\\n    return result.body.hits.hits[0]._source;\\n  } else {\\n    return {};\\n  }\"",
+					"metaName": "Code",
+					"metaDescription": "A JavaScript function body. Supports `await` and returning promises. `data` is the value of the Data parameter. `logger` is the API Builder logger. See the docs for more info: https://docs.axway.com/bundle/API_Builder_4x_allOS_en/page/javascript_flow-node.html"
+				},
+				{
+					"name": "data",
+					"type": "jsonpath",
+					"value": "$",
+					"metaName": "Data",
+					"metaDescription": "The value to apply as the `data` argument of the JavaScript code. For objects and arrays, `data` is passed by reference."
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.previousKPIs",
+					"routes": [
+						"api-management-kpis.1"
+					],
+					"metaName": "Next"
+				},
+				"error": {
+					"context": "$.error",
+					"routes": [],
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Execute"
+		}
+	}
+}
