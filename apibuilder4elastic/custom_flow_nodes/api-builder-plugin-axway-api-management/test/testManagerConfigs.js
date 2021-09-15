@@ -70,7 +70,8 @@ describe('Test API-Manager configuration variations', () => {
                     },
                     "group-a": {
                         url: "http://my.group-a-api-manager.com:8075",
-                        username: "user", password: "password"
+                        username: "user", password: "password",
+                        group: "group-a"
                     }
                 }
             }
@@ -96,11 +97,14 @@ describe('Test API-Manager configuration variations', () => {
                     },
                     "group-a": {
                         url: "http://my.group-a-api-manager.com:8075",
-                        username: "user", password: "password"
+                        username: "user", password: "password",
+                        group: "group-a"
                     },
                     "group-b###us": {
                         url: "http://my.group-b-us-api-manager.com:8075",
-                        username: "user", password: "password"
+                        username: "user", password: "password",
+                        group: "group-b",
+                        region: "us"
                     }
                 }
             }
@@ -122,11 +126,14 @@ describe('Test API-Manager configuration variations', () => {
                 "configs": {
                     "group-a": {
                         url: "http://my.group-a-api-manager.com:8075",
-                        username: "user", password: "password"
+                        username: "user", password: "password",
+                        group: "group-a"
                     },
                     "group-b###us": {
                         url: "http://my.group-b-us-api-manager.com:8075",
-                        username: "user", password: "password"
+                        username: "user", password: "password",
+                        group: "group-b",
+                        region: "us"
                     }
                 }
             }

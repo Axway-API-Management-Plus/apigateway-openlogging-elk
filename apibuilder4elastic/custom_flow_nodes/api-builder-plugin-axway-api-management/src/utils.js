@@ -121,11 +121,11 @@ async function parseAPIManagerConfig(pluginConfig, options) {
 				} else if(groupRegionAndURL.length == 2) {
 					// Only the Group-ID is given
 					options.logger.debug(`Found API-Manager URL: ${groupRegionAndURL[1]} for group: ${groupRegionAndURL[0]}`);
-					pluginConfig.apimanager.configs[`${groupRegionAndURL[0]}`] = { url: groupRegionAndURL[1], username: pluginConfig.apimanager.username, password: pluginConfig.apimanager.password };
+					pluginConfig.apimanager.configs[`${groupRegionAndURL[0]}`] = { url: groupRegionAndURL[1], username: pluginConfig.apimanager.username, password: pluginConfig.apimanager.password, group: groupRegionAndURL[0] };
 				} else if(groupRegionAndURL.length == 3) {
 					// Group-ID and region is given (Just create a map with a special key)
 					options.logger.debug(`Found API-Manager URL: ${groupRegionAndURL[2]} for group: ${groupRegionAndURL[1]} and region: ${groupRegionAndURL[1]}`);
-					pluginConfig.apimanager.configs[`${groupRegionAndURL[0]}###${groupRegionAndURL[1]}`] = { url: groupRegionAndURL[2], username: pluginConfig.apimanager.username, password: pluginConfig.apimanager.password} 
+					pluginConfig.apimanager.configs[`${groupRegionAndURL[0]}###${groupRegionAndURL[1]}`] = { url: groupRegionAndURL[2], username: pluginConfig.apimanager.username, password: pluginConfig.apimanager.password, group: groupRegionAndURL[0], region: groupRegionAndURL[1]} 
 				} else {
 					return Promise.reject(`Unexpected API-Manager format: ${groupRegionAndURL}`);
 				}

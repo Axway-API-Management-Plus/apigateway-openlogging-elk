@@ -58,7 +58,6 @@ async function getAppKPIs(params, options) {
 			var app = apps[i];
 			var subscriptions = await _getManagerApplicationSubscriptions(apiManagerConfig.connection, app);
 			subscriptions_total = subscriptions_total + subscriptions.length;
-			console.log(`subscriptions_total: ${subscriptions_total}`);
 		}
 		kpis.subscriptions_total = subscriptions_total;
 	}

@@ -26,8 +26,8 @@ async function getAPIManagerConfig(params, options) {
 	const { logger } = options;
 	var pluginConfig = options.pluginConfig;
 	var cache = options.pluginContext.cache;
-	debugger;
 	const apiManagerConfigs = [];
+	const apiManagerNames = {};
 	for (const [key, config] of Object.entries(pluginConfig.apimanager.configs)) {
 		if(cache.has(config.url)) {
 			logger.debug(`Using cached API-Manager configuration for URL: ${config.url}`);
@@ -35,9 +35,16 @@ async function getAPIManagerConfig(params, options) {
 		} else {
 			logger.debug(`Reading API-Manager configuration from: ${config.url}`);
 			try {
+				debugger;
 				var managerConfig = await _getManagerConfig(config);
 				// Additionally add the API-Manager Connection details to the object (required by the KPI-Subflow)
 				managerConfig.connection = config;
+				// If API-Manager names are duplicated, the configured Group-ID and Region is additionally used
+				if(apiManagerNames[managerConfig.portalName]) {
+					logger.warn(`Two API-Managers found with the same name: '${managerConfig.portalName}'. It's strongly adviced to configure unique names in the settings of all configured API-Managers.`);
+					managerConfig.portalName = `${managerConfig.portalName} (${config.region.toUpperCase()} ${config.group.toUpperCase()})`;
+				}
+				apiManagerNames[managerConfig.portalName] = "Found";
 				apiManagerConfigs.push(managerConfig);
 				cache.set( config.url, managerConfig, 3600);
 			} catch (err) {
