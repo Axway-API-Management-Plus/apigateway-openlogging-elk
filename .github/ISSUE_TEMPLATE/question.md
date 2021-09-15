@@ -1,7 +1,7 @@
 ---
 name: Question
 about: You need help or just have a question concerning the Elasticsearch based solution
-title: ""
+title: ''
 labels: question
 assignees: cwiechmann
 

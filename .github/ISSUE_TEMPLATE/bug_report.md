@@ -1,7 +1,7 @@
 ---
 name: Bug report
 about: Create a report to help us to improve the solution
-title: ""
+title: ''
 labels: bug
 assignees: cwiechmann
 
