@@ -1,0 +1,130 @@
+[
+    {
+        "id": "dd88699a-e313-4049-a451-55ff69321bd6",
+        "organizationId": "ea62bff5-2859-46d7-a29e-1731b2717795",
+        "name": "Bob",
+        "description": "User in organization partners.",
+        "loginName": "bob",
+        "email": "bob@partnera.com",
+        "role": "user",
+        "enabled": true,
+        "createdOn": 1630994234769,
+        "state": "approved",
+        "type": "internal",
+        "dn": "cn=bob,o=Partners,ou=organizations,ou=APIPortal"
+    },
+    {
+        "id": "b69de2b2-2455-48e1-8f99-f51556b057ae",
+        "organizationId": "ea62bff5-2859-46d7-a29e-1731b2717795",
+        "name": "Alex",
+        "description": "Alex is a user for organization Partners and Fastcars",
+        "loginName": "alex",
+        "email": "alex@partnera.com",
+        "role": "user",
+        "enabled": true,
+        "createdOn": 1630994305285,
+        "state": "approved",
+        "type": "internal",
+        "orgs2Role": {
+            "be9dd2f2-b2f0-4b4b-ac38-9d53da1e4dfd": "user"
+        },
+        "orgs2Name": {
+            "be9dd2f2-b2f0-4b4b-ac38-9d53da1e4dfd": "FastCars"
+        },
+        "dn": "cn=alex,o=Partners,ou=organizations,ou=APIPortal"
+    },
+    {
+        "id": "e17c7897-d3cc-4f8f-ae69-2234693911e2",
+        "organizationId": "d2d8d4ac-223f-4aa4-862e-8cf1768b844e",
+        "name": "Ravee Chinthakuntla",
+        "loginName": "ravee",
+        "email": "rchinthakuntla@axway.com",
+        "role": "admin",
+        "enabled": true,
+        "createdOn": 1626710656076,
+        "state": "approved",
+        "type": "internal",
+        "dn": "cn=ravee,o=Community,ou=organizations,ou=APIPortal"
+    },
+    {
+        "id": "99a509ed-088a-4513-b450-ca6751ff78fb",
+        "organizationId": "fbb9fca7-e168-4c79-84fa-547516623d72",
+        "name": "Alice",
+        "loginName": "alice",
+        "email": "alice@partnerb.com",
+        "role": "user",
+        "enabled": true,
+        "createdOn": 1630939022904,
+        "state": "approved",
+        "type": "internal",
+        "dn": "cn=alice,o=Plexus Health,ou=organizations,ou=APIPortal"
+    },
+    {
+        "id": "2e2b0e93-b840-4493-89af-2eded023e72f",
+        "organizationId": "2c724048-653e-418c-977f-b33f6219ee16",
+        "name": "Markus",
+        "description": "Organization Administrator for Axway and API-Development",
+        "loginName": "markus",
+        "email": "markus@axway.com",
+        "role": "oadmin",
+        "enabled": true,
+        "createdOn": 1630994174094,
+        "state": "approved",
+        "type": "internal",
+        "orgs2Role": {
+            "3fec2611-17a1-46fa-be9f-dd00862ace7c": "oadmin"
+        },
+        "orgs2Name": {
+            "3fec2611-17a1-46fa-be9f-dd00862ace7c": "API Development"
+        },
+        "dn": "cn=markus,o=Axway,ou=organizations,ou=APIPortal"
+    },
+    {
+        "id": "568e894b-f123-480c-93a4-6a8f6eee5f84",
+        "organizationId": "2c724048-653e-418c-977f-b33f6219ee16",
+        "name": "Susan",
+        "description": "Organization Administrator for Organization Axway",
+        "loginName": "susan",
+        "email": "susan@axway.com",
+        "role": "oadmin",
+        "enabled": true,
+        "createdOn": 1630993719496,
+        "state": "approved",
+        "type": "internal",
+        "dn": "cn=susan,o=Axway,ou=organizations,ou=APIPortal"
+    },
+    {
+        "id": "f8c1ff25-8684-460e-af54-e2607e8e41dd",
+        "organizationId": "be9dd2f2-b2f0-4b4b-ac38-9d53da1e4dfd",
+        "name": "Chris",
+        "loginName": "chris",
+        "email": "chris@partner.com",
+        "role": "user",
+        "enabled": true,
+        "createdOn": 1622714388431,
+        "state": "approved",
+        "type": "internal",
+        "orgs2Role": {
+            "ea62bff5-2859-46d7-a29e-1731b2717795": "user",
+            "3fec2611-17a1-46fa-be9f-dd00862ace7c": "oadmin"
+        },
+        "orgs2Name": {
+            "ea62bff5-2859-46d7-a29e-1731b2717795": "Partners",
+            "3fec2611-17a1-46fa-be9f-dd00862ace7c": "API Development"
+        },
+        "dn": "cn=chris,o=FastCars,ou=organizations,ou=APIPortal"
+    },
+    {
+        "id": "b00ee6a4-26ea-483a-8d6b-1324cd1da203",
+        "organizationId": "d2d8d4ac-223f-4aa4-862e-8cf1768b844e",
+        "name": "Apoorva Choudhary",
+        "loginName": "achoudhary",
+        "email": "achoudhary@axway.com",
+        "role": "admin",
+        "enabled": true,
+        "createdOn": 1626879396051,
+        "state": "approved",
+        "type": "internal",
+        "dn": "cn=achoudhary,o=Community,ou=organizations,ou=APIPortal"
+    }
+]

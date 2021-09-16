@@ -65,6 +65,12 @@ flow-nodes:
             required: true
             schema:
               type: object
+          organization:
+            name: Organization
+            description: 'If given, the result will contain Applicatons only for the actual organization. Must be an object containing the id and name of the organization (e.g. {id: "b932cbb5-d4be-4bce-aca7-c5daac14f187", name: "FastCars"}).'
+            required: false
+            schema:
+              type: object
           includeSubscriptions:
             name: Include subscriptions
             description: If true, the returned KPI will contain subscription information.
@@ -111,6 +117,12 @@ flow-nodes:
             required: true
             schema:
               type: object
+          organization:
+            name: Organization
+            description: 'If given nothing useful is returned, as the result is limited to one org. This is more to satisfy the Kibana-Dashboard rendering showing 1 Org, when filtered for an Organization. Must be an object containing the id and name of the organization (e.g. {id: "b932cbb5-d4be-4bce-aca7-c5daac14f187", name: "FastCars"}).'
+            required: false
+            schema:
+              type: object
           previousKPIs:
             name: Previous KPIs
             description: This object contains the previous stored KPIs for this API-Manager. It's used to compute relevant differences between the previous and current state. If not given, no differences are computed.
@@ -147,6 +159,12 @@ flow-nodes:
             name: API-Manager configuration
             description: The API Manager configuration including API-ManagerName and connection details such as URL, name, username. The API Manager name is merged into the KPI object.
             required: true
+            schema:
+              type: object
+          organization:
+            name: Organization
+            description: 'If given, the result will contain Users only for the actual organization. Must be an object containing the id and name of the organization (e.g. {id: "b932cbb5-d4be-4bce-aca7-c5daac14f187", name: "FastCars"}).'
+            required: false
             schema:
               type: object
           previousKPIs:

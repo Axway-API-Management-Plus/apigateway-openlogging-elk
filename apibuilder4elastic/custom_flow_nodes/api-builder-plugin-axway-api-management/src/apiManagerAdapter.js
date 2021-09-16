@@ -63,7 +63,6 @@ async function getAPIManagerOrganizations(params, options) {
 	}
 	logger.debug(`Reading API-Manager organizations from: ${apiManager.url}`);
 	try {
-		debugger;
 		var organizations = await _getManagerOrganizations(apiManager);
 	} catch (err) {
 		throw new Error(`Error reading configuration from API-Manager: ${apiManager.url}. Error: ${JSON.stringify(err)}`);

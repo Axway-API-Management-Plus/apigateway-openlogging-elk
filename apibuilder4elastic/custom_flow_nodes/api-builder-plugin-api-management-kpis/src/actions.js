@@ -26,11 +26,13 @@ async function getAPIKPIs(params, options) {
 	const { apiManagerConfig, previousKPIs, organization } = params;
 	var { kpis } = params;
 	const { logger } = options;
-	debugger;
+
 	await _checkCommonParams(params);
 	kpis = await _addKPIMetaInformation(params, kpis);
 
 	const apis = await _getManagerAPIs(apiManagerConfig.connection);
+	// Unfortunately we have to check the organization like so, as everything in the Sub-Flow comes with $.request incl. the organization
+	// Therefore the organization is always set
 	if(organization && organization.name && organization.id) {
 		logger.debug(`Filtering APIs for organization: ${organization.name} (${organization.id}).`);
 		var apiCount = 0;
@@ -59,7 +61,7 @@ async function getAPIKPIs(params, options) {
 }
 
 async function getAppKPIs(params, options) {
-	const { apiManagerConfig, previousKPIs, includeSubscriptions } = params;
+	const { apiManagerConfig, previousKPIs, includeSubscriptions, organization } = params;
 	var { kpis } = params;
 	const { logger } = options;
 
@@ -67,22 +69,46 @@ async function getAppKPIs(params, options) {
 	kpis = await _addKPIMetaInformation(params, kpis);
 
 	const apps = await _getManagerApplications(apiManagerConfig.connection);
-	kpis.apps_total = apps.length;
-	kpis.apps_total_diff = 0;
 
-	if(includeSubscriptions) {
-		var subscriptions_total = 0;
-		// Collect the subscriptions
+	var consideredApps = apps;
+	// Unfortunately we have to check the organization like so, as everything in the Sub-Flow comes with $.request incl. the organization
+	// Therefore the organization is always set
+	if(organization && organization.name && organization.id) {
+		logger.debug(`Filtering Applications for organization: ${organization.name} (${organization.id}).`);
+		consideredApps = [];
+		var appCount = 0;
 		for (i = 0; i < apps.length; i++) {
 			var app = apps[i];
+			if(app.organizationId == organization.id) {
+				// 
+				consideredApps.push(app);
+				appCount++;
+			}
+		}
+		logger.debug(`Found: ${appCount} Applications for organization ${organization.name} (${organization.id}).`);
+		kpis.apps_total = appCount;
+		kpis.apps_total_diff = 0;
+		kpis.organization = organization.name;
+		if(previousKPIs) {
+			kpis.apps_total_diff = await _getDifference(appCount, previousKPIs.apps_total, "Applications", options);
+		}
+	} else {
+		kpis.apps_total = apps.length;
+		kpis.apps_total_diff = 0;
+		if(previousKPIs) {
+			kpis.apps_total_diff = await _getDifference(apps.length, previousKPIs.apps_total, "Apps", options);
+		}
+	}
+	if(includeSubscriptions) {
+		var subscriptions_total = 0;
+		// Collect the subscriptions for all apps
+		for (i = 0; i < consideredApps.length; i++) {
+			var app = consideredApps[i];
 			var subscriptions = await _getManagerApplicationSubscriptions(apiManagerConfig.connection, app);
 			subscriptions_total = subscriptions_total + subscriptions.length;
 		}
 		kpis.subscriptions_total = subscriptions_total;
-	}
-	if(previousKPIs) {
-		kpis.apps_total_diff = await _getDifference(apps.length, previousKPIs.apps_total, "Apps", options);
-		if(includeSubscriptions) {
+		if(previousKPIs) {
 			kpis.subscriptions_total_diff = await _getDifference(kpis.subscriptions_total, previousKPIs.subscriptions_total, "Subscriptions", options);
 		}
 	}
@@ -90,13 +116,19 @@ async function getAppKPIs(params, options) {
 }
 
 async function getOrgKPIs(params, options) {
-	const { apiManagerConfig, previousKPIs } = params;
+	const { apiManagerConfig, previousKPIs, organization } = params;
 	var { kpis } = params;
 	const { logger } = options;
-	debugger;
 
 	await _checkCommonParams(params);
 	kpis = await _addKPIMetaInformation(params, kpis);
+
+	if(organization && organization.name && organization.id) {
+		kpis.orgs_total = 1;
+		kpis.orgs_total_diff = 0;
+		kpis.organization = organization.name;
+		return kpis;
+	}
 
 	const orgs = await _getManagerOrganizations(apiManagerConfig.connection);
 	kpis.orgs_total = orgs.length;
@@ -108,19 +140,39 @@ async function getOrgKPIs(params, options) {
 }
 
 async function getUserKPIs(params, options) {
-	const { apiManagerConfig, previousKPIs } = params;
+	const { apiManagerConfig, previousKPIs, organization } = params;
 	var { kpis } = params;
 	const { logger } = options;
-	debugger;
 
 	await _checkCommonParams(params);
 	kpis = await _addKPIMetaInformation(params, kpis);
 
 	const users = await _getManagerUsers(apiManagerConfig.connection);
-	kpis.users_total = users.length;
-	kpis.users_total_diff = 0;
-	if(previousKPIs) {
-		kpis.users_total_diff = await _getDifference(users.length, previousKPIs.users_total, "Users", options);
+
+	// Unfortunately we have to check the organization like so, as everything in the Sub-Flow comes with $.request incl. the organization
+	// Therefore the organization is always set
+	if(organization && organization.name && organization.id) {
+		logger.debug(`Filtering Users for organization: ${organization.name} (${organization.id}).`);
+		var userCount = 0;
+		for (i = 0; i < users.length; i++) {
+			var user = users[i];
+			if(user.organizationId == organization.id) {
+				userCount++;
+			}
+		}
+		logger.debug(`Found: ${userCount} Users for organization ${organization.name} (${organization.id}).`);
+		kpis.users_total = userCount;
+		kpis.users_total_diff = 0;
+		kpis.organization = organization.name;
+		if(previousKPIs) {
+			kpis.users_total_diff = await _getDifference(userCount, previousKPIs.users_total, "Users", options);
+		}
+	} else {
+		kpis.users_total = users.length;
+		kpis.users_total_diff = 0;
+		if(previousKPIs) {
+			kpis.users_total_diff = await _getDifference(users.length, previousKPIs.users_total, "Users", options);
+		}
 	}
 	return kpis;
 }

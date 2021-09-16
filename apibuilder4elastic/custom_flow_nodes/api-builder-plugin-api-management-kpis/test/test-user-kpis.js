@@ -25,7 +25,7 @@ describe('flow-node api-management-kpis', () => {
 		});
 
 		it('should succeed with valid arguments and return a new KPIs object', async () => {
-			nock('https://mocked-api-gateway:8175').get('/api/portal/v1.3/users').replyWithFile(200, './test/testReplies/users/5-users-response.json');
+			nock('https://mocked-api-gateway:8175').get('/api/portal/v1.3/users').replyWithFile(200, './test/testReplies/users/8-users-response.json');
 			const { value, output } = await flowNode.getUserKPIs({
 				apiManagerConfig: { connection: { url: "https://mocked-api-gateway:8175", username: "myuser", password: "mypass" }, portalName: "My API-Manager", productVersion: "7.7.20210830" }
 			});
@@ -33,27 +33,30 @@ describe('flow-node api-management-kpis', () => {
 			expect(output).to.equal('next');
 			expect(value).to.deep.equal(
 				{meta: { apiManagerName:"My API-Manager", apiManagerVersion: "7.7.20210830", apiBuilderHostname: os.hostname() }, 
-				users_total: 5, users_total_diff:0}
+				users_total: 8, users_total_diff:0}
 			);
 		});
 
 		it('should succeed with valid arguments and return merged KPIs object', async () => {
-			nock('https://mocked-api-gateway:8175').get('/api/portal/v1.3/users').replyWithFile(200, './test/testReplies/users/5-users-response.json');
+			nock('https://mocked-api-gateway:8175').get('/api/portal/v1.3/users').replyWithFile(200, './test/testReplies/users/8-users-response.json');
 			const { value, output } = await flowNode.getUserKPIs({
-				apiManagerConfig: { connection: { url: "https://api-env:8075", username: "apiadmin", password: "changeme" }, portalName: "My API-Manager", productVersion: "7.7.20210830" },
-				kpis: { meta: { apiManagerName:"Test API-Manager", apiManagerVersion: "7.7.20210530", apiBuilderHostname: os.hostname() }, apis_total: 235, apis_total_diff: 2 }
+				apiManagerConfig: { connection: { url: "https://mocked-api-gateway:8175", username: "apiadmin", password: "changeme" }, portalName: "My API-Manager", productVersion: "7.7.20210830" },
+				kpis: { 
+					meta: { apiManagerName:"Test API-Manager", apiManagerVersion: "7.7.20210530", apiBuilderHostname: os.hostname() }, 
+					apis_total: 235, apis_total_diff: 2 
+				}
 			});
 
 			expect(output).to.equal('next');
 			expect(value).to.deep.equal({
 				meta: { apiManagerName:"Test API-Manager", apiManagerVersion: "7.7.20210530", apiBuilderHostname: os.hostname() }, 
-				users_total: 5, users_total_diff: 0,
+				users_total: 8, users_total_diff: 0,
 				apis_total: 235, apis_total_diff: 2
 			});
 		});
 
 		it('should succeed with valid arguments and return new KPIs object with caclulated differences (Users reduced)', async () => {
-			nock('https://mocked-api-gateway:8175').get('/api/portal/v1.3/users').replyWithFile(200, './test/testReplies/users/5-users-response.json');
+			nock('https://mocked-api-gateway:8175').get('/api/portal/v1.3/users').replyWithFile(200, './test/testReplies/users/8-users-response.json');
 			const { value, output } = await flowNode.getUserKPIs({
 				apiManagerConfig: { 
 					connection: { url: "https://mocked-api-gateway:8175", username: "myuser", password: "mypass" }, 
@@ -65,24 +68,43 @@ describe('flow-node api-management-kpis', () => {
 			expect(output).to.equal('next');
 			expect(value).to.deep.equal({
 				meta: { apiManagerName:"My API-Manager", apiManagerVersion: "7.7.20210830", apiBuilderHostname: os.hostname() }, 
-				users_total: 5, users_total_diff: -10
+				users_total: 8, users_total_diff: -7
 			});
 		});
 
 		it('should succeed with valid arguments and return new KPIs object with caclulated differences (Users added)', async () => {
-			nock('https://mocked-api-gateway:8175').get('/api/portal/v1.3/users').replyWithFile(200, './test/testReplies/users/5-users-response.json');
+			nock('https://mocked-api-gateway:8175').get('/api/portal/v1.3/users').replyWithFile(200, './test/testReplies/users/8-users-response.json');
 			const { value, output } = await flowNode.getUserKPIs({
 				apiManagerConfig: { 
 					connection: { url: "https://mocked-api-gateway:8175", username: "myuser", password: "mypass" }, 
 					portalName: "My API-Manager", productVersion: "7.7.20210830"
 				},
-				previousKPIs: {users_total: 1, users_total_diff: 1 }
+				previousKPIs: {users_total: 4, users_total_diff: 1 }
 			});
 
 			expect(output).to.equal('next');
 			expect(value).to.deep.equal({
 				meta:{apiManagerName:"My API-Manager", apiManagerVersion: "7.7.20210830", apiBuilderHostname: os.hostname() }, 
-				users_total: 5, users_total_diff: 4
+				users_total: 8, users_total_diff: 4
+			});
+		});
+
+		it('should return user KPIs only for the given organization', async () => {
+			nock('https://mocked-api-gateway:8175').get('/api/portal/v1.3/users').replyWithFile(200, './test/testReplies/users/8-users-response.json');
+			const { value, output } = await flowNode.getUserKPIs({
+				apiManagerConfig: { 
+					connection: { url: "https://mocked-api-gateway:8175", username: "myuser", password: "mypass" }, 
+					portalName: "My API-Manager", productVersion: "7.7.20210830"
+				},
+				previousKPIs: {users_total: 1, users_total_diff: 1 },
+				organization: {id: "2c724048-653e-418c-977f-b33f6219ee16", name: "Axway"}
+			});
+
+			expect(output).to.equal('next');
+			expect(value).to.deep.equal({
+				meta:{apiManagerName:"My API-Manager", apiManagerVersion: "7.7.20210830", apiBuilderHostname: os.hostname() }, 
+				users_total: 2, users_total_diff: 1,
+				organization: "Axway"
 			});
 		});
 	});

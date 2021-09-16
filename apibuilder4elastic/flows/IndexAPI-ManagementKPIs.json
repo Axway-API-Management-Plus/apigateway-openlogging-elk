@@ -191,7 +191,6 @@
 			"outputs": {
 				"next": {
 					"routes": [
-						"invoke-flow.2",
 						"invoke-flow.1"
 					],
 					"context": "$.apiManagerConfig",
