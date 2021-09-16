@@ -165,6 +165,13 @@
 					"value": "\"apigw-management-kpis\"",
 					"metaName": "Alias name",
 					"metaDescription": "The alias for the index. If an index configuration is given, this alias name is merged into it. Please note, that the index- and alias-name must be different."
+				},
+				{
+					"name": "indexTemplate",
+					"type": "string",
+					"value": "\"management-kpis\"",
+					"metaName": "Index template name",
+					"metaDescription": "If given, the index will only be created if the index-template already exists."
 				}
 			],
 			"outputs": {
@@ -191,7 +198,8 @@
 			"outputs": {
 				"next": {
 					"routes": [
-						"invoke-flow.1"
+						"invoke-flow.1",
+						"invoke-flow.2"
 					],
 					"context": "$.apiManagerConfig",
 					"metaName": "Next"
