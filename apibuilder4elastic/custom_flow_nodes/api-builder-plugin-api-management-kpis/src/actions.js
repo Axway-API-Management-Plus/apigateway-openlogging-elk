@@ -73,8 +73,10 @@ async function getAppKPIs(params, options) {
 	var consideredApps = apps;
 	// Unfortunately we have to check the organization like so, as everything in the Sub-Flow comes with $.request incl. the organization
 	// Therefore the organization is always set
+	var orgNameStringMessage = "";
 	if(organization && organization.name && organization.id) {
 		logger.debug(`Filtering Applications for organization: ${organization.name} (${organization.id}).`);
+		orgNameStringMessage = ` for organization ${organization.name} (${organization.id})`;
 		consideredApps = [];
 		var appCount = 0;
 		for (i = 0; i < apps.length; i++) {
@@ -103,10 +105,11 @@ async function getAppKPIs(params, options) {
 	if(includeSubscriptions) {
 		var subscriptions_total = 0;
 		// Collect the subscriptions for all apps
-		logger.debug(`Getting subscriptions for: ${consideredApps} Applications.`);
+		logger.debug(`Getting subscriptions for: ${consideredApps.length} Applications${orgNameStringMessage}.`);
 		for (i = 0; i < consideredApps.length; i++) {
 			var app = consideredApps[i];
 			var subscriptions = await _getManagerApplicationSubscriptions(apiManagerConfig.connection, app);
+			logger.debug(`Got ${subscriptions.length} subscriptions for application: ${JSON.stringify(app)}.`);
 			subscriptions_total = subscriptions_total + subscriptions.length;
 		}
 		kpis.subscriptions_total = subscriptions_total;
