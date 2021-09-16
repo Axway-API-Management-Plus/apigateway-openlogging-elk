@@ -21,6 +21,12 @@ flow-nodes:
             required: true
             schema:
               type: object
+          organization:
+            name: Organization
+            description: 'If given, the result will contain APIs only for the actual organization. Must be an object containing the id and name of the organization (e.g. {id: "b932cbb5-d4be-4bce-aca7-c5daac14f187", name: "FastCars"}).'
+            required: false
+            schema:
+              type: object
           previousKPIs:
             name: Previous KPIs
             description: This object contains the previous stored KPIs for this API-Manager. It's used to compute relevant differences between the previous and current state. If not given, no differences are computed.

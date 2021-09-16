@@ -10,3 +10,14 @@ triggers:
         request: $.request
         config: $.config
         env: $.env
+  flow-listener-2:
+    name: Flow Listener
+    parameters:
+      id: manager-organizations-kpis
+    enabled: true
+    invoke:
+      flow: KPIs-IndexAPI-ManagerOrganizations(Sub-Flow)
+      parameters:
+        request: $.request
+        config: $.config
+        env: $.env

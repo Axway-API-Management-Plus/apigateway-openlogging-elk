@@ -23,7 +23,7 @@ const os = require("os");
  *	 does not define "next", the first defined output).
  */
 async function getAPIKPIs(params, options) {
-	const { apiManagerConfig, previousKPIs } = params;
+	const { apiManagerConfig, previousKPIs, organization } = params;
 	var { kpis } = params;
 	const { logger } = options;
 	debugger;
@@ -31,10 +31,29 @@ async function getAPIKPIs(params, options) {
 	kpis = await _addKPIMetaInformation(params, kpis);
 
 	const apis = await _getManagerAPIs(apiManagerConfig.connection);
-	kpis.apis_total = apis.length;
-	kpis.apis_total_diff = 0;
-	if(previousKPIs) {
-		kpis.apis_total_diff = await _getDifference(apis.length, previousKPIs.apis_total, "APIs", options);
+	if(organization && organization.name && organization.id) {
+		logger.debug(`Filtering APIs for organization: ${organization.name} (${organization.id}).`);
+		var apiCount = 0;
+		for (i = 0; i < apis.length; i++) {
+			var api = apis[i];
+			if(api.organizationId == organization.id) {
+				apiCount++;
+			}
+		}
+		logger.debug(`Found: ${apiCount} APIs for organization ${organization.name} (${organization.id}).`);
+		kpis.apis_total = apiCount;
+		kpis.apis_total_diff = 0;
+		kpis.organization = organization.name;
+		if(previousKPIs) {
+			kpis.apis_total_diff = await _getDifference(apiCount, previousKPIs.apis_total, "APIs", options);
+		}
+	} else {
+		logger.debug(`Found: ${apis.length} APIs for all organizations.`);
+		kpis.apis_total = apis.length;
+		kpis.apis_total_diff = 0;
+		if(previousKPIs) {
+			kpis.apis_total_diff = await _getDifference(apis.length, previousKPIs.apis_total, "APIs", options);
+		}
 	}
 	return kpis;
 }
@@ -147,7 +166,7 @@ async function _addKPIMetaInformation(params, kpis) {
 
 async function _getManagerAPIs(apiManagerConfig) {
 	var options = {
-		path: `/api/portal/v1.3/discovery/apis`,
+		path: `/api/portal/v1.3/proxies`,
 		headers: {
 			'Authorization': 'Basic ' + Buffer.from(apiManagerConfig.username + ':' + apiManagerConfig.password).toString('base64')
 		},

@@ -335,3 +335,30 @@ flow-nodes:
             properties:
               message:
                 type: string
+
+      getAPIManagerOrganizations:
+        name: Get API-Manager organizations
+        description: Reads organizations from one API-Manager.
+        parameters:
+          apiManager:
+            name: API-Manager connection
+            description: The connection details object to use
+            required: true
+            initialType: object
+            schema:
+              type: object
+        returns:
+          name: Next
+          description: Returns the API-Manager organizations as an array.
+          context: $.apiManagerOrganizations
+          schema:
+            type: array
+        throws:
+          name: Error
+          description: An unexpected error was encountered.
+          context: $.error
+          schema:
+            type: object
+            properties:
+              message:
+                type: string

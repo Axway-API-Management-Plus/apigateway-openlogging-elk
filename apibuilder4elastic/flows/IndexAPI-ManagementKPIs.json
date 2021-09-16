@@ -30,7 +30,7 @@
 				{
 					"name": "code",
 					"type": "string",
-					"value": "\"return Math.floor(Math.random() * Math.floor(60000));\"",
+					"value": "\"//return Math.floor(Math.random() * Math.floor(60000));\\n  return Math.floor(Math.random() * Math.floor(1000));\"",
 					"metaName": "Code",
 					"metaDescription": "A JavaScript function body. Supports `await` and returning promises. `data` is the value of the Data parameter. `logger` is the API Builder logger. See the docs for more info: https://docs.axway.com/bundle/API_Builder_4x_allOS_en/page/javascript_flow-node.html"
 				}
@@ -191,6 +191,7 @@
 			"outputs": {
 				"next": {
 					"routes": [
+						"invoke-flow.2",
 						"invoke-flow.1"
 					],
 					"context": "$.apiManagerConfig",
@@ -210,13 +211,6 @@
 			"method": "invokeFlowForEach",
 			"parameters": [
 				{
-					"name": "concurrency",
-					"type": "number",
-					"value": "0",
-					"metaName": "Concurrency",
-					"metaDescription": "By default, items in the Items array are processed concurrently in chunks of 10.  This value can be set to 0 to process all items in Items concurrently, or set to 1 to disable concurrency, or set to a value greater-than 1 to provide a throttling mechanism so as to not overwhelm a backend."
-				},
-				{
 					"name": "id",
 					"type": "string",
 					"value": "\"index-api-management-kpis\"",
@@ -229,6 +223,13 @@
 					"value": "$.apiManagerConfig",
 					"metaName": "Items",
 					"metaDescription": "An array of input items where each item will be passed as request data when invoking the flow."
+				},
+				{
+					"name": "concurrency",
+					"type": "number",
+					"value": "1",
+					"metaName": "Concurrency",
+					"metaDescription": "By default, items in the Items array are processed concurrently in chunks of 10.  This value can be set to 0 to process all items in Items concurrently, or set to 1 to disable concurrency, or set to a value greater-than 1 to provide a throttling mechanism so as to not overwhelm a backend."
 				}
 			],
 			"outputs": {
@@ -414,7 +415,9 @@
 				{
 					"name": "value",
 					"type": "boolean",
-					"value": "true"
+					"value": "true",
+					"metaName": "Value",
+					"metaDescription": "The value to test input against."
 				}
 			],
 			"outputs": {
@@ -468,6 +471,47 @@
 				}
 			},
 			"metaMethod": "Log Message"
+		},
+		"invoke-flow.2": {
+			"type": "nodehandler://@axway/api-builder-plugin-invoke-flow/invoke-flow",
+			"name": "KPIs per Organization",
+			"method": "invokeFlowForEach",
+			"parameters": [
+				{
+					"name": "id",
+					"type": "string",
+					"value": "\"manager-organizations-kpis\"",
+					"metaName": "Flow Listener ID",
+					"metaDescription": "The ID of a previously configured `Flow Listener`."
+				},
+				{
+					"name": "items",
+					"type": "jsonpath",
+					"value": "$.apiManagerConfig",
+					"metaName": "Items",
+					"metaDescription": "An array of input items where each item will be passed as request data when invoking the flow."
+				},
+				{
+					"name": "concurrency",
+					"type": "number",
+					"value": "1",
+					"metaName": "Concurrency",
+					"metaDescription": "By default, items in the Items array are processed concurrently in chunks of 10.  This value can be set to 0 to process all items in Items concurrently, or set to 1 to disable concurrency, or set to a value greater-than 1 to provide a throttling mechanism so as to not overwhelm a backend."
+				}
+			],
+			"outputs": {
+				"next": {
+					"routes": [],
+					"context": "$.flowResponse",
+					"metaName": "Next"
+				},
+				"error": {
+					"routes": [],
+					"context": "$.error",
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Invoke Flow (for-each)"
 		}
 	}
 }

@@ -2,6 +2,7 @@ const { expect } = require('chai');
 const { MockRuntime } = require('@axway/api-builder-test-utils');
 const getPlugin = require('../src');
 const nock = require('nock');
+const os = require("os");
 
 describe('flow-node api-management-kpis', () => {
 	let plugin;
@@ -30,20 +31,23 @@ describe('flow-node api-management-kpis', () => {
 			});
 
 			expect(output).to.equal('next');
-			expect(value).to.deep.equal({apiManager:{name:"My API-Manager", version: "7.7.20210830" }, orgs_total: 6, orgs_total_diff:0});
+			expect(value).to.deep.equal(
+				{meta:{apiManagerName:"My API-Manager", apiManagerVersion: "7.7.20210830", apiBuilderHostname: os.hostname() }, 
+				orgs_total: 8, orgs_total_diff:0}
+			);
 		});
 
 		it('should succeed with valid arguments and return merged KPIs object', async () => {
 			nock('https://mocked-api-gateway:8175').get('/api/portal/v1.3/organizations').replyWithFile(200, './test/testReplies/orgs/6-orgs-response.json');
 			const { value, output } = await flowNode.getOrgKPIs({
 				apiManagerConfig: { connection: { url: "https://mocked-api-gateway:8175", username: "myuser", password: "mypass" }, portalName: "My API-Manager", productVersion: "7.7.20210830" },
-				kpis: { apiManager:{name:"Test API-Manager", version: "7.7.20210530" }, apis_total: 235, apis_total_diff: 2 }
+				kpis: { meta: { apiManagerName:"Test API-Manager", apiManagerVersion: "7.7.20210530", apiBuilderHostname: os.hostname() }, apis_total: 235, apis_total_diff: 2 }
 			});
 
 			expect(output).to.equal('next');
 			expect(value).to.deep.equal({
-				apiManager:{name:"Test API-Manager", version: "7.7.20210530" }, 
-				orgs_total: 6, orgs_total_diff: 0,
+				meta:{apiManagerName:"Test API-Manager", apiManagerVersion: "7.7.20210530", apiBuilderHostname: os.hostname() }, 
+				orgs_total: 8, orgs_total_diff: 0,
 				apis_total: 235, apis_total_diff: 2
 			});
 		});
@@ -60,8 +64,8 @@ describe('flow-node api-management-kpis', () => {
 
 			expect(output).to.equal('next');
 			expect(value).to.deep.equal({
-				apiManager:{name:"My API-Manager", version: "7.7.20210830" }, 
-				orgs_total: 6, orgs_total_diff: -9
+				meta: { apiManagerName:"My API-Manager", apiManagerVersion: "7.7.20210830", apiBuilderHostname: os.hostname() }, 
+				orgs_total: 8, orgs_total_diff: -7
 			});
 		});
 
@@ -77,8 +81,8 @@ describe('flow-node api-management-kpis', () => {
 
 			expect(output).to.equal('next');
 			expect(value).to.deep.equal({
-				apiManager:{name:"My API-Manager", version: "7.7.20210830" }, 
-				orgs_total: 6, orgs_total_diff: 5
+				meta:{apiManagerName:"My API-Manager", apiManagerVersion: "7.7.20210830", apiBuilderHostname: os.hostname() }, 
+				orgs_total: 8, orgs_total_diff: 7
 			});
 		});
 	});

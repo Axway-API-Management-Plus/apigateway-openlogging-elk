@@ -62,4 +62,19 @@ describe('Test API-Manager config', () => {
 			expect(value[1].portalName).to.equal(`Axway API Manager (US GROUP-2)`);
 		});	
 	});
+
+	describe('#getAPIManagerOrganizations', () => {
+		it('should return the API-Manager organizations', async () => {
+			nock('https://mocked-api-gateway:8175').get('/api/portal/v1.3/organizations').replyWithFile(200, './test/testReplies/apimanager/apiManagerOrganizations.json');
+
+			plugin = await MockRuntime.loadPlugin(getPlugin,pluginConfig);
+			plugin.setOptions({ validateOutputs: true });
+			flowNode = plugin.getFlowNode('axway-api-management');
+			
+			const { value, output } = await flowNode.getAPIManagerOrganizations({ apiManager: { url: "https://mocked-api-gateway:8175", username: "user", password: "pass" } });
+
+			expect(output).to.equal('next');
+			expect(value).to.lengthOf(8); // 
+		});
+	});
 });

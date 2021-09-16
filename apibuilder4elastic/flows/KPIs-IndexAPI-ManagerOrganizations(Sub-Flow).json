@@ -1,0 +1,151 @@
+{
+	"schemaVersion": "4",
+	"info": {
+		"name": "KPIs - Index API-Manager Organizations (Sub-Flow)",
+		"description": "Is indexing all organizations of a single API-Manager"
+	},
+	"parameter": {
+		"properties": {
+			"request": {
+				"description": "The request"
+			},
+			"config": {
+				"type": "object",
+				"description": "The service's configuration"
+			},
+			"env": {
+				"type": "object",
+				"description": "The host OS environment"
+			}
+		},
+		"additionalProperties": false
+	},
+	"start": "axway-api-management.1",
+	"nodes": {
+		"axway-api-management.1": {
+			"type": "nodehandler://api-builder-plugin-axway-api-management/axway-api-management",
+			"name": "Get API-Manager organizations",
+			"method": "getAPIManagerOrganizations",
+			"parameters": [
+				{
+					"name": "apiManager",
+					"type": "jsonpath",
+					"value": "$.request.connection",
+					"metaName": "API-Manager connection",
+					"metaDescription": "The connection details object to use"
+				}
+			],
+			"outputs": {
+				"next": {
+					"routes": [
+						"javascript.1"
+					],
+					"context": "$.apiManagerOrganizations",
+					"metaName": "Next"
+				},
+				"error": {
+					"routes": [],
+					"context": "$.error",
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Get API-Manager organizations"
+		},
+		"invoke-flow.1": {
+			"type": "nodehandler://@axway/api-builder-plugin-invoke-flow/invoke-flow",
+			"name": "Index KPIs for Organization",
+			"method": "invokeFlowForEach",
+			"parameters": [
+				{
+					"name": "items",
+					"type": "jsonpath",
+					"value": "$.apiManagerOrganizations",
+					"metaName": "Items",
+					"metaDescription": "An array of input items where each item will be passed as request data when invoking the flow."
+				},
+				{
+					"name": "id",
+					"type": "string",
+					"value": "\"index-api-management-kpis\"",
+					"metaName": "Flow Listener ID",
+					"metaDescription": "The ID of a previously configured `Flow Listener`."
+				},
+				{
+					"name": "concurrency",
+					"type": "number",
+					"value": "1"
+				}
+			],
+			"outputs": {
+				"next": {
+					"routes": [
+						"invoke-flow-response.1"
+					],
+					"context": "$.flowResponse",
+					"metaName": "Next"
+				},
+				"error": {
+					"routes": [],
+					"context": "$.error",
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Invoke Flow (for-each)"
+		},
+		"invoke-flow-response.1": {
+			"type": "nodehandler://@axway/api-builder-plugin-invoke-flow/invoke-flow-response",
+			"name": "Set Response",
+			"method": "setResponse",
+			"parameters": [],
+			"outputs": {
+				"next": {
+					"context": "$.response",
+					"routes": [],
+					"metaName": "Next"
+				},
+				"error": {
+					"context": "$.error",
+					"routes": [],
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Set Response"
+		},
+		"javascript.1": {
+			"type": "nodehandler://@axway/api-builder-plugin-fn-javascript/javascript",
+			"name": "Add portalName & Connection",
+			"method": "Execute",
+			"parameters": [
+				{
+					"name": "data",
+					"type": "jsonpath",
+					"value": "$",
+					"metaName": "Data",
+					"metaDescription": "The value to apply as the `data` argument of the JavaScript code. For objects and arrays, `data` is passed by reference."
+				},
+				{
+					"name": "code",
+					"type": "string",
+					"value": "\"var apiManagerOrganizations = data.apiManagerOrganizations;\\n  var portalName = data.request.portalName;\\n  var connection = data.request.connection;\\n  // We have to add required details to all list item before calling the sub-flow\\n  for (i = 0; i < apiManagerOrganizations.length; i++) {\\n    var org = apiManagerOrganizations[i];\\n    org.portalName = portalName; // Used to query the actual KPI\\n    org.connection = connection; \\n  }\\n  return apiManagerOrganizations;\"",
+					"metaName": "Code",
+					"metaDescription": "A JavaScript function body. Supports `await` and returning promises. `data` is the value of the Data parameter. `logger` is the API Builder logger. See the docs for more info: https://docs.axway.com/bundle/API_Builder_4x_allOS_en/page/javascript_flow-node.html"
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.apiManagerOrganizations",
+					"routes": [
+						"invoke-flow.1"
+					],
+					"metaName": "Next"
+				},
+				"error": {
+					"context": "$.error",
+					"routes": [],
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Execute"
+		}
+	}
+}

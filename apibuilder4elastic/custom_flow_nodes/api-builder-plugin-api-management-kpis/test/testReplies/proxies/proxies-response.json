@@ -1,0 +1,3319 @@
+[
+    {
+        "id": "2fc22ca8-cf55-49aa-ba0f-6a1dc413cee7",
+        "organizationId": "2c724048-653e-418c-977f-b33f6219ee16",
+        "apiId": "5f54375f-ae8f-41b1-85aa-3affeaa445b1",
+        "name": "Greeting API",
+        "version": "1.0.0",
+        "apiRoutingKey": null,
+        "vhost": null,
+        "path": "/api/greet",
+        "descriptionType": "original",
+        "descriptionManual": null,
+        "descriptionMarkdown": null,
+        "descriptionUrl": null,
+        "summary": null,
+        "retired": false,
+        "expired": false,
+        "image": null,
+        "retirementDate": 0,
+        "deprecated": false,
+        "state": "published",
+        "createdOn": 1626937683460,
+        "createdBy": "d8554fd4-03a8-4371-be00-90d69df54e10",
+        "corsProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "origins": [
+                    "*"
+                ],
+                "allowedHeaders": [],
+                "exposedHeaders": [
+                    "X-CorrelationID"
+                ],
+                "supportCredentials": false,
+                "maxAgeSeconds": 0
+            }
+        ],
+        "securityProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "devices": [
+                    {
+                        "name": "API Key",
+                        "type": "apiKey",
+                        "order": 1,
+                        "properties": {
+                            "apiKeyFieldName": "KeyId",
+                            "takeFrom": "HEADER",
+                            "removeCredentialsOnSuccess": "true"
+                        }
+                    }
+                ]
+            }
+        ],
+        "authenticationProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "parameters": {
+                    "_id_": 0
+                },
+                "type": "none"
+            }
+        ],
+        "inboundProfiles": {
+            "_default": {
+                "securityProfile": "_default",
+                "corsProfile": "_default",
+                "monitorAPI": true,
+                "monitorSubject": "authentication.subject.id"
+            }
+        },
+        "outboundProfiles": {
+            "_default": {
+                "authenticationProfile": "_default",
+                "routeType": "policy",
+                "requestPolicy": "<key type='CircuitContainer'><id field='name' value='RBI-Demo'/><key type='FilterCircuit'><id field='name' value='Request Policy 1'/></key></key>",
+                "responsePolicy": "<key type='CircuitContainer'><id field='name' value='RBI-Demo'/><key type='FilterCircuit'><id field='name' value='Response Policy 1'/></key></key>",
+                "routePolicy": "<key type='CircuitContainer'><id field='name' value='Generated Policies'/><key type='CircuitContainer'><id field='name' value='REST API&apos;s'/><key type='CircuitContainer'><id field='name' value='Templates'/><key type='FilterCircuit'><id field='name' value='Default URL-based Routing'/></key></key></key></key>",
+                "faultHandlerPolicy": null,
+                "apiId": "5f54375f-ae8f-41b1-85aa-3affeaa445b1",
+                "apiMethodId": null,
+                "parameters": []
+            }
+        },
+        "serviceProfiles": {
+            "_default": {
+                "apiId": "5f54375f-ae8f-41b1-85aa-3affeaa445b1",
+                "basePath": "http://mocked-apis:8280"
+            }
+        },
+        "caCerts": [],
+        "tags": {}
+    },
+    {
+        "id": "92eb944c-57c2-49f6-afc6-6198a805b44f",
+        "organizationId": "19f2fcb7-1f24-40b3-aeb6-16acda948c82",
+        "apiId": "bcfe227c-3786-4515-bcf5-5f872a3f98ce",
+        "name": "FHIR Encounter",
+        "version": "DSTU2",
+        "apiRoutingKey": null,
+        "vhost": null,
+        "path": "/encounter",
+        "descriptionType": "manual",
+        "descriptionManual": "An interaction between a patient and healthcare provider(s) for the purpose of providing healthcare service(s) or assessing the health status of a patient. For more information: https://www.hl7.org/fhir/encounter.html",
+        "descriptionMarkdown": null,
+        "descriptionUrl": null,
+        "summary": null,
+        "retired": false,
+        "expired": false,
+        "image": "/api/portal/v1.3/discovery/swagger/apis/92eb944c-57c2-49f6-afc6-6198a805b44f/image",
+        "retirementDate": 0,
+        "deprecated": false,
+        "state": "published",
+        "createdOn": 1626766543296,
+        "createdBy": "d8554fd4-03a8-4371-be00-90d69df54e10",
+        "corsProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "origins": [
+                    "*"
+                ],
+                "allowedHeaders": [],
+                "exposedHeaders": [
+                    "X-CorrelationID"
+                ],
+                "supportCredentials": false,
+                "maxAgeSeconds": 0
+            }
+        ],
+        "securityProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "devices": [
+                    {
+                        "name": "API Key",
+                        "type": "apiKey",
+                        "order": 1,
+                        "properties": {
+                            "apiKeyFieldName": "KeyId",
+                            "takeFrom": "HEADER",
+                            "removeCredentialsOnSuccess": "true"
+                        }
+                    }
+                ]
+            }
+        ],
+        "authenticationProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "parameters": {
+                    "_id_": 0
+                },
+                "type": "none"
+            }
+        ],
+        "inboundProfiles": {
+            "_default": {
+                "securityProfile": "_default",
+                "corsProfile": "_default",
+                "monitorAPI": true,
+                "monitorSubject": "authentication.subject.id"
+            }
+        },
+        "outboundProfiles": {
+            "_default": {
+                "authenticationProfile": "_default",
+                "routeType": "proxy",
+                "requestPolicy": null,
+                "responsePolicy": null,
+                "routePolicy": null,
+                "faultHandlerPolicy": null,
+                "apiId": null,
+                "apiMethodId": null,
+                "parameters": []
+            }
+        },
+        "serviceProfiles": {
+            "_default": {
+                "apiId": "bcfe227c-3786-4515-bcf5-5f872a3f98ce",
+                "basePath": "http://mocked-apis:8280"
+            }
+        },
+        "caCerts": [],
+        "tags": {
+            "Industry": [
+                "Healthcare"
+            ],
+            "Type": [
+                "Demo_FHIR"
+            ],
+            "Category": [
+                "Workflow",
+                " Patient Management"
+            ],
+            "Standard": [
+                "FHIR"
+            ]
+        }
+    },
+    {
+        "id": "914a5ef7-0eb0-48fa-9194-cc5c19109fb7",
+        "organizationId": "19f2fcb7-1f24-40b3-aeb6-16acda948c82",
+        "apiId": "2d488920-a58d-4833-be9c-ddd8d685bba8",
+        "name": "FHIR Appointment",
+        "version": "DSTU2",
+        "apiRoutingKey": null,
+        "vhost": null,
+        "path": "/appointment",
+        "descriptionType": "manual",
+        "descriptionManual": "A booking of a healthcare event among patient(s), practitioner(s), related person(s) and/or device(s) for a specific date/time. This may result in one or more Encounter(s). For more information: https://www.hl7.org/fhir/appointment.html",
+        "descriptionMarkdown": null,
+        "descriptionUrl": null,
+        "summary": null,
+        "retired": false,
+        "expired": false,
+        "image": "/api/portal/v1.3/discovery/swagger/apis/914a5ef7-0eb0-48fa-9194-cc5c19109fb7/image",
+        "retirementDate": 0,
+        "deprecated": false,
+        "state": "published",
+        "createdOn": 1626766518839,
+        "createdBy": "d8554fd4-03a8-4371-be00-90d69df54e10",
+        "corsProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "origins": [
+                    "*"
+                ],
+                "allowedHeaders": [],
+                "exposedHeaders": [
+                    "X-CorrelationID"
+                ],
+                "supportCredentials": false,
+                "maxAgeSeconds": 0
+            }
+        ],
+        "securityProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "devices": [
+                    {
+                        "name": "API Key",
+                        "type": "apiKey",
+                        "order": 1,
+                        "properties": {
+                            "apiKeyFieldName": "KeyId",
+                            "takeFrom": "HEADER",
+                            "removeCredentialsOnSuccess": "true"
+                        }
+                    }
+                ]
+            }
+        ],
+        "authenticationProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "parameters": {
+                    "_id_": 0
+                },
+                "type": "none"
+            }
+        ],
+        "inboundProfiles": {
+            "_default": {
+                "securityProfile": "_default",
+                "corsProfile": "_default",
+                "monitorAPI": true,
+                "monitorSubject": "authentication.subject.id"
+            }
+        },
+        "outboundProfiles": {
+            "_default": {
+                "authenticationProfile": "_default",
+                "routeType": "proxy",
+                "requestPolicy": null,
+                "responsePolicy": null,
+                "routePolicy": null,
+                "faultHandlerPolicy": null,
+                "apiId": null,
+                "apiMethodId": null,
+                "parameters": []
+            }
+        },
+        "serviceProfiles": {
+            "_default": {
+                "apiId": "2d488920-a58d-4833-be9c-ddd8d685bba8",
+                "basePath": "http://mocked-apis:8280"
+            }
+        },
+        "caCerts": [],
+        "tags": {
+            "Industry": [
+                "Healthcare"
+            ],
+            "Type": [
+                "Demo_FHIR"
+            ],
+            "Category": [
+                "Workflow",
+                " Scheduling"
+            ],
+            "Standard": [
+                "FHIR"
+            ]
+        }
+    },
+    {
+        "id": "d17e4131-ddf8-4bfb-85ed-82959a479126",
+        "organizationId": "fbb9fca7-e168-4c79-84fa-547516623d72",
+        "apiId": "d3e19484-e4d3-4769-93cb-65cbd13135ad",
+        "name": "INS-InsuranceCheck",
+        "version": "1.3",
+        "apiRoutingKey": null,
+        "vhost": null,
+        "path": "/api/ins/check",
+        "descriptionType": "original",
+        "descriptionManual": null,
+        "descriptionMarkdown": null,
+        "descriptionUrl": null,
+        "summary": "Validate patient insurance",
+        "retired": false,
+        "expired": false,
+        "image": "/api/portal/v1.3/discovery/swagger/apis/d17e4131-ddf8-4bfb-85ed-82959a479126/image",
+        "retirementDate": 0,
+        "deprecated": false,
+        "state": "published",
+        "createdOn": 1626766507942,
+        "createdBy": "d8554fd4-03a8-4371-be00-90d69df54e10",
+        "corsProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "origins": [
+                    "*"
+                ],
+                "allowedHeaders": [],
+                "exposedHeaders": [
+                    "X-CorrelationID"
+                ],
+                "supportCredentials": false,
+                "maxAgeSeconds": 0
+            }
+        ],
+        "securityProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "devices": [
+                    {
+                        "name": "API Key",
+                        "type": "apiKey",
+                        "order": 1,
+                        "properties": {
+                            "apiKeyFieldName": "KeyId",
+                            "takeFrom": "HEADER",
+                            "removeCredentialsOnSuccess": "true"
+                        }
+                    }
+                ]
+            }
+        ],
+        "authenticationProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "parameters": {
+                    "_id_": 0
+                },
+                "type": "none"
+            }
+        ],
+        "inboundProfiles": {
+            "_default": {
+                "securityProfile": "_default",
+                "corsProfile": "_default",
+                "monitorAPI": true,
+                "monitorSubject": "authentication.subject.id"
+            }
+        },
+        "outboundProfiles": {
+            "_default": {
+                "authenticationProfile": "_default",
+                "routeType": "proxy",
+                "requestPolicy": null,
+                "responsePolicy": null,
+                "routePolicy": null,
+                "faultHandlerPolicy": null,
+                "apiId": null,
+                "apiMethodId": null,
+                "parameters": []
+            }
+        },
+        "serviceProfiles": {
+            "_default": {
+                "apiId": "d3e19484-e4d3-4769-93cb-65cbd13135ad",
+                "basePath": "http://mocked-apis:8280"
+            }
+        },
+        "caCerts": [],
+        "tags": {
+            "Industry": [
+                "Healthcare"
+            ],
+            "Type": [
+                "Demo_Amplify_PlexusHealth"
+            ]
+        }
+    },
+    {
+        "id": "5cc1c270-aead-4bba-b2c6-7c29876b8bbd",
+        "organizationId": "19f2fcb7-1f24-40b3-aeb6-16acda948c82",
+        "apiId": "2846b243-699d-4658-baef-a084e307d13e",
+        "name": "FHIR Procedure",
+        "version": "DSTU2",
+        "apiRoutingKey": null,
+        "vhost": null,
+        "path": "/procedure",
+        "descriptionType": "manual",
+        "descriptionManual": "An action that is or was performed on a patient. This can be a physical intervention like an operation, or less invasive like counseling or hypnotherapy. For more information: https://www.hl7.org/fhir/procedure.html",
+        "descriptionMarkdown": null,
+        "descriptionUrl": null,
+        "summary": null,
+        "retired": false,
+        "expired": false,
+        "image": "/api/portal/v1.3/discovery/swagger/apis/5cc1c270-aead-4bba-b2c6-7c29876b8bbd/image",
+        "retirementDate": 0,
+        "deprecated": false,
+        "state": "published",
+        "createdOn": 1626766577733,
+        "createdBy": "d8554fd4-03a8-4371-be00-90d69df54e10",
+        "corsProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "origins": [
+                    "*"
+                ],
+                "allowedHeaders": [],
+                "exposedHeaders": [
+                    "X-CorrelationID"
+                ],
+                "supportCredentials": false,
+                "maxAgeSeconds": 0
+            }
+        ],
+        "securityProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "devices": [
+                    {
+                        "name": "API Key",
+                        "type": "apiKey",
+                        "order": 1,
+                        "properties": {
+                            "apiKeyFieldName": "KeyId",
+                            "takeFrom": "HEADER",
+                            "removeCredentialsOnSuccess": "true"
+                        }
+                    }
+                ]
+            }
+        ],
+        "authenticationProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "parameters": {
+                    "_id_": 0
+                },
+                "type": "none"
+            }
+        ],
+        "inboundProfiles": {
+            "_default": {
+                "securityProfile": "_default",
+                "corsProfile": "_default",
+                "monitorAPI": true,
+                "monitorSubject": "authentication.subject.id"
+            }
+        },
+        "outboundProfiles": {
+            "_default": {
+                "authenticationProfile": "_default",
+                "routeType": "proxy",
+                "requestPolicy": null,
+                "responsePolicy": null,
+                "routePolicy": null,
+                "faultHandlerPolicy": null,
+                "apiId": null,
+                "apiMethodId": null,
+                "parameters": []
+            }
+        },
+        "serviceProfiles": {
+            "_default": {
+                "apiId": "2846b243-699d-4658-baef-a084e307d13e",
+                "basePath": "http://mocked-apis:8280"
+            }
+        },
+        "caCerts": [],
+        "tags": {
+            "Industry": [
+                "Healthcare"
+            ],
+            "Type": [
+                "Demo_FHIR"
+            ],
+            "Category": [
+                "Clinical",
+                " General"
+            ],
+            "Standard": [
+                "FHIR"
+            ]
+        }
+    },
+    {
+        "id": "34b03034-7473-4149-8d39-4aa0f8a82d85",
+        "organizationId": "3fec2611-17a1-46fa-be9f-dd00862ace7c",
+        "apiId": "2323b5f9-4465-4d63-b0a9-0960ad3daa25",
+        "name": "Petstore",
+        "version": "1.0.5",
+        "apiRoutingKey": null,
+        "vhost": null,
+        "path": "/petstore/v2",
+        "descriptionType": "original",
+        "descriptionManual": null,
+        "descriptionMarkdown": null,
+        "descriptionUrl": null,
+        "summary": null,
+        "retired": false,
+        "expired": false,
+        "image": null,
+        "retirementDate": 0,
+        "deprecated": false,
+        "state": "unpublished",
+        "createdOn": 1626766593987,
+        "createdBy": "d8554fd4-03a8-4371-be00-90d69df54e10",
+        "corsProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "origins": [
+                    "*"
+                ],
+                "allowedHeaders": [],
+                "exposedHeaders": [
+                    "X-CorrelationID"
+                ],
+                "supportCredentials": false,
+                "maxAgeSeconds": 0
+            }
+        ],
+        "securityProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "devices": [
+                    {
+                        "name": "API Key",
+                        "type": "apiKey",
+                        "order": 1,
+                        "properties": {
+                            "apiKeyFieldName": "KeyId",
+                            "takeFrom": "HEADER",
+                            "removeCredentialsOnSuccess": "true"
+                        }
+                    }
+                ]
+            }
+        ],
+        "authenticationProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "parameters": {
+                    "_id_": 0
+                },
+                "type": "none"
+            }
+        ],
+        "inboundProfiles": {
+            "_default": {
+                "securityProfile": "_default",
+                "corsProfile": "_default",
+                "monitorAPI": true,
+                "monitorSubject": "authentication.subject.id"
+            }
+        },
+        "outboundProfiles": {
+            "_default": {
+                "authenticationProfile": "_default",
+                "routeType": "proxy",
+                "requestPolicy": null,
+                "responsePolicy": null,
+                "routePolicy": null,
+                "faultHandlerPolicy": null,
+                "apiId": null,
+                "apiMethodId": null,
+                "parameters": []
+            }
+        },
+        "serviceProfiles": {
+            "_default": {
+                "apiId": "2323b5f9-4465-4d63-b0a9-0960ad3daa25",
+                "basePath": "http://mocked-apis:8280"
+            }
+        },
+        "caCerts": [],
+        "tags": {},
+        "securityLevel": "public",
+        "publicAPI": "false"
+    },
+    {
+        "id": "fe796450-ed47-46ce-a62a-853b03cddad8",
+        "organizationId": "fbb9fca7-e168-4c79-84fa-547516623d72",
+        "apiId": "ea470c43-d67f-4b51-afd0-4f1c3ca277be",
+        "name": "Security-PatientAuth-Service",
+        "version": "2.2",
+        "apiRoutingKey": null,
+        "vhost": null,
+        "path": "/api/sec/auth/patient",
+        "descriptionType": "original",
+        "descriptionManual": null,
+        "descriptionMarkdown": null,
+        "descriptionUrl": null,
+        "summary": "Security service providing patient authentication",
+        "retired": false,
+        "expired": false,
+        "image": "/api/portal/v1.3/discovery/swagger/apis/fe796450-ed47-46ce-a62a-853b03cddad8/image",
+        "retirementDate": 0,
+        "deprecated": false,
+        "state": "published",
+        "createdOn": 1626766513171,
+        "createdBy": "d8554fd4-03a8-4371-be00-90d69df54e10",
+        "corsProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "origins": [
+                    "*"
+                ],
+                "allowedHeaders": [],
+                "exposedHeaders": [
+                    "X-CorrelationID"
+                ],
+                "supportCredentials": false,
+                "maxAgeSeconds": 0
+            }
+        ],
+        "securityProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "devices": [
+                    {
+                        "name": "Pass Through",
+                        "type": "passThrough",
+                        "order": 0,
+                        "properties": {
+                            "subjectIdFieldName": "Pass Through",
+                            "removeCredentialsOnSuccess": "true"
+                        }
+                    }
+                ]
+            }
+        ],
+        "authenticationProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "parameters": {
+                    "_id_": 0
+                },
+                "type": "none"
+            }
+        ],
+        "inboundProfiles": {
+            "_default": {
+                "securityProfile": "_default",
+                "corsProfile": "_default",
+                "monitorAPI": true,
+                "monitorSubject": "authentication.subject.id"
+            }
+        },
+        "outboundProfiles": {
+            "_default": {
+                "authenticationProfile": "_default",
+                "routeType": "proxy",
+                "requestPolicy": null,
+                "responsePolicy": null,
+                "routePolicy": null,
+                "faultHandlerPolicy": null,
+                "apiId": null,
+                "apiMethodId": null,
+                "parameters": []
+            }
+        },
+        "serviceProfiles": {
+            "_default": {
+                "apiId": "ea470c43-d67f-4b51-afd0-4f1c3ca277be",
+                "basePath": "http://mocked-apis:8280"
+            }
+        },
+        "caCerts": [],
+        "tags": {
+            "Industry": [
+                "Healthcare"
+            ],
+            "Type": [
+                "Demo_Amplify_PlexusHealth"
+            ],
+            "Category": [
+                "Auth",
+                " Security"
+            ]
+        }
+    },
+    {
+        "id": "a0922624-ed17-401b-9301-cce860beba5d",
+        "organizationId": "fbb9fca7-e168-4c79-84fa-547516623d72",
+        "apiId": "833333d6-83f8-4b6e-9eae-b99359ffb008",
+        "name": "HL7-Interface-Module",
+        "version": "2.1",
+        "apiRoutingKey": null,
+        "vhost": null,
+        "path": "/api/hl7/module/verif",
+        "descriptionType": "original",
+        "descriptionManual": null,
+        "descriptionMarkdown": null,
+        "descriptionUrl": null,
+        "summary": "HL7 standards module verifications",
+        "retired": false,
+        "expired": false,
+        "image": "/api/portal/v1.3/discovery/swagger/apis/a0922624-ed17-401b-9301-cce860beba5d/image",
+        "retirementDate": 0,
+        "deprecated": false,
+        "state": "published",
+        "createdOn": 1626766501485,
+        "createdBy": "d8554fd4-03a8-4371-be00-90d69df54e10",
+        "corsProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "origins": [
+                    "*"
+                ],
+                "allowedHeaders": [],
+                "exposedHeaders": [
+                    "X-CorrelationID"
+                ],
+                "supportCredentials": false,
+                "maxAgeSeconds": 0
+            }
+        ],
+        "securityProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "devices": [
+                    {
+                        "name": "HTTP Basic",
+                        "type": "basic",
+                        "order": 1,
+                        "properties": {
+                            "realm": "Default",
+                            "removeCredentialsOnSuccess": "true"
+                        }
+                    }
+                ]
+            }
+        ],
+        "authenticationProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "parameters": {
+                    "_id_": 0
+                },
+                "type": "none"
+            }
+        ],
+        "inboundProfiles": {
+            "_default": {
+                "securityProfile": "_default",
+                "corsProfile": "_default",
+                "monitorAPI": true,
+                "monitorSubject": "authentication.subject.id"
+            }
+        },
+        "outboundProfiles": {
+            "_default": {
+                "authenticationProfile": "_default",
+                "routeType": "proxy",
+                "requestPolicy": null,
+                "responsePolicy": null,
+                "routePolicy": null,
+                "faultHandlerPolicy": null,
+                "apiId": null,
+                "apiMethodId": null,
+                "parameters": []
+            }
+        },
+        "serviceProfiles": {
+            "_default": {
+                "apiId": "833333d6-83f8-4b6e-9eae-b99359ffb008",
+                "basePath": "http://mocked-apis:8280"
+            }
+        },
+        "caCerts": [],
+        "tags": {
+            "Industry": [
+                "Healthcare"
+            ],
+            "Type": [
+                "Demo_Amplify_PlexusHealth"
+            ]
+        }
+    },
+    {
+        "id": "063f04d5-b22d-4754-820c-b2874f691598",
+        "organizationId": "fbb9fca7-e168-4c79-84fa-547516623d72",
+        "apiId": "98839086-439e-49fb-8b2f-becd168bfe6e",
+        "name": "HL7-Message-Maker",
+        "version": "2.1",
+        "apiRoutingKey": null,
+        "vhost": null,
+        "path": "/api/hl7/message",
+        "descriptionType": "original",
+        "descriptionManual": null,
+        "descriptionMarkdown": null,
+        "descriptionUrl": null,
+        "summary": "Manage message standards for transfer of clinical and administrative data between software applications used by various healthcare providers",
+        "retired": false,
+        "expired": false,
+        "image": "/api/portal/v1.3/discovery/swagger/apis/063f04d5-b22d-4754-820c-b2874f691598/image",
+        "retirementDate": 0,
+        "deprecated": false,
+        "state": "published",
+        "createdOn": 1626766495832,
+        "createdBy": "d8554fd4-03a8-4371-be00-90d69df54e10",
+        "corsProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "origins": [
+                    "*"
+                ],
+                "allowedHeaders": [],
+                "exposedHeaders": [
+                    "X-CorrelationID"
+                ],
+                "supportCredentials": false,
+                "maxAgeSeconds": 0
+            }
+        ],
+        "securityProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "devices": [
+                    {
+                        "name": "Pass Through",
+                        "type": "passThrough",
+                        "order": 0,
+                        "properties": {
+                            "subjectIdFieldName": "Pass Through",
+                            "removeCredentialsOnSuccess": "true"
+                        }
+                    }
+                ]
+            }
+        ],
+        "authenticationProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "parameters": {
+                    "_id_": 0
+                },
+                "type": "none"
+            }
+        ],
+        "inboundProfiles": {
+            "_default": {
+                "securityProfile": "_default",
+                "corsProfile": "_default",
+                "monitorAPI": true,
+                "monitorSubject": "authentication.subject.id"
+            }
+        },
+        "outboundProfiles": {
+            "_default": {
+                "authenticationProfile": "_default",
+                "routeType": "proxy",
+                "requestPolicy": null,
+                "responsePolicy": null,
+                "routePolicy": null,
+                "faultHandlerPolicy": null,
+                "apiId": null,
+                "apiMethodId": null,
+                "parameters": []
+            }
+        },
+        "serviceProfiles": {
+            "_default": {
+                "apiId": "98839086-439e-49fb-8b2f-becd168bfe6e",
+                "basePath": "http://mocked-apis:8280"
+            }
+        },
+        "caCerts": [],
+        "tags": {
+            "Industry": [
+                "Healthcare"
+            ],
+            "Type": [
+                "Demo_Amplify_PlexusHealth"
+            ]
+        }
+    },
+    {
+        "id": "14307233-89f8-42e3-997c-8654bfedcdc9",
+        "organizationId": "fbb9fca7-e168-4c79-84fa-547516623d72",
+        "apiId": "c9ab97ed-34db-42e5-96e7-97deadf7cc44",
+        "name": "EMR-System-Surgery",
+        "version": "3.7",
+        "apiRoutingKey": null,
+        "vhost": null,
+        "path": "/api/emr/surgery",
+        "descriptionType": "original",
+        "descriptionManual": null,
+        "descriptionMarkdown": null,
+        "descriptionUrl": null,
+        "summary": "Processing electronic healthcare transactions for retrieving surgery availabilities",
+        "retired": false,
+        "expired": false,
+        "image": "/api/portal/v1.3/discovery/swagger/apis/14307233-89f8-42e3-997c-8654bfedcdc9/image",
+        "retirementDate": 0,
+        "deprecated": false,
+        "state": "published",
+        "createdOn": 1626766469373,
+        "createdBy": "d8554fd4-03a8-4371-be00-90d69df54e10",
+        "corsProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "origins": [
+                    "*"
+                ],
+                "allowedHeaders": [],
+                "exposedHeaders": [
+                    "X-CorrelationID"
+                ],
+                "supportCredentials": false,
+                "maxAgeSeconds": 0
+            }
+        ],
+        "securityProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "devices": [
+                    {
+                        "name": "Pass Through",
+                        "type": "passThrough",
+                        "order": 0,
+                        "properties": {
+                            "subjectIdFieldName": "Pass Through",
+                            "removeCredentialsOnSuccess": "true"
+                        }
+                    }
+                ]
+            }
+        ],
+        "authenticationProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "parameters": {
+                    "_id_": 0
+                },
+                "type": "none"
+            }
+        ],
+        "inboundProfiles": {
+            "_default": {
+                "securityProfile": "_default",
+                "corsProfile": "_default",
+                "monitorAPI": true,
+                "monitorSubject": "authentication.subject.id"
+            }
+        },
+        "outboundProfiles": {
+            "_default": {
+                "authenticationProfile": "_default",
+                "routeType": "proxy",
+                "requestPolicy": null,
+                "responsePolicy": null,
+                "routePolicy": null,
+                "faultHandlerPolicy": null,
+                "apiId": null,
+                "apiMethodId": null,
+                "parameters": []
+            }
+        },
+        "serviceProfiles": {
+            "_default": {
+                "apiId": "c9ab97ed-34db-42e5-96e7-97deadf7cc44",
+                "basePath": "http://mocked-apis:8280"
+            }
+        },
+        "caCerts": [],
+        "tags": {
+            "Industry": [
+                "Healthcare"
+            ],
+            "Type": [
+                "Demo_Amplify_PlexusHealth"
+            ],
+            "Category": [
+                "Surgery"
+            ]
+        }
+    },
+    {
+        "id": "b18f08cd-6eb0-4ef4-95ea-59bbb111616f",
+        "organizationId": "2c724048-653e-418c-977f-b33f6219ee16",
+        "apiId": "1734b0eb-3d8a-4506-9561-fb18889402a6",
+        "name": "ATM Locator API",
+        "version": "2.0",
+        "apiRoutingKey": null,
+        "vhost": null,
+        "path": "/api/atm/locator",
+        "descriptionType": "original",
+        "descriptionManual": null,
+        "descriptionMarkdown": null,
+        "descriptionUrl": null,
+        "summary": null,
+        "retired": false,
+        "expired": false,
+        "image": "/api/portal/v1.3/discovery/swagger/apis/b18f08cd-6eb0-4ef4-95ea-59bbb111616f/image",
+        "retirementDate": 0,
+        "deprecated": false,
+        "state": "published",
+        "createdOn": 1631190645559,
+        "createdBy": "d8554fd4-03a8-4371-be00-90d69df54e10",
+        "corsProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "origins": [
+                    "*"
+                ],
+                "allowedHeaders": [],
+                "exposedHeaders": [
+                    "X-CorrelationID"
+                ],
+                "supportCredentials": false,
+                "maxAgeSeconds": 0
+            }
+        ],
+        "securityProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "devices": [
+                    {
+                        "name": "API Key",
+                        "type": "apiKey",
+                        "order": 1,
+                        "properties": {
+                            "apiKeyFieldName": "KeyId",
+                            "takeFrom": "HEADER",
+                            "removeCredentialsOnSuccess": "true"
+                        }
+                    }
+                ]
+            }
+        ],
+        "authenticationProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "parameters": {
+                    "_id_": 0
+                },
+                "type": "none"
+            }
+        ],
+        "inboundProfiles": {
+            "_default": {
+                "securityProfile": "_default",
+                "corsProfile": "_default",
+                "monitorAPI": true,
+                "monitorSubject": "authentication.subject.id"
+            }
+        },
+        "outboundProfiles": {
+            "_default": {
+                "authenticationProfile": "_default",
+                "routeType": "proxy",
+                "requestPolicy": null,
+                "responsePolicy": null,
+                "routePolicy": null,
+                "faultHandlerPolicy": null,
+                "apiId": null,
+                "apiMethodId": null,
+                "parameters": []
+            }
+        },
+        "serviceProfiles": {
+            "_default": {
+                "apiId": "1734b0eb-3d8a-4506-9561-fb18889402a6",
+                "basePath": "https://backend.yoisho.dob.jp"
+            }
+        },
+        "caCerts": [
+            {
+                "certBlob": "MIIFMTCCBBmgAwIBAgISBMifDVdDRyY31nzhX1wDJJzAMA0GCSqGSIb3DQEBCwUAMDIxCzAJBgNVBAYTAlVTMRYwFAYDVQQKEw1MZXQncyBFbmNyeXB0MQswCQYDVQQDEwJSMzAeFw0yMTA4MjUxMTE4MzJaFw0yMTExMjMxMTE4MzFaMCAxHjAcBgNVBAMTFWJhY2tlbmQueW9pc2hvLmRvYi5qcDCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAL4IiDJ5pCr5sN7R/W0Yq+gpE5IruzyBM159+pD31RGldyVfH9o+tOxeZilfKAMWMOruijueD7J3Z8jCNgX4xAK+ICGkLPMCfLQHUtox5Ab2QrO/1sjfMLoClXYBFEntJtNcSzOsD9T4ogTF1N3wwAjafzarfqLIqZY6qUkUc8KrN6DCoXuEkk+IRSBta5A6yZTw8tlAlGFAdPYuPAhainQHrw6RQufGxQ1KClfy0WepIemb3eQ/pyxbzN67puCv1g7mmWK6oDer4zqfH3JTwXIvgI5p+mHD8BUSyh8SFf3Zex4KOCvazC/xiJ25T3PX+mFBebF67BK9NoLTmJk5zokCAwEAAaOCAlEwggJNMA4GA1UdDwEB/wQEAwIFoDAdBgNVHSUEFjAUBggrBgEFBQcDAQYIKwYBBQUHAwIwDAYDVR0TAQH/BAIwADAdBgNVHQ4EFgQUNSnjBB5I8u21uYSLqu/l8K2wCcIwHwYDVR0jBBgwFoAUFC6zF7dYVsuuUAlA5h+vnYsUwsYwVQYIKwYBBQUHAQEESTBHMCEGCCsGAQUFBzABhhVodHRwOi8vcjMuby5sZW5jci5vcmcwIgYIKwYBBQUHMAKGFmh0dHA6Ly9yMy5pLmxlbmNyLm9yZy8wIAYDVR0RBBkwF4IVYmFja2VuZC55b2lzaG8uZG9iLmpwMEwGA1UdIARFMEMwCAYGZ4EMAQIBMDcGCysGAQQBgt8TAQEBMCgwJgYIKwYBBQUHAgEWGmh0dHA6Ly9jcHMubGV0c2VuY3J5cHQub3JnMIIBBQYKKwYBBAHWeQIEAgSB9gSB8wDxAHcA9lyUL9F3MCIUVBgIMJRWjuNNExkzv98MLyALzE7xZOMAAAF7fT9nFQAABAMASDBGAiEA6qx8irL9/ncOSEqB0ZNnUJqEV9LjWifH2P8f0S766FkCIQD6ed0r9J8MiHfgKMfD01sqJS233cFhlf/HcSQyfx7Q+AB2AG9Tdqwx8DEZ2JkApFEV/3cVHBHZAsEAKQaNsgiaN9kTAAABe30/aC0AAAQDAEcwRQIgDg0DlqCUVepytKGlzkAzRJvd4OYnGl/NIebBsMuckw4CIQDINOSzrwsfhr76UVkFv0FYZfF7Hgu3kjUIfXc5GiX8CjANBgkqhkiG9w0BAQsFAAOCAQEAXKAHKTI+3La+4FCev4L8rIkZ85YZ0v1doG6uG93ph7pP/CX7uPwhwJP8qkSSyYUptlpCTPtkIxJwfDdPaSakMFWjyGFteNLr74celpl91MSOs38uySor3SNkP9r/OQ6lQ6LW5T4gLrNI6LfcVRW3ZTIdy9IN575s1bOT+mZoBYjyH3SPXWFbLAi43qwrmDl0RV+Pb6KXZfdY/BEsPk4zkuoN7e3ncVotXoKJCi6m+F9Sph9i6Etc4D5vLBEiw6OFAQGKf4Ng9Ax9WUuIRGFpU5Xl4h8ltpnQZquf8pyXzNxf4V8f26AUG3miQpBkmrDVLK3MjhsoosSfJD3DLGKU7Q==",
+                "name": "CN=backend.yoisho.dob.jp",
+                "alias": "CN=backend.yoisho.dob.jp",
+                "subject": "CN=backend.yoisho.dob.jp",
+                "issuer": "CN=R3, O=Let's Encrypt, C=US",
+                "version": 3,
+                "notValidBefore": 1629890312000,
+                "notValidAfter": 1637666311000,
+                "signatureAlgorithm": "RSA (2048 bits)",
+                "sha1Fingerprint": "16:F5:F0:6B:C5:D4:1F:7D:61:BA:92:A7:B3:22:D0:1E:50:D7:CC:F3",
+                "md5Fingerprint": "E4:87:F3:9D:E7:A0:BF:14:38:CF:C9:B5:A3:B4:D8:E3",
+                "expired": false,
+                "notYetValid": false,
+                "inbound": false,
+                "outbound": true
+            },
+            {
+                "certBlob": "MIIFFjCCAv6gAwIBAgIRAJErCErPDBinU/bWLiWnX1owDQYJKoZIhvcNAQELBQAwTzELMAkGA1UEBhMCVVMxKTAnBgNVBAoTIEludGVybmV0IFNlY3VyaXR5IFJlc2VhcmNoIEdyb3VwMRUwEwYDVQQDEwxJU1JHIFJvb3QgWDEwHhcNMjAwOTA0MDAwMDAwWhcNMjUwOTE1MTYwMDAwWjAyMQswCQYDVQQGEwJVUzEWMBQGA1UEChMNTGV0J3MgRW5jcnlwdDELMAkGA1UEAxMCUjMwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQC7AhUozPaglNMPEuyNVZLD+ILxmaZ6QoinXSaqtSu5xUyxr45r+XXIo9cPR5QUVTVXjJ6oojkZ9YI8QqlObvU7wy7bjcCwXPNZOOftz2nwWgsbvsCUJCWH+jdxsxPnHKzhm+/b5DtFUkWWqcFTzjTIUu61ru2P3mBw4qVUq7ZtDpelQDRrK9O8ZutmNHz6a4uPVymZ+DAXXbpyb/uBxa3Shlg9F8fnCbvxK/eG3MHacV3URuPMrSXBiLxgZ3Vms/EY96Jc5lP/Ooi2R6X/ExjqmAl3P51T+c8B5fWmcBcUr2Ok/5mzk53cU6cG/kiFHaFpriV1uxPMUgP17VGhi9sVAgMBAAGjggEIMIIBBDAOBgNVHQ8BAf8EBAMCAYYwHQYDVR0lBBYwFAYIKwYBBQUHAwIGCCsGAQUFBwMBMBIGA1UdEwEB/wQIMAYBAf8CAQAwHQYDVR0OBBYEFBQusxe3WFbLrlAJQOYfr52LFMLGMB8GA1UdIwQYMBaAFHm0WeZ7tuXkAXOACIjIGlj26ZtuMDIGCCsGAQUFBwEBBCYwJDAiBggrBgEFBQcwAoYWaHR0cDovL3gxLmkubGVuY3Iub3JnLzAnBgNVHR8EIDAeMBygGqAYhhZodHRwOi8veDEuYy5sZW5jci5vcmcvMCIGA1UdIAQbMBkwCAYGZ4EMAQIBMA0GCysGAQQBgt8TAQEBMA0GCSqGSIb3DQEBCwUAA4ICAQCFyk5HPqP3hUSFvNVneLKYY611TR6WPTNlclQtgaDqw+34IL9fzLdwALduO/ZelN7kIJ+m74uyA+eitRY8kc607TkC53wlikfmZW4/RvTZ8M6UK+5UzhK8jCdLuMGYL6KvzXGRSgi3yLgjewQtCPkIVz6D2QQzCkcheAmCJ8MqyJu5zlzyZMjAvnnAT45tRAxekrsu94sQ4egdRCnbWSDtY7kh+BImlJNXoB1lBMEKIq4QDUOXoRgffuDghje1WrG9ML+Hbisq/yFOGwXD9RiX8F6sw6W4avAuvDszue5L3sz85K+EC4Y/wFVDNvZo4TYXao6Z0f+lQKc0t8DQYzk1OXVu8rp2yJMC6alLbBfODALZvYH7n7do1AZls4I9d1P4jnkDrQoxB3UqQ9hVl3LEKQ73xF1OyK5GhDDX8oVfGKF5u+decIsH4YaTw7mP3GFxJSqv3+0lUFJoi5Lc5da149p90IdshCExroL1+7mryIkXPeFM5TgO9r0rvZaBFOvV2z0gp35Z0+L4WPlbuEjN/lxPFin+HlUjr8gRsI3qfJOQFy/9rKIJR0Y/8Omwt/8oTWgy1mdeHmmjk7j1nYsvC9JSQ6ZvMldlTTKB3zhThV1+XWYp6rjd5JW1zbVWEkLNxE7GJThEUG3szgBVGP7pSWTUTsqXnLRbwHOoq7hHwg==",
+                "name": "CN=R3, O=Let's Encrypt, C=US",
+                "alias": "CN=R3, O=Let's Encrypt, C=US",
+                "subject": "CN=R3, O=Let's Encrypt, C=US",
+                "issuer": "CN=ISRG Root X1, O=Internet Security Research Group, C=US",
+                "version": 3,
+                "notValidBefore": 1599177600000,
+                "notValidAfter": 1757952000000,
+                "signatureAlgorithm": "RSA (2048 bits)",
+                "sha1Fingerprint": "A0:53:37:5B:FE:84:E8:B7:48:78:2C:7C:EE:15:82:7A:6A:F5:A4:05",
+                "md5Fingerprint": "E8:29:E6:5D:7C:43:07:D6:FB:C1:3C:17:9E:03:7A:36",
+                "expired": false,
+                "notYetValid": false,
+                "inbound": false,
+                "outbound": true
+            },
+            {
+                "certBlob": "MIIFYDCCBEigAwIBAgIQQAF3ITfU6UK47naqPGQKtzANBgkqhkiG9w0BAQsFADA/MSQwIgYDVQQKExtEaWdpdGFsIFNpZ25hdHVyZSBUcnVzdCBDby4xFzAVBgNVBAMTDkRTVCBSb290IENBIFgzMB4XDTIxMDEyMDE5MTQwM1oXDTI0MDkzMDE4MTQwM1owTzELMAkGA1UEBhMCVVMxKTAnBgNVBAoTIEludGVybmV0IFNlY3VyaXR5IFJlc2VhcmNoIEdyb3VwMRUwEwYDVQQDEwxJU1JHIFJvb3QgWDEwggIiMA0GCSqGSIb3DQEBAQUAA4ICDwAwggIKAoICAQCt6CRz9BQ385ueK1coHIe+3LffOJCMbjzmV6B493XCov71am72AE8o295ohmxEk7axY/0UEmu/H9LqMZshftEzPLpI9d1537O4/xLxIZpLwYqGcWlKZmZsj348cL+tKSIG8+TA5oCu4kuPt5l+lAOf00eXfJlII1PoOK5PCm+DLtFJV4yAdLbaL9A4jXsDcCEbdfIwPPqPrt3aY6vrFk/CjhFLfs8L6P+1dy70sntK4EwSJQxwjQMpoOFTJOwT2e4ZvxCzSow/iaNhUd6shweU9GNx7C7ib1uYgeGJXDR5bHbvO5BieebbpJovJsXQEOEO3tkQjhb7t/eo98flAgeYjzYIlefiN5YNNnWe+w5ysR2bvAP5SQXYgd0FtCrWQemsAXaVCg/Y39W9Eh81LygXbNKYwagJZHduRze6zqxZXmidf3LWicUGQSk+WT7dJvUkyRGnWqNMQB9GoZm1pzpRboY7nn1ypxIFeFntPlF4FQsDj43QLwWyPntKHEtzBRL8xurgUBN8Q5N0s8p0544fAQjQMNRbcTa0B7rBMDBcSLeCO5imfWCKoqMpgsy6vYMEG6KDA0Gh1gXxG8K28Kh8hjtGqEgqiNx2mna/H2qlPRmP6zjzZN7IKw0KKP/32+IVQtQi0Cdd4Xn+GOdwiK1O5tmLOsbdJ1Fu/7xk9TNDTwIDAQABo4IBRjCCAUIwDwYDVR0TAQH/BAUwAwEB/zAOBgNVHQ8BAf8EBAMCAQYwSwYIKwYBBQUHAQEEPzA9MDsGCCsGAQUFBzAChi9odHRwOi8vYXBwcy5pZGVudHJ1c3QuY29tL3Jvb3RzL2RzdHJvb3RjYXgzLnA3YzAfBgNVHSMEGDAWgBTEp7Gkeyxx+tvhS5B1/8QVYIWJEDBUBgNVHSAETTBLMAgGBmeBDAECATA/BgsrBgEEAYLfEwEBATAwMC4GCCsGAQUFBwIBFiJodHRwOi8vY3BzLnJvb3QteDEubGV0c2VuY3J5cHQub3JnMDwGA1UdHwQ1MDMwMaAvoC2GK2h0dHA6Ly9jcmwuaWRlbnRydXN0LmNvbS9EU1RST09UQ0FYM0NSTC5jcmwwHQYDVR0OBBYEFHm0WeZ7tuXkAXOACIjIGlj26ZtuMA0GCSqGSIb3DQEBCwUAA4IBAQAKcwBslm7/DlLQrt2M51oGrS+o44+/yQoDFVDC5WxCu2+b9LRPwkSICHXM6webFGJueN7sJ7o5XPWioW5WlHAQU7G75K/QosMrAdSW9MUgNTP52GE24HGNtLi1qoJFlcDyqSMo59ahy2cI2qBDLKobkx/J3vWraV0T9VuGWCLKTVXkcGdtwlfFRjlBz4pYg1htmf5X6DYO8A4jqv2Il9DjXA6USbW1FzXSLr9Ohe8Y4IWS6wY7bCkjCWDcRQJMEhg76fsO3txE+FiYruq9RUWhiF1myv4Q6W+CyBFCDfvp7OOGAN6dEOM4+qR9sdjoSYKEBpsr6GtPAQw4dy753ec5",
+                "name": "CN=ISRG Root X1, O=Internet Security Research Group, C=US",
+                "alias": "CN=ISRG Root X1, O=Internet Security Research Group, C=US",
+                "subject": "CN=ISRG Root X1, O=Internet Security Research Group, C=US",
+                "issuer": "CN=DST Root CA X3, O=Digital Signature Trust Co.",
+                "version": 3,
+                "notValidBefore": 1611170043000,
+                "notValidAfter": 1727720043000,
+                "signatureAlgorithm": "RSA (4096 bits)",
+                "sha1Fingerprint": "93:3C:6D:DE:E9:5C:9C:41:A4:0F:9F:50:49:3D:82:BE:03:AD:87:BF",
+                "md5Fingerprint": "C1:E1:FF:07:F9:F6:88:49:82:74:D1:A1:80:53:EA:BF",
+                "expired": false,
+                "notYetValid": false,
+                "inbound": false,
+                "outbound": true
+            }
+        ],
+        "tags": {
+            "Portal": [
+                "Partners"
+            ]
+        },
+        "securityLevel": "public",
+        "publicAPI": "true"
+    },
+    {
+        "id": "be4a16be-b525-4f59-9015-c054766b9cca",
+        "organizationId": "19f2fcb7-1f24-40b3-aeb6-16acda948c82",
+        "apiId": "0d83f756-cbe9-48ec-a227-12e24cf6dc54",
+        "name": "FHIR Practitioner",
+        "version": "DSTU2",
+        "apiRoutingKey": null,
+        "vhost": null,
+        "path": "/practitioner",
+        "descriptionType": "manual",
+        "descriptionManual": "A person who is directly or indirectly involved in the provisioning of healthcare. For more information: https://www.hl7.org/fhir/practitioner.html",
+        "descriptionMarkdown": null,
+        "descriptionUrl": null,
+        "summary": null,
+        "retired": false,
+        "expired": false,
+        "image": "/api/portal/v1.3/discovery/swagger/apis/be4a16be-b525-4f59-9015-c054766b9cca/image",
+        "retirementDate": 0,
+        "deprecated": false,
+        "state": "published",
+        "createdOn": 1626766571921,
+        "createdBy": "d8554fd4-03a8-4371-be00-90d69df54e10",
+        "corsProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "origins": [
+                    "*"
+                ],
+                "allowedHeaders": [],
+                "exposedHeaders": [
+                    "X-CorrelationID"
+                ],
+                "supportCredentials": false,
+                "maxAgeSeconds": 0
+            }
+        ],
+        "securityProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "devices": [
+                    {
+                        "name": "API Key",
+                        "type": "apiKey",
+                        "order": 1,
+                        "properties": {
+                            "apiKeyFieldName": "KeyId",
+                            "takeFrom": "HEADER",
+                            "removeCredentialsOnSuccess": "true"
+                        }
+                    }
+                ]
+            }
+        ],
+        "authenticationProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "parameters": {
+                    "_id_": 0
+                },
+                "type": "none"
+            }
+        ],
+        "inboundProfiles": {
+            "_default": {
+                "securityProfile": "_default",
+                "corsProfile": "_default",
+                "monitorAPI": true,
+                "monitorSubject": "authentication.subject.id"
+            }
+        },
+        "outboundProfiles": {
+            "_default": {
+                "authenticationProfile": "_default",
+                "routeType": "proxy",
+                "requestPolicy": null,
+                "responsePolicy": null,
+                "routePolicy": null,
+                "faultHandlerPolicy": null,
+                "apiId": null,
+                "apiMethodId": null,
+                "parameters": []
+            }
+        },
+        "serviceProfiles": {
+            "_default": {
+                "apiId": "0d83f756-cbe9-48ec-a227-12e24cf6dc54",
+                "basePath": "http://mocked-apis:8280"
+            }
+        },
+        "caCerts": [],
+        "tags": {
+            "Industry": [
+                "Healthcare"
+            ],
+            "Type": [
+                "Demo_FHIR"
+            ],
+            "Category": [
+                "Identification",
+                " Individuals"
+            ],
+            "Standard": [
+                "FHIR"
+            ]
+        }
+    },
+    {
+        "id": "7de8e161-0cd0-49f0-9a33-ca448010dae6",
+        "organizationId": "fbb9fca7-e168-4c79-84fa-547516623d72",
+        "apiId": "e67a980e-3aef-41b2-972e-6318dbb98cfe",
+        "name": "Security-HIPAA-Control",
+        "version": "1.0",
+        "apiRoutingKey": null,
+        "vhost": null,
+        "path": "/api/hipaa/control",
+        "descriptionType": "original",
+        "descriptionManual": null,
+        "descriptionMarkdown": null,
+        "descriptionUrl": null,
+        "summary": "Provides secure electronic access to health data and to remain in compliance with privacy regulations set by HHS (encryption, multi factor authentication, …)",
+        "retired": false,
+        "expired": false,
+        "image": "/api/portal/v1.3/discovery/swagger/apis/7de8e161-0cd0-49f0-9a33-ca448010dae6/image",
+        "retirementDate": 0,
+        "deprecated": false,
+        "state": "published",
+        "createdOn": 1626766482128,
+        "createdBy": "d8554fd4-03a8-4371-be00-90d69df54e10",
+        "corsProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "origins": [
+                    "*"
+                ],
+                "allowedHeaders": [],
+                "exposedHeaders": [
+                    "X-CorrelationID"
+                ],
+                "supportCredentials": false,
+                "maxAgeSeconds": 0
+            }
+        ],
+        "securityProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "devices": [
+                    {
+                        "name": "Pass Through",
+                        "type": "passThrough",
+                        "order": 0,
+                        "properties": {
+                            "subjectIdFieldName": "Pass Through",
+                            "removeCredentialsOnSuccess": "true"
+                        }
+                    }
+                ]
+            }
+        ],
+        "authenticationProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "parameters": {
+                    "_id_": 0
+                },
+                "type": "none"
+            }
+        ],
+        "inboundProfiles": {
+            "_default": {
+                "securityProfile": "_default",
+                "corsProfile": "_default",
+                "monitorAPI": true,
+                "monitorSubject": "authentication.subject.id"
+            }
+        },
+        "outboundProfiles": {
+            "_default": {
+                "authenticationProfile": "_default",
+                "routeType": "proxy",
+                "requestPolicy": null,
+                "responsePolicy": null,
+                "routePolicy": null,
+                "faultHandlerPolicy": null,
+                "apiId": null,
+                "apiMethodId": null,
+                "parameters": []
+            }
+        },
+        "serviceProfiles": {
+            "_default": {
+                "apiId": "e67a980e-3aef-41b2-972e-6318dbb98cfe",
+                "basePath": "http://mocked-apis:8280"
+            }
+        },
+        "caCerts": [],
+        "tags": {
+            "Industry": [
+                "Healthcare"
+            ],
+            "Type": [
+                "Demo_Amplify_PlexusHealth"
+            ],
+            "Category": [
+                "Security",
+                " Control"
+            ]
+        }
+    },
+    {
+        "id": "9df45322-878b-46f2-9b0b-5cd9a81df974",
+        "organizationId": "fbb9fca7-e168-4c79-84fa-547516623d72",
+        "apiId": "1febd4c0-fa1b-4965-82ca-cc8f73f03a6b",
+        "name": "EMR-System-Patient",
+        "version": "3.7",
+        "apiRoutingKey": null,
+        "vhost": null,
+        "path": "/api/emr/patient",
+        "descriptionType": "original",
+        "descriptionManual": null,
+        "descriptionMarkdown": null,
+        "descriptionUrl": null,
+        "summary": "Processing electronic healthcare transactions for retrieving patient records",
+        "retired": false,
+        "expired": false,
+        "image": "/api/portal/v1.3/discovery/swagger/apis/9df45322-878b-46f2-9b0b-5cd9a81df974/image",
+        "retirementDate": 0,
+        "deprecated": false,
+        "state": "published",
+        "createdOn": 1626766458521,
+        "createdBy": "d8554fd4-03a8-4371-be00-90d69df54e10",
+        "corsProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "origins": [
+                    "*"
+                ],
+                "allowedHeaders": [],
+                "exposedHeaders": [
+                    "X-CorrelationID"
+                ],
+                "supportCredentials": false,
+                "maxAgeSeconds": 0
+            }
+        ],
+        "securityProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "devices": [
+                    {
+                        "name": "Pass Through",
+                        "type": "passThrough",
+                        "order": 0,
+                        "properties": {
+                            "subjectIdFieldName": "Pass Through",
+                            "removeCredentialsOnSuccess": "true"
+                        }
+                    }
+                ]
+            }
+        ],
+        "authenticationProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "parameters": {
+                    "_id_": 0
+                },
+                "type": "none"
+            }
+        ],
+        "inboundProfiles": {
+            "_default": {
+                "securityProfile": "_default",
+                "corsProfile": "_default",
+                "monitorAPI": true,
+                "monitorSubject": "authentication.subject.id"
+            }
+        },
+        "outboundProfiles": {
+            "_default": {
+                "authenticationProfile": "_default",
+                "routeType": "proxy",
+                "requestPolicy": null,
+                "responsePolicy": null,
+                "routePolicy": null,
+                "faultHandlerPolicy": null,
+                "apiId": null,
+                "apiMethodId": null,
+                "parameters": []
+            }
+        },
+        "serviceProfiles": {
+            "_default": {
+                "apiId": "1febd4c0-fa1b-4965-82ca-cc8f73f03a6b",
+                "basePath": "http://mocked-apis:8280"
+            }
+        },
+        "caCerts": [],
+        "tags": {
+            "Industry": [
+                "Healthcare"
+            ],
+            "Type": [
+                "Demo_Amplify_PlexusHealth"
+            ],
+            "Category": [
+                "Patient"
+            ]
+        }
+    },
+    {
+        "id": "cca34e63-2e9a-45ff-9300-fdcd0bb96097",
+        "organizationId": "3fec2611-17a1-46fa-be9f-dd00862ace7c",
+        "apiId": "dec523bc-5f83-4ed0-9087-7bd862b6a1a2",
+        "name": "Fixed Deposit Calculator",
+        "version": "3.7",
+        "apiRoutingKey": null,
+        "vhost": null,
+        "path": "/api/fixeddeposit/",
+        "descriptionType": "original",
+        "descriptionManual": null,
+        "descriptionMarkdown": null,
+        "descriptionUrl": null,
+        "summary": "This API calculates the total interest earned from a fixed deposit, along with a breakdown for the number of years the deposit is running. Parameters: amount, number of years the fixed deposit will run",
+        "retired": false,
+        "expired": false,
+        "image": "/api/portal/v1.3/discovery/swagger/apis/cca34e63-2e9a-45ff-9300-fdcd0bb96097/image",
+        "retirementDate": 0,
+        "deprecated": false,
+        "state": "published",
+        "createdOn": 1631192009718,
+        "createdBy": "d8554fd4-03a8-4371-be00-90d69df54e10",
+        "corsProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "origins": [
+                    "*"
+                ],
+                "allowedHeaders": [],
+                "exposedHeaders": [
+                    "X-CorrelationID"
+                ],
+                "supportCredentials": false,
+                "maxAgeSeconds": 0
+            }
+        ],
+        "securityProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "devices": [
+                    {
+                        "name": "API Key",
+                        "type": "apiKey",
+                        "order": 1,
+                        "properties": {
+                            "apiKeyFieldName": "KeyId",
+                            "takeFrom": "HEADER",
+                            "removeCredentialsOnSuccess": "true"
+                        }
+                    }
+                ]
+            }
+        ],
+        "authenticationProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "parameters": {
+                    "username": "3BQKVuJLkUOWdgEtpSyNaVORv4104Azo",
+                    "_id_": 0
+                },
+                "type": "http_basic"
+            }
+        ],
+        "inboundProfiles": {
+            "_default": {
+                "securityProfile": "_default",
+                "corsProfile": "_default",
+                "monitorAPI": true,
+                "monitorSubject": "authentication.subject.id"
+            }
+        },
+        "outboundProfiles": {
+            "_default": {
+                "authenticationProfile": "_default",
+                "routeType": "proxy",
+                "requestPolicy": null,
+                "responsePolicy": null,
+                "routePolicy": null,
+                "faultHandlerPolicy": null,
+                "apiId": null,
+                "apiMethodId": null,
+                "parameters": []
+            }
+        },
+        "serviceProfiles": {
+            "_default": {
+                "apiId": "dec523bc-5f83-4ed0-9087-7bd862b6a1a2",
+                "basePath": "http://deposit-calculator-app:8080"
+            }
+        },
+        "caCerts": [],
+        "tags": {
+            "Category": [
+                "Consumer"
+            ],
+            "Portal": [
+                "Partner"
+            ]
+        },
+        "securityLevel": "public",
+        "publicAPI": "true"
+    },
+    {
+        "id": "873194b8-7f0a-4599-bb08-d8a4cedb3669",
+        "organizationId": "19f2fcb7-1f24-40b3-aeb6-16acda948c82",
+        "apiId": "3b21645a-dbf8-468b-954a-6cbfe25882b1",
+        "name": "FHIR Condition",
+        "version": "DSTU2",
+        "apiRoutingKey": null,
+        "vhost": null,
+        "path": "/condition",
+        "descriptionType": "manual",
+        "descriptionManual": "Use to record detailed information about conditions, problems or diagnoses recognized by a clinician. There are many uses including: recording a diagnosis during an encounter; populating a problem list or a summary statement, such as a discharge summary. For more information: https://www.hl7.org/fhir/condition.html",
+        "descriptionMarkdown": null,
+        "descriptionUrl": null,
+        "summary": null,
+        "retired": false,
+        "expired": false,
+        "image": "/api/portal/v1.3/discovery/swagger/apis/873194b8-7f0a-4599-bb08-d8a4cedb3669/image",
+        "retirementDate": 0,
+        "deprecated": false,
+        "state": "published",
+        "createdOn": 1626766530193,
+        "createdBy": "d8554fd4-03a8-4371-be00-90d69df54e10",
+        "corsProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "origins": [
+                    "*"
+                ],
+                "allowedHeaders": [],
+                "exposedHeaders": [
+                    "X-CorrelationID"
+                ],
+                "supportCredentials": false,
+                "maxAgeSeconds": 0
+            }
+        ],
+        "securityProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "devices": [
+                    {
+                        "name": "API Key",
+                        "type": "apiKey",
+                        "order": 1,
+                        "properties": {
+                            "apiKeyFieldName": "KeyId",
+                            "takeFrom": "HEADER",
+                            "removeCredentialsOnSuccess": "true"
+                        }
+                    }
+                ]
+            }
+        ],
+        "authenticationProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "parameters": {
+                    "_id_": 0
+                },
+                "type": "none"
+            }
+        ],
+        "inboundProfiles": {
+            "_default": {
+                "securityProfile": "_default",
+                "corsProfile": "_default",
+                "monitorAPI": true,
+                "monitorSubject": "authentication.subject.id"
+            }
+        },
+        "outboundProfiles": {
+            "_default": {
+                "authenticationProfile": "_default",
+                "routeType": "proxy",
+                "requestPolicy": null,
+                "responsePolicy": null,
+                "routePolicy": null,
+                "faultHandlerPolicy": null,
+                "apiId": null,
+                "apiMethodId": null,
+                "parameters": []
+            }
+        },
+        "serviceProfiles": {
+            "_default": {
+                "apiId": "3b21645a-dbf8-468b-954a-6cbfe25882b1",
+                "basePath": "http://mocked-apis:8280"
+            }
+        },
+        "caCerts": [],
+        "tags": {
+            "Industry": [
+                "Healthcare"
+            ],
+            "Type": [
+                "Demo_FHIR"
+            ],
+            "Category": [
+                "Clinical",
+                " General"
+            ],
+            "Standard": [
+                "FHIR"
+            ]
+        }
+    },
+    {
+        "id": "f3349fa3-f5d3-4c21-bacf-e188c4bdc7f4",
+        "organizationId": "19f2fcb7-1f24-40b3-aeb6-16acda948c82",
+        "apiId": "e3223391-720e-45d3-813b-9403e44ae54c",
+        "name": "FHIR Observation",
+        "version": "DSTU2",
+        "apiRoutingKey": null,
+        "vhost": null,
+        "path": "/observation",
+        "descriptionType": "manual",
+        "descriptionManual": "Measurements and simple assertions made about a patient, device or other subject. For more information: https://www.hl7.org/fhir/observation.html",
+        "descriptionMarkdown": null,
+        "descriptionUrl": null,
+        "summary": null,
+        "retired": false,
+        "expired": false,
+        "image": "/api/portal/v1.3/discovery/swagger/apis/f3349fa3-f5d3-4c21-bacf-e188c4bdc7f4/image",
+        "retirementDate": 0,
+        "deprecated": false,
+        "state": "published",
+        "createdOn": 1626766554317,
+        "createdBy": "d8554fd4-03a8-4371-be00-90d69df54e10",
+        "corsProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "origins": [
+                    "*"
+                ],
+                "allowedHeaders": [],
+                "exposedHeaders": [
+                    "X-CorrelationID"
+                ],
+                "supportCredentials": false,
+                "maxAgeSeconds": 0
+            }
+        ],
+        "securityProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "devices": [
+                    {
+                        "name": "API Key",
+                        "type": "apiKey",
+                        "order": 1,
+                        "properties": {
+                            "apiKeyFieldName": "KeyId",
+                            "takeFrom": "HEADER",
+                            "removeCredentialsOnSuccess": "true"
+                        }
+                    }
+                ]
+            }
+        ],
+        "authenticationProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "parameters": {
+                    "_id_": 0
+                },
+                "type": "none"
+            }
+        ],
+        "inboundProfiles": {
+            "_default": {
+                "securityProfile": "_default",
+                "corsProfile": "_default",
+                "monitorAPI": true,
+                "monitorSubject": "authentication.subject.id"
+            }
+        },
+        "outboundProfiles": {
+            "_default": {
+                "authenticationProfile": "_default",
+                "routeType": "proxy",
+                "requestPolicy": null,
+                "responsePolicy": null,
+                "routePolicy": null,
+                "faultHandlerPolicy": null,
+                "apiId": null,
+                "apiMethodId": null,
+                "parameters": []
+            }
+        },
+        "serviceProfiles": {
+            "_default": {
+                "apiId": "e3223391-720e-45d3-813b-9403e44ae54c",
+                "basePath": "http://mocked-apis:8280"
+            }
+        },
+        "caCerts": [],
+        "tags": {
+            "Industry": [
+                "Healthcare"
+            ],
+            "Type": [
+                "Demo_FHIR"
+            ],
+            "Category": [
+                "Clinical",
+                " Diagnostics"
+            ],
+            "Standard": [
+                "FHIR"
+            ]
+        }
+    },
+    {
+        "id": "1ec9c45a-fa53-425b-9c82-40e70194eb27",
+        "organizationId": "19f2fcb7-1f24-40b3-aeb6-16acda948c82",
+        "apiId": "716b818d-a996-4f10-806e-dba0badd85a1",
+        "name": "FHIR Location",
+        "version": "DSTU2",
+        "apiRoutingKey": null,
+        "vhost": null,
+        "path": "/location",
+        "descriptionType": "manual",
+        "descriptionManual": "Details and position information for a physical place where services are provided and resources and participants may be stored, found, contained or accommodated. For more information: https://www.hl7.org/fhir/location.html",
+        "descriptionMarkdown": null,
+        "descriptionUrl": null,
+        "summary": null,
+        "retired": false,
+        "expired": false,
+        "image": "/api/portal/v1.3/discovery/swagger/apis/1ec9c45a-fa53-425b-9c82-40e70194eb27/image",
+        "retirementDate": 0,
+        "deprecated": false,
+        "state": "published",
+        "createdOn": 1626766548913,
+        "createdBy": "d8554fd4-03a8-4371-be00-90d69df54e10",
+        "corsProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "origins": [
+                    "*"
+                ],
+                "allowedHeaders": [],
+                "exposedHeaders": [
+                    "X-CorrelationID"
+                ],
+                "supportCredentials": false,
+                "maxAgeSeconds": 0
+            }
+        ],
+        "securityProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "devices": [
+                    {
+                        "name": "API Key",
+                        "type": "apiKey",
+                        "order": 1,
+                        "properties": {
+                            "apiKeyFieldName": "KeyId",
+                            "takeFrom": "HEADER",
+                            "removeCredentialsOnSuccess": "true"
+                        }
+                    }
+                ]
+            }
+        ],
+        "authenticationProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "parameters": {
+                    "_id_": 0
+                },
+                "type": "none"
+            }
+        ],
+        "inboundProfiles": {
+            "_default": {
+                "securityProfile": "_default",
+                "corsProfile": "_default",
+                "monitorAPI": true,
+                "monitorSubject": "authentication.subject.id"
+            }
+        },
+        "outboundProfiles": {
+            "_default": {
+                "authenticationProfile": "_default",
+                "routeType": "proxy",
+                "requestPolicy": null,
+                "responsePolicy": null,
+                "routePolicy": null,
+                "faultHandlerPolicy": null,
+                "apiId": null,
+                "apiMethodId": null,
+                "parameters": []
+            }
+        },
+        "serviceProfiles": {
+            "_default": {
+                "apiId": "716b818d-a996-4f10-806e-dba0badd85a1",
+                "basePath": "http://mocked-apis:8280"
+            }
+        },
+        "caCerts": [],
+        "tags": {
+            "Industry": [
+                "Healthcare"
+            ],
+            "Type": [
+                "Demo_FHIR"
+            ],
+            "Category": [
+                "Identification",
+                " Entities"
+            ],
+            "Standard": [
+                "FHIR"
+            ]
+        }
+    },
+    {
+        "id": "bcba2cec-aef0-4ae8-a427-e2c8bde3cc57",
+        "organizationId": "19f2fcb7-1f24-40b3-aeb6-16acda948c82",
+        "apiId": "a4fe6906-cdd4-4173-84d1-d24be6fdbd60",
+        "name": "FHIR CarePlan",
+        "version": "DSTU2",
+        "apiRoutingKey": null,
+        "vhost": null,
+        "path": "/careplan",
+        "descriptionType": "manual",
+        "descriptionManual": "Describes the intention of how one or more practitioners intend to deliver care for a particular patient, group or community for a period of time, possibly limited to care for a specific condition or set of conditions. For more information: https://www.hl7.org/fhir/careplan.html",
+        "descriptionMarkdown": null,
+        "descriptionUrl": null,
+        "summary": null,
+        "retired": false,
+        "expired": false,
+        "image": "/api/portal/v1.3/discovery/swagger/apis/bcba2cec-aef0-4ae8-a427-e2c8bde3cc57/image",
+        "retirementDate": 0,
+        "deprecated": false,
+        "state": "published",
+        "createdOn": 1626766524298,
+        "createdBy": "d8554fd4-03a8-4371-be00-90d69df54e10",
+        "corsProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "origins": [
+                    "*"
+                ],
+                "allowedHeaders": [],
+                "exposedHeaders": [
+                    "X-CorrelationID"
+                ],
+                "supportCredentials": false,
+                "maxAgeSeconds": 0
+            }
+        ],
+        "securityProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "devices": [
+                    {
+                        "name": "API Key",
+                        "type": "apiKey",
+                        "order": 1,
+                        "properties": {
+                            "apiKeyFieldName": "KeyId",
+                            "takeFrom": "HEADER",
+                            "removeCredentialsOnSuccess": "true"
+                        }
+                    }
+                ]
+            }
+        ],
+        "authenticationProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "parameters": {
+                    "_id_": 0
+                },
+                "type": "none"
+            }
+        ],
+        "inboundProfiles": {
+            "_default": {
+                "securityProfile": "_default",
+                "corsProfile": "_default",
+                "monitorAPI": true,
+                "monitorSubject": "authentication.subject.id"
+            }
+        },
+        "outboundProfiles": {
+            "_default": {
+                "authenticationProfile": "_default",
+                "routeType": "proxy",
+                "requestPolicy": null,
+                "responsePolicy": null,
+                "routePolicy": null,
+                "faultHandlerPolicy": null,
+                "apiId": null,
+                "apiMethodId": null,
+                "parameters": []
+            }
+        },
+        "serviceProfiles": {
+            "_default": {
+                "apiId": "a4fe6906-cdd4-4173-84d1-d24be6fdbd60",
+                "basePath": "http://mocked-apis:8280"
+            }
+        },
+        "caCerts": [],
+        "tags": {
+            "Industry": [
+                "Healthcare"
+            ],
+            "Type": [
+                "Demo_FHIR"
+            ],
+            "Category": [
+                "Clinical",
+                " Care Provision"
+            ],
+            "Standard": [
+                "FHIR"
+            ]
+        }
+    },
+    {
+        "id": "3e393363-c64e-4b19-ba41-5f09d082c982",
+        "organizationId": "3fec2611-17a1-46fa-be9f-dd00862ace7c",
+        "apiId": "ba9b08c4-68e2-4009-ab33-13b9cff56a1d",
+        "name": "Petstore API",
+        "version": "1.0.5",
+        "apiRoutingKey": null,
+        "vhost": null,
+        "path": "/v2",
+        "descriptionType": "original",
+        "descriptionManual": null,
+        "descriptionMarkdown": null,
+        "descriptionUrl": null,
+        "summary": null,
+        "retired": false,
+        "expired": false,
+        "image": null,
+        "retirementDate": 0,
+        "deprecated": false,
+        "state": "published",
+        "createdOn": 1624993504784,
+        "createdBy": "d8554fd4-03a8-4371-be00-90d69df54e10",
+        "corsProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "origins": [
+                    "*"
+                ],
+                "allowedHeaders": [],
+                "exposedHeaders": [
+                    "X-CorrelationID"
+                ],
+                "supportCredentials": false,
+                "maxAgeSeconds": 0
+            }
+        ],
+        "securityProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "devices": [
+                    {
+                        "name": "OAuth (External)",
+                        "type": "oauthExternal",
+                        "order": 1,
+                        "properties": {
+                            "tokenStore": "<key type='CircuitContainer'><id field='name' value='RBI-Demo'/><key type='CircuitContainer'><id field='name' value='Token-Provider'/><key type='FilterCircuit'><id field='name' value='Validate Azure Token'/></key></key></key>",
+                            "accessTokenLocation": "HEADER",
+                            "authorizationHeaderPrefix": "Bearer",
+                            "accessTokenLocationQueryString": "",
+                            "scopesMustMatch": "Any",
+                            "scopes": "resource.WRITE, resource.READ",
+                            "removeCredentialsOnSuccess": "true",
+                            "implicitGrantEnabled": "true",
+                            "implicitGrantLoginEndpointUrl": "https://localhost:8089/api/oauth/authorize",
+                            "implicitGrantLoginTokenName": "access_token",
+                            "authCodeGrantTypeEnabled": "true",
+                            "authCodeGrantTypeRequestEndpointUrl": "https://localhost:8089/api/oauth/authorize",
+                            "authCodeGrantTypeRequestClientIdName": "client_id",
+                            "authCodeGrantTypeRequestSecretName": "client_secret",
+                            "authCodeGrantTypeTokenEndpointUrl": "https://localhost:8089/api/oauth/token",
+                            "authCodeGrantTypeTokenEndpointTokenName": "access_code",
+                            "useClientRegistry": "true",
+                            "subjectSelector": "${oauth.token.client_id}",
+                            "oauth.token.client_id": "${oauth.token.client_id}",
+                            "oauth.token.scopes": "${oauth.token.scopes}",
+                            "oauth.token.valid": "${oauth.token.valid}"
+                        }
+                    }
+                ]
+            }
+        ],
+        "authenticationProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "parameters": {
+                    "_id_": 0
+                },
+                "type": "none"
+            }
+        ],
+        "inboundProfiles": {
+            "_default": {
+                "securityProfile": "_default",
+                "corsProfile": "_default",
+                "monitorAPI": true,
+                "monitorSubject": "authentication.subject.id"
+            }
+        },
+        "outboundProfiles": {
+            "_default": {
+                "authenticationProfile": "_default",
+                "routeType": "proxy",
+                "requestPolicy": "<key type='CircuitContainer'><id field='name' value='RBI-Demo'/><key type='FilterCircuit'><id field='name' value='Request Policy 1'/></key></key>",
+                "responsePolicy": null,
+                "routePolicy": null,
+                "faultHandlerPolicy": null,
+                "apiId": null,
+                "apiMethodId": null,
+                "parameters": []
+            }
+        },
+        "serviceProfiles": {
+            "_default": {
+                "apiId": "ba9b08c4-68e2-4009-ab33-13b9cff56a1d",
+                "basePath": "https://petstore.swagger.io"
+            }
+        },
+        "caCerts": [
+            {
+                "certBlob": "MIIFVTCCBD2gAwIBAgIQBKsFS7dJ73VFx4AM/vlZMjANBgkqhkiG9w0BAQsFADBGMQswCQYDVQQGEwJVUzEPMA0GA1UEChMGQW1hem9uMRUwEwYDVQQLEwxTZXJ2ZXIgQ0EgMUIxDzANBgNVBAMTBkFtYXpvbjAeFw0yMTAzMTcwMDAwMDBaFw0yMjA0MTUyMzU5NTlaMBcxFTATBgNVBAMMDCouc3dhZ2dlci5pbzCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAKV3Z4XbSxD99iTPl17YqGUCsvPHShkgywQ5As8Ivsq0Fsa73sbC4bohoSGS8NYYI12gERmWdtH6tCfefRX/xogPoRmnaPTSXmA9C0XwaL0SjaupERCZx7i7GmmJAM3PWdxBTeaV5ThR5vSCYHBx6uxbr5AM6gOQbKXyh7e1nl1Ojl3lRaSfs78kQTm4/+jZohHhwZhiiLhAEi9NKTFutVp+MQ0mO114fvE8zc3okpUCfcjntRWNd3hDGUFvnPbaqR/7/Ag1gKyJIxts0KuFnwNzHIvnY7i1r78L/gQODA7IFJ+s4yniYih9As5j/iJ+iQ7fDgrnMRrznK3p2tACmNkCAwEAAaOCAmwwggJoMB8GA1UdIwQYMBaAFFmkZgZSoHuVkjyjlAcnlnRb+T3QMB0GA1UdDgQWBBTQxb+JsAEbvlT8Lxe3/+flLMx3kzAXBgNVHREEEDAOggwqLnN3YWdnZXIuaW8wDgYDVR0PAQH/BAQDAgWgMB0GA1UdJQQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjA7BgNVHR8ENDAyMDCgLqAshipodHRwOi8vY3JsLnNjYTFiLmFtYXpvbnRydXN0LmNvbS9zY2ExYi5jcmwwEwYDVR0gBAwwCjAIBgZngQwBAgEwdQYIKwYBBQUHAQEEaTBnMC0GCCsGAQUFBzABhiFodHRwOi8vb2NzcC5zY2ExYi5hbWF6b250cnVzdC5jb20wNgYIKwYBBQUHMAKGKmh0dHA6Ly9jcnQuc2NhMWIuYW1hem9udHJ1c3QuY29tL3NjYTFiLmNydDAMBgNVHRMBAf8EAjAAMIIBBQYKKwYBBAHWeQIEAgSB9gSB8wDxAHcAKXm+8J45OSHwVnOfY6V35b5XfZxgCvj5TV0mXCVdx4QAAAF4Pfq90wAABAMASDBGAiEA0Q6quLg9nvq2klfLHGAMk0bPCXN8NPAGcfxaUQhdX/oCIQD3XELUjlkxAO2OFSobN8RZyPctHU25IKcwzuk8TuiepQB2ACJFRQdZVSRWlj+hL/H3bYbgIyZjrcBLf13Gg1xu4g8CAAABeD36vhQAAAQDAEcwRQIgVzqMoCQmPSjL+XtcHp80ctHBWTr2PSZCaxI1OzBiIaoCIQDDJ8HAFuMapkn7xugDwVtXZrlM38yKTpDCy3aF2HHiYDANBgkqhkiG9w0BAQsFAAOCAQEAejx/iJghdimnTjL5wO9jW4VetxCr+K1cUOkwVH9pHJl4+EzUskCrKd+n0jZNeiEkOYPGJiG4GPOGYEoCkVLwJa0i+cBa4bqX6hgjNI4n8L0+5JpcmD9B4Jxgo5qVU0fmCbIA8WEn1/Lj8Ntd0H8xnS5vZSoJSxYE4SEQxk+xb6JPWsAG3mbRpgd6n+We+L9/V1PHzm+Nx9ym7By6hlAgc8KykSpdjw08iAJDPpC9M7QkKKcVUGkXQU88YSE5RjDOUzhN0VMmIYHbytqYbTVuKRD1/ItrbriVwgW1qJE8x8uyiY4JJwk1OTg+bnpiFelaXdmrPLUBY5MvwdKk07Xplg==",
+                "name": "CN=*.swagger.io",
+                "alias": "CN=*.swagger.io",
+                "subject": "CN=*.swagger.io",
+                "issuer": "CN=Amazon, OU=Server CA 1B, O=Amazon, C=US",
+                "version": 3,
+                "notValidBefore": 1615939200000,
+                "notValidAfter": 1650067199000,
+                "signatureAlgorithm": "RSA (2048 bits)",
+                "sha1Fingerprint": "80:61:D7:6E:10:34:0C:F4:70:31:86:F5:20:3F:41:1D:6C:C3:F6:1A",
+                "md5Fingerprint": "54:63:34:53:9D:71:2A:96:B7:D6:53:26:93:25:1B:16",
+                "expired": false,
+                "notYetValid": false,
+                "inbound": false,
+                "outbound": true
+            },
+            {
+                "certBlob": "MIIESTCCAzGgAwIBAgITBn+UV4WH6Kx33rJTMlu8mYtWDTANBgkqhkiG9w0BAQsFADA5MQswCQYDVQQGEwJVUzEPMA0GA1UEChMGQW1hem9uMRkwFwYDVQQDExBBbWF6b24gUm9vdCBDQSAxMB4XDTE1MTAyMjAwMDAwMFoXDTI1MTAxOTAwMDAwMFowRjELMAkGA1UEBhMCVVMxDzANBgNVBAoTBkFtYXpvbjEVMBMGA1UECxMMU2VydmVyIENBIDFCMQ8wDQYDVQQDEwZBbWF6b24wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDCThZn3c68asg3Wuw6MLAd5tES6BIoSMzoKcG5blPVo+sDORrMd4f2AbnZcMzPa43j4wNxhplty6aUKk4T1qe9BOwKFjwK6zmxxLVYo7bHViXsPlJ6qOMpFge5blDP+18x+B26A0piiQOuPkfyDyeR4xQghfj66Yo19V+emU3nazfvpFA+ROz6WoVmB5x+F2pV8xeKNR7u6azDdU5YVX1TawprmxRC1+WsAYmz6qP+z8ArDITC2FMVy2fw0IjKOtEXc/VfmtTFch5+AfGYMGMqqvJ6LcXiAhqG5TI+Dr0RtM88k+8XUBCeQ8IGKuANaL7TiItKZYxK1MMuTJtV9IblAgMBAAGjggE7MIIBNzASBgNVHRMBAf8ECDAGAQH/AgEAMA4GA1UdDwEB/wQEAwIBhjAdBgNVHQ4EFgQUWaRmBlKge5WSPKOUByeWdFv5PdAwHwYDVR0jBBgwFoAUhBjMhTTsvAyUlC4IWZzHshBOCggwewYIKwYBBQUHAQEEbzBtMC8GCCsGAQUFBzABhiNodHRwOi8vb2NzcC5yb290Y2ExLmFtYXpvbnRydXN0LmNvbTA6BggrBgEFBQcwAoYuaHR0cDovL2NydC5yb290Y2ExLmFtYXpvbnRydXN0LmNvbS9yb290Y2ExLmNlcjA/BgNVHR8EODA2MDSgMqAwhi5odHRwOi8vY3JsLnJvb3RjYTEuYW1hem9udHJ1c3QuY29tL3Jvb3RjYTEuY3JsMBMGA1UdIAQMMAowCAYGZ4EMAQIBMA0GCSqGSIb3DQEBCwUAA4IBAQCFkr41u3nPo4FCHOTjY3NTOVI159Gt/a6ZiqyJEi+752+a1U5y6iAwYfmXss2lJwJFqMp2PphKg5625kXg8kP2CN5t6G7bMQcT8C8xDZNtYTd7WPD8UZiRKAJPBXa30/AbwuZe0GaFEQ8ugcYQgSn+IGBI8/LwhBNTZTUVEWuCUUBVV18YtbAiPq3yXqMB48Oz+ctBWuZSkbvkNodPLamkB2g1upRyzQ7qDn1X8nn8N8V7YJ6y68AtkHcNSRAnpTitxBKjtKPISLMVCx7i4hncxHZSyLyKQXhw2W2Xs0qLeC1etA+jTGDK4UfLeC0SF7FSi8o5LL21L8IzApar2pR/",
+                "name": "CN=Amazon, OU=Server CA 1B, O=Amazon, C=US",
+                "alias": "CN=Amazon, OU=Server CA 1B, O=Amazon, C=US",
+                "subject": "CN=Amazon, OU=Server CA 1B, O=Amazon, C=US",
+                "issuer": "CN=Amazon Root CA 1, O=Amazon, C=US",
+                "version": 3,
+                "notValidBefore": 1445472000000,
+                "notValidAfter": 1760832000000,
+                "signatureAlgorithm": "RSA (2048 bits)",
+                "sha1Fingerprint": "91:7E:73:2D:33:0F:9A:12:40:4F:73:D8:BE:A3:69:48:B9:29:DF:FC",
+                "md5Fingerprint": "EB:26:8E:55:D4:34:FE:BD:A3:6A:97:9A:44:65:4B:6D",
+                "expired": false,
+                "notYetValid": false,
+                "inbound": false,
+                "outbound": true
+            },
+            {
+                "certBlob": "MIIEkjCCA3qgAwIBAgITBn+USionzfP6wq4rAfkI7rnExjANBgkqhkiG9w0BAQsFADCBmDELMAkGA1UEBhMCVVMxEDAOBgNVBAgTB0FyaXpvbmExEzARBgNVBAcTClNjb3R0c2RhbGUxJTAjBgNVBAoTHFN0YXJmaWVsZCBUZWNobm9sb2dpZXMsIEluYy4xOzA5BgNVBAMTMlN0YXJmaWVsZCBTZXJ2aWNlcyBSb290IENlcnRpZmljYXRlIEF1dGhvcml0eSAtIEcyMB4XDTE1MDUyNTEyMDAwMFoXDTM3MTIzMTAxMDAwMFowOTELMAkGA1UEBhMCVVMxDzANBgNVBAoTBkFtYXpvbjEZMBcGA1UEAxMQQW1hem9uIFJvb3QgQ0EgMTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBALJ4gHHKeNXjca9HgFB0fW7Y14h29Jlo91ghYPl0hAEvrAIthtOgQ3pOsqTQNroBvo3bSMgHFzZM9O6II8c+6zf1tRn4SWiw3te5djgdYZ6k/oI2peVKVuRF4fn9tBb6dNqcmzU5L/qwIFAGbHrQgLKm+a/sRxmPUDgH3KKHOVj4utWp+UhnMJbulHheb4mjUcAwhmahRWa6VOujw5H5SNz/0egwLX0tdHA114gk957EWW67c4cX8jJGKLhD+rcdqsq08p8kDi1L93FcXmn/6pUCyziKrlA4b9v7LWIbxcceVOF34GfID5yHI9Y/QCB/IIDEgEw+OyQmjgSubJrIqg0CAwEAAaOCATEwggEtMA8GA1UdEwEB/wQFMAMBAf8wDgYDVR0PAQH/BAQDAgGGMB0GA1UdDgQWBBSEGMyFNOy8DJSULghZnMeyEE4KCDAfBgNVHSMEGDAWgBScXwDfqgHXMCs4iKK4bUqc8hGRgzB4BggrBgEFBQcBAQRsMGowLgYIKwYBBQUHMAGGImh0dHA6Ly9vY3NwLnJvb3RnMi5hbWF6b250cnVzdC5jb20wOAYIKwYBBQUHMAKGLGh0dHA6Ly9jcnQucm9vdGcyLmFtYXpvbnRydXN0LmNvbS9yb290ZzIuY2VyMD0GA1UdHwQ2MDQwMqAwoC6GLGh0dHA6Ly9jcmwucm9vdGcyLmFtYXpvbnRydXN0LmNvbS9yb290ZzIuY3JsMBEGA1UdIAQKMAgwBgYEVR0gADANBgkqhkiG9w0BAQsFAAOCAQEAYjdCXLwQtT6LLOkMm2xF4gcAevnFWAu5CIw+7bMlPLVvUOTNNWqnkzSWMiGpSESrnO09tKpzbeR/FoCJbM8oAxiDR3mjEH4wW6w7sGDgd9QIpuEdfF7Au/maeyKdpwAJfqxGF4PcnCZXmTA5YpaP7dreqsXMGz7KQ2hsVxa81Q4gLv7/wmpdLqBKbRRYh5TmOTFffHPLkIhqhBGWJ6bt2YFGpn6jcgAKUj6DiAdjd4lpFw85hdKrCEVN0FE6/V1dN2RMfjCyVSRCnTawXZwXgWHxyvkQAiSr6w10kY17RSlQOYiypok1JR4UakcjMS9cmvqtmg5iUaQqqcT5NJ0hGA==",
+                "name": "CN=Amazon Root CA 1, O=Amazon, C=US",
+                "alias": "CN=Amazon Root CA 1, O=Amazon, C=US",
+                "subject": "CN=Amazon Root CA 1, O=Amazon, C=US",
+                "issuer": "CN=Starfield Services Root Certificate Authority - G2, O=\"Starfield Technologies, Inc.\", L=Scottsdale, ST=Arizona, C=US",
+                "version": 3,
+                "notValidBefore": 1432555200000,
+                "notValidAfter": 2145834000000,
+                "signatureAlgorithm": "RSA (2048 bits)",
+                "sha1Fingerprint": "06:B2:59:27:C4:2A:72:16:31:C1:EF:D9:43:1E:64:8F:A6:2E:1E:39",
+                "md5Fingerprint": "E8:65:A2:2A:AE:52:4D:26:86:9A:F0:44:8D:6F:D8:96",
+                "expired": false,
+                "notYetValid": false,
+                "inbound": false,
+                "outbound": true
+            },
+            {
+                "certBlob": "MIIEdTCCA12gAwIBAgIJAKcOSkw0grd/MA0GCSqGSIb3DQEBCwUAMGgxCzAJBgNVBAYTAlVTMSUwIwYDVQQKExxTdGFyZmllbGQgVGVjaG5vbG9naWVzLCBJbmMuMTIwMAYDVQQLEylTdGFyZmllbGQgQ2xhc3MgMiBDZXJ0aWZpY2F0aW9uIEF1dGhvcml0eTAeFw0wOTA5MDIwMDAwMDBaFw0zNDA2MjgxNzM5MTZaMIGYMQswCQYDVQQGEwJVUzEQMA4GA1UECBMHQXJpem9uYTETMBEGA1UEBxMKU2NvdHRzZGFsZTElMCMGA1UEChMcU3RhcmZpZWxkIFRlY2hub2xvZ2llcywgSW5jLjE7MDkGA1UEAxMyU3RhcmZpZWxkIFNlcnZpY2VzIFJvb3QgQ2VydGlmaWNhdGUgQXV0aG9yaXR5IC0gRzIwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDVDDrEKvlO4vW+GZdfjohTsR8/y8+fIBNtKTrID30892t2OGPZNmCom15cAICyL1l/9of5JUOG52kbUpqQ4XHj2C0NTm/2yEnZtvMaVq4rtnQU68/7JuMauh2WLmo7WJSJR1b/JaCTcFOD2oR0FMNnngRoOt+OQFodSk7PQ5E751bWAHDLUu57fa4657wx+UX2wmDPE1kCK4DMNEffud6QZW0CzyyRpqbn3oUYSXxmTqM6bam17jQuug0DuDPfR+uxa40l2ZvOgdFFRjKWcIfeAg5JQ4W2bHO7ZOphQazJ1FTfhy/HIrImzJ9ZVGif/L4qL8RVHHVAYBeFAlU5i38FAgMBAAGjgfAwge0wDwYDVR0TAQH/BAUwAwEB/zAOBgNVHQ8BAf8EBAMCAYYwHQYDVR0OBBYEFJxfAN+qAdcwKziIorhtSpzyEZGDMB8GA1UdIwQYMBaAFL9ft9HO3R+G9FtVrNzXEMIOqYjnME8GCCsGAQUFBwEBBEMwQTAcBggrBgEFBQcwAYYQaHR0cDovL28uc3MyLnVzLzAhBggrBgEFBQcwAoYVaHR0cDovL3guc3MyLnVzL3guY2VyMCYGA1UdHwQfMB0wG6AZoBeGFWh0dHA6Ly9zLnNzMi51cy9yLmNybDARBgNVHSAECjAIMAYGBFUdIAAwDQYJKoZIhvcNAQELBQADggEBACMd44pXyn3pF3lM8R5V/cxTbj5HD9/GVfKyBDbtgB9TxF00KGu+x1X8Z+rLP3+QsjPNG1gQggL4+C/1E2DUBc7xgQjB3ad1l08YuW3e95ORCLp+QCztweq7dp4zBncdDQh/U90bZKuCJ/Fp1U1ervShw3WnWEQt8jxwmKy6abaVd38PMV4s/KCHOkdp8Hlf9BRUpJVeEXgSYCfOn8J3/yNTd126/+pZ59vPr5KW7ySaNRB6nJHGDn2Z9j8Z3/VyVOEVqQdZe4O/Ui5GjLIAZHYcSNPYeehuVsyuLAOQ1xk4meTKCRlb/weWsKh/NEnfVqn3sF/tM+2MR7cwA130A4w=",
+                "name": "CN=Starfield Services Root Certificate Authority - G2, O=\"Starfield Technologies, Inc.\", L=Scottsdale, ST=Arizona, C=US",
+                "alias": "CN=Starfield Services Root Certificate Authority - G2, O=\"Starfield Technologies, Inc.\", L=Scottsdale, ST=Arizona, C=US",
+                "subject": "CN=Starfield Services Root Certificate Authority - G2, O=\"Starfield Technologies, Inc.\", L=Scottsdale, ST=Arizona, C=US",
+                "issuer": "OU=Starfield Class 2 Certification Authority, O=\"Starfield Technologies, Inc.\", C=US",
+                "version": 3,
+                "notValidBefore": 1251849600000,
+                "notValidAfter": 2035129156000,
+                "signatureAlgorithm": "RSA (2048 bits)",
+                "sha1Fingerprint": "9E:99:A4:8A:99:60:B1:49:26:BB:7F:3B:02:E2:2D:A2:B0:AB:72:80",
+                "md5Fingerprint": "C6:15:09:25:CF:EA:59:41:DD:C7:FF:2A:0A:50:66:92",
+                "expired": false,
+                "notYetValid": false,
+                "inbound": false,
+                "outbound": true
+            },
+            {
+                "certBlob": "MIICrTCCAZUCBgF6WAPApTANBgkqhkiG9w0BAQsFADAaMRgwFgYDVQQDEw9QYXJ0bmVyLVJvb3QtQ2EwHhcNMjEwNjI5MTM0NDAwWhcNMjIwNjI5MTM0NDAwWjAaMRgwFgYDVQQDEw9QYXJ0bmVyLVJvb3QtQ2EwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCblRCG4EoBgt1PZeDaBg7yWs0JUr6gaTIbBI+sPwcRiR3kxjCFQFAdif0F85pwXPM58HDY/mnwbZgIiO2dQRgJq+GZr2wFJbNSWOCgYXFQW9/LwM8GUTnw3OdHRENAYMSAPw7LEw3wAa2J2pfW9znR1W3HKf5/Di4aIpqAyKvsSGRfbXtBNwCiiE57yyqh7saTyhmJyXwhCL0u27UCm11YvG7NO/D2v/u+Z0xQYWOOddWSs0eV/mbecGNCgztypIAYAs1kB63Sy3zjk7SLcrJK4xIeqwjdEXWAaXyT+kHY5YpaJzpP4cggeZzk+ohVh4+SVEA0lwmTzJqJ3nXkTt9LAgMBAAEwDQYJKoZIhvcNAQELBQADggEBADIBONZKTML1KC/FZ3f//J5P8a6KJABR2Bf4XxRhEkHNxOP29MlWXRuXnsbkug26mvUUUKd619jPH+JnlK8dxWWC3OPuo81jMy/2p+bBqhTn8ECcEwiZ2c/A4bSWNmG3F1v5Tmru8CZG4qlbVNsiKUzox49vgYrhH1xNW972FOdNziUZQ5m7FzN9uEtWMK/baYuCnsEhiDBgxBYcGhsIf1XCEBjgwNdlATKBXUIRAg0COGRR97VQ2KsI5UqBL2xl2VkwhUOTe633t3A5efenvH+zHFlj3W2d7JpYOCkrpAFqUhAVB06ST9hTNgcAnY78ikLuP2gyCTgYtLFu1GOxtSQ=",
+                "name": "CN=Partner-Root-Ca",
+                "alias": "CN=Partner-Root-Ca",
+                "subject": "CN=Partner-Root-Ca",
+                "issuer": "CN=Partner-Root-Ca",
+                "version": 1,
+                "notValidBefore": 1624974240000,
+                "notValidAfter": 1656510240000,
+                "signatureAlgorithm": "RSA (2048 bits)",
+                "sha1Fingerprint": "C4:04:13:49:39:67:4C:4B:E1:13:F4:D0:0A:B6:E3:30:6C:87:D3:B2",
+                "md5Fingerprint": "81:C0:16:46:54:CD:C5:F8:C4:22:70:2F:9A:E2:4D:2A",
+                "expired": false,
+                "notYetValid": false,
+                "inbound": true,
+                "outbound": false
+            }
+        ],
+        "tags": {},
+        "securityLevel": "public",
+        "validateRequest": "false",
+        "publicAPI": "false"
+    },
+    {
+        "id": "4c7aa9fb-98dc-4ac4-81d9-24f257814a55",
+        "organizationId": "19f2fcb7-1f24-40b3-aeb6-16acda948c82",
+        "apiId": "6e5866f9-a634-4bbb-9a4d-62c2492dd927",
+        "name": "FHIR Organization",
+        "version": "DSTU2",
+        "apiRoutingKey": null,
+        "vhost": null,
+        "path": "/organization",
+        "descriptionType": "manual",
+        "descriptionManual": "A formally or informally recognized grouping of people or organizations formed for the purpose of achieving some form of collective action. Includes companies, institutions, corporations, departments, community groups, healthcare practice groups, etc. For more infomation: https://www.hl7.org/fhir/organization.html",
+        "descriptionMarkdown": null,
+        "descriptionUrl": null,
+        "summary": null,
+        "retired": false,
+        "expired": false,
+        "image": "/api/portal/v1.3/discovery/swagger/apis/4c7aa9fb-98dc-4ac4-81d9-24f257814a55/image",
+        "retirementDate": 0,
+        "deprecated": false,
+        "state": "published",
+        "createdOn": 1626766559558,
+        "createdBy": "d8554fd4-03a8-4371-be00-90d69df54e10",
+        "corsProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "origins": [
+                    "*"
+                ],
+                "allowedHeaders": [],
+                "exposedHeaders": [
+                    "X-CorrelationID"
+                ],
+                "supportCredentials": false,
+                "maxAgeSeconds": 0
+            }
+        ],
+        "securityProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "devices": [
+                    {
+                        "name": "API Key",
+                        "type": "apiKey",
+                        "order": 1,
+                        "properties": {
+                            "apiKeyFieldName": "KeyId",
+                            "takeFrom": "HEADER",
+                            "removeCredentialsOnSuccess": "true"
+                        }
+                    }
+                ]
+            }
+        ],
+        "authenticationProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "parameters": {
+                    "_id_": 0
+                },
+                "type": "none"
+            }
+        ],
+        "inboundProfiles": {
+            "_default": {
+                "securityProfile": "_default",
+                "corsProfile": "_default",
+                "monitorAPI": true,
+                "monitorSubject": "authentication.subject.id"
+            }
+        },
+        "outboundProfiles": {
+            "_default": {
+                "authenticationProfile": "_default",
+                "routeType": "proxy",
+                "requestPolicy": null,
+                "responsePolicy": null,
+                "routePolicy": null,
+                "faultHandlerPolicy": null,
+                "apiId": null,
+                "apiMethodId": null,
+                "parameters": []
+            }
+        },
+        "serviceProfiles": {
+            "_default": {
+                "apiId": "6e5866f9-a634-4bbb-9a4d-62c2492dd927",
+                "basePath": "http://mocked-apis:8280"
+            }
+        },
+        "caCerts": [],
+        "tags": {
+            "Industry": [
+                "Healthcare"
+            ],
+            "Type": [
+                "Demo_FHIR"
+            ],
+            "Category": [
+                "Identification",
+                " Groups"
+            ],
+            "Standard": [
+                "FHIR"
+            ]
+        }
+    },
+    {
+        "id": "290138af-7575-4390-be37-99e952648048",
+        "organizationId": "fbb9fca7-e168-4c79-84fa-547516623d72",
+        "apiId": "51cc9811-6850-4a8d-8803-8a98d3beb276",
+        "name": "EMR-DiagnosticInfo",
+        "version": "3.7",
+        "apiRoutingKey": null,
+        "vhost": null,
+        "path": "/api/emr/diagnostic",
+        "descriptionType": "original",
+        "descriptionManual": null,
+        "descriptionMarkdown": null,
+        "descriptionUrl": null,
+        "summary": "Processes submitted patient diagnostics data",
+        "retired": false,
+        "expired": false,
+        "image": "/api/portal/v1.3/discovery/swagger/apis/290138af-7575-4390-be37-99e952648048/image",
+        "retirementDate": 0,
+        "deprecated": false,
+        "state": "published",
+        "createdOn": 1626766452802,
+        "createdBy": "d8554fd4-03a8-4371-be00-90d69df54e10",
+        "corsProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "origins": [
+                    "*"
+                ],
+                "allowedHeaders": [],
+                "exposedHeaders": [
+                    "X-CorrelationID"
+                ],
+                "supportCredentials": false,
+                "maxAgeSeconds": 0
+            }
+        ],
+        "securityProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "devices": [
+                    {
+                        "name": "Pass Through",
+                        "type": "passThrough",
+                        "order": 0,
+                        "properties": {
+                            "subjectIdFieldName": "Pass Through",
+                            "removeCredentialsOnSuccess": "true"
+                        }
+                    }
+                ]
+            }
+        ],
+        "authenticationProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "parameters": {
+                    "_id_": 0
+                },
+                "type": "none"
+            }
+        ],
+        "inboundProfiles": {
+            "_default": {
+                "securityProfile": "_default",
+                "corsProfile": "_default",
+                "monitorAPI": true,
+                "monitorSubject": "authentication.subject.id"
+            }
+        },
+        "outboundProfiles": {
+            "_default": {
+                "authenticationProfile": "_default",
+                "routeType": "proxy",
+                "requestPolicy": null,
+                "responsePolicy": null,
+                "routePolicy": null,
+                "faultHandlerPolicy": null,
+                "apiId": null,
+                "apiMethodId": null,
+                "parameters": []
+            }
+        },
+        "serviceProfiles": {
+            "_default": {
+                "apiId": "51cc9811-6850-4a8d-8803-8a98d3beb276",
+                "basePath": "http://mocked-apis:8280"
+            }
+        },
+        "caCerts": [],
+        "tags": {
+            "Industry": [
+                "Healthcare"
+            ],
+            "Type": [
+                "Demo_Amplify_PlexusHealth"
+            ],
+            "Category": [
+                "Diagnostic"
+            ]
+        }
+    },
+    {
+        "id": "5f0116ac-853e-44ec-82ea-0464bd503fdd",
+        "organizationId": "19f2fcb7-1f24-40b3-aeb6-16acda948c82",
+        "apiId": "578f9ba6-f20c-4d7e-b04b-772415575728",
+        "name": "FHIR Device",
+        "version": "DSTU2",
+        "apiRoutingKey": null,
+        "vhost": null,
+        "path": "/device",
+        "descriptionType": "manual",
+        "descriptionManual": "This resource identifies an instance of a manufactured item that is used in the provision of healthcare without being substantially changed through that activity. The device may be a medical or non-medical device. Medical devices includes durable (reusable) medical equipment, implantable devices, as well as disposable equipment used for diagnostic, treatment, and research for healthcare and public health. Non-medical devices may include items such as a machine, cellphone, computer, application, etc. For more information: https://www.hl7.org/fhir/device.html",
+        "descriptionMarkdown": null,
+        "descriptionUrl": null,
+        "summary": null,
+        "retired": false,
+        "expired": false,
+        "image": "/api/portal/v1.3/discovery/swagger/apis/5f0116ac-853e-44ec-82ea-0464bd503fdd/image",
+        "retirementDate": 0,
+        "deprecated": false,
+        "state": "published",
+        "createdOn": 1626766536823,
+        "createdBy": "d8554fd4-03a8-4371-be00-90d69df54e10",
+        "corsProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "origins": [
+                    "*"
+                ],
+                "allowedHeaders": [],
+                "exposedHeaders": [
+                    "X-CorrelationID"
+                ],
+                "supportCredentials": false,
+                "maxAgeSeconds": 0
+            }
+        ],
+        "securityProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "devices": [
+                    {
+                        "name": "API Key",
+                        "type": "apiKey",
+                        "order": 1,
+                        "properties": {
+                            "apiKeyFieldName": "KeyId",
+                            "takeFrom": "HEADER",
+                            "removeCredentialsOnSuccess": "true"
+                        }
+                    }
+                ]
+            }
+        ],
+        "authenticationProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "parameters": {
+                    "_id_": 0
+                },
+                "type": "none"
+            }
+        ],
+        "inboundProfiles": {
+            "_default": {
+                "securityProfile": "_default",
+                "corsProfile": "_default",
+                "monitorAPI": true,
+                "monitorSubject": "authentication.subject.id"
+            }
+        },
+        "outboundProfiles": {
+            "_default": {
+                "authenticationProfile": "_default",
+                "routeType": "proxy",
+                "requestPolicy": null,
+                "responsePolicy": null,
+                "routePolicy": null,
+                "faultHandlerPolicy": null,
+                "apiId": null,
+                "apiMethodId": null,
+                "parameters": []
+            }
+        },
+        "serviceProfiles": {
+            "_default": {
+                "apiId": "578f9ba6-f20c-4d7e-b04b-772415575728",
+                "basePath": "http://mocked-apis:8280"
+            }
+        },
+        "caCerts": [],
+        "tags": {
+            "Industry": [
+                "Healthcare"
+            ],
+            "Type": [
+                "Demo_FHIR"
+            ],
+            "Category": [
+                "Identification",
+                " Devices"
+            ],
+            "Standard": [
+                "FHIR"
+            ]
+        }
+    },
+    {
+        "id": "f813fca8-d5e7-4953-9ecf-d3e9516d9bc4",
+        "organizationId": "fbb9fca7-e168-4c79-84fa-547516623d72",
+        "apiId": "1afe2a09-441a-4e97-a8f7-80601152b2e8",
+        "name": "EMR-System-Physicians",
+        "version": "3.7",
+        "apiRoutingKey": null,
+        "vhost": null,
+        "path": "/api/emr/physicians",
+        "descriptionType": "original",
+        "descriptionManual": null,
+        "descriptionMarkdown": null,
+        "descriptionUrl": null,
+        "summary": "Processing electronic health transactions for retrieving physicians availability",
+        "retired": false,
+        "expired": false,
+        "image": "/api/portal/v1.3/discovery/swagger/apis/f813fca8-d5e7-4953-9ecf-d3e9516d9bc4/image",
+        "retirementDate": 0,
+        "deprecated": false,
+        "state": "published",
+        "createdOn": 1626766464175,
+        "createdBy": "d8554fd4-03a8-4371-be00-90d69df54e10",
+        "corsProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "origins": [
+                    "*"
+                ],
+                "allowedHeaders": [],
+                "exposedHeaders": [
+                    "X-CorrelationID"
+                ],
+                "supportCredentials": false,
+                "maxAgeSeconds": 0
+            }
+        ],
+        "securityProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "devices": [
+                    {
+                        "name": "Pass Through",
+                        "type": "passThrough",
+                        "order": 0,
+                        "properties": {
+                            "subjectIdFieldName": "Pass Through",
+                            "removeCredentialsOnSuccess": "true"
+                        }
+                    }
+                ]
+            }
+        ],
+        "authenticationProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "parameters": {
+                    "_id_": 0
+                },
+                "type": "none"
+            }
+        ],
+        "inboundProfiles": {
+            "_default": {
+                "securityProfile": "_default",
+                "corsProfile": "_default",
+                "monitorAPI": true,
+                "monitorSubject": "authentication.subject.id"
+            }
+        },
+        "outboundProfiles": {
+            "_default": {
+                "authenticationProfile": "_default",
+                "routeType": "proxy",
+                "requestPolicy": null,
+                "responsePolicy": null,
+                "routePolicy": null,
+                "faultHandlerPolicy": null,
+                "apiId": null,
+                "apiMethodId": null,
+                "parameters": []
+            }
+        },
+        "serviceProfiles": {
+            "_default": {
+                "apiId": "1afe2a09-441a-4e97-a8f7-80601152b2e8",
+                "basePath": "http://mocked-apis:8280"
+            }
+        },
+        "caCerts": [],
+        "tags": {
+            "Industry": [
+                "Healthcare"
+            ],
+            "Type": [
+                "Demo_Amplify_PlexusHealth"
+            ],
+            "Category": [
+                "Physician"
+            ]
+        }
+    },
+    {
+        "id": "30a50ced-ca45-40ca-9c29-63b0ad11ee36",
+        "organizationId": "fbb9fca7-e168-4c79-84fa-547516623d72",
+        "apiId": "e902f18b-9d12-4aeb-8a1e-3c205a950f1b",
+        "name": "EMR-System-Admissions",
+        "version": "3.7",
+        "apiRoutingKey": null,
+        "vhost": null,
+        "path": "/api/erm/admission",
+        "descriptionType": "original",
+        "descriptionManual": null,
+        "descriptionMarkdown": null,
+        "descriptionUrl": null,
+        "summary": "Processing electronic health transactions for managing admissions",
+        "retired": false,
+        "expired": false,
+        "image": "/api/portal/v1.3/discovery/swagger/apis/30a50ced-ca45-40ca-9c29-63b0ad11ee36/image",
+        "retirementDate": 0,
+        "deprecated": false,
+        "state": "published",
+        "createdOn": 1626766474748,
+        "createdBy": "d8554fd4-03a8-4371-be00-90d69df54e10",
+        "corsProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "origins": [
+                    "*"
+                ],
+                "allowedHeaders": [],
+                "exposedHeaders": [
+                    "X-CorrelationID"
+                ],
+                "supportCredentials": false,
+                "maxAgeSeconds": 0
+            }
+        ],
+        "securityProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "devices": [
+                    {
+                        "name": "OAuth",
+                        "type": "oauth",
+                        "order": 1,
+                        "properties": {
+                            "tokenStore": "<key type='OAuth2StoresGroup'><id field='name' value='OAuth2 Stores'/><key type='AccessTokenStoreGroup'><id field='name' value='Access Token Stores'/><key type='AccessTokenPersist'><id field='name' value='OAuth Access Token Store'/></key></key></key>",
+                            "accessTokenLocation": "HEADER",
+                            "authorizationHeaderPrefix": "Bearer",
+                            "accessTokenLocationQueryString": "",
+                            "scopesMustMatch": "Any",
+                            "scopes": "patient.*, registration.submit",
+                            "removeCredentialsOnSuccess": "true",
+                            "implicitGrantEnabled": "true",
+                            "implicitGrantLoginEndpointUrl": "http://localhost:8089/api/oauth/authorize",
+                            "implicitGrantLoginTokenName": "access_token",
+                            "authCodeGrantTypeEnabled": "true",
+                            "authCodeGrantTypeRequestEndpointUrl": "http://localhost:8089/api/oauth/authorize",
+                            "authCodeGrantTypeRequestClientIdName": "client_id",
+                            "authCodeGrantTypeRequestSecretName": "client_secret",
+                            "authCodeGrantTypeTokenEndpointUrl": "http://localhost:8089/api/oauth/token",
+                            "authCodeGrantTypeTokenEndpointTokenName": "access_code"
+                        }
+                    }
+                ]
+            }
+        ],
+        "authenticationProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "parameters": {
+                    "_id_": 0
+                },
+                "type": "none"
+            }
+        ],
+        "inboundProfiles": {
+            "_default": {
+                "securityProfile": "_default",
+                "corsProfile": "_default",
+                "monitorAPI": true,
+                "monitorSubject": "authentication.subject.id"
+            }
+        },
+        "outboundProfiles": {
+            "_default": {
+                "authenticationProfile": "_default",
+                "routeType": "proxy",
+                "requestPolicy": null,
+                "responsePolicy": null,
+                "routePolicy": null,
+                "faultHandlerPolicy": null,
+                "apiId": null,
+                "apiMethodId": null,
+                "parameters": []
+            }
+        },
+        "serviceProfiles": {
+            "_default": {
+                "apiId": "e902f18b-9d12-4aeb-8a1e-3c205a950f1b",
+                "basePath": "http://mocked-apis:8280"
+            }
+        },
+        "caCerts": [],
+        "tags": {
+            "Industry": [
+                "Healthcare"
+            ],
+            "Type": [
+                "Demo_Amplify_PlexusHealth"
+            ],
+            "Category": [
+                "EMR"
+            ]
+        }
+    },
+    {
+        "id": "f1ec2eda-634e-4275-9886-f0fe1b73094b",
+        "organizationId": "fbb9fca7-e168-4c79-84fa-547516623d72",
+        "apiId": "f7445fba-3b9e-434e-b92c-f155081c300c",
+        "name": "HL7-Element-DB",
+        "version": "2.1",
+        "apiRoutingKey": null,
+        "vhost": null,
+        "path": "/api/hl7/db",
+        "descriptionType": "original",
+        "descriptionManual": null,
+        "descriptionMarkdown": null,
+        "descriptionUrl": null,
+        "summary": "Datasource access to HL7 messages",
+        "retired": false,
+        "expired": false,
+        "image": "/api/portal/v1.3/discovery/swagger/apis/f1ec2eda-634e-4275-9886-f0fe1b73094b/image",
+        "retirementDate": 0,
+        "deprecated": false,
+        "state": "published",
+        "createdOn": 1626766488625,
+        "createdBy": "d8554fd4-03a8-4371-be00-90d69df54e10",
+        "corsProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "origins": [
+                    "*"
+                ],
+                "allowedHeaders": [],
+                "exposedHeaders": [
+                    "X-CorrelationID"
+                ],
+                "supportCredentials": false,
+                "maxAgeSeconds": 0
+            }
+        ],
+        "securityProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "devices": [
+                    {
+                        "name": "Pass Through",
+                        "type": "passThrough",
+                        "order": 0,
+                        "properties": {
+                            "subjectIdFieldName": "Pass Through",
+                            "removeCredentialsOnSuccess": "true"
+                        }
+                    }
+                ]
+            }
+        ],
+        "authenticationProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "parameters": {
+                    "_id_": 0
+                },
+                "type": "none"
+            }
+        ],
+        "inboundProfiles": {
+            "_default": {
+                "securityProfile": "_default",
+                "corsProfile": "_default",
+                "monitorAPI": true,
+                "monitorSubject": "authentication.subject.id"
+            }
+        },
+        "outboundProfiles": {
+            "_default": {
+                "authenticationProfile": "_default",
+                "routeType": "proxy",
+                "requestPolicy": null,
+                "responsePolicy": null,
+                "routePolicy": null,
+                "faultHandlerPolicy": null,
+                "apiId": null,
+                "apiMethodId": null,
+                "parameters": []
+            }
+        },
+        "serviceProfiles": {
+            "_default": {
+                "apiId": "f7445fba-3b9e-434e-b92c-f155081c300c",
+                "basePath": "http://mocked-apis:8280"
+            }
+        },
+        "caCerts": [],
+        "tags": {
+            "Industry": [
+                "Healthcare"
+            ],
+            "Category": [
+                "Demo_Amplify_PlexusHealth"
+            ]
+        }
+    },
+    {
+        "id": "106e8067-77ec-4a24-a6fc-a2fc24bb859b",
+        "organizationId": "fbb9fca7-e168-4c79-84fa-547516623d72",
+        "apiId": "0d28d572-025a-440a-ba0c-ef73082a4874",
+        "name": "Order API",
+        "version": "1.0",
+        "apiRoutingKey": null,
+        "vhost": null,
+        "path": "/api/order",
+        "descriptionType": "original",
+        "descriptionManual": null,
+        "descriptionMarkdown": null,
+        "descriptionUrl": null,
+        "summary": "An API to manage orders ",
+        "retired": false,
+        "expired": false,
+        "image": null,
+        "retirementDate": 0,
+        "deprecated": false,
+        "state": "unpublished",
+        "createdOn": 1623151635652,
+        "createdBy": "d8554fd4-03a8-4371-be00-90d69df54e10",
+        "corsProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "origins": [
+                    "*"
+                ],
+                "allowedHeaders": [],
+                "exposedHeaders": [
+                    "X-CorrelationID"
+                ],
+                "supportCredentials": false,
+                "maxAgeSeconds": 0
+            }
+        ],
+        "securityProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "devices": [
+                    {
+                        "name": "Pass Through",
+                        "type": "passThrough",
+                        "order": 0,
+                        "properties": {
+                            "subjectIdFieldName": "Pass Through",
+                            "removeCredentialsOnSuccess": "true"
+                        }
+                    }
+                ]
+            }
+        ],
+        "authenticationProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "parameters": {
+                    "_id_": 0
+                },
+                "type": "none"
+            }
+        ],
+        "inboundProfiles": {
+            "_default": {
+                "securityProfile": "_default",
+                "corsProfile": "_default",
+                "monitorAPI": true,
+                "monitorSubject": "authentication.subject.id"
+            }
+        },
+        "outboundProfiles": {
+            "_default": {
+                "authenticationProfile": "_default",
+                "routeType": "proxy",
+                "requestPolicy": null,
+                "responsePolicy": null,
+                "routePolicy": null,
+                "faultHandlerPolicy": null,
+                "apiId": null,
+                "apiMethodId": null,
+                "parameters": []
+            }
+        },
+        "serviceProfiles": {
+            "_default": {
+                "apiId": "0d28d572-025a-440a-ba0c-ef73082a4874",
+                "basePath": "http://order-app:8080"
+            }
+        },
+        "caCerts": [],
+        "tags": {}
+    },
+    {
+        "id": "86c8317a-9631-424d-aa7d-c33d5e603924",
+        "organizationId": "fbb9fca7-e168-4c79-84fa-547516623d72",
+        "apiId": "85a19789-af80-4f77-9aad-3b5018cb578e",
+        "name": "EMR-HealthCatalog",
+        "version": "3.7",
+        "apiRoutingKey": null,
+        "vhost": null,
+        "path": "/api/emr/catalog",
+        "descriptionType": "original",
+        "descriptionManual": null,
+        "descriptionMarkdown": null,
+        "descriptionUrl": null,
+        "summary": "Processes health data for patient symptom recommendation",
+        "retired": false,
+        "expired": false,
+        "image": "/api/portal/v1.3/discovery/swagger/apis/86c8317a-9631-424d-aa7d-c33d5e603924/image",
+        "retirementDate": 0,
+        "deprecated": false,
+        "state": "published",
+        "createdOn": 1626766445019,
+        "createdBy": "d8554fd4-03a8-4371-be00-90d69df54e10",
+        "corsProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "origins": [
+                    "*"
+                ],
+                "allowedHeaders": [],
+                "exposedHeaders": [
+                    "X-CorrelationID"
+                ],
+                "supportCredentials": false,
+                "maxAgeSeconds": 0
+            }
+        ],
+        "securityProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "devices": [
+                    {
+                        "name": "API Key",
+                        "type": "apiKey",
+                        "order": 1,
+                        "properties": {
+                            "apiKeyFieldName": "KeyId",
+                            "takeFrom": "HEADER",
+                            "removeCredentialsOnSuccess": "true"
+                        }
+                    }
+                ]
+            }
+        ],
+        "authenticationProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "parameters": {
+                    "_id_": 0
+                },
+                "type": "none"
+            }
+        ],
+        "inboundProfiles": {
+            "_default": {
+                "securityProfile": "_default",
+                "corsProfile": "_default",
+                "monitorAPI": true,
+                "monitorSubject": "authentication.subject.id"
+            }
+        },
+        "outboundProfiles": {
+            "_default": {
+                "authenticationProfile": "_default",
+                "routeType": "proxy",
+                "requestPolicy": null,
+                "responsePolicy": null,
+                "routePolicy": null,
+                "faultHandlerPolicy": null,
+                "apiId": null,
+                "apiMethodId": null,
+                "parameters": []
+            }
+        },
+        "serviceProfiles": {
+            "_default": {
+                "apiId": "85a19789-af80-4f77-9aad-3b5018cb578e",
+                "basePath": "http://mocked-apis:8280"
+            }
+        },
+        "caCerts": [],
+        "tags": {
+            "Industry": [
+                "Healthcare"
+            ],
+            "Type": [
+                "Demo_Amplify_PlexusHealth"
+            ],
+            "Category": [
+                "Catalog"
+            ]
+        }
+    },
+    {
+        "id": "ae2ca0b1-4f42-4173-9b58-5a7d2df23577",
+        "organizationId": "19f2fcb7-1f24-40b3-aeb6-16acda948c82",
+        "apiId": "0765f0a1-b791-4a75-88b8-a92d129da514",
+        "name": "FHIR Patient",
+        "version": "DSTU2",
+        "apiRoutingKey": null,
+        "vhost": null,
+        "path": "/patient",
+        "descriptionType": "manual",
+        "descriptionManual": "Demographics and other administrative information about an individual or animal receiving care or other health-related services. For more information: https://www.hl7.org/fhir/patient.html",
+        "descriptionMarkdown": null,
+        "descriptionUrl": null,
+        "summary": null,
+        "retired": false,
+        "expired": false,
+        "image": "/api/portal/v1.3/discovery/swagger/apis/ae2ca0b1-4f42-4173-9b58-5a7d2df23577/image",
+        "retirementDate": 0,
+        "deprecated": false,
+        "state": "published",
+        "createdOn": 1626766565448,
+        "createdBy": "d8554fd4-03a8-4371-be00-90d69df54e10",
+        "corsProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "origins": [
+                    "*"
+                ],
+                "allowedHeaders": [],
+                "exposedHeaders": [
+                    "X-CorrelationID"
+                ],
+                "supportCredentials": false,
+                "maxAgeSeconds": 0
+            }
+        ],
+        "securityProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "devices": [
+                    {
+                        "name": "OAuth",
+                        "type": "oauth",
+                        "order": 1,
+                        "properties": {
+                            "tokenStore": "<key type='OAuth2StoresGroup'><id field='name' value='OAuth2 Stores'/><key type='AccessTokenStoreGroup'><id field='name' value='Access Token Stores'/><key type='AccessTokenPersist'><id field='name' value='OAuth Access Token Store'/></key></key></key>",
+                            "accessTokenLocation": "HEADER",
+                            "authorizationHeaderPrefix": "Bearer",
+                            "accessTokenLocationQueryString": "",
+                            "scopesMustMatch": "Any",
+                            "scopes": "resource.WRITE, resource.READ",
+                            "removeCredentialsOnSuccess": "true",
+                            "implicitGrantEnabled": "true",
+                            "implicitGrantLoginEndpointUrl": "http://localhost:8089/api/oauth/authorize",
+                            "implicitGrantLoginTokenName": "access_token",
+                            "authCodeGrantTypeEnabled": "true",
+                            "authCodeGrantTypeRequestEndpointUrl": "http://localhost:8089/api/oauth/authorize",
+                            "authCodeGrantTypeRequestClientIdName": "client_id",
+                            "authCodeGrantTypeRequestSecretName": "client_secret",
+                            "authCodeGrantTypeTokenEndpointUrl": "http://localhost:8089/api/oauth/token",
+                            "authCodeGrantTypeTokenEndpointTokenName": "access_code"
+                        }
+                    }
+                ]
+            }
+        ],
+        "authenticationProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "parameters": {
+                    "_id_": 0
+                },
+                "type": "none"
+            }
+        ],
+        "inboundProfiles": {
+            "_default": {
+                "securityProfile": "_default",
+                "corsProfile": "_default",
+                "monitorAPI": true,
+                "monitorSubject": "authentication.subject.id"
+            }
+        },
+        "outboundProfiles": {
+            "_default": {
+                "authenticationProfile": "_default",
+                "routeType": "proxy",
+                "requestPolicy": null,
+                "responsePolicy": null,
+                "routePolicy": null,
+                "faultHandlerPolicy": null,
+                "apiId": null,
+                "apiMethodId": null,
+                "parameters": []
+            }
+        },
+        "serviceProfiles": {
+            "_default": {
+                "apiId": "0765f0a1-b791-4a75-88b8-a92d129da514",
+                "basePath": "http://mocked-apis:8280"
+            }
+        },
+        "caCerts": [],
+        "tags": {
+            "Industry": [
+                "Healthcare"
+            ],
+            "Type": [
+                "Demo_FHIR"
+            ],
+            "Category": [
+                "Identification",
+                " Individuals"
+            ],
+            "Standard": [
+                "FHIR"
+            ]
+        }
+    },
+    {
+        "id": "6954f15f-856f-49f5-8af5-2eafbcfc91d1",
+        "organizationId": "19f2fcb7-1f24-40b3-aeb6-16acda948c82",
+        "apiId": "98d43bc0-2bb7-411d-9b0e-d8486738db34",
+        "name": "FHIR Resource (Any)",
+        "version": "DSTU2",
+        "apiRoutingKey": null,
+        "vhost": null,
+        "path": "/fhir",
+        "descriptionType": "manual",
+        "descriptionManual": "This is a generic API that can invoke any FHIR resource. Parameter is \"type\" and sample values can be Condition, Patient etc.",
+        "descriptionMarkdown": null,
+        "descriptionUrl": null,
+        "summary": null,
+        "retired": false,
+        "expired": false,
+        "image": "/api/portal/v1.3/discovery/swagger/apis/6954f15f-856f-49f5-8af5-2eafbcfc91d1/image",
+        "retirementDate": 0,
+        "deprecated": false,
+        "state": "published",
+        "createdOn": 1626766583439,
+        "createdBy": "d8554fd4-03a8-4371-be00-90d69df54e10",
+        "corsProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "origins": [
+                    "*"
+                ],
+                "allowedHeaders": [],
+                "exposedHeaders": [
+                    "X-CorrelationID"
+                ],
+                "supportCredentials": false,
+                "maxAgeSeconds": 0
+            }
+        ],
+        "securityProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "devices": [
+                    {
+                        "name": "API Key",
+                        "type": "apiKey",
+                        "order": 1,
+                        "properties": {
+                            "apiKeyFieldName": "KeyId",
+                            "takeFrom": "HEADER",
+                            "removeCredentialsOnSuccess": "true"
+                        }
+                    }
+                ]
+            }
+        ],
+        "authenticationProfiles": [
+            {
+                "name": "_default",
+                "isDefault": true,
+                "parameters": {
+                    "_id_": 0
+                },
+                "type": "none"
+            }
+        ],
+        "inboundProfiles": {
+            "_default": {
+                "securityProfile": "_default",
+                "corsProfile": "_default",
+                "monitorAPI": true,
+                "monitorSubject": "authentication.subject.id"
+            }
+        },
+        "outboundProfiles": {
+            "_default": {
+                "authenticationProfile": "_default",
+                "routeType": "proxy",
+                "requestPolicy": null,
+                "responsePolicy": null,
+                "routePolicy": null,
+                "faultHandlerPolicy": null,
+                "apiId": null,
+                "apiMethodId": null,
+                "parameters": []
+            }
+        },
+        "serviceProfiles": {
+            "_default": {
+                "apiId": "98d43bc0-2bb7-411d-9b0e-d8486738db34",
+                "basePath": "http://mocked-apis:8280"
+            }
+        },
+        "caCerts": [],
+        "tags": {
+            "Industry": [
+                "Healthcare"
+            ],
+            "Type": [
+                "Demo_FHIR"
+            ],
+            "Standard": [
+                "FHIR"
+            ]
+        }
+    }
+]

@@ -35,7 +35,6 @@ async function getAPIManagerConfig(params, options) {
 		} else {
 			logger.debug(`Reading API-Manager configuration from: ${config.url}`);
 			try {
-				debugger;
 				var managerConfig = await _getManagerConfig(config);
 				// Additionally add the API-Manager Connection details to the object (required by the KPI-Subflow)
 				managerConfig.connection = config;
@@ -56,6 +55,23 @@ async function getAPIManagerConfig(params, options) {
 	return apiManagerConfigs;
 }
 
+async function getAPIManagerOrganizations(params, options) {
+	let { apiManager } = params;
+	const { logger } = options;
+	if (!apiManager) {
+		throw new Error('Missing requirement parameter apiManager containing connection details.');
+	}
+	logger.debug(`Reading API-Manager organizations from: ${apiManager.url}`);
+	try {
+		debugger;
+		var organizations = await _getManagerOrganizations(apiManager);
+	} catch (err) {
+		throw new Error(`Error reading configuration from API-Manager: ${apiManager.url}. Error: ${JSON.stringify(err)}`);
+	}
+	logger.info(`Found: ${organizations.length} organizations in API-Manager: ${apiManager.url}.`);
+	return organizations;
+}
+
 async function _getManagerConfig(apiManagerConfig) {
 	var options = {
 		path: `/api/portal/v1.3/config`,
@@ -74,6 +90,25 @@ async function _getManagerConfig(apiManagerConfig) {
 	return managerConfig;
 }
 
+async function _getManagerOrganizations(apiManagerConfig) {
+	var options = {
+		path: `/api/portal/v1.3/organizations`,
+		headers: {
+			'Authorization': 'Basic ' + Buffer.from(apiManagerConfig.username + ':' + apiManagerConfig.password).toString('base64')
+		},
+		agent: new https.Agent({ rejectUnauthorized: false })
+	};
+	var organizations = await sendRequest(apiManagerConfig.url, options)
+		.then(response => {
+			return response.body;
+		})
+		.catch(err => {
+			throw err;
+		});
+	return organizations;
+}
+
 module.exports = {
-	getAPIManagerConfig
+	getAPIManagerConfig,
+	getAPIManagerOrganizations
 };

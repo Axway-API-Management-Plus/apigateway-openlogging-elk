@@ -36,6 +36,10 @@
                     }
                 }
             },
+            "organization": {
+                "type": "keyword",
+                "norms": false
+            },
             "apis_total": {
                 "type": "integer"
             },

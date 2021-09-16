@@ -133,9 +133,7 @@
 				{
 					"name": "code",
 					"type": "string",
-					"value": "\"var query = \\n    {\\n      bool: {\\n        filter: [\\n          {\\n            term: {\\n              \\\"meta.apiManagerName\\\": data.portalName\\n            }\\n          }\\n        ]\\n      }\\n    };\\n  return query;\"",
-					"metaName": "Code",
-					"metaDescription": "A JavaScript function body. Supports `await` and returning promises. `data` is the value of the Data parameter. `logger` is the API Builder logger. See the docs for more info: https://docs.axway.com/bundle/API_Builder_4x_allOS_en/page/javascript_flow-node.html"
+					"value": "\"var organization = data.name;\\n  if(!data.portalName) {\\n    throw new Error(\\\"Requirement parameter: data.portalName containing the API-Manager name is missing.\\\");\\n  }\\n  var filters = [{ term: { \\\"meta.apiManagerName\\\": data.portalName}}];\\n  if(organization) {\\n    logger.debug(`Get previous KPIs for organization: ${organization}`);\\n    filters.push({ term: { \\\"organization\\\": organization}});\\n  }\\n  var query = \\n    {\\n      bool: {\\n        filter: filters\\n      }\\n    };\\n  \\n  return query;\""
 				}
 			],
 			"outputs": {
@@ -172,6 +170,13 @@
 					"value": "$.request",
 					"metaName": "API-Manager configuration",
 					"metaDescription": "The API Manager configuration including API-ManagerName and connection details such as URL, name, username. The API Manager name is merged into the KPI object."
+				},
+				{
+					"name": "organization",
+					"type": "jsonpath",
+					"value": "$.request",
+					"metaName": "Organization",
+					"metaDescription": "If given, the result will contain APIs only for the actual organization. Must be an object containing the id and name of the organization (e.g. {id: \"b932cbb5-d4be-4bce-aca7-c5daac14f187\", name: \"FastCars\"})."
 				}
 			],
 			"outputs": {
