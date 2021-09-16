@@ -93,6 +93,7 @@ async function getAppKPIs(params, options) {
 			kpis.apps_total_diff = await _getDifference(appCount, previousKPIs.apps_total, "Applications", options);
 		}
 	} else {
+		logger.debug(`Found: ${appCount} Applications for all organizations.`);
 		kpis.apps_total = apps.length;
 		kpis.apps_total_diff = 0;
 		if(previousKPIs) {
@@ -102,6 +103,7 @@ async function getAppKPIs(params, options) {
 	if(includeSubscriptions) {
 		var subscriptions_total = 0;
 		// Collect the subscriptions for all apps
+		logger.debug(`Getting subscriptions for: ${consideredApps} Applications.`);
 		for (i = 0; i < consideredApps.length; i++) {
 			var app = consideredApps[i];
 			var subscriptions = await _getManagerApplicationSubscriptions(apiManagerConfig.connection, app);
