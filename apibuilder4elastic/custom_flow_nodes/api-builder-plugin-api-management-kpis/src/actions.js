@@ -95,7 +95,7 @@ async function getAppKPIs(params, options) {
 			kpis.apps_total_diff = await _getDifference(appCount, previousKPIs.apps_total, "Applications", options);
 		}
 	} else {
-		logger.debug(`Found: ${appCount} Applications for all organizations.`);
+		logger.debug(`Found: ${apps.length} Applications for all organizations.`);
 		kpis.apps_total = apps.length;
 		kpis.apps_total_diff = 0;
 		if(previousKPIs) {
