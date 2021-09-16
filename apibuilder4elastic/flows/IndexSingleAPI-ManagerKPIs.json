@@ -133,7 +133,7 @@
 				{
 					"name": "code",
 					"type": "string",
-					"value": "\"var organization = data.name;\\n  if(!data.portalName) {\\n    throw new Error(\\\"Requirement parameter: data.portalName containing the API-Manager name is missing.\\\");\\n  }\\n  var filters = [{ term: { \\\"meta.apiManagerName\\\": data.portalName}}];\\n  if(organization) {\\n    logger.debug(`Get previous KPIs for organization: ${organization}`);\\n    filters.push({ term: { \\\"organization\\\": organization}});\\n  }\\n  var query = \\n    {\\n      bool: {\\n        filter: filters\\n      }\\n    };\\n  \\n  return query;\""
+					"value": "\"var organization = data.name;\\n  if(!data.portalName) {\\n    throw new Error(\\\"Requirement parameter: data.portalName containing the API-Manager name is missing.\\\");\\n  }\\n  var filters = [{ term: { \\\"meta.apiManagerName\\\": data.portalName}}];\\n  var mustNotFilters = [];\\n  if(organization) {\\n    logger.debug(`Get previous KPIs for organization: ${organization}`);\\n    filters.push({ term: { \\\"organization\\\": organization}});\\n  } else {\\n    // Otherwise filter for the last document not having an organization\\n    logger.debug(`Get previous KPIs for ALL organizations`);\\n    mustNotFilters.push( {exists: { field: \\\"organization\\\" } });\\n  }\\n  var query = \\n    {\\n      bool: {\\n        filter: filters,\\n        must_not: mustNotFilters\\n      }\\n    };\\n  \\n  return query;\""
 				}
 			],
 			"outputs": {
