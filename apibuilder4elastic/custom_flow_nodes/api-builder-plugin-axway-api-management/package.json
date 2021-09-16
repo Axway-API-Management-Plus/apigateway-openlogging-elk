@@ -34,6 +34,6 @@
 	},
 	"scripts": {
 		"test": "mocha ./test --recursive -R spec",
-		"postinstall": "node scripts/copyconf.js"
+		"postinstall": "api-builder-copy ./config/axway-api-utils.default.js ./conf"
 	}
 }
