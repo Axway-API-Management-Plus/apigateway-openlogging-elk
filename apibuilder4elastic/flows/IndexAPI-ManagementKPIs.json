@@ -237,6 +237,11 @@
 					"value": "1",
 					"metaName": "Concurrency",
 					"metaDescription": "By default, items in the Items array are processed concurrently in chunks of 10.  This value can be set to 0 to process all items in Items concurrently, or set to 1 to disable concurrency, or set to a value greater-than 1 to provide a throttling mechanism so as to not overwhelm a backend."
+				},
+				{
+					"name": "breakOnError",
+					"type": "boolean",
+					"value": "true"
 				}
 			],
 			"outputs": {
@@ -504,6 +509,11 @@
 					"value": "1",
 					"metaName": "Concurrency",
 					"metaDescription": "By default, items in the Items array are processed concurrently in chunks of 10.  This value can be set to 0 to process all items in Items concurrently, or set to 1 to disable concurrency, or set to a value greater-than 1 to provide a throttling mechanism so as to not overwhelm a backend."
+				},
+				{
+					"name": "breakOnError",
+					"type": "boolean",
+					"value": "true"
 				}
 			],
 			"outputs": {

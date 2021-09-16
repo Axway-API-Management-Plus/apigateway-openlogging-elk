@@ -33,7 +33,6 @@
 		"simple-mock": "^0.8.0"
 	},
 	"scripts": {
-		"test": "mocha ./test --recursive -R spec",
-		"postinstall": "api-builder-copy ./config/axway-api-utils.default.js ./conf"
+		"test": "mocha ./test --recursive -R spec"
 	}
 }
