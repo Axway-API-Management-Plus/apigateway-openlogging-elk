@@ -198,8 +198,7 @@
 			"outputs": {
 				"next": {
 					"routes": [
-						"invoke-flow.1",
-						"invoke-flow.2"
+						"invoke-flow.1"
 					],
 					"context": "$.apiManagerConfig",
 					"metaName": "Next"
@@ -241,12 +240,16 @@
 				{
 					"name": "breakOnError",
 					"type": "boolean",
-					"value": "true"
+					"value": "true",
+					"metaName": "Break on error",
+					"metaDescription": "If true, this will break out of the flow invocation loop when the first error occurs. When Concurrency is not set to 1, all remaining requests currently being executed will be processed before breaking."
 				}
 			],
 			"outputs": {
 				"next": {
-					"routes": [],
+					"routes": [
+						"invoke-flow.2"
+					],
 					"context": "$.flowResponse",
 					"metaName": "Next"
 				},
@@ -513,7 +516,9 @@
 				{
 					"name": "breakOnError",
 					"type": "boolean",
-					"value": "true"
+					"value": "true",
+					"metaName": "Break on error",
+					"metaDescription": "If true, this will break out of the flow invocation loop when the first error occurs. When Concurrency is not set to 1, all remaining requests currently being executed will be processed before breaking."
 				}
 			],
 			"outputs": {
