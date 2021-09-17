@@ -110,7 +110,7 @@ describe('flow-node api-management-kpis', () => {
 			expect(output).to.equal('next');
 			expect(value).to.deep.equal({
 				meta:{apiManagerName:"My API-Manager", apiManagerVersion: "7.7.20210830", apiBuilderHostname: os.hostname() }, 
-				users_total: 2, users_total_diff: 1,
+				users_total: 3, users_total_diff: 2, // Including Multi-Org User
 				organization: "Axway"
 			});
 		});

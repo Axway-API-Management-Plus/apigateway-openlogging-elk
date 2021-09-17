@@ -166,6 +166,14 @@ async function getUserKPIs(params, options) {
 			var user = users[i];
 			if(user.organizationId == organization.id) {
 				userCount++;
+				continue;
+			}
+			if(user.orgs2Name) { // Has the user any Multi-Orgs ?
+				for (const orgId of Object.keys(user.orgs2Name)) {
+					if(orgId == organization.id) {
+						userCount++;
+					}
+				}
 			}
 		}
 		logger.debug(`Found: ${userCount} Users for organization ${organization.name} (${organization.id}).`);

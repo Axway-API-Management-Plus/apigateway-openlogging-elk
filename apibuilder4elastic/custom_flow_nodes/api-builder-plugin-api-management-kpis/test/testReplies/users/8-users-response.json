@@ -105,11 +105,11 @@
         "state": "approved",
         "type": "internal",
         "orgs2Role": {
-            "ea62bff5-2859-46d7-a29e-1731b2717795": "user",
+            "2c724048-653e-418c-977f-b33f6219ee16": "user",
             "3fec2611-17a1-46fa-be9f-dd00862ace7c": "oadmin"
         },
         "orgs2Name": {
-            "ea62bff5-2859-46d7-a29e-1731b2717795": "Partners",
+            "2c724048-653e-418c-977f-b33f6219ee16": "Axway",
             "3fec2611-17a1-46fa-be9f-dd00862ace7c": "API Development"
         },
         "dn": "cn=chris,o=FastCars,ou=organizations,ou=APIPortal"
