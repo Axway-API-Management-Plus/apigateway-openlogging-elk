@@ -136,9 +136,7 @@
 				{
 					"name": "code",
 					"type": "string",
-					"value": "\"var organization = data.request.name;\\n  var organizationKPIs = data.organizationKPIs;\\n  if(!data.request.portalName) {\\n    throw new Error(\\\"Requirement parameter: data.portalName containing the API-Manager name is missing.\\\");\\n  }\\n  var filters = [{ term: { \\\"meta.apiManagerName\\\": data.request.portalName}}];\\n  var mustNotFilters = [];\\n  if(organizationKPIs==\\\"true\\\") {\\n    logger.debug(`Loading previous KPIs for organization: ${organization}`);\\n    filters.push({ term: { \\\"organization\\\": organization}});\\n  } else {\\n    // Otherwise filter for the last document not having an organization\\n    logger.debug(`Loading previous KPIs for ALL organizations`);\\n    mustNotFilters.push( {exists: { field: \\\"organization\\\" } });\\n  }\\n  var query = \\n    {\\n      bool: {\\n        filter: filters,\\n        must_not: mustNotFilters\\n      }\\n    };\\n  \\n  return query;\"",
-					"metaName": "Code",
-					"metaDescription": "A JavaScript function body. Supports `await` and returning promises. `data` is the value of the Data parameter. `logger` is the API Builder logger. See the docs for more info: https://docs.axway.com/bundle/API_Builder_4x_allOS_en/page/javascript_flow-node.html"
+					"value": "\"var organization = data.request.name;\\n  var organizationKPIs = data.organizationKPIs;\\n  if(!data.request.portalName) {\\n    throw new Error(\\\"Requirement parameter: data.portalName containing the API-Manager name is missing.\\\");\\n  }\\n  // Select the last KPI for the correct API-Manager\\n  var filters = [{ term: { \\\"meta.apiManagerName\\\": data.request.portalName}}];\\n  if(organizationKPIs==\\\"true\\\") {\\n    // If KPI should be indexed for an organization load last KPIs for this organization\\n    logger.debug(`Loading previous KPIs for organization: ${organization}`);\\n    filters.push({ term: { organization: organization}});\\n  } else {\\n    // Otherwise filter for the ALL Organization\\n    logger.debug(`Loading previous KPIs for ALL organizations`);\\n    filters.push({ term: { organization: \\\"< All >\\\"}});\\n  }\\n  var query = \\n    {\\n      bool: {\\n        filter: filters\\n      }\\n    };\\n  \\n  return query;\""
 				}
 			],
 			"outputs": {
@@ -415,7 +413,9 @@
 				{
 					"name": "code",
 					"type": "string",
-					"value": "\"var result = data.result;\\n  var organizationKPIs = data.organizationKPIs;\\n  if(result.statusCode!=200) {\\n    throw new Error(`There was an error getting last KPIs from Elasticsearch. Error: ${JSON.stringify(result)}`);\\n  }\\n  if(result.body.hits.total.value != 0) {\\n    return result.body.hits.hits[0]._source;\\n  } else {\\n    logger.info(`No previous KPIs found. KPIs for organization: ${organizationKPIs}`);\\n    return {};\\n  }\""
+					"value": "\"var result = data.result;\\n  var organizationKPIs = data.organizationKPIs;\\n  if(result.statusCode!=200) {\\n    throw new Error(`There was an error getting last KPIs from Elasticsearch. Error: ${JSON.stringify(result)}`);\\n  }\\n  if(result.body.hits.total.value != 0) {\\n    return result.body.hits.hits[0]._source;\\n  } else {\\n    logger.info(`No previous KPIs found. KPIs for organization: ${organizationKPIs}`);\\n    return {};\\n  }\"",
+					"metaName": "Code",
+					"metaDescription": "A JavaScript function body. Supports `await` and returning promises. `data` is the value of the Data parameter. `logger` is the API Builder logger. See the docs for more info: https://docs.axway.com/bundle/API_Builder_4x_allOS_en/page/javascript_flow-node.html"
 				}
 			],
 			"outputs": {

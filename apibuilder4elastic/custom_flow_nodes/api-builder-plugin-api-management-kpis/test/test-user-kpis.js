@@ -32,8 +32,11 @@ describe('flow-node api-management-kpis', () => {
 
 			expect(output).to.equal('next');
 			expect(value).to.deep.equal(
-				{meta: { apiManagerName:"My API-Manager", apiManagerVersion: "7.7.20210830", apiBuilderHostname: os.hostname() }, 
-				users_total: 8, users_total_diff:0}
+				{
+					meta: { apiManagerName:"My API-Manager", apiManagerVersion: "7.7.20210830", apiBuilderHostname: os.hostname() }, 
+					users_total: 8, users_total_diff:0,
+					organization: "< All >"
+				}
 			);
 		});
 
@@ -43,7 +46,8 @@ describe('flow-node api-management-kpis', () => {
 				apiManagerConfig: { connection: { url: "https://mocked-api-gateway:8175", username: "apiadmin", password: "changeme" }, portalName: "My API-Manager", productVersion: "7.7.20210830" },
 				kpis: { 
 					meta: { apiManagerName:"Test API-Manager", apiManagerVersion: "7.7.20210530", apiBuilderHostname: os.hostname() }, 
-					apis_total: 235, apis_total_diff: 2 
+					apis_total: 235, apis_total_diff: 2,
+					organization: "< All >"
 				}
 			});
 
@@ -51,7 +55,8 @@ describe('flow-node api-management-kpis', () => {
 			expect(value).to.deep.equal({
 				meta: { apiManagerName:"Test API-Manager", apiManagerVersion: "7.7.20210530", apiBuilderHostname: os.hostname() }, 
 				users_total: 8, users_total_diff: 0,
-				apis_total: 235, apis_total_diff: 2
+				apis_total: 235, apis_total_diff: 2,
+				organization: "< All >"
 			});
 		});
 
@@ -68,7 +73,8 @@ describe('flow-node api-management-kpis', () => {
 			expect(output).to.equal('next');
 			expect(value).to.deep.equal({
 				meta: { apiManagerName:"My API-Manager", apiManagerVersion: "7.7.20210830", apiBuilderHostname: os.hostname() }, 
-				users_total: 8, users_total_diff: -7
+				users_total: 8, users_total_diff: -7,
+				organization: "< All >"
 			});
 		});
 
@@ -85,7 +91,8 @@ describe('flow-node api-management-kpis', () => {
 			expect(output).to.equal('next');
 			expect(value).to.deep.equal({
 				meta:{apiManagerName:"My API-Manager", apiManagerVersion: "7.7.20210830", apiBuilderHostname: os.hostname() }, 
-				users_total: 8, users_total_diff: 4
+				users_total: 8, users_total_diff: 4,
+				organization: "< All >"
 			});
 		});
 

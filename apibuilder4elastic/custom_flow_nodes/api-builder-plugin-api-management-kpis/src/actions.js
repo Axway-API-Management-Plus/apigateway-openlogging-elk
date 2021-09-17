@@ -53,6 +53,7 @@ async function getAPIKPIs(params, options) {
 		logger.debug(`Found: ${apis.length} APIs for all organizations.`);
 		kpis.apis_total = apis.length;
 		kpis.apis_total_diff = 0;
+		kpis.organization = "< All >";
 		if(previousKPIs) {
 			kpis.apis_total_diff = await _getDifference(apis.length, previousKPIs.apis_total, "APIs", options);
 		}
@@ -98,6 +99,7 @@ async function getAppKPIs(params, options) {
 		logger.debug(`Found: ${apps.length} Applications for all organizations.`);
 		kpis.apps_total = apps.length;
 		kpis.apps_total_diff = 0;
+		kpis.organization = "< All >";
 		if(previousKPIs) {
 			kpis.apps_total_diff = await _getDifference(apps.length, previousKPIs.apps_total, "Apps", options);
 		}
@@ -138,6 +140,7 @@ async function getOrgKPIs(params, options) {
 	const orgs = await _getManagerOrganizations(apiManagerConfig.connection);
 	kpis.orgs_total = orgs.length;
 	kpis.orgs_total_diff = 0;
+	kpis.organization = "< All >";
 	if(previousKPIs) {
 		kpis.orgs_total_diff = await _getDifference(orgs.length, previousKPIs.orgs_total, "Orgs", options);
 	}
@@ -175,6 +178,7 @@ async function getUserKPIs(params, options) {
 	} else {
 		kpis.users_total = users.length;
 		kpis.users_total_diff = 0;
+		kpis.organization = "< All >";
 		if(previousKPIs) {
 			kpis.users_total_diff = await _getDifference(users.length, previousKPIs.users_total, "Users", options);
 		}

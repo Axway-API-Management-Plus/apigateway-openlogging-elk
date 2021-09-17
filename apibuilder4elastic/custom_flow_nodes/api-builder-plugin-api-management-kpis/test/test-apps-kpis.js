@@ -33,7 +33,8 @@ describe('flow-node api-management-kpis', () => {
 			expect(output).to.equal('next');
 			expect(value).to.deep.equal(
 				{meta: {apiManagerName:"My API-Manager", apiManagerVersion: "7.7.20210830", apiBuilderHostname: os.hostname() }, 
-				apps_total:4, apps_total_diff:0
+				apps_total:4, apps_total_diff:0,
+				organization: "< All >"
 			});
 		});
 
@@ -48,7 +49,8 @@ describe('flow-node api-management-kpis', () => {
 			expect(value).to.deep.equal({
 				meta:{apiManagerName:"Test API-Manager", apiManagerVersion: "7.7.20210530", apiBuilderHostname: os.hostname() }, 
 				apps_total: 4, apps_total_diff: 0,
-				apis_total: 235, apis_total_diff: 2
+				apis_total: 235, apis_total_diff: 2,
+				organization: "< All >"
 			});
 		});
 
@@ -65,7 +67,8 @@ describe('flow-node api-management-kpis', () => {
 			expect(output).to.equal('next');
 			expect(value).to.deep.equal({
 				meta:{apiManagerName:"My API-Manager", apiManagerVersion: "7.7.20210830", apiBuilderHostname: os.hostname() }, 
-				apps_total:4, apps_total_diff: -3
+				apps_total:4, apps_total_diff: -3,
+				organization: "< All >"
 			});
 		});
 
@@ -82,7 +85,8 @@ describe('flow-node api-management-kpis', () => {
 			expect(output).to.equal('next');
 			expect(value).to.deep.equal({
 				meta: {apiManagerName:"My API-Manager", apiManagerVersion: "7.7.20210830", apiBuilderHostname: os.hostname() }, 
-				apps_total:4, apps_total_diff: 3
+				apps_total:4, apps_total_diff: 3,
+				organization: "< All >"
 			});
 		});
 
@@ -104,7 +108,8 @@ describe('flow-node api-management-kpis', () => {
 			expect(value).to.deep.equal({
 				meta:{apiManagerName:"My API-Manager", apiManagerVersion: "7.7.20210830", apiBuilderHostname: os.hostname() }, 
 				apps_total:4, apps_total_diff: 4,
-				subscriptions_total: 3, subscriptions_total_diff: -2
+				subscriptions_total: 3, subscriptions_total_diff: -2,
+				organization: "< All >"
 			});
 		});
 
