@@ -236,7 +236,9 @@
 				{
 					"name": "organization",
 					"type": "jsonpath",
-					"value": "$.request"
+					"value": "$.request",
+					"metaName": "Organization",
+					"metaDescription": "If given, the result will contain Applicatons only for the actual organization. Must be an object containing the id and name of the organization (e.g. {id: \"b932cbb5-d4be-4bce-aca7-c5daac14f187\", name: \"FastCars\"})."
 				}
 			],
 			"outputs": {
@@ -284,7 +286,9 @@
 				{
 					"name": "organization",
 					"type": "jsonpath",
-					"value": "$.request"
+					"value": "$.request",
+					"metaName": "Organization",
+					"metaDescription": "If given nothing useful is returned, as the result is limited to one org. This is more to satisfy the Kibana-Dashboard rendering showing 1 Org, when filtered for an Organization. Must be an object containing the id and name of the organization (e.g. {id: \"b932cbb5-d4be-4bce-aca7-c5daac14f187\", name: \"FastCars\"})."
 				}
 			],
 			"outputs": {
@@ -332,7 +336,9 @@
 				{
 					"name": "organization",
 					"type": "jsonpath",
-					"value": "$.request"
+					"value": "$.request",
+					"metaName": "Organization",
+					"metaDescription": "If given, the result will contain Users only for the actual organization. Must be an object containing the id and name of the organization (e.g. {id: \"b932cbb5-d4be-4bce-aca7-c5daac14f187\", name: \"FastCars\"})."
 				}
 			],
 			"outputs": {
@@ -409,9 +415,7 @@
 				{
 					"name": "code",
 					"type": "string",
-					"value": "\"var result = data.result;\\n  if(result.statusCode!=200) {\\n    throw new Error(`There was an error getting last KPIs from Elasticsearch. Error: ${JSON.stringify(result)}`);\\n  }\\n  if(result.body.hits.total.value != 0) {\\n    return result.body.hits.hits[0]._source;\\n  } else {\\n    logger.info(`No previous KPIs found. KPIs for organization: ${organizationKPIs}`);\\n    return {};\\n  }\"",
-					"metaName": "Code",
-					"metaDescription": "A JavaScript function body. Supports `await` and returning promises. `data` is the value of the Data parameter. `logger` is the API Builder logger. See the docs for more info: https://docs.axway.com/bundle/API_Builder_4x_allOS_en/page/javascript_flow-node.html"
+					"value": "\"var result = data.result;\\n  var organizationKPIs = data.organizationKPIs;\\n  if(result.statusCode!=200) {\\n    throw new Error(`There was an error getting last KPIs from Elasticsearch. Error: ${JSON.stringify(result)}`);\\n  }\\n  if(result.body.hits.total.value != 0) {\\n    return result.body.hits.hits[0]._source;\\n  } else {\\n    logger.info(`No previous KPIs found. KPIs for organization: ${organizationKPIs}`);\\n    return {};\\n  }\""
 				}
 			],
 			"outputs": {
