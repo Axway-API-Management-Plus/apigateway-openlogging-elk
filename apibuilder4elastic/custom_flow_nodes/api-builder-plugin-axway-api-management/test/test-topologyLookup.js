@@ -20,6 +20,8 @@ describe('Tests Topology-Lookup', () => {
 	// Delete the cached module 
 	decache('../config/axway-api-utils.default.js');
 	var pluginConfig = require('../config/axway-api-utils.default.js').pluginConfig['api-builder-plugin-axway-api-management'];
+	// Simulate a regional configuration, which is used in the regional test
+	pluginConfig.apigateway.url = "https://mocked-api-gateway:8190, dc1|https://mocked-dc1-api-gateway:8190, dc2|https://mocked-dc2-api-gateway:8190";
 
 	beforeEach(async () => {
 		plugin = await MockRuntime.loadPlugin(getPlugin,pluginConfig);
@@ -53,6 +55,19 @@ describe('Tests Topology-Lookup', () => {
 
 			const { value, output } = await flowNode.lookupTopology({ 
 				requestHeaders: {"host":"api-gateway:8090","max-forwards":"20", "cookie":"VIDUSR=1597381095-XTawGDtJhBA7Zw==;", "csrf-token": "CF2796B3BD18C1B0B5AB1C8E95B75662E92FBC04BD799DEB97838FC5B9C39348"}
+			});
+
+			expect(value.emtEnabled).to.equal(true);
+			expect(value.services).to.lengthOf(3); // We expect only 3 services, as the ANM is removed already
+			expect(output).to.equal('next');
+		});
+
+		it('should result into the API-Gateway topology', async () => {
+			nock('https://mocked-dc2-api-gateway:8190').get('/api/topology').replyWithFile(200, './test/testReplies/gateway/gatewayEMTTopology.json');
+
+			const { value, output } = await flowNode.lookupTopology({ 
+				requestHeaders: {"host":"api-gateway:8090","max-forwards":"20", "cookie":"VIDUSR=1597381095-XTawGDtJhBA7Zw==;", "csrf-token": "CF2796B3BD18C1B0B5AB1C8E95B75662E92FBC04BD799DEB97838FC5B9C39348"},
+				region: "DC2"
 			});
 
 			expect(value.emtEnabled).to.equal(true);

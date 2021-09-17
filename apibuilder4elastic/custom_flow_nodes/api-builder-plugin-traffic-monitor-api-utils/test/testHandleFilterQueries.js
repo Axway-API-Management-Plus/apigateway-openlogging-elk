@@ -106,6 +106,19 @@ describe('flow-node traffic-monitor-api-utils', () => {
 			expect(value.bool.must[2].range).to.be.a('object');
 		});
 
+		// Example .../search?region=US
+		it('should include the region', async () => {
+			const { value, output } = await flowNode.handleFilterFields({ params: { }, serviceID: "instance-1", gatewayTopology: {}, gatewayTopology: {}, region: "US" });
+
+			expect(output).to.equal('next');
+
+			expect(value).to.deep.equal({ "bool": { "must": [
+				{ exists: { "field": "http"} },
+				{"term": {"processInfo.serviceId": "instance-1"}}, 
+				{"term": {"processInfo.gatewayRegion": "US" }}
+			  ]}});
+		});
+
 		// Example .../search?field=timestamp&op=gt&value=1607010000000&field=timestamp&op=lt&value=16070900000000
 		it('should succeed with an ago filter', async () => {
 			const { value, output } = await flowNode.handleFilterFields({ params: { field: ["timestamp", "timestamp"], op: "gt", value: ["1607010000000", "16070900000000"] }, serviceID: "instance-1", gatewayTopology: {} });

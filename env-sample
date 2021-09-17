@@ -61,9 +61,15 @@ API_BUILDER_URL=https://apibuilder4elastic:8443
 
 # ----------------------------------------------------------------------------------------------
 # Connection to the Admin-Node-Manager. Used by the API-Builder identify the current user.
-# IMPORTANT NOTE: This URL must be reachable/resolveable from within the API-Builder
+# If you are using the solution based on the regional feature with multiple Admin-Node-Managers, 
+# then you need to specify the node managers accordingly to the configured regions. 
+# Please make sure that the corresponding region is also stored in the API Gateway traffic monitor.
+# See: https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk#admin-node-manager-per-region
+# IMPORTANT NOTE: All URLs must be reachable/resolveable from within the API-Builder
 #                 Docker-Container!
 # Used-By: API-Builder
+# ADMIN_NODE_MANAGER=us|https://my-us-anm:8090, eu|https://my-eu-anm:8090
+# ADMIN_NODE_MANAGER=dc1|https://my-anm-in-dc1:8090, dc2|https://my-anm-in-dc1:8090
 ADMIN_NODE_MANAGER=https://172.17.0.1:8090
 
 # ----------------------------------------------------------------------------------------------

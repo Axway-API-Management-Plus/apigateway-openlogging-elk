@@ -16,9 +16,15 @@ describe('Endpoints', function () {
 
 	beforeEach(() => {
 		// Simulate all responses in this test-file to be an admin, which will not lead to any result restriction
-		nock('https://mocked-api-gateway:8090').get('/api/rbac/currentuser').reply(200, { "result": "david" });
-		nock('https://mocked-api-gateway:8090').get('/api/rbac/permissions/currentuser').replyWithFile(200, './test/mockedReplies/apigateway/adminUserDavid.json');
-		nock('https://mocked-api-gateway:8090').get('/api/topology').reply(200, { result: {} });
+		nock('https://mocked-api-gateway:8090').get('/api/rbac/currentuser').reply(403, { "error": "Invalid user - Request is expected at the regional ANM." });
+
+		nock('https://mocked-us-api-gateway:8090').get('/api/rbac/currentuser').reply(200, { "result": "david" });
+		nock('https://mocked-us-api-gateway:8090').get('/api/rbac/permissions/currentuser').replyWithFile(200, './test/mockedReplies/apigateway/adminUserDavid.json');
+		nock('https://mocked-us-api-gateway:8090').get('/api/topology').reply(200, { result: {} });
+
+		nock('https://mocked-eu-api-gateway:8090').get('/api/rbac/currentuser').reply(200, { "result": "david" });
+		nock('https://mocked-eu-api-gateway:8090').get('/api/rbac/permissions/currentuser').replyWithFile(200, './test/mockedReplies/apigateway/adminUserDavid.json');
+		nock('https://mocked-eu-api-gateway:8090').get('/api/topology').reply(200, { result: {} });
 	});
 
 	afterEach(() => {
@@ -34,6 +40,8 @@ describe('Endpoints', function () {
 			if (fs.existsSync(envFilePath)) {
 				envLoader.config({ path: envFilePath });
 			}
+			// Regional configured ANM
+			process.env.ADMIN_NODE_MANAGER = "us|https://mocked-us-api-gateway:8090,eu|https://mocked-eu-api-gateway:8090";
 			server = startApiBuilder();
 			server.apibuilder.config.testElasticIndex = indexName;
 			elasticConfig = server.apibuilder.config.pluginConfig['@axway-api-builder-ext/api-builder-plugin-fn-elasticsearch'].elastic;
@@ -59,7 +67,7 @@ describe('Endpoints', function () {
 	after(() => stopApiBuilder(server));
 
 	describe('Search regional', () => {
-		it('[Search-Regional-0001] Execute a search with region EU, must ONE entry EU', () => {
+		it.only('[Search-Regional-0001] Execute a search with region EU, must ONE entry EU', () => {
 			return requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-2/ops/search?region=EU`,
@@ -77,7 +85,7 @@ describe('Endpoints', function () {
 			});
 		});
 
-		it('[Search-Regional-0002] Execute a search with region US, must ONE entry US', () => {
+		it.only('[Search-Regional-0002] Execute a search with region US, must ONE entry US', () => {
 			const auth = {
 				user: server.apibuilder.config.apikey || 'test',
 				password: ''

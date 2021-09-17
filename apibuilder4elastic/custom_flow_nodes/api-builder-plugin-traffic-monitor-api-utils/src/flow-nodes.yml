@@ -30,6 +30,12 @@ flow-nodes:
             required: true
             schema:
               type: object
+          region:
+            name: API-Gateway region
+            description: "If given this region is used to limit the query based on the field: processInfo.gatewayRegion"
+            required: false
+            schema:
+              type: object
         returns:
           name: Next
           description: Returns the created search query for elastic search

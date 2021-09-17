@@ -1,5 +1,5 @@
 const { expect } = require('chai');
-const { parseAPIManagerConfig, checkAPIManagers, getManagerConfig } = require('../src/utils');
+const { parseAPIManagerConfig, checkAPIManagers, getManagerConfig, parseANMConfig, getANMConfig } = require('../src/utils');
 const simple = require('simple-mock');
 const nock = require('nock');
 
@@ -333,6 +333,146 @@ describe('Test API-Manager configuration variations', () => {
             }
             var managerConfig = await getManagerConfig(configuredManagers, "group-a", "N/A");
             expect(managerConfig).to.deep.equal({ username: "user", password: "password", url: "https://my.group-a-api-manager.com:8075"});
+        });
+    });
+
+    describe('Test Admin-Node-Manager parsing', () => {
+        it('should succeed with a single Admin-Node-Manager configured', async () => {
+            const pluginConfig = { 
+                apigateway: {
+				    url: "http://my.admin-node-manager.com:8090"
+                }
+			};
+            var expectedANM = {
+                url: "http://my.admin-node-manager.com:8090",
+                "configs": {
+                    "default": {
+                        url: "http://my.admin-node-manager.com:8090"
+                    }
+                }
+            }
+            await parseANMConfig(pluginConfig, options);
+            expect(pluginConfig.apigateway).to.deep.equal(expectedANM);
+        });
+
+        it('should succeed with a default and region based Admin-Node-Manager', async () => {
+            const pluginConfig = { 
+                apigateway: {
+                    url: "http://my.admin-node-manager.com:8090, us|http://my.admin--regional-node-manager.com:8090"
+                }
+			};
+            var expectedANM = {
+                url: "http://my.admin-node-manager.com:8090, us|http://my.admin--regional-node-manager.com:8090",
+                "perRegion": true,
+                "configs": {
+                    "default": {
+                        url: "http://my.admin-node-manager.com:8090"
+                    },
+                    "us": {
+                        url: "http://my.admin--regional-node-manager.com:8090"
+                    }
+                }
+            }
+            await parseANMConfig(pluginConfig, options);
+            expect(pluginConfig.apigateway).to.deep.equal(expectedANM);
+        });
+
+        it('should succeed without a default Admin-Node-Manager only region based', async () => {
+            const pluginConfig = { 
+                apigateway: {
+                    url: "dc1|http://my.dc1-anm.com:8090, dc2|http://my.dc2-anm.com:8090"
+                }
+			};
+            var expectedANM = {
+                url: "dc1|http://my.dc1-anm.com:8090, dc2|http://my.dc2-anm.com:8090",
+                "perRegion": true,
+                "configs": {
+                    "dc1": {
+                        url: "http://my.dc1-anm.com:8090"
+                    },
+                    "dc2": {
+                        url: "http://my.dc2-anm.com:8090"
+                    }
+                }
+            }
+            await parseANMConfig(pluginConfig, options);
+            expect(pluginConfig.apigateway).to.deep.equal(expectedANM);
+        });
+    });
+
+    describe('Test Get Admin-Node-Manager config', () => {
+        it('should fail to return an Admin-Node-Manager without giving region and no default configured', async () => {
+            var configuredANM = {
+                "configs": {
+                    "us": {
+                        url: "https://my.us-anm.com:8090"
+                    }
+                }
+            }
+            try {
+				await getANMConfig(configuredANM);
+			} catch(e) {
+				expect(e).to.be.an('Error')
+				.and.to.have.property('message', 'Cannot return Admin-Node-Manager config without a region as no default Admin-Node-Manager is configured.');
+			}
+        });
+
+        it('should succeed with a default Admin-Node-Manager without a region', async () => {
+            var configuredANM = {
+                "configs": {
+                    "default": {
+                        url: "https://my.default-anm.com:8090"
+                    }
+                }
+            }
+            var anmConfig = await getANMConfig(configuredANM);
+            expect(anmConfig).to.deep.equal({ url: "https://my.default-anm.com:8090" });
+        });
+
+        it('should return default Admin-Node-Manager if requested region is not configured', async () => {
+            var configuredANM = {
+                "configs": {
+                    "default": {
+                        url: "https://my.default-anm.com:8090"
+                    }
+                }
+            }
+            var anmConfig = await getManagerConfig(configuredANM, "UNKNOWN-REGION");
+            expect(anmConfig).to.deep.equal({ url: "https://my.default-anm.com:8090" });
+        });
+
+        it('should return region based Admin-Node-Manager for requested region', async () => {
+            var configuredANM = {
+                "configs": {
+                    "default": {
+                        url: "https://my.default-anm.com:8090"
+                    },
+                    "dc1": {
+                        url: "https://my.dc1-anm.com:8090"
+                    }
+                }
+            }
+            var anmConfig = await getManagerConfig(configuredANM, "dc1");
+            expect(anmConfig).to.deep.equal({ url: "https://my.dc1-anm.com:8090" });
+        });
+
+        it('should fail to return an API-Gateway when giving an invalid region and no default configured.', async () => {
+            var configuredANM = {
+                "configs": {
+                    "us": {
+                        url: "https://my.us-anm.com:8090"
+                    },
+                    "eu": {
+                        url: "https://my.eu-anm.com:8090"
+                    }
+                }
+            }
+            try {
+				await getANMConfig(configuredANM, "apac");
+			} catch(e) {
+				expect(e).to.be.an('Error')
+				.and.to.have.property('message', 'Cannot return Admin-Node-Manager config for region: \'apac\' as no default Admin-Node-Manager is configured.');
+			}
         });
     });
 });

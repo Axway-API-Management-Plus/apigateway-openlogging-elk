@@ -19,7 +19,7 @@
  *	 does not define "next", the first defined output).
  */
 async function handleFilterFields(parameters, options) {
-	const { params, serviceID, gatewayTopology } = parameters;
+	const { params, serviceID, gatewayTopology, region } = parameters;
 	const { logger } = options;
 	if (!params) {
 		throw new Error('Missing required parameter: params');
@@ -128,8 +128,10 @@ async function handleFilterFields(parameters, options) {
 			}
 		});
 	});
+	debugger;
 	await addProtocolFilter(filters.mustFilters, params, logger);
 	await addServiceIdFilter(filters, serviceID, gatewayTopology, logger);
+	await addRegionFilter(filters.mustFilters, region, logger);
 	await addDurationFilter(filters.mustFilters, params, logger);
 	await addAgoFilter(filters.mustFilters, params, logger);
 	await addTimestampFilter(filters.mustFilters, params, logger);
@@ -367,6 +369,11 @@ async function addProtocolFilter(filters, params, logger) {
 	}
 	// Making sure, it's getting data only for the selected protocol
 	filters.push({ "exists": { "field": params.protocol } });
+}
+
+async function addRegionFilter(filters, region, logger) {
+	if(!region) return;
+	filters.push({ "term": { "processInfo.gatewayRegion": region } });
 }
 
 async function addServiceIdFilter(filters, serviceID, gatewayTopology, logger) {

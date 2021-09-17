@@ -164,6 +164,54 @@ function getManagerConfig(apiManagerConfig, groupId, region) {
 	}
 }
 
+async function parseANMConfig(pluginConfig, options) {
+	pluginConfig.apigateway.configs = {};
+		// Check, if multiple Admin-Node-Manager URLs based on the region are configured (Format: region|anmUrl)
+	if(pluginConfig.apigateway.url.indexOf('|')!=-1) {
+		pluginConfig.apigateway.perRegion = true;
+		options.logger.info(`Parse region based ADMIN_NODE_MANAGER: ${pluginConfig.apigateway.url}.`);
+		// Looks like ANM URLs are given based on regions
+		pluginConfig.apigateway.url.split(',').forEach(regionAndURL => {
+			regionAndURL = regionAndURL.trim().toLowerCase().split('|');
+			if(regionAndURL.length == 1) {
+				// The default Admin-Node-Manager
+				options.logger.debug(`Found default Admin-Node-Manager URL: ${regionAndURL[0]}`);
+				pluginConfig.apigateway.configs.default = { url: regionAndURL[0] } 
+			} else if(regionAndURL.length == 2) {
+				// Only the Region is given
+				options.logger.debug(`Found Admin-Node-Manager URL: ${regionAndURL[1]} for region: ${regionAndURL[0]}`);
+				pluginConfig.apigateway.configs[`${regionAndURL[0]}`] = { url: regionAndURL[1] };
+			} else {
+				return Promise.reject(`Unexpected Admin-Node-Manager (ADMIN_NODE_MANAGER) format: ${regionAndURL}`);
+			}
+		});
+	} else { // If not, create a default Admin-Node-Manager config object
+		options.logger.info(`Using only default Admin-Node-Manager: ${pluginConfig.apigateway.url}.`);
+		pluginConfig.apigateway.configs.default = {
+			url: pluginConfig.apigateway.url
+		}
+	}
+}
+
+function getANMConfig(anmConfig, region) {
+	if(region == undefined) {
+		if(anmConfig.configs.default == undefined) {
+			throw new Error(`Cannot return Admin-Node-Manager config without a region as no default Admin-Node-Manager is configured.`);
+		} else {
+			return anmConfig.configs.default;
+		}
+	}
+	var key = region.toLowerCase();
+	if (anmConfig.configs && anmConfig.configs[key]) {
+		return anmConfig.configs[key];
+	} else {
+		if(!anmConfig.configs.default) {
+			throw new Error(`Cannot return Admin-Node-Manager config for region: '${region}' as no default Admin-Node-Manager is configured.`);
+		}
+		return anmConfig.configs.default;
+	}
+}
+
 async function checkAPIManagers(apiManagerConfig, options) {
 	var finalResult = { isValid: true };
 	for (const [key, config] of Object.entries(apiManagerConfig.configs)) {
@@ -223,6 +271,8 @@ module.exports = {
     _getCookie, 
 	isDeveloperMode, 
 	getManagerConfig,
+	getANMConfig,
 	checkAPIManagers,
-	parseAPIManagerConfig
+	parseAPIManagerConfig,
+	parseANMConfig
 }

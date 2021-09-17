@@ -1,0 +1,33 @@
+{
+    "result": {
+        "user": "dc2ApigatewayUser",
+        "permissions": [
+            "ama_modify",
+            "fips_modify",
+            "group_force_unlock",
+            "traffic_monitor",
+            "deploy",
+            "domain_audit",
+            "domain_audit_modify",
+            "logs",
+            "dashboard",
+            "events",
+            "adminusers_passwordpolicy_modify",
+            "settings_modify",
+            "adminusers",
+            "settings",
+            "dashboard_modify",
+            "fips_read",
+            "mgmt_modify",
+            "adminusers_modify",
+            "monitoring",
+            "adminusers_reset",
+            "mgmt",
+            "ama",
+            "discovery",
+            "adminusers_advisorybanner_modify",
+            "emc",
+            "config"
+        ]
+    }
+}
