@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+- Make sure Filebeat is not mixing up OpenTraffic with other Log-Files auch as Audit-Log [#145](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/145)
+
 ## [3.5.0] 2021-09-13
 ### Added
 - Traffic-Monitor Authorization should support Multi-Organization [#141](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/141)
