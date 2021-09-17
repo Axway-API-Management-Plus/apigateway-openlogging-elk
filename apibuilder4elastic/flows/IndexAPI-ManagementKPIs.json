@@ -134,7 +134,7 @@
 				},
 				"missingIndex": {
 					"routes": [
-						"elasticsearch.2"
+						"delay.2"
 					],
 					"context": "$.error",
 					"metaName": "Missing index"
@@ -516,7 +516,9 @@
 				{
 					"name": "id",
 					"type": "string",
-					"value": "\"get-manager-organization\""
+					"value": "\"get-manager-organization\"",
+					"metaName": "Flow Listener ID",
+					"metaDescription": "The ID of a previously configured `Flow Listener`."
 				}
 			],
 			"outputs": {
@@ -532,6 +534,26 @@
 				}
 			},
 			"metaMethod": "Invoke Flow (for-each)"
+		},
+		"delay.2": {
+			"type": "nodehandler://axway-flow/delay",
+			"name": "Wait before creating KPI-Index",
+			"method": "delay",
+			"parameters": [
+				{
+					"name": "delay",
+					"type": "number",
+					"value": "10000"
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.delayed",
+					"routes": [
+						"elasticsearch.2"
+					]
+				}
+			}
 		}
 	}
 }
