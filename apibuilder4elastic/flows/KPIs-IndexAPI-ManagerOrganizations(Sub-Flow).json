@@ -64,16 +64,16 @@
 					"metaDescription": "An array of input items where each item will be passed as request data when invoking the flow."
 				},
 				{
-					"name": "id",
-					"type": "string",
-					"value": "\"index-api-management-kpis\"",
-					"metaName": "Flow Listener ID",
-					"metaDescription": "The ID of a previously configured `Flow Listener`."
-				},
-				{
 					"name": "concurrency",
 					"type": "number",
-					"value": "1"
+					"value": "1",
+					"metaName": "Concurrency",
+					"metaDescription": "By default, items in the Items array are processed concurrently in chunks of 10.  This value can be set to 0 to process all items in Items concurrently, or set to 1 to disable concurrency, or set to a value greater-than 1 to provide a throttling mechanism so as to not overwhelm a backend."
+				},
+				{
+					"name": "id",
+					"type": "string",
+					"value": "\"index-kpis-organization\""
 				}
 			],
 			"outputs": {

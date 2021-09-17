@@ -1,8 +1,8 @@
 triggers:
-  flow-listener-1:
-    name: Flow Listener
+  kpis-index-kpis-manager:
+    name: KPIs for Manager
     parameters:
-      id: index-api-management-kpis
+      id: index-kpis-manager
     enabled: true
     invoke:
       flow: IndexSingleAPI-ManagerKPIs
@@ -10,10 +10,11 @@ triggers:
         request: $.request
         config: $.config
         env: $.env
-  flow-listener-2:
+        organizationKPIs: 'false'
+  kpis-get-manager-organization:
     name: Flow Listener
     parameters:
-      id: manager-organizations-kpis
+      id: get-manager-organization
     enabled: true
     invoke:
       flow: KPIs-IndexAPI-ManagerOrganizations(Sub-Flow)
@@ -21,3 +22,15 @@ triggers:
         request: $.request
         config: $.config
         env: $.env
+  kpis-index-kpis-organization:
+    name: KPIs for Organization
+    parameters:
+      id: index-kpis-organization
+    enabled: true
+    invoke:
+      flow: IndexSingleAPI-ManagerKPIs
+      parameters:
+        request: $.request
+        config: $.config
+        env: $.env
+        organizationKPIs: 'true'

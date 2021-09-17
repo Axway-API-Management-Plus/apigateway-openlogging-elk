@@ -217,13 +217,6 @@
 			"method": "invokeFlowForEach",
 			"parameters": [
 				{
-					"name": "id",
-					"type": "string",
-					"value": "\"index-api-management-kpis\"",
-					"metaName": "Flow Listener ID",
-					"metaDescription": "The ID of a previously configured `Flow Listener`."
-				},
-				{
 					"name": "items",
 					"type": "jsonpath",
 					"value": "$.apiManagerConfig",
@@ -243,6 +236,13 @@
 					"value": "true",
 					"metaName": "Break on error",
 					"metaDescription": "If true, this will break out of the flow invocation loop when the first error occurs. When Concurrency is not set to 1, all remaining requests currently being executed will be processed before breaking."
+				},
+				{
+					"name": "id",
+					"type": "string",
+					"value": "\"index-kpis-manager\"",
+					"metaName": "Flow Listener ID",
+					"metaDescription": "The ID of a previously configured `Flow Listener`."
 				}
 			],
 			"outputs": {
@@ -493,13 +493,6 @@
 			"method": "invokeFlowForEach",
 			"parameters": [
 				{
-					"name": "id",
-					"type": "string",
-					"value": "\"manager-organizations-kpis\"",
-					"metaName": "Flow Listener ID",
-					"metaDescription": "The ID of a previously configured `Flow Listener`."
-				},
-				{
 					"name": "items",
 					"type": "jsonpath",
 					"value": "$.apiManagerConfig",
@@ -519,6 +512,11 @@
 					"value": "true",
 					"metaName": "Break on error",
 					"metaDescription": "If true, this will break out of the flow invocation loop when the first error occurs. When Concurrency is not set to 1, all remaining requests currently being executed will be processed before breaking."
+				},
+				{
+					"name": "id",
+					"type": "string",
+					"value": "\"get-manager-organization\""
 				}
 			],
 			"outputs": {

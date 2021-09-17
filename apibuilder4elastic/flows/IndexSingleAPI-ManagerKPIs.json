@@ -9,6 +9,9 @@
 			"request": {
 				"description": "The request"
 			},
+			"organizationKPIs": {
+				"description": "If set, KPIs for an organization should be indexed."
+			},
 			"config": {
 				"type": "object",
 				"description": "The service's configuration"
@@ -126,14 +129,14 @@
 				{
 					"name": "data",
 					"type": "jsonpath",
-					"value": "$.request",
+					"value": "$",
 					"metaName": "Data",
 					"metaDescription": "The value to apply as the `data` argument of the JavaScript code. For objects and arrays, `data` is passed by reference."
 				},
 				{
 					"name": "code",
 					"type": "string",
-					"value": "\"var organization = data.name;\\n  if(!data.portalName) {\\n    throw new Error(\\\"Requirement parameter: data.portalName containing the API-Manager name is missing.\\\");\\n  }\\n  var filters = [{ term: { \\\"meta.apiManagerName\\\": data.portalName}}];\\n  var mustNotFilters = [];\\n  if(organization) {\\n    logger.debug(`Get previous KPIs for organization: ${organization}`);\\n    filters.push({ term: { \\\"organization\\\": organization}});\\n  } else {\\n    // Otherwise filter for the last document not having an organization\\n    logger.debug(`Get previous KPIs for ALL organizations`);\\n    mustNotFilters.push( {exists: { field: \\\"organization\\\" } });\\n  }\\n  var query = \\n    {\\n      bool: {\\n        filter: filters,\\n        must_not: mustNotFilters\\n      }\\n    };\\n  \\n  return query;\""
+					"value": "\"var organization = data.request.name;\\n  var organizationKPIs = data.organizationKPIs;\\n  if(!data.request.portalName) {\\n    throw new Error(\\\"Requirement parameter: data.portalName containing the API-Manager name is missing.\\\");\\n  }\\n  var filters = [{ term: { \\\"meta.apiManagerName\\\": data.request.portalName}}];\\n  var mustNotFilters = [];\\n  if(organizationKPIs==\\\"true\\\") {\\n    logger.debug(`Loading previous KPIs for organization: ${organization}`);\\n    filters.push({ term: { \\\"organization\\\": organization}});\\n  } else {\\n    // Otherwise filter for the last document not having an organization\\n    logger.debug(`Loading previous KPIs for ALL organizations`);\\n    mustNotFilters.push( {exists: { field: \\\"organization\\\" } });\\n  }\\n  var query = \\n    {\\n      bool: {\\n        filter: filters,\\n        must_not: mustNotFilters\\n      }\\n    };\\n  \\n  return query;\""
 				}
 			],
 			"outputs": {
