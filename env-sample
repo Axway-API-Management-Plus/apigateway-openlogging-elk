@@ -65,7 +65,7 @@ API_BUILDER_URL=https://apibuilder4elastic:8443
 # then you need to specify the node managers accordingly to the configured regions. 
 # Please make sure that the corresponding region is also stored in the API Gateway traffic monitor.
 # See: https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk#admin-node-manager-per-region
-# IMPORTANT NOTE: All URLs must be reachable/resolveable from within the API-Builder
+# IMPORTANT NOTE: All URLs must be reachable/resolvable from within the API-Builder
 #                 Docker-Container!
 # Used-By: API-Builder
 # ADMIN_NODE_MANAGER=us|https://my-us-anm:8090, eu|https://my-eu-anm:8090
