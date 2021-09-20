@@ -69,7 +69,7 @@ API_BUILDER_URL=https://apibuilder4elastic:8443
 #                 Docker-Container!
 # Used-By: API-Builder
 # ADMIN_NODE_MANAGER=us|https://my-us-anm:8090, eu|https://my-eu-anm:8090
-# ADMIN_NODE_MANAGER=dc1|https://my-anm-in-dc1:8090, dc2|https://my-anm-in-dc1:8090
+# ADMIN_NODE_MANAGER=dc1|https://my-anm-in-dc1:8090, dc2|https://my-anm-in-dc2:8090
 ADMIN_NODE_MANAGER=https://172.17.0.1:8090
 
 # ----------------------------------------------------------------------------------------------
