@@ -58,8 +58,12 @@ async function lookupCurrentUser(params, options) {
 	if (!unrestrictedPermissions || unrestrictedPermissions=="") {
 		unrestrictedPermissions = "adminusers_modify";
 	}
+	var regionLogMessage = "";
+	if(region) {
+		regionLogMessage = ` (Region: ${region})`;
+	}
 	if(requestHeaders.authorization) {
-		logger.debug(`Trying to authorize user based on Authorization header.`);
+		logger.debug(`Trying to authorize user based on Authorization header ${regionLogMessage}.`);
 		user.loginName = await _getCurrentGWUser(headers = {'Authorization': `${requestHeaders.authorization}`}, region, logger);
 		logger.debug(`Authorized user is: ${user.loginName}`);
 		permissions = await _getCurrentGWPermissions(headers = {'Authorization': `${requestHeaders.authorization}`}, user.loginName, region);
@@ -76,7 +80,7 @@ async function lookupCurrentUser(params, options) {
 			logger.trace(`Received headers: ${requestHeaders}`);
 			throw new Error('The requestHeaders do not contain the required header csrf-token');
 		}
-		logger.trace(`Trying to get current user based on VIDUSR cookie.`);
+		logger.trace(`Trying to get current user based on VIDUSR cookie ${regionLogMessage}.`);
 		try {
 			user.loginName = await _getCurrentGWUser(headers = {'Cookie': requestHeaders.cookie}, region, logger);
 		} catch (err) { 

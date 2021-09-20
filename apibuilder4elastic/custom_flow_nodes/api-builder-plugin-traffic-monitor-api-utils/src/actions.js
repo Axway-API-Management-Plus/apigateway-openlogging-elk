@@ -410,7 +410,7 @@ async function addServiceIdFilter(filters, serviceID, gatewayTopology, logger) {
 	}
 	if(!includeOtherServiceIDs) {
 		// For classic mode, we simply include the serviceId
-		logger.debug(`Request for serviceId: ${serviceID} is NOT including other serviceIDs.`);
+		logger.debug(`Classic-Mode: Request for serviceId: ${serviceID} does NOT include other serviceIDs. Looking up this serviceId only.`);
 		filters.mustFilters.push({ "term": { "processInfo.serviceId": serviceID } });
 	} else {
 		logger.info(`EMT-Mode - Request for serviceId: ${serviceID} is including other serviceIDs.`);
