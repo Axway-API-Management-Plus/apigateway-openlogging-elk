@@ -259,9 +259,13 @@ LOGSTASH_HOSTS=logstash:5044
 
 # ----------------------------------------------------------------------------------------------
 # Define JVM-Heap size for Logstash. Both values should be the same and not more than 6GB.
+# Additionally you may set the temp directory which should be used by Logstash.
 # Defaults to -Xmx1g -Xms1g
 # Used-By: Logstash
-# LS_JAVA_OPTS="-Xmx6g -Xms6g"
+# LS_JAVA_OPTS=-Xmx6g -Xms6g
+# Or use it to setup the temp directory for Logstash. Keep in mind, a directory within the 
+# container.
+# LS_JAVA_OPTS=-Xmx6g -Xms6g -Djava.io.tmpdir=/var/tmp
 
 # ----------------------------------------------------------------------------------------------
 # With this parameter you tell the Logstash processing pipeline which memchached to use. It is
@@ -288,7 +292,10 @@ MEMCACHED=memcached:11211
 # It should not be bigger than 31GB. Defaults to 1GB by ES default which is in most cases not
 # correct.
 # Used-By: Elasticsearch
-# ES_JAVA_OPTS="-Xms8g -Xmx8g"
+# ES_JAVA_OPTS=-Xms8g -Xmx8g
+# Or use it to setup the temp directory for Elasticsearch. Keep in mind, a directory within the 
+# container.
+# ES_JAVA_OPTS=-Xms8g -Xmx8g -Djava.io.tmpdir=/var/tmp
 
 # ----------------------------------------------------------------------------------------------
 # The number of Filebeat worker threads sending data to Logstash. This should be sufficient in
