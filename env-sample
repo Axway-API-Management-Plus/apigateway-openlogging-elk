@@ -386,6 +386,16 @@ ELASTIC_VERSION=7.14.0
 # Defaults to 3
 # FILEBEAT_COMPRESSION_LEVEL=6
 
+# ----------------------------------------------------------------------------------------------
+# As of version 4.0.0, the solution stores API Managament KPIs in Elasticsearch and displays them 
+# in the dashboard: [Axway] API Management KPIs. To do this, the API Builder polls all configured 
+# API managers at hourly intervals and then stores the KPIs in the 
+# index: apigw-management-kpis-000001. 
+# You can use this parameter to disable this feature and feel free to enable it later.
+# Used-By: API-Builder
+# Defaults to true
+# MANAGEMENT_KPIS_ENABLED=false
+
 ################################################################################################
 #                         Metricbeat
 ################################################################################################

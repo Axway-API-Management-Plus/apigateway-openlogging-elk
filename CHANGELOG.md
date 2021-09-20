@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Added
+- API-Management KPIs incl. dashboard [#64](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/64)
+
 ## [3.5.0] 2021-09-13
 ### Added
 - Traffic-Monitor Authorization should support Multi-Organization [#141](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/141)
