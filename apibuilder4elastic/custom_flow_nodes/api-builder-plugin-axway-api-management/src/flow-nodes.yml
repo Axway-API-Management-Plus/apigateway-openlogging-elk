@@ -18,7 +18,7 @@ flow-nodes:
               type: string
           getApiManagerUser:
             name: Get the API-Manager user?
-            description: If set to false, the flow-node does not tries to lookup the user on the API-Manager. Set it to false, when for instance user authorization is disabled as there might be no belonging user configured in the API-Manager.
+            description: If set to false, the flow-node does not try to lookup the user on the API-Manager. Set it to false, when for instance user authorization is disabled as there might be no belonging user configured in the API-Manager.
             required: false
             initialType: boolean
             schema:
@@ -27,6 +27,12 @@ flow-nodes:
           unrestrictedPermissions:
             name: Unrestricted Permissions
             description: 'A comma separated list of the permission(s) to check, if a user should get unrestricted traffic view access. For example: "logs" or "logs,mgmt". The second option requires are user to have both permissions to get the unrestricted view. Defaults to adminusers_modify.'
+            required: false
+            schema:
+              type: string
+          region:
+            name: Region
+            description: 'If the region is set, the corresponding admin node manager is determined based on this region. If no region is set, then the default Admin-Node-Manager is used.'
             required: false
             schema:
               type: string
@@ -52,6 +58,12 @@ flow-nodes:
             name: Request Headers
             description: The request headers are used to lookup the topology using the currently logged in user.
             required: true
+            schema:
+              type: string
+          region:
+            name: Region
+            description: 'If the region is set, the corresponding admin node manager is determined based on this region. If no region is set, then the default Admin-Node-Manager is used.'
+            required: false
             schema:
               type: string
         outputs:

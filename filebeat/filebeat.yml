@@ -13,7 +13,7 @@ http.host: "0.0.0.0"
 
 filebeat.inputs:
 - type: log
-  paths: ["/var/log/opentraffic/*.log"]
+  paths: ["/var/log/opentraffic/*_traffic_*.log"]
   close_inactive: 5m # Close filehandlers, if the file has not changed anymore
   json.keys_under_root: true
   json.overwrite_keys: false

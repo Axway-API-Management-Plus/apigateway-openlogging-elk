@@ -8,6 +8,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - API-Management KPIs incl. dashboard [#64](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/64)
 
+## [3.6.0] 2021-09-20
+### Added
+- Make sure Filebeat is not mixing up OpenTraffic with other Log-Files such as Audit-Log [#145](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/145)
+- New optional parameter: `API_BUILDER_LOG_LEVEL` to set the API-Builder Log-Level in your .env file
+- Support for multiple Admin-Node-Managers when using the regional feature [#144](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/144)
+- Added documentation and examples for ES_JAVA_OPTS and LS_JAVA_OPTS on how to setup a different temp directory for Elasticsearch & Logstash
+
 ## [3.5.0] 2021-09-13
 ### Added
 - Traffic-Monitor Authorization should support Multi-Organization [#141](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/141)

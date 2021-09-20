@@ -4,7 +4,7 @@ const { lookupCurrentUser, lookupTopology, lookupAPIDetails, getCustomProperties
 const { mergeCustomProperties } = require('./customProperties');
 const { getAPIManagerConfig, getAPIManagerOrganizations } = require('./apiManagerAdapter');
 const NodeCache = require( "node-cache" );
-const { checkAPIManagers, parseAPIManagerConfig } = require('./utils');
+const { checkAPIManagers, parseAPIManagerConfig, parseANMConfig } = require('./utils');
 const https = require('https');
 
 /**
@@ -34,6 +34,7 @@ async function getPlugin(pluginConfig, options) {
 		if(!pluginConfig.apigateway.url) {
 			throw new Error(`Required parameter: apigateway.url is not set.`);
 		}
+		await parseANMConfig(pluginConfig, options);
 		await parseAPIManagerConfig(pluginConfig, options);
 		if(pluginConfig.validateConfig==true) {
 			var result = await checkAPIManagers(pluginConfig.apimanager, options);

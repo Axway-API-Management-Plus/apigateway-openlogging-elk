@@ -57,7 +57,7 @@ services:
 
   # This is the API-Builder project exposing the API-Gateway Manager REST-API
   apibuilder4elastic:
-    image: cwiechmann/apibuilder4elastic:v3.5.0
+    image: cwiechmann/apibuilder4elastic:v3.6.0
     restart: on-failure:10
     container_name: apibuilder4elastic
     environment:
@@ -79,7 +79,7 @@ services:
       - DISABLE_CUSTOM_PROPERTIES=${DISABLE_CUSTOM_PROPERTIES}
       - EXT_AUTHZ_URI=${EXT_AUTHZ_URI}
       - MANAGEMENT_KPIS_ENABLED=${MANAGEMENT_KPIS_ENABLED}
-      #- LOG_LEVEL=debug
+      - LOG_LEVEL=${API_BUILDER_LOG_LEVEL}
     ports:
       - 8443:8443
     networks:

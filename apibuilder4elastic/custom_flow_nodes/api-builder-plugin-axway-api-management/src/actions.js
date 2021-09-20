@@ -1,5 +1,5 @@
 const https = require('https');
-const { sendRequest, _getCookie, getManagerConfig } = require('./utils');
+const { sendRequest, _getCookie, getManagerConfig, getANMConfig } = require('./utils');
 const fs = require('fs');
 const path = require('path');
 
@@ -39,7 +39,7 @@ const securityDeviceTypes = {
  *	 does not define "next", the first defined output).
  */
 async function lookupCurrentUser(params, options) {
-	const { requestHeaders, getApiManagerUser } = params;
+	const { requestHeaders, getApiManagerUser, region } = params;
 	var { unrestrictedPermissions } = params;
 	const logger = options.logger;
 	cache = options.pluginContext.cache;
@@ -58,11 +58,15 @@ async function lookupCurrentUser(params, options) {
 	if (!unrestrictedPermissions || unrestrictedPermissions=="") {
 		unrestrictedPermissions = "adminusers_modify";
 	}
+	var regionLogMessage = "";
+	if(region) {
+		regionLogMessage = ` (Region: ${region})`;
+	}
 	if(requestHeaders.authorization) {
-		logger.debug(`Trying to authorize user based on Authorization header.`);
-		user.loginName = await _getCurrentGWUser(headers = {'Authorization': `${requestHeaders.authorization}`});
+		logger.debug(`Trying to authorize user based on Authorization header ${regionLogMessage}.`);
+		user.loginName = await _getCurrentGWUser(headers = {'Authorization': `${requestHeaders.authorization}`}, region, logger);
 		logger.debug(`Authorized user is: ${user.loginName}`);
-		permissions = await _getCurrentGWPermissions(headers = {'Authorization': `${requestHeaders.authorization}`}, user.loginName);
+		permissions = await _getCurrentGWPermissions(headers = {'Authorization': `${requestHeaders.authorization}`}, user.loginName, region);
 	} else {
 		VIDUSR = _getCookie(requestHeaders.cookie, "VIDUSR");
 		if(!VIDUSR) {
@@ -76,17 +80,17 @@ async function lookupCurrentUser(params, options) {
 			logger.trace(`Received headers: ${requestHeaders}`);
 			throw new Error('The requestHeaders do not contain the required header csrf-token');
 		}
-		logger.trace(`Trying to get current user based on VIDUSR cookie.`);
+		logger.trace(`Trying to get current user based on VIDUSR cookie ${regionLogMessage}.`);
 		try {
-			user.loginName = await _getCurrentGWUser(headers = {'Cookie': requestHeaders.cookie});
+			user.loginName = await _getCurrentGWUser(headers = {'Cookie': requestHeaders.cookie}, region, logger);
 		} catch (err) { 
 			// Might happen if the request has been sent to the wrong ANM by a Load-Balancer in between. (Session Stickyness not working as expected)
 			// Only mitigating the problem, but not really fully solving the issue - Load-Balanced request must be investigated
 			logger.warn(`Unexpected error while trying to get current user from the ANM. Using a Load-Balancer which is not sticky?! Try again at least once.`);
-			user.loginName = await _getCurrentGWUser(headers = {'Cookie': requestHeaders.cookie});
+			user.loginName = await _getCurrentGWUser(headers = {'Cookie': requestHeaders.cookie}, region, logger);
 		}
 		logger.trace(`Current user is: ${user.loginName}`);
-		permissions = await _getCurrentGWPermissions(headers = {'Cookie': requestHeaders.cookie, 'csrf-token': requestHeaders['csrf-token']}, user.loginName);
+		permissions = await _getCurrentGWPermissions(headers = {'Cookie': requestHeaders.cookie, 'csrf-token': requestHeaders['csrf-token']}, user.loginName, region);
 	}
 	if(unrestrictedPermissions.split(",").every( function(perm) { return permissions.includes(perm); })) {
 		user.gatewayManager.isUnrestricted = true;
@@ -120,7 +124,7 @@ async function lookupCurrentUser(params, options) {
 }
 
 async function lookupTopology(params, options) {
-	const { requestHeaders } = params;
+	const { requestHeaders, region } = params;
 	const logger = options.logger;
 	pluginConfig = options.pluginConfig;
 	
@@ -131,7 +135,7 @@ async function lookupTopology(params, options) {
 	if(!requestHeaders.cookie && !requestHeaders.authorization) {
 		throw new Error('You must provide either the VIDUSR cookie + csrf-token or an HTTP-Basic Authorization header.');
 	}
-	let cacheKey = requestHeaders.host;
+	let cacheKey = `${requestHeaders.host}###region`;
 	if(!requestHeaders.host) {
 		logger.warn(`Host header not found, using static cache-key for the API-Gateway topology lookup.`);
 		cacheKey = "apigwTopology";
@@ -142,16 +146,20 @@ async function lookupTopology(params, options) {
 	var topology;
 	if(requestHeaders.authorization) {
 		logger.debug(`Trying to get API-Gateway topology based on Authorization header.`);
-		topology = await _getTopology(headers = {'Authorization': `${requestHeaders.authorization}`}, logger);
+		topology = await _getTopology(headers = {'Authorization': `${requestHeaders.authorization}`}, region, logger);
 	} else {
 		logger.trace(`Trying to get API-Gateway topology based on VIDUSR cookie.`);
-		topology = await _getTopology(headers = {'Cookie': requestHeaders.cookie, 'csrf-token': requestHeaders['csrf-token']}, logger);
+		topology = await _getTopology(headers = {'Cookie': requestHeaders.cookie, 'csrf-token': requestHeaders['csrf-token']}, region, logger);
 	}
 	if(topology.services) {
 		topology.services = topology.services.filter(function(service) {
 			return service.type!="nodemanager"; // Filter node manager service
 		});
-		logger.info(`Successfully retrieved topology from Admin-Node-Manager. Will be cached for 5 minutes.`);
+		if(region) {
+			logger.info(`Successfully retrieved topology from Admin-Node-Manager for region: ${region}. Will be cached for 5 minutes.`);
+		} else {
+			logger.info(`Successfully retrieved topology from Admin-Node-Manager. Will be cached for 5 minutes.`);
+		}
 		cache.set( cacheKey, topology, 300);
 		return topology;
 	}
@@ -465,34 +473,54 @@ async function _getGroupRegionFilename(basefilename, groupId, region) {
 	return result;
 }
 
-async function _getCurrentGWUser(requestHeaders) {
+async function _getCurrentGWUser(requestHeaders, region, logger) {
 	var options = {
 		path: '/api/rbac/currentuser',
 		headers: requestHeaders,
 		agent: new https.Agent({ rejectUnauthorized: false })
 	};
-	var loginName = await sendRequest(pluginConfig.apigateway.url, options)
+	var anmConfig = await getANMConfig(pluginConfig.apigateway, region);
+	if(region) {
+		logger.debug(`Trying to read current user from Admin-Node-Manager: ${anmConfig.url} based on region: ${region}`);
+	} else {
+		logger.debug(`Trying to read current user from Admin-Node-Manager: ${anmConfig.url}`);
+	}
+	var loginName = await sendRequest(anmConfig.url, options)
 		.then(response => {
 			return response.body.result;
 		})
 		.catch(err => {
-			throw new Error(`Error getting current user. Request sent to: '${pluginConfig.apigateway.url}'. Response-Code: ${err.statusCode}`);
+			if(region) {
+				throw new Error(`Error getting current user. Request sent to: '${anmConfig.url}' based on given region: '${region}'. Response-Code: ${err.statusCode}`);
+			} else {
+				throw new Error(`Error getting current user. Request sent to: '${anmConfig.url}'. Response-Code: ${err.statusCode}`);
+			}
 		});
 	return loginName;
 }
 
-async function _getTopology(requestHeaders, logger) {
+async function _getTopology(requestHeaders, region, logger) {
 	var options = {
 		path: '/api/topology',
 		headers: requestHeaders,
 		agent: new https.Agent({ rejectUnauthorized: false })
 	};
-	var topology = await sendRequest(pluginConfig.apigateway.url, options)
+	var anmConfig = await getANMConfig(pluginConfig.apigateway, region);
+	if(region) {
+		logger.debug(`Trying to read topology from Admin-Node-Manager: ${anmConfig.url} based on region: ${region}`);
+	} else {
+		logger.debug(`Trying to read topology from Admin-Node-Manager: ${anmConfig.url}`);
+	}
+	var topology = await sendRequest(anmConfig.url, options)
 		.then(response => {
 			return response.body.result;
 		})
 		.catch(err => {
-			logger.error(`Error getting API-Gateway topology from Admin-Node-Manager. Request sent to: '${pluginConfig.apigateway.url}'. Response-Code: ${err.statusCode}`);
+			if(region) {
+				logger.error(`Error getting API-Gateway topology from Admin-Node-Manager based on given region: ${region}. Request sent to: '${anmConfig.url}'. Response-Code: ${err.statusCode}`);
+			} else {
+				logger.error(`Error getting API-Gateway topology from Admin-Node-Manager. Request sent to: '${anmConfig.url}'. Response-Code: ${err.statusCode}`);
+			}
 			logger.error(`This error will cause the application to fail in a future release.`);
 			return {};
 			// During a grace period it not cause the entire application to fail - Just EMT will not include all services.
@@ -593,18 +621,19 @@ async function _getBackendBasePath(apiProxy, operationId) {
 	throw new Error('_getBackendBasePath with operationId not yet implemented.');
 }
 
-async function _getCurrentGWPermissions(requestHeaders, loginName) {
+async function _getCurrentGWPermissions(requestHeaders, loginName, region) {
 	var options = {
 		path: '/api/rbac/permissions/currentuser',
 		headers: requestHeaders,
 		agent: new https.Agent({ rejectUnauthorized: false })
 	};
-	var result = await sendRequest(pluginConfig.apigateway.url, options)
+	var anmConfig = getANMConfig(pluginConfig.apigateway, region);
+	var result = await sendRequest(anmConfig.url, options)
 		.then(response => {
 			return response.body.result;
 		});
 	if(result.user!=loginName) {
-		throw new Error(`Error reading current permissions from API-Gateway Manager. Loginname: ${loginName} does not match to retrieved user: ${result.user}.`);
+		throw new Error(`Error reading current permissions from API-Gateway Manager (${anmConfig.url}). Loginname: ${loginName} does not match to retrieved user: ${result.user}.`);
 	}
 	return result.permissions;
 }
