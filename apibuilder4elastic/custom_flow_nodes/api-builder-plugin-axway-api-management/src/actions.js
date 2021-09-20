@@ -151,7 +151,11 @@ async function lookupTopology(params, options) {
 		topology.services = topology.services.filter(function(service) {
 			return service.type!="nodemanager"; // Filter node manager service
 		});
-		logger.info(`Successfully retrieved topology from Admin-Node-Manager. Will be cached for 5 minutes.`);
+		if(region) {
+			logger.info(`Successfully retrieved topology from Admin-Node-Manager for region: ${region}. Will be cached for 5 minutes.`);
+		} else {
+			logger.info(`Successfully retrieved topology from Admin-Node-Manager. Will be cached for 5 minutes.`);
+		}
 		cache.set( cacheKey, topology, 300);
 		return topology;
 	}
