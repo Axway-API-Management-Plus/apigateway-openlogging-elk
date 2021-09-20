@@ -5,7 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
-- Make sure Filebeat is not mixing up OpenTraffic with other Log-Files auch as Audit-Log [#145](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/145)
+### Added
+- Make sure Filebeat is not mixing up OpenTraffic with other Log-Files such as Audit-Log [#145](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/145)
+- New optional parameter: `API_BUILDER_LOG_LEVEL` to set the API-Builder Log-Level in your .env file
+- Support for multiple Admin-Node-Managers when using the regional feature [#144](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/144)
 
 ## [3.5.0] 2021-09-13
 ### Added

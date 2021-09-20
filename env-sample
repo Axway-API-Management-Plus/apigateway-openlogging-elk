@@ -399,6 +399,14 @@ ELASTIC_VERSION=7.14.0
 # Defaults to 3
 # FILEBEAT_COMPRESSION_LEVEL=6
 
+# ----------------------------------------------------------------------------------------------
+# Especially during the setup of the solution it makes sense to increase the log level for the 
+# API builder. Also, if you find an error and want to report an issue, set the log level to 
+# debug if possible.
+# Used-By: API-Builder
+# Defaults to info
+# API_BUILDER_LOG_LEVEL=debug
+
 ################################################################################################
 #                         Metricbeat
 ################################################################################################
