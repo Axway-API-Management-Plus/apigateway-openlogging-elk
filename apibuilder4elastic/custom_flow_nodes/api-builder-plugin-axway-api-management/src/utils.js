@@ -97,8 +97,8 @@ async function parseAPIManagerConfig(pluginConfig, options) {
 	}
 	pluginConfig.apimanager.configs = {};
 	if(!pluginConfig.apimanager.url) {
-		// If no API-Manager URL is given, use the Admin-Node-Manager URL
-		const managerURL = new URL(pluginConfig.apigateway.url);
+		// If no API-Manager URL is given, use the default Admin-Node-Manager URL
+		const managerURL = new URL(pluginConfig.apigateway.configs.default.url);
 		managerURL.port = 8075;
 		options.logger.info(`Parameter API_MANAGER not set. Expect API-Manager on URL: ${managerURL.toString()}`);
 		pluginConfig.apimanager.configs.default = {

@@ -34,7 +34,32 @@ describe('Test API-Manager configuration variations', () => {
 
         it('should succeed without giving an API-Manager', async () => {
             const pluginConfig = { 
-                apigateway: { url: "http://my.api-gateway.com:8090" },
+                apigateway: { configs: { default: { url: "http://my.api-gateway.com:8090" }}, url: "http://my.api-gateway.com:8090" },
+                apimanager: {
+				    username: "user", password: "password" 
+                }
+			};
+            var expectedManagers = {
+                username: "user", password: "password",
+                "configs": {
+                    "default": {
+                        url: "http://my.api-gateway.com:8075/",
+                        username: "user", password: "password"
+                    }
+                }
+            }
+            await parseAPIManagerConfig(pluginConfig, options);
+            expect(pluginConfig.apimanager).to.deep.equal(expectedManagers);
+        });
+
+        it('should succeed without giving an API-Manager and having a region based ANM', async () => {
+            const pluginConfig = { 
+                apigateway: { 
+                    configs: { 
+                        default: { url: "http://my.api-gateway.com:8090" }, 
+                        us: { url: "http://my.api-us-gateway.com:8090" } 
+                    }, 
+                    url: "http://my.api-gateway.com:8090,US|http://my.api-us-gateway.com:8090" },
                 apimanager: {
 				    username: "user", password: "password" 
                 }
