@@ -1,0 +1,559 @@
+{
+	"schemaVersion": "4",
+	"info": {
+		"name": "KPIs - Run API-Management indexing (Main)",
+		"description": "Flow which indexes API management KPIs. This flow checks, makes sure that the current API builder is responsible for indexing, reads the API manager configuration and starts a sub-flow."
+	},
+	"parameter": {
+		"properties": {
+			"request": {
+				"description": "The request"
+			},
+			"config": {
+				"type": "object",
+				"description": "The service's configuration"
+			},
+			"env": {
+				"type": "object",
+				"description": "The host OS environment"
+			}
+		},
+		"additionalProperties": false
+	},
+	"start": "condition.2",
+	"nodes": {
+		"javascript.1": {
+			"type": "nodehandler://@axway/api-builder-plugin-fn-javascript/javascript",
+			"name": "Set time to sleep",
+			"method": "Execute",
+			"parameters": [
+				{
+					"name": "code",
+					"type": "string",
+					"value": "\"//return Math.floor(Math.random() * Math.floor(60000));\\n  return Math.floor(Math.random() * Math.floor(1000));\"",
+					"metaName": "Code",
+					"metaDescription": "A JavaScript function body. Supports `await` and returning promises. `data` is the value of the Data parameter. `logger` is the API Builder logger. See the docs for more info: https://docs.axway.com/bundle/API_Builder_4x_allOS_en/page/javascript_flow-node.html"
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.time2Sleep",
+					"routes": [
+						"elk-solution-utils.1"
+					],
+					"metaName": "Next"
+				},
+				"error": {
+					"context": "$.error",
+					"routes": [],
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Execute"
+		},
+		"delay.1": {
+			"type": "nodehandler://axway-flow/delay",
+			"name": "Sleep to avoid race conditions",
+			"method": "delay",
+			"parameters": [
+				{
+					"name": "delay",
+					"type": "jsonpath",
+					"value": "$.time2Sleep",
+					"metaName": "Delay",
+					"metaDescription": "The length of delay, in milliseconds."
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.delayed",
+					"routes": [
+						"elasticsearch.1",
+						"setcontext.1"
+					],
+					"metaName": "Next"
+				}
+			},
+			"metaMethod": "Delay"
+		},
+		"elasticsearch.1": {
+			"type": "nodehandler://@axway-api-builder-ext/api-builder-plugin-fn-elasticsearch/elasticsearch",
+			"name": "Search last KPI Document",
+			"method": "search",
+			"parameters": [
+				{
+					"name": "index",
+					"type": "string",
+					"value": "\"apigw-management-kpis\"",
+					"metaName": "Index",
+					"metaDescription": "Comma-separated list or wildcard expression of index names used to limit the request."
+				},
+				{
+					"name": "sort",
+					"type": "string",
+					"value": "\"@timestamp:desc\"",
+					"metaName": "Sort",
+					"metaDescription": "A comma-separated list of <field>:<direction> pairs."
+				},
+				{
+					"name": "allow_no_indices",
+					"type": "boolean",
+					"value": "true",
+					"metaName": "Allow no indices",
+					"metaDescription": "If true, the request does not return an error if a wildcard expression or _all value retrieves only missing or closed indices. This parameter also applies to index aliases that point to a missing or closed index."
+				},
+				{
+					"name": "size",
+					"type": "number",
+					"value": "1",
+					"metaName": "Size",
+					"metaDescription": "Defines the number of hits to return. Defaults to 10."
+				},
+				{
+					"name": "_source",
+					"type": "boolean",
+					"value": "true",
+					"metaName": "Include source",
+					"metaDescription": "True or false to return the _source field or not, or a list of fields to return."
+				}
+			],
+			"outputs": {
+				"next": {
+					"routes": [
+						"setcontext.1"
+					],
+					"context": "$.result",
+					"metaName": "Next"
+				},
+				"noResult": {
+					"routes": [
+						"axway-api-management.1"
+					],
+					"context": "$.result",
+					"metaName": "No result"
+				},
+				"missingIndex": {
+					"routes": [
+						"delay.2"
+					],
+					"context": "$.error",
+					"metaName": "Missing index"
+				},
+				"error": {
+					"routes": [],
+					"context": "$.error",
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Search"
+		},
+		"elasticsearch.2": {
+			"type": "nodehandler://@axway-api-builder-ext/api-builder-plugin-fn-elasticsearch/elasticsearch",
+			"name": "Create Management-KPIs index",
+			"method": "indicesCreate",
+			"parameters": [
+				{
+					"name": "index",
+					"type": "string",
+					"value": "\"apigw-management-kpis-000001\"",
+					"metaName": "Index",
+					"metaDescription": "The name of the index"
+				},
+				{
+					"name": "alias",
+					"type": "string",
+					"value": "\"apigw-management-kpis\"",
+					"metaName": "Alias name",
+					"metaDescription": "The alias for the index. If an index configuration is given, this alias name is merged into it. Please note, that the index- and alias-name must be different."
+				},
+				{
+					"name": "indexTemplate",
+					"type": "string",
+					"value": "\"management-kpis\"",
+					"metaName": "Index template name",
+					"metaDescription": "If given, the index will only be created if the index-template already exists."
+				}
+			],
+			"outputs": {
+				"next": {
+					"routes": [
+						"axway-api-management.1"
+					],
+					"context": "$.result",
+					"metaName": "Next"
+				},
+				"error": {
+					"routes": [],
+					"context": "$.error",
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Create index"
+		},
+		"axway-api-management.1": {
+			"type": "nodehandler://api-builder-plugin-axway-api-management/axway-api-management",
+			"name": "Get API-Manager settings",
+			"method": "getAPIManagerConfig",
+			"parameters": [],
+			"outputs": {
+				"next": {
+					"routes": [
+						"invoke-flow.1"
+					],
+					"context": "$.apiManagerConfig",
+					"metaName": "Next"
+				},
+				"error": {
+					"routes": [],
+					"context": "$.error",
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Get API-Manager configuration"
+		},
+		"invoke-flow.1": {
+			"type": "nodehandler://@axway/api-builder-plugin-invoke-flow/invoke-flow",
+			"name": "Index KPIs for each API-Manager",
+			"method": "invokeFlowForEach",
+			"parameters": [
+				{
+					"name": "items",
+					"type": "jsonpath",
+					"value": "$.apiManagerConfig",
+					"metaName": "Items",
+					"metaDescription": "An array of input items where each item will be passed as request data when invoking the flow."
+				},
+				{
+					"name": "concurrency",
+					"type": "number",
+					"value": "1",
+					"metaName": "Concurrency",
+					"metaDescription": "By default, items in the Items array are processed concurrently in chunks of 10.  This value can be set to 0 to process all items in Items concurrently, or set to 1 to disable concurrency, or set to a value greater-than 1 to provide a throttling mechanism so as to not overwhelm a backend."
+				},
+				{
+					"name": "breakOnError",
+					"type": "boolean",
+					"value": "true",
+					"metaName": "Break on error",
+					"metaDescription": "If true, this will break out of the flow invocation loop when the first error occurs. When Concurrency is not set to 1, all remaining requests currently being executed will be processed before breaking."
+				},
+				{
+					"name": "id",
+					"type": "string",
+					"value": "\"index-kpis-manager\"",
+					"metaName": "Flow Listener ID",
+					"metaDescription": "The ID of a previously configured `Flow Listener`."
+				}
+			],
+			"outputs": {
+				"next": {
+					"routes": [
+						"invoke-flow.2"
+					],
+					"context": "$.flowResponse",
+					"metaName": "Next"
+				},
+				"error": {
+					"routes": [],
+					"context": "$.error",
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Invoke Flow (for-each)"
+		},
+		"elk-solution-utils.1": {
+			"type": "nodehandler://api-builder-plugin-elk-solution-utils/elk-solution-utils",
+			"name": "Get Hostname",
+			"method": "getHostname",
+			"parameters": [],
+			"outputs": {
+				"next": {
+					"routes": [
+						"delay.1"
+					],
+					"context": "$.hostname",
+					"metaName": "Next"
+				},
+				"error": {
+					"routes": [],
+					"context": "$.error",
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Get Hostname"
+		},
+		"condition.1": {
+			"type": "nodehandler://axway-flow/condition",
+			"name": "Does hostname matches last document?",
+			"method": "equals",
+			"parameters": [
+				{
+					"name": "value",
+					"type": "jsonpath",
+					"value": "$.hostname",
+					"metaName": "Value",
+					"metaDescription": "The value to test input against."
+				},
+				{
+					"name": "source",
+					"type": "jsonpath",
+					"value": "$.lastKPI.meta.apiBuilderHostname",
+					"metaName": "Source",
+					"metaDescription": "The input to test."
+				}
+			],
+			"outputs": {
+				"true": {
+					"routes": [
+						"axway-api-management.1"
+					],
+					"context": "$.equals",
+					"metaName": "True"
+				},
+				"false": {
+					"routes": [
+						"javascript.2"
+					],
+					"context": "$.equals",
+					"metaName": "False"
+				}
+			},
+			"metaMethod": "Equals"
+		},
+		"logger.1": {
+			"type": "nodehandler://@axway/api-builder-plugin-fn-logger/logger",
+			"name": "Log Message",
+			"method": "log",
+			"parameters": [
+				{
+					"name": "message",
+					"type": "string",
+					"value": "\"API-Builder hostname does not match to last KPI-Document. Another builder is indexing Management KPIs.\"",
+					"metaName": "Message",
+					"metaDescription": "The log message."
+				},
+				{
+					"name": "level",
+					"type": "string",
+					"value": "\"info\"",
+					"metaName": "Level",
+					"metaDescription": "The desired log level of the output logs."
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": null,
+					"routes": [],
+					"metaName": "Next"
+				},
+				"error": {
+					"context": "$.error",
+					"routes": [],
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Log Message"
+		},
+		"javascript.2": {
+			"type": "nodehandler://@axway/api-builder-plugin-fn-javascript/javascript",
+			"name": "Check KPIs are still indexed?",
+			"method": "Execute",
+			"parameters": [
+				{
+					"name": "data",
+					"type": "jsonpath",
+					"value": "$",
+					"metaName": "Data",
+					"metaDescription": "The value to apply as the `data` argument of the JavaScript code. For objects and arrays, `data` is passed by reference."
+				},
+				{
+					"name": "code",
+					"type": "string",
+					"value": "\"var lastKPI = data.lastKPI; // Is the _source object\\n  var lastTimestamp = lastKPI[\\\"@timestamp\\\"];\\n  var lastapiBuilderHostname = lastKPI.meta.apiBuilderHostname;\\n  var managementKPIsInterval = data.config.managementKPIsInterval;\\n  var now = Date.now();\\n  logger.info(`Check timestamp of last KPI: ${lastTimestamp} vs. current time: ${now} and managementKPIsInterval: ${managementKPIsInterval}`);\\n  if(now - lastTimestamp > managementKPIsInterval * 2) { // If the last KPI document older than twice the interval, consider it as too old.\\n    logger.info(`Last KPI document is too old, assuming previous API-Builder has stopped indexing data. Taking over indexing data`);\\n    return true;\\n  } else {\\n    logger.info(`Previous API-Builder running on host: ${lastapiBuilderHostname} is still indexing data. Timestamp of last document: ${lastTimestamp}`);\\n    return false;\\n  }\"",
+					"metaName": "Code",
+					"metaDescription": "A JavaScript function body. Supports `await` and returning promises. `data` is the value of the Data parameter. `logger` is the API Builder logger. See the docs for more info: https://docs.axway.com/bundle/API_Builder_4x_allOS_en/page/javascript_flow-node.html"
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.result",
+					"routes": [
+						"axway-api-management.1"
+					],
+					"metaName": "Next"
+				},
+				"error": {
+					"context": "$.error",
+					"routes": [
+						"logger.1"
+					],
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Execute"
+		},
+		"setcontext.1": {
+			"type": "nodehandler://axway-flow/setcontext",
+			"name": "Set last KPI",
+			"method": "setcontext",
+			"parameters": [
+				{
+					"name": "value",
+					"type": "jsonpath",
+					"value": "$.result.body.hits.hits[0]._source",
+					"metaName": "Value"
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.lastKPI",
+					"routes": [
+						"condition.1"
+					],
+					"metaName": "Next"
+				}
+			},
+			"metaMethod": "Set Context"
+		},
+		"condition.2": {
+			"type": "nodehandler://axway-flow/condition",
+			"name": "Is interval disabled?",
+			"method": "equals",
+			"parameters": [
+				{
+					"name": "source",
+					"type": "jsonpath",
+					"value": "$.config.managementKPIsEnabled",
+					"metaName": "Source",
+					"metaDescription": "The input to test."
+				},
+				{
+					"name": "value",
+					"type": "boolean",
+					"value": "true",
+					"metaName": "Value",
+					"metaDescription": "The value to test input against."
+				}
+			],
+			"outputs": {
+				"true": {
+					"routes": [
+						"javascript.1"
+					],
+					"context": "$.equals",
+					"metaName": "True"
+				},
+				"false": {
+					"routes": [
+						"logger.2"
+					],
+					"context": "$.equals",
+					"metaName": "False"
+				}
+			},
+			"metaMethod": "Equals"
+		},
+		"logger.2": {
+			"type": "nodehandler://@axway/api-builder-plugin-fn-logger/logger",
+			"name": "KPIs are disabled",
+			"method": "log",
+			"parameters": [
+				{
+					"name": "level",
+					"type": "string",
+					"value": "\"info\"",
+					"metaName": "Level",
+					"metaDescription": "The desired log level of the output logs."
+				},
+				{
+					"name": "message",
+					"type": "string",
+					"value": "\"Indexing of KPIs is disabled as managementKPIsEnabled is set to false\"",
+					"metaName": "Message",
+					"metaDescription": "The log message."
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": null,
+					"routes": [],
+					"metaName": "Next"
+				},
+				"error": {
+					"context": "$.error",
+					"routes": [],
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Log Message"
+		},
+		"invoke-flow.2": {
+			"type": "nodehandler://@axway/api-builder-plugin-invoke-flow/invoke-flow",
+			"name": "KPIs per Organization",
+			"method": "invokeFlowForEach",
+			"parameters": [
+				{
+					"name": "items",
+					"type": "jsonpath",
+					"value": "$.apiManagerConfig",
+					"metaName": "Items",
+					"metaDescription": "An array of input items where each item will be passed as request data when invoking the flow."
+				},
+				{
+					"name": "concurrency",
+					"type": "number",
+					"value": "1",
+					"metaName": "Concurrency",
+					"metaDescription": "By default, items in the Items array are processed concurrently in chunks of 10.  This value can be set to 0 to process all items in Items concurrently, or set to 1 to disable concurrency, or set to a value greater-than 1 to provide a throttling mechanism so as to not overwhelm a backend."
+				},
+				{
+					"name": "breakOnError",
+					"type": "boolean",
+					"value": "true",
+					"metaName": "Break on error",
+					"metaDescription": "If true, this will break out of the flow invocation loop when the first error occurs. When Concurrency is not set to 1, all remaining requests currently being executed will be processed before breaking."
+				},
+				{
+					"name": "id",
+					"type": "string",
+					"value": "\"get-manager-organization\"",
+					"metaName": "Flow Listener ID",
+					"metaDescription": "The ID of a previously configured `Flow Listener`."
+				}
+			],
+			"outputs": {
+				"next": {
+					"routes": [],
+					"context": "$.flowResponse",
+					"metaName": "Next"
+				},
+				"error": {
+					"routes": [],
+					"context": "$.error",
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Invoke Flow (for-each)"
+		},
+		"delay.2": {
+			"type": "nodehandler://axway-flow/delay",
+			"name": "Wait before creating KPI-Index",
+			"method": "delay",
+			"parameters": [
+				{
+					"name": "delay",
+					"type": "number",
+					"value": "10000"
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.delayed",
+					"routes": [
+						"elasticsearch.2"
+					]
+				}
+			}
+		}
+	}
+}

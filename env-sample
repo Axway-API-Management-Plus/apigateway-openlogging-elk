@@ -61,8 +61,8 @@ API_BUILDER_URL=https://apibuilder4elastic:8443
 
 # ----------------------------------------------------------------------------------------------
 # Connection to the Admin-Node-Manager. Used by the API-Builder identify the current user.
-# If you are using the solution based on the regional feature with multiple Admin-Node-Managers, 
-# then you need to specify the node managers accordingly to the configured regions. 
+# If you are using the solution based on the regional feature with multiple Admin-Node-Managers,
+# then you need to specify the node managers accordingly to the configured regions.
 # Please make sure that the corresponding region is also stored in the API Gateway traffic monitor.
 # See: https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk#admin-node-manager-per-region
 # IMPORTANT NOTE: All URLs must be reachable/resolvable from within the API-Builder
@@ -263,7 +263,7 @@ LOGSTASH_HOSTS=logstash:5044
 # Defaults to -Xmx1g -Xms1g
 # Used-By: Logstash
 # LS_JAVA_OPTS=-Xmx6g -Xms6g
-# Or use it to setup the temp directory for Logstash. Keep in mind, a directory within the 
+# Or use it to setup the temp directory for Logstash. Keep in mind, a directory within the
 # container.
 # LS_JAVA_OPTS=-Xmx6g -Xms6g -Djava.io.tmpdir=/var/tmp
 
@@ -293,7 +293,7 @@ MEMCACHED=memcached:11211
 # correct.
 # Used-By: Elasticsearch
 # ES_JAVA_OPTS=-Xms8g -Xmx8g
-# Or use it to setup the temp directory for Elasticsearch. Keep in mind, a directory within the 
+# Or use it to setup the temp directory for Elasticsearch. Keep in mind, a directory within the
 # container.
 # ES_JAVA_OPTS=-Xms8g -Xmx8g -Djava.io.tmpdir=/var/tmp
 
@@ -344,16 +344,16 @@ ELASTIC_VERSION=7.14.0
 # AUTHZ_CONFIG=./config/my-authorization-config.js
 
 # ----------------------------------------------------------------------------------------------
-# With this parameter you control which user gets an unrestricted access to the traffic in the 
-# API gateway traffic monitor.  This means that these users will see all traffic, regardless of 
-# which API Manager organization. Users who have these rights in the API Gateway traffic monitor 
+# With this parameter you control which user gets an unrestricted access to the traffic in the
+# API gateway traffic monitor.  This means that these users will see all traffic, regardless of
+# which API Manager organization. Users who have these rights in the API Gateway traffic monitor
 # do not need to be configured on the API Manager.
-# If the parameter is not configured, then the default permission is: adminusers_modify, which 
+# If the parameter is not configured, then the default permission is: adminusers_modify, which
 # in principle only full API Gateway administrators have.
 # Example of multiple permissions. The user must have all these permissions:
 # Used-By: API-Builder
 # UNRESTRICTED_PERMISSIONS=traffic_monitor,adminusers,settings
-# Example of a single permissions. Take care, as many people will have this permissions: 
+# Example of a single permissions. Take care, as many people will have this permissions:
 # UNRESTRICTED_PERMISSIONS=traffic_monitor
 
 # ----------------------------------------------------------------------------------------------
@@ -371,12 +371,12 @@ ELASTIC_VERSION=7.14.0
 # PAYLOAD_HANDLING_ENABLED=false
 
 # ----------------------------------------------------------------------------------------------
-# By default, all generated trace messages are forwarded to Elasticsearch. No matter if DEBUG 
-# or DATA. 
-# If you do not want this, you can configure which trace levels should be dropped. 
+# By default, all generated trace messages are forwarded to Elasticsearch. No matter if DEBUG
+# or DATA.
+# If you do not want this, you can configure which trace levels should be dropped.
 # For example, if you set DEBUG,DATA these two log levels will not be stored in ElasticSearch.
-# Please note that this will of course result in the messages not appearing in the 
-# API Gateway traffic monitor. Also it is not possible to change this parameter afterwards and 
+# Please note that this will of course result in the messages not appearing in the
+# API Gateway traffic monitor. Also it is not possible to change this parameter afterwards and
 # expect Trace-Messages are re-processed.
 # Used-By: Logstash for Traffic and General-Trace messages
 # Defaults to all levels are forwarded.
@@ -392,7 +392,7 @@ ELASTIC_VERSION=7.14.0
 # DISABLE_SETUP_FLOWS=true
 
 # ----------------------------------------------------------------------------------------------
-# The gzip compression level. Setting this value to 0 disables compression. The compression level 
+# The gzip compression level. Setting this value to 0 disables compression. The compression level
 # must be in the range of 1 (best speed) to 9 (best compression).
 # Increasing the compression level will reduce the network usage but will increase the CPU usage.
 # Used-By: Filebeat
@@ -400,8 +400,18 @@ ELASTIC_VERSION=7.14.0
 # FILEBEAT_COMPRESSION_LEVEL=6
 
 # ----------------------------------------------------------------------------------------------
-# Especially during the setup of the solution it makes sense to increase the log level for the 
-# API builder. Also, if you find an error and want to report an issue, set the log level to 
+# As of version 4.0.0, the solution stores API Managament KPIs in Elasticsearch and displays them
+# in the dashboard: [Axway] API Management KPIs. To do this, the API Builder polls all configured
+# API managers at hourly intervals and then stores the KPIs in the
+# index: apigw-management-kpis-000001.
+# You can use this parameter to disable this feature and feel free to enable it later.
+# Used-By: API-Builder
+# Defaults to true
+# MANAGEMENT_KPIS_ENABLED=false
+
+# ----------------------------------------------------------------------------------------------
+# Especially during the setup of the solution it makes sense to increase the log level for the
+# API builder. Also, if you find an error and want to report an issue, set the log level to
 # debug if possible.
 # Used-By: API-Builder
 # Defaults to info

@@ -33,7 +33,6 @@
 		"simple-mock": "^0.8.0"
 	},
 	"scripts": {
-		"test": "mocha ./test --recursive -R spec",
-		"postinstall": "node scripts/copyconf.js"
+		"test": "mocha ./test --recursive -R spec"
 	}
 }

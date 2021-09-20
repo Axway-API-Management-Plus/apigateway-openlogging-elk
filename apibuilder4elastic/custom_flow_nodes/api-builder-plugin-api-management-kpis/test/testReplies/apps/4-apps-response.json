@@ -1,0 +1,66 @@
+[
+  {
+      "id": "118c6617-1e2f-4242-bea7-4c23a373b6fe",
+      "name": "Another application",
+      "description": null,
+      "organizationId": "3fec2611-17a1-46fa-be9f-dd00862ace7c",
+      "phone": null,
+      "email": null,
+      "createdBy": "d8554fd4-03a8-4371-be00-90d69df54e10",
+      "managedBy": [],
+      "createdOn": 1631708308218,
+      "enabled": true,
+      "image": null,
+      "state": "approved",
+      "publicApp": "false"
+  },
+  {
+      "id": "01ecde65-7335-4cbf-a1bf-6fc2250515e2",
+      "name": "Bobs application",
+      "description": null,
+      "organizationId": "ea62bff5-2859-46d7-a29e-1731b2717795",
+      "phone": null,
+      "email": null,
+      "createdBy": "dd88699a-e313-4049-a451-55ff69321bd6",
+      "managedBy": [
+          "dd88699a-e313-4049-a451-55ff69321bd6"
+      ],
+      "createdOn": 1631191086135,
+      "enabled": true,
+      "image": null,
+      "state": "approved",
+      "publicApp": "true"
+  },
+  {
+      "id": "9c5934fa-7c71-43b1-bcf8-694aa9f36d55",
+      "name": "Partner A",
+      "description": null,
+      "organizationId": "ea62bff5-2859-46d7-a29e-1731b2717795",
+      "phone": null,
+      "email": null,
+      "createdBy": "d8554fd4-03a8-4371-be00-90d69df54e10",
+      "managedBy": [],
+      "createdOn": 1623925357056,
+      "enabled": true,
+      "image": null,
+      "state": "approved",
+      "publicApp": "false"
+  },
+  {
+      "id": "f3a990fc-d3d7-4412-86e7-c26ff4a39b3b",
+      "name": "Test",
+      "description": null,
+      "organizationId": "3fec2611-17a1-46fa-be9f-dd00862ace7c",
+      "phone": null,
+      "email": null,
+      "createdBy": "d8554fd4-03a8-4371-be00-90d69df54e10",
+      "managedBy": [
+          "f8c1ff25-8684-460e-af54-e2607e8e41dd"
+      ],
+      "createdOn": 1623051766869,
+      "enabled": true,
+      "image": null,
+      "state": "approved",
+      "publicApp": "false"
+  }
+]

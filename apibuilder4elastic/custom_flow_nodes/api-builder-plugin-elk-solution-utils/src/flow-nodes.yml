@@ -189,3 +189,22 @@ flow-nodes:
             context: $.error
             schema:
               type: object
+
+      getHostname:
+        name: Get Hostname
+        description: "Returns the hostname the actual API-Builder process is running on."
+        returns:
+          name: Next
+          description: Returns the current hostname.
+          context: $.hostname
+          schema:
+            type: object
+        throws:
+          name: Error
+          description: An unexpected error was encountered.
+          context: $.error
+          schema:
+            type: object
+            properties:
+              message:
+                type: string

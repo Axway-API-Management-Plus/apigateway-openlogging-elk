@@ -71,6 +71,18 @@ triggers:
         config: $.config
         env: $.env
         indexName: apigw-domainaudit
+  setup-management-kpis-index:
+    enabled: true
+    name: Setup Management-KPIs Index
+    parameters:
+      interval: '172800000'
+      startImmediately: 'true'
+    invoke:
+      flow: SetupElasticsearchIndex
+      parameters:
+        config: $.config
+        env: $.env
+        indexName: apigw-management-kpis
   update-rollover-alias:
     enabled: true
     name: Update Index Rollover-Alias
@@ -94,3 +106,15 @@ triggers:
         config: $.config
         env: $.env
         indexName: apigw-traffic-summary
+  index-management-kpis:
+    name: Index Management KPIs
+    parameters:
+      interval: $.config.managementKPIsInterval
+      startImmediately: 'true'
+    enabled: true
+    invoke:
+      flow: IndexAPI-ManagementKPIs
+      parameters:
+        config: $.config
+        env: $.env
+        request: $

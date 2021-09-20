@@ -2,6 +2,7 @@ const path = require('path');
 const { SDK } = require('@axway/api-builder-sdk');
 const { lookupCurrentUser, lookupTopology, lookupAPIDetails, getCustomPropertiesConfig, isIgnoreAPI, lookupApplication } = require('./actions');
 const { mergeCustomProperties } = require('./customProperties');
+const { getAPIManagerConfig, getAPIManagerOrganizations } = require('./apiManagerAdapter');
 const NodeCache = require( "node-cache" );
 const { checkAPIManagers, parseAPIManagerConfig, parseANMConfig } = require('./utils');
 const https = require('https');
@@ -47,7 +48,7 @@ async function getPlugin(pluginConfig, options) {
 		}
 	}
 
-	sdk.load(path.resolve(__dirname, 'flow-nodes.yml'), {lookupCurrentUser, lookupTopology, lookupAPIDetails, getCustomPropertiesConfig, mergeCustomProperties, isIgnoreAPI, lookupApplication }, { pluginContext: { cache: cache }, pluginConfig});
+	sdk.load(path.resolve(__dirname, 'flow-nodes.yml'), {lookupCurrentUser, lookupTopology, lookupAPIDetails, getCustomPropertiesConfig, mergeCustomProperties, getAPIManagerConfig, getAPIManagerOrganizations, isIgnoreAPI, lookupApplication }, { pluginContext: { cache: cache }, pluginConfig});
 	return sdk.getPlugin();
 }
 

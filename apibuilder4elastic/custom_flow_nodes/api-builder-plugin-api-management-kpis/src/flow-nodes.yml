@@ -1,0 +1,190 @@
+flow-nodes:
+  api-management-kpis:
+    name: API-Management KPIs
+    icon: kpi-icon.png
+    description: Flow to used to retrieve different types of KPIs from an API-Manager.
+    category: general
+    methods:
+      getAPIKPIs:
+        name: Get API-KPIs
+        description: Retrieves all relevant API KPIs.
+        parameters:
+          kpis:
+            name: KPIs
+            description: The eventually already existing KPIs object, that should be extended about API-KPIs. If not given, a new object is created.
+            required: false
+            schema:
+              type: object
+          apiManagerConfig:
+            name: API-Manager configuration
+            description: The API Manager configuration including API-ManagerName and connection details such as URL, name, username. The API Manager name is merged into the KPI object.
+            required: true
+            schema:
+              type: object
+          organization:
+            name: Organization
+            description: 'If given, the result will contain APIs only for the actual organization. Must be an object containing the id and name of the organization (e.g. {id: "b932cbb5-d4be-4bce-aca7-c5daac14f187", name: "FastCars"}).'
+            required: false
+            schema:
+              type: object
+          previousKPIs:
+            name: Previous KPIs
+            description: This object contains the previous stored KPIs for this API-Manager. It's used to compute relevant differences between the previous and current state. If not given, no differences are computed.
+            required: false
+            schema:
+              type: object
+        returns:
+          name: Next
+          description: Returns the KPIs object created or which has been extended.
+          context: $.kpis
+          schema:
+            type: object
+        throws:
+          name: Error
+          description: An unexpected error was encountered.
+          context: $.error
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+
+      getAppKPIs:
+        name: Get Application-KPIs
+        description: Retrieves all relevant Application KPIs.
+        parameters:
+          kpis:
+            name: KPIs
+            description: The eventually already existing KPIs object, that should be extended about API-KPIs. If not given, a new object is created.
+            required: false
+            schema:
+              type: object
+          apiManagerConfig:
+            name: API-Manager configuration
+            description: The API Manager configuration including API-ManagerName and connection details such as URL, name, username. The API Manager name is merged into the KPI object.
+            required: true
+            schema:
+              type: object
+          organization:
+            name: Organization
+            description: 'If given, the result will contain Applicatons only for the actual organization. Must be an object containing the id and name of the organization (e.g. {id: "b932cbb5-d4be-4bce-aca7-c5daac14f187", name: "FastCars"}).'
+            required: false
+            schema:
+              type: object
+          includeSubscriptions:
+            name: Include subscriptions
+            description: If true, the returned KPI will contain subscription information.
+            required: false
+            initialType: boolean
+            schema:
+              default: false
+              type: boolean
+          previousKPIs:
+            name: Previous KPIs
+            description: This object contains the previous stored KPIs for this API-Manager. It's used to compute relevant differences between the previous and current state. If not given, no differences are computed.
+            required: false
+            schema:
+              type: object
+        returns:
+          name: Next
+          description: Returns the KPIs object created or which has been extended.
+          context: $.kpis
+          schema:
+            type: object
+        throws:
+          name: Error
+          description: An unexpected error was encountered.
+          context: $.error
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+
+      getOrgKPIs:
+        name: Get Organization-KPIs
+        description: Retrieves all relevant Organization KPIs.
+        parameters:
+          kpis:
+            name: KPIs
+            description: The eventually already existing KPIs object, that should be extended about API-KPIs. If not given, a new object is created.
+            required: false
+            schema:
+              type: object
+          apiManagerConfig:
+            name: API-Manager configuration
+            description: The API Manager configuration including API-ManagerName and connection details such as URL, name, username. The API Manager name is merged into the KPI object.
+            required: true
+            schema:
+              type: object
+          organization:
+            name: Organization
+            description: 'If given nothing useful is returned, as the result is limited to one org. This is more to satisfy the Kibana-Dashboard rendering showing 1 Org, when filtered for an Organization. Must be an object containing the id and name of the organization (e.g. {id: "b932cbb5-d4be-4bce-aca7-c5daac14f187", name: "FastCars"}).'
+            required: false
+            schema:
+              type: object
+          previousKPIs:
+            name: Previous KPIs
+            description: This object contains the previous stored KPIs for this API-Manager. It's used to compute relevant differences between the previous and current state. If not given, no differences are computed.
+            required: false
+            schema:
+              type: object
+        returns:
+          name: Next
+          description: Returns the KPIs object created or which has been extended.
+          context: $.kpis
+          schema:
+            type: object
+        throws:
+          name: Error
+          description: An unexpected error was encountered.
+          context: $.error
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+
+      getUserKPIs:
+        name: Get User-KPIs
+        description: Retrieves all relevant User KPIs.
+        parameters:
+          kpis:
+            name: KPIs
+            description: The eventually already existing KPIs object, that should be extended about API-KPIs. If not given, a new object is created.
+            required: false
+            schema:
+              type: object
+          apiManagerConfig:
+            name: API-Manager configuration
+            description: The API Manager configuration including API-ManagerName and connection details such as URL, name, username. The API Manager name is merged into the KPI object.
+            required: true
+            schema:
+              type: object
+          organization:
+            name: Organization
+            description: 'If given, the result will contain Users only for the actual organization. Must be an object containing the id and name of the organization (e.g. {id: "b932cbb5-d4be-4bce-aca7-c5daac14f187", name: "FastCars"}).'
+            required: false
+            schema:
+              type: object
+          previousKPIs:
+            name: Previous KPIs
+            description: This object contains the previous stored KPIs for this API-Manager. It's used to compute relevant differences between the previous and current state. If not given, no differences are computed.
+            required: false
+            schema:
+              type: object
+        returns:
+          name: Next
+          description: Returns the KPIs object created or which has been extended.
+          context: $.kpis
+          schema:
+            type: object
+        throws:
+          name: Error
+          description: An unexpected error was encountered.
+          context: $.error
+          schema:
+            type: object
+            properties:
+              message:
+                type: string

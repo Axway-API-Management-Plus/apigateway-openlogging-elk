@@ -1,0 +1,23 @@
+[
+    {
+      "name": "ATM Locator API",
+      "summary": null,
+      "id": "3cf4bd41-9ded-4647-a75e-a7d40bf47614",
+      "uri": "https://api-env:8075/api/portal/v1.3/discovery/swagger/api/ATM+Locator+API",
+      "type": "rest"
+    },
+    {
+      "name": "Sample Minimal API",
+      "summary": null,
+      "id": "fd25b6e7-c8b9-4960-9d2e-88f040de8379",
+      "uri": "https://api-env:8075/api/portal/v1.3/discovery/swagger/api/Sample+Minimal+API",
+      "type": "rest"
+    },
+    {
+      "name": "Sample Minimal API",
+      "summary": null,
+      "id": "031082b8-95e7-40b6-bb48-63531943c486",
+      "uri": "https://api-env:8075/api/portal/v1.3/discovery/swagger/api/Sample+Minimal+API",
+      "type": "rest"
+    }
+]

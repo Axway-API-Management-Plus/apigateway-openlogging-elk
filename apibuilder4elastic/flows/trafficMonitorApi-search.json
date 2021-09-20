@@ -98,16 +98,20 @@
 			],
 			"outputs": {
 				"next": {
-					"context": "$.elasticsearch.result",
-					"routes": [
-						"javascript.1"
-					],
-					"metaName": "Next"
+					"routes": ["javascript.1"],
+					"context": "$.elasticsearch.result"
+				},
+				"noResult": {
+					"routes": ["javascript.1"],
+					"context": "$.elasticsearch.result"
+				},
+				"missingIndex": {
+					"routes": [],
+					"context": "$.error"
 				},
 				"error": {
-					"context": "$.error",
 					"routes": [],
-					"metaName": "Error"
+					"context": "$.error"
 				}
 			},
 			"metaMethod": "Search"

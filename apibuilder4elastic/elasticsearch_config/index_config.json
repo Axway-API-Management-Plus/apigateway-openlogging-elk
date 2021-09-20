@@ -94,5 +94,12 @@
             "config": "elasticsearch_config/apigw-monitoring/ilm_policy.json",
             "name": "apigw-monitoring-ilm"
         }
+    },
+    "apigw-management-kpis": {
+        "alias": "apigw-management-kpis", 
+        "template": {
+            "config": "elasticsearch_config/management-kpis/index_template.json",
+            "name": "management-kpis"
+        }
     }
 }

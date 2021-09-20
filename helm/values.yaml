@@ -142,6 +142,9 @@ apibuilder4elastic:
   # false only for very good reasons.
   # setupFlows: false
 
+  # Disables the collection of API-Management KPIs.
+  # managementKPIsEnabled: false
+
   # logLevel of API-Builder4Elastic. When encoutering issues, enable debug. Also enable debug 
   # if you want to raise an issue.
   #logLevel: "debug"
