@@ -414,10 +414,10 @@ kibana:
   resources:
     requests:
       cpu: "500m"
-      memory: "300Mi"
+      memory: "500Mi"
     limits:
       cpu: "1000m"
-      memory: "300Mi"
+      memory: "750Mi"
   protocol: https
   # Injects the environment variables from the ConfigMaps and Secrets into the 
   # Kibana container. Specify your own ConfigMaps or Secrets if you don't
