@@ -403,6 +403,9 @@ To transform the raw data, the solution delivers and automatically installs a re
 
 It is important to know that the transformation works with a delay of 3 hours. This means that real-time data will appear in the Quartely/Yearly dashboards only after this time. This delay allows you to suspend/interrupt ingesting data for a max. of 3 hours without losing data for the transform and thus long term analytics.  
 
+Please note:    
+- Long-Term Analytics data will only be available after approximately 1 hour. Until then, the corresponding dashboards will show errors. For example: _The field "name-of-a-field" associated with this object no longer exists. Please use another field._ Please wait at least 1 hour for the data to be prepared accordingly.
+
 <p align="right"><a href="#table-of-content">Top</a></p>
 
 ## Advanced and production Setup
