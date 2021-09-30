@@ -358,8 +358,9 @@ This project solves the problem by storing the API transactions in Elasticsearch
 #### Setup API-Manager user in API-Gateway Manager
 
 To give API-Manager users a limited access to the API Traffic Monitor, the user must be configured in the API-Gateway manager with the same login name as in the API Manager. Here, for example, an LDAP connection can be a simplification.  
-None of his roles must contain the permission: `adminusers_modify` otherwise he is considered as admin and will see all traffic. A suitable standard role is the `API Gateway Operator role`. 
-You can, of course, create additional roles in the API Gateway Manager to adjust the user's rights according to your needs.
+By default, all API Gateway Traffic-Monitor users get unrestricted access if one of their roles includes the right: `adminusers_modify`. Typically, only a full API-Administrator has this right.  
+However, you can modify this right with the parameter: `UNRESTRICTED_PERMISSIONS` to configure which right(s) a user must have to get unrestricted access. 
+All other users get a restricted view of the API traffic and will be authorized according to the configured authorization configuration described below.
 
 #### Customize user authorization
 
