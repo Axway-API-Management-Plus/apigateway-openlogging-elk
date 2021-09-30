@@ -363,7 +363,7 @@ However, with the parameter: `UNRESTRICTED_PERMISSIONS` you can configure which 
 
 #### Customize user authorization
 
-By default, the organization of the API-Manager user is used for authorization to the Traffic-Monitor. This means that the user only sees traffic from his own organization (multi-organization is not yet supported). From a technical point of view, an additional filter clause is added to the Elasticsearch query, which results in a restricted result set. An example:  `{ term: { "serviceContext.apiOrg": "Org-A" }}`  
+By default, the organization(s) of the API-Manager user is used for authorization to the Traffic-Monitor. This means that the user only sees traffic from his the organization(s) he belongs in API-Manager. From a technical point of view, an additional filter clause is added to the Elasticsearch query, which results in a restricted result set. An example:  `{ term: { "serviceContext.apiOrg": "Org-A" }}`  
    
 Since version 2.0.0, it is alternatively possible to use an external HTTP service for authorization instead of the API Manager organizations, to restrict the Elasticsearch result based on other criterias.  
 
