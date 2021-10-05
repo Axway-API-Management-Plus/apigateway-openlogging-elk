@@ -73,10 +73,10 @@ async function addApiManagerOrganizationFilter(params, options) {
 	}
 	var filters = elasticQuery.bool.filter;
 	var filter;
-	// If the user is an API-Manager Admin, he should see all traffic passed API-Manager (has a ServiceContext)
+	// If the user is an API-Manager Admin, he should see all traffic that has passed the API-Manager (has a ServiceContext)
 	if (user.apiManager.role == "admin") {
 		// The serviceContext may be at different places depending on the queried index
-		
+		logger.debug(`User: ${user.loginName} has admin role. Has access to entire API-Manager traffic.`);
 		filters.push( {
 			bool: {
 				should: [
@@ -96,6 +96,7 @@ async function addApiManagerOrganizationFilter(params, options) {
 				filter.terms[indexProperty].push(val);
 			}
 		}
+		logger.debug(`Adding organization filter: ${JSON.stringify(filter)} for user: ${user.loginName}`);
 		filters.push(filter);
 	}
 	return elasticQuery;
