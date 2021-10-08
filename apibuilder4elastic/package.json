@@ -49,8 +49,8 @@
 	"devDependencies": {
 		"@axway/api-builder-admin": "^1.44.12",
 		"chai": "^4.3.4",
-		"dotenv": "^8.6.0",
-		"mocha": "^8.4.0",
+		"dotenv": "^10.0.0",
+		"mocha": "^9.1.2",
 		"nock": "^13.1.1",
 		"simple-mock": "^0.8.0",
 		"template-file": "^5.1.0"

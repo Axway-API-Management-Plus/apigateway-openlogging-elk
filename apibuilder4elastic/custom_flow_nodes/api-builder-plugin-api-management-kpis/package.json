@@ -24,8 +24,8 @@
 	},
 	"devDependencies": {
 		"@axway/api-builder-test-utils": "^1.1.0",
-		"chai": "^4.1.2",
-		"mocha": "^7.1.1",
+		"chai": "^4.3.4",
+		"mocha": "^9.1.2",
 		"nock": "^13.1.3"
 	},
 	"scripts": {

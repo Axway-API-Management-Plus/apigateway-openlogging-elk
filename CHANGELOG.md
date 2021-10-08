@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 - Helm Default-Values for Kibana Memory-Limits changed from 300MB to 500MB (Request) and 300MB to 750MB (Limit)
+- Updated dependencies of a number of packages to fix security issues
 
 ## [3.6.0] 2021-09-20
 ### Added
