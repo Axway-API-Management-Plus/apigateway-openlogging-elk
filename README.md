@@ -151,7 +151,7 @@ After this configuration has been done, Open-Traffic log-files will be created b
 
 #### Download and extract the release package
 
-Please download and extract the release package from GitHub onto your machine(s). Please select the Axway supported or community release. The community release always reflects the state of development. Please check the changelog to make sure you select the correct version  
+Please select the Axway- or Community-Supported release. The community release always reflects the state of development. Please check the [changelog](CHANGELOG.md) to make sure you select the correct version. [Learn more](#is-this-solution-officially-supported-by-axway).  
 
 #### Community-Version
 ```
