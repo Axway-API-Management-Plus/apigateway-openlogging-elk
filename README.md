@@ -151,10 +151,18 @@ After this configuration has been done, Open-Traffic log-files will be created b
 
 #### Download and extract the release package
 
-Please download and extract the release package from the GitHub project onto your machine(s):  
+Please download and extract the release package from GitHub onto your machine(s). Please select the Axway supported or community release. The community release always reflects the state of development. Please check the changelog to make sure you select the correct version  
+
+#### Community-Version
 ```
 wget --no-check-certificate https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v3.6.0/axway-apim-elk-v3.6.0.tar.gz -O - | tar -xvz
 ```
+
+#### Axway Supported-Version
+```
+wget --no-check-certificate https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v3.6.0/axway-apim-elk-v3.2.0.tar.gz -O - | tar -xvz
+```
+
 To simplify updates it is recommended to create a Symlink-Folder and finally rename the provided file `env-sample` to `.env`.  
 ```
 ln -s axway-apim-elk-v1.0.0 axway-apim-elk
