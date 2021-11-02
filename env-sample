@@ -495,9 +495,11 @@ ELASTIC_VERSION=7.14.0
 ################################################################################################
 #                         Certificates and Certificate authorities
 ################################################################################################
-# This CA is mounted into all applications and used to validate certificates for each component.
+# This CA-File is mounted into all applications and used to validate certificates for each component.
 # For instance, when Filebeat is sending Metrics to Elasticsearch or the ANM communicates with
-# the API-Builder.
+# the API-Builder. 
+# You can concatenet multiple certificates into one certificate file if you also use intermediate 
+# certificates. Learn more: https://bit.ly/3mxWDSu
 # Used-By: Elasticsearch, Kibana, Logstash, Filebeat, Admin-Node-Manager
 ELASTICSEARCH_CA=config/certificates/ca.crt
 
