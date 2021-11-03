@@ -12,6 +12,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Helm Default-Values for Kibana Memory-Limits changed from 300MB to 500MB (Request) and 300MB to 750MB (Limit)
 - Updated dependencies of a number of packages to fix security issues
 
+### Fixed
+- Error initializing cluster when having multiple ELASTICSEARCH_HOSTS configured [#150](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/150)
+
 ## [3.6.0] 2021-09-20
 ### Added
 - Make sure Filebeat is not mixing up OpenTraffic with other Log-Files such as Audit-Log [#145](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/145)

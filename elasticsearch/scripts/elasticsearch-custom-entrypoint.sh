@@ -12,19 +12,14 @@ nodeNumber=`echo node.name | awk 'match(ENVIRON[$0], /([a-zA-Z]*)([0-9]{1,})/, v
 count=1
 params=""
 seedHosts=""
-initialMasterNodes=""
+initialMasterNode=""
 for host in ${ELASTICSEARCH_HOSTS//,/ }
 do
-    # Use all nodes as initial master node, when initializing the cluster
+    # Use only the first node as initial master node, when initializing the cluster
     # It is assumed, that node-names are sequentially counted elasticsearch1, elasticsearch2, ...
-    if [ "${initCluster}" = "true" ]; then
-        if [ "${initialMasterNodes}" == "" ]; then
-            echo "Init Elasticsearch cluster using nodeBasename: ${nodeBasename} and count: ${count}"
-            initialMasterNodes="-E cluster.initial_master_nodes=${nodeBasename}${count}"
-        else
-            echo "Init Elasticsearch cluster with given initialMasterNodes: ${initialMasterNodes}"
-            initialMasterNodes="-E cluster.initial_master_nodes=${initialMasterNodes}"
-        fi
+    if [ "${initCluster}" = "true" -a "${initialMasterNode}" == "" ]; then
+        echo "Init Elasticsearch cluster using nodeBasename: ${nodeBasename} and count: ${count}"
+        initialMasterNode="-E cluster.initial_master_nodes=${nodeBasename}${count}"
     fi
     # Use all declared hosts as seed hosts if 
     # Seeds hosts are not given externally and the standard transport ports are used
@@ -89,4 +84,4 @@ if [ "${ELASTICSEARCH_ANONYMOUS_ENABLED}" = "true" ]; then
 fi
 
 # Finally call the original Docker-Entrypoint
-/usr/local/bin/docker-entrypoint.sh elasticsearch ${params} ${seedHosts} ${initialMasterNodes} ${anonymousUsername} ${anonymousRoles}
+/usr/local/bin/docker-entrypoint.sh elasticsearch ${params} ${seedHosts} ${initialMasterNode} ${anonymousUsername} ${anonymousRoles}
