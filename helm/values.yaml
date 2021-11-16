@@ -8,7 +8,7 @@ global:
   elasticsearchCa: "config/certificates/ca.crt"
   # ImagePullSecrets made available to all Deployments/StateFullSets
   imagePullSecrets: []
-  #  - myRegistryKeySecretName
+  #  - name: myRegistryKeySecretName
   # Stack monitoring for Filebeat, Logstash, Elasticsearch and Kibana using Self-Monitoring. 
   # Metricbeat monitoring is not yet supported in the Kubernetes deployment.
   selfMonitoringEnabled: "true"
