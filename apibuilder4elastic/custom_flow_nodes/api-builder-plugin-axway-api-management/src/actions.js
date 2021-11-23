@@ -491,9 +491,9 @@ async function _getCurrentGWUser(requestHeaders, region, logger) {
 		})
 		.catch(err => {
 			if(region) {
-				throw new Error(`Error getting current user. Request sent to: '${anmConfig.url}' based on given region: '${region}'. Response-Code: ${err.statusCode}`);
+				throw new Error(`Error getting current user. Request sent to: '${anmConfig.url}' based on given region: '${region}'. Response: ${JSON.stringify(err)}`);
 			} else {
-				throw new Error(`Error getting current user. Request sent to: '${anmConfig.url}'. Response-Code: ${JSON.stringify(err)}`);
+				throw new Error(`Error getting current user. Request sent to: '${anmConfig.url}'. Response: ${JSON.stringify(err)}`);
 			}
 		});
 	return loginName;
