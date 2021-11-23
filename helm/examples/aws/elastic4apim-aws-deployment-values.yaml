@@ -36,6 +36,9 @@ kibana:
       alb.ingress.kubernetes.io/backend-protocol: "HTTPS"
       # 302 is also accepted, as Kibana is performing a redirect
       alb.ingress.kubernetes.io/success-codes: 200,302
+      # Instead of autodiscovery you may optionally define the certificate to be used manually 
+      # https://kubernetes-sigs.github.io/aws-load-balancer-controller/v2.1/guide/ingress/cert_discovery/
+      # alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:eu-central-1:1231234564:certificate/4564abc12-d3c2-4455-8c39-45354cddaf03
     hosts:
       - host: kibana.axway-apim-on-eks.de
         paths:
