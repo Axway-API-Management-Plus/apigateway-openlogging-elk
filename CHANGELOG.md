@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Helm Default-Values for Kibana Memory-Limits changed from 300MB to 500MB (Request) and 300MB to 750MB (Limit)
 - Updated dependencies of a number of packages to fix security issues
 - Updated API-Builder to version Bangkok
+- Updated Elastic-Stack from version 7.14.0 to 7.15.2
 
 ### Fixed
 - Error initializing cluster when having multiple ELASTICSEARCH_HOSTS configured [#150](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/150)
