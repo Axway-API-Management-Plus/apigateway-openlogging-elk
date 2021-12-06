@@ -1,0 +1,19 @@
+apm-server:
+  host: "localhost:8200"
+  rum:
+    enabled: true
+
+output:
+  elasticsearch:
+    hosts: ${ELASTICSEARCH_HOSTS}
+    username: ${APM_USERNAME}
+    password: ${APM_PASSWORD}
+    ssl: 
+      certificate_authorities: ${ELASTICSEARCH_CA}
+
+monitoring:
+  enabled: true
+  elasticsearch:
+    username: ${APM_USERNAME}
+    password: ${APM_PASSWORD}
+    cluster_uuid: ${ELASTICSEARCH_CLUSTER_UUID}

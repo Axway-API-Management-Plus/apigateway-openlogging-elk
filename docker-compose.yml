@@ -80,6 +80,8 @@ services:
       - EXT_AUTHZ_URI=${EXT_AUTHZ_URI}
       - MANAGEMENT_KPIS_ENABLED=${MANAGEMENT_KPIS_ENABLED}
       - LOG_LEVEL=${API_BUILDER_LOG_LEVEL}
+      - APM_ENABLED=${APM_ENABLED}
+      - APM_SERVER=${APM_SERVER}
     ports:
       - 8443:8443
     networks:

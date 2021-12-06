@@ -502,8 +502,21 @@ ELASTIC_VERSION=7.15.2
 # is used by API Builder to pass application performance management data from the 
 # API Builder process.
 # Used-By: Elastic-APM
-# Defaults to true
-#APM_ENABLED=false
+# Defaults to false
+#APM_ENABLED=true
+
+# ----------------------------------------------------------------------------------------------
+# This is used by the API-Builder process for the APM-Server connection. It defaults to 
+# http://apm-server:8200 if not configured, which is the service-name when using docker-compose. 
+# Used-By: API-Builder4Elastic
+# APM_SERVER=http://my-apm-server:8200
+
+# ----------------------------------------------------------------------------------------------
+# Account used by the APM-Server for the Elasticsearch communication. For the initial setup it 
+# must have permissions to setup index templates.
+# Used-By: APM-Server
+#APM_USERNAME=elastic
+#APM_PASSWORD=
 
 ################################################################################################
 #                         Certificates and Certificate authorities
