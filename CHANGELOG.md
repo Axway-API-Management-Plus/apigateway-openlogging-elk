@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 - Helm Default-Values for Kibana Memory-Limits changed from 300MB to 500MB (Request) and 300MB to 750MB (Limit)
+- Elasticsearch default ES_JAVA_OPTS now -Xms1g -Xmx1g as it is no longer set by Elasticsearch to this default
 - Updated dependencies of a number of packages to fix security issues
 - Updated API-Builder to version Bangkok
 - Updated Elastic-Stack from version 7.14.0 to 7.15.2
@@ -17,6 +18,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 - Error initializing cluster when having multiple ELASTICSEARCH_HOSTS configured [#150](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/150)
 - Filebeat ignored most recent OpenTraffic file due to a wrong filename pattern (*_traffic_*.log --> *_traffic*.log)
+- Default for optional parameter: `FILEBEAT_COMPRESSION_LEVEL` was not working as expected
+
 
 ## [3.6.0] 2021-09-20
 ### Added
