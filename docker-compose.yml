@@ -82,6 +82,7 @@ services:
       - LOG_LEVEL=${API_BUILDER_LOG_LEVEL}
       - APM_ENABLED=${APM_ENABLED}
       - APM_SERVER=${APM_SERVER}
+      - APM_SERVER_CA=${APM_SERVER_CA}
     ports:
       - 8443:8443
     networks:

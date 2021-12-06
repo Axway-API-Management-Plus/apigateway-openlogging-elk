@@ -80,6 +80,14 @@ instances:
       - "*.ec2.internal"
       - "*.compute-1.amazonaws.com"
       - "*.cloudapp.azure.com"
+  - name: "apm-server"
+    dns:
+      - "apm-server"
+      - "localhost"
+      - "api-env"
+      - "*.ec2.internal"
+      - "*.compute-1.amazonaws.com"
+      - "*.cloudapp.azure.com"
 ```
 
 Run elasticsearch-certutil:  

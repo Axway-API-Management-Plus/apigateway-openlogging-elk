@@ -1,7 +1,12 @@
 apm-server:
-  host: "localhost:8200"
+  host: "apm-server:8200"
   rum:
     enabled: true
+  ssl:
+    enabled: true
+    certificate: "${APM_SERVER_CRT}"
+    key: "${APM_SERVER_KEY}"
+    key_passphrase: "${APM_SERVER_KEY_PASSPHRASE}"
 
 output:
   elasticsearch:
