@@ -1,0 +1,30 @@
+version: '3.7'
+services:
+  # APM-Service
+  metricbeat:
+    image: docker.elastic.co/apm/apm-server:${ELASTIC_VERSION}
+    restart: on-failure:10
+    entrypoint: /usr/local/scripts/apm-server-entrypoint.sh
+    container_name: apm-server
+    environment:
+      - ELASTICSEARCH_HOSTS=${ELASTICSEARCH_HOSTS}
+      - ELASTICSEARCH_CA=${ELASTICSEARCH_CA}
+      - SELF_MONITORING_ENABLED=${SELF_MONITORING_ENABLED}
+    ports:
+      - 8200:8200
+    volumes:
+      - ./apm-server.yml:/usr/share/apm-server/apm-server.yml:ro
+      - ../config/certificates:/usr/share/apm-server/config/certificates
+    networks:
+      - elastic
+    logging:
+      options:
+        max-file: "3"
+        max-size: "10m"
+
+volumes:
+  logs:
+  metricbeatdata:
+
+networks:
+  elastic:

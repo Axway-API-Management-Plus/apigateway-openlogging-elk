@@ -493,6 +493,19 @@ ELASTIC_VERSION=7.15.2
 #KIBANA_HOST=https://my.kibanahost.net:5601
 
 ################################################################################################
+#                         APM
+################################################################################################
+# The solution can use APM from Elastic to monitor the behavior of the API builder process.
+
+# ----------------------------------------------------------------------------------------------
+# This is where Elastic-APM is enabled, which is an additional service before Elasticsearch. It 
+# is used by API Builder to pass application performance management data from the 
+# API Builder process.
+# Used-By: Elastic-APM
+# Defaults to true
+#APM_ENABLED=false
+
+################################################################################################
 #                         Certificates and Certificate authorities
 ################################################################################################
 # This CA-File is mounted into all applications and used to validate certificates for each component.
