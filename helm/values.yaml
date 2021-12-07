@@ -186,6 +186,15 @@ apibuilder4elastic:
   #        - axway-elk-apim4elastic-logstash
   #    topologyKey: kubernetes.io/hostname
 
+  apmserver:
+    # If you want to use an external APM-Server, you can configure the URL here. 
+    # Defaults to the internal APM-Server service if enabled
+    serverUrl: {}
+    # The Certificate-Authory to validate the APM-Server certificate
+    # serverCaCertFile: "config/certificates/my-apmserver-ca.crt"
+    # You may disable the certificate check
+    # verifyServerCert: "false"
+
 ##################################################################################################################################
 #          L O G S T A S H
 ##################################################################################################################################
@@ -680,3 +689,76 @@ filebeat:
       #  keepfiles: 7
       #  permissions: 0644
       #logging.selectors: ["*"]
+
+##################################################################################################################################
+#          A P M - S E R V E R
+##################################################################################################################################
+apm-server:
+  enabled: true
+  # Required for the internal stack monitoring to work with the APM-Server
+  elasticsearchClusterUUID: ""
+
+  envFrom:
+    - configMapRef:
+        name: axway-elk-apim4elastic-apmserver-env-config
+
+  secretMounts:
+    - name: certificates
+      secretName: axway-elk-apim4elastic-certificates
+      path: /usr/share/apm-server/config/certificates
+
+  # Setup the SSL-Configuration for the APM-Server
+  # Use secretMounts to mount your keys & certificates into pod 
+  # and configure them here.
+  # By default the generated key and certificate is used here
+  ssl: 
+    cert: "config/certificates/apmserver.crt"
+    key: "config/certificates/apmserver.key"
+    #  password: ""
+
+  livenessProbe:
+    httpGet:
+      path: /
+      port: http
+      scheme: HTTPS
+    initialDelaySeconds: 30
+    failureThreshold: 3
+    periodSeconds: 10
+    timeoutSeconds: 5
+
+  readinessProbe:
+    httpGet:
+      path: /
+      port: http
+      scheme: HTTPS
+    initialDelaySeconds: 30
+    failureThreshold: 3
+    periodSeconds: 10
+    timeoutSeconds: 5
+
+  apmConfig:
+    apm-server.yml: |
+      apm-server:
+        host: "0.0.0.0:8200"
+        rum:
+          enabled: true
+        ssl:
+          enabled: true
+          certificate: ${APM_SERVER_CRT:""}
+          key: ${APM_SERVER_KEY:""}
+          key_passphrase: ${APM_SERVER_KEY_PASSPHRASE:""}
+
+      output:
+        elasticsearch:
+          hosts: "${ELASTICSEARCH_HOSTS}"
+          username: ${APM_USERNAME:""}
+          password: ${APM_PASSWORD:""}
+          ssl: 
+            certificate_authorities: ${ELASTICSEARCH_CA}
+
+      monitoring:
+        enabled: true
+        elasticsearch:
+          username: ${APM_USERNAME:""}
+          password: ${APM_PASSWORD:""}
+          cluster_uuid: ${ELASTICSEARCH_CLUSTER_UUID}

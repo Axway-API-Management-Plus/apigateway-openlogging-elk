@@ -16,4 +16,12 @@ data:
   PAYLOAD_HANDLING_ENABLED: {{ default true .Values.apibuilder4elastic.payloadEnabled | quote }}
   MANAGEMENT_KPIS_ENABLED: {{ default true .Values.apibuilder4elastic.managementKPIsEnabled | quote }}
   LOG_LEVEL: {{ default "info" .Values.apibuilder4elastic.logLevel | quote }}
+  APM_ENABLED: {{ index .Values "apm-server" "enabled" | quote }}
+{{- if .Values.apibuilder4elastic.apmserver.serverUrl }}
+  APM_SERVER: {{ .Values.apibuilder4elastic.apmserver.serverUrl | quote }}
+{{- else }}
+  APM_SERVER: {{ printf "https://%s-apm-server:8200" .Release.Name | quote }}
+{{- end }}  
+  APM_VALIDATE_SERVER_CERT: {{ default true .Values.apibuilder4elastic.apmserver.verifyServerCert | quote }}
+  APM_SERVER_CA: {{ default "" .Values.apibuilder4elastic.apmserver.serverCaCertFile | quote }}
 {{- end }}
