@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [4.0.0] 2021-12-07
 ### Added
 - API-Management KPIs incl. dashboard [#64](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/64)
-- Added support to enable an APM-Service or use an external APM-Server with API-Builder [#149](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/149)
+- Added support to enable an APM-Service or use an external APM-Server with API-Builder [Learn more](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/tree/develop/apm) [#149](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/149)
 
 ### Changed
 - Helm Default-Values for Kibana Memory-Limits changed from 300MB to 500MB (Request) and 300MB to 750MB (Limit)
