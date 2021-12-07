@@ -694,7 +694,7 @@ filebeat:
 #          A P M - S E R V E R
 ##################################################################################################################################
 apm-server:
-  enabled: true
+  enabled: false
   # Required for the internal stack monitoring to work with the APM-Server
   elasticsearchClusterUUID: ""
 
