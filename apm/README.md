@@ -8,7 +8,7 @@ Once APM is [set up](#setup), you can use Kibana --> Observability --> APM to ac
 dashboards. You will find details about throughput, resource consumption, etc. Here are some sample screenshots.
 
 ### APM Services overview   
-![APM-Services overview](imgs/apm/1_apm-services.png)
+![APM-Services overview](../imgs/apm/1_apm-services.png)
 
 ### Selected APIBuilder4Elastic - Overview
 ![Service API-Builder4Elastic overview](imgs/apm/2_apm-apibuilder4elastic-overview.png)
