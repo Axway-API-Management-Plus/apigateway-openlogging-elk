@@ -2,7 +2,7 @@
 
 With [Elastic-APM](https://www.elastic.co/observability/application-performance-monitoring), you can monitor the 
 APIBuilder4Elastic better than just using logs directly from the API Builder. Of course, you can also add 
-more API-Builder or other containers.  
+other API-Builder services or other applications.  
 
 Once APM is [set up](#setup), you can use Kibana --> Observability --> APM to access a series of application performance 
 dashboards. You will find details about throughput, resource consumption, etc. Here are some sample screenshots.
