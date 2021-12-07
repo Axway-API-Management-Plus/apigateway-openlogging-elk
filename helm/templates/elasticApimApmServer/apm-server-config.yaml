@@ -10,7 +10,7 @@ metadata:
     release: {{ .Release.Name | quote }}
 data: 
   ELASTICSEARCH_HOSTS: {{ required "The value global.elasticsearchHosts is missing." .Values.global.elasticsearchHosts | quote }}
-  ELASTICSEARCH_CLUSTER_UUID: {{ .Values.apmserver.elasticsearchClusterUUID | quote }}
+  ELASTICSEARCH_CLUSTER_UUID: {{ index .Values "apm-server" "elasticsearchClusterUUID" | quote }}
   ELASTICSEARCH_CA: {{ required "The path to the CA for APM-Server to Elasticsearch communication is missing" .Values.global.elasticsearchCa | quote }}
   APM_SERVER_CRT: {{ index .Values "apm-server" "ssl" "cert"  }}
   APM_SERVER_KEY: {{ index .Values "apm-server" "ssl" "key"  }}
