@@ -756,6 +756,15 @@ Please note, before restarting an Elasticsearch-Node make sure, the cluster stat
 
 <p align="right"><a href="#table-of-content">Top</a></p>
 
+### Enable Application-Performance Monitoring
+
+You can enable Application Performance Monitoring (APM) to monitor APIBuilder4Elastic and other services (e.g. API Builder Services) if required. 
+
+![Service API-Builder4Elastic overview](imgs/apm/2_apm-apibuilder4elastic-overview.png)
+
+
+Learn how to set up and activate APM [here](apm).
+
 ### Configure cluster UUID
 
 This step is optional, but required to monitor your Filebeat instances as part of the stack monitoring. To obtain the Cluster UUID run the following in your browser:  
