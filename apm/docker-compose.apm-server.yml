@@ -1,0 +1,35 @@
+version: '3.7'
+services:
+  # APM-Service
+  metricbeat:
+    image: docker.elastic.co/apm/apm-server:${ELASTIC_VERSION}
+    restart: on-failure:10
+    entrypoint: /usr/local/scripts/apm-server-entrypoint.sh
+    command: -environment container
+    container_name: apm-server
+    environment:
+      - APM_ENABLED=${APM_ENABLED:-true}
+      - ELASTICSEARCH_HOSTS=${ELASTICSEARCH_HOSTS}
+      - APM_USERNAME=${APM_USERNAME:-""}
+      - APM_PASSWORD=${APM_PASSWORD:-""}
+      - ELASTICSEARCH_CA=${ELASTICSEARCH_CA}
+      - APM_SERVER_KEY=${APM_SERVER_KEY}
+      - APM_SERVER_CRT=${APM_SERVER_CRT}
+      - APM_SERVER_KEY_PASSPHRASE=${APM_SERVER_KEY_PASSPHRASE:-""}
+      - ELASTICSEARCH_ANONYMOUS_ENABLED=${ELASTICSEARCH_ANONYMOUS_ENABLED}
+      - ELASTICSEARCH_CLUSTER_UUID=${ELASTICSEARCH_CLUSTER_UUID}
+    ports:
+      - 8200:8200
+    volumes:
+      - ./apm-server.yml:/usr/share/apm-server/apm-server.yml:ro
+      - ../config/certificates:/usr/share/apm-server/config/certificates
+      - ./scripts:/usr/local/scripts
+    networks:
+      - elastic
+    logging:
+      options:
+        max-file: "3"
+        max-size: "10m"
+
+networks:
+  elastic:

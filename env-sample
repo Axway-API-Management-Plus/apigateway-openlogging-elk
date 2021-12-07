@@ -494,6 +494,43 @@ ELASTIC_VERSION=7.15.2
 #KIBANA_HOST=https://my.kibanahost.net:5601
 
 ################################################################################################
+#                         APM
+################################################################################################
+# The solution can use APM from Elastic to monitor the behavior of the API builder process.
+
+# ----------------------------------------------------------------------------------------------
+# This is where Elastic-APM is enabled, which is an additional service before Elasticsearch. It 
+# is used by API Builder to pass application performance management data from the 
+# API Builder process.
+# Used-By: Elastic-APM
+# Defaults to false
+#APM_ENABLED=true
+
+# ----------------------------------------------------------------------------------------------
+# This is used by the API-Builder process for the APM-Server connection. It defaults to 
+# https://apm-server:8200 if not configured, which is the service-name when using docker-compose. 
+# Used-By: API-Builder4Elastic
+# APM_SERVER=https://my-apm-server:8200
+
+# ----------------------------------------------------------------------------------------------
+# Parameter used by API-Builder if the APM-Server certificate should be validated.
+# Used-By: API-Builder4Elastic
+# APM_VALIDATE_SERVER_CERT=false
+
+# ----------------------------------------------------------------------------------------------
+# Certificate authory used by API-Builder4Elastic to validate the server certificate.
+# Used-By: API-Builder4Elastic
+# Defaults to the CA used by all components.
+# APM_SERVER_CA=config/certificates/ca.crt
+
+# ----------------------------------------------------------------------------------------------
+# Account used by the APM-Server for the Elasticsearch communication. For the initial setup it 
+# must have permissions to setup index templates.
+# Used-By: APM-Server
+#APM_USERNAME=elastic
+#APM_PASSWORD=
+
+################################################################################################
 #                         Certificates and Certificate authorities
 ################################################################################################
 # This CA-File is mounted into all applications and used to validate certificates for each component.
@@ -532,3 +569,7 @@ ELASTICSEARCH_CRT=config/certificates/elasticsearch1.crt
 KIBANA_KEY=config/certificates/kibana.key
 KIBANA_CRT=config/certificates/kibana.crt
 KIBANA_KEYPASSPHRASE=
+
+APM_SERVER_KEY=config/certificates/apm-server.key
+APM_SERVER_CRT=config/certificates/apm-server.crt
+APM_SERVER_KEY_PASSPHRASE=

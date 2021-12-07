@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Added
 - API-Management KPIs incl. dashboard [#64](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/64)
+- Added support to enable an APM-Service or use an external APM-Server with API-Builder [#149](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/149)
 
 ### Changed
 - Helm Default-Values for Kibana Memory-Limits changed from 300MB to 500MB (Request) and 300MB to 750MB (Limit)
@@ -16,7 +17,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Updated Elastic-Stack from version 7.14.0 to 7.15.2
 
 ### Fixed
-- Error initializing cluster when having multiple ELASTICSEARCH_HOSTS configured [#150](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/150)
+- Error initializing cluster when already multiple ELASTICSEARCH_HOSTS configured [#150](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/150)
 - Filebeat ignored most recent OpenTraffic file due to a wrong filename pattern (*_traffic_*.log --> *_traffic*.log)
 - Default for optional parameter: `FILEBEAT_COMPRESSION_LEVEL` was not working as expected
 

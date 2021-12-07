@@ -34,7 +34,7 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 Generate required certificates 
 */}}
 {{- define "elastic-apim.gen-certs" -}}
-{{- $altNames := list "localhost" ( printf "%s-elasticsearch" (include "apim4elastic.fullname" .) ) ( printf "%s-apibuilder4elastic" (include "apim4elastic.fullname" .) )  ( printf "%s-kibana" (include "apim4elastic.fullname" .) ) -}}
+{{- $altNames := list "localhost" ( printf "%s-elasticsearch" (include "apim4elastic.fullname" .) ) ( printf "%s-apibuilder4elastic" (include "apim4elastic.fullname" .) )  ( printf "%s-kibana" (include "apim4elastic.fullname" .) ) ( printf "%s-apmserver" (include "apim4elastic.fullname" .) ) -}}
 {{- $ca := genCA "elastic-apim-ca" 365 -}}
 {{- $cert := genSignedCert ( include "apim4elastic.name" . ) nil $altNames 365 $ca -}}
 ca.crt: {{ $ca.Cert | b64enc }}
@@ -44,4 +44,6 @@ kibana.crt: {{ $cert.Cert | b64enc }}
 kibana.key: {{ $cert.Key | b64enc }}
 apibuilder4elastic.crt: {{ $cert.Cert | b64enc }}
 apibuilder4elastic.key: {{ $cert.Key | b64enc }}
+apmserver.crt: {{ $cert.Cert | b64enc }}
+apmserver.key: {{ $cert.Key | b64enc }}
 {{- end -}}

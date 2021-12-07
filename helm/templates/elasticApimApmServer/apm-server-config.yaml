@@ -1,0 +1,17 @@
+{{- if ".Values.apm-server.enabled" }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "apmserver.fullname" . }}-env-config
+  labels:
+    app: "{{ template "apmserver.fullname" . }}"
+    chart: "{{ .Chart.Name }}"
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+data: 
+  ELASTICSEARCH_HOSTS: {{ required "The value global.elasticsearchHosts is missing." .Values.global.elasticsearchHosts | quote }}
+  ELASTICSEARCH_CLUSTER_UUID: {{ index .Values "apm-server" "elasticsearchClusterUUID" | quote }}
+  ELASTICSEARCH_CA: {{ required "The path to the CA for APM-Server to Elasticsearch communication is missing" .Values.global.elasticsearchCa | quote }}
+  APM_SERVER_CRT: {{ index .Values "apm-server" "ssl" "cert"  }}
+  APM_SERVER_KEY: {{ index .Values "apm-server" "ssl" "key"  }}
+{{- end }}
