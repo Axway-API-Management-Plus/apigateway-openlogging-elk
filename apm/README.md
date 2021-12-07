@@ -11,16 +11,16 @@ dashboards. You will find details about throughput, resource consumption, etc. H
 ![APM-Services overview](../imgs/apm/1_apm-services.png)
 
 ### Selected APIBuilder4Elastic - Overview
-![Service API-Builder4Elastic overview](imgs/apm/2_apm-apibuilder4elastic-overview.png)
+![Service API-Builder4Elastic overview](../imgs/apm/2_apm-apibuilder4elastic-overview.png)
 
 ### Selected APIBuilder4Elastic - Dependencies
-![Service API-Builder4Elastic dependencies](imgs/apm/3_apm-apibuilder4elastic-dependencies.png)
+![Service API-Builder4Elastic dependencies](../imgs/apm/3_apm-apibuilder4elastic-dependencies.png)
 
 ### Selected APIBuilder4Elastic - Errors
-![Service API-Builder4Elastic errors](imgs/apm/4_apm-apibuilder4elastic-errors.png)
+![Service API-Builder4Elastic errors](../imgs/apm/4_apm-apibuilder4elastic-errors.png)
 
 ### Selected APIBuilder4Elastic - Metrics
-![Service API-Builder4Elastic metrics](imgs/apm/5_apm-apibuilder4elastic-metrics.png)
+![Service API-Builder4Elastic metrics](../imgs/apm/5_apm-apibuilder4elastic-metrics.png)
 
 ## Setup
 
