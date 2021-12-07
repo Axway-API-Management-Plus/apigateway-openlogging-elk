@@ -58,7 +58,7 @@ On the other hand, the API builder Docker image, as a central component of the s
 | 3.4.0 | [X](#api-builderlogstashmemcached) | [X](#api-builderlogstashmemcached) | -                                  | -             | -               | [X](#dashboards)| [X](#parameters)|[X](#elastic-config)| 7.14.0  |            |
 | 3.5.0 | [X](#api-builderlogstashmemcached) | -                                  | -                                  | -             | -               | -               | [X](#parameters)|-                   | 7.14.0  |            |
 | 3.6.0 | [X](#api-builderlogstashmemcached) | -                                  | -                                  | -             | -               | -               | [X](#parameters)|-                   | 7.14.0  |            |
-| 4.0.0 | [X](#api-builderlogstashmemcached) | -                                  | -                                  | -             | -               | -               | [X](#parameters)|-                   | 7.15.2  |Unreleased  |
+| 4.0.0 | [X](#api-builderlogstashmemcached) | -                                  | -                                  | -             | -               | [X](#dashboards)| -               |-                   | 7.15.2  |            |
 
 ### Update from Version 1.0.0
 

@@ -155,12 +155,12 @@ Please select the Axway- or Community-Supported release. The community release a
 
 #### Community-Version
 ```
-wget --no-check-certificate https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v3.6.0/axway-apim-elk-v3.6.0.tar.gz -O - | tar -xvz
+wget --no-check-certificate https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v4.0.0/axway-apim-elk-v4.0.0.tar.gz -O - | tar -xvz
 ```
 
 #### Axway Supported-Version
 ```
-wget --no-check-certificate https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v3.6.0/axway-apim-elk-v3.2.0.tar.gz -O - | tar -xvz
+wget --no-check-certificate https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v3.2.0/axway-apim-elk-v3.2.0.tar.gz -O - | tar -xvz
 ```
 
 To simplify updates it is recommended to create a Symlink-Folder and finally rename the provided file `env-sample` to `.env`.  
