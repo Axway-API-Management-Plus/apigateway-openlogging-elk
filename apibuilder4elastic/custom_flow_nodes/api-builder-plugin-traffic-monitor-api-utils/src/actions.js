@@ -128,7 +128,6 @@ async function handleFilterFields(parameters, options) {
 			}
 		});
 	});
-	debugger;
 	await addProtocolFilter(filters.mustFilters, params, logger);
 	await addServiceIdFilter(filters, serviceID, gatewayTopology, logger);
 	await addRegionFilter(filters.mustFilters, region, logger);
