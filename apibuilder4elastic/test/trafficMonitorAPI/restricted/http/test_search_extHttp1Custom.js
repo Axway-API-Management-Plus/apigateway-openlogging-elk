@@ -3,7 +3,7 @@ const { startApiBuilder, stopApiBuilder, requestAsync, sendToElasticsearch, getR
 const path = require('path');
 const fs = require('fs');
 const nock = require('nock');
-const envLoader = require('dotenv');
+const dotenv = require('dotenv');
 
 describe('Endpoints', function () {
 	this.timeout(30000);
@@ -23,8 +23,10 @@ describe('Endpoints', function () {
 		return new Promise(function(resolve, reject){
 			delete process.env.AUTHZ_CONFIG; // Make sure, it is not using config from a previous test
 			const envFilePath = path.join(__dirname, '../../../.env');
-			if (fs.existsSync(envFilePath)) {
-				envLoader.config({ path: envFilePath });
+			// Make sure the existing environment variables are overwritten (https://github.com/motdotla/dotenv#what-happens-to-environment-variables-that-were-already-set)
+			const envConfig = dotenv.parse(fs.readFileSync(envFilePath));
+			for (const k in envConfig) {
+				process.env[k] = envConfig[k];
 			}
 			process.env.AUTHZ_CONFIG = "../../../test/trafficMonitorAPI/authZConfig/authorization-config-1-custom.js";
 			server = startApiBuilder();

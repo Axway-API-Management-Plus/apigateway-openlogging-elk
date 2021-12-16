@@ -23,7 +23,7 @@ describe('Endpoints', function () {
 		return new Promise(function(resolve, reject){
 			delete process.env.AUTHZ_CONFIG; // Make sure, it is not using from a previous test
 			const envFilePath = path.join(__dirname, '../../../.env');
-			// Make existing environment variables are overwritten (https://github.com/motdotla/dotenv#what-happens-to-environment-variables-that-were-already-set)
+			// Make sure the existing environment variables are overwritten (https://github.com/motdotla/dotenv#what-happens-to-environment-variables-that-were-already-set)
 			const envConfig = dotenv.parse(fs.readFileSync(envFilePath));
 			for (const k in envConfig) {
 				process.env[k] = envConfig[k];
