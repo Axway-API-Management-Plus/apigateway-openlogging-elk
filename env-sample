@@ -538,6 +538,8 @@ ELASTIC_VERSION=7.16.1
 # the API-Builder. 
 # You can concatenet multiple certificates into one certificate file if you also use intermediate 
 # certificates. Learn more: https://bit.ly/3mxWDSu
+# Example command to created the chained cert file:
+# openssl pkcs7 -inform DER -in certificate.p7b -print_certs > certificate_bundle.cer
 # Used-By: Elasticsearch, Kibana, Logstash, Filebeat, Admin-Node-Manager
 ELASTICSEARCH_CA=config/certificates/ca.crt
 
