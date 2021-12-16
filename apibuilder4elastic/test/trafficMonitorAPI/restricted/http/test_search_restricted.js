@@ -3,7 +3,7 @@ const { startApiBuilder, stopApiBuilder, requestAsync, sendToElasticsearch, getR
 const path = require('path');
 const fs = require('fs');
 const nock = require('nock');
-const envLoader = require('dotenv');
+const dotenv = require('dotenv');
 
 describe('Endpoints', function () {
 	this.timeout(30000);
