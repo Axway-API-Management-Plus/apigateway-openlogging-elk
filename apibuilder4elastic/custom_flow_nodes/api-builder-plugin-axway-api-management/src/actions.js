@@ -85,8 +85,10 @@ async function lookupCurrentUser(params, options) {
 			user.loginName = await _getCurrentGWUser(headers = {'Cookie': requestHeaders.cookie}, region, logger);
 		} catch (err) { 
 			// Might happen if the request has been sent to the wrong ANM by a Load-Balancer in between. (Session Stickyness not working as expected)
+			// With that, the session cookie sent is not known
 			// Only mitigating the problem, but not really fully solving the issue - Load-Balanced request must be investigated
 			logger.warn(`Unexpected error while trying to get current user from the ANM. Using a Load-Balancer which is not sticky?! Try again at least once.`);
+			logger.debug(`Received error: ${JSON.stringify(err)}`);
 			user.loginName = await _getCurrentGWUser(headers = {'Cookie': requestHeaders.cookie}, region, logger);
 		}
 		logger.trace(`Current user is: ${user.loginName}`);
