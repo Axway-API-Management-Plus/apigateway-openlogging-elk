@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.0.1] 2021-12-16
+### Changed
+- Updated default Elastic-Stack version from 7.15.1 to 7.16.1
+
 ## [4.0.0] 2021-12-07
 ### Added
 - API-Management KPIs incl. dashboard [#64](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/64)
@@ -14,7 +18,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Elasticsearch default ES_JAVA_OPTS now -Xms1g -Xmx1g as it is no longer set by Elasticsearch to this default
 - Updated dependencies of a number of packages to fix security issues
 - Updated API-Builder to version Bangkok
-- Updated Elastic-Stack from version 7.14.0 to 7.15.2
+- Updated default Elastic-Stack version from 7.14.0 to 7.15.2
 
 ### Fixed
 - Error initializing cluster when already multiple ELASTICSEARCH_HOSTS configured [#150](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/150)
