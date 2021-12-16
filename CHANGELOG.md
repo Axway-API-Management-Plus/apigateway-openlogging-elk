@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [4.0.1] 2021-12-16
 ### Changed
 - Updated default Elastic-Stack version from 7.15.1 to 7.16.1
+- Dropped support for K8S 1.18
 
 ## [4.0.0] 2021-12-07
 ### Added
