@@ -23,7 +23,7 @@ describe('Endpoints', function () {
 		return new Promise(function(resolve, reject){
 			delete process.env.AUTHZ_CONFIG; // Make sure, it is not using from a previous test
 			const envFilePath = path.join(__dirname, '../../../.env');
-			const envLoadResult = envLoader.config({ path: envFilePath });
+			const envLoadResult = envLoader.config({ path: envFilePath, debug: true });
 			if (envLoadResult.error) {
 				throw envLoadResult.error;
 			}
