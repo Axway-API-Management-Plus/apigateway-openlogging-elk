@@ -155,12 +155,12 @@ Please select the Axway- or Community-Supported release. The community release a
 
 #### Community-Version
 ```
-wget --no-check-certificate https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v4.0.0/axway-apim-elk-v4.0.0.tar.gz -O - | tar -xvz
+wget --no-check-certificate https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v4.0.1/axway-apim-elk-v4.0.1.tar.gz -O - | tar -xvz
 ```
 
 #### Axway Supported-Version
 ```
-wget --no-check-certificate https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v3.2.0/axway-apim-elk-v3.2.0.tar.gz -O - | tar -xvz
+wget --no-check-certificate https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v4.0.1/axway-apim-elk-v4.0.1.tar.gz -O - | tar -xvz
 ```
 
 To simplify updates it is recommended to create a Symlink-Folder and finally rename the provided file `env-sample` to `.env`.  
@@ -204,7 +204,7 @@ curl -k GET https://my-elasticsearch-host.com:9200
   "cluster_name" : "axway-apim-elasticsearch",
   "cluster_uuid" : "nCFt9WhpQr6JSOVY_h48gg",
   "version" : {
-    "number" : "7.14.0",
+    "number" : "7.16.1",
     "build_flavor" : "default",
     "build_type" : "docker",
     "build_hash" : "d34da0ea4a966c4e49417f2da2f244e3e97b4e6e",
