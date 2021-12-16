@@ -87,8 +87,8 @@ async function lookupCurrentUser(params, options) {
 			// Might happen if the request has been sent to the wrong ANM by a Load-Balancer in between. (Session Stickyness not working as expected)
 			// With that, the session cookie sent is not known
 			// Only mitigating the problem, but not really fully solving the issue - Load-Balanced request must be investigated
-			logger.warn(`Unexpected error while trying to get current user from the ANM. Using a Load-Balancer which is not sticky?! Try again at least once.`);
-			logger.debug(`Received error: ${JSON.stringify(err)}`);
+			logger.warn(`Unexpected error while trying to get current user from the ANM. (Perhaps using a Load-Balancer bteween APIBuilder4Elastic and Admin-Node-Manager which is not sticky?!). Trying again ...`);
+			logger.debug(`Exception message error: ${JSON.stringify(err)}`);
 			user.loginName = await _getCurrentGWUser(headers = {'Cookie': requestHeaders.cookie}, region, logger);
 		}
 		logger.trace(`Current user is: ${user.loginName}`);

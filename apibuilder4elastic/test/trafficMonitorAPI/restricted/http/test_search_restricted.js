@@ -23,8 +23,9 @@ describe('Endpoints', function () {
 		return new Promise(function(resolve, reject){
 			delete process.env.AUTHZ_CONFIG; // Make sure, it is not using from a previous test
 			const envFilePath = path.join(__dirname, '../../../.env');
-			if (fs.existsSync(envFilePath)) {
-				envLoader.config({ path: envFilePath });
+			const envLoadResult = envLoader.config({ path: envFilePath });
+			if (envLoadResult.error) {
+				throw envLoadResult.error;
 			}
 			server = startApiBuilder();
 			server.apibuilder.config.testElasticIndex = indexName;
