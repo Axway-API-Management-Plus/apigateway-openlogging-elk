@@ -118,7 +118,20 @@ Sometimes it may be necessary to include newly introduced parameters in your `.e
 
 ### Elastic-Stack version
 
-The solution uses the latest available Elastic version with new releases. However, this does not force you to update to the appropriate Elastic version with each update. So, for example, if version 3.4.0 ships with Elastic version 7.14.0, you can still stay on version 7.12.1. You can find the minimum required Elastic version [here](README.md#requirements).  
+The solution ships the latest available Elastic version with new releases. However, this does not force you to update to the appropriate Elastic version with each update. So, for example, if version 3.4.0 ships with Elastic version 7.14.0, you can still stay on version 7.12.1. You can find the minimum required Elastic version [here](README.md#requirements).  
+
+#### 3 Elasticsearch nodes required
+
+:exclamation: Before proceeding, make sure that your Elasticsearch cluster consists of __at least 3 nodes__. Please note, that two Elasticsearch nodes on one machine is perfectly fine for this.  
+There are 3 Elasticsearch nodes required, as there must always be a master node in the cluster. If this master is stopped, a quorum of remaining cluster nodes must remain to elect a new master. [Learn more](https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-discovery-quorums.html)  
+If you have 2 Elasticsearch nodes, then you can bring up another node using the following command:
+```
+docker-compose -f elasticsearch/docker-compose.es03.yml up -d
+```
+[Read more](README.md##general-remarks) information about adding additional cluster node.  
+After the upgrade, you can remove the third cluster node if necessary.
+
+Before proceeding, make sure that Elasticsearch is in the Green state.
 
 Please follow these steps to update the Elasticversion:  
 - Open your `.env` file and change the parameter: `ELASTIC_VERSION` to the necessary version as specified in the release or the version you would like to use
