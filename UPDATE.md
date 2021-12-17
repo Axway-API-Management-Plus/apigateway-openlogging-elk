@@ -60,6 +60,7 @@ On the other hand, the API builder Docker image, as a central component of the s
 | 3.6.0 | [X](#api-builderlogstashmemcached) | -                                  | -                                  | -             | -               | -               | [X](#parameters)|-                   | 7.14.0  |            |
 | 4.0.0 | [X](#api-builderlogstashmemcached) | -                                  | -                                  | -             | -               | [X](#dashboards)| -               |-                   | 7.15.2  |            |
 | 4.0.1 | -                                  | -                                  | -                                  | -             | -               | [X](#dashboards)| -               |-                   | 7.16.1  |            |
+| 4.0.2 | -                                  | -                                  | -                                  | -             | -               | [X](#dashboards)| -               |-                   | 7.16.1  | See #154   |
 
 ### Update from Version 1.0.0
 
