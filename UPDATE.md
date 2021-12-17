@@ -125,20 +125,23 @@ The solution ships the latest available Elastic version with new releases. Howev
 :exclamation: Before proceeding, make sure that your Elasticsearch cluster consists of __at least 3 nodes__. Please note, that two Elasticsearch nodes on one machine is perfectly fine for this.  
 There are 3 Elasticsearch nodes required, as there must always be a master node in the cluster. If this master is stopped, a quorum of remaining cluster nodes must remain to elect a new master. [Learn more](https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-discovery-quorums.html)  
 If you have 2 Elasticsearch nodes, then you can bring up another node using the following command:
+
 ```
 docker-compose -f elasticsearch/docker-compose.es03.yml up -d
 ```
-[Read more](README.md##general-remarks) information about adding additional cluster node.  
-After the upgrade, you can remove the third cluster node if necessary.
+[Read more](README.md##general-remarks) information about adding additional cluster node. After the upgrade, you can remove the third cluster node if necessary. Before proceeding, make sure that Elasticsearch is in the Green state.
 
-Before proceeding, make sure that Elasticsearch is in the Green state.
+### Elastic stack upgrade steps
 
-Please follow these steps to update the Elasticversion:  
+Please follow these steps to update the Elastic version.
+
+__1. Update .env file__
+
 - Open your `.env` file and change the parameter: `ELASTIC_VERSION` to the necessary version as specified in the release or the version you would like to use
   - Make sure that the `.env` file contains the correct/same version on all machines
-- To avoid any downtime, double check all Elasticsearch clients (API-Builder, Logstash, Filebeat) have multiple or all Elasticsearch nodes configured so that they can fail over  
+- To avoid any downtime, double check all Elasticsearch clients (API-Builder, Logstash, Filebeat) using the `ELASTICSEARCH_HOSTS` have multiple or all Elasticsearch nodes configured so that they can fail over  
 
-__1. Update Elasticsearch cluster__   
+__2. Update Elasticsearch cluster__   
 
 Updating the Elasticsearch cluster happens one node after next. Before updating the next node it's strongly recommended that the cluster state is green and remaining nodes have enough disk space to take over the shards from the node to be upgraded.
 ```
@@ -151,7 +154,7 @@ docker-compose -f elasticsearch/docker-compose.es01.yml up -d
 ```
 Repeat these steps on the remaining Eleasticsearch nodes, but only after the Elasticsearch cluster has returned to Green status.   
 
-__2. Update Kibana__   
+__3. Update Kibana__   
 
 It is recommended to run the entire Elastic stack with the same version, so Kibana should/must be updated as well. To update Kibana you need to perform the following steps after adjusting the `ELASTIC_VERSION` accordingly.
 
@@ -164,7 +167,7 @@ docker-compose -f kibana/docker-compose.kibana.yml stop
 docker-compose -f kibana/docker-compose.kibana.yml up -d
 ```
 
-__3. Update Logstash__   
+__4. Update Logstash__   
 
 It is recommended to run the entire Elastic stack with the same version, so Logstash should/must be updated as well. Same procedure as for Kibana but repeat this on all Logstash nodes.
 ```
@@ -176,7 +179,7 @@ docker-compose stop
 docker-compose up -d
 ```
 
-__4. Update Filebeat__   
+__5. Update Filebeat__   
 
 It is recommended to run the entire Elastic stack with the same version, so Filebeat should/must be updated as well. Same procedure as for Kibana and Logstash but repeat this on all Filebeat nodes.
 ```
