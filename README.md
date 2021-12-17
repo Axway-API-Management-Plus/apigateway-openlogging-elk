@@ -1207,7 +1207,7 @@ You can find more information here: https://www.elastic.co/pricing/
 
 ### Is this solution officially supported by Axway?
 
-Yes, the solution is supported by Axway. A distinction is made between Community and Axway Supported releases, which are marked accordingly in the release directory. For example, currently version 4.0.1 is Axway supported and accordingly you can create normal Axway support cases.  
+Yes, the solution is supported by Axway. A distinction is made between Community and Axway Supported releases, which are marked accordingly in the release directory. For example, currently version 4.0.2 is Axway supported and accordingly you can create normal Axway support cases.  
 
 #### Axway Supported Release
 
