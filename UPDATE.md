@@ -124,12 +124,8 @@ The solution ships the latest available Elastic version with new releases. Howev
 
 :exclamation: Before proceeding, make sure that your Elasticsearch cluster consists of __at least 3 nodes__. For example 3 Elasticsearch nodes running on two machines is perfectly fine for this.  
 There are 3 Elasticsearch nodes required, as there must always be a master node in the cluster. If this master node is stopped, a quorum of remaining cluster nodes must still be running to elect a new master, otherwise an upgraded Elasticsearch node cannot join the cluster. [Learn more](https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-discovery-quorums.html)  
-If you have 2 Elasticsearch nodes, then you can bring up another node using the following command:
 
-```
-docker-compose -f elasticsearch/docker-compose.es03.yml up -d
-```
-[Read more](README.md##general-remarks) information about adding additional cluster node. After the upgrade, you can remove the third cluster node if necessary. Before proceeding, make sure that Elasticsearch is in the Green state.
+[Read more](README.md##general-remarks) information about adding additional cluster nodes. After the upgrade, you can remove the third cluster node if necessary. Before proceeding, make sure that Elasticsearch is in the Green state.
 
 ### Elastic stack upgrade steps
 
@@ -213,3 +209,10 @@ The solution ships a defined Elasticsearch version with each release, which is u
 ### Can I skip several versions for an upgrade?
 
 Yes, you can. Please note which components have been updated between the current and the new version.
+
+
+### Can I downgrade back to a previous version?
+
+No, you cannot downgrade from a newer version to an older one. You will see the following error message:  
+`cannot downgrade a node from version [7.16.1] to version [7.15.2]`  
+Please note that as soon as a newer Elasticsearch node was started, the data stored on the volume was updated, which makes it impossible to start an older version. 
