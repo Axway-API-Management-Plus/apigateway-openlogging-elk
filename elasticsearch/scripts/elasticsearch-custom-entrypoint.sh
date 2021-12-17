@@ -6,8 +6,12 @@
 # given externally they are used with precedence.
 
 # Get the number of the Elasticsearch node based on the node.name (e.g. elasticsearch2)
-nodeBasename=`echo node.name | awk 'match(ENVIRON[$0], /([a-zA-Z]*)([0-9]{1,})/, v) { print v[1] }'`
-nodeNumber=`echo node.name | awk 'match(ENVIRON[$0], /([a-zA-Z]*)([0-9]{1,})/, v) { print v[2] }'`
+echo "Setup Elasticsearch cluster based on ELASTICSEARCH_HOSTS: ${ELASTICSEARCH_HOSTS}"
+# Translate the dotted environment variable into Non-Dotted to avoid issues with Bash commands
+nodeName=`echo | awk '{ print ENVIRON["node.name"] }'`
+
+nodeBasename=`echo $nodeName | sed -r 's/([a-zA-Z]*)([0-9]{1,})/\1/'`
+nodeNumber=`echo $nodeName | sed -r 's/([a-zA-Z]*)([0-9]{1,})/\2/'`
 
 count=1
 params=""
@@ -23,13 +27,13 @@ do
     fi
     # Use all declared hosts as seed hosts if 
     # Seeds hosts are not given externally and the standard transport ports are used
-    discoverySeedHosts=`echo discovery.seed_hosts | awk '{print ENVIRON[$0]}'`
-    discoveryTransportPort=`echo transport.port | awk '{print ENVIRON[$0]}'`
+    discoverySeedHosts=`echo | awk '{ print ENVIRON["discovery.seed_hosts"] }'`
+    discoveryTransportPort=`echo | awk '{ print ENVIRON["transport.port"] }'`
     if [ -z "${discoverySeedHosts}" -a -z "${discoveryTransportPort}" ]
     then
-        # Get the hostname and transport from the URL
-        discoverPublishHostname=`echo $host | awk 'match($0, /https?:\/\/(.*)\:(\d*)/, v) { print v[1] }'`
-        discoveryTransportPort=`echo $host | awk 'match($0,/https?:\/\/(.*)\:[0-9]{2}([0-9]{2})/, v) { print 93v[2] }'`
+        # Get the hostname and defined transportPort based on the URL (e.g. https://elasticsearch2:9201) 9201 --> 9301
+        discoverPublishHostname=`echo $host | sed -r 's/https?:\/\/(.*)\:[0-9]{4}/\1/'`
+        discoveryTransportPort=`echo $host | sed -r 's/https?:\/\/(.*)\:[0-9]{2}([0-9]{2})/93\2/'`
         if [ "${seedHosts}" == "" ]; then
             seedHosts="-E discovery.seed_hosts=${discoverPublishHostname}:${discoveryTransportPort}"
         else 
@@ -39,9 +43,9 @@ do
 
     if [ "${count}" == "${nodeNumber}" ]; then
         echo "Setting up Elasticsearch node: ${nodeNumber}"
-        publishHost=`echo network.publish_host | awk '{print ENVIRON[$0]}'`
+        publishHost=`echo | awk '{ print ENVIRON["network.publish_host"] }'`
         if [ -z "${publishHost}" ]; then
-            publishHost=`echo $host | awk 'match($0, /https?:\/\/(.*)\:(\d*)/, v) { print v[1] }'`
+            publishHost=`echo $host | sed -r 's/https?:\/\/(.*)\:[0-9]{4}/\1/'`
             params="$params -E network.publish_host=${publishHost}"
             echo "Set network.publish_host=${publishHost} based on given host: ${host}"
         else
@@ -51,17 +55,17 @@ do
         httpPort=`echo http.port | awk '{print ENVIRON[$0]}'`
         if [ -z "${httpPort}" ]
         then
-            httpPort=`echo $host | awk 'match($0,/https?:\/\/(.*)\:([0-9]*)/, v) { print v[2] }'`
+            httpPort=`echo $host | sed -r 's/https?:\/\/(.*)\:([0-9]*)/\2/'`
             params="$params -E http.port=${httpPort}"
             echo "Set http.port=${httpPort} based on given host: ${host}"
         else
             echo "http.port=${httpPort} taken from envionment variable"
         fi
 
-        transportPort=`echo transport.port | awk '{print ENVIRON[$0]}'`
+        transportPort=`echo | awk '{ print ENVIRON["transport.port"] }'`
         if [ -z "${transportPort}" ]
         then
-            transportPort=`echo $host | awk 'match($0,/https?:\/\/(.*)\:[0-9]{2}([0-9]{2})/, v) { print 93v[2] }'`
+            transportPort=`echo $host | sed -r 's/https?:\/\/(.*)\:[0-9]{2}([0-9]{2})/93\2/'`
             params="$params -E transport.port=${transportPort}"
             echo "Set transport.port=${transportPort} based on given host: ${host}"
         else

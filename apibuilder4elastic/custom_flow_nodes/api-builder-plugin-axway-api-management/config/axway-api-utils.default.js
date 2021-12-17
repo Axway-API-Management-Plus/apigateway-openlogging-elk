@@ -18,7 +18,7 @@ module.exports = {
 			localLookupFile: process.env.API_BUILDER_LOCAL_API_LOOKUP_FILE,
 			// This optionally disables the validation of the configuration on API-Builder startup
 			validateConfig: (process.env.VALIDATE_CONFIG) ? process.env.VALIDATE_CONFIG : true,
-			// For how long should looked up entities (API, User) stay in the cached
+			// For how long should looked up entities (API-, Application-Details) stay in the cache
 			lookupCacheTTL: parseInt(process.env.LOOKUP_CACHE_TTL) ? process.env.LOOKUP_CACHE_TTL : 600
 		}
 	}
