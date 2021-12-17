@@ -122,7 +122,7 @@ The solution ships the latest available Elastic version with new releases. Howev
 
 #### 3 Elasticsearch nodes required
 
-:exclamation: Before proceeding, make sure that your Elasticsearch cluster consists of __at least 3 nodes__. Please note, that two Elasticsearch nodes on one machine is perfectly fine for this.  
+:exclamation: Before proceeding, make sure that your Elasticsearch cluster consists of __at least 3 nodes__. For example 3 Elasticsearch nodes running on two machines is perfectly fine for this.  
 There are 3 Elasticsearch nodes required, as there must always be a master node in the cluster. If this master is stopped, a quorum of remaining cluster nodes must remain to elect a new master. [Learn more](https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-discovery-quorums.html)  
 If you have 2 Elasticsearch nodes, then you can bring up another node using the following command:
 
