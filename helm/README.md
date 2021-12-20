@@ -535,9 +535,11 @@ Of course, this a very basic example just to explain the concept. More sophistic
 
 ## Upgrade the release
 
-Example how to upgrade an existing Helm release:  
+:exclamation: If a new Elastic version is installed as a result of the upgrade, it is important that at least __3 Elasticsearch nodes__ are running. This is the only way to ensure that a new master node can be selected during the upgrade and that updated nodes can join the cluster.
+
+Example how to upgrade an existing release:  
 ```
-helm upgrade -n apim-elk -f myvalues.yaml axway-elk https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v3.1.0/helm-chart-apim4elastic-v3.1.0.tgz
+helm upgrade -n apim-elk -f myvalues.yaml axway-elk https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v4.0.2/helm-chart-apim4elastic-v4.0.2.tgz
 ```
 
 ## Required resources
