@@ -204,6 +204,8 @@ apibuilder4elastic:
 
 logstash:
   enabled: true
+  # You may override the standard version
+  imageTag: "7.16.2"
   # The following secrets are used to generate the secret <releaseName>-apim4elastic-logstash-secret
   # If disabled the secret is not created and you have to provide them in your own secret and 
   # use the envFrom.secretRef below to make it available for Logstash. 
@@ -297,9 +299,11 @@ logstash:
 # The following parameters represent only the most important parameters for the solution.
 elasticsearch:
   enabled: true
+  # You may override the standard version
+  imageTag: "7.16.2"
   fullnameOverride: "axway-elk-apim4elastic-elasticsearch"
   clusterName: "axway-apim"
-  replicas: 2
+  replicas: 3
   minimumMasterNodes: 1
   esJavaOpts: "-Xms8g -Xmx8g"
   protocol: https
@@ -408,6 +412,8 @@ elasticsearch:
 # The following parameters represent only the most important parameters for the solution.
 kibana:
   enabled: true
+  # You may override the standard version
+  imageTag: "7.16.2"
   fullnameOverride: "axway-elk-apim4elastic"
   replicas: 1
   # Username and Password for Kibana to send monitoring events to Elasticsearch
@@ -490,6 +496,8 @@ kibana:
 filebeat:
   # Deploy Filebeat or not
   enabled: false
+  # You may override the standard version
+  imageTag: "7.16.2"
   # Set this to true, to create the filebeat ConfigMaps & Secret including the filebeat.yaml 
   # This is useful, if you would like to run filebeat as a sidecar along with the API-Gateways and just 
   # reference these config maps
@@ -695,6 +703,8 @@ filebeat:
 ##################################################################################################################################
 apm-server:
   enabled: false
+  # You may override the standard version
+  imageTag: "7.16.2"
   # Required for the internal stack monitoring to work with the APM-Server
   elasticsearchClusterUUID: ""
 

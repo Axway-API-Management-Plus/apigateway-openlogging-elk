@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.0.3] 2021-12-20
+### Changed
+- Updated default Elastic-Stack version from 7.16.1 to 7.16.2 which derlivery log4j 2.17.0
+
 ## [4.0.2] 2021-12-17
 ### Fixed
 - Elasticsearch failed to start - awk: line 1: syntax error at or near , [#154](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/154)
