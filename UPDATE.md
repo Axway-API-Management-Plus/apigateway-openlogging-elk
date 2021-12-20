@@ -10,11 +10,11 @@ This documents describes how to update based on Docker Compose deployment. If yo
 
 With the following steps you can update the solution without downtime. Of course, this requires that all components (Logstash, API Builder, Memcached) are running at least 2x and configured accordingly. So all filebeats have to communicate with all logstash hosts.
 
-### General overview
+## General overview
 
 The core component is the API Builder application which provides the information about the necessary configuration. In principle, it contains the desired or necessary state suitable for the version, especially about the Elasticsearch configuration, such as index templates, ILM policies, etc. If the version is updated, the API builder checks the current configuration in Elasticsearch and adjusts it if necessary to fit the corresponding version. This includes necessary changes for bug fixes or enhancements.  
 
-#### Upgrade steps overview
+### Upgrade approach
 
 - load and unpack the current or desired release
    - it is recommended to unpack it next to the existing release
@@ -25,13 +25,13 @@ The core component is the API Builder application which provides the information
 - depending on which components have changed
   - these containers must be stopped and then restarted based on the new release with `docker-compose up -d`
   - e.g. if no change is noted in logstash, then this component can continue to run
-- the API builder delivers the configuration for Elasticsearch as well
-  - If the API builder is updated, then it checks on restart and periodically if the Elasticsearch configuration is correct.
-  - In addition, the API builder checks whether the filebeat and logstash configuration corresponds to the expected version.
+- the API-Builder delivers the configuration for Elasticsearch as well
+  - if the API-Builder is updated, then it checks on restart and periodically if the Elasticsearch configuration is correct.
+  - in addition, the API builder checks whether the filebeat and logstash configuration corresponds to the expected version.
 
 ## Release history - Changed components
 
-This table should help you to understand which components have changed with which version. For example, it is not always or very rarely necessary to update Filebeat.  
+This table should help you to understand which components have changed with which version. For example, it is not always or very rarely necessary to update Filebeat.  If the Elastic version has changed between the some releases, you do not necessarily have to follow it. Of course it is recommended to be on a recent Elastic stack version, because only for this version bugfixes are released by Elastic. [Learn here](#updated-elastic-stack-version) how to update the Elastic stack.
 
 On the other hand, the API builder Docker image, as a central component of the solution, will most likely change with each release.  
 
@@ -116,9 +116,9 @@ Please follow the instructions to [import Kibana-Dashboards](README.md#kibana-da
 
 Sometimes it may be necessary to include newly introduced parameters in your `.env` file or you may want to use optional parameters. To do this, use the supplied `env-sample` as a reference and copy the desired parameters. Please check the [changelog](CHANGELOG.md) which new parameters have been added.
 
-### Elastic-Stack version
+## Update Elastic-Stack version
 
-The solution ships the latest available Elastic version with new releases. However, this does not force you to update to the appropriate Elastic version with each update. So, for example, if version 3.4.0 ships with Elastic version 7.14.0, you can still stay on version 7.12.1. You can find the minimum required Elastic version [here](README.md#requirements).  
+The solution ships the latest available Elastic version with new releases. However, this does not force you to update to the appropriate Elastic version with each update. So, for example, if version 3.4.0 ships with Elastic version 7.14.0, you can still stay on version 7.12.1. Thus, it can be concluded that the update of the Elastic stack can be done independently of the releases. You can find the minimum required Elastic version [here](README.md#requirements).  
 
 ### 3 Elasticsearch nodes required
 
