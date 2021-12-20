@@ -120,9 +120,6 @@ Sometimes it may be necessary to include newly introduced parameters in your `.e
 
 The solution ships the latest available Elastic version with new releases. However, this does not force you to update to the appropriate Elastic version with each update. So, for example, if version 3.4.0 ships with Elastic version 7.14.0, you can still stay on version 7.12.1. You can find the minimum required Elastic version [here](README.md#requirements).  
 
-Watch this video to see a demonstration how to update the Elastic-Stack:  
-[![Update Elastic-Stack](https://img.youtube.com/vi/Oht_Xnzurok/0.jpg)](https://youtu.be/Oht_Xnzurok)
-
 ### 3 Elasticsearch nodes required
 
 :exclamation: Before proceeding, make sure that your Elasticsearch cluster consists of __at least 3 nodes__. For example 3 Elasticsearch nodes running on two machines is perfectly fine for this.  
@@ -130,39 +127,48 @@ There are 3 Elasticsearch nodes required, as there must always be a master node 
 
 [Read more](README.md##general-remarks) information about adding additional cluster nodes. After the upgrade, you can remove the third cluster node if necessary. Before proceeding, make sure that Elasticsearch is in the Green state.
 
+Watch this video to see a demonstration how to update the Elastic-Stack:  
+[![Update Elastic-Stack](https://img.youtube.com/vi/Oht_Xnzurok/0.jpg)](https://youtu.be/Oht_Xnzurok)
+
 ### Elastic stack upgrade steps
 
 Please follow these steps to update the Elastic version.
 
 __1. Update .env file__
 
-- Open your `.env` file and change the parameter: `ELASTIC_VERSION` to the necessary version as specified in the release or the version you would like to use
+- Open your `.env` file and change the parameter: `ELASTIC_VERSION` to the version as specified in the release or the version you would like to use
   - Make sure that the `.env` file contains the correct/same version on all machines
 - To avoid any downtime, double check all Elasticsearch clients (API-Builder, Logstash, Filebeat) using the `ELASTICSEARCH_HOSTS` have multiple or all Elasticsearch nodes configured so that they can fail over  
 
 __2. Update Elasticsearch cluster__   
 
-Updating the Elasticsearch cluster happens one node after next. Before updating the next node it's strongly recommended that the cluster state is green and remaining nodes have enough disk space to take over the shards from the node to be upgraded.
+Updating the Elasticsearch cluster happens one node after next. Make sure:
+- You have three Elasticsearch-Node
+- Before updating the next node it's strongly recommended to validate a new master has been elected
+- and remaining nodes have enough disk space to take over the shards from the node to be upgraded  
+
 ```
-wget --no-check-certificate https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v3.4.0/axway-apim-elk-v3.4.0.tar.gz -O - | tar -xvz
-cd axway-apim-elk-v3.4.0
-cp ~/axway-apim-elk-v3.2.0/.env .
-cp ~/axway-apim-elk-v3.2.0/config/all-my-custom-certificates ./config
-docker-compose -f elasticsearch/docker-compose.es01.yml stop
+# On the Elasticsearch node you would like to update, navigate into your ELK-Solution directory
+cd axway-apim-elk-v4.0.2
+# Stop the existing Elasticsearch container you would like to update
+docker stop elasticsearch1
+# Start a new Elasticsearch node (in this case Elasticsearch-Node-1), which will 
+# create a new container based on the version you configured in your .env file
 docker-compose -f elasticsearch/docker-compose.es01.yml up -d
 ```
-Repeat these steps on the remaining Eleasticsearch nodes, but only after the Elasticsearch cluster has returned to Green status.   
+
+Repeat these steps on the remaining Eleasticsearch nodes, but make sure a new Elasticsearch-Master has been elected.   
 
 __3. Update Kibana__   
 
-It is recommended to run the entire Elastic stack with the same version, so Kibana should/must be updated as well. To update Kibana you need to perform the following steps after adjusting the `ELASTIC_VERSION` accordingly.
+It is recommended to run the entire Elastic stack with the same version, so Kibana should/must be updated as well. To update Kibana you need to perform the following steps after adjusting the `ELASTIC_VERSION` accordingly. Kibana must be updated as it otherwise is no longer compatible with the Elasticsearch version.  
 
 ```
-wget --no-check-certificate https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v3.4.0/axway-apim-elk-v3.4.0.tar.gz -O - | tar -xvz
-cd axway-apim-elk-v3.4.0
-cp ~/axway-apim-elk-v3.2.0/.env .
-cp ~/axway-apim-elk-v2.0.0/config/all-my-custom-certificates ./config
-docker-compose -f kibana/docker-compose.kibana.yml stop
+# On the Kibana node you would like to update, navigate into your ELK-Solution directory
+cd axway-apim-elk-v4.0.2
+# Stop the existing Kibana container
+docker stop kibana
+# Start a new Kibana-Container with the configured ELASTIC_VERSION in your .env file
 docker-compose -f kibana/docker-compose.kibana.yml up -d
 ```
 
@@ -170,23 +176,24 @@ __4. Update Logstash__
 
 It is recommended to run the entire Elastic stack with the same version, so Logstash should/must be updated as well. Same procedure as for Kibana but repeat this on all Logstash nodes.
 ```
-wget --no-check-certificate https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v3.4.0/axway-apim-elk-v3.4.0.tar.gz -O - | tar -xvz
-cd axway-apim-elk-v3.4.0
-cp ~/axway-apim-elk-v3.2.0/.env .
-cp ~/axway-apim-elk-v2.0.0/config/all-my-custom-certificates ./config
-docker-compose stop
+# On the Logstash node you would like to update, navigate into your ELK-Solution directory
+cd axway-apim-elk-v4.0.2
+# Stop the existing Logstash container
+docker stop logstash
+# Start a new Logstash with the configured ELASTIC_VERSION in your .env file
 docker-compose up -d
 ```
 
 __5. Update Filebeat__   
 
-It is recommended to run the entire Elastic stack with the same version, so Filebeat should/must be updated as well. Same procedure as for Kibana and Logstash but repeat this on all Filebeat nodes.
+It is recommended to run the entire Elastic stack with the same version, so Filebeat should/must be updated as well. Same procedure as for Kibana and Logstash but repeat this on all Filebeat nodes. Of course, these steps are only valid if you run Filebeat as part of the Docker-Compose approach.  
+
 ```
-wget --no-check-certificate https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v3.4.0/axway-apim-elk-v3.4.0.tar.gz -O - | tar -xvz
-cd axway-apim-elk-v3.4.0
-cp ~/axway-apim-elk-v3.2.0/.env .
-cp ~/axway-apim-elk-v2.0.0/config/all-my-custom-certificates ./config
-docker-compose -f filebeat/docker-compose.filebeat.yml stop
+# On the Filebeat node you would like to update, navigate into your ELK-Solution directory
+cd axway-apim-elk-v4.0.2
+# Stop existing filebeat container
+docker stop filebeat
+# Start a new Filebeat with the configured ELASTIC_VERSION in your .env file
 docker-compose -f filebeat/docker-compose.filebeat.yml up -d
 ```
 
