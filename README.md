@@ -922,7 +922,7 @@ To give you a good feel for the memory usage of the individual components, the f
 
 ## Updates
 
-It is planned that this solution will be further developed and therefore further releases will be published. 
+This solution will be further developed and therefore further releases will be published. 
 With each release the following artifacts may change:  
 
 - All Docker-Compose files
