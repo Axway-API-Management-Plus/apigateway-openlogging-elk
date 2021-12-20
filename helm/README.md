@@ -537,6 +537,9 @@ Of course, this a very basic example just to explain the concept. More sophistic
 
 :exclamation: If a new Elastic version is installed as a result of the upgrade, it is important that at least __3 Elasticsearch nodes__ are running. This is the only way to ensure that a new master node can be selected during the upgrade and that updated nodes can join the cluster.
 
+Watch this video to see a demonstration how to update the Elastic-Stack on Kubernetes using HELM:  
+[![Update Elastic-Stack](https://img.youtube.com/vi/3-7db1eYIc0/0.jpg)](https://youtu.be/3-7db1eYIc0)
+
 Example how to upgrade an existing release:  
 ```
 helm upgrade -n apim-elk -f myvalues.yaml axway-elk https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v4.0.2/helm-chart-apim4elastic-v4.0.2.tgz
