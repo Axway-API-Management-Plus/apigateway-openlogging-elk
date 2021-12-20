@@ -66,18 +66,18 @@ On the other hand, the API builder Docker image, as a central component of the s
 
 ## Upgrade components
 
-The following example shows how to load/unpack release 4.0.2 and apply your current configuration from, for example, version 3.2.0. Regardless of which components have changed, you should install the same release package and take over your configuration on all machines to avoid confusion.  
+The following example shows how to load/unpack release 4.0.3 and apply your current configuration from, for example, version 3.2.0. Regardless of which components have changed, you should install the same release package and take over your configuration on all machines to avoid confusion.  
 
 ```
 # Perform these steps on all belonging machines
 # Get and extract the release package
-wget --no-check-certificate https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v4.0.2/axway-apim-elk-v4.0.2.tar.gz -O - | tar -xvz
+wget --no-check-certificate https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v4.0.3/axway-apim-elk-v4.0.3.tar.gz -O - | tar -xvz
 # The following directory has been created
-cd axway-apim-elk-v4.0.2
+cd axway-apim-elk-v4.0.3
 # Take over existing configuration from the previous version
 cp ~/axway-apim-elk-v3.2.0/.env .
 # Also copy existing certificates, scripts, extra config-files from the previous version
-cp ~/axway-apim-elk-v3.1.0/config/all-my-custom-certificates ./config
+cp ~/axway-apim-elk-v3.2.0/config/all-my-custom-certificates ./config
 ```
 
 You can then update each component as described below.
@@ -168,7 +168,7 @@ Updating the Elasticsearch cluster happens one node after next. Make sure:
 
 ```
 # On the Elasticsearch node you would like to update, navigate into your ELK-Solution directory
-cd axway-apim-elk-v4.0.2
+cd axway-apim-elk-v4.0.3
 # Stop the existing Elasticsearch container you would like to update
 docker stop elasticsearch1
 # Start a new Elasticsearch node (in this case Elasticsearch-Node-1), which will 
@@ -184,7 +184,7 @@ It is recommended to run the entire Elastic stack with the same version, so Kiba
 
 ```
 # On the Kibana node you would like to update, navigate into your ELK-Solution directory
-cd axway-apim-elk-v4.0.2
+cd axway-apim-elk-v4.0.3
 # Stop the existing Kibana container
 docker stop kibana
 # Start a new Kibana-Container with the configured ELASTIC_VERSION in your .env file
@@ -196,7 +196,7 @@ __4. Update Logstash__
 It is recommended to run the entire Elastic stack with the same version, so Logstash should/must be updated as well. Same procedure as for Kibana but repeat this on all Logstash nodes.
 ```
 # On the Logstash node you would like to update, navigate into your ELK-Solution directory
-cd axway-apim-elk-v4.0.2
+cd axway-apim-elk-v4.0.3
 # Stop the existing Logstash container
 docker stop logstash
 # Start a new Logstash with the configured ELASTIC_VERSION in your .env file
@@ -209,7 +209,7 @@ It is recommended to run the entire Elastic stack with the same version, so File
 
 ```
 # On the Filebeat node you would like to update, navigate into your ELK-Solution directory
-cd axway-apim-elk-v4.0.2
+cd axway-apim-elk-v4.0.3
 # Stop existing filebeat container
 docker stop filebeat
 # Start a new Filebeat with the configured ELASTIC_VERSION in your .env file

@@ -25,7 +25,7 @@ apibuilder4elastic:
   # Enables the APIBuilder4Elastic, which is required for the solution to work. So very unlikely to disable
   enabled: true
   image: "cwiechmann/apibuilder4elastic"
-  imageTag: "v4.0.2"
+  imageTag: "v4.0.3"
   imagePullPolicy: IfNotPresent
   nameOverride: "apibuilder4leastic"
   fullnameOverride: "Axway API-Builder4Elastic"
