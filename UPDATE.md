@@ -161,8 +161,8 @@ __1. Update .env file__
 __2. Update Elasticsearch cluster__   
 
 Updating the Elasticsearch cluster happens one node after next. Make sure:
-- You have three Elasticsearch-Node
-- Before updating the next node it's strongly recommended to validate a new master has been elected
+- You have three Elasticsearch-Nodes
+- Before proceeding with the next node it's strongly recommended to validate a new master has been elected
 - and remaining nodes have enough disk space to take over the shards from the node to be upgraded  
 
 ```
