@@ -31,7 +31,7 @@ The core component is the API Builder application which provides the information
 
 ## Release history - Changed components
 
-This table should help you to understand which components have changed with which version. For example, it is not always or very rarely necessary to update Filebeat.  If the Elastic version has changed between the some releases, you do not necessarily have to follow it. Of course it is recommended to be on a recent Elastic stack version, because only for this version bugfixes are released by Elastic. [Learn here](#updated-elastic-stack-version) how to update the Elastic stack.
+This table should help you to understand which components have changed with which version. For example, it is not always or very rarely necessary to update Filebeat.  If the Elastic version has changed between the some releases, you do not necessarily have to follow it. Of course it is recommended to be on a recent Elastic stack version, because only for this version bugfixes are released by Elastic. [Learn here](#update-elastic-stack-version) how to update the Elastic stack.
 
 On the other hand, the API builder Docker image, as a central component of the solution, will most likely change with each release.  
 
@@ -61,10 +61,6 @@ On the other hand, the API builder Docker image, as a central component of the s
 | 4.0.0 | [X](#api-builderlogstashmemcached) | -                                  | -                                  | -             | -               | [X](#dashboards)| -               |-                   | 7.15.2  |            |
 | 4.0.1 | -                                  | -                                  | -                                  | -             | -               | [X](#dashboards)| -               |-                   | 7.16.1  |            |
 | 4.0.2 | -                                  | -                                  | -                                  | -             | -               | [X](#dashboards)| -               |-                   | 7.16.1  | See #154   |
-
-### Update from Version 1.0.0
-
-If you are upgrading from Release 1.0.0 and encounter problems, please open an issue.
 
 ## Upgrade components
 
@@ -115,6 +111,19 @@ Please follow the instructions to [import Kibana-Dashboards](README.md#kibana-da
 ### Parameters
 
 Sometimes it may be necessary to include newly introduced parameters in your `.env` file or you may want to use optional parameters. To do this, use the supplied `env-sample` as a reference and copy the desired parameters. Please check the [changelog](CHANGELOG.md) which new parameters have been added.
+
+### Elastic Config
+
+Whether the Elastic configuration has changed is for information only and does not require any steps during the update.  
+The required Elasticsearch configuration is built into the API Builder application and Elasticsearch will be updated accordingly if necessary.  
+This includes the following components:  
+
+- Index configuration
+- Index templates
+- Index lifecycle policies
+- Transform jobs  
+
+FYI. You can find the current configuration here: [elasticsearch_config](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/tree/develop/apibuilder4elastic/elasticsearch_config)
 
 ## Update Elastic-Stack version
 
@@ -196,19 +205,6 @@ docker stop filebeat
 # Start a new Filebeat with the configured ELASTIC_VERSION in your .env file
 docker-compose -f filebeat/docker-compose.filebeat.yml up -d
 ```
-
-### Elastic Config
-
-Whether the Elastic configuration has changed is for information only and does not require any steps during the update.  
-The required Elasticsearch configuration is built into the API Builder application and Elasticsearch will be updated accordingly if necessary.  
-This includes the following components:  
-
-- Index configuration
-- Index templates
-- Index lifecycle policies
-- Transform jobs  
-
-FYI. You can find the current configuration here: [elasticsearch_config](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/tree/develop/apibuilder4elastic/elasticsearch_config)
 
 ## Update FAQ
 
