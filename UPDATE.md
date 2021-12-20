@@ -65,22 +65,21 @@ On the other hand, the API builder Docker image, as a central component of the s
 
 ## Upgrade components
 
-### Filebeat
+The following example shows how to load/unpack release 4.0.2 and apply your current configuration from, for example, version 3.2.0. Regardless of which components have changed, you should install the same release package and take over your configuration on all machines to avoid confusion.  
 
-If Filebeat changes with a version, you must update the corresponding configuration on all your API Gateway instances. It is recommended to update Filebeat as the first component, because the Filebeat configuration version is checked by the API-Builder application. If it does not match, Logstash will exit with an error message.
-Even if you run Filebeat as a native service, you have to copy the configuration (`filebeat/filebeat.yml`) from the release into your configuration.
-
-The following steps illustrates an update to version 3.2.0 using the docker-compose approach:  
 ```
-wget --no-check-certificate https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v3.2.0/axway-apim-elk-v3.2.0.tar.gz -O - | tar -xvz
-cd axway-apim-elk-v3.2.0
-cp ~/axway-apim-elk-v3.1.0/.env .
+# Perform these steps on all belonging machines
+# Get and extract the release package
+wget --no-check-certificate https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v4.0.2/axway-apim-elk-v4.0.2.tar.gz -O - | tar -xvz
+# The following directory has been created
+cd axway-apim-elk-v4.0.2
+# Take over existing configuration from the previous version
+cp ~/axway-apim-elk-v3.2.0/.env .
+# Also copy existing certificates, scripts, extra config-files from the previous version
 cp ~/axway-apim-elk-v3.1.0/config/all-my-custom-certificates ./config
-docker-compose -f filebeat/docker-compose.filebeat.yml stop
-docker-compose -f filebeat/docker-compose.filebeat.yml up -d
 ```
 
-If you have deployed the solution on a Kubernetes-Cluster using Helm read [here](helm/README.md) for more information.
+You can then update each component as described below.
 
 ### API-Builder/Logstash/Memcached
 
@@ -90,14 +89,23 @@ API Builder, Logstash and Memcache work as a tight unit and should be stopped, u
 
 The following steps illustrates an update to version 3.2.0:
 ```
-wget --no-check-certificate https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v3.2.0/axway-apim-elk-v3.2.0.tar.gz -O - | tar -xvz
-cd axway-apim-elk-v3.2.0
-cp ~/axway-apim-elk-v3.1.0/.env .
-cp ~/axway-apim-elk-v3.1.0/config/all-my-custom-certificates ./config
 docker-compose stop
 docker-compose up -d
 ```
 Repeat these steps on all machines running Logstash/API-Builder/Memcache.  
+
+If you have deployed the solution on a Kubernetes-Cluster using Helm read [here](helm/README.md) for more information.
+
+### Filebeat
+
+If Filebeat changes with a version, you must update the corresponding configuration on all your API Gateway instances. It is recommended to update Filebeat as the first component, because the Filebeat configuration version is checked by the API-Builder application. If it does not match, Logstash will exit with an error message.
+Even if you run Filebeat as a native service, you have to copy the configuration (`filebeat/filebeat.yml`) from the release into your configuration.
+
+The following steps illustrates an update to version 3.2.0 using the docker-compose approach:  
+```
+docker stop filebeat
+docker-compose -f filebeat/docker-compose.filebeat.yml up -d
+```
 
 If you have deployed the solution on a Kubernetes-Cluster using Helm read [here](helm/README.md) for more information.
 
