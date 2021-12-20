@@ -6,7 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [4.0.3] 2021-12-20
 ### Changed
-- Updated default Elastic-Stack version from 7.16.1 to 7.16.2 which derlivery log4j 2.17.0
+- Updated default Elastic-Stack version from 7.16.1 to 7.16.2 which delivers log4j 2.17.0
+
+### Fixed
+- APM-Server was missing the release package
 
 ## [4.0.2] 2021-12-17
 ### Fixed
