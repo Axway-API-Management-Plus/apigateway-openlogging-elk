@@ -120,6 +120,9 @@ Sometimes it may be necessary to include newly introduced parameters in your `.e
 
 The solution ships the latest available Elastic version with new releases. However, this does not force you to update to the appropriate Elastic version with each update. So, for example, if version 3.4.0 ships with Elastic version 7.14.0, you can still stay on version 7.12.1. You can find the minimum required Elastic version [here](README.md#requirements).  
 
+Watch this video to see a demonstration how to update the Elastic-Stack:  
+[![Update Elastic-Stack](https://img.youtube.com/vi/Oht_Xnzurok/0.jpg)](https://youtu.be/Oht_Xnzurok)
+
 #### 3 Elasticsearch nodes required
 
 :exclamation: Before proceeding, make sure that your Elasticsearch cluster consists of __at least 3 nodes__. For example 3 Elasticsearch nodes running on two machines is perfectly fine for this.  
