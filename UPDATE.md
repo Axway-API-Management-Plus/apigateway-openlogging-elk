@@ -37,6 +37,7 @@ On the other hand, the API builder Docker image, as a central component of the s
 
 | Ver   | API-Builder                        | Logstash                           | Memcached                          | Filebeat      | ANM-Config      | Dashboards      | Params          |Elastic-Config      | ELK-Ver.| Notes      |
 | :---  | :---:                              | :---:                              | :---:                              | :---:         | :---:           | :---:           | :---:           |:---:               | :---:   | :---       |
+| 4.1.0 | [X](#api-builderlogstashmemcached) | -                                  | -                                  | -             | -               | -               | [X](#parameters)|-                   | 7.16.2  | Unreleased |
 | 4.0.3 | -                                  | -                                  | -                                  | -             | -               | -               | -               |-                   | 7.16.2  |            |
 | 4.0.2 | -                                  | -                                  | -                                  | -             | -               | -               | -               |-                   | 7.16.1  | See #154   |
 | 4.0.1 | -                                  | -                                  | -                                  | -             | -               | -               | -               |-                   | 7.16.1  |            |

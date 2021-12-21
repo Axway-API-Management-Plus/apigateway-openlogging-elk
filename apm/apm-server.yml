@@ -15,6 +15,7 @@ output:
     password: ${APM_PASSWORD}
     ssl: 
       certificate_authorities: ${ELASTICSEARCH_CA}
+      verification_mode: ${ELASTICSEARCH_SSL_VERIFICATIONMODE}
 
 monitoring:
   enabled: true

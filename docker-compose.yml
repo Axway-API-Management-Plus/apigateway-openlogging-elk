@@ -11,11 +11,13 @@ services:
       - node.name=${LOGSTASH_NODE_NAME:-Logstash-1}
       - xpack.monitoring.enabled=${SELF_MONITORING_ENABLED:-true}
       - xpack.monitoring.elasticsearch.ssl.certificate_authority=${ELASTICSEARCH_CA}
+      - xpack.monitoring.elasticsearch.ssl.verification_mode="${LOGSTASH_ELASTICSEARCH_SSL_VERIFICATIONMODE:-certificate}"
       - xpack.monitoring.elasticsearch.hosts=[${ELASTICSEARCH_HOSTS}]
       - xpack.monitoring.elasticsearch.username=${LOGSTASH_SYSTEM_USERNAME}
       - xpack.monitoring.elasticsearch.password=${LOGSTASH_SYSTEM_PASSWORD}
       - LS_JAVA_OPTS=${LS_JAVA_OPTS}
       - ELASTICSEARCH_CERT=${ELASTICSEARCH_CRT}
+      - ELASTICSEARCH_SSL_VERIFICATIONMODE=${LOGSTASH_ELASTICSEARCH_SSL_VERIFICATIONMODE:-certificate}
       - ELASTICSEARCH_HOSTS=${ELASTICSEARCH_HOSTS}
       - LOGSTASH_USERNAME=${LOGSTASH_USERNAME}
       - LOGSTASH_PASSWORD=${LOGSTASH_PASSWORD}
@@ -71,6 +73,7 @@ services:
       - API_BUILDER_SSL_KEY=${API_BUILDER_SSL_KEY}
       - API_BUILDER_SSL_CERT=${API_BUILDER_SSL_CERT}
       - API_BUILDER_SSL_KEY_PASSWORD=${API_BUILDER_SSL_KEY_PASSWORD}
+      - ELASTICSEARCH_SSL_VERIFICATIONMODE=${APIBUILDER_ELASTICSEARCH_SSL_VERIFICATIONMODE:-true}
       - API_BUILDER_LOCAL_API_LOOKUP_FILE=${API_BUILDER_LOCAL_API_LOOKUP_FILE}
       - AUTHZ_CONFIG=${AUTHZ_CONFIG}
       - ENABLE_HTTP_PORT=false

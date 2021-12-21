@@ -8,6 +8,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 - No longer possible to start an Elasticsearch-Node that is not part of ELASTICSEARCH_NODES [#155](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/155)
 
+### Added
+- New optional parameter: `KIBANA_ELASTICSEARCH_SSL_VERIFICATIONMODE` to configure Kibana to Elasticsearch certificate validation [#156](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/156)
+- New optional parameter: `APIBUILDER_ELASTICSEARCH_SSL_VERIFICATIONMODE` to configure API-Builder to Elasticsearch certificate validation [#156](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/156)
+- New optional parameter: `APM_ELASTICSEARCH_SSL_VERIFICATIONMODE` to configure APM-Server to Elasticsearch certificate validation [#156](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/156)
+- New optional parameter: `LOGSTASH_ELASTICSEARCH_SSL_VERIFICATIONMODE` to configure Logstash to Elasticsearch certificate validation [#156](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/156)
+- New optional parameter: `FILEBEAT_ELASTICSEARCH_SSL_VERIFICATIONMODE` to configure Filebeat to Elasticsearch certificate validation [#156](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/156)
+
 ## [4.0.3] 2021-12-20
 ### Changed
 - Updated default Elastic-Stack version from 7.16.1 to 7.16.2 which delivers log4j 2.17.0

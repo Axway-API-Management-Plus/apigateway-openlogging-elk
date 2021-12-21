@@ -496,20 +496,20 @@ ELASTIC_VERSION=7.16.2
 ################################################################################################
 #                         APM
 ################################################################################################
-# The solution can use APM from Elastic to monitor the behavior of the API builder process.
+# The solution can use APM from Elastic to monitor the behavior of the API-Builder process.
 
 # ----------------------------------------------------------------------------------------------
 # This is where Elastic-APM is enabled, which is an additional service before Elasticsearch. It 
 # is used by API Builder to pass application performance management data from the 
-# API Builder process.
-# Used-By: Elastic-APM
+# API Builder process. It can also be used by other API-Builder applications/microservices.
+# Used-By: Elastic-APM, APIBuilder4Elastic
 # Defaults to false
 #APM_ENABLED=true
 
 # ----------------------------------------------------------------------------------------------
 # This is used by the API-Builder process for the APM-Server connection. It defaults to 
 # https://apm-server:8200 if not configured, which is the service-name when using docker-compose. 
-# Used-By: API-Builder4Elastic
+# Used-By: APM-Server, APIBuilder4Elastic
 # APM_SERVER=https://my-apm-server:8200
 
 # ----------------------------------------------------------------------------------------------
@@ -552,6 +552,10 @@ ELASTICSEARCH_CA=config/certificates/ca.crt
 API_BUILDER_SSL_KEY=config/certificates/apibuilder4elastic.key
 API_BUILDER_SSL_CERT=config/certificates/apibuilder4elastic.crt
 API_BUILDER_SSL_KEY_PASSWORD=
+# Controls the APIBuilder4Elastic to Elasticsearch certificate validation mode 
+# Possible values: (true|false)
+# Defaults to: true
+# APIBUILDER_ELASTICSEARCH_SSL_VERIFICATIONMODE=false
 
 # The following certificates and keys are mainly used by Elasticsearch to enable transport
 # security on port: 9200.
@@ -571,7 +575,34 @@ ELASTICSEARCH_CRT=config/certificates/elasticsearch1.crt
 KIBANA_KEY=config/certificates/kibana.key
 KIBANA_CRT=config/certificates/kibana.crt
 KIBANA_KEYPASSPHRASE=
+# Controls the Kibana to Elasticsearch certificate validation mode 
+# Possible values: (full|certificate|none)
+# Defaults to: full
+# For more information please read 
+# https://www.elastic.co/guide/en/elasticsearch/reference/current/security-settings.html
+# KIBANA_ELASTICSEARCH_SSL_VERIFICATIONMODE=none
 
 APM_SERVER_KEY=config/certificates/apm-server.key
 APM_SERVER_CRT=config/certificates/apm-server.crt
 APM_SERVER_KEY_PASSPHRASE=
+# Controls the APM-Server to Elasticsearch certificate validation mode
+# Possible values: (full|strict|certificate|none)
+# Defaults to: full
+# For more information please read 
+# https://www.elastic.co/guide/en/beats/filebeat/current/configuration-ssl.html
+# APM_ELASTICSEARCH_SSL_VERIFICATIONMODE=none
+
+# Controls the Logstash to Elasticsearch certificate validation mode for pipelines and monitoring
+# Value certificate is translated into true for pipelines certificate validation. none into false
+# Possible values: (certificate|none)
+# Defaults to: certificate
+# For more information please read 
+# https://www.elastic.co/guide/en/logstash/current/plugins-outputs-elasticsearch.html#plugins-outputs-elasticsearch-ssl_certificate_verification
+# LOGSTASH_ELASTICSEARCH_SSL_VERIFICATIONMODE=none
+
+# Controls the Filebeat to Elasticsearch certificate validation mode (for monitoring only)
+# Possible values: (full|strict|certificate|none)
+# Defaults to: full
+# For more information please read 
+# https://www.elastic.co/guide/en/beats/filebeat/current/configuration-ssl.html
+# FILEBEAT_ELASTICSEARCH_SSL_VERIFICATIONMODE=none

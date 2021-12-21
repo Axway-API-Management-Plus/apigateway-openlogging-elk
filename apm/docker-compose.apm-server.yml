@@ -1,7 +1,7 @@
 version: '3.7'
 services:
   # APM-Service
-  metricbeat:
+  apm-server:
     image: docker.elastic.co/apm/apm-server:${ELASTIC_VERSION}
     restart: on-failure:10
     entrypoint: /usr/local/scripts/apm-server-entrypoint.sh
@@ -13,6 +13,7 @@ services:
       - APM_USERNAME=${APM_USERNAME:-""}
       - APM_PASSWORD=${APM_PASSWORD:-""}
       - ELASTICSEARCH_CA=${ELASTICSEARCH_CA}
+      - ELASTICSEARCH_SSL_VERIFICATIONMODE=${APM_ELASTICSEARCH_SSL_VERIFICATIONMODE:-full}
       - APM_SERVER_KEY=${APM_SERVER_KEY}
       - APM_SERVER_CRT=${APM_SERVER_CRT}
       - APM_SERVER_KEY_PASSPHRASE=${APM_SERVER_KEY_PASSPHRASE:-""}
