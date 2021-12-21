@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased] 
+### Changed
+- No longer possible to start an Elasticsearch-Node that is not part of ELASTICSEARCH_NODES [#155](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/155)
+
 ## [4.0.3] 2021-12-20
 ### Changed
 - Updated default Elastic-Stack version from 7.16.1 to 7.16.2 which delivers log4j 2.17.0
