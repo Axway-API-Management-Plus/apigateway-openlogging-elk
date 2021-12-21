@@ -509,15 +509,18 @@ This node automatically becomes the master node.
 __3. Add additional nodes__
 
 You can add cluster nodes at any time to increase available disk space or CPU performance. 
-To achieve resilience, it is strongly recommended set up at least 2 cluster nodes.  
-To add a cluster node, execute the following command:
+To achieve resilience, it is strongly recommended set up at least 2 or even better 3 cluster nodes to also perform maintenance tasks such as updates. For more information please read: [Designing for resilience](https://www.elastic.co/guide/en/elasticsearch/reference/current/high-availability-cluster-design.html). It is also possible to have two Elasticsearch nodes running on the same machine.  
+  
+To add a cluster node you need to configure ELASTICSEARCH_HOSTS and execute the following command:  
 ```
-docker-compose -f elasticsearch/docker-compose.es02.yml up -d
+# To add for instance a third node ELASTICSEARCH_HOSTS must contain three nodes
+docker-compose -f elasticsearch/docker-compose.es03.yml up -d
 ```
 If a node has successfully joined the cluster you see the following log message logged in the master node:  
 ```
 {"ty...": "INFO", "component": "o.e.c.s.MasterService", "cluster.name": "axway-apim-elasticsearch", "node.name": "elasticsearch1", "message": "node-join[{elasticsearch3}{eQaH...w"  }
 ```
+Additionally please check in Kibana the new node has successfully joined the cluster and shards are assigned to it.
 
 __4. Restart clients__
 
