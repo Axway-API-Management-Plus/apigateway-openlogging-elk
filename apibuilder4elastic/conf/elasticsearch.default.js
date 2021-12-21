@@ -19,7 +19,7 @@ module.exports = {
 				maxRetries: 5,
 				requestTimeout: 60000,
 				ssl: {
-					ca: fs.readFileSync(process.env.ELASTICSEARCH_CA),
+					ca: ("false" == process.env.ELASTICSEARCH_SSL_VERIFICATIONMODE) ? fs.readFileSync(process.env.ELASTICSEARCH_CA) : "",
 					rejectUnauthorized: ("false" == process.env.ELASTICSEARCH_SSL_VERIFICATIONMODE) ? false : true
 				}
 			},
