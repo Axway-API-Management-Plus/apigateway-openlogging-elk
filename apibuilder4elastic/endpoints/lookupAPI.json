@@ -68,7 +68,7 @@
         ],
         "summary": "Looks up an API based on the API-Path",
         "description": "This endpoint returns based on parameters such as the API name, API path some other required additional API details, like configured Security, Policies, etc. These are either based on the API manager and in a locally configured file. \nThe locally configured file takes precedence over using the API manager to retrieve the details.\nFirst, the specified API path is used to look up the API details locally, and if the API is not found there, then the API name is also needed, since the specified API path (e.g. /v1/my/api/some/data/hello) does not necessarily have to match the API registered in the API manager. Then all APIs with the name are searched for and additionally it is checked that the start of the API path matches the API found and searched for.",
-        "operationId": "search",
+        "operationId": "lookupApi",
         "x-flow": "lookupAPI-search"
       },
       "parameters": []
@@ -77,7 +77,7 @@
       "get": {
         "summary": "Ignore this API/Document?",
         "tags": [],
-        "operationId": "index-api",
+        "operationId": "lookup-api-ignore",
         "description": "Provides information if the API should be indexed or not.",
         "parameters": [
           {

@@ -9,11 +9,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - No longer possible to start an Elasticsearch-Node that is not part of ELASTICSEARCH_NODES [#155](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/155)
 
 ### Added
+- APIBuilder4Elastic should use configured ELASTICSEARCH_CA [#157](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/157)
 - New optional parameter: `KIBANA_ELASTICSEARCH_SSL_VERIFICATIONMODE` to configure Kibana to Elasticsearch certificate validation [#156](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/156)
 - New optional parameter: `APIBUILDER_ELASTICSEARCH_SSL_VERIFICATIONMODE` to configure API-Builder to Elasticsearch certificate validation [#156](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/156)
 - New optional parameter: `APM_ELASTICSEARCH_SSL_VERIFICATIONMODE` to configure APM-Server to Elasticsearch certificate validation [#156](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/156)
 - New optional parameter: `LOGSTASH_ELASTICSEARCH_SSL_VERIFICATIONMODE` to configure Logstash to Elasticsearch certificate validation [#156](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/156)
 - New optional parameter: `FILEBEAT_ELASTICSEARCH_SSL_VERIFICATIONMODE` to configure Filebeat to Elasticsearch certificate validation [#156](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/156)
+
+### Fixed
+- APIBuilder4Elastic - The Swagger for this service is invalid - Duplicate operationId renamed [#158](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/158)
 
 ## [4.0.3] 2021-12-20
 ### Changed
