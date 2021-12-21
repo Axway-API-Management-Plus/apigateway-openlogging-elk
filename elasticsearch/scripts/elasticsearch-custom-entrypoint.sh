@@ -83,7 +83,6 @@ if [ ${nodeConfigured} == false ]; then
     echo "Failed to start/configure Elasticsearch node: ${nodeNumber}. Please check that ELASTICSEARCH_HOSTS contains the required number of nodes.";
     exit 99
 fi
-exit 1
 
 # Check if Self-Monitoring should be enabled
 if [ -z "${SELF_MONITORING_ENABLED}" ];then
