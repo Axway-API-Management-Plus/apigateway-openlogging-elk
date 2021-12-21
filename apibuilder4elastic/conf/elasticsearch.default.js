@@ -20,7 +20,7 @@ module.exports = {
 				requestTimeout: 60000,
 				ssl: {
 					//ca: fs.readFileSync('C:/temp/elasticsearch.crt'),
-					rejectUnauthorized: false
+					rejectUnauthorized: (process.env.ELASTICSEARCH_SSL_VERIFICATIONMODE) ? process.env.ELASTICSEARCH_SSL_VERIFICATIONMODE : true
 				}
 			},
 			// The connection to Elasticsearch is validated on API-Builder startup by default
