@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased] 
 ### Changed
 - No longer possible to start an Elasticsearch-Node that is not part of ELASTICSEARCH_NODES [#155](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/155)
+- Updated API-Builder to version Caracas
+- Updated API-Builder custom flow node libraries
 
 ### Added
 - APIBuilder4Elastic should use configured ELASTICSEARCH_CA [#157](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/157)
