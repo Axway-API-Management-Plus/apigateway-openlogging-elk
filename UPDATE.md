@@ -152,7 +152,7 @@ Watch this video to see a demonstration how to update the Elastic-Stack:
 
 ### Elastic stack upgrade steps
 
-Please follow these steps to update the Elastic version.
+When you have a three node Elasticsearh-Cluster up and running, please follow these steps to update the Elastic version.
 
 __1. Update .env file__
 
