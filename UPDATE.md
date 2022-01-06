@@ -142,7 +142,7 @@ The solution ships the latest available Elastic version with new releases. Howev
 
 ### 3 Elasticsearch nodes required
 
-:exclamation: Before proceeding, make sure that your Elasticsearch cluster consists of __at least 3 nodes__. For example 3 Elasticsearch nodes running on two machines is perfectly fine for this.  
+:exclamation: Before proceeding with the upgrade, make sure that your Elasticsearch cluster consists of __at least 3 nodes with the same version__. For example 3 Elasticsearch nodes running on two machines is perfectly fine for this.  
 There are 3 Elasticsearch nodes required, as there must always be a master node in the cluster. If this master node is stopped, a quorum of remaining cluster nodes must still be running to elect a new master, otherwise an upgraded Elasticsearch node cannot join the cluster. [Learn more](https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-discovery-quorums.html)  
 
 [Read more](README.md#general-remarks) information about adding additional cluster nodes. After the upgrade, you can remove the third cluster node if necessary. Before proceeding, make sure that Elasticsearch is in the Green state.
