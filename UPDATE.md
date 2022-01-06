@@ -232,4 +232,4 @@ Yes, you can. Please note which components have been updated between the current
 
 No, you cannot downgrade from a newer version to an older one. You will see the following error message:  
 `cannot downgrade a node from version [7.16.1] to version [7.15.2]`  
-Please note that as soon as a newer Elasticsearch node was started, the data stored on the volume was updated, which makes it impossible to start an older version. 
+Please note that as soon as a newer Elasticsearch node was started, the data stored on the volume is already updated, which makes it impossible to start an older version. 
