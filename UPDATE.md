@@ -106,7 +106,7 @@ Even if you run Filebeat as a native service, you have to copy the configuration
 The following steps illustrates an update to version 3.2.0 using the docker-compose approach:  
 ```
 docker stop filebeat
-docker-compose -f filebeat/docker-compose.filebeat.yml up -d
+docker-compose --env-file .env -f filebeat/docker-compose.filebeat.yml up -d
 ```
 
 If you have deployed the solution on a Kubernetes-Cluster using Helm read [here](helm/README.md) for more information.
@@ -174,7 +174,7 @@ cd axway-apim-elk-v4.0.3
 docker stop elasticsearch1
 # Start a new Elasticsearch node (in this case Elasticsearch-Node-1), which will 
 # create a new container based on the version you configured in your .env file
-docker-compose -f elasticsearch/docker-compose.es01.yml up -d
+docker-compose --env-file .env -f elasticsearch/docker-compose.es01.yml up -d
 ```
 
 Repeat these steps on the remaining Eleasticsearch nodes, but make sure a new Elasticsearch-Master has been elected.   
@@ -189,7 +189,7 @@ cd axway-apim-elk-v4.0.3
 # Stop the existing Kibana container
 docker stop kibana
 # Start a new Kibana-Container with the configured ELASTIC_VERSION in your .env file
-docker-compose -f kibana/docker-compose.kibana.yml up -d
+docker-compose --env-file .env -f kibana/docker-compose.kibana.yml up -d
 ```
 
 __4. Update Logstash__   
@@ -214,7 +214,7 @@ cd axway-apim-elk-v4.0.3
 # Stop existing filebeat container
 docker stop filebeat
 # Start a new Filebeat with the configured ELASTIC_VERSION in your .env file
-docker-compose -f filebeat/docker-compose.filebeat.yml up -d
+docker-compose --env-file .env -f filebeat/docker-compose.filebeat.yml up -d
 ```
 
 ## Update FAQ
