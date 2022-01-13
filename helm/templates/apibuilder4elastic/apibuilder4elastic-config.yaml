@@ -7,6 +7,8 @@ metadata:
     {{- include "apibuilder4elastic.labels" . | nindent 4 }}
 data:
   ELASTICSEARCH_HOSTS: {{ required "The value global.elasticsearchHosts is missing." .Values.global.elasticsearchHosts | quote }}
+  ELASTICSEARCH_CA: {{ required "The path to the CA for API-Builder to Elasticsearch communication is missing" .Values.global.elasticsearchCa | quote }}
+  ELASTICSEARCH_SSL_VERIFICATIONMODE: {{ .Values.apibuilder4elastic.ssl.validateElasticsearchCertificate | quote }}
   ADMIN_NODE_MANAGER: {{ required "The Admin-Node-Manager URL (apibuilder4elastic.anmUrl) is required." .Values.apibuilder4elastic.anmUrl | quote }}
   API_MANAGER: {{ default "" .Values.apibuilder4elastic.apimgrUrl | quote }}
   API_BUILDER_SSL_CERT: {{ default "config/certificates/apibuilder4elastic.crt" .Values.apibuilder4elastic.ssl.cert | quote }}

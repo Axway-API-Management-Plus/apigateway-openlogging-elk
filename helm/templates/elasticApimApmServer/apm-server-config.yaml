@@ -12,6 +12,7 @@ data:
   ELASTICSEARCH_HOSTS: {{ required "The value global.elasticsearchHosts is missing." .Values.global.elasticsearchHosts | quote }}
   ELASTICSEARCH_CLUSTER_UUID: {{ index .Values "apm-server" "elasticsearchClusterUUID" | quote }}
   ELASTICSEARCH_CA: {{ required "The path to the CA for APM-Server to Elasticsearch communication is missing" .Values.global.elasticsearchCa | quote }}
+  ELASTICSEARCH_SSL_VERIFICATIONMODE: {{ .Values.apm-server.ssl.validateElasticsearchCertificate | quote }}
   APM_SERVER_CRT: {{ index .Values "apm-server" "ssl" "cert"  }}
   APM_SERVER_KEY: {{ index .Values "apm-server" "ssl" "key"  }}
 {{- end }}

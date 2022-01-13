@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Updated API-Builder custom flow node libraries
 
 ### Added
-- APIBuilder4Elastic should use configured ELASTICSEARCH_CA [#157](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/157)
+- APIBuilder4Elastic now using configured ELASTICSEARCH_CA [#157](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/157)
 - New optional parameters
   - `KIBANA_ELASTICSEARCH_SSL_VERIFICATIONMODE` to configure Kibana to Elasticsearch certificate validation [#156](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/156)
   - `APIBUILDER_ELASTICSEARCH_SSL_VERIFICATIONMODE` to configure API-Builder to Elasticsearch certificate validation [#156](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/156)

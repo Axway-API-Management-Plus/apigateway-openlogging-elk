@@ -112,13 +112,16 @@ apibuilder4elastic:
   #    configMap:
   #      name: custom-configuration
 
-  # Setup the SSL-Configuration for API-Builder for Elastic
+  # Setup the SSL-Configuration for API-Builder4Elastic
   # Use secretMounts to mount your keys & certificates into pod 
   # and configure them here.
   ssl: {}
   #  key: "config/certificates/apibuilder4elastic.key"
   #  cert: "config/certificates/apibuilder4elastic.crt"
   #  password: ""
+
+  # Here you may disable the Elasticsearch server certificate validation for APIBuilder4Elastic
+  # validateElasticsearchCertificate: false
 
   # localAPILookup enables the Local API-Lookup feature
   # Use extraVolumes & extraVolumeMounts to mount your custom configuration into 
@@ -449,6 +452,11 @@ kibana:
   #  key: "certificates/kibana.key"
   #  cert: "certificates/kibana.crt"
   #  password: ""
+
+  # Here you can configure the Elasticsearch server certificate validation for Kibana
+  # Possible values: (full|certificate|none) - Defaults to: full
+  # validateElasticsearchCertificate: none
+
   secretMounts: 
     - name: certificates
       secretName: axway-elk-apim4elastic-certificates
@@ -541,6 +549,10 @@ filebeat:
   #  - name: custom-certificate
   #    secretName: custom-certificate
   #    path: /usr/share/filebeat/config/certificates
+
+  # Here you can configure the Elasticsearch server certificate validation for Filebeat (for monitoring only)
+  # Possible values: (full|strict|certificate|none) - Defaults to: full
+  # ssl.validateElasticsearchCertificate: none
   
   # extraVolumes is used to provide Filebeat access to the necessary log files from the API-Gateways.
   # The API-Gateways write to the same volumes accordingly.
@@ -725,6 +737,10 @@ apm-server:
     cert: "config/certificates/apmserver.crt"
     key: "config/certificates/apmserver.key"
     #  password: ""
+
+  # Here you can configure the Elasticsearch server certificate validation for the APM-Server
+  # Possible values: (full|strict|certificate|none) - Defaults to: full
+  # validateElasticsearchCertificate: none
 
   livenessProbe:
     httpGet:
