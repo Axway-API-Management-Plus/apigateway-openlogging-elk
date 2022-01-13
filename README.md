@@ -120,7 +120,6 @@ Components such as the API-Builder project are supposed to run as a Docker-Conta
 ### Docker-Compose or HELM
 
 Docker Compose is one option to deploy the solution. Additionally a [HELM-Chart](helm/README.md) is provided to deploy the solution on Kubernetes or OpenShift.  
-Please be careful using docker-compose version 1.28.x as it may contain a bug/issue reading the .env file. See here: https://github.com/docker/compose/issues/8108 or https://github.com/docker/compose/issues/8173. Perhaps switch back to a previous version. 
 
 ### API-Gateway/API-Management
 
@@ -194,7 +193,7 @@ ES_JAVA_OPTS="-Xms8g -Xmx8g"
 ```
 With the following command you initialize a new Elasticsearch Cluster which is going through an appropriate bootstrapping. Later you can add more nodes to this single node cluster. Please do not use the init extension when restarting the node:  
 ```
-docker-compose -f elasticsearch/docker-compose.es01.yml -f elasticsearch/docker-compose.es01init.yml up -d
+docker-compose --env-file .env -f elasticsearch/docker-compose.es01.yml -f elasticsearch/docker-compose.es01init.yml up -d
 ```
 Wait until the cluster has started and then call the following URL:
 ```
@@ -227,7 +226,7 @@ Watch this video for a demonstration: [Setup Kibana](https://youtu.be/aLODAuXDMz
 
 For Kibana all parameters are already stored in the .env file. Start Kibana with the following command:
 ```
-docker-compose -f kibana/docker-compose.kibana.yml up -d
+docker-compose --env-file .env -f kibana/docker-compose.kibana.yml up -d
 ```
 You can address Kibana at the following URL Currently no user login is required.
 ```
@@ -297,7 +296,7 @@ You can find more information for each parameter in the env-sample.
 
 To start Filebeat: 
 ```
-docker-compose -f filebeat/docker-compose.filebeat.yml up -d
+docker-compose --env-file .env -f filebeat/docker-compose.filebeat.yml up -d
 ```
 Use docker logs filebeat to check that no error is displayed. If everything is ok, you should not see anything.  
 Check in Kibana (Menu --> Management --> Stack Management --> Index Management) that the indexes are filled with data.
@@ -502,7 +501,7 @@ You can skip this step if you want to extend the cluster from the basic setup, s
 We recommend starting one node after the next. The first node will initially set up the cluster and bootstrap it.
 Start the first cluster node with the following statement:  
 ```
-docker-compose -f elasticsearch/docker-compose.es01.yml -f elasticsearch/docker-compose.es01init.yml up -d
+docker-compose --env-file .env -f elasticsearch/docker-compose.es01.yml -f elasticsearch/docker-compose.es01init.yml up -d
 ```
 This node automatically becomes the master node.
 
@@ -514,7 +513,7 @@ To achieve resilience, it is strongly recommended set up at least 2 or even bett
 To add a cluster node you need to configure ELASTICSEARCH_HOSTS and execute the following command:  
 ```
 # To add for instance a third node ELASTICSEARCH_HOSTS must contain three nodes
-docker-compose -f elasticsearch/docker-compose.es03.yml up -d
+docker-compose --env-file .env -f elasticsearch/docker-compose.es03.yml up -d
 ```
 If a node has successfully joined the cluster you see the following log message logged in the master node:  
 ```
@@ -744,7 +743,7 @@ __3. Start Metricbeat__
 
 Now start the Metricbeat container on each host:
 ```
-docker-compose -f metricbeat/docker-compose.metricbeat.yml up -d
+docker-compose --env-file .env -f metricbeat/docker-compose.metricbeat.yml up -d
 ```
 On each host a container `metricbeat` started with given configuration in the belonging `.env` file.
 
@@ -753,7 +752,7 @@ __4. Disable Self-Monitoring__
 Make sure, the parameter: `SELF_MONITORING_ENABLED=false` is set. Then stop Elasticsearch, Kibana, Logstash & Filebeat services and restart them with docker-compose that they are no longer using self-monitoring. A docker restart is not sufficient here. E.g.
 ```
 docker stop kibana
-docker-compose -f kibana/docker-compose.kibana.yml up -d
+docker-compose --env-file .env -f kibana/docker-compose.kibana.yml up -d
 ```
 Please note, before restarting an Elasticsearch-Node make sure, the cluster state is green. to stay online during the restart.
 
