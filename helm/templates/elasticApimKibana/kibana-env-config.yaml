@@ -26,5 +26,5 @@ data:
   SERVER_SSL_CERTIFICATE: {{ default "config/certificates/kibana.crt" .Values.kibana.ssl.cert | quote }}
   SERVER_SSL_KEYPASSPHRASE: {{ default "" .Values.kibana.ssl.password | quote }}
   ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES: {{ required "The path to the CA for Kibana to Elasticsearch communication is missing" .Values.global.elasticsearchCa | quote }}
-  ELASTICSEARCH_SSL_VERIFICATIONMODE: {{ .Values.kibana.ssl.validateElasticsearchCertificate | quote }}
+  ELASTICSEARCH_SSL_VERIFICATIONMODE: {{ default "full" .Values.kibana.validateElasticsearchCertificate | quote }}
 {{- end }}

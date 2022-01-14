@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - `APM_ELASTICSEARCH_SSL_VERIFICATIONMODE` to configure APM-Server to Elasticsearch certificate validation [#156](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/156)
   - `LOGSTASH_ELASTICSEARCH_SSL_VERIFICATIONMODE` to configure Logstash to Elasticsearch certificate validation [#156](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/156)
   - `FILEBEAT_ELASTICSEARCH_SSL_VERIFICATIONMODE` to configure Filebeat to Elasticsearch certificate validation [#156](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/156)
+  - Helm chart supports this by the new new parameter: `validateElasticsearchCertificate` per component [#156](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/156)
 
 ### Fixed
 - APIBuilder4Elastic - The Swagger for this service is invalid - Duplicate operationId renamed [#158](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/158)

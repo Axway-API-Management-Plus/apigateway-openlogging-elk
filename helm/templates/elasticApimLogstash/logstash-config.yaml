@@ -20,10 +20,15 @@ data:
   xpack.monitoring.enabled: "true"
   xpack.monitoring.elasticsearch.hosts: {{ required "The value global.elasticsearchHosts is missing." .Values.global.elasticsearchHosts | quote }}
   xpack.monitoring.elasticsearch.ssl.certificate_authority: {{ required "The path to the CA for Logstash to Elasticsearch communication is missing" .Values.global.elasticsearchCa | quote }}
+  xpack.monitoring.elasticsearch.ssl.verification_mode: {{ default "certificate" .Values.logstash.validateElasticsearchCertificate | quote }}
   LS_JAVA_OPTS: {{ .Values.logstash.logstashJavaOpts | quote }}
   ELASTICSEARCH_HOSTS: {{ required "The value global.elasticsearchHosts is missing." .Values.global.elasticsearchHosts | quote }}
   ELASTICSEARCH_CERT: {{ required "The path to the CA for Logstash to Elasticsearch communication is missing" .Values.global.elasticsearchCa | quote }}
-  ELASTICSEARCH_SSL_VERIFICATIONMODE: {{ .Values.logstash.ssl.validateElasticsearchCertificate | quote }}
+  {{- if eq .Values.logstash.validateElasticsearchCertificate "none" }}
+  ELASTICSEARCH_SSL_VERIFICATIONMODE: "false"
+  {{- else }}
+  ELASTICSEARCH_SSL_VERIFICATIONMODE: "true"
+  {{- end }}
   API_BUILDER_URL: "https://{{ include "apim4elastic.fullname" . }}-apibuilder4elastic:{{ .Values.apibuilder4elastic.port }}"
   DROP_TRACE_MESSAGE_LEVELS: {{ .Values.logstash.dropTraceMessageLevels | quote }}
   API_BUILDER_SSL_CERT: {{ required "The path to the CA for Logstash to Elasticsearch communication is missing" .Values.global.elasticsearchCa | quote }}

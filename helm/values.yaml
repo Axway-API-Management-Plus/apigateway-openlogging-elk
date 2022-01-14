@@ -120,9 +120,6 @@ apibuilder4elastic:
   #  cert: "config/certificates/apibuilder4elastic.crt"
   #  password: ""
 
-  # Here you may disable the Elasticsearch server certificate validation for APIBuilder4Elastic
-  # validateElasticsearchCertificate: false
-
   # localAPILookup enables the Local API-Lookup feature
   # Use extraVolumes & extraVolumeMounts to mount your custom configuration into 
   # the API-Builder4Elastic container.
@@ -151,6 +148,9 @@ apibuilder4elastic:
   # logLevel of API-Builder4Elastic. When encoutering issues, enable debug. Also enable debug 
   # if you want to raise an issue.
   #logLevel: "debug"
+
+  # Configure the Elasticsearch server certificate validation for APIBuilder4Elastic. Is enabled by default.
+  # validateElasticsearchCertificate: false
 
   # Resource requests for API-Builder
   resources:
@@ -226,6 +226,19 @@ logstash:
   dropTraceMessageLevels: "DEBUG,DATA"
   # Number of replicas for Logstash
   replicas: 2
+
+  # Controls the Logstash to Elasticsearch certificate validation mode for pipelines and monitoring
+  # Value certificate is translated into true for pipelines certificate validation. none into false
+  # Possible values: (certificate|none)
+  # Defaults to: certificate
+  # For more information please read 
+  # https://www.elastic.co/guide/en/logstash/current/plugins-outputs-elasticsearch.html#plugins-outputs-elasticsearch-ssl_certificate_verification
+
+  # Controls Logstash to Elasticsearch certificate validation mode for pipelines and monitoring
+  # Value certificate is translated into true for pipelines certificate validation. none into false
+  # Possible values: (certificate|none) - Defaults to: certificate
+  validateElasticsearchCertificate: "certificate"
+
   # Injects the environment variables from the ConfigMaps and Secrets into the 
   # Logstash container. Specify your own ConfigMaps or Secrets if you don't
   # provide Configuration and Secrets as part of this values.yaml.
@@ -453,7 +466,7 @@ kibana:
   #  cert: "certificates/kibana.crt"
   #  password: ""
 
-  # Here you can configure the Elasticsearch server certificate validation for Kibana
+  # Can configure the Elasticsearch server certificate validation for Kibana
   # Possible values: (full|certificate|none) - Defaults to: full
   # validateElasticsearchCertificate: none
 
@@ -552,7 +565,7 @@ filebeat:
 
   # Here you can configure the Elasticsearch server certificate validation for Filebeat (for monitoring only)
   # Possible values: (full|strict|certificate|none) - Defaults to: full
-  # ssl.validateElasticsearchCertificate: none
+  # validateElasticsearchCertificate: none
   
   # extraVolumes is used to provide Filebeat access to the necessary log files from the API-Gateways.
   # The API-Gateways write to the same volumes accordingly.
@@ -740,7 +753,7 @@ apm-server:
 
   # Here you can configure the Elasticsearch server certificate validation for the APM-Server
   # Possible values: (full|strict|certificate|none) - Defaults to: full
-  # validateElasticsearchCertificate: none
+  validateElasticsearchCertificate: full
 
   livenessProbe:
     httpGet:
