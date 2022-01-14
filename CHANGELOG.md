@@ -6,7 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased] 
 ### Changed
+- Updated default Elastic-Stack version from 7.16.2 to 7.16.3 which delivers log4j 2.17.1
 - No longer possible to start an Elasticsearch-Node that is not part of ELASTICSEARCH_NODES [#155](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/155)
+- Helm chart deploys 2 Kibana replicas by default instead of 1
 - Updated API-Builder to version Caracas
 - Updated API-Builder custom flow node libraries
 
