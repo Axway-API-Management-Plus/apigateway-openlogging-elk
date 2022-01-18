@@ -280,11 +280,13 @@ MEMCACHED=memcached:11211
 
 # ----------------------------------------------------------------------------------------------
 # This parameter controls how long information looked up from API-Manager should stay in the
-# cache. Currently used for API-Details and User-Information.
+# cache. Currently used for API-, Application- and User-Details. The same cache timeout is used 
+# for API-Builder In-Memory-Cache and Logstash-Memcache.
 # You may increase this timeout if you need to reduce the API-Manager REST-API calls performed
-# by the Logstash pipeline.
-# Used-By: Logstash
-# LOOKUP_CACHE_TTL=600
+# during ingestion.
+# Defaults to 600 (seconds)
+# Used-By: Logstash, API-Builder
+# LOOKUP_CACHE_TTL=1200
 
 # ----------------------------------------------------------------------------------------------
 # The maximum heap memory for ES. Xmx should be configured to 50% of the available memory, when
