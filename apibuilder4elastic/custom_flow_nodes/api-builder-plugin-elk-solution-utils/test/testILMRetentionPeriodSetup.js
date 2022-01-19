@@ -41,7 +41,7 @@ describe('flow-node elk-solution-utils ILM Rentention-Period setup', () => {
 			const { value, output } = await flowNode.setupILMRententionPeriod({ indexConfig: {}, ilmConfig: {}, rententionPeriodConfig: {} });
 
 			expect(value).to.be.instanceOf(Error)
-				.and.to.have.property('message', 'Index name is missing is given indexConfig');
+				.and.to.have.property('message', 'The name of the index is missing in the IndexConfig');
 			expect(output).to.equal('error');
 		});
 

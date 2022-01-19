@@ -261,7 +261,7 @@ async function setupILMRententionPeriod(params, options) {
 		return options.setOutput('notChanged', ilmConfig);
 	}
 	if (!indexConfig.name) {
-		throw new Error('Index name is missing in indexConfig');
+		throw new Error('The name of the index is missing in the IndexConfig');
 	}
 	// Trying to read the retentionPeriodConfig file
 	if (!rententionPeriodConfig.retentionPeriods) {
