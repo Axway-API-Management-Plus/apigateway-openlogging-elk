@@ -1,0 +1,25 @@
+{
+    "retentionPeriods": {
+        "apigw-traffic-summary": {
+            "rollover": {
+                "max_age": "7d",
+                "max_size": "15gb"
+            }, 
+            "days": "7d"
+        }, 
+        "apigw-traffic-details": {
+            "rollover": {
+                "max_age": "7d",
+                "max_size": "15gb"
+            }, 
+            "days": "7d"
+        }, 
+        "apigw-traffic-trace": {
+            "rollover": {
+                "max_age": "7d",
+                "max_size": "15gb"
+            }, 
+            "days": "7d"
+        }
+    }
+}

@@ -336,7 +336,7 @@ ELASTICSEARCH_CLUSTERNAME=Axway APIM
 ELASTIC_VERSION=7.16.3
 
 # ----------------------------------------------------------------------------------------------
-# With these parameters you can change the way the authorization for the traffic monitor is
+# With this parameter you can change the way the authorization for the traffic monitor is
 # performed.
 # By default, users who are not API-Gateway administrators are authorized to see traffic in
 # the traffic monitor based on their API-Manager organization.
@@ -344,7 +344,20 @@ ELASTIC_VERSION=7.16.3
 # to adjust the Elastic-Query. For more details please see: config/authorization-config-sample.js
 # It's recommended to create a copy the sample file and configure it with the following parameter:
 # For example:
+# Used-By: APIBuilder4Elastic
 # AUTHZ_CONFIG=./config/my-authorization-config.js
+
+# ----------------------------------------------------------------------------------------------
+# Use this parameter to adjust the default solution retention time. 
+# You must pass a corresponding JSON configuration file to the parameter. You can find an 
+# example of this in the config/retention-period-config-sample.json folder. 
+# Create your own version of this file, customize the configuration as desired, and configure 
+# the file name here. 
+# To learn more: https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk#lifecycle-management
+# Used-By: APIBuilder4Elastic
+# For example:
+# RETENTION_PERIOD_CONFIG=./config/my-retention-periods.json
+
 
 # ----------------------------------------------------------------------------------------------
 # With this parameter you control which user gets an unrestricted access to the traffic in the
