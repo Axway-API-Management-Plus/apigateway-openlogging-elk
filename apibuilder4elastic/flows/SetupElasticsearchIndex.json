@@ -851,7 +851,9 @@
 					"metaName": "Next"
 				},
 				"notChanged": {
-					"routes": [],
+					"routes": [
+						"mustache.1"
+					],
 					"context": "$.ilmPolicyBody",
 					"metaName": "Not changed"
 				},
