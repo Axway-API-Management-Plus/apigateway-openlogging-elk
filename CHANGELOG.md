@@ -25,6 +25,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 - APIBuilder4Elastic - The Swagger for this service is invalid - Duplicate operationId renamed [#158](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/158)
 
+### Security
+- Custom-Flow-Nodes dependencies updated to solve security issue https://github.com/advisories/GHSA-74fj-2j2h-c42q
+- API-Builder version update to version Exeter
+
 ## [4.0.3] 2021-12-20
 ### Changed
 - Updated default Elastic-Stack version from 7.16.1 to 7.16.2 which delivers log4j 2.17.0
