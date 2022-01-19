@@ -528,6 +528,22 @@ This ensures that clients can use the available Elasticsearch nodes for a fail-o
 
 <p align="right"><a href="#table-of-content">Top</a></p>
 
+### Configure cluster UUID
+
+This step is optional, but required to monitor your Filebeat instances as part of the stack monitoring. To obtain the Cluster UUID run the following in your browser:  
+`https://elasticsearch1:9200/` (if you have already activated authentication you can use the elastic user here)  
+
+Take over the UUID into the .env file:  
+`ELASTICSEARCH_CLUSTER_UUID=XBmL4QynThmwg0X0YN-ONA` 
+
+You may also configure the following parameters: `GATEWAY_NAME` & `GATEWAY_REGION` to make you Filebeat instances unique.  
+
+![Monitoring-Overview][Monitoring-Overview]  
+
+To activate these changes the Filebeat service must be restarted. 
+
+<p align="right"><a href="#table-of-content">Top</a></p>
+
 ### Setup API-Manager
 
 Before a document is send to Elasticsearch, additional information for the processed API is requested by Logstash from the API-Manager through an API lookup. This lookup is handled by the API-Builder and performed against the configured API-Manager.  
@@ -710,6 +726,42 @@ The monitoring users are used to send metric information to Elasticsearch to ena
 
 <p align="right"><a href="#table-of-content">Top</a></p>
 
+### Custom certificates
+
+_If you are using an existing Elasticsearch cluster, you have to provide the required CA to the solution to allow certificate validation._
+
+The project is shipped with sample long running certificates/keys that should help you to get started with the solution. For a production environment these certificates and keys should be replaced with custom certificates, as the sample certificates & key are public available on GitHub.  
+
+After you have created the corresponding certificates and keys based on your CA, you must save them in the folder: `certificates`. 
+Afterwards these certificates must be configured in the `.env` file.  
+```
+API_BUILDER_SSL_KEY=config/certificates/corporate-certificate.key
+API_BUILDER_SSL_CERT=config/certificates/corporate-certificate.crt
+API_BUILDER_SSL_KEY_PASSWORD=dfslkjaskljdklasjdlas
+ELASTICSEARCH_CA=config/certificates/corp-ca.crt
+ELASTICSEARCH_KEY=config/certificates/corporate-elasticsearch.key
+ELASTICSEARCH_KEY_PASSPHRASE=config/certificates/corporate-elasticsearch.crt
+ELASTICSEARCH_CRT=config/certificates/corporate-elasticsearch.key
+KIBANA_KEY=config/certificates/corporate-kibana.key
+KIBANA_CRT=config/certificates/corporate-kibana.crt
+```
+You can find more information about the individual certificates in the `.env` file.
+
+<p align="right"><a href="#table-of-content">Top</a></p>
+
+### Secure API-Builder Traffic-Monitor API
+The API-Builder project for providing access to Elasticsearch data has no access restrictions right now. To ensure only API-Gateway Manager users (topology administrators with proper RBAC role) or other users with appropriate access rights can query the log data, one can expose this API via API-Manager and add security here.
+
+To import the API Builder application REST-API into your API-Manager, you can access the Swagger/OpenAPI definition here (replace docker-host and port appropriately for the container that is hosting the API-Builder project):  
+https://docker-host:8443/apidoc/swagger.json?endpoints/trafficMonitorApi
+
+<p align="right"><a href="#table-of-content">Top</a></p>
+
+## Monitoring
+
+It is important that the solution is monitored appropriately and by default Internal-Stack Monitoring is used for this purpose, which monitors the Elasticsearch cluster, Kibana, Logstash and Filebeat. 
+You can alternatively use Metricbeat and you can find more guidance in this section on platform monitoring.
+
 ### Enable Metricbeat
 
 In the default configuration, the solution uses the so-called self-monitoring. This means that components such as Logstash, Kibana, Filebeat, etc. independently send monitoring information (metrics) to Elasticsearch. However, this approach is not recommended by Elastic and is deprecated.  
@@ -764,57 +816,20 @@ You can enable Application Performance Monitoring (APM) to monitor APIBuilder4El
 
 ![Service API-Builder4Elastic overview](imgs/apm/2_apm-apibuilder4elastic-overview.png)
 
-
 Learn how to set up and activate APM [here](apm).
 
-### Configure cluster UUID
+### Disk-Usage monitoring
 
-This step is optional, but required to monitor your Filebeat instances as part of the stack monitoring. To obtain the Cluster UUID run the following in your browser:  
-`https://elasticsearch1:9200/` (if you have already activated authentication you can use the elastic user here)  
+It is important that you monitor the disk usage of the Elasticsearch cluster and get alarmed accordingly.  
+Elasticsearch also independently monitors disk usage against preconfigured thresholds and closes write operations when the high disk watermark index is exceeded. This means that no more new data can be written.  
+To avoid this condition, your alerts should already warn below the Elasticsearch thresholds. The thresholds for Elasticsearch:
 
-Take over the UUID into the .env file:  
-`ELASTICSEARCH_CLUSTER_UUID=XBmL4QynThmwg0X0YN-ONA` 
+- Low watermark for disk usage: 85%.
+- High watermark for disk usage: 90% 
 
-You may also configure the following parameters: `GATEWAY_NAME` & `GATEWAY_REGION` to make you Filebeat instances unique.  
+So your alerts should report a critical alert before 90%. For more information, please read here: [Disk-based shard allocation settings](https://www.elastic.co/guide/en/elasticsearch/reference/7.16/modules-cluster.html#disk-based-shard-allocation)
 
-![Monitoring-Overview][Monitoring-Overview]  
-
-To activate these changes the Filebeat service must be restarted. 
-
-<p align="right"><a href="#table-of-content">Top</a></p>
-
-### Custom certificates
-
-_If you are using an existing Elasticsearch cluster, you have to provide the required CA to the solution to allow certificate validation._
-
-The project is shipped with sample long running certificates/keys that should help you to get started with the solution. For a production environment these certificates and keys should be replaced with custom certificates, as the sample certificates & key are public available on GitHub.  
-
-After you have created the corresponding certificates and keys based on your CA, you must save them in the folder: `certificates`. 
-Afterwards these certificates must be configured in the `.env` file.  
-```
-API_BUILDER_SSL_KEY=config/certificates/corporate-certificate.key
-API_BUILDER_SSL_CERT=config/certificates/corporate-certificate.crt
-API_BUILDER_SSL_KEY_PASSWORD=dfslkjaskljdklasjdlas
-ELASTICSEARCH_CA=config/certificates/corp-ca.crt
-ELASTICSEARCH_KEY=config/certificates/corporate-elasticsearch.key
-ELASTICSEARCH_KEY_PASSPHRASE=config/certificates/corporate-elasticsearch.crt
-ELASTICSEARCH_CRT=config/certificates/corporate-elasticsearch.key
-KIBANA_KEY=config/certificates/corporate-kibana.key
-KIBANA_CRT=config/certificates/corporate-kibana.crt
-```
-You can find more information about the individual certificates in the `.env` file.
-
-<p align="right"><a href="#table-of-content">Top</a></p>
-
-### Secure API-Builder Traffic-Monitor API
-The API-Builder project for providing access to Elasticsearch data has no access restrictions right now. To ensure only API-Gateway Manager users (topology administrators with proper RBAC role) or other users with appropriate access rights can query the log data, one can expose this API via API-Manager and add security here.
-
-To import the API Builder application REST-API into your API-Manager, you can access the Swagger/OpenAPI definition here (replace docker-host and port appropriately for the container that is hosting the API-Builder project):  
-https://docker-host:8443/apidoc/swagger.json?endpoints/trafficMonitorApi
-
-<p align="right"><a href="#table-of-content">Top</a></p>
-
-### Lifecycle Management
+## Lifecycle Management
 
 Since new data is continuously stored in Elasticsearch in various indexes, these must of course be removed after a certain period of time.  
 Since version 2.0.0, the solution uses the Elasticsearch [ILM](https://www.elastic.co/guide/en/elasticsearch/reference/current/index-lifecycle-management.html) feature for this purpose, which defines different lifecycle stages per index. The so-called ILM policies are automatically configured by the solution using [configuration files](apibuilder4elastic/elasticsearch_config) and can be reviewed in Kibana.  
