@@ -904,7 +904,7 @@ For example, if you specify a maximum age and size for an index, then the index 
 - If the maximum size is too small for your transaction volume, then an index can meet the size condition in less than 24 hours and will be rolled over. 
 - If the maximum size is too large, the index will be rolled when it reaches the maximum age (e.g. after 7 days).  
 
-So how long the data is available from the very beginning to the end of an index is the sum of the period from the index's initial creation to the rollover __plus__ the period until the delete. As the rollover date cannot be defined exactly, you need to monitor your system accordingly and adjust the lifecycle accordingly to get the desired retention time.  
+☝️ So how long the data is available from the very beginning to the end of an index is the sum of the period from the index's initial creation to the rollover plus the period until the delete. As the rollover date cannot be defined exactly, you need to monitor your system accordingly and adjust the lifecycle accordingly to get the desired retention time.  
 
 You can use the following conditions for the rollover:
  - `max_age`: Defines the maximum age of an index until it is rolled over
