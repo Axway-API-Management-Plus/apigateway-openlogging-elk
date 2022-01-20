@@ -917,6 +917,15 @@ __3. Define the retention period__
 
 With the parameter: `retentionPeriod` you define the time period for which the data is guaranteed to be available. As already described, the time until the rollover of the index adds to this. You can specify only days here.
 
+__4. Apply the configuration__  
+
+The last step is to reference your configuration file in your `.env` file with the parameter: `RETENTION_PERIOD_CONFIG=./config/custom-retention-period.json` and restart API Builder.
+
+`docker-compose stop apibuilder4elastic`
+`docker-compose up`
+
+You can check in Kibana whether the ILM policy has been adjusted accordingly. To do this, go to Stack Management --> Index Lifecycle Policies - Open the corresponding policy here and check the phase.
+
 Further notes:  
 - Changes to the index lifecycle have no influence on indices that have already been rolled over, as these have already entered lifecycle management
 - Indexes should not be too small, as this increases the load on Elasticsearch too much. 
