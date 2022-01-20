@@ -926,8 +926,9 @@ The last step is to reference your configuration file in your `.env` file with t
 
 You can check in Kibana whether the ILM policy has been adjusted accordingly. To do this, go to Stack Management --> Index Lifecycle Policies - Open the corresponding policy here and check the phase.
 
-Further notes:  
-- Changes to the index lifecycle have no influence on indices that have already been rolled over, as these have already entered lifecycle management
+__Further notes:__
+
+- Changes to the ILM-Policy have no influence on indices that have already been rolled over, as these have already entered lifecycle management
 - Indexes should not be too small, as this increases the load on Elasticsearch too much. 
   - For each active index there are 5 Primary- and 5 Replica-Shards. 
   - Each shard corresponds to a Lucene instance, which consumes corresponding resources. 
