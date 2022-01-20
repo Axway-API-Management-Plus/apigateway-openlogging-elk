@@ -837,14 +837,14 @@ The indices pass through stages such as Hot, Warm, Cold which can be used to dep
 
 The configuration is defined here per data type (e.g. Summary, Details, Audit, ...). The following table gives an overview about the default values. The number of days that is crucial for the retention period is the delete days. This gives the guaranteed number of days that the data is guaranteed to be available. More information on how the lifecycle works can be found later in this section. You can use the further phase, for example, to allocate more favorable resources accordingly.
 
-| Data-Type              | Description                                                            | Hot (Rollover) | Warm    | Cold    | __Delete__   |
-| :---                   |:---                                                                    | :---           | :---    | :---    | :---         |
-| **Traffic-Summary**    | Main index for traffic-monitor overview and primary dashboard          | 30GB / 7d      | 0d      | 12d     | __15 days__  |
-| **Traffic-Details**    | Details in Traffic-Monitor for Policy, Headers and Payload reference   | 30GB / 7d      | 0d      | 12d     | __15 days__  |
-| **Traffic-Trace**      | Trace-Messages belonging to an API-Request shown in Traffic-Monitor    | 30GB / 7d      | 0d      | 12d     | __15 days__  |
-| **General-Trace**      | General trace messages, like Start- & Stop-Messages                    | 30GB / 7d      | 0d      | 12d     | __15 days__  |
-| **Gateway-Monitoring** | System status information (CPU, HDD, etc.) from Event-Files            | 30GB / 60d     | 0d      | 90d     | __105 days__ |
-| **Domain-Audit**       | Domain Audit-Information as configured in Admin-Node-Manager           | 10GB / 270d    | 270d    | 720d    | __750 days__ |
+| Data-Type              | Description                                                            | Hot (Rollover) | Warm    | Cold    | __Delete__  |
+| :---                   |:---                                                                    | :---           | :---    | :---    | :---        |
+| **Traffic-Summary**    | Main index for traffic-monitor overview and primary dashboard          | 30GB / 7d      | 0d      | 12d     | __15d__     |
+| **Traffic-Details**    | Details in Traffic-Monitor for Policy, Headers and Payload reference   | 30GB / 7d      | 0d      | 12d     | __15d__     |
+| **Traffic-Trace**      | Trace-Messages belonging to an API-Request shown in Traffic-Monitor    | 30GB / 7d      | 0d      | 12d     | __15d__     |
+| **General-Trace**      | General trace messages, like Start- & Stop-Messages                    | 30GB / 7d      | 0d      | 12d     | __15d__     |
+| **Gateway-Monitoring** | System status information (CPU, HDD, etc.) from Event-Files            | 30GB / 60d     | 0d      | 90d     | __105d__    |
+| **Domain-Audit**       | Domain Audit-Information as configured in Admin-Node-Manager           | 10GB / 270d    | 270d    | 720d    | __750d__    |
 
 ### Configure the lifecycle
 
