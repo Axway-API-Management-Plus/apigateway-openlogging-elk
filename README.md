@@ -850,9 +850,9 @@ The configuration is defined here per data type (e.g. Summary, Details, Audit, .
 
 As of version 4.1.0, you can configure how long the indexed data should be kept in Elasticsearch. Before starting, you should read and understand the following information thoroughly, because once deleted, data cannot be recovered.  
 Individual API transactions are stored as documents in Elasticsearch Indices. However, it is not the case that individual documents are ultimately deleted again, instead it is always an entire index with millions of transactions/documents. Therefore, you can only control the retention period for an entire index, not per document.  
-When API transactions are stored in an index, the size of the index increases accordingly. To prevent an index from growing infinitely, it can be rolled over after a certain time. A new active index is created, which is used to write the data. This replaces the old index, which is only used for reading. This process is called rollover.  
+When API transactions are stored in an index, the size of the index increases accordingly. To prevent an index from growing infinitely, it can be rolled over after a certain time. A new active index is created, which is used to write the data. This replaces the old index, which is only used for reading. This process is called [rollover](https://www.elastic.co/guide/en/elasticsearch/reference/current/index-rollover.html).  
 
-In order not to have to control this process manually, there are so-called Index Lifecycle Management (ILM) policies in Elasticsearch, which perform the rollover based on defined rules and then send the index through further phases for various purposes.  
+In order not to have to control this process manually, there are so-called [Index Lifecycle Management](https://www.elastic.co/guide/en/elasticsearch/reference/current/index-lifecycle-management.html) (ILM) policies in Elasticsearch, which perform the rollover based on defined rules and then send the index through further phases for various purposes.  
 
 These ILM policies are configured automatically by the solution with default values and are stored and managed for each index in Elasticsearch. The default values result in the data being available for at least 2 weeks.  
 
@@ -867,37 +867,57 @@ Here is an example:
                 "max_age": "7d",
                 "max_size": "15gb"
             }, 
-            "days": "7d"
+            "retentionPeriod": "7d"
         }, 
         "apigw-traffic-details": {
             "rollover": {
                 "max_age": "7d",
                 "max_size": "15gb"
             }, 
-            "days": "7d"
+            "retentionPeriod": "6d"
         }, 
         "apigw-traffic-trace": {
             "rollover": {
                 "max_age": "7d",
                 "max_primary_shard_size": "15gb"
             }, 
-            "days": "7d"
+            "retentionPeriod": "5d"
         }
     }
 }
 ```
 
 The configuration is defined per index and is divided into two areas. When should the rollover happen and how many days after the rollover should the data still be available.  
-The following figure illustrates the process:
+The following figure illustrates the process:  
 
 ![Lifecycle details](imgs/index-ilm-details.png)  
 
-It is important to understand that the time period until the rollover of an index is not exactly fixed.  
-For example, if you specify a maximum age and size for an index, then the index will be rolled over as soon as a condition is met. If the maximum size is too small for your transaction volume, then an index can meet the size condition in less than 24 hours and will be rolled over. If the maximum size is too large, the index will be rolled when it reaches the maximum age (e.g. after 7 days).  
-So how long the data is available from the very beginning to the end is the sum of the period from the index's initial creation to the rollover plus the period until the delete. As the rollover date cannot be defined exactly, you need to monitor your system accordingly and adjust the lifecycle accordingly to get the desired retention time.  
-__Keep in mind: Data is only guaranteed to be available for the period after rollover.__   
+__1. Create your rention period config file__  
 
-Please note:  
+Create a new file for your retention period configuration. For example: `config/custom-retention-period.json`. As a template, you can use the file: `config/my-retention-period-sample.json`. 
+
+__2. Define the rollover__  
+
+It is important to understand that the time period until the rollover of an index is not exactly fixed.  
+For example, if you specify a maximum age and size for an index, then the index will be rolled over as soon as a condition is met.  
+
+- If the maximum size is too small for your transaction volume, then an index can meet the size condition in less than 24 hours and will be rolled over. 
+- If the maximum size is too large, the index will be rolled when it reaches the maximum age (e.g. after 7 days).  
+
+So how long the data is available from the very beginning to the end of an index is the sum of the period from the index's initial creation to the rollover __plus__ the period until the delete. As the rollover date cannot be defined exactly, you need to monitor your system accordingly and adjust the lifecycle accordingly to get the desired retention time.  
+
+You can use the following conditions for the rollover:
+ - `max_age`: Defines the maximum age of an index until it is rolled over
+ - `max_size`: The maxium index size. As an index has a Primary and Replica the required disk space is doubled (max_size: 30gb turns it 60gb disk space used)
+ - `max_primary_shard_size`: Starting with an Elasticsearch version 7.13, you can also define the maximum shard size of an index. All indexes , except apigw-management-kpis and apigw-domainaudit, have 5 shards. So you have to multiply the specified size by 5.
+
+For more information please read: [ILM Rollover options](https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-rollover.html#ilm-rollover-options)
+
+__3. Define the retention period__  
+
+With the parameter: `retentionPeriod` you define the time period for which the data is guaranteed to be available. As already described, the time until the rollover of the index adds to this. You can specify only days here.
+
+Further notes:  
 - Changes to the index lifecycle have no influence on indices that have already been rolled over, as these have already entered lifecycle management
 - Indexes should not be too small, as this increases the load on Elasticsearch too much. 
   - For each active index there are 5 Primary- and 5 Replica-Shards. 
