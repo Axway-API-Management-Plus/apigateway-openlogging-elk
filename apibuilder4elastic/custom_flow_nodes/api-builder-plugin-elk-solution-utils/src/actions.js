@@ -52,6 +52,8 @@ async function getIndexConfig(params, options) {
 	if(indexConfig.ilm == undefined || indexConfig.ilm.config == undefined) {
 		indexConfig.ilm = { config: "NotSet" } ;
 	}
+	// Additionally add the name to the indexConfig
+	indexConfig.name = indexName;
 	return indexConfig;
 }
 
@@ -245,6 +247,77 @@ async function getPayloadFilename(params, options) {
 	return extractedFileName;
 }
 
+async function setupILMRententionPeriod(params, options) {
+	const { indexConfig, ilmConfig, rententionPeriodConfig } = params;
+	const { logger } = options;
+	if (!indexConfig) {
+		throw new Error('Missing required parameter: indexConfig');
+	}
+	if (!ilmConfig) {
+		throw new Error('Missing required parameter: ilmConfig');
+	}
+	if (!rententionPeriodConfig) {
+		logger.debug(`No retentionPeriodConfig is given. Using standard retention periods.`);
+		return options.setOutput('notChanged', ilmConfig);
+	}
+	if (!indexConfig.name) {
+		throw new Error('The name of the index is missing in the IndexConfig');
+	}
+	// Trying to read the retentionPeriodConfig file
+	if (!rententionPeriodConfig.retentionPeriods) {
+		throw new Error('rententionPeriodConfig must contain retentionPeriods object.');
+	}
+	const indexName = indexConfig.name;
+	// Check if a retentionPeriod is defined for the given index
+	if(!rententionPeriodConfig.retentionPeriods[indexName]) {
+		logger.debug(`No retention period configured for index: ${indexName}. Using default ILM-Configuration.`);
+		return options.setOutput('notChanged', ilmConfig);
+	} else {
+		var periodConfig = rententionPeriodConfig.retentionPeriods[indexName];
+		// Defines when an index should be rolled over which means it enters the WARM, COLD, DELETE lifecycle
+		if(periodConfig.rollover) {
+			logger.info(`Setup ILM rollover configuration for index: ${indexName} with config: ${JSON.stringify(periodConfig.rollover)}`);
+			var maxAge = parseInt(periodConfig.rollover.max_age);
+			if(periodConfig.rollover.max_age) {
+				ilmConfig.policy.phases.hot.actions.rollover.max_age = `${maxAge}d`;
+			}
+			if(periodConfig.rollover.max_size) {
+				const maxSize = parseInt(periodConfig.rollover.max_size);
+				if(isNaN(maxSize)) {
+					throw new Error(`The given max_size: ${periodConfig.rollover.max_size} for index: ${indexName} is not a valid number.`);
+				}
+				if(maxSize<5) {
+					throw new Error(`The given max_size: ${maxSize} for index: ${indexName} is too small. Please configure at least 5GB.`);
+				}
+				ilmConfig.policy.phases.hot.actions.rollover.max_size = `${maxSize}gb`;
+			}
+			if(periodConfig.rollover.max_primary_shard_size) {
+				const maxPrimaryShardSize = parseInt(periodConfig.rollover.max_primary_shard_size);
+				if(isNaN(maxPrimaryShardSize)) {
+					throw new Error(`The given max_primary_shard_size: ${periodConfig.rollover.max_primary_shard_size} for index: ${indexName} is not a valid number.`);
+				}
+				if(maxPrimaryShardSize<5) {
+					throw new Error(`The given max_primary_shard_size: ${maxPrimaryShardSize} for index: ${indexName} is too small. Please configure at least 5GB.`);
+				}
+				ilmConfig.policy.phases.hot.actions.rollover.max_primary_shard_size = `${maxSize}gb`;
+			}
+			
+		}
+		// The single value period is distributed across the lifecycle stages COLD AND DELETED. WARM is not considered for now, as an rolled over index should 
+		// move to WARM immediatly after roll-over. This might be enhanced later if needed with extra config options instead of days only
+		if(periodConfig.days) {
+			var givenDays = parseInt(periodConfig.days);
+			logger.info(`Setup ILM retention period for index: ${indexName} based on ${givenDays} number of days.`);
+			// The given number of days is distrbuted evenly for stages COLD & DELETE
+			var coldDays = Math.round(givenDays / 2); // It stay for a while warm before it goes to COLD
+			var deleteDays = givenDays; // It stay for a while in COLD before delete
+			ilmConfig.policy.phases.cold.min_age = `${coldDays}d`;
+			ilmConfig.policy.phases.delete.min_age = `${deleteDays}d`;
+		}
+	}
+	return ilmConfig;
+}
+
 async function getHostname(params, options) {
 	const hostname = os.hostname();
 	options.logger.debug(`API-Builder process is running on host: ${hostname}`);
@@ -257,5 +330,6 @@ module.exports = {
 	createIndices, 
 	updateRolloverAlias,
 	getPayloadFilename,
-	getHostname
+	getHostname,
+	setupILMRententionPeriod
 };

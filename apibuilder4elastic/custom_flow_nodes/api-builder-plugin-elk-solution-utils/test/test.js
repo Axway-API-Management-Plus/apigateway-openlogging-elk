@@ -73,30 +73,33 @@ describe('flow-node elk-solution-utils', () => {
 
 		it('should succeed with a valid index name given in params.indexName', async () => {
 			var indexConfigs = JSON.parse(fs.readFileSync('./test/testConfig/test_index_config.json'), null);
-			var expectedConfig = indexConfigs['test-index-name'];
+			var expectedConfig = JSON.parse(fs.readFileSync('./test/testConfig/test_index_config.json'), null)['test-index-name'];
 			const { value, output } = await flowNode.getIndexConfig({ data: {params: {indexName: 'test-index-name'} }, indexConfigs: indexConfigs });
 
 			expectedConfig.rollup = { config: "NotSet" } ;
+			expectedConfig.name = 'test-index-name' ;
 			expect(value).to.deep.equal(expectedConfig);
 			expect(output).to.equal('next');
 		});
 
 		it('should succeed with a valid index name given in indexName', async () => {
 			var indexConfigs = JSON.parse(fs.readFileSync('./test/testConfig/test_index_config.json'), null);
-			var expectedConfig = indexConfigs['test-index-name'];
+			var expectedConfig = JSON.parse(fs.readFileSync('./test/testConfig/test_index_config.json'), null)['test-index-name'];
 			const { value, output } = await flowNode.getIndexConfig({ data: {indexName: 'test-index-name'}, indexConfigs: indexConfigs });
 
 			expectedConfig.rollup = { config: "NotSet" } ;
+			expectedConfig.name = 'test-index-name' ;
 			expect(value).to.deep.equal(expectedConfig);
 			expect(output).to.equal('next');
 		});
 
 		it('should add defaults for rollup jobs', async () => {
 			var indexConfigs = JSON.parse(fs.readFileSync('./test/testConfig/test_index_config.json'), null);
-			var expectedConfig = indexConfigs['test-index-name'];
+			var expectedConfig = JSON.parse(fs.readFileSync('./test/testConfig/test_index_config.json'), null)['test-index-name'];
 			const { value, output } = await flowNode.getIndexConfig({ data: {indexName: 'test-index-name'}, indexConfigs: indexConfigs });
 
 			expectedConfig.rollup = { config: "NotSet" } ;
+			expectedConfig.name = 'test-index-name' ;
 			expect(value).to.deep.equal(expectedConfig);
 			expect(output).to.equal('next');
 		});

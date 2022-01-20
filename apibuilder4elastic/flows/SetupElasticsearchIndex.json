@@ -284,7 +284,7 @@
 			"outputs": {
 				"next": {
 					"routes": [
-						"mustache.1"
+						"elk-solution-utils.2"
 					],
 					"context": "$.ilmPolicyBody",
 					"metaName": "Next"
@@ -449,7 +449,8 @@
 				"next": {
 					"context": "$.delayed",
 					"routes": [
-						"file.2"
+						"file.2",
+						"file.3"
 					],
 					"metaName": "Next"
 				}
@@ -705,15 +706,15 @@
 					"name": "data",
 					"type": "jsonpath",
 					"value": "$",
-					"metaName": "data",
-					"metaDescription": "The value to apply as the `data` argument to the JavaScript code. For objects and arrays, `data` is passed by reference."
+					"metaName": "Data",
+					"metaDescription": "The value to apply as the `data` argument of the JavaScript code. For objects and arrays, `data` is passed by reference."
 				},
 				{
 					"name": "code",
 					"type": "string",
 					"value": "\"if(!data.error.message.startsWith(\\\"No index found to rollover for alias:\\\")) {\\n    throw new Error(data.error);\\n  } else {\\n    return;\\n  }\"",
-					"metaName": "code",
-					"metaDescription": "A JavaScript function body. Supports `await` and returning promises."
+					"metaName": "Code",
+					"metaDescription": "A JavaScript function body. Supports `await` and returning promises. `data` is the value of the Data parameter. `logger` is the API Builder logger. See the docs for more info: https://docs.axway.com/bundle/api-builder/page/docs/developer_guide/flows/flow_nodes/javascript_flow_node/index.html"
 				}
 			],
 			"outputs": {
@@ -813,6 +814,101 @@
 				}
 			},
 			"metaMethod": "Shutdown"
+		},
+		"elk-solution-utils.2": {
+			"type": "nodehandler://api-builder-plugin-elk-solution-utils/elk-solution-utils",
+			"name": "Setup ILM Retention-Period",
+			"method": "setupILMRententionPeriod",
+			"parameters": [
+				{
+					"name": "ilmConfig",
+					"type": "jsonpath",
+					"value": "$.ilmPolicyBody",
+					"metaName": "ILM-Config",
+					"metaDescription": "The ILM Config object that is supposed to be send to Elasticsearch to create or update the ILM-Policy. It is read from the $.indexConfig.ilm.config file and converted into an object."
+				},
+				{
+					"name": "indexConfig",
+					"type": "jsonpath",
+					"value": "$.indexConfig",
+					"metaName": "Index config",
+					"metaDescription": "Index configuration as defined in elasticsearch_config/index_config.json. It also contains the index name."
+				},
+				{
+					"name": "rententionPeriodConfig",
+					"type": "jsonpath",
+					"value": "$.retentionPeriodConfig",
+					"metaName": "Rentention period config",
+					"metaDescription": "Contains the path of the retention period config file. If not given, the standard ILM is used."
+				}
+			],
+			"outputs": {
+				"next": {
+					"routes": [
+						"mustache.1"
+					],
+					"context": "$.ilmPolicyBody",
+					"metaName": "Next"
+				},
+				"notChanged": {
+					"routes": [
+						"mustache.1"
+					],
+					"context": "$.ilmPolicyBody",
+					"metaName": "Not changed"
+				},
+				"error": {
+					"routes": [
+						"http.3"
+					],
+					"context": "$.error",
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Setup ILM Rentention-Period"
+		},
+		"file.3": {
+			"type": "nodehandler://@axway-api-builder-ext/api-builder-plugin-fn-file/file",
+			"name": "Read retention period config",
+			"method": "readFile",
+			"parameters": [
+				{
+					"name": "filename",
+					"type": "jsonpath",
+					"value": "$.config.retentionPeriodConfigFile",
+					"metaName": "Source filename",
+					"metaDescription": "The filename to read."
+				},
+				{
+					"name": "parseJson",
+					"type": "boolean",
+					"value": "true",
+					"metaName": "Parse JSON",
+					"metaDescription": "Turn this option if you are reading s JSON-File and would like to parse it into a JS-Object."
+				}
+			],
+			"outputs": {
+				"next": {
+					"routes": [
+						"elk-solution-utils.2"
+					],
+					"context": "$.retentionPeriodConfig",
+					"metaName": "Next"
+				},
+				"notFound": {
+					"routes": [],
+					"context": "$.result",
+					"metaName": "Not found"
+				},
+				"error": {
+					"routes": [
+						"http.3"
+					],
+					"context": "$.error",
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Read file"
 		}
 	}
 }

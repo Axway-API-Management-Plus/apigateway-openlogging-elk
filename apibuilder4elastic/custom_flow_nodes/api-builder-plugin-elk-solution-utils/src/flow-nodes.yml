@@ -208,3 +208,45 @@ flow-nodes:
             properties:
               message:
                 type: string
+
+      setupILMRententionPeriod:
+        name: Setup ILM Rentention-Period
+        description: "Configures the given ILM-Policy according to the provided number of days."
+        parameters:
+          indexConfig:
+            name: Index config
+            description: "Index configuration as defined in elasticsearch_config/index_config.json. It also contains the index name."
+            required: true
+            schema:
+              type: object
+          rententionPeriodConfig:
+            name: Rentention period config
+            description: "Contains the path of the retention period config file. If not given, the standard ILM is used."
+            required: true
+            schema:
+              type: string
+          ilmConfig:
+            name: ILM-Config
+            description: "The ILM Config object that is supposed to be send to Elasticsearch to create or update the ILM-Policy. It is read from the $.indexConfig.ilm.config file and converted into an object."
+            required: true
+            schema:
+              type: object
+        outputs:
+          next:
+            name: Next
+            description: Returns the updated ILM-Configuration object.
+            context: $.ilmPolicyBody
+            schema:
+              type: object
+          notChanged:
+            name: Not changed
+            description: The given ILM-Policy has not changed, because either no rention period parameter is given or it defaults to 15 days.
+            context: $.ilmPolicyBody
+            schema:
+              type: object
+          error:
+            name: Error
+            description: An unexpected error happened
+            context: $.error
+            schema:
+              type: object

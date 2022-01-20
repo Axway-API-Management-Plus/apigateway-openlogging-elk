@@ -15,6 +15,7 @@ data:
   API_BUILDER_SSL_KEY: {{ default "config/certificates/apibuilder4elastic.key" .Values.apibuilder4elastic.ssl.key | quote }}
   API_BUILDER_LOCAL_API_LOOKUP_FILE: {{ default "" .Values.apibuilder4elastic.localAPILookup | quote}}
   AUTHZ_CONFIG: {{ default "" .Values.apibuilder4elastic.authzConfig | quote}}
+  RETENTION_PERIOD_CONFIG: {{ default "" .Values.apibuilder4elastic.retentionPeriodConfig | quote}}
   PAYLOAD_HANDLING_ENABLED: {{ default true .Values.apibuilder4elastic.payloadEnabled | quote }}
   MANAGEMENT_KPIS_ENABLED: {{ default true .Values.apibuilder4elastic.managementKPIsEnabled | quote }}
   LOG_LEVEL: {{ default "info" .Values.apibuilder4elastic.logLevel | quote }}

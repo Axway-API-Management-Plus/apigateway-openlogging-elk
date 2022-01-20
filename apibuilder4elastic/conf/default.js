@@ -33,6 +33,9 @@ module.exports = {
 	managementKPIsInterval: process.env.MANAGEMENT_KPIS_INTERVAL || '3600000',
 	managementKPIsEnabled: ("false" == process.env.MANAGEMENT_KPIS_ENABLED) ? false : true, 
 
+	// This path is optional and if given used to adjust the ILM-Configuration.
+	retentionPeriodConfigFile: process.env.RETENTION_PERIOD_CONFIG || 'NotSet',
+
 	// These version are used, that Filebeat and Logstash are configured as required 
 	// by the API-Builder release
 	versions: {

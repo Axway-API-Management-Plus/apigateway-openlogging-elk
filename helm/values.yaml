@@ -132,6 +132,12 @@ apibuilder4elastic:
   # To learn more read the description of parameter AUTHZ_CONFIG
   # authzConfig: "./config/my-authorization-config.js"
 
+  # retentionPeriod sets the path to the retentionPeriod config file
+  # Use extraVolumes & extraVolumeMounts to mount your custom configuration into 
+  # the API-Builder4Elastic container.
+  # To learn more read the description of parameter RETENTION_PERIOD_CONFIG
+  # retentionPeriodConfig: "./config/my-retention-period-config.json"
+
   # payloadEnabled set to false, API-Builder will not try to read the payload files
   # Use extraVolumes & extraVolumeMounts to mount your payloads into 
   # the API-Builder4Elastic container.
