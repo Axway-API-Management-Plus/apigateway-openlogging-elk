@@ -17,7 +17,7 @@
         "apigw-traffic-trace": {
             "rollover": {
                 "max_age": "7d",
-                "max_size": "15gb"
+                "max_primary_shard_size": "15gb"
             }, 
             "days": "7d"
         }

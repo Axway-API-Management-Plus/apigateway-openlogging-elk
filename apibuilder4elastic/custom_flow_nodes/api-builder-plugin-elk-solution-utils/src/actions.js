@@ -275,9 +275,8 @@ async function setupILMRententionPeriod(params, options) {
 	} else {
 		var periodConfig = rententionPeriodConfig.retentionPeriods[indexName];
 		// Defines when an index should be rolled over which means it enters the WARM, COLD, DELETE lifecycle
-		debugger;
 		if(periodConfig.rollover) {
-			logger.info(`Changing ILM rollover configuration for index: ${indexName} with config: ${JSON.stringify(periodConfig.rollover)}`);
+			logger.info(`Setup ILM rollover configuration for index: ${indexName} with config: ${JSON.stringify(periodConfig.rollover)}`);
 			var maxAge = parseInt(periodConfig.rollover.max_age);
 			if(periodConfig.rollover.max_age) {
 				ilmConfig.policy.phases.hot.actions.rollover.max_age = `${maxAge}d`;
@@ -292,12 +291,23 @@ async function setupILMRententionPeriod(params, options) {
 				}
 				ilmConfig.policy.phases.hot.actions.rollover.max_size = `${maxSize}gb`;
 			}
+			if(periodConfig.rollover.max_primary_shard_size) {
+				const maxPrimaryShardSize = parseInt(periodConfig.rollover.max_primary_shard_size);
+				if(isNaN(maxPrimaryShardSize)) {
+					throw new Error(`The given max_primary_shard_size: ${periodConfig.rollover.max_primary_shard_size} for index: ${indexName} is not a valid number.`);
+				}
+				if(maxPrimaryShardSize<5) {
+					throw new Error(`The given max_primary_shard_size: ${maxPrimaryShardSize} for index: ${indexName} is too small. Please configure at least 5GB.`);
+				}
+				ilmConfig.policy.phases.hot.actions.rollover.max_primary_shard_size = `${maxSize}gb`;
+			}
+			
 		}
 		// The single value period is distributed across the lifecycle stages COLD AND DELETED. WARM is not considered for now, as an rolled over index should 
 		// move to WARM immediatly after roll-over. This might be enhanced later if needed with extra config options instead of days only
 		if(periodConfig.days) {
 			var givenDays = parseInt(periodConfig.days);
-			logger.info(`Changing ILM retention period for index: ${indexName} based on ${givenDays} number of days.`);
+			logger.info(`Setup ILM retention period for index: ${indexName} based on ${givenDays} number of days.`);
 			// The given number of days is distrbuted evenly for stages COLD & DELETE
 			var coldDays = Math.round(givenDays / 2); // It stay for a while warm before it goes to COLD
 			var deleteDays = givenDays; // It stay for a while in COLD before delete

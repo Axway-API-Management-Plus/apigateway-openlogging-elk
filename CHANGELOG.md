@@ -21,13 +21,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - `LOGSTASH_ELASTICSEARCH_SSL_VERIFICATIONMODE` to configure Logstash to Elasticsearch certificate validation [#156](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/156)
   - `FILEBEAT_ELASTICSEARCH_SSL_VERIFICATIONMODE` to configure Filebeat to Elasticsearch certificate validation [#156](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/156)
   - Helm chart supports this by the new new parameter: `validateElasticsearchCertificate` per component [#156](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/156)
+- Support to configure the data retention period of indexed data instead of using hardcoded ILM-Settings [#160](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/160)
 
 ### Fixed
 - APIBuilder4Elastic - The Swagger for this service is invalid - Duplicate operationId renamed [#158](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/158)
 
 ### Security
 - Custom-Flow-Nodes dependencies updated to solve security issue https://github.com/advisories/GHSA-74fj-2j2h-c42q
-- API-Builder version update to version Exeter
+- API-Builder version update to version Exeter to solve security issues
 
 ## [4.0.3] 2021-12-20
 ### Changed
