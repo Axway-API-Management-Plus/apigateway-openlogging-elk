@@ -835,16 +835,16 @@ Since new data is continuously stored in Elasticsearch in various indexes, these
 Since version 2.0.0, the solution uses the Elasticsearch [ILM](https://www.elastic.co/guide/en/elasticsearch/reference/current/index-lifecycle-management.html) feature for this purpose, which defines different lifecycle stages per index. The so-called ILM policies are automatically configured by the solution with default values using [configuration files](apibuilder4elastic/elasticsearch_config) and can be reviewed in Kibana. Beginning with version 4.1.0, you can also configure the lifecycle of the data yourself according to your requirements.  
 The indices pass through stages such as Hot, Warm, Cold which can be used to deploy different performance hardware per stage. This means that traffic details from two weeks ago no longer have to be stored on high-performance machines.  
 
-The configuration is defined here per data type (e.g. Summary, Details, Audit, ...). The following table gives an overview about the default values.  
+The configuration is defined here per data type (e.g. Summary, Details, Audit, ...). The following table gives an overview about the default values. The number of days that is crucial for the retention period is the delete days. This gives the guaranteed number of days that the data is guaranteed to be available. More information on how the lifecycle works can be found later in this section. 
 
-| Data-Type              | Description                                                            | Hot (Size/Days) | Warm    | Cold    | Delete  | Total   |
-| :---                   |:---                                                                    | :---            | :---    | :---    | :---    | :---    |
-| **Traffic-Summary**    | Main index for traffic-monitor overview and primary dashboard          | 30GB / 7 days   | 5 days  | 3 days  | 0 days  | 15 days |
-| **Traffic-Details**    | Details in Traffic-Monitor for Policy, Headers and Payload reference   | 30GB / 7 days   | 5 days  | 3 days  | 0 days  | 15 days |
-| **Traffic-Trace**      | Trace-Messages belonging to an API-Request shown in Traffic-Monitor    | 30GB / 7 days   | 5 days  | 3 days  | 0 days  | 15 days |
-| **General-Trace**      | General trace messages, like Start- & Stop-Messages                    | 30GB / 7 days   | 5 days  | 3 days  | 0 days  | 15 days |
-| **Gateway-Monitoring** | System status information (CPU, HDD, etc.) from Event-Files            | 30GB / 60 days  | 30 days | 15 days | 0 days  | 105 days|
-| **Domain-Audit**       | Domain Audit-Information as configured in Admin-Node-Manager           | 10GB / 270 days | 270 days| 720 days| 30 days | >3 years|
+| Data-Type              | Description                                                            | Hot (Rollover)  | Warm    | Cold    | __Delete__   |
+| :---                   |:---                                                                    | :---            | :---    | :---    | :---         |
+| **Traffic-Summary**    | Main index for traffic-monitor overview and primary dashboard          | 30GB / 7 days   | 0 days  | 12 days | __15 days__  |
+| **Traffic-Details**    | Details in Traffic-Monitor for Policy, Headers and Payload reference   | 30GB / 7 days   | 0 days  | 12 days | __15 days__  |
+| **Traffic-Trace**      | Trace-Messages belonging to an API-Request shown in Traffic-Monitor    | 30GB / 7 days   | 0 days  | 12 days | __15 days__  |
+| **General-Trace**      | General trace messages, like Start- & Stop-Messages                    | 30GB / 7 days   | 0 days  | 12 days | __15 days__  |
+| **Gateway-Monitoring** | System status information (CPU, HDD, etc.) from Event-Files            | 30GB / 60 days  | 0 days  | 90 days | __105 days__ |
+| **Domain-Audit**       | Domain Audit-Information as configured in Admin-Node-Manager           | 10GB / 270 days | 270 days| 720 days| __750 days__ |
 
 ### Configure the lifecycle
 
