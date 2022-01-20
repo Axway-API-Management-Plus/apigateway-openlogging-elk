@@ -832,10 +832,10 @@ So your alerts should report a critical alert before 90%. For more information, 
 ## Lifecycle Management
 
 Since new data is continuously stored in Elasticsearch in various indexes, these must of course be removed after a certain period of time.  
-Since version 2.0.0, the solution uses the Elasticsearch [ILM](https://www.elastic.co/guide/en/elasticsearch/reference/current/index-lifecycle-management.html) feature for this purpose, which defines different lifecycle stages per index. The so-called ILM policies are automatically configured by the solution using [configuration files](apibuilder4elastic/elasticsearch_config) and can be reviewed in Kibana.  
+Since version 2.0.0, the solution uses the Elasticsearch [ILM](https://www.elastic.co/guide/en/elasticsearch/reference/current/index-lifecycle-management.html) feature for this purpose, which defines different lifecycle stages per index. The so-called ILM policies are automatically configured by the solution with default values using [configuration files](apibuilder4elastic/elasticsearch_config) and can be reviewed in Kibana. Beginning with version 4.1.0, you can also configure the lifecycle of the data yourself according to your requirements.  
 The indices pass through stages such as Hot, Warm, Cold which can be used to deploy different performance hardware per stage. This means that traffic details from two weeks ago no longer have to be stored on high-performance machines.  
 
-The configuration is defined here per data type (e.g. Summary, Details, Audit, ...). The following table gives an overview.  
+The configuration is defined here per data type (e.g. Summary, Details, Audit, ...). The following table gives an overview about the default values.  
 
 | Data-Type              | Description                                                            | Hot (Size/Days) | Warm    | Cold    | Delete  | Total   |
 | :---                   |:---                                                                    | :---            | :---    | :---    | :---    | :---    |
@@ -846,9 +846,65 @@ The configuration is defined here per data type (e.g. Summary, Details, Audit, .
 | **Gateway-Monitoring** | System status information (CPU, HDD, etc.) from Event-Files            | 30GB / 60 days  | 30 days | 15 days | 0 days  | 105 days|
 | **Domain-Audit**       | Domain Audit-Information as configured in Admin-Node-Manager           | 10GB / 270 days | 270 days| 720 days| 30 days | >3 years|
 
+### Configure the lifecycle
+
+As of version 4.1.0, you can configure how long the indexed data should be kept in Elasticsearch. Before starting, you should read and understand the following information thoroughly, because once deleted, data cannot be recovered.
+Individual API transactions are stored as documents in Elasticsearch Indices. However, it is not the case that individual documents are ultimately deleted again, instead it is always an entire index with millions of transactions/documents. Therefore, you can only control the retention period for an entire index, not per document.
+When API transactions are stored in an index, the size of the index increases accordingly. To prevent an index from growing infinitely, it can be rolled over after a certain time. A new active index is created, which is used to write the data. This replaces the old index, which is only used for reading. This process is called rollover.
+
+In order not to have to control this process manually, there are so-called Index Lifecycle Management (ILM) policies in Elasticsearch, which perform the rollover based on defined rules and then send the index through further phases for various purposes.
+
+These ILM policies are configured automatically by the solution with default values and are stored and managed for each index in Elasticsearch. The default values result in the data being available for at least 2 weeks. 
+
+If you would like to customize the lifecycle, then you can provide a corresponding configuration file from version 4.1.0 and use the parameter: `RETENTION_PERIOD_CONFIG`. This is used to adapt the ILM policies accordingly.
+
+Here is an example:
+```json
+{
+    "retentionPeriods": {
+        "apigw-traffic-summary": {
+            "rollover": {
+                "max_age": "7d",
+                "max_size": "15gb"
+            }, 
+            "days": "7d"
+        }, 
+        "apigw-traffic-details": {
+            "rollover": {
+                "max_age": "7d",
+                "max_size": "15gb"
+            }, 
+            "days": "7d"
+        }, 
+        "apigw-traffic-trace": {
+            "rollover": {
+                "max_age": "7d",
+                "max_primary_shard_size": "15gb"
+            }, 
+            "days": "7d"
+        }
+    }
+}
+```
+
+The configuration is defined per index and is divided into two areas. When should the rollover happen and how many days after the rollover should the data still be available.  
+The following figure illustrates the process:
+
+![Lifecycle details](imgs/index-ilm-details.png)  
+
+It is important to understand that the time period until the rollover of an index is not exactly fixed. 
+For example, if you specify a maximum age and size for an index, then the index will be rolled over as soon as a condition is met. If the maximum size is too small for your transaction volume, then an index can meet the size condition in less than 24 hours and will be rolled over. If the maximum size is too large, the index will be rolled when it reaches the maximum age (e.g. after 7 days). 
+So how long the data is available from the very beginning to the end is the sum of the period from the index's initial creation to the rollover plus the period until the delete. As the rollover date cannot be defined exactly, you need to monitor your system accordingly and adjust the lifecycle accordingly to get the desired retention time. 
+__Keep in mind: Data is only guaranteed to be available for the period after rollover.__  
+
 Please note:  
-:point_right: It's optional to use different hardware per stage  
-:point_right: Do not change the ILM/Modify the ILM-Policies manually, as they are configured automatically. In a later version, the solution will provide options to customize the time range as needed without breaking updates.  
+- Changes to the index lifecycle have no influence on indices that have already been rolled over, as these have already entered lifecycle management
+- Indexes should not be too small, as this increases the load on Elasticsearch too much. 
+  - For each active index there are 5 Primary- and 5 Replica-Shards. 
+  - Each shard corresponds to a Lucene instance, which consumes corresponding resources. 
+  - The smaller an index, the more indexes, the more shards, the more resources are needed. 
+  - Elastic's recommendation is 30GB. The solution does not allow index size below 5GB.
+- It's optional to use different hardware per stage  
 
 <p align="right"><a href="#table-of-content">Top</a></p>
 
