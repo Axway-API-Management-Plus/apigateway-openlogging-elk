@@ -449,8 +449,7 @@
 				"next": {
 					"context": "$.delayed",
 					"routes": [
-						"file.2",
-						"file.3"
+						"condition.2"
 					],
 					"metaName": "Next"
 				}
@@ -909,6 +908,65 @@
 				}
 			},
 			"metaMethod": "Read file"
+		},
+		"condition.2": {
+			"type": "nodehandler://axway-flow/condition",
+			"name": "ILM-Config NotSet?",
+			"method": "equals",
+			"parameters": [
+				{
+					"name": "source",
+					"type": "jsonpath",
+					"value": "$.indexConfig.ilm.config"
+				},
+				{
+					"name": "value",
+					"type": "string",
+					"value": "\"NotSet\""
+				}
+			],
+			"outputs": {
+				"true": {
+					"routes": [
+						"logger.1"
+					],
+					"context": "$.equals"
+				},
+				"false": {
+					"routes": [
+						"file.3",
+						"file.2"
+					],
+					"context": "$.equals"
+				}
+			}
+		},
+		"logger.1": {
+			"type": "nodehandler://@axway/api-builder-plugin-fn-logger/logger",
+			"name": "Log Message",
+			"method": "log",
+			"parameters": [
+				{
+					"name": "level",
+					"type": "string",
+					"value": "\"debug\""
+				},
+				{
+					"name": "message",
+					"type": "string",
+					"value": "\"Index has no ILM-Config defined.\""
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": null,
+					"routes": []
+				},
+				"error": {
+					"context": "$.error",
+					"routes": []
+				}
+			}
 		}
 	}
 }
