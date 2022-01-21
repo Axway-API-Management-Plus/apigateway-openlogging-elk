@@ -1,17 +1,21 @@
 ## Create a release
 
-1. Merge develop into master
-- make sure no .only or debugger instruction is still in the code
+### 1. Merge develop into master
+  - make sure no .only or debugger instruction is still in the code
 
-2. Bump version number
+### 2. Update Helm dependencies
+- helm repo update 
+- helm dep update
 
+### 3. Bump version number
 - helm/values.yaml
-  - `"imageTag": "v3.0.0",`
+  - Set the `"imageTag": "v3.0.0",` for APIBuilder4Elastic
 - helm/Chart.yaml
-  - `"version": "v3.0.0",`
-  - `"appVersion": "v3.0.0",`
+  - Set the Helm-Chart `"version": "v3.0.0",`
+  - Set the App `"appVersion": "v3.0.0",` to the same version number
 - helm/README.md
-  - Check the versions
+  - Replace previous version with new version
+  - For example:
   - `helm install -n apim-e .... teway-openlogging-elk/releases/download/v3.0.0/helm-chart-apim4elastic-v3.0.0.tgz`
 - docker-compose.yml
   - `image: cwiechmann/apibuilder4elastic:v2.0.0`
@@ -23,14 +27,14 @@
 - README.md
   - `"version": "v2.0.0",`
 
-3. Modify the CHANGELOG.md
+### 4. Modify the CHANGELOG.md
 - Add/Verify recent changes
 - Set the release version and date
 
-4. Create the release
+### 5. Create the release
 - Create a new release on Github with the tag name: e.g. v2.0.2
 
-5. Merge back master to developer for next development iteration
+### 6. Merge back master to developer for next development iteration
 
 ## Run tests
 

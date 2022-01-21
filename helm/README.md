@@ -85,7 +85,7 @@ kubectl apply -n apim-elk -f https://raw.githubusercontent.com/Axway-API-Managem
 
 With Elasticsearch volumes and your `myvalues.yaml` file in place, you can start the installation:  
 ```
-helm install -n apim-elk -f myvalues.yaml axway-elk https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v4.0.3/helm-chart-apim4elastic-v4.0.3.tgz
+helm install -n apim-elk -f myvalues.yaml axway-elk https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v4.1.0/helm-chart-apim4elastic-v4.1.0.tgz
 ```
 👉 __Please note:__ The Helm Release-Name: __axway-elk__ is mandatory. Read [here](#why-helm-release-name-axway-elk) why.  
 
@@ -94,7 +94,7 @@ You may run the following commands to check the status of the deployment, pods, 
 // Check the installed release
 helm list -n apim-elk
 NAME            NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                           APP VERSION   
-axway-elk       apim-elk        1               2021-05-03 14:22:08.9325287 +0200 CEST  deployed        apim4elastic-4.0.3              4.0.3
+axway-elk       apim-elk        1               2021-05-03 14:22:08.9325287 +0200 CEST  deployed        apim4elastic-4.1.0              4.1.0
 
 // Check the pods, with Elasticsearch and Kibana enabled
 kubectl get pods -n apim-elk
@@ -542,7 +542,7 @@ Watch this video to see a demonstration how to update the Elastic-Stack on Kuber
 
 Example how to upgrade an existing release:  
 ```
-helm upgrade -n apim-elk -f myvalues.yaml axway-elk https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v4.0.3/helm-chart-apim4elastic-v4.0.3.tgz
+helm upgrade -n apim-elk -f myvalues.yaml axway-elk https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v4.1.0/helm-chart-apim4elastic-v4.1.0.tgz
 ```
 
 ## Required resources

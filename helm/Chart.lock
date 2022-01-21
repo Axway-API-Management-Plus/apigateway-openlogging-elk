@@ -1,18 +1,18 @@
 dependencies:
 - name: logstash
   repository: https://helm.elastic.co
-  version: 7.16.2
+  version: 7.16.3
 - name: filebeat
   repository: https://helm.elastic.co
-  version: 7.16.2
+  version: 7.16.3
 - name: elasticsearch
   repository: https://helm.elastic.co
-  version: 7.16.2
+  version: 7.16.3
 - name: kibana
   repository: https://helm.elastic.co
-  version: 7.16.2
+  version: 7.16.3
 - name: apm-server
   repository: https://helm.elastic.co
-  version: 7.16.2
-digest: sha256:19dd7196acdfecab08ba9fce400d23ff0422edaf28d354923677ee5c1b4ddcd0
-generated: "2022-01-14T09:14:46.2144341+01:00"
+  version: 7.16.3
+digest: sha256:8259e4669385b60f221b98f5b13780bc9cfffcff35d28f79988be68a49ba4cf5
+generated: "2022-01-21T08:07:22.0239306+01:00"

@@ -4,12 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased] 
+## [4.1.0] 2022-01-21
 ### Changed
 - Updated default Elastic-Stack version from 7.16.2 to 7.16.3 which delivers log4j 2.17.1
 - No longer possible to start an Elasticsearch-Node that is not part of ELASTICSEARCH_NODES [#155](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/155)
 - Helm chart deploys 2 Kibana replicas by default instead of 1
-- Updated API-Builder to version Caracas
+- Adjusted ILM-Policies to get more suiteable standard index lifecycle [#162](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/162)
+- Updated API-Builder to version Exeter
 - Updated API-Builder custom flow node libraries
 
 ### Added
