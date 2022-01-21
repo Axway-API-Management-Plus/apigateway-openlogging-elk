@@ -296,8 +296,8 @@ async function setupILMRententionPeriod(params, options) {
 				if(isNaN(maxPrimaryShardSize)) {
 					throw new Error(`The given max_primary_shard_size: ${periodConfig.rollover.max_primary_shard_size} for index: ${indexName} is not a valid number.`);
 				}
-				if(maxPrimaryShardSize<5) {
-					throw new Error(`The given max_primary_shard_size: ${maxPrimaryShardSize} for index: ${indexName} is too small. Please configure at least 5GB.`);
+				if(maxPrimaryShardSize<1) {
+					throw new Error(`The given max_primary_shard_size: ${maxPrimaryShardSize} for index: ${indexName} is too small. Please configure at least 1GB.`);
 				}
 				ilmConfig.policy.phases.hot.actions.rollover.max_primary_shard_size = `${maxPrimaryShardSize}gb`;
 			}
