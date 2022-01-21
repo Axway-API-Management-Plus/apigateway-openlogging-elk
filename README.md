@@ -154,7 +154,7 @@ Please select the Axway- or Community-Supported release. The community release a
 
 #### Community-Version
 ```
-wget --no-check-certificate https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v4.0.3/axway-apim-elk-v4.0.3.tar.gz -O - | tar -xvz
+wget --no-check-certificate https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v4.1.0/axway-apim-elk-v4.1.0.tar.gz -O - | tar -xvz
 ```
 
 #### Axway Supported-Version
@@ -839,12 +839,12 @@ The configuration is defined here per data type (e.g. Summary, Details, Audit, .
 
 | Data-Type              | Description                                                            | Hot (Rollover) | Warm    | Cold    | __Delete__  |
 | :---                   |:---                                                                    | :---           | :---    | :---    | :---        |
-| **Traffic-Summary**    | Main index for traffic-monitor overview and primary dashboard          | 30GB / 7d      | 0d      | 12d     | __15d__     |
-| **Traffic-Details**    | Details in Traffic-Monitor for Policy, Headers and Payload reference   | 30GB / 7d      | 0d      | 12d     | __15d__     |
-| **Traffic-Trace**      | Trace-Messages belonging to an API-Request shown in Traffic-Monitor    | 30GB / 7d      | 0d      | 12d     | __15d__     |
-| **General-Trace**      | General trace messages, like Start- & Stop-Messages                    | 30GB / 7d      | 0d      | 12d     | __15d__     |
-| **Gateway-Monitoring** | System status information (CPU, HDD, etc.) from Event-Files            | 30GB / 60d     | 0d      | 90d     | __105d__    |
-| **Domain-Audit**       | Domain Audit-Information as configured in Admin-Node-Manager           | 10GB / 270d    | 270d    | 720d    | __750d__    |
+| **Traffic-Summary**    | Main index for traffic-monitor overview and primary dashboard          | 30GB / 7d      | 0d      | 5d      | __10d__     |
+| **Traffic-Details**    | Details in Traffic-Monitor for Policy, Headers and Payload reference   | 30GB / 7d      | 0d      | 5d      | __10d__     |
+| **Traffic-Trace**      | Trace-Messages belonging to an API-Request shown in Traffic-Monitor    | 30GB / 7d      | 0d      | 5d      | __10d__     |
+| **General-Trace**      | General trace messages, like Start- & Stop-Messages                    | 30GB / 7d      | 0d      | 5d      | __10d__     |
+| **Gateway-Monitoring** | System status information (CPU, HDD, etc.) from Event-Files            | 10GB / 30d     | 0d      | 50d     | __100d__    |
+| **Domain-Audit**       | Domain Audit-Information as configured in Admin-Node-Manager           | 10GB / 30d     | 0d      | 300d    | __750d__    |
 
 ### Configure the lifecycle
 

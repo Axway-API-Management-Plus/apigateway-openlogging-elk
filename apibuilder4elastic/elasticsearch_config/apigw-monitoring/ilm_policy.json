@@ -5,8 +5,8 @@
         "min_age": "0ms",
         "actions": {
           "rollover": {
-            "max_age": "60d",
-            "max_size": "30gb"
+            "max_age": "30d",
+            "max_size": "10gb"
           },
           "set_priority": {
             "priority": 100
@@ -31,7 +31,7 @@
         }
       },
       "cold": {
-        "min_age": "90d",
+        "min_age": "50d",
         "actions": {
           "set_priority": {
             "priority": 0
@@ -39,7 +39,7 @@
         }
       },
       "delete": {
-        "min_age": "105d",
+        "min_age": "100d",
         "actions": {
           "delete": {
             "delete_searchable_snapshot": true
