@@ -5,9 +5,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+- Improved documentation to point out default parameters are not production ready [#163](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/163)
+- Added a warning when running Logstash or Elasticsearch with default minimal parameters (when using docker-compose) [#163](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/163)
 
 ### Security
-- Mocha updated to version 9.2.0 to solve https://nvd.nist.gov/vuln/detail/CVE-2021-23566
+- Mocha in API-Builder4Elastic updated to version 9.2.0 to solve https://nvd.nist.gov/vuln/detail/CVE-2021-23566
 
 ## [4.1.0] 2022-01-21
 ### Changed
