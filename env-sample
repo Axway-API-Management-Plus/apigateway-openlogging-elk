@@ -7,8 +7,14 @@
 # - All services are using HTTPS
 # - Using an anonoymus user to communicate with Elasticsearch
 #
-# For a production environment it's recommended to configure users in Elasticsearch and
-# configure them in this configuration file.
+# For a production environment it's recommended to configure 
+# - set the ELASTICSEARCH_CLUSTERNAME if the default: Axway APIM does not fit
+# - setup the parameters: ES_JAVA_OPTS and LS_JAVA_OPTS
+# - set the ELASTICSEARCH_CLUSTER_UUID
+# - setup users in Elasticsearch and configure them in this configuration file.
+# - set the GATEWAY_NAME for each API-Gateway running Filebeat
+# - set the LOGSTASH_NODE_NAME when running multiple Logstash-Hosts
+# - Consider to enable APM - See parameter APM_ENABLED
 #
 # It's also supported to run this solution with dedicated or existing services. For instance
 # using an Elasticsearch-Cluster, Kibana (7.x) or Filebeat installed as a software
@@ -295,7 +301,7 @@ MEMCACHED=memcached:11211
 # correct.
 # Used-By: Elasticsearch
 # ES_JAVA_OPTS=-Xms8g -Xmx8g
-ES_JAVA_OPTS=-Xms1g -Xmx1g
+ES_JAVA_OPTS=-Xmx1g -Xms1g
 # Or use it to setup the temp directory for Elasticsearch. Keep in mind, a directory within the
 # container.
 # ES_JAVA_OPTS=-Xms8g -Xmx8g -Djava.io.tmpdir=/var/tmp
@@ -533,7 +539,7 @@ ELASTIC_VERSION=7.16.3
 # APM_VALIDATE_SERVER_CERT=false
 
 # ----------------------------------------------------------------------------------------------
-# Certificate authory used by API-Builder4Elastic to validate the server certificate.
+# Certificate authory used by API-Builder4Elastic to validate the APM server certificate.
 # Used-By: API-Builder4Elastic
 # Defaults to the CA used by all components.
 # APM_SERVER_CA=config/certificates/ca.crt

@@ -129,7 +129,7 @@ Version __7.7-20200130__ is required due to some Dateformat changes in the Open-
 ### Elastic stack
 
 The solution is based on the Elastic-Stack (Elasticsearch, Logstash, Beats and Kibana). It can run completely in docker containers, which for example are started on the basis of docker-compose.yaml or run in a Docker Orchestration Framework.  
-It is also possible to use existing components such as an Elasticsearch cluster or a Kibana instance. With that you have the flexiblity to used for instance an Elasticsearch service at AWS or Azure or use Filebeat manually installed on the API-Gateway machines. The solution has been tested with Elasticsearch >7.10.x version.
+It is also possible to use existing components such as an Elasticsearch cluster or a Kibana instance. With that you have the flexiblity to use for instance an Elasticsearch service at AWS or Azure or use Filebeat manually installed on the API-Gateway machines. The solution has been tested with Elasticsearch >7.10.x version.
 
 ## Getting started
 
@@ -137,7 +137,7 @@ It is also possible to use existing components such as an Elasticsearch cluster 
 
 The basic setup explains the individual components, how they can be deployed and play together. After completing the basic setup you will have a single node Elasticsearch cluster including a Kibana instance running. This cluster receives data from 1 to N API-Gateways via Filebeat, Logstash, API-Builder and is accessible via the Traffic Monitor. You can also use the sample Kibana Dashboard or create your own visualizations.  
 You can extend this setup, then expand it to a production cluster.
-To test this solution, it is possible to deploy all components, incl. API-Management on a single machine, which should then have at least 18 GB RAM available. _(For instance like the Axway internal API-Management reference environment.)_
+To test this solution, it is possible to deploy all components, incl. API-Management on a single machine, which should then have at least 16 GB RAM available. _(For instance like the Axway internal API-Management reference environment.)_ For this the solution is delivered with minimal parameters as default. For a production environment, check the parameters mentioned in the `env-sample` at the beginning and set them if necessary. 
 
 ### Preparations
 
@@ -292,7 +292,7 @@ GATEWAY_NAME=API-Gateway 3
 GATEWAY_REGION=US
 ```
 Audit-Logs are optional. If you don't want them indexed just point to an invalid folder.  
-You can find more information for each parameter in the env-sample.  
+You can find more information for each parameter in the `env-sample`.  
 
 To start Filebeat: 
 ```
