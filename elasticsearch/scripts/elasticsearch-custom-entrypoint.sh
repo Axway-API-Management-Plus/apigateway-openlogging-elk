@@ -96,5 +96,9 @@ if [ "${ELASTICSEARCH_ANONYMOUS_ENABLED}" = "true" ]; then
     anonymousRoles="-E xpack.security.authc.anonymous.username=anonymous"
 fi
 
+if [ -z "${ES_JAVA_OPTS}" -o "${ES_JAVA_OPTS}" == "-Xmx1g -Xms1g" ];then
+    echo "WARN: >>>> The parameter ES_JAVA_OPTS is not set. Please check and set this parameter for a production environment. <<<<<"
+fi
+
 # Finally call the original Docker-Entrypoint
 /usr/local/bin/docker-entrypoint.sh elasticsearch ${params} ${seedHosts} ${initialMasterNode} ${anonymousUsername} ${anonymousRoles}
