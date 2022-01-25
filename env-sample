@@ -17,7 +17,7 @@
 # - Consider to enable APM - See parameter APM_ENABLED
 #
 # It's also supported to run this solution with dedicated or existing services. For instance
-# using an Elasticsearch-Cluster, Kibana (7.x) or Filebeat installed as a software
+# using an Elasticsearch-Cluster, Kibana (>=7.10.x) or Filebeat installed as a software
 # installation (Filebeat should be 7.x).
 # For that, just disable the services in this docker-compose file you don't need.
 #
