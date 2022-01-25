@@ -36,6 +36,18 @@
 
 ### 6. Merge back master to developer for next development iteration
 
+## Export Kibana Dashboards
+
+In Kibana --> Stack Management --> Saved Objects
+
+Select the tags `apis` to export the API-Overview dashboard into file: `Axway-api-overview.ndjson`
+Select the tags `kpis` to export the API-Overview dashboard into file: `Axway-api-management-kpis.ndjson`
+
+Make sure: __Include related objects__ is selected and overwrite the existing file.
+
+Take care about the following error: _Your file is downloading in the background. Some related objects could not be found. Please see the last line in the exported file for a list of missing objects._  
+Open the exported file and check the missingRefCount & missingReferences. If everything looks okay you may fix the problem manually and try to reimport it.
+
 ## Run tests
 
 ### Run Integration-Tests
