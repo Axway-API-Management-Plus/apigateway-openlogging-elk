@@ -14,6 +14,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Security
 - Mocha in API-Builder4Elastic updated to version 9.2.0 to solve https://nvd.nist.gov/vuln/detail/CVE-2021-23566
 
+### Security
+- Updated API-Builder to version Flint (to solve security issues)
+- Updated API-Builder custom flow node libraries (to solve security issues)
+
 ## [4.1.0] 2022-01-21
 ### Changed
 - Updated default Elastic-Stack version from 7.16.2 to 7.16.3 which delivers log4j 2.17.1
