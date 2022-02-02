@@ -13,8 +13,7 @@ describe('Test group based API lookup', () => {
 	// Loads environment variables from .env-multiple-groups - which has multiple API-Managers (mocked) configured 
 	const envFilePath = path.join(__dirname, '.env-multiple-groups');
 	if (fs.existsSync(envFilePath)) {
-		delete process.env.API_MANAGER; // Otherwise it is not overwritten
-		envLoader.config({ path: envFilePath });
+		envLoader.config({ override: true, path: envFilePath });
 	}
 	// Delete the cached module 
 	decache('../config/axway-api-utils.default.js');

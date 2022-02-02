@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Added a warning when running Logstash or Elasticsearch with default minimal parameters (when using docker-compose) [#163](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/163)
 - Added a new visualization: Status by API to all API-Overview dashboards showing Success, Failure/Blocked and Failed status per API
 - Added tag kpis to the KPI-Dashboard
+- Added new parameter: `API_MANAGER_ENABLED` to allow running the solution without an API-Manager at all
 
 ### Security
 - Mocha in API-Builder4Elastic updated to version 9.2.0 to solve https://nvd.nist.gov/vuln/detail/CVE-2021-23566

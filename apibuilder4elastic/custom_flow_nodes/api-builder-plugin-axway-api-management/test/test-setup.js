@@ -92,7 +92,7 @@ describe('Configuration parameter tests', () => {
 				expect(output).to.equal('error');
 			} catch(e) {
 				expect(e).to.be.an('Error')
-				.and.to.have.property('message', 'Error checking configured API-Manager(s). {"isValid":false,"default":{"url":"https://mocked-api-gateway:8175","username":"user","password":"invalid","isValid":false}}');
+				.and.to.have.property('message', 'Error checking configured API-Manager(s). {"isValid":false,"default":{"url":"https://mocked-api-gateway:8175","username":"user","password":"invalid","isValid":false},"message":"There was an error validating the API-Manager connection."}');
 			}
 			nock.cleanAll();
 		});

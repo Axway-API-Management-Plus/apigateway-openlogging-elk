@@ -31,7 +31,8 @@ module.exports = {
 
 	// The interval in milliseconds in which API-Builder will poll all configured API-Managers for their KPIs. Defaults to 3600000 (which is 1 hour)
 	managementKPIsInterval: process.env.MANAGEMENT_KPIS_INTERVAL || '3600000',
-	managementKPIsEnabled: ("false" == process.env.MANAGEMENT_KPIS_ENABLED) ? false : true, 
+	// Management KPI will be disabled also, if the API-Manager is disabled
+	managementKPIsEnabled: ("false" == process.env.MANAGEMENT_KPIS_ENABLED || "false" == process.env.API_MANAGER_ENABLED) ? false : true, 
 
 	// This path is optional and if given used to adjust the ILM-Configuration.
 	retentionPeriodConfigFile: process.env.RETENTION_PERIOD_CONFIG || 'NotSet',

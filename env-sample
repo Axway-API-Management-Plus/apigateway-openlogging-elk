@@ -190,6 +190,11 @@ API_MANAGER_PASSWORD=changeme
 # Another way of fallback based on the group not having the region configured
 # API_MANAGER=https://172.17.0.1:8075, group-2|https://api-manager-1:8075, group-2|eu|https://api-manager-2:8275
 
+# If no API manager is in use, i.e. only API gateways, then you can disable it completely here. 
+# As a result, no more lookups are executed in the direction of the API manager, but only locally.
+# Used-By: API-Builder
+# API_MANAGER_ENABLED=false
+
 # Additionally to the API-Manager(s) itself, the API-Builder can perform an API-Lookup against
 # a local configuration file. This is useful if you would like to map natively exposed APIs
 # (e.g. http://api-gateway:8080/healthcheck) to a real API-Name and Method.

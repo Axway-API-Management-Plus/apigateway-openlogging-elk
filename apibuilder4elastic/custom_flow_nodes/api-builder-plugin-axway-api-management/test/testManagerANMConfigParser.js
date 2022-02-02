@@ -165,6 +165,22 @@ describe('Test API-Manager configuration variations', () => {
             await parseAPIManagerConfig(pluginConfig, options);
             expect(pluginConfig.apimanager).to.deep.equal(expectedManagers);
         });
+
+        it('should succeed with a disabled API-Manager (API-Gateway only)', async () => {
+            const pluginConfig = { 
+                apimanager: {
+				    username: "user", password: "password",
+                    enabled: false
+                }
+			};
+            var expectedManagers = {
+                enabled: false,
+                password: "password",
+                username: "user"
+            }
+            await parseAPIManagerConfig(pluginConfig, options);
+            expect(pluginConfig.apimanager).to.deep.equal(expectedManagers);
+        });
     });
 
     describe('Test API-Manager validation', () => {

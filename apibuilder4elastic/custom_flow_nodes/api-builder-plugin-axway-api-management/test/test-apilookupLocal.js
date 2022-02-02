@@ -14,8 +14,7 @@ describe('Test API Lookup', () => {
 	// Loads environment variables from .env if the file exists
 	const envFilePath = path.join(__dirname, '.env');
 	if (fs.existsSync(envFilePath)) {
-		delete process.env.API_MANAGER; // Otherwise it is not overwritten
-		envLoader.config({ path: envFilePath });
+		envLoader.config({ override: true, path: envFilePath });
 	}
 	// Tests are using this local config file
 	process.env.API_BUILDER_LOCAL_API_LOOKUP_FILE = 'test/testConfig/test-api-lookup.json';

@@ -89,6 +89,11 @@ function isDeveloperMode() {
 }
 
 async function parseAPIManagerConfig(pluginConfig, options) {
+	debugger;
+	if(pluginConfig.apimanager.enabled == false) {
+		options.logger.warn(`API-Manager is disabled. Using Local-API-Details lookup only. Users have unrestricted Traffic-Monitor view by default (You may use an external authorization) instead. API-Management KPIs are disabled.`);
+		return;
+	}
 	if(!pluginConfig.apimanager.username) {
 		throw new Error(`Required parameter: apimanager.username is not set.`)
 	}
@@ -214,6 +219,10 @@ function getANMConfig(anmConfig, region) {
 
 async function checkAPIManagers(apiManagerConfig, options) {
 	var finalResult = { isValid: true };
+	if(apiManagerConfig.enabled == false) {
+		finalResult.message = "Nothing to validate as API-Manager is disabled.";
+		return finalResult;
+	}
 	for (const [key, config] of Object.entries(apiManagerConfig.configs)) {
 		if(typeof config != 'object') continue;
 		finalResult[key] = config;
@@ -262,6 +271,11 @@ async function checkAPIManagers(apiManagerConfig, options) {
 			options.logger.error(ex);
 			throw ex;
 		}
+	}
+	if(finalResult.isValid) {
+		finalResult.message = "Connection to API-Manager(s) successfully validated."
+	} else {
+		finalResult.message = "There was an error validating the API-Manager connection."
 	}
 	return finalResult;
 }

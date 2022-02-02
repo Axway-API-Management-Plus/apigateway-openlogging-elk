@@ -9,7 +9,8 @@ module.exports = {
 			'apimanager': {
 				url: process.env.API_MANAGER, // If not set, the API-Gateway hostname is used
 				username: process.env.API_MANAGER_USERNAME, // User with Admin-Privileges required
-				password: process.env.API_MANAGER_PASSWORD 
+				password: process.env.API_MANAGER_PASSWORD, 
+				enabled: (!process.env.API_MANAGER_ENABLED) ? process.env.API_MANAGER_ENABLED : true // Makes it possible to use the solution without an API-Manager at all
 			}, 
 			// This is true, when running as part of the CI-Pipeline (GitHub Actions)
 			// If true, some test API-Requests are then mocked

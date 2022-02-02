@@ -9,7 +9,8 @@ module.exports = {
 			'apimanager': {
 				url: process.env.API_MANAGER, // If not set, the Admin-Node-Manager hostname is used
 				username: process.env.API_MANAGER_USERNAME, // User with Admin-Privileges required
-				password: process.env.API_MANAGER_PASSWORD
+				password: process.env.API_MANAGER_PASSWORD,
+				enabled: ("false" == process.env.API_MANAGER_ENABLED) ? false : true // Makes it possible to use the solution without an API-Manager at all
 			}, 
 			// Which file to use for the local API-Lookup
 			localLookupFile: process.env.API_BUILDER_LOCAL_API_LOOKUP_FILE,

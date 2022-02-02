@@ -101,7 +101,8 @@ async function lookupCurrentUser(params, options) {
 			cache.set( VIDUSR, user);
 		}
 		return user;
-	} else if(getApiManagerUser==false) {
+	// getApiManagerUser is set by the flow based on the userAuthorization toggle 
+	} else if(getApiManagerUser == false || pluginConfig.apimanager.enabled == false) {
 		logger.debug(`Current user is: '${user.loginName}'. Unrestricted Traffic-Monitor access: ${user.gatewayManager.isUnrestricted}. Don't try to get user on API-Manager.`);
 		if(VIDUSR) {
 			cache.set( VIDUSR, user);
@@ -198,7 +199,7 @@ async function lookupAPIDetails(params, options) {
 	} catch (ex) {
 		logger.warn(`Error looking up API locally. ${JSON.stringify(ex)}`);
 	}
-	if(proxies == undefined) {
+	if(proxies == undefined) { // Nothing configured locally ... trying to lookup API at API-Manager
 		// To lookup the API in API-Manager the API-Name is required
 		if (!apiName) {
 			logger.info(`API not configured locally, based on path: ${apiPath}. The API cannot be queried at the API Manager as no API name is given. Please configure this API path locally.`);
@@ -345,6 +346,7 @@ async function getCustomPropertiesConfig(params, options) {
 		params.region = params.region.toLowerCase();
 	}
 	pluginConfig = options.pluginConfig;
+	if(pluginConfig.apimanager.enabled == false) return {}; // API-Manager is disabled, nothing to do
 	const { logger } = options;
 	cache = options.pluginContext.cache;
 	let apiManagerConfig;
@@ -660,6 +662,7 @@ async function _getManagerUser(user, groupId) {
 }
 
 async function _getAPIProxy(apiName, groupId, region) {
+	if(pluginConfig.apimanager.enabled == false) return;
 	const apiManagerConfig = getManagerConfig(pluginConfig.apimanager, groupId, region);
 	var options = {
 		path: `/api/portal/v1.3/proxies?field=name&op=eq&value=${apiName}`,
@@ -679,6 +682,7 @@ async function _getAPIProxy(apiName, groupId, region) {
 }
 
 async function _getApplication(applicationId, groupId, region) {
+	if(pluginConfig.apimanager.enabled == false) return undefined; // No lookup
 	const apiManagerConfig = getManagerConfig(pluginConfig.apimanager, groupId, region);
 	var options = {
 		path: `/api/portal/v1.3/applications/${applicationId}`,
