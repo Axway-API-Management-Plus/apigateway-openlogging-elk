@@ -16,8 +16,7 @@ describe('Tests User-Lookup with complete configuration parameters', () => {
 	// Loads environment variables from .env if the file exists
 	const envFilePath = path.join(__dirname, '.env');
 	if (fs.existsSync(envFilePath)) {
-		delete process.env.API_MANAGER; // Otherwise it is not overwritten
-		envLoader.config({ path: envFilePath });
+		envLoader.config({ override: true, path: envFilePath });
 	}
 	// Delete the cached module 
 	decache('../config/axway-api-utils.default.js');

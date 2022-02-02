@@ -62,6 +62,8 @@ services:
     image: cwiechmann/apibuilder4elastic:v4.1.0
     restart: on-failure:10
     container_name: apibuilder4elastic
+    # Enable this, if you want to debug a crashing container
+    # command: sleep 10000
     environment:
       - ELASTICSEARCH_HOSTS=${ELASTICSEARCH_HOSTS}
       - ADMIN_NODE_MANAGER=${ADMIN_NODE_MANAGER}
@@ -84,6 +86,7 @@ services:
       - DISABLE_CUSTOM_PROPERTIES=${DISABLE_CUSTOM_PROPERTIES}
       - EXT_AUTHZ_URI=${EXT_AUTHZ_URI}
       - MANAGEMENT_KPIS_ENABLED=${MANAGEMENT_KPIS_ENABLED}
+      - API_MANAGER_ENABLED=${API_MANAGER_ENABLED}
       - LOG_LEVEL=${API_BUILDER_LOG_LEVEL}
       - APM_ENABLED=${APM_ENABLED}
       - APM_SERVER=${APM_SERVER}

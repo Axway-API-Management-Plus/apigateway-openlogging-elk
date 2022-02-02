@@ -13,6 +13,8 @@ describe('flow-node elk-solution-utils indexManagement', () => {
 	beforeEach(async () => {
 		// We have to simulate the plugin is called from the main API-Builder project, hence we defined the API-Builder root directory as appDir
 		process.env.ELASTICSEARCH_HOSTS = "http://any.host.com:9200";
+		// If not set, Elasticsearch-Flow node tries to load the CA, which is not required for the tests
+		process.env.ELASTICSEARCH_SSL_VERIFICATIONMODE = "false";
 		plugin = await MockRuntime.loadPlugin(getPlugin, {}, {appDir: path.resolve("../..")});
 		plugin.setOptions({ validateOutputs: true });
 		flowNode = plugin.getFlowNode('elk-solution-utils');

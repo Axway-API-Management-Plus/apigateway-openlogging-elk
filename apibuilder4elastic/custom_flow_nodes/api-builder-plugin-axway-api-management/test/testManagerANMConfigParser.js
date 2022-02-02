@@ -8,7 +8,8 @@ describe('Test API-Manager configuration variations', () => {
         info: simple.mock(),
         trace: simple.mock(),
         error: simple.mock(), 
-        debug: simple.mock()
+        debug: simple.mock(),
+        warn: simple.mock()
     } };
 
     describe('Test API-Manager parsing', () => {
@@ -161,6 +162,22 @@ describe('Test API-Manager configuration variations', () => {
                         region: "us"
                     }
                 }
+            }
+            await parseAPIManagerConfig(pluginConfig, options);
+            expect(pluginConfig.apimanager).to.deep.equal(expectedManagers);
+        });
+
+        it('should succeed with a disabled API-Manager (API-Gateway only)', async () => {
+            const pluginConfig = { 
+                apimanager: {
+				    username: "user", password: "password",
+                    enabled: false
+                }
+			};
+            var expectedManagers = {
+                enabled: false,
+                password: "password",
+                username: "user"
             }
             await parseAPIManagerConfig(pluginConfig, options);
             expect(pluginConfig.apimanager).to.deep.equal(expectedManagers);

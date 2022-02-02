@@ -151,6 +151,9 @@ apibuilder4elastic:
   # Disables the collection of API-Management KPIs.
   # managementKPIsEnabled: false
 
+  # If you do not use an API-Manager, please set this parameter to false.
+  # apimanagerEnabled: false
+
   # logLevel of API-Builder4Elastic. When encoutering issues, enable debug. Also enable debug 
   # if you want to raise an issue.
   #logLevel: "debug"

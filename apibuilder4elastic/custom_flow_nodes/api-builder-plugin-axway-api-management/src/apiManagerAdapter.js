@@ -25,6 +25,7 @@ async function getAPIManagerConfig(params, options) {
 	let { } = params;
 	const { logger } = options;
 	var pluginConfig = options.pluginConfig;
+	if(pluginConfig.apimanager.enabled == false) return [];
 	var cache = options.pluginContext.cache;
 	const apiManagerConfigs = [];
 	const apiManagerNames = {};

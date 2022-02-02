@@ -190,6 +190,11 @@ API_MANAGER_PASSWORD=changeme
 # Another way of fallback based on the group not having the region configured
 # API_MANAGER=https://172.17.0.1:8075, group-2|https://api-manager-1:8075, group-2|eu|https://api-manager-2:8275
 
+# If no API manager is in use, i.e. only API gateways, then you can disable it completely here. 
+# As a result, no more lookups are executed in the direction of the API manager, but only locally.
+# Used-By: API-Builder
+# API_MANAGER_ENABLED=false
+
 # Additionally to the API-Manager(s) itself, the API-Builder can perform an API-Lookup against
 # a local configuration file. This is useful if you would like to map natively exposed APIs
 # (e.g. http://api-gateway:8080/healthcheck) to a real API-Name and Method.
@@ -339,7 +344,7 @@ ELASTICSEARCH_CLUSTERNAME=Axway APIM
 # ----------------------------------------------------------------------------------------------
 # Define the version of the Elastic-Stack to use. Based on this version Docker images are pulled
 # Used-By: Elasticsearch, Filebeat, Kibana, Logstash
-ELASTIC_VERSION=7.16.3
+ELASTIC_VERSION=7.17.0
 
 # ----------------------------------------------------------------------------------------------
 # With this parameter you can change the way the authorization for the traffic monitor is
@@ -561,7 +566,7 @@ ELASTIC_VERSION=7.16.3
 # certificates. Learn more: https://bit.ly/3mxWDSu
 # Example command to created the chained cert file:
 # openssl pkcs7 -inform DER -in certificate.p7b -print_certs > certificate_bundle.cer
-# Used-By: Elasticsearch, Kibana, Logstash, Filebeat, Admin-Node-Manager
+# Used-By: APIBuilder4Elastic, Elasticsearch, Kibana, Logstash, Filebeat, Admin-Node-Manager
 ELASTICSEARCH_CA=config/certificates/ca.crt
 
 # The following variables are used by API-Builder to define, which certificate is used
