@@ -142,24 +142,24 @@ apibuilder4elastic:
   # Use extraVolumes & extraVolumeMounts to mount your payloads into 
   # the API-Builder4Elastic container.
   # To learn more read the description of parameter PAYLOAD_HANDLING_ENABLED
-  # payloadEnabled: false
+  # payloadEnabled: "false"
 
   # setupFlows can be used to turn off setup of Elasticsearch. This should be set to 
   # false only for very good reasons.
-  # setupFlows: false
+  # setupFlows: "false"
 
   # Disables the collection of API-Management KPIs.
-  # managementKPIsEnabled: false
+  # managementKPIsEnabled: "false"
 
   # If you do not use an API-Manager, please set this parameter to false.
-  # apimanagerEnabled: false
+  # apimanagerEnabled: "false"
 
   # logLevel of API-Builder4Elastic. When encoutering issues, enable debug. Also enable debug 
   # if you want to raise an issue.
   #logLevel: "debug"
 
   # Configure the Elasticsearch server certificate validation for APIBuilder4Elastic. Is enabled by default.
-  # validateElasticsearchCertificate: false
+  # validateElasticsearchCertificate: "false"
 
   # Resource requests for API-Builder
   resources:
