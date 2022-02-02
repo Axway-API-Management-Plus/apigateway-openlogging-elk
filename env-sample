@@ -344,7 +344,7 @@ ELASTICSEARCH_CLUSTERNAME=Axway APIM
 # ----------------------------------------------------------------------------------------------
 # Define the version of the Elastic-Stack to use. Based on this version Docker images are pulled
 # Used-By: Elasticsearch, Filebeat, Kibana, Logstash
-ELASTIC_VERSION=7.16.3
+ELASTIC_VERSION=7.17.0
 
 # ----------------------------------------------------------------------------------------------
 # With this parameter you can change the way the authorization for the traffic monitor is
@@ -566,7 +566,7 @@ ELASTIC_VERSION=7.16.3
 # certificates. Learn more: https://bit.ly/3mxWDSu
 # Example command to created the chained cert file:
 # openssl pkcs7 -inform DER -in certificate.p7b -print_certs > certificate_bundle.cer
-# Used-By: Elasticsearch, Kibana, Logstash, Filebeat, Admin-Node-Manager
+# Used-By: APIBuilder4Elastic, Elasticsearch, Kibana, Logstash, Filebeat, Admin-Node-Manager
 ELASTICSEARCH_CA=config/certificates/ca.crt
 
 # The following variables are used by API-Builder to define, which certificate is used

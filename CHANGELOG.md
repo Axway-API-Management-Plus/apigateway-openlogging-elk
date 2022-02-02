@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Added a new visualization: Status by API to all API-Overview dashboards showing Success, Failure/Blocked and Failed status per API
 - Added tag kpis to the KPI-Dashboard
 - Added new parameter: `API_MANAGER_ENABLED` to allow running the solution without an API-Manager at all
+- Updated default Elastic-Stack version from 7.16.3 to 7.17.0
 
 ### Security
 - Mocha in API-Builder4Elastic updated to version 9.2.0 to solve https://nvd.nist.gov/vuln/detail/CVE-2021-23566
