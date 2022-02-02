@@ -134,6 +134,7 @@ jobs:
       env:
         ELASTICSEARCH_HOSTS: 'http://localhost:9200'
         VALIDATE_CONFIG: false
+        ELASTICSEARCH_SSL_VERIFICATIONMODE: false
         LOG_LEVEL: DEBUG
         DISABLE_SETUP_FLOWS: true # Disable Elasticsearch setup flows for the tests.
         CI: true
