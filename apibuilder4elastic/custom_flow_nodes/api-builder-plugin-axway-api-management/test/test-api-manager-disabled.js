@@ -96,7 +96,8 @@ describe('Tests User-Lookup with API-Manager disabled', () => {
 			info: simple.mock(),
 			trace: simple.mock(),
 			error: simple.mock(), 
-			debug: simple.mock()
+			debug: simple.mock(),
+			warn: simple.mock()
 		} };
 
 		it('should skip the API-Manager validation', async () => {

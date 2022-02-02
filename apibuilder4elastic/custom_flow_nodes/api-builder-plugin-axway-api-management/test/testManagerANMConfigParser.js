@@ -8,7 +8,8 @@ describe('Test API-Manager configuration variations', () => {
         info: simple.mock(),
         trace: simple.mock(),
         error: simple.mock(), 
-        debug: simple.mock()
+        debug: simple.mock(),
+        warn: simple.mock()
     } };
 
     describe('Test API-Manager parsing', () => {
