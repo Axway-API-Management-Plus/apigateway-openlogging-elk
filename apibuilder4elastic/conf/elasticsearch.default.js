@@ -15,11 +15,11 @@ module.exports = {
 				// The name to identify the client instance in the events.
 				name: process.env.ELASTICSEARCH_CLIENT_NAME || 'apibuilder4elastic',
 				// You can use all configuration options documented here: 
-				// https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/7.x/client-configuration.html
+				// https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/master/client-configuration.html
 				maxRetries: 5,
 				requestTimeout: 60000,
 				ssl: {
-					ca: ("false" == process.env.ELASTICSEARCH_SSL_VERIFICATIONMODE) ? fs.readFileSync(process.env.ELASTICSEARCH_CA) : "",
+					ca: ("false" == process.env.ELASTICSEARCH_SSL_VERIFICATIONMODE) ? "" : fs.readFileSync(process.env.ELASTICSEARCH_CA),
 					rejectUnauthorized: ("false" == process.env.ELASTICSEARCH_SSL_VERIFICATIONMODE) ? false : true
 				}
 			},
