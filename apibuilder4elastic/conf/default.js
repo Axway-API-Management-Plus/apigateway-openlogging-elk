@@ -311,12 +311,20 @@ module.exports = {
 		// e.g. "oracle/foó" will now be encoded as "oracle/fo%C3%B3".
 		enableModelNameEncodingWithConnectorSlash: true,
 		// Enabling this flag will emit the log level in each log message.
-		enableLoggingOfLevel: true
+		enableLoggingOfLevel: true,
+		enableModelErrorOutputs: true,
+		exitOnSwaggerSchemaValidationError: true,
+		enableStrictBodyPayloads: true
 	},
 
 	authorization: {
 		callback: '/auth/callback',
 		credentials: {
 		}
+	},
+
+	limits: {
+		// The maximum size of any file/part in a multipart/form-data request
+		multipartPartSize: '10MB'
 	}
 };
