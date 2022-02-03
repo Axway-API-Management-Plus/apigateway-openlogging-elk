@@ -1431,6 +1431,10 @@ Yes, the solution can be used when the API-Mnagement platform is deployed in a D
 
 No. The settings can be found in Policy Studio Server Settings --> Monitoring --> Traffic Monitor. Please make sure that the "Traffic Monitor" is enabled, otherwise the policy execution path will not appear in the Traffic-Monitor. If you only use the [protocols supported](#which-protocols-are-supported) by the Elastic solution, you can gladly reduce the size of the OBSDB if you like, since the data comes from the Elasticsearch database.
 
+### Can I use the solution without an API-Manager?
+
+Yes, from version >=4.2.0 this is possible. For this you have to set the parameter: `API_MANAGER_ENABLED=false` and disable user authorization. See parameter: `AUTHZ_CONFIG`
+
 ## Known issues
 N/A
   
