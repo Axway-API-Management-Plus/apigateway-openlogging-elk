@@ -65,6 +65,7 @@ async function addApiManagerOrganizationFilter(params, options) {
 	}
 	// Skip, if the user an API-Gateway Admin
 	if (user.gatewayManager.isUnrestricted) {
+		logger.debug(`Skip user authorization as the user has unrestricted access.`);
 		return elasticQuery;
 	}
 	// Initialize the filter array, if not given

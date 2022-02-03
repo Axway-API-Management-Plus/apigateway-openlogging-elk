@@ -190,8 +190,11 @@ API_MANAGER_PASSWORD=changeme
 # Another way of fallback based on the group not having the region configured
 # API_MANAGER=https://172.17.0.1:8075, group-2|https://api-manager-1:8075, group-2|eu|https://api-manager-2:8275
 
-# If no API manager is in use, i.e. only API gateways, then you can disable it completely here. 
-# As a result, no more lookups are executed in the direction of the API manager, but only locally.
+# If no API manager is in use, i.e. only API gateways, then you must disable it here. 
+# As a result, no more lookups are executed in the direction of the API manager, however you can 
+# still user local lookup files to provide context.
+# Additional you need to disable user authorization or use external REST API. Otherwise, 
+# restricted users will not see any traffic. See parameter: AUTHZ_CONFIG
 # Used-By: API-Builder
 # API_MANAGER_ENABLED=false
 
