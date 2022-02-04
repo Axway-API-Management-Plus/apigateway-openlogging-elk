@@ -950,6 +950,8 @@ If you are using an existing Elastic Search environment including Kibana, the fo
 
 #### Required users and roles
 
+The following table represents a suggestion of which roles should be created for the solution to work. You are also welcome to divide the roles differently and assign them to the users accordingly.
+
 | Role                  | Cluster privileges                                                    | Index privileges | Kibana        |
 | :---                  | :---                                                                  | :---             | :---          | 
 | axway_apigw_indicies  | `monitor`,                                                            | `apigw-* - All`  | None          | 
@@ -957,19 +959,13 @@ If you are using an existing Elastic Search environment including Kibana, the fo
 
 The following table assumes that the same user should also be used for stack monitoring. You can also split this into two users if necessary.
 
-| Username                  | Roles                                            | Comment                                               |
-| :---                      | :---                                             | :---                                                  | 
-| axway_logstash            | `axway_apigw_indicies`, `logstash_system`        |                                                       | 
-| axway_apibuilder          | `axway_apigw_indicies`, `axway_manage`           |                                                       | 
-| axway_filebeat            | `beats_system`                                   | `beats_system` role required to send monitoring data. | 
+| Username                  | Roles                                            | Comment                                                        |
+| :---                      | :---                                             | :---                                                           | 
+| axway_logstash            | `axway_apigw_indicies`, `logstash_system`        | Parameter: `LOGSTASH_USERNAME` and `LOGSTASH_SYSTEM_USERNAME`  | 
+| axway_apibuilder          | `axway_apigw_indicies`, `axway_manage`           | Parameter: `API_BUILDER_USERNAME`                              | 
+| axway_filebeat            | `beats_system`                                   | Parameter: `BEATS_SYSTEM_USERNAME`                             | 
 
-
-  - Logstash-User 
-    - used to ingest data and send monitoring data
-  - 
-  - 1 user to ingest data into Elasticsearch using Logstash (e.g. logstash_axway)
-  - 1 user to query and setup Elasticsearch with API-Builder
-  - Of course it’s also possible to use the same user for both
+Kibana users are not included in this overview. 
 
 ### Size your infrastructure
 
