@@ -941,7 +941,36 @@ __Further notes:__
 
 ## Requirements
 
+### Elastic stack
+
 The minimum Elastic Stack version is 7.10.x. This applies to Elasticsearch, Kibana, Logstash and Filebeat.
+
+If you are using an existing Elastic Search environment including Kibana, the following requirements apply.
+
+- Minimal Elasticsearch is version 7.10.x with X-Pack enabled
+- Depending on the traffic enough disk-space available (it can be quite heavy depending on the traffic volume)
+
+#### Required users and roles
+
+| Role                  | Cluster privileges | Index privileges | Comment       |
+| :---                  | :---               | :---             | :---          | 
+| axway_apimanagement   | `monitor`          | `apigw-*`        |               | 
+
+The following table assumes that the same user should also be used for stack monitoring. You can also split this into two users if necessary.
+
+| Username                  | Roles                                            | Comment                                                             |
+| :---                      | :---                                             | :---                                                                | 
+| axway_logstash            | `axway_apimanagement`, `logstash_system`              |    | 
+| axway_apibuilder          | `axway_apimanagement`, `TBC`              |    | 
+| axway_filebeat            | `axway_apimanagement`, `TBC`              |    | 
+
+
+  - Logstash-User 
+    - used to ingest data and send monitoring data
+  - 
+  - 1 user to ingest data into Elasticsearch using Logstash (e.g. logstash_axway)
+  - 1 user to query and setup Elasticsearch with API-Builder
+  - Of course it’s also possible to use the same user for both
 
 ### Size your infrastructure
 
