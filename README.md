@@ -943,8 +943,6 @@ __Further notes:__
 
 ### Elastic stack
 
-The minimum Elastic Stack version is 7.10.x. This applies to Elasticsearch, Kibana, Logstash and Filebeat.
-
 If you are using an existing Elastic Search environment including Kibana, the following requirements apply.
 
 - Minimal Elasticsearch is version 7.10.x with X-Pack enabled
@@ -952,17 +950,18 @@ If you are using an existing Elastic Search environment including Kibana, the fo
 
 #### Required users and roles
 
-| Role                  | Cluster privileges | Index privileges | Comment       |
-| :---                  | :---               | :---             | :---          | 
-| axway_apimanagement   | `monitor`          | `apigw-*`        |               | 
+| Role                  | Cluster privileges                                                    | Index privileges | Kibana        |
+| :---                  | :---                                                                  | :---             | :---          | 
+| axway_apigw_indicies  | `monitor`,                                                            | `apigw-* - All`  | None          | 
+| axway_manage          | `monitor`, `manage_ilm`, `manage_index_templates`, `manage_transform` | None             | None          | 
 
 The following table assumes that the same user should also be used for stack monitoring. You can also split this into two users if necessary.
 
-| Username                  | Roles                                            | Comment                                                             |
-| :---                      | :---                                             | :---                                                                | 
-| axway_logstash            | `axway_apimanagement`, `logstash_system`              |    | 
-| axway_apibuilder          | `axway_apimanagement`, `TBC`              |    | 
-| axway_filebeat            | `axway_apimanagement`, `TBC`              |    | 
+| Username                  | Roles                                            | Comment                                               |
+| :---                      | :---                                             | :---                                                  | 
+| axway_logstash            | `axway_apigw_indicies`, `logstash_system`        |                                                       | 
+| axway_apibuilder          | `axway_apigw_indicies`, `axway_manage`           |                                                       | 
+| axway_filebeat            | `beats_system`                                   | `beats_system` role required to send monitoring data. | 
 
 
   - Logstash-User 
