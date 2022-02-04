@@ -967,9 +967,9 @@ The following table assumes that the same user should also be used for stack mon
 | axway_logstash            | `axway_apigw_write`, `logstash_system`                       | Parameter: `LOGSTASH_USERNAME` and `LOGSTASH_SYSTEM_USERNAME`  | 
 | axway_apibuilder          | `axway_apigw_read`, `axway_apigw_admin`                      | Parameter: `API_BUILDER_USERNAME`                              | 
 | axway_filebeat            | `beats_system`                                               | Parameter: `BEATS_SYSTEM_USERNAME`                             | 
-| axway_kibana_read         | `axway_apigw_read`, `axway_kibana_read`                      |                                                                | 
-| axway_kibana_write        | `axway_apigw_read`, `axway_kibana_write`                     |                                                                | 
-| axway_kibana_admin        | `axway_apigw_read`, `axway_apigw_admin`, `axway_kibana_write`, `monitoring_user` |                                            | 
+| axway_kibana_read         | `axway_apigw_read`, `axway_kibana_read`                      | Read only access to Dashboards                                 | 
+| axway_kibana_write        | `axway_apigw_read`, `axway_kibana_write`                     | Write access to Dashboard, Visualizations                      | 
+| axway_kibana_admin        | `axway_apigw_read`, `axway_apigw_admin`, `axway_kibana_write`, `monitoring_user` | Access to Stack-Monitoring and APM         | 
 
 Please also create at least one user with Kibana privileges who is allowed to import dashboards.
 
