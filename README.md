@@ -969,7 +969,7 @@ The following table assumes that the same user should also be used for stack mon
 | axway_filebeat            | `beats_system`                                               | Parameter: `BEATS_SYSTEM_USERNAME`                             | 
 | axway_kibana_read         | `axway_apigw_read`, `axway_kibana_read`                      |                                                                | 
 | axway_kibana_write        | `axway_apigw_read`, `axway_kibana_write`                     |                                                                | 
-| axway_kibana_admin        | `axway_apigw_admin`, `axway_kibana_write`, `monitoring_user` |                                                                | 
+| axway_kibana_admin        | `axway_apigw_read`, `axway_apigw_admin`, `axway_kibana_write`, `monitoring_user` |                                            | 
 
 Please also create at least one user with Kibana privileges who is allowed to import dashboards.
 
