@@ -971,8 +971,6 @@ The following table assumes that the same user should also be used for stack mon
 | [axway_kibana_write](elasticsearch/usersAndRoles#user-axway_kibana_write)        | `axway_apigw_read`, `axway_kibana_write`                     | Write access to Dashboard, Visualizations and some other information such as ILM-Policies.                      | 
 | [axway_kibana_admin](elasticsearch/usersAndRoles#user-axway_kibana_admin)        | `axway_apigw_read`, `axway_apigw_admin`, `axway_kibana_write`, `monitoring_user` | Access to Stack-Monitoring and APM         | 
 
-Please also create at least one user with Kibana privileges who is allowed to import dashboards.
-
 ### Size your infrastructure
 
 The solution is designed to process and store millions of transactions per day and make them quickly available for traffic monitoring and analytics. 
