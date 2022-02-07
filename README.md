@@ -954,11 +954,11 @@ The following table represents a suggestion of which roles should be created for
 
 | Role              | Cluster privileges                                                    | Index privileges                   | Kibana                   |
 | :---              | :---                                                                  | :---                               | :---                     | 
-| axway_apigw_write | `monitor`                                                             | `apigw-* - write`                  | No                       | 
-| axway_apigw_read  | `monitor`                                                             | `apigw-* - read`                   | No                       | 
-| axway_apigw_admin | `monitor`, `manage_ilm`, `manage_index_templates`, `manage_transform` | `apigw-* - monitor, view_index_metadata, create_index`, `apim-* - read,view_index_metadata`| Yes (All or Custom)  | 
-| axway_kibana_write|                                                                       | None                               | Yes (Analytics All)      | 
-| axway_kibana_read | None                                                                  | None                               | Yes (Analytics Read)     | 
+| [axway_apigw_write](elasticsearch/usersAndRoles#role-axway_apigw_write) | `monitor`                                                             | `apigw-* - write`                  | No                       | 
+| [axway_apigw_read](elasticsearch/usersAndRoles#role-axway_apigw_read)  | `monitor`                                                             | `apigw-* - read`                   | No                       | 
+| [axway_apigw_admin](elasticsearch/usersAndRoles#role-axway_apigw_admin) | `monitor`, `manage_ilm`, `manage_index_templates`, `manage_transform` | `apigw-* - monitor, view_index_metadata, create_index`, `apim-* - read,view_index_metadata`| Yes (All or Custom)  | 
+| [axway_kibana_write](elasticsearch/usersAndRoles#role-axway_kibana_write)|                                                                       | None                               | Yes (Analytics All)      | 
+| [axway_kibana_read](elasticsearch/usersAndRoles#role-axway_apigw_read) | None                                                                  | None                               | Yes (Analytics Read)     | 
 
 The following table assumes that the same user should also be used for stack monitoring. You can also split this into two users if necessary.
 
