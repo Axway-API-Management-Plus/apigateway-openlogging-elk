@@ -47,7 +47,14 @@ POST /_security/role/axway_apigw_admin
       "names": [ "apm-*" ],
       "privileges": ["read", "view_index_metadata" ]
     }
-  ]
+  ],
+  "applications" : [
+      {
+          "application" : "kibana-.kibana",
+          "privileges" : [ "all" ],
+          "resources" : [ "*" ]
+      }
+   ]
 }
 ```
 
