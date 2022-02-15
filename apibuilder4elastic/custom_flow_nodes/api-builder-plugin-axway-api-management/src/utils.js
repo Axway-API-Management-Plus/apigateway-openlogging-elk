@@ -89,7 +89,6 @@ function isDeveloperMode() {
 }
 
 async function parseAPIManagerConfig(pluginConfig, options) {
-	debugger;
 	if(pluginConfig.apimanager.enabled == false) {
 		options.logger.warn(`API-Manager is disabled. Using Local-API-Details lookup only. Users have unrestricted Traffic-Monitor view by default (You may use an external authorization) instead. API-Management KPIs are disabled.`);
 		return;
