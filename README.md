@@ -183,6 +183,8 @@ Even if otherwise possible, it is recommended to deploy the individual component
 
 Watch this video for a demonstration: [Setup Single Node Elasticsearch cluster](https://youtu.be/x-OdAdV2N7I)  
 
+If you are using an existing Elasticsearch cluster, you can skip this section and go straight to [Logstash/Memcached and APIBuilder4Elastic](#logstash--api-builder--memcached).  
+
 Open the `.env` file and configure the ELASTICSEARCH_HOSTS. At this point please configure only one Elasticsearch node. You can start with a single node and add more nodes later. More about this topic [Multi-Node Deployment](#setup-elasticsearch-multi-node) later in the documenation.  
 This URL is used by all Elasticsearch clients (Logstash, API-Builder, Filebeat) of the solution to establish communication.  
 If you use an external Elasticsearch cluster, please specify the node(s) that are given to you.  
@@ -225,6 +227,8 @@ At this point you can already add the cluster UUID to the `.env` (`ELASTICSEARCH
 
 Watch this video for a demonstration: [Setup Kibana](https://youtu.be/aLODAuXDMzY)  
 
+If you are using an existing Elasticsearch cluster, you can skip this section and go straight to [Logstash/Memcached and APIBuilder4Elastic](#logstash--api-builder--memcached).  
+
 For Kibana all parameters are already stored in the .env file. Start Kibana with the following command:
 ```
 docker-compose --env-file .env -f kibana/docker-compose.kibana.yml up -d
@@ -246,6 +250,12 @@ It is recommended to deploy these components on one machine, so they are in a co
 ADMIN_NODE_MANAGER=https://my-admin-node-manager:8090
 API_MANAGER_USERNAME=elkAdmin
 API_MANAGER_PASSWORD=elastic
+```
+
+If you are using an existing Elasticsearch cluster and have therefore skipped the previous two sections, please also configure the Elasticsearch hosts, any [necessary users](#activate-user-authentication) and the Elasticsearch [server CA](#custom-certificates) here.
+
+```
+ELASTICSEARCH_HOSTS=https://my-existing-elasticsearch-host1.com:9200, https://my-existing-elasticsearch-host2.com:9200, https://my-existing-elasticsearch-host3.com:9200
 ```
 
 To start all three components the main Docker-Compose file is used:
