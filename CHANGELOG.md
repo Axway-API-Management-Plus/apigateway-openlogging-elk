@@ -17,7 +17,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Helm-Chart: Boolean toggles in standard values.yaml file now quoted [#164](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/164)
 
 ### Security
-- Updated API-Builder to version Flint (to solve security issues)
+- Updated API-Builder to version Gondar (to solve security issues)
 - Mocha in API-Builder4Elastic updated to version 9.2.0 to solve https://nvd.nist.gov/vuln/detail/CVE-2021-23566
 - Updated API-Builder custom flow node libraries (to solve security issues)
 
