@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [4.2.0] 2022-02-15
 ### Added
 - Improved documentation to point out default parameters are not production ready [#163](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/163)
 - Added a warning when running Logstash or Elasticsearch with default minimal parameters (when using docker-compose) [#163](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/163)
