@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 - Helm-Chart: Boolean toggles in standard values.yaml file now quoted [#164](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/164)
+- APIBuilder4Elastic fails to load the provided certificate to validate the Elasticsearch-Connection
 
 ### Security
 - Updated API-Builder to version Gondar (to solve security issues)
