@@ -27,7 +27,7 @@ do
     # It is assumed, that node-names are sequentially counted elasticsearch1, elasticsearch2, ...
     if [ "${initCluster}" = "true" -a "${initialMasterNode}" == "" ]; then
         echo "Init Elasticsearch cluster using nodeBasename: ${nodeBasename} and count: ${count}"
-        initialMasterNode="-E cluster.initial_master_nodes=${nodeBasename}${count}"
+        initialMasterNode=" cluster.initial_master_nodes=${nodeBasename}${count}"
     fi
     # Use all declared hosts as seed hosts, but only if
     # seed hosts are not given externally and the standard transport ports are used
@@ -39,7 +39,7 @@ do
         discoverPublishHostname=`echo $host | sed -r 's/https?:\/\/(.*)\:[0-9]{4}/\1/'`
         discoveryTransportPort=`echo $host | sed -r 's/https?:\/\/(.*)\:[0-9]{2}([0-9]{2})/93\2/'`
         if [ "${seedHosts}" == "" ]; then
-            seedHosts="-E discovery.seed_hosts=${discoverPublishHostname}:${discoveryTransportPort}"
+            seedHosts=" discovery.seed_hosts=${discoverPublishHostname}:${discoveryTransportPort}"
         else 
             seedHosts="${seedHosts},${discoverPublishHostname}:${discoveryTransportPort}"
         fi
@@ -50,7 +50,7 @@ do
         publishHost=`echo | awk '{ print ENVIRON["network.publish_host"] }'`
         if [ -z "${publishHost}" ]; then
             publishHost=`echo $host | sed -r 's/https?:\/\/(.*)\:[0-9]{4}/\1/'`
-            params="$params -E network.publish_host=${publishHost}"
+            params="$params network.publish_host=${publishHost}"
             echo "Set network.publish_host=${publishHost} based on given host: ${host}"
         else
             echo "network.publish_host=${publishHost} taken from envionment variable"
@@ -60,7 +60,7 @@ do
         if [ -z "${httpPort}" ]
         then
             httpPort=`echo $host | sed -r 's/https?:\/\/(.*)\:([0-9]*)/\2/'`
-            params="$params -E http.port=${httpPort}"
+            params="$params http.port=${httpPort}"
             echo "Set http.port=${httpPort} based on given host: ${host}"
         else
             echo "http.port=${httpPort} taken from envionment variable"
@@ -70,7 +70,7 @@ do
         if [ -z "${transportPort}" ]
         then
             transportPort=`echo $host | sed -r 's/https?:\/\/(.*)\:[0-9]{2}([0-9]{2})/93\2/'`
-            params="$params -E transport.port=${transportPort}"
+            params="$params transport.port=${transportPort}"
             echo "Set transport.port=${transportPort} based on given host: ${host}"
         else
             echo "transport.port=${transportPort} taken from envionment variable"
@@ -92,8 +92,8 @@ fi
 
 # Check if the ELASTICSEARCH_ANONYMOUS_ENABLED status
 if [ "${ELASTICSEARCH_ANONYMOUS_ENABLED}" = "true" ]; then
-    anonymousUsername="-E xpack.security.authc.anonymous.roles=kibana_admin,superuser,beats_system,logstash_system"
-    anonymousRoles="-E xpack.security.authc.anonymous.username=anonymous"
+    anonymousUsername="xpack.security.authc.anonymous.roles=kibana_admin,superuser,beats_system,logstash_system"
+    anonymousRoles="xpack.security.authc.anonymous.username=anonymous"
 fi
 
 if [ -z "${ES_JAVA_OPTS}" -o "${ES_JAVA_OPTS}" == "-Xmx1g -Xms1g" ];then
@@ -101,4 +101,4 @@ if [ -z "${ES_JAVA_OPTS}" -o "${ES_JAVA_OPTS}" == "-Xmx1g -Xms1g" ];then
 fi
 
 # Finally call the original Docker-Entrypoint
-/usr/local/bin/docker-entrypoint.sh elasticsearch ${params} ${seedHosts} ${initialMasterNode} ${anonymousUsername} ${anonymousRoles}
+env ${params} ${seedHosts} ${initialMasterNode} ${anonymousUsername} ${anonymousRoles} /usr/local/bin/docker-entrypoint.sh elasticsearch

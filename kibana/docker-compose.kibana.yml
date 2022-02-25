@@ -8,6 +8,7 @@ services:
     container_name: kibana
     environment:
       - SERVER_NAME=Kibana-Axway-APIM
+      - SERVER_HOST=${SERVER_HOST:-0.0.0.0}
       - ELASTICSEARCH_HOSTS=${ELASTICSEARCH_HOSTS}
       - KIBANA_SYSTEM_USERNAME=${KIBANA_SYSTEM_USERNAME}
       - KIBANA_SYSTEM_PASSWORD=${KIBANA_SYSTEM_PASSWORD}

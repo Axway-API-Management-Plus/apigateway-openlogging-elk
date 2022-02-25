@@ -1,13 +1,12 @@
 # Disable security by default to fallback to anonymous user
 # Enable this parameter to activate security for Kibana
-xpack.security.enabled: ${KIBANA_SECURITY_ENABLED}
+#xpack.security.enabled: true
 
 # Should be disabled, when Kibana is monitored by Metricbeat
 # No longer hard coded is handled by the entry-script
 # monitoring.kibana.collection.enabled: true
 
 server.name: kibana
-server.host: "0"
 elasticsearch.hosts: ${ELASTICSEARCH_HOSTS}
 monitoring.ui.container.elasticsearch.enabled: true
 
