@@ -1473,6 +1473,10 @@ No. The settings can be found in Policy Studio Server Settings --> Monitoring --
 
 Yes, from version >=4.2.0 this is possible. For this you have to set the parameter: `API_MANAGER_ENABLED=false` and disable user authorization. See parameter: `AUTHZ_CONFIG`
 
+### Can I use the solution with Elasticsearch >=8.0.0
+
+No, Elasticsearch 8.0.0 introduces a number of breaking changes and the solution has not yet being updated to become compatible with it. Of course, it's the plan to adjust the solution to support it at a later time.
+
 ## Known issues
 N/A
   
