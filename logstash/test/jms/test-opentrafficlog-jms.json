@@ -14,6 +14,23 @@
         {
           "@timestamp": "2021-06-30T08:11:23.511Z",
           "correlationId": "2927dc60e52ae8c48fb505da",
+          "protocol": "jms",
+          "protocolSrc": "local/com.customer.APPLIC.msg.WWSWO.PROD.P44.ShipmentService_IQ",
+          "finalStatus": "Pass",
+          "processInfo": {
+            "hostname": "api-back-11",
+            "groupId": "group-2",
+            "groupName": "Back",
+            "serviceId": "instance-1",
+            "version": "7.7.20201130",
+            "gatewayName": "API-Gateway 3", 
+            "gatewayRegion": "US"
+          },
+          "type": "summaryIndex"
+        },
+        {
+          "@timestamp": "2021-06-30T08:11:23.511Z",
+          "correlationId": "2927dc60e52ae8c48fb505da",
           "processInfo": {
             "hostname": "api-back-11",
             "groupId": "group-2",
@@ -29,23 +46,6 @@
             "protocolSrc": "local/com.customer.APPLIC.msg.WWSWO.PROD.P44.ShipmentService_IQ",
             "status": "success"
           }
-        },
-        {
-          "@timestamp": "2021-06-30T08:11:23.511Z",
-          "correlationId": "2927dc60e52ae8c48fb505da",
-          "protocol": "jms",
-          "protocolSrc": "local/com.customer.APPLIC.msg.WWSWO.PROD.P44.ShipmentService_IQ",
-          "finalStatus": "Pass",
-          "processInfo": {
-            "hostname": "api-back-11",
-            "groupId": "group-2",
-            "groupName": "Back",
-            "serviceId": "instance-1",
-            "version": "7.7.20201130",
-            "gatewayName": "API-Gateway 3", 
-            "gatewayRegion": "US"
-          },
-          "type": "summaryIndex"
         }
       ]
     },
