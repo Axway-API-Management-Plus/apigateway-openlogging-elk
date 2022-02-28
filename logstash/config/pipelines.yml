@@ -6,6 +6,7 @@
 
 - pipeline.id: BeatsInput
   path.config: "pipelines/BeatsInputPipeline.conf"
+  pipeline.ecs_compatibility: disabled
   pipeline.workers: 16
   pipeline.batch.size: 2048
   pipeline.ordered: false
@@ -19,16 +20,19 @@
 
 - pipeline.id: TraceMessages
   path.config: "pipelines/TraceMessagesPipeline.conf"
+  pipeline.ecs_compatibility: disabled
   pipeline.workers: 8
   pipeline.batch.size: 2048
   pipeline.ordered: false
 
 - pipeline.id: Events
   path.config: "pipelines/EventsPipeline.conf"
+  pipeline.ecs_compatibility: disabled
   pipeline.workers: 1
   pipeline.ordered: false
 
 - pipeline.id: DomainAudit
   path.config: "pipelines/DomainAuditPipeline.conf"
+  pipeline.ecs_compatibility: disabled
   pipeline.workers: 1
   pipeline.ordered: false
