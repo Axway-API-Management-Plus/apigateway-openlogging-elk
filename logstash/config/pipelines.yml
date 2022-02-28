@@ -12,6 +12,7 @@
 
 - pipeline.id: OpenTraffic
   path.config: "pipelines/OpenTrafficPipeline.conf"
+  pipeline.ecs_compatibility: disabled
   pipeline.workers: 8
   pipeline.batch.size: 2048
   pipeline.ordered: false
