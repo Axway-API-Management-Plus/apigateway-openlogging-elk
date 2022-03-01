@@ -32,7 +32,7 @@
 					"type": "string",
 					"value": "\"//return Math.floor(Math.random() * Math.floor(60000));\\n  return Math.floor(Math.random() * Math.floor(1000));\"",
 					"metaName": "Code",
-					"metaDescription": "A JavaScript function body. Supports `await` and returning promises. `data` is the value of the Data parameter. `logger` is the API Builder logger. See the docs for more info: https://docs.axway.com/bundle/API_Builder_4x_allOS_en/page/javascript_flow-node.html"
+					"metaDescription": "A JavaScript function body. Supports `await` and returning promises. `data` is the value of the Data parameter. `logger` is the API Builder logger. See the docs for more info: https://docs.axway.com/bundle/api-builder/page/docs/developer_guide/flows/flow_nodes/javascript_flow_node/index.html"
 				}
 			],
 			"outputs": {
@@ -371,7 +371,7 @@
 					"type": "string",
 					"value": "\"var lastKPI = data.lastKPI; // Is the _source object\\n  var lastTimestamp = lastKPI[\\\"@timestamp\\\"];\\n  var lastapiBuilderHostname = lastKPI.meta.apiBuilderHostname;\\n  var managementKPIsInterval = data.config.managementKPIsInterval;\\n  var now = Date.now();\\n  logger.info(`Check timestamp of last KPI: ${lastTimestamp} vs. current time: ${now} and managementKPIsInterval: ${managementKPIsInterval}`);\\n  if(now - lastTimestamp > managementKPIsInterval * 2) { // If the last KPI document older than twice the interval, consider it as too old.\\n    logger.info(`Last KPI document is too old, assuming previous API-Builder has stopped indexing data. Taking over indexing data`);\\n    return true;\\n  } else {\\n    logger.info(`Previous API-Builder running on host: ${lastapiBuilderHostname} is still indexing data. Timestamp of last document: ${lastTimestamp}`);\\n    return false;\\n  }\"",
 					"metaName": "Code",
-					"metaDescription": "A JavaScript function body. Supports `await` and returning promises. `data` is the value of the Data parameter. `logger` is the API Builder logger. See the docs for more info: https://docs.axway.com/bundle/API_Builder_4x_allOS_en/page/javascript_flow-node.html"
+					"metaDescription": "A JavaScript function body. Supports `await` and returning promises. `data` is the value of the Data parameter. `logger` is the API Builder logger. See the docs for more info: https://docs.axway.com/bundle/api-builder/page/docs/developer_guide/flows/flow_nodes/javascript_flow_node/index.html"
 				}
 			],
 			"outputs": {
@@ -400,8 +400,7 @@
 				{
 					"name": "value",
 					"type": "jsonpath",
-					"value": "$.result.body.hits.hits[0]._source",
-					"metaName": "Value"
+					"value": "$.result.hits.hits[0]._source"
 				}
 			],
 			"outputs": {
@@ -543,7 +542,9 @@
 				{
 					"name": "delay",
 					"type": "number",
-					"value": "10000"
+					"value": "10000",
+					"metaName": "Delay",
+					"metaDescription": "The length of delay, in milliseconds."
 				}
 			],
 			"outputs": {
@@ -551,9 +552,11 @@
 					"context": "$.delayed",
 					"routes": [
 						"elasticsearch.2"
-					]
+					],
+					"metaName": "Next"
 				}
-			}
+			},
+			"metaMethod": "Delay"
 		}
 	}
 }

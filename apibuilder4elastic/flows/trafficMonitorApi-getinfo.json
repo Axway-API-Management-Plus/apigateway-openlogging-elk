@@ -42,15 +42,15 @@
 					"name": "data",
 					"type": "jsonpath",
 					"value": "$",
-					"metaName": "data",
-					"metaDescription": "The value to apply as the `data` argument to the JavaScript code. For objects and arrays, `data` is passed by reference."
+					"metaName": "Data",
+					"metaDescription": "The value to apply as the `data` argument of the JavaScript code. For objects and arrays, `data` is passed by reference."
 				},
 				{
 					"name": "code",
 					"type": "string",
 					"value": "\"// Perhaps there is a region given\\n  let region = data.params.region;\\n  \\n  let index = 'apigw-traffic-details';\\n  // Atach the region if given\\n  if(region) {\\n    index = `${index}-${region.toLowerCase()}`;\\n  }\\n  index = `${index}-*`;\\n  \\n  if(data.config.testElasticIndex) {\\n    index = data.config.testElasticIndex;\\n  }\\n  \\n  return index;\"",
-					"metaName": "code",
-					"metaDescription": "A JavaScript function body. Supports `await` and returning promises."
+					"metaName": "Code",
+					"metaDescription": "A JavaScript function body. Supports `await` and returning promises. `data` is the value of the Data parameter. `logger` is the API Builder logger. See the docs for more info: https://docs.axway.com/bundle/api-builder/page/docs/developer_guide/flows/flow_nodes/javascript_flow_node/index.html"
 				}
 			],
 			"outputs": {
@@ -80,15 +80,15 @@
 					"name": "data",
 					"type": "jsonpath",
 					"value": "$",
-					"metaName": "data",
-					"metaDescription": "The value to apply as the `data` argument to the JavaScript code. For objects and arrays, `data` is passed by reference."
+					"metaName": "Data",
+					"metaDescription": "The value to apply as the `data` argument of the JavaScript code. For objects and arrays, `data` is passed by reference."
 				},
 				{
 					"name": "code",
 					"type": "string",
 					"value": "\"//only json is supported. \\n  //If param format is skipped automatically json is returned\\n\\n  if(data.params.format != undefined && data.params.format != 'json') {\\n    throw {\\n      name: \\\"unknown format exception\\\",\\n      message: \\\"unknown format\\\"\\n    };\\n  }\\n\\n  return data.params;\"",
-					"metaName": "code",
-					"metaDescription": "A JavaScript function body. Supports `await` and returning promises."
+					"metaName": "Code",
+					"metaDescription": "A JavaScript function body. Supports `await` and returning promises. `data` is the value of the Data parameter. `logger` is the API Builder logger. See the docs for more info: https://docs.axway.com/bundle/api-builder/page/docs/developer_guide/flows/flow_nodes/javascript_flow_node/index.html"
 				}
 			],
 			"outputs": {
@@ -131,20 +131,32 @@
 			],
 			"outputs": {
 				"next": {
-					"routes": ["traffic-monitor-api-utils.1"],
-					"context": "$.elasticsearch.result"
+					"routes": [
+						"traffic-monitor-api-utils.1"
+					],
+					"context": "$.elasticsearch.result",
+					"metaName": "Next"
 				},
 				"noResult": {
-					"routes": ["traffic-monitor-api-utils.1"],
-					"context": "$.elasticsearch.result"
+					"routes": [
+						"traffic-monitor-api-utils.1"
+					],
+					"context": "$.elasticsearch.result",
+					"metaName": "No result"
 				},
 				"missingIndex": {
-					"routes": ["http.1"],
-					"context": "$.error"
+					"routes": [
+						"http.1"
+					],
+					"context": "$.error",
+					"metaName": "Missing index"
 				},
 				"error": {
-					"routes": ["http.1"],
-					"context": "$.error"
+					"routes": [
+						"http.1"
+					],
+					"context": "$.error",
+					"metaName": "Error"
 				}
 			},
 			"metaMethod": "Search"
@@ -224,7 +236,7 @@
 					"type": "jsonpath",
 					"value": "$.authzConfig.getApiManagerUser",
 					"metaName": "Get the API-Manager user?",
-					"metaDescription": "If set to false, the flow-node does not tries to lookup the user on the API-Manager. Set it to false, when for instance user authorization is disabled as there might be no belonging user configured in the API-Manager."
+					"metaDescription": "If set to false, the flow-node does not try to lookup the user on the API-Manager. Set it to false, when for instance user authorization is disabled as there might be no belonging user configured in the API-Manager."
 				}
 			],
 			"outputs": {
@@ -272,32 +284,26 @@
 					"metaDescription": "The number of the leg to be returned or * for all legs."
 				},
 				{
-					"name": "correlationId",
-					"type": "jsonpath",
-					"value": "$.elasticsearch.result.body.hits.hits[0]._source.correlationId",
-					"metaName": "CorrelationId",
-					"metaDescription": "The correlation ID of the request. It needs to be added to the transaction information"
-				},
-				{
-					"name": "timestamp",
-					"type": "jsonpath",
-					"value": "$.elasticsearch.result.body.hits.hits[0]._source['@timestamp']",
-					"metaName": "Request timestamp",
-					"metaDescription": "The timestamp of the request. It needs to be added to the transaction information"
-				},
-				{
-					"name": "transactionElements",
-					"type": "jsonpath",
-					"value": "$.elasticsearch.result.body.hits.hits[0]._source.transactionElements",
-					"metaName": "TransactionElements",
-					"metaDescription": "The transaction element object returned by Elasticsearch traffic details index containing the individual Legs. The legs can contain HTTP or other protocols like JMS."
-				},
-				{
 					"name": "sheadersParam",
 					"type": "jsonpath",
 					"value": "$.params.sheaders",
 					"metaName": "Include Sent-Headers",
 					"metaDescription": "Should Sent-Headers returned or not (1 or 0)"
+				},
+				{
+					"name": "correlationId",
+					"type": "jsonpath",
+					"value": "$.elasticsearch.result.hits.hits[0]._source.correlationId"
+				},
+				{
+					"name": "timestamp",
+					"type": "jsonpath",
+					"value": "$.elasticsearch.result.hits.hits[0]._source['@timestamp']"
+				},
+				{
+					"name": "transactionElements",
+					"type": "jsonpath",
+					"value": "$.elasticsearch.result.hits.hits[0]._source.transactionElements"
 				}
 			],
 			"outputs": {
@@ -384,7 +390,9 @@
 				{
 					"name": "gatewayTopology",
 					"type": "jsonpath",
-					"value": "$.gatewayTopology"
+					"value": "$.gatewayTopology",
+					"metaName": "API-Gateway Topology",
+					"metaDescription": "The API-Gateway topology as read by flow-node: axway-api-management->lookupTopology"
 				}
 			],
 			"outputs": {
@@ -632,7 +640,9 @@
 				{
 					"name": "requestHeaders",
 					"type": "jsonpath",
-					"value": "$.request.headers"
+					"value": "$.request.headers",
+					"metaName": "Request Headers",
+					"metaDescription": "The request headers are used to lookup the topology using the currently logged in user."
 				}
 			],
 			"outputs": {
@@ -640,15 +650,18 @@
 					"routes": [
 						"javascript.1"
 					],
-					"context": "$.gatewayTopology"
+					"context": "$.gatewayTopology",
+					"metaName": "Next"
 				},
 				"error": {
 					"routes": [
 						"http.5"
 					],
-					"context": "$.error"
+					"context": "$.error",
+					"metaName": "Error"
 				}
-			}
+			},
+			"metaMethod": "Lookup topology"
 		}
 	}
 }

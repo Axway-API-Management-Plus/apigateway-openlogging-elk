@@ -105,20 +105,32 @@
 			],
 			"outputs": {
 				"next": {
-					"routes": ["elk-solution-utils.1"],
-					"context": "$.transactionDetails"
+					"routes": [
+						"elk-solution-utils.1"
+					],
+					"context": "$.transactionDetails",
+					"metaName": "Next"
 				},
 				"noResult": {
-					"routes": ["elk-solution-utils.1"],
-					"context": "$.transactionDetails"
+					"routes": [
+						"elk-solution-utils.1"
+					],
+					"context": "$.transactionDetails",
+					"metaName": "No result"
 				},
 				"missingIndex": {
-					"routes": ["http.3"],
-					"context": "$.error"
+					"routes": [
+						"http.3"
+					],
+					"context": "$.error",
+					"metaName": "Missing index"
 				},
 				"error": {
-					"routes": ["http.3"],
-					"context": "$.error"
+					"routes": [
+						"http.3"
+					],
+					"context": "$.error",
+					"metaName": "Error"
 				}
 			},
 			"metaMethod": "Search"
@@ -132,15 +144,15 @@
 					"name": "data",
 					"type": "jsonpath",
 					"value": "$",
-					"metaName": "data",
-					"metaDescription": "The value to apply as the `data` argument to the JavaScript code. For objects and arrays, `data` is passed by reference."
+					"metaName": "Data",
+					"metaDescription": "The value to apply as the `data` argument of the JavaScript code. For objects and arrays, `data` is passed by reference."
 				},
 				{
 					"name": "code",
 					"type": "string",
 					"value": "\"// Perhaps there is a region given\\n  let region = data.params.region;\\n  \\n  let index = 'apigw-traffic-details';\\n  // Atach the region if given\\n  if(region) {\\n    index = `${index}-${region.toLowerCase()}`;\\n  }\\n  index = `${index}-*`;\\n  \\n  if(data.config.testElasticIndex) {\\n    index = data.config.testElasticIndex;\\n  }\\n  \\n  return index;\"",
-					"metaName": "code",
-					"metaDescription": "A JavaScript function body. Supports `await` and returning promises."
+					"metaName": "Code",
+					"metaDescription": "A JavaScript function body. Supports `await` and returning promises. `data` is the value of the Data parameter. `logger` is the API Builder logger. See the docs for more info: https://docs.axway.com/bundle/api-builder/page/docs/developer_guide/flows/flow_nodes/javascript_flow_node/index.html"
 				}
 			],
 			"outputs": {
@@ -233,7 +245,9 @@
 				{
 					"name": "region",
 					"type": "jsonpath",
-					"value": "$.params.region"
+					"value": "$.params.region",
+					"metaName": "Region",
+					"metaDescription": "Returns the filename including the region prefix"
 				}
 			],
 			"outputs": {
@@ -384,7 +398,7 @@
 					"type": "jsonpath",
 					"value": "$.authzConfig.getApiManagerUser",
 					"metaName": "Get the API-Manager user?",
-					"metaDescription": "If set to false, the flow-node does not tries to lookup the user on the API-Manager. Set it to false, when for instance user authorization is disabled as there might be no belonging user configured in the API-Manager."
+					"metaDescription": "If set to false, the flow-node does not try to lookup the user on the API-Manager. Set it to false, when for instance user authorization is disabled as there might be no belonging user configured in the API-Manager."
 				}
 			],
 			"outputs": {
@@ -560,15 +574,15 @@
 					"name": "data",
 					"type": "jsonpath",
 					"value": "$",
-					"metaName": "data",
-					"metaDescription": "The value to apply as the `data` argument to the JavaScript code. For objects and arrays, `data` is passed by reference."
+					"metaName": "Data",
+					"metaDescription": "The value to apply as the `data` argument of the JavaScript code. For objects and arrays, `data` is passed by reference."
 				},
 				{
 					"name": "code",
 					"type": "string",
 					"value": "\"var params = data.params;\\n  console.log(`data.response.headers: ${data.response.headers}`);\\n  // Add a filename header in case the payload should be downloaded\\n  data.response.headers[\\\"Content-Disposition\\\"] = `attachment; filename=${params.correlationID}_${params.legID}_${params.direction}`;\"",
-					"metaName": "code",
-					"metaDescription": "A JavaScript function body. Supports `await` and returning promises."
+					"metaName": "Code",
+					"metaDescription": "A JavaScript function body. Supports `await` and returning promises. `data` is the value of the Data parameter. `logger` is the API Builder logger. See the docs for more info: https://docs.axway.com/bundle/api-builder/page/docs/developer_guide/flows/flow_nodes/javascript_flow_node/index.html"
 				}
 			],
 			"outputs": {
@@ -661,15 +675,13 @@
 					"name": "data",
 					"type": "jsonpath",
 					"value": "$",
-					"metaName": "data",
-					"metaDescription": "The value to apply as the `data` argument to the JavaScript code. For objects and arrays, `data` is passed by reference."
+					"metaName": "Data",
+					"metaDescription": "The value to apply as the `data` argument of the JavaScript code. For objects and arrays, `data` is passed by reference."
 				},
 				{
 					"name": "code",
 					"type": "string",
-					"value": "\"var source = data.transactionDetails.body.hits.hits[0]._source;\\n  var payload = data.payload;\\n  var direction = data.params.direction;\\n  var legID = data.params.legID;\\n  \\n  var headers;\\n  \\n  if(direction == \\\"sent\\\") {\\n    headers = source.transactionElements[`leg${legID}`].protocolInfo.sentHeader;\\n  } else if(direction == \\\"received\\\") {\\n    headers = source.transactionElements[`leg${legID}`].protocolInfo.recvHeader;\\n  }\\n  \\n  var result = `${headers}\\\\r\\\\n${payload}`;\\n  return result;\"",
-					"metaName": "code",
-					"metaDescription": "A JavaScript function body. Supports `await` and returning promises."
+					"value": "\"var source = data.transactionDetails.hits.hits[0]._source;\\n  var payload = data.payload;\\n  var direction = data.params.direction;\\n  var legID = data.params.legID;\\n  \\n  var headers;\\n  \\n  if(direction == \\\"sent\\\") {\\n    headers = source.transactionElements[`leg${legID}`].protocolInfo.sentHeader;\\n  } else if(direction == \\\"received\\\") {\\n    headers = source.transactionElements[`leg${legID}`].protocolInfo.recvHeader;\\n  }\\n  \\n  var result = `${headers}\\\\r\\\\n${payload}`;\\n  return result;\""
 				}
 			],
 			"outputs": {

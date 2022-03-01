@@ -55,20 +55,32 @@
 			],
 			"outputs": {
 				"next": {
-					"routes": ["javascript.1"],
-					"context": "$.elasticsearch.result"
+					"routes": [
+						"javascript.1"
+					],
+					"context": "$.elasticsearch.result",
+					"metaName": "Next"
 				},
 				"noResult": {
-					"routes": ["javascript.1"],
-					"context": "$.elasticsearch.result"
+					"routes": [
+						"javascript.1"
+					],
+					"context": "$.elasticsearch.result",
+					"metaName": "No result"
 				},
 				"missingIndex": {
-					"routes": ["http.1"],
-					"context": "$.error"
+					"routes": [
+						"http.1"
+					],
+					"context": "$.error",
+					"metaName": "Missing index"
 				},
 				"error": {
-					"routes": ["http.1"],
-					"context": "$.error"
+					"routes": [
+						"http.1"
+					],
+					"context": "$.error",
+					"metaName": "Error"
 				}
 			},
 			"metaMethod": "Search"
@@ -108,16 +120,16 @@
 			"method": "Execute",
 			"parameters": [
 				{
-					"name": "data",
-					"type": "jsonpath",
-					"value": "$.elasticsearch.result.body.hits",
-					"metaName": "Data",
-					"metaDescription": "The value to apply as the `data` argument of the JavaScript code. For objects and arrays, `data` is passed by reference."
-				},
-				{
 					"name": "code",
 					"type": "string",
-					"value": "\"let result = [];\\n  //console.log(data);\\n  \\n  if(typeof data.hits[0] != \\\"undefined\\\"){\\n    var source = data.hits[0]._source;\\n    if(source.circuitPath) {\\n      result = source.circuitPath;\\n    } else {\\n      logger.warn(`Unexpectedly no CircuitPath information found for API request: '${source.correlationId}'`);\\n    }\\n  }\\n  return result;\""
+					"value": "\"let result = [];\\n  //console.log(data);\\n  \\n  if(typeof data.hits[0] != \\\"undefined\\\"){\\n    var source = data.hits[0]._source;\\n    if(source.circuitPath) {\\n      result = source.circuitPath;\\n    } else {\\n      logger.warn(`Unexpectedly no CircuitPath information found for API request: '${source.correlationId}'`);\\n    }\\n  }\\n  return result;\"",
+					"metaName": "Code",
+					"metaDescription": "A JavaScript function body. Supports `await` and returning promises. `data` is the value of the Data parameter. `logger` is the API Builder logger. See the docs for more info: https://docs.axway.com/bundle/api-builder/page/docs/developer_guide/flows/flow_nodes/javascript_flow_node/index.html"
+				},
+				{
+					"name": "data",
+					"type": "jsonpath",
+					"value": "$.elasticsearch.result.hits"
 				}
 			],
 			"outputs": {
@@ -155,7 +167,7 @@
 					"type": "string",
 					"value": "\"// Perhaps there is a region given\\n  let region = data.params.region;\\n  let index = 'apigw-traffic-details';\\n  // Atach the region if given\\n  if(region) {\\n    index = `${index}-${region.toLowerCase()}`;\\n  }\\n  index = `${index}-*`;\\n  \\n  if(data.config.testElasticIndex) {\\n    index = data.config.testElasticIndex;\\n  }\\n  return index;\"",
 					"metaName": "Code",
-					"metaDescription": "A JavaScript function body. Supports `await` and returning promises. `data` is the value of the Data parameter. `logger` is the API Builder logger. See the docs for more info: https://docs.axway.com/bundle/API_Builder_4x_allOS_en/page/javascript_flow-node.html"
+					"metaDescription": "A JavaScript function body. Supports `await` and returning promises. `data` is the value of the Data parameter. `logger` is the API Builder logger. See the docs for more info: https://docs.axway.com/bundle/api-builder/page/docs/developer_guide/flows/flow_nodes/javascript_flow_node/index.html"
 				}
 			],
 			"outputs": {
@@ -222,7 +234,7 @@
 					"type": "jsonpath",
 					"value": "$.authzConfig.getApiManagerUser",
 					"metaName": "Get the API-Manager user?",
-					"metaDescription": "If set to false, the flow-node does not tries to lookup the user on the API-Manager. Set it to false, when for instance user authorization is disabled as there might be no belonging user configured in the API-Manager."
+					"metaDescription": "If set to false, the flow-node does not try to lookup the user on the API-Manager. Set it to false, when for instance user authorization is disabled as there might be no belonging user configured in the API-Manager."
 				}
 			],
 			"outputs": {

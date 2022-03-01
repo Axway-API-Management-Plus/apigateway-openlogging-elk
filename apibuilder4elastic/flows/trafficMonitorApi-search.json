@@ -98,20 +98,28 @@
 			],
 			"outputs": {
 				"next": {
-					"routes": ["javascript.1"],
-					"context": "$.elasticsearch.result"
+					"routes": [
+						"javascript.1"
+					],
+					"context": "$.elasticsearch.result",
+					"metaName": "Next"
 				},
 				"noResult": {
-					"routes": ["javascript.1"],
-					"context": "$.elasticsearch.result"
+					"routes": [
+						"javascript.1"
+					],
+					"context": "$.elasticsearch.result",
+					"metaName": "No result"
 				},
 				"missingIndex": {
 					"routes": [],
-					"context": "$.error"
+					"context": "$.error",
+					"metaName": "Missing index"
 				},
 				"error": {
 					"routes": [],
-					"context": "$.error"
+					"context": "$.error",
+					"metaName": "Error"
 				}
 			},
 			"metaMethod": "Search"
@@ -131,9 +139,7 @@
 				{
 					"name": "code",
 					"type": "string",
-					"value": "\"var result = {};\\n  var hits = data.elasticsearch.result.body.hits.hits;\\n  var protocol = data.params.protocol;\\n  result.processId = \\\"\\\";\\n  result.data = [];\\n  hits.map(function(entry) {\\n    var dataObject = {};\\n    var _source = entry._source;\\n    dataObject.correlationId = _source.correlationId;\\n    dataObject.timestamp = Date.parse(_source['@timestamp']);\\n    if(_source.serviceContext) {\\n      dataObject.serviceName = _source.serviceContext.service;\\n      dataObject.operation = _source.serviceContext.method;\\n    }\\n    dataObject.type = protocol;\\n    switch (protocol) {\\n      case \\\"http\\\":\\n        formatHttpFields(dataObject, _source);\\n        break;\\n      case \\\"fileTransfer\\\":\\n        formatFiletransferFields(dataObject, _source);\\n        break;\\n      case \\\"jms\\\":\\n        formatJMSFields(dataObject, _source);\\n        break;\\n    }\\n    result.data.push(dataObject);\\n  });\\n  \\n  function formatHttpFields(dataObject, _source) {    \\n      if(!_source.http.sslSubject) {\\n        _source.http.sslSubject = \\\"null\\\";\\n      }\\n      dataObject.statustext = _source.http.statusText;\\n      dataObject.method = _source.http.method;\\n      dataObject.status = _source.http.status;\\n      dataObject.wafStatus = _source.http.wafStatus;\\n      dataObject.subject = _source.http.authSubjectId;\\n      dataObject.sslsubject = _source.http.sslSubject;\\n      dataObject.localPort = _source.http.localPort;\\n      dataObject.uri = _source.http.uri;\\n      dataObject.vhost = _source.http.vhost;\\n      dataObject.duration = _source.duration;\\n      dataObject.finalStatus = _source.finalStatus;\\n      dataObject.bytesReceived = _source.http.bytesReceived;\\n      dataObject.bytesSent = _source.http.bytesSent;\\n      dataObject.remoteName = _source.http.remoteName;\\n      dataObject.remoteAddr = _source.http.remoteAddr;\\n      dataObject.remotePort = _source.http.remotePort;\\n      dataObject.localAddr = _source.http.localAddr;\\n      dataObject.localPort = _source.http.localPort;\\n      dataObject.leg = 0;\\n  }\\n  \\n  function formatFiletransferFields(dataObject, _source) {\\n      dataObject.remoteAddr = _source.fileTransfer.remoteAddr;\\n      dataObject.uploadFile = _source.fileTransfer.uploadFile;\\n      dataObject.direction = _source.fileTransfer.direction;\\n      dataObject.servicetype = _source.fileTransfer.serviceType;\\n      dataObject.size = _source.fileTransfer.size;\\n      dataObject.duration = _source.duration;\\n      dataObject.subject = _source.fileTransfer.authSubjectId;\\n      dataObject.finalStatus = _source.finalStatus;\\n  }\\n  \\n  function formatJMSFields(dataObject, _source) {\\n    dataObject.jmsMessageID = _source.jms.jmsMessageID;\\n    dataObject.jmsCorrelationID = _source.jms.jmsCorrelationID;\\n    dataObject.jmsDestination = _source.jms.jmsDestination;\\n    dataObject.jmsProviderURL = _source.jms.jmsProviderURL;\\n    dataObject.jmsDeliveryMode = _source.jms.jmsDeliveryMode;\\n    dataObject.jmsPriority = _source.jms.jmsPriority;\\n    dataObject.jmsReplyTo = _source.jms.jmsReplyTo;\\n    dataObject.jmsRedelivered = _source.jms.jmsRedelivered;\\n    dataObject.jmsTimestamp = _source.jms.jmsTimestamp;\\n    dataObject.jmsExpiration = _source.jms.jmsExpiration;\\n    dataObject.jmsType = _source.jms.jmsType;\\n    dataObject.jmsStatus = _source.jms.jmsStatus;\\n    dataObject.jmsStatusText = _source.jms.jmsStatusText;\\n    dataObject.leg = 0;\\n    dataObject.duration = _source.duration;\\n    dataObject.subject = _source.jms.authSubjectId;\\n    dataObject.finalStatus = _source.finalStatus;\\n  }\\n\\n  \\n  return result;\"",
-					"metaName": "Code",
-					"metaDescription": "A JavaScript function body. Supports `await` and returning promises. `data` is the value of the Data parameter. `logger` is the API Builder logger. See the docs for more info: https://docs.axway.com/bundle/API_Builder_4x_allOS_en/page/javascript_flow-node.html"
+					"value": "\"var result = {};\\n  var hits = data.elasticsearch.result.hits.hits;\\n  var protocol = data.params.protocol;\\n  result.processId = \\\"\\\";\\n  result.data = [];\\n  hits.map(function(entry) {\\n    var dataObject = {};\\n    var _source = entry._source;\\n    dataObject.correlationId = _source.correlationId;\\n    dataObject.timestamp = Date.parse(_source['@timestamp']);\\n    if(_source.serviceContext) {\\n      dataObject.serviceName = _source.serviceContext.service;\\n      dataObject.operation = _source.serviceContext.method;\\n    }\\n    dataObject.type = protocol;\\n    switch (protocol) {\\n      case \\\"http\\\":\\n        formatHttpFields(dataObject, _source);\\n        break;\\n      case \\\"fileTransfer\\\":\\n        formatFiletransferFields(dataObject, _source);\\n        break;\\n      case \\\"jms\\\":\\n        formatJMSFields(dataObject, _source);\\n        break;\\n    }\\n    result.data.push(dataObject);\\n  });\\n  \\n  function formatHttpFields(dataObject, _source) {    \\n      if(!_source.http.sslSubject) {\\n        _source.http.sslSubject = \\\"null\\\";\\n      }\\n      dataObject.statustext = _source.http.statusText;\\n      dataObject.method = _source.http.method;\\n      dataObject.status = _source.http.status;\\n      dataObject.wafStatus = _source.http.wafStatus;\\n      dataObject.subject = _source.http.authSubjectId;\\n      dataObject.sslsubject = _source.http.sslSubject;\\n      dataObject.localPort = _source.http.localPort;\\n      dataObject.uri = _source.http.uri;\\n      dataObject.vhost = _source.http.vhost;\\n      dataObject.duration = _source.duration;\\n      dataObject.finalStatus = _source.finalStatus;\\n      dataObject.bytesReceived = _source.http.bytesReceived;\\n      dataObject.bytesSent = _source.http.bytesSent;\\n      dataObject.remoteName = _source.http.remoteName;\\n      dataObject.remoteAddr = _source.http.remoteAddr;\\n      dataObject.remotePort = _source.http.remotePort;\\n      dataObject.localAddr = _source.http.localAddr;\\n      dataObject.localPort = _source.http.localPort;\\n      dataObject.leg = 0;\\n  }\\n  \\n  function formatFiletransferFields(dataObject, _source) {\\n      dataObject.remoteAddr = _source.fileTransfer.remoteAddr;\\n      dataObject.uploadFile = _source.fileTransfer.uploadFile;\\n      dataObject.direction = _source.fileTransfer.direction;\\n      dataObject.servicetype = _source.fileTransfer.serviceType;\\n      dataObject.size = _source.fileTransfer.size;\\n      dataObject.duration = _source.duration;\\n      dataObject.subject = _source.fileTransfer.authSubjectId;\\n      dataObject.finalStatus = _source.finalStatus;\\n  }\\n  \\n  function formatJMSFields(dataObject, _source) {\\n    dataObject.jmsMessageID = _source.jms.jmsMessageID;\\n    dataObject.jmsCorrelationID = _source.jms.jmsCorrelationID;\\n    dataObject.jmsDestination = _source.jms.jmsDestination;\\n    dataObject.jmsProviderURL = _source.jms.jmsProviderURL;\\n    dataObject.jmsDeliveryMode = _source.jms.jmsDeliveryMode;\\n    dataObject.jmsPriority = _source.jms.jmsPriority;\\n    dataObject.jmsReplyTo = _source.jms.jmsReplyTo;\\n    dataObject.jmsRedelivered = _source.jms.jmsRedelivered;\\n    dataObject.jmsTimestamp = _source.jms.jmsTimestamp;\\n    dataObject.jmsExpiration = _source.jms.jmsExpiration;\\n    dataObject.jmsType = _source.jms.jmsType;\\n    dataObject.jmsStatus = _source.jms.jmsStatus;\\n    dataObject.jmsStatusText = _source.jms.jmsStatusText;\\n    dataObject.leg = 0;\\n    dataObject.duration = _source.duration;\\n    dataObject.subject = _source.jms.authSubjectId;\\n    dataObject.finalStatus = _source.finalStatus;\\n  }\\n\\n  \\n  return result;\""
 				}
 			],
 			"outputs": {
@@ -457,7 +463,9 @@
 				{
 					"name": "region",
 					"type": "jsonpath",
-					"value": "$.params.region"
+					"value": "$.params.region",
+					"metaName": "API-Gateway region",
+					"metaDescription": "If given this region is used to limit the query based on the field: processInfo.gatewayRegion"
 				}
 			],
 			"outputs": {
@@ -495,7 +503,7 @@
 					"type": "string",
 					"value": "\"// Perhaps there is a region given\\n  let region = data.params.region;\\n  // Overview screen (Traffic-Details table) \\n  // should also include the apigw-traffic-errors documents\\n  let index = 'apigw-traffic-summary';\\n  // Atach the region if given\\n  if(region) {\\n    index = `${index}-${region.toLowerCase()}`;\\n  }\\n  index = `${index}-*`;\\n  // Check, if there is an index name to test configured (this is set by the tests)\\n  if(data.config.testElasticIndex) {\\n    index = data.config.testElasticIndex;\\n    if(region) {\\n      index = index.replace(\\\"%REGION%\\\", region.toLowerCase());\\n    }\\n  }\\n  // Define the protocol default (mainly for tests, as they are not sending the default)\\n  if(data.params.protocol == undefined) {\\n    data.params.protocol = 'http';\\n  }\\n  return index;\"",
 					"metaName": "Code",
-					"metaDescription": "A JavaScript function body. Supports `await` and returning promises. `data` is the value of the Data parameter. `logger` is the API Builder logger. See the docs for more info: https://docs.axway.com/bundle/API_Builder_4x_allOS_en/page/javascript_flow-node.html"
+					"metaDescription": "A JavaScript function body. Supports `await` and returning promises. `data` is the value of the Data parameter. `logger` is the API Builder logger. See the docs for more info: https://docs.axway.com/bundle/api-builder/page/docs/developer_guide/flows/flow_nodes/javascript_flow_node/index.html"
 				}
 			],
 			"outputs": {

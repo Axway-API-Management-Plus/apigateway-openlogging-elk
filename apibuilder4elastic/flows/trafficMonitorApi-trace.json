@@ -98,20 +98,32 @@
 			],
 			"outputs": {
 				"next": {
-					"routes": ["javascript.1"],
-					"context": "$.elasticsearch.result"
+					"routes": [
+						"javascript.1"
+					],
+					"context": "$.elasticsearch.result",
+					"metaName": "Next"
 				},
 				"noResult": {
-					"routes": ["javascript.1"],
-					"context": "$.elasticsearch.result"
+					"routes": [
+						"javascript.1"
+					],
+					"context": "$.elasticsearch.result",
+					"metaName": "No result"
 				},
 				"missingIndex": {
-					"routes": ["http.2"],
-					"context": "$.error"
+					"routes": [
+						"http.2"
+					],
+					"context": "$.error",
+					"metaName": "Missing index"
 				},
 				"error": {
-					"routes": ["http.2"],
-					"context": "$.error"
+					"routes": [
+						"http.2"
+					],
+					"context": "$.error",
+					"metaName": "Error"
 				}
 			},
 			"metaMethod": "Search"
@@ -122,16 +134,16 @@
 			"method": "Execute",
 			"parameters": [
 				{
-					"name": "data",
-					"type": "jsonpath",
-					"value": "$.elasticsearch.result.body.hits",
-					"metaName": "data",
-					"metaDescription": "The value to apply as the `data` argument to the JavaScript code. For objects and arrays, `data` is passed by reference."
-				},
-				{
 					"name": "code",
 					"type": "string",
-					"value": "\"let result = [];\\n  \\n  data.hits.map(function(entry) {\\n    let traceObj = {};\\n    let message = entry._source.message;\\n\\t\\n    // depth is the number of tabs befor start of the message. \\n    // Calculated based on count of white spaces divided by 4\\n    const regexPattern = new RegExp(/(^\\\\s*)\\\\S*/g);\\n    let leadingSpaces = regexPattern.exec(message)[1];\\n\\tlet depth = 0;\\n    \\n    if (leadingSpaces !== null){\\n      depth = Math.round(leadingSpaces.length/4);\\n    }\\n    \\n    traceObj.level = entry._source.level;\\n    traceObj.type = 'trace';\\n    traceObj.time = new Date(entry._source['@timestamp']).getTime();\\n    traceObj.depth = depth;\\n    traceObj.text = message.trim();\\n    \\n    result.push(traceObj);\\n    \\n  });\\n  \\n  return result;\""
+					"value": "\"let result = [];\\n  \\n  data.hits.map(function(entry) {\\n    let traceObj = {};\\n    let message = entry._source.message;\\n\\t\\n    // depth is the number of tabs befor start of the message. \\n    // Calculated based on count of white spaces divided by 4\\n    const regexPattern = new RegExp(/(^\\\\s*)\\\\S*/g);\\n    let leadingSpaces = regexPattern.exec(message)[1];\\n\\tlet depth = 0;\\n    \\n    if (leadingSpaces !== null){\\n      depth = Math.round(leadingSpaces.length/4);\\n    }\\n    \\n    traceObj.level = entry._source.level;\\n    traceObj.type = 'trace';\\n    traceObj.time = new Date(entry._source['@timestamp']).getTime();\\n    traceObj.depth = depth;\\n    traceObj.text = message.trim();\\n    \\n    result.push(traceObj);\\n    \\n  });\\n  \\n  return result;\"",
+					"metaName": "Code",
+					"metaDescription": "A JavaScript function body. Supports `await` and returning promises. `data` is the value of the Data parameter. `logger` is the API Builder logger. See the docs for more info: https://docs.axway.com/bundle/api-builder/page/docs/developer_guide/flows/flow_nodes/javascript_flow_node/index.html"
+				},
+				{
+					"name": "data",
+					"type": "jsonpath",
+					"value": "$.elasticsearch.result.hits"
 				}
 			],
 			"outputs": {
@@ -161,15 +173,15 @@
 					"name": "data",
 					"type": "jsonpath",
 					"value": "$",
-					"metaName": "data",
-					"metaDescription": "The value to apply as the `data` argument to the JavaScript code. For objects and arrays, `data` is passed by reference."
+					"metaName": "Data",
+					"metaDescription": "The value to apply as the `data` argument of the JavaScript code. For objects and arrays, `data` is passed by reference."
 				},
 				{
 					"name": "code",
 					"type": "string",
 					"value": "\"let elasticQuery = ({\\n    \\\"bool\\\": {\\n      \\\"must\\\": [\\n        {\\\"term\\\": {\\n          \\\"correlationId\\\": data.params.correlationID\\n          }\\n        }\\n      ]\\n    }\\n  });\\n\\n  return elasticQuery;\"",
-					"metaName": "code",
-					"metaDescription": "A JavaScript function body. Supports `await` and returning promises."
+					"metaName": "Code",
+					"metaDescription": "A JavaScript function body. Supports `await` and returning promises. `data` is the value of the Data parameter. `logger` is the API Builder logger. See the docs for more info: https://docs.axway.com/bundle/api-builder/page/docs/developer_guide/flows/flow_nodes/javascript_flow_node/index.html"
 				}
 			],
 			"outputs": {
@@ -221,15 +233,15 @@
 					"name": "data",
 					"type": "jsonpath",
 					"value": "$",
-					"metaName": "data",
-					"metaDescription": "The value to apply as the `data` argument to the JavaScript code. For objects and arrays, `data` is passed by reference."
+					"metaName": "Data",
+					"metaDescription": "The value to apply as the `data` argument of the JavaScript code. For objects and arrays, `data` is passed by reference."
 				},
 				{
 					"name": "code",
 					"type": "string",
 					"value": "\"//only json is supported. \\n  //If param format is skipped automatically json is returned\\n  if(data.params.format != undefined && data.params.format != 'json') {\\n    throw {\\n      name: \\\"unknown format exception\\\",\\n      message: \\\"unknown format\\\"\\n    };\\n  }\"",
-					"metaName": "code",
-					"metaDescription": "A JavaScript function body. Supports `await` and returning promises."
+					"metaName": "Code",
+					"metaDescription": "A JavaScript function body. Supports `await` and returning promises. `data` is the value of the Data parameter. `logger` is the API Builder logger. See the docs for more info: https://docs.axway.com/bundle/api-builder/page/docs/developer_guide/flows/flow_nodes/javascript_flow_node/index.html"
 				}
 			],
 			"outputs": {
@@ -288,15 +300,15 @@
 					"name": "data",
 					"type": "jsonpath",
 					"value": "$",
-					"metaName": "data",
-					"metaDescription": "The value to apply as the `data` argument to the JavaScript code. For objects and arrays, `data` is passed by reference."
+					"metaName": "Data",
+					"metaDescription": "The value to apply as the `data` argument of the JavaScript code. For objects and arrays, `data` is passed by reference."
 				},
 				{
 					"name": "code",
 					"type": "string",
 					"value": "\"// Perhaps there is a region given\\n  let region = data.params.region;\\n  let index = 'apigw-traffic-trace';\\n  // Atach the region if given\\n  if(region) {\\n    index = `${index}-${region.toLowerCase()}`;\\n  }\\n  index = `${index}-*`;\\n  \\n  if(data.config.testElasticIndex) {\\n    index = data.config.testElasticIndex;\\n  }\\n  return index;\"",
-					"metaName": "code",
-					"metaDescription": "A JavaScript function body. Supports `await` and returning promises."
+					"metaName": "Code",
+					"metaDescription": "A JavaScript function body. Supports `await` and returning promises. `data` is the value of the Data parameter. `logger` is the API Builder logger. See the docs for more info: https://docs.axway.com/bundle/api-builder/page/docs/developer_guide/flows/flow_nodes/javascript_flow_node/index.html"
 				}
 			],
 			"outputs": {
