@@ -142,7 +142,6 @@ async function updateRolloverAlias(params, options) {
 		 * apigw-trace-messages-us apigw-trace-messages-us-000002 -      -             -              true
 		 * apigw-trace-messages-us apigw-trace-messages-us-000001 -      -             -              false
 		 */
-		debugger;
 		var indicesForName = await client.indices.get({index: `${indexName}-*`}, { maxRetries: 3 });
 		logger.debug(`Check rollover alias for configured index: ${indexName} ... got ${Object.entries(indicesForName).length} indicies from Elasticsearch to check.`);
 		// For each index returned on the name ...
