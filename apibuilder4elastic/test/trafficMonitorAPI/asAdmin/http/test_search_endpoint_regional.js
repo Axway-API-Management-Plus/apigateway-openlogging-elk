@@ -67,7 +67,7 @@ describe('Endpoints', function () {
 	after(() => stopApiBuilder(server));
 
 	describe('Search regional', () => {
-		it('[Search-Regional-0001] Execute a search with region EU, must ONE entry EU', () => {
+		it('[Search-Regional-0001] Execute a search with region EU, must ONE entry EU', async () => {
 			return requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/router/service/instance-2/ops/search?region=EU`,
@@ -85,7 +85,7 @@ describe('Endpoints', function () {
 			});
 		});
 
-		it('[Search-Regional-0002] Execute a search with region US, must ONE entry US', () => {
+		it('[Search-Regional-0002] Execute a search with region US, must ONE entry US', async () => {
 			const auth = {
 				user: server.apibuilder.config.apikey || 'test',
 				password: ''
