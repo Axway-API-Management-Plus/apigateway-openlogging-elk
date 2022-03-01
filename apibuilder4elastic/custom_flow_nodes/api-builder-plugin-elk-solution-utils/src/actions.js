@@ -99,7 +99,7 @@ async function createIndices(params, options) {
 		var aliasName = `${indexConfig.alias}${regionSuffix}`;
 		var myIndexName = `${indexName}${regionSuffix}-${intialCounter}`;
 		var indexExists = await client.indices.existsAlias({name: aliasName});
-		if(indexExists.body) {
+		if(indexExists) {
 			logger.info(`Index with alias: ${aliasName} for region: ${region} already exists.`);
 			continue;
 		}
@@ -111,7 +111,7 @@ async function createIndices(params, options) {
 		} catch(ex) {
 			throw new Error(`Error creating index: ${myIndexName}. ${JSON.stringify(ex)}`);
 		}
-		if(result.statusCode != 200) {
+		if(!result.acknowledged) {
 			logger.error(`Error creating index: ${myIndexName}. ${JSON.stringify(result)}`);
 		} else {
 			createdIndices[myIndexName] = { alias: aliasName };
@@ -142,10 +142,11 @@ async function updateRolloverAlias(params, options) {
 		 * apigw-trace-messages-us apigw-trace-messages-us-000002 -      -             -              true
 		 * apigw-trace-messages-us apigw-trace-messages-us-000001 -      -             -              false
 		 */
+		debugger;
 		var indicesForName = await client.indices.get({index: `${indexName}-*`}, { maxRetries: 3 });
-		logger.debug(`Check rollover alias for configured index: ${indexName} ... got ${Object.entries(indicesForName.body).length} indicies from Elasticsearch to check.`);
+		logger.debug(`Check rollover alias for configured index: ${indexName} ... got ${Object.entries(indicesForName).length} indicies from Elasticsearch to check.`);
 		// For each index returned on the name ...
-		for (const [key, val] of Object.entries(indicesForName.body)) {
+		for (const [key, val] of Object.entries(indicesForName)) {
 			logger.debug(`Check rollover alias for index: ${key} returned from Elasticsearch`);
 			var writeIndexAliasName = undefined;
 			// Check if current index is the write index
@@ -169,7 +170,7 @@ async function updateRolloverAlias(params, options) {
 					index: key, 
 					body: { index: { "lifecycle.rollover_alias": writeIndexAliasName } } 
 				}, { maxRetries: 3 });
-				if(updatedRolloverAliasResponse.statusCode != 200) {
+				if(!updatedRolloverAliasResponse.acknowledged) {
 					logger.errr(`Error updateding rollover alias for index: ${key}. ${JSON.stringify(updatedRolloverAliasResponse)}`);
 				} else {
 					logger.debug(`Rollover alias for for index: ${key} successfully changed.`);
@@ -203,20 +204,20 @@ async function getPayloadFilename(params, options) {
 	if(direction != "sent" && direction != "received") {
 		throw new Error('Parameter: direction must be either sent or received.');
 	}
-	if(trafficDetails.body.hits.hits.length == 0) {
+	if(trafficDetails.hits.hits.length == 0) {
 		return options.setOutput('noAccess', `No access as traffic details contains no hit.`);
 	}
-	if(trafficDetails.body.hits.hits.length > 1) {
-		logger.warn(`Expected one Traffic-Details document for correlationId: ${correlationId} returned from Elasticsearch, but got: ${trafficDetails.body.hits.hits.length}. Using first document.`);
+	if(trafficDetails.hits.hits.length > 1) {
+		logger.warn(`Expected one Traffic-Details document for correlationId: ${correlationId} returned from Elasticsearch, but got: ${trafficDetails.hits.hits.length}. Using first document.`);
 		logger.warn(`Returned Traffic-Details: ${JSON.stringify(trafficDetails)}`);
 	}
-	if(!trafficDetails.body.hits.hits[0]._source.transactionElements) {
+	if(!trafficDetails.hits.hits[0]._source.transactionElements) {
 		throw new Error(`Traffic-Details source must contain transactionElements.`);
 	}
-	if(!trafficDetails.body.hits.hits[0]._source.transactionElements[`leg${legNo}`]) {
+	if(!trafficDetails.hits.hits[0]._source.transactionElements[`leg${legNo}`]) {
 		throw new Error(`No TransactionElement found with legNo: ${legNo}`);
 	}
-	var details = trafficDetails.body.hits.hits[0]._source;
+	var details = trafficDetails.hits.hits[0]._source;
 	if(details.correlationId != correlationId) {
 		throw new Error(`Traffic-Details correlationID: ${details.correlationId} does not match to correlationId: ${correlationId}`);
 	}
