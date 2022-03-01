@@ -160,7 +160,7 @@ wget --no-check-certificate https://github.com/Axway-API-Management-Plus/apigate
 
 #### Axway Supported-Version
 ```
-wget --no-check-certificate https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v4.0.3/axway-apim-elk-v4.0.3.tar.gz -O - | tar -xvz
+wget --no-check-certificate https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v4.2.0/axway-apim-elk-v4.2.0.tar.gz -O - | tar -xvz
 ```
 
 To simplify updates it is recommended to create a Symlink-Folder and finally rename the provided file `env-sample` to `.env`.  
@@ -1349,7 +1349,7 @@ You can find more information here: https://www.elastic.co/pricing/
 
 ### Is this solution officially supported by Axway?
 
-Yes, the solution is supported by Axway. A distinction is made between Community and Axway Supported releases, which are marked accordingly in the release directory. For example, currently version 4.0.3 is Axway supported and accordingly you can create normal Axway support cases.  
+Yes, the solution is supported by Axway. A distinction is made between Community and Axway Supported releases, which are marked accordingly in the release directory. For example, currently version 4.2.0 is Axway supported and accordingly you can create normal Axway support cases.  
 
 #### Axway Supported Release
 
