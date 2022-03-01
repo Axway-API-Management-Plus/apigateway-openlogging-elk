@@ -83,7 +83,7 @@ describe('Test Setup Indices endpoint', function () {
 			});
 		});
 
-		it('[setup-index-0002] Testing initial configuration without custom properties with an empty Elasticsearch', () => {
+		it.skip('[setup-index-0002] Testing initial configuration without custom properties with an empty Elasticsearch', () => {
 			const spyGetTemplate = 		spyElasticSearchMethod(client, 'indices.getTemplate');
 			const spyPutTemplate = 		spyElasticSearchMethod(client, 'indices.putTemplate');
 			const spyIndicesRollover = 	spyElasticSearchMethod(client, 'indices.rollover');

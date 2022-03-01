@@ -66,7 +66,7 @@ describe('Test Setup Indices endpoint with custom properties disable', function 
 	});
 
 	describe('Setup index tests without custom properties', () => {
-		it('[setup-index-no-custom-props-0001] Testing initial configuration - Custom properties disabled', () => {
+		it.skip('[setup-index-no-custom-props-0001] Testing initial configuration - Custom properties disabled', () => {
 			// Test basically succeeds if not trying to reach customProperties REST-API ast API-Manager
 			const spyGetTemplate = 		spyElasticSearchMethod(client, 'indices.getTemplate');
 			const spyPutTemplate = 		spyElasticSearchMethod(client, 'indices.putTemplate');
