@@ -115,7 +115,13 @@ jobs:
           - 9300:9300
         env:
           xpack.security.enabled: false
-        options: -e "discovery.type=single-node"
+        options: >-
+          -e "discovery.type=single-node"
+          --health-cmd "curl -f http://localhost:9200"
+          --health-interval 30s
+          --health-timeout 2s
+          --health-retries 5
+          --health-start-period 30s
 
     steps:
     - uses: actions/checkout@v2
@@ -123,14 +129,6 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 12.x
-    - name: Sleep 15 seconds to make sure ES is ready
-      uses: jakejarvis/wait-action@master
-      with:
-        time: '15s'
-    - name: Show ES Logs
-      run: |
-        echo "Logs of ES-Service container: ${{ job.services.elasticsearch.id }}"
-        docker logs "${{ job.services.elasticsearch.id }}"
     - name: Test API-Builder API
       working-directory: ${{env.workingDirectory}}
       env:
