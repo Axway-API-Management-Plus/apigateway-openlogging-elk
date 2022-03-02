@@ -114,7 +114,9 @@
 					"metaName": "Missing index"
 				},
 				"error": {
-					"routes": [],
+					"routes": [
+						"logger.1"
+					],
 					"context": "$.error",
 					"metaName": "Error"
 				}
@@ -415,7 +417,7 @@
 				{
 					"name": "code",
 					"type": "string",
-					"value": "\"var result = data.result;\\n  var organizationKPIs = data.organizationKPIs;\\n  if(result.statusCode!=200) {\\n    throw new Error(`There was an error getting last KPIs from Elasticsearch. Error: ${JSON.stringify(result)}`);\\n  }\\n  if(result.hits.total.value != 0) {\\n    return result.hits.hits[0]._source;\\n  } else {\\n    logger.info(`No previous KPIs found. KPIs for organization: ${organizationKPIs}`);\\n    return {};\\n  }\""
+					"value": "\"var result = data.result;\\n  var organizationKPIs = data.organizationKPIs;\\n  if(result.hits.total.value != 0) {\\n    return result.hits.hits[0]._source;\\n  } else {\\n    logger.info(`No previous KPIs found. KPIs for organization: ${organizationKPIs}`);\\n    return {};\\n  }\""
 				}
 			],
 			"outputs": {
@@ -433,6 +435,33 @@
 				}
 			},
 			"metaMethod": "Execute"
+		},
+		"logger.1": {
+			"type": "nodehandler://@axway/api-builder-plugin-fn-logger/logger",
+			"name": "Get prev. KPIs failed",
+			"method": "log",
+			"parameters": [
+				{
+					"name": "message",
+					"type": "jsonpath",
+					"value": "$.error"
+				},
+				{
+					"name": "level",
+					"type": "string",
+					"value": "\"error\""
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": null,
+					"routes": []
+				},
+				"error": {
+					"context": "$.error",
+					"routes": []
+				}
+			}
 		}
 	}
 }
