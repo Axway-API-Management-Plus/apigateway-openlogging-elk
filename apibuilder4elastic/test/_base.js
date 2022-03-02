@@ -74,20 +74,20 @@ async function sendToElasticsearch(elasticConfig, index, template, dataset) {
 		mappingConfig = JSON.parse(fs.readFileSync(`elasticsearch_config/${template}`));
 	}
 	var createdIndexTemplate = await client.indices.putTemplate( { name: index, body: mappingConfig}, { ignore: [404], maxRetries: 3 });
-	if (createdIndexTemplate.statusCode!=200) {
+	if (!createdIndexTemplate.acknowledged) {
 		throw Error(`Error creating index-template with name: ${index} with template: ${createdIndexResponse.body.error.reason}`);
 	}
 	const createdIndexResponse = await client.indices.create({ index: index }, { ignore: [400] });
-	if (createdIndexResponse.statusCode!=200) {
+	if (!createdIndexResponse.acknowledged) {
 		throw Error(`Error creating index: ${index} with template: ${createdIndexResponse.body.error.reason}`);
 	}
 
 
 	const body = dataset.flatMap(doc => [{ index: { _index: index } }, doc]);
-	const { body: bulkResponse } = await client.bulk({ refresh: true, body });
+	const bulkResult = await client.bulk({ refresh: true, body });
 
-	if (bulkResponse.errors) {
-		bulkResponse.items.map(function(element) { 
+	if (bulkResult.errors) {
+		bulkResult.items.map(function(element) { 
 			if(element.index.error) {
 				console.log(JSON.stringify(element.index.error));
 			}
