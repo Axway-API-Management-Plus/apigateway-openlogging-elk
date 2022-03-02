@@ -18,7 +18,7 @@ module.exports = {
 				// https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/master/client-configuration.html
 				maxRetries: 5,
 				requestTimeout: 60000,
-				ssl: {
+				tls: {
 					ca: ("false" == process.env.ELASTICSEARCH_SSL_VERIFICATIONMODE || !process.env.ELASTICSEARCH_CA) ? "" : fs.readFileSync(process.env.ELASTICSEARCH_CA),
 					rejectUnauthorized: ("false" == process.env.ELASTICSEARCH_SSL_VERIFICATIONMODE) ? false : true
 				}
