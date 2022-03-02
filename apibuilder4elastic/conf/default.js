@@ -41,7 +41,7 @@ module.exports = {
 	// by the API-Builder release
 	versions: {
 		filebeat: "2", 
-		logstash: "2"
+		logstash: "3"
 	},
 	// Payload configuration settings
 	payload: {
