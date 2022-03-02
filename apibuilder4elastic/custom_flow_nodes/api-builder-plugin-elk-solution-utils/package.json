@@ -17,7 +17,7 @@
 		"README.md"
 	],
 	"dependencies": {
-		"@axway-api-builder-ext/api-builder-plugin-fn-elasticsearch": "file:../../axway-api-builder-ext-api-builder-plugin-fn-elasticsearch-3.0.0.tgz",
+		"@axway-api-builder-ext/api-builder-plugin-fn-elasticsearch": "^3.0.0",
 		"@axway/api-builder-sdk": "^1.1.12"
 	},
 	"peerDependencies": {
