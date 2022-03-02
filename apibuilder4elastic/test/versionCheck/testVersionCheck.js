@@ -49,7 +49,7 @@ describe('Endpoints', function () {
         
 		it('[Check-Version-0003] Should return version check ok', () => {
             const filebeatVersion = "2";
-            const logstashVersion = "2";
+            const logstashVersion = "3";
 			return requestAsync({
 				method: 'GET',
 				uri: `http://localhost:${server.apibuilder.port}/api/elk/v1/api/version/check?filebeatVersion=${filebeatVersion}&logstashVersion=${logstashVersion}`,

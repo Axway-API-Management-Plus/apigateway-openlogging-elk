@@ -68,8 +68,7 @@
 				"next": {
 					"context": "$.delayed",
 					"routes": [
-						"elasticsearch.1",
-						"setcontext.1"
+						"elasticsearch.1"
 					],
 					"metaName": "Next"
 				}
@@ -400,7 +399,8 @@
 				{
 					"name": "value",
 					"type": "jsonpath",
-					"value": "$.result.hits.hits[0]._source"
+					"value": "$.result.hits.hits[0]._source",
+					"metaName": "Value"
 				}
 			],
 			"outputs": {
