@@ -54,8 +54,7 @@
 		"mocha": "^9.1.2",
 		"nock": "^13.1.1",
 		"simple-mock": "^0.8.0",
-		"template-file": "^5.1.0",
-		"@elastic/elasticsearch": "^8.0.0"
+		"template-file": "^5.1.0"
 	},
 	"scripts": {
 		"start": "node .",
