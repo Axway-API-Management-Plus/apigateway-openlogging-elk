@@ -1,0 +1,80 @@
+name: Bug report
+description: Create a report to help us to improve the solution
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Before opening a bug report, please search for the behaviour in the existing issues. 
+        
+        ---
+        
+        Thank you for taking the time to file a bug report. To address this bug as fast as possible, we need some information.
+  - type: input
+    id: elkSolutionVersion
+    attributes:
+      label: ELK-Solution version
+      description: "The ELK-Solution version you are using"
+      placeholder: "4.1.0"
+    validations:
+      required: true
+  - type: input
+    id: elasticstackVersion
+    attributes:
+      label: Elastic-Stack version
+      description: "The version of your Elastic-Stack"
+      placeholder: "7.17.0"
+    validations:
+      required: true
+  - type: input
+    id: apimanagementVersion
+    attributes:
+      label: API-Management version
+      description: "The API-Management version you are using"
+      placeholder: "7.7.0.20220228"
+    validations:
+      required: true  
+  - type: input
+    id: numberOfAPIs
+    attributes:
+      label: Number of APIs
+      description: "Please provide the ap. number of APIs (not operations) you have in our API-Manager."
+      placeholder: "ap. 55 APIs"
+    validations:
+      required: true
+  - type: input
+    id: numberOfApplications
+    attributes:
+      label: Number of Applications
+      description: "Please provide the ap. number of applications"
+      placeholder: "ap. 30 applications"
+    validations:
+      required: true
+  - type: dropdown
+    id: deploymentOption
+    attributes:
+      label: Deployment option
+      description: Is the project deployed based on Docker-Compose or Container-Platform using HELM?
+      options:
+        - Docker-Compose
+        - Kubernetes
+        - Something else (please specify in the description!)
+    validations:
+      required: true
+  - type: textarea
+    id: bug-description
+    attributes:
+      label: Bug description
+      description: What happened?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Which steps do we need to take to reproduce this error?
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant log output
+      description: If applicable, provide relevant log output. No need for backticks here.
+      render: shell
