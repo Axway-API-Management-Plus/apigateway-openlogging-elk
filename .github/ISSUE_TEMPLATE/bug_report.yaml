@@ -1,6 +1,8 @@
 name: Bug report
 description: Create a report to help us to improve the solution
 labels: [bug]
+assignees:
+  - cwiechmann
 body:
   - type: markdown
     attributes:
