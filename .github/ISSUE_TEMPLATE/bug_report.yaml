@@ -61,7 +61,7 @@ body:
     validations:
       required: true
   - type: dropdown
-    id: elkDeploymentOptions
+    id: apimDeploymentOption
     attributes:
       label: API-Management deployment option
       description: How is the API-Management platfor deployed?
@@ -74,7 +74,7 @@ body:
         - GCP GKE
         - Something else (please specify in the description!)
   - type: dropdown
-    id: elkDeploymentOptions
+    id: elkDeploymentOption
     attributes:
       label: ELK-Solution deployment option
       description: Is the project deployed based on Docker-Compose or Container-Platform using HELM?
