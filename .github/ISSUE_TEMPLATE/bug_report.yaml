@@ -1,5 +1,6 @@
 name: Bug report
 description: Create a report to help us to improve the solution
+labels: [bug]
 body:
   - type: markdown
     attributes:
