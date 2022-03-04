@@ -13,7 +13,7 @@
       "expected": [ ]
     },
     {
-      "description": "For now, Transaction events are skipped if they dont contain a customattribute transactionId - Might be changed later",
+      "description": "For now, Transaction events are skipped if they dont contain a custom attribute transactionId - Might be changed later",
       "input": [
         "{\"type\":\"transaction\", \"time\":1598469300007, \"path\":null, \"protocol\":null, \"protocolSrc\":null, \"duration\":2, \"status\":\"success\", \"serviceContexts\":[], \"customMsgAtts\":{}, \"correlationId\":\"b4b4465f0093bdc9ba91150e\", \"legs\":[]}"
       ],
