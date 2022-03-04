@@ -17,7 +17,13 @@
       "input": [
         "{\"type\":\"transaction\", \"time\":1598469300007, \"path\":null, \"protocol\":null, \"protocolSrc\":null, \"duration\":2, \"status\":\"success\", \"serviceContexts\":[], \"customMsgAtts\":{}, \"correlationId\":\"b4b4465f0093bdc9ba91150e\", \"legs\":[]}"
       ],
-      "expected": [ ]
+      "expected": [ 
+        {
+          "correlationId": "0db627612000dccd1e5f4775",
+          "transactionId": "UISwFMaYushbM7FN302oHLd78xU=",
+          "customMsgAtts": {}
+        }
+      ]
     },
     {
       "description": "If Transaction-Event contains a transactionId an outgoing event is expected. It is supposed to be stored in the traffic-summary index",
