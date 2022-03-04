@@ -33,16 +33,11 @@
             "remoteGeoIp": {
               "continent_code": "NA",
               "country_code2": "US",
-              "country_code3": "US",
               "country_name": "United States",
-              "ip": "65.49.22.66",
-              "latitude": 37.751,
               "location": {
                 "lat": 37.751,
                 "lon": -97.822
-              },
-              "longitude": -97.822,
-              "timezone": "America/Chicago"
+              }
             }
           }
         }
@@ -60,18 +55,13 @@
           "customMsgAtts": {}, 
           "http": {
             "remoteGeoIp": {
-              "continent_code": "NA",
-              "country_code2": "US",
-              "country_code3": "US",
-              "country_name": "United States",
-              "ip": "65.49.22.66",
-              "latitude": 37.751,
+              "continent_code": "EU",
+              "country_code2": "FR",
+              "country_name": "France",
               "location": {
-                "lat": 37.751,
-                "lon": -97.822
-              },
-              "longitude": -97.822,
-              "timezone": "America/Chicago"
+                "lat": 48.8323,
+                "lon": 2.4075
+              }
             }
           }
         }

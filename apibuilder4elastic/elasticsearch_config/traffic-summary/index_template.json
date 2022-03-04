@@ -1,5 +1,5 @@
 {
-    "version": 9,
+    "version": 10,
     "index_patterns": [
         "apigw-traffic-summary-*"
     ],
@@ -119,6 +119,21 @@
             },
             "http.remoteAddr": {
                 "type": "keyword"
+            },
+            "http.remoteGeoIp.continent_code": {
+                "type": "keyword"
+            },
+            "http.remoteGeoIp.country_code2": {
+                "type": "keyword"
+            },
+            "http.remoteGeoIp.country_name": {
+                "type": "keyword"
+            },
+            "http.remoteGeoIp.city_name": {
+                "type": "keyword"
+            },
+            "http.remoteGeoIp.location": {
+                "type": "geo_point"
             },
             "http.vhost": {
                 "type": "keyword",
