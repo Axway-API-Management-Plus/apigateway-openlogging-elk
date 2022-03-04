@@ -28,7 +28,10 @@
         {
           "correlationId": "0db627612000dccd1e5f4775",
           "transactionId": "UISwFMaYushbM7FN302oHLd78xU=",
-          "customMsgAtts": {}
+          "customMsgAtts": {}, 
+          "http": {
+            "remoteGeoIp": {}
+          }
         }
       ]
     },
