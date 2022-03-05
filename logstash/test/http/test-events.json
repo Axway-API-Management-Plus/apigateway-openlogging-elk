@@ -53,7 +53,7 @@
           "correlationId": "0db627612000dccd1e5f4775",
           "transactionId": "12345MaYushbM7FN302oHLd78xU=",
           "customMsgAtts": { 
-            "x-forwarded-for": "78.197.238.46"
+            "xForwardedFor": "78.197.238.46"
           }, 
           "http": {
             "remoteGeoIp": {
