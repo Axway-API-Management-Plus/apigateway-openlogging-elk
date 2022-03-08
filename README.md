@@ -427,6 +427,19 @@ Please note:
 
 <p align="right"><a href="#table-of-content">Top</a></p>
 
+## Geo-Location
+
+As of version 4.3.0, the solution supports geo-maps to see from which regions API requests are processed.  
+These are broken down on the basis of real-time data in a map to the corresponding city and, for historical data, the number of requests per country.
+
+![API-Requests map](imgs/geo-map-mixed.png)  
+
+The IP address of the client is determined from the Transaction event log, converted to a corresponding location by the Logstash plugin geoip and stored in Elasticsearch. The process is enabled by default, but can be disabled via the XXXX parameter.  
+
+Most likely, your API management solution is running behind a firewall or load balancer, so the actual IP address of the client is not included in the event log. To pass the correct IP address to the solution, please configure a custom attribute for the transaction event log: `xForwardedFor`, which contains the correct IP address. You can obtain this from the X-Forwarded-For header, for example. 
+
+![Custom attribute xForwardedFor](imgs/custom-attribute-xForwardedFor.png)  
+
 ## Advanced and production Setup
 
 This section covers advanced configuration topics that are required for a production environment. It is assumed that you have already familiarized yourself with the solution using the Basic setup.  
