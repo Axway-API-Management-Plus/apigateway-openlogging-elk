@@ -98,6 +98,12 @@
             "field": "serviceContext.backendBasePath",
             "missing_bucket": true
           }
+        },
+        "http.remoteGeoIp.country_code2": {
+          "terms": {
+            "field": "http.remoteGeoIp.country_code2",
+            "missing_bucket": true
+          }
         }
       },
       "aggregations": {
