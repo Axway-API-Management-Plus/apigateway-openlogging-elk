@@ -217,7 +217,7 @@ apibuilder4elastic:
 logstash:
   enabled: true
   # You may override the standard version
-  imageTag: "7.17.0"
+  # imageTag: "7.17.0"
   # The following secrets are used to generate the secret <releaseName>-apim4elastic-logstash-secret
   # If disabled the secret is not created and you have to provide them in your own secret and 
   # use the envFrom.secretRef below to make it available for Logstash. 
@@ -334,7 +334,7 @@ logstash:
 elasticsearch:
   enabled: true
   # You may override the standard version
-  imageTag: "7.17.0"
+  # imageTag: "7.17.0"
   fullnameOverride: "axway-elk-apim4elastic-elasticsearch"
   clusterName: "axway-apim"
   replicas: 3
@@ -447,7 +447,7 @@ elasticsearch:
 kibana:
   enabled: true
   # You may override the standard version
-  imageTag: "7.17.0"
+  # imageTag: "7.17.0"
   fullnameOverride: "axway-elk-apim4elastic"
   replicas: 2
   # Username and Password for Kibana to send monitoring events to Elasticsearch
@@ -536,7 +536,7 @@ filebeat:
   # Deploy Filebeat or not
   enabled: false
   # You may override the standard version
-  imageTag: "7.17.0"
+  # imageTag: "7.17.0"
   # Set this to true, to create the filebeat ConfigMaps & Secret including the filebeat.yaml 
   # This is useful, if you would like to run filebeat as a sidecar along with the API-Gateways and just 
   # reference these config maps
