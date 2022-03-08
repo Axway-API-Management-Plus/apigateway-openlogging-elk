@@ -560,6 +560,34 @@ ELASTIC_VERSION=7.17.0
 #APM_PASSWORD=
 
 ################################################################################################
+#                         Geo-IP Location
+################################################################################################
+
+# ----------------------------------------------------------------------------------------------
+# Controls whether the IP address of the client should be translated into a geo-location. This is 
+# necessary so that the map dashboards can display corresponding data.
+# Disable this function only if necessary. For example, if you find that ingest latency increases 
+# significantly and the solution no longer remains real-time.
+# Used-By: Logstash (EventsPipeline.conf)
+# Defaults to true
+#GEOIP_ENABLED=false
+
+# ----------------------------------------------------------------------------------------------
+# The Logstash geoip plugin uses a cache to avoid having to re-read queried IP addresses from the 
+# database. Here you determine the appropriate cache size. More information: 
+# https://www.elastic.co/guide/en/logstash/current/plugins-filters-geoip.html#plugins-filters-geoip-cache_size
+# Used-By: Logstash (EventsPipeline.conf)
+# Defaults to 1000
+#GEOIP_CACHE_SIZE=5000
+
+# ----------------------------------------------------------------------------------------------
+# You can specify the transaction event log custom attribute that contains the corresponding IP 
+# address.
+# Used-By: Logstash (EventsPipeline.conf)
+# Defaults to xForwardedFor
+#GEOIP_CUSTOM_ATTRIBUTE=clientIp
+
+################################################################################################
 #                         Certificates and Certificate authorities
 ################################################################################################
 # This CA-File is mounted into all applications and used to validate certificates for each component.

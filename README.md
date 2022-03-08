@@ -45,6 +45,7 @@ This shows a sample dashboard created in Kibana based on the indexed documents:
   - [Setup Admin-Node-Manager](#setup-admin-node-manager)
   - [Traffic-Monitor for API-Manager Users](#traffic-monitor-for-api-manager-users)
 - [Long Term Analytics](#long-term-analytics)
+- [GEO-Location](#geo-location)
 - [Advanced and production Setup](#advanced-and-production-setup)
   - [Architecture examples](#architecture-examples)
   - [Traffic-Payload](#traffic-payload)
@@ -422,9 +423,23 @@ To transform the raw data, the solution delivers and automatically installs a re
 It is important to know that the transformation works with a delay of 3 hours. This means that real-time data will appear in the Quartely/Yearly dashboards only after this time. This delay allows you to suspend/interrupt ingesting data for a max. of 3 hours without losing data for the transform and thus long term analytics.  
 
 Please note:    
-- Long-Term Analytics data will only be available after approximately 1 hour. Until then, the corresponding dashboards will show errors. For example: _The field "name-of-a-field" associated with this object no longer exists. Please use another field._ Please wait at least 1 hour for the data to be prepared accordingly.
+- Long-Term Analytics data will only be available after approximately 1 hour. Until then, the corresponding dashboards will show errors. For example: _The field "name-of-a-field" associated with this object no longer exists. Please use another field._ Please wait at least 1 hour for the data to be prepared accordingly or create the transformation job manually executing the following command in the APIBuilder4Elastic container:  
+`wget --no-check-certificate https://localhost:8443/api/elk/v1/api/setup/transform/apigw-traffic-summary`.
 
 <p align="right"><a href="#table-of-content">Top</a></p>
+
+## Geo-Location
+
+As of version 4.3.0, the solution supports geo-maps to see from which regions API requests are processed.  
+These are broken down on the basis of real-time data in a map to the corresponding city and, for historical data, the number of requests per country.
+
+![API-Requests map](imgs/geo-map-mixed.png)  
+
+The IP address of the client is determined from the Transaction event log, converted to a corresponding location by the Logstash plugin geoip and stored in Elasticsearch. The process is enabled by default, but can be disabled via the XXXX parameter.  
+
+Most likely, your API management solution is running behind a firewall or load balancer, so the actual IP address of the client is not included in the event log. To pass the correct IP address to the solution, please configure a custom attribute (by default `xForwardedFor`) for the transaction event log, which contains the correct IP address. You can obtain this from the X-Forwarded-For header, for example. 
+
+![Custom attribute xForwardedFor](imgs/custom-attribute-xForwardedFor.png)  
 
 ## Advanced and production Setup
 

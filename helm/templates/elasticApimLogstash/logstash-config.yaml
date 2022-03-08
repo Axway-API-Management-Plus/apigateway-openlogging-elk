@@ -35,6 +35,9 @@ data:
   MEMCACHED: localhost:11211
   LOG_LEVEL: info
   {{- if .Values.logstash.lookupCacheTTL }}
-  LOOKUP_CACHE_TTL: {{ default "" .Values.logstash.lookupCacheTTL quote }}
+  LOOKUP_CACHE_TTL: {{ default "" .Values.logstash.lookupCacheTTL | quote }}
   {{- end }}
+  GEOIP_ENABLED: {{ default "true" .Values.logstash.geoip.enabled | quote }}
+  GEOIP_CACHE_SIZE: {{ default "1000" .Values.logstash.geoip.cacheSize | quote }}
+  GEOIP_CUSTOM_ATTRIBUTE: {{ default "true" .Values.logstash.geoip.customAttribute | quote }}
 {{- end }}

@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Added
+- Added Geo-Location map of API-Requests
+  - Logstash pipeline: `EventsPipeline.conf` changed to translate IP to Geo-Location
+  - new dashboard: `kibana/dashboards/7/Axway-api-management-maps.ndjson` added
+
+### Fixed
+- API-Gateway selector was not working for the Real-Time view, as it was using the Time-Filter
+  - updated dashboard: `kibana/dashboards/7/Axway-api-overview.ndjson` to fix this
+
 ## [4.2.0] 2022-02-15
 ### Added
 - Improved documentation to point out default parameters are not production ready [#163](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/163)

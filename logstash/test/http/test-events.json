@@ -13,7 +13,7 @@
       "expected": [ ]
     },
     {
-      "description": "For now, Transaction events are skipped if they dont contain a transactionId - Might be changed later",
+      "description": "For now, Transaction events are skipped if they dont contain a custom attribute transactionId - Might be changed later",
       "input": [
         "{\"type\":\"transaction\", \"time\":1598469300007, \"path\":null, \"protocol\":null, \"protocolSrc\":null, \"duration\":2, \"status\":\"success\", \"serviceContexts\":[], \"customMsgAtts\":{}, \"correlationId\":\"b4b4465f0093bdc9ba91150e\", \"legs\":[]}"
       ],
@@ -22,13 +22,51 @@
     {
       "description": "If Transaction-Event contains a transactionId an outgoing event is expected. It is supposed to be stored in the traffic-summary index",
       "input": [
-        "{\"type\":\"transaction\", \"time\":1629992461722, \"path\":\"/healthcheck\", \"protocol\":\"http\", \"protocolSrc\":\"8080\", \"duration\":1, \"status\":\"success\", \"serviceContexts\":[], \"customMsgAtts\":{\"transactionId\":\"UISwFMaYushbM7FN302oHLd78xU=\"}, \"correlationId\":\"0db627612000dccd1e5f4775\", \"legs\":[{\"uri\":\"/healthcheck\", \"status\":200, \"statustext\":\"OK\", \"method\":\"GET\", \"vhost\":null, \"wafStatus\":0, \"bytesSent\":355, \"bytesReceived\":157, \"remoteName\":\"192.168.70.179\", \"remoteAddr\":\"192.168.70.179\", \"localAddr\":\"192.168.91.142\", \"remotePort\":\"35474\", \"localPort\":\"8080\", \"sslsubject\":null, \"leg\":0, \"timestamp\":1629992461721, \"duration\":1, \"serviceName\":null, \"subject\":null, \"operation\":null, \"type\":\"http\", \"finalStatus\":\"Pass\"}]}"
+        "{\"type\":\"transaction\", \"time\":1629992461722, \"path\":\"/healthcheck\", \"protocol\":\"http\", \"protocolSrc\":\"8080\", \"duration\":1, \"status\":\"success\", \"serviceContexts\":[], \"customMsgAtts\":{\"transactionId\":\"UISwFMaYushbM7FN302oHLd78xU=\"}, \"correlationId\":\"0db627612000dccd1e5f4775\", \"legs\":[{\"uri\":\"/healthcheck\", \"status\":200, \"statustext\":\"OK\", \"method\":\"GET\", \"vhost\":null, \"wafStatus\":0, \"bytesSent\":355, \"bytesReceived\":157, \"remoteName\":\"192.168.70.179\", \"remoteAddr\":\"65.49.22.66\", \"localAddr\":\"192.168.91.142\", \"remotePort\":\"35474\", \"localPort\":\"8080\", \"sslsubject\":null, \"leg\":0, \"timestamp\":1629992461721, \"duration\":1, \"serviceName\":null, \"subject\":null, \"operation\":null, \"type\":\"http\", \"finalStatus\":\"Pass\"}]}"
       ],
       "expected": [ 
         {
           "correlationId": "0db627612000dccd1e5f4775",
           "transactionId": "UISwFMaYushbM7FN302oHLd78xU=",
-          "customMsgAtts": {}
+          "customMsgAtts": {}, 
+          "http": {
+            "remoteGeoIp": {
+              "continent_code": "NA",
+              "country_code2": "US",
+              "country_name": "United States",
+              "location": {
+                "lat": 37.751,
+                "lon": -97.822
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "description": "If Transaction-Event contains a xForwardedFor custom attribute it should be used for the GEO-Location lookup",
+      "input": [
+        "{\"type\":\"transaction\", \"time\":1629992461722, \"path\":\"/healthcheck\", \"protocol\":\"http\", \"protocolSrc\":\"8080\", \"duration\":1, \"status\":\"success\", \"serviceContexts\":[], \"customMsgAtts\":{\"transactionId\":\"12345MaYushbM7FN302oHLd78xU=\", \"xForwardedFor\":\"78.197.238.46\"}, \"correlationId\":\"0db627612000dccd1e5f4775\", \"legs\":[{\"uri\":\"/healthcheck\", \"status\":200, \"statustext\":\"OK\", \"method\":\"GET\", \"vhost\":null, \"wafStatus\":0, \"bytesSent\":355, \"bytesReceived\":157, \"remoteName\":\"192.168.70.179\", \"remoteAddr\":\"65.49.22.66\", \"localAddr\":\"192.168.91.142\", \"remotePort\":\"35474\", \"localPort\":\"8080\", \"sslsubject\":null, \"leg\":0, \"timestamp\":1629992461721, \"duration\":1, \"serviceName\":null, \"subject\":null, \"operation\":null, \"type\":\"http\", \"finalStatus\":\"Pass\"}]}"
+      ],
+      "expected": [ 
+        {
+          "correlationId": "0db627612000dccd1e5f4775",
+          "transactionId": "12345MaYushbM7FN302oHLd78xU=",
+          "customMsgAtts": { 
+            "xForwardedFor": "78.197.238.46"
+          }, 
+          "http": {
+            "remoteGeoIp": {
+              "city_name": "Paris",
+              "continent_code": "EU",
+              "country_code2": "FR",
+              "country_name": "France",
+              "location": {
+                "lat": 48.8323,
+                "lon": 2.4075
+              }
+            }
+          }
         }
       ]
     },

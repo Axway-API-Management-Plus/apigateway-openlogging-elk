@@ -248,6 +248,15 @@ logstash:
   # Possible values: (certificate|none) - Defaults to: certificate
   validateElasticsearchCertificate: "certificate"
 
+  # GEO-IP
+  geoip: 
+    # You may disable geoip lookup for data ingest performance reasons if necessary.
+    enabled: true
+    # GEOIP Cache size - When needed, it can be increased to avoid IP-Database lookups
+    cacheSize: "1000"
+    # The name of the custom attribute that contains the IP address which should translated
+    customAttribute: "xForwardedFor"
+
   # Injects the environment variables from the ConfigMaps and Secrets into the 
   # Logstash container. Specify your own ConfigMaps or Secrets if you don't
   # provide Configuration and Secrets as part of this values.yaml.
