@@ -43,6 +43,7 @@ jobs:
       run: |
         echo Using API_BUILDER_URL: $API_BUILDER_URL
         echo Using MEMCACHED: $MEMCACHED
+        echo Using GEOIP_ENABLED: $GEOIP_ENABLED, GEOIP_CUSTOM_ATTRIBUTE: ${GEOIP_CUSTOM_ATTRIBUTE}, GEOIP_CACHE_SIZE: ${GEOIP_CACHE_SIZE}
         ./logstash-filter-verifier --diff-command="diff -y" --logstash-output --keep-env=API_BUILDER_SSL_CERT --keep-env=API_BUILDER_URL --keep-env=MEMCACHED ./logstash/test/http/test-events.json ./logstash/pipelines/EventsPipeline.conf
 #        ./logstash-filter-verifier --diff-command="diff -y" --logstash-output --keep-env=API_BUILDER_SSL_CERT --keep-env=API_BUILDER_URL --keep-env=MEMCACHED ./logstash/test/http/test-opentrafficlog.json ./logstash/pipelines/OpenTrafficPipeline.conf
         
@@ -61,12 +62,12 @@ jobs:
         API_BUILDER_URL: 'http://localhost:8080'
         MEMCACHED: 'localhost:11211'
         DROP_TRACE_MESSAGE_LEVELS: 'DEBUG'
+        GEOIP_ENABLED: 'true'
+        GEOIP_CUSTOM_ATTRIBUTE: 'xForwardedFor'
+        GEOIP_CACHE_SIZE: 1000
         # This is not relevant as we test with HTTP
         # But it's required by Logstash to be a valid certificate
         API_BUILDER_SSL_CERT: "./config/certificates/apibuilder4elastic.crt"
-        GEOIP_ENABLED: true
-        GEOIP_CUSTOM_ATTRIBUTE: "xForwardedFor"
-        GEOIP_CACHE_SIZE: 1000
     - name: API-Builder Logs
       if: ${{ always() }}
       run: |
