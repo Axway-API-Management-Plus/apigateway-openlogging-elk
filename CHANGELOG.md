@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - Logstash pipeline: `EventsPipeline.conf` changed to translate IP to Geo-Location
   - new dashboard: `kibana/dashboards/7/Axway-api-management-maps.ndjson` added
 
+### Changed
+- OpenTraffic logs read from the last 12 hours only [#188](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/188)
+
 ### Fixed
 - API-Gateway selector was not working for the Real-Time view, as it was using the Time-Filter
   - updated dashboard: `kibana/dashboards/7/Axway-api-overview.ndjson` to fix this

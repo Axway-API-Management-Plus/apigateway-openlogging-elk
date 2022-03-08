@@ -19,6 +19,8 @@ filebeat.inputs:
   json.overwrite_keys: false
   json.add_error_key: true
   fields_under_root: true
+  # When initially started, don't try to read all existing OpenTraffc log files
+  ignore_older: "12h"
   fields:
     logtype: openlog
     gatewayName: ${GATEWAY_NAME:"API-Gateway"}
