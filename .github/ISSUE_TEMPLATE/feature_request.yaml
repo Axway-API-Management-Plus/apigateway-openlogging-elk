@@ -5,9 +5,16 @@ assignees:
   - cwiechmann
 body:
   - type: textarea
+    id: problem-description
+    attributes:
+      label: Problem description
+      description: Is your feature request related to a problem? Please describe.
+    validations:
+      required: false
+  - type: textarea
     id: feature-request
     attributes:
       label: Feature request
-      description: Explain as precisely as possible what you would like to have as a feature.
+      description: Describe the solution you'd like
     validations:
       required: true
