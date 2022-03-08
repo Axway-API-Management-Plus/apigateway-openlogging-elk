@@ -1,0 +1,44 @@
+name: Question
+description: You need help or just have a question concerning the Elasticsearch based solution
+labels: [question]
+assignees:
+  - cwiechmann
+body:
+  - type: input
+    id: elkSolutionVersion
+    attributes:
+      label: ELK-Solution version
+      description: "If already in use, the ELK-Solution version you are using"
+      placeholder: "4.1.0"
+  - type: input
+    id: elasticstackVersion
+    attributes:
+      label: Elastic-Stack version
+      description: "If already in use, the version of your Elastic-Stack"
+      placeholder: "7.17.0"
+  - type: input
+    id: apimanagementVersion
+    attributes:
+      label: API-Management version
+      description: "If relevant to the question, the API-Management version you are using"
+      placeholder: "7.7.0.20220228"
+  - type: dropdown
+    id: apimDeploymentOption
+    attributes:
+      label: API-Management deployment option
+      description: "If relevant to the question, how is the API-Management platfor deployed?"
+      options:
+        - Classic VMs
+        - Kubernetes plain
+        - OpenShift
+        - AWS EKS
+        - Azure AKS
+        - GCP GKE
+        - Something else (please specify in the description!)
+  - type: textarea
+    id: question
+    attributes:
+      label: Question
+      description: Your question about the solution or a specific problem
+    validations:
+      required: true

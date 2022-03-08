@@ -73,6 +73,8 @@ body:
         - Azure AKS
         - GCP GKE
         - Something else (please specify in the description!)
+    validations:
+      required: true
   - type: dropdown
     id: elkDeploymentOption
     attributes:

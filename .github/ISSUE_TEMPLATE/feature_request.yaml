@@ -1,0 +1,13 @@
+name: Feature request
+description: Suggest an idea for this project
+labels: [enhancement]
+assignees:
+  - cwiechmann
+body:
+  - type: textarea
+    id: feature-request
+    attributes:
+      label: Feature request
+      description: Explain as precisely as possible what you would like to have as a feature.
+    validations:
+      required: true
