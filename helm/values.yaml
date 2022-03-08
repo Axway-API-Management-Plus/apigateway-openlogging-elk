@@ -251,7 +251,7 @@ logstash:
   # GEO-IP
   geoip: 
     enabled: true
-    cacheSize: 1000
+    cacheSize: "1000"
     customAttribute: "xForwardedFor"
 
   # Injects the environment variables from the ConfigMaps and Secrets into the 
