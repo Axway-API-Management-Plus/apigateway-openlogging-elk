@@ -64,6 +64,9 @@ jobs:
         # This is not relevant as we test with HTTP
         # But it's required by Logstash to be a valid certificate
         API_BUILDER_SSL_CERT: "./config/certificates/apibuilder4elastic.crt"
+        GEOIP_ENABLED: true
+        GEOIP_CUSTOM_ATTRIBUTE: "xForwardedFor"
+        GEOIP_CACHE_SIZE: 1000
     - name: API-Builder Logs
       if: ${{ always() }}
       run: |

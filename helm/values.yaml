@@ -248,6 +248,12 @@ logstash:
   # Possible values: (certificate|none) - Defaults to: certificate
   validateElasticsearchCertificate: "certificate"
 
+  # GEO-IP
+  geoip: 
+    enabled: true
+    cacheSize: 1000
+    customAttribute: "xForwardedFor"
+
   # Injects the environment variables from the ConfigMaps and Secrets into the 
   # Logstash container. Specify your own ConfigMaps or Secrets if you don't
   # provide Configuration and Secrets as part of this values.yaml.

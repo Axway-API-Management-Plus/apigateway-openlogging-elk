@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Added
 - Added Geo-Location map of API-Requests
+  - Logstash pipeline: `EventsPipeline.conf` changed to translate IP to Geo-Location
+  - new dashboard: `kibana/dashboards/7/Axway-api-management-maps.ndjson` added
 
 ## [4.2.0] 2022-02-15
 ### Added
