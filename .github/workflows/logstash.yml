@@ -44,7 +44,7 @@ jobs:
         echo Using API_BUILDER_URL: $API_BUILDER_URL
         echo Using MEMCACHED: $MEMCACHED
         echo Using GEOIP_ENABLED: $GEOIP_ENABLED, GEOIP_CUSTOM_ATTRIBUTE: ${GEOIP_CUSTOM_ATTRIBUTE}, GEOIP_CACHE_SIZE: ${GEOIP_CACHE_SIZE}
-        ./logstash-filter-verifier --diff-command="diff -y" --logstash-output --keep-env=API_BUILDER_SSL_CERT --keep-env=API_BUILDER_URL --keep-env=MEMCACHED ./logstash/test/http/test-events.json ./logstash/pipelines/EventsPipeline.conf
+        ./logstash-filter-verifier --diff-command="diff -y" --logstash-output --keep-env=API_BUILDER_SSL_CERT --keep-env=API_BUILDER_URL --keep-env=MEMCACHED --keep-env=GEOIP_ENABLED --keep-env=GEOIP_CUSTOM_ATTRIBUTE --keep-env=GEOIP_CACHE_SIZE ./logstash/test/http/test-events.json ./logstash/pipelines/EventsPipeline.conf
 #        ./logstash-filter-verifier --diff-command="diff -y" --logstash-output --keep-env=API_BUILDER_SSL_CERT --keep-env=API_BUILDER_URL --keep-env=MEMCACHED ./logstash/test/http/test-opentrafficlog.json ./logstash/pipelines/OpenTrafficPipeline.conf
         
 #      run: |
