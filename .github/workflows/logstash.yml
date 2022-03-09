@@ -65,7 +65,7 @@ jobs:
         GEOIP_CUSTOM_ATTRIBUTE: 'xForwardedFor'
         # The attribute at this point is only used to determine if a document should be generated and send to ES
         # If not set - We avoid sending the event log to Elasticsearch (even if only relevant with GeoIP disabled)
-        EVENTLOG_CUSTOM_ATTR: 'doesn-matter-for-the-pipeline-test'
+        EVENTLOG_CUSTOM_ATTR: "[\"test\", \"test2\"]"
         GEOIP_CACHE_SIZE: 1000
         # This is not relevant as we test with HTTP
         # But it's required by Logstash to be a valid certificate
