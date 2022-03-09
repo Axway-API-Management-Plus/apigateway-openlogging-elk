@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 - OpenTraffic logs read from the last 12 hours only [#188](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/188)
 - Elastic-Helm charts dependencies for the Elasticstack updated from 7.16.3 to 7.17.1
+- Set pipeline.ecs_compatibility to false for all Logstash pipelines
 
 ### Fixed
 - API-Gateway selector was not working for the Real-Time view, as it was using the Time-Filter
