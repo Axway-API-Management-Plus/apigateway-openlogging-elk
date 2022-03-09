@@ -15,9 +15,9 @@
     {
       "description": "For now, Transaction events are skipped if they dont contain a custom attribute transactionId - Might be changed later",
       "input": [
-        "{\"type\":\"transaction\", \"time\":1598469300007, \"path\":null, \"protocol\":null, \"protocolSrc\":null, \"duration\":2, \"status\":\"success\", \"serviceContexts\":[], \"customMsgAtts\":{\"test\": \"test\"}, \"correlationId\":\"b4b4465f0093bdc9ba91150e\", \"legs\":[]}"
+        "{\"type\":\"transaction\", \"time\":1598469300007, \"path\":null, \"protocol\":null, \"protocolSrc\":null, \"duration\":2, \"status\":\"success\", \"serviceContexts\":[], \"customMsgAtts\":{}, \"correlationId\":\"b4b4465f0093bdc9ba91150e\", \"legs\":[]}"
       ],
-      "expected": [{"hello": "world"} ]
+      "expected": [ ]
     },
     {
       "description": "If Transaction-Event contains a transactionId an outgoing event is expected. It is supposed to be stored in the traffic-summary index",
