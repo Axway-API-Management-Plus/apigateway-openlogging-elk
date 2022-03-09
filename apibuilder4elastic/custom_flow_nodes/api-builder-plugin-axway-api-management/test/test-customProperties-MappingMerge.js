@@ -146,5 +146,21 @@ describe('Merge custom properties tests', () => {
 
 			expect(output).to.equal('noUpdate');
 		});
+
+		it('should merge the given eventlog custom properties into the template', async () => {
+			const { value, output } = await flowNode.mergeCustomProperties({ 
+				customProperties: JSON.parse(fs.readFileSync('./test/testInput/customPropertiesConfig.json'), null), 
+				eventLogCustomProperties: 'myProperty1, myProperty2, myCustomProperty3:custom', 
+				desiredIndexTemplate: JSON.parse(fs.readFileSync('./test/testInput/desiredIndexTemplate.json'), null),
+				actualIndexTemplate: JSON.parse(fs.readFileSync('./test/testInput/actualIndexTemplateWithParentCustomProps.json'), null), 
+				customPropertiesSettings: { merge: true, parent: "transactionSummary." }
+			});
+
+			expect(output).to.equal('next');
+
+			expect(value.mappings.properties['customMsgAtts.myProperty1']).to.be.an('Object');
+			expect(value.mappings.properties['customMsgAtts.myProperty2']).to.be.an('Object');
+			expect(value.mappings.properties['customMsgAtts.myCustomProperty3']).to.be.an('Object');
+		});
 	});
 });

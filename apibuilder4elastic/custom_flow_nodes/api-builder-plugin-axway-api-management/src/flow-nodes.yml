@@ -289,6 +289,12 @@ flow-nodes:
             initialType: object
             schema:
               type: object
+          eventLogCustomProperties:
+            name: EventLog Custom properties
+            description: The EventLog custom properties which are configured using the parameter EVENTLOG_CUSTOM_ATTR. If given, they will be additionally merged into the index template.
+            required: false
+            schema:
+              type: string
           desiredIndexTemplate:
             name: Desired Index template
             description: The desired Elasticsearch index template containing the mappings.
