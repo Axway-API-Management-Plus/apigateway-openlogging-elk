@@ -28,6 +28,7 @@ services:
       - GEOIP_ENABLED=${GEOIP_ENABLED:-true}
       - GEOIP_CACHE_SIZE=${GEOIP_CACHE_SIZE:-1000}
       - GEOIP_CUSTOM_ATTRIBUTE=${GEOIP_CUSTOM_ATTRIBUTE:-xForwardedFor}
+      - xpack.geoip.download.endpoint=${GEOIP_DOWNLOAD_ENDPOINT}
     ports:
       - 5044:5044
     volumes:

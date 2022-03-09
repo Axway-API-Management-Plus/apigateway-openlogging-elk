@@ -347,7 +347,7 @@ ELASTICSEARCH_CLUSTERNAME=Axway APIM
 # ----------------------------------------------------------------------------------------------
 # Define the version of the Elastic-Stack to use. Based on this version Docker images are pulled
 # Used-By: Elasticsearch, Filebeat, Kibana, Logstash
-ELASTIC_VERSION=7.17.0
+ELASTIC_VERSION=7.17.1
 
 # ----------------------------------------------------------------------------------------------
 # With this parameter you can change the way the authorization for the traffic monitor is
@@ -586,6 +586,14 @@ ELASTIC_VERSION=7.17.0
 # Used-By: Logstash (EventsPipeline.conf)
 # Defaults to xForwardedFor
 #GEOIP_CUSTOM_ATTRIBUTE=clientIp
+
+# ----------------------------------------------------------------------------------------------
+# If your Logstash instance cannot download the GEOIP-Database directly, you may configure  a 
+# different endpoint here. Learn more:
+# https://www.elastic.co/guide/en/logstash/current/plugins-filters-geoip.html#plugins-filters-geoip-manage_update
+# Used-By: Logstash (Geo-IP Plugin)
+# Defaults to none
+#GEOIP_DOWNLOAD_ENDPOINT=
 
 ################################################################################################
 #                         Certificates and Certificate authorities

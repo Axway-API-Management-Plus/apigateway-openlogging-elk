@@ -9,10 +9,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Added Geo-Location map of API-Requests
   - Logstash pipeline: `EventsPipeline.conf` changed to translate IP to Geo-Location
   - new dashboard: `kibana/dashboards/7/Axway-api-management-maps.ndjson` added
+  - new parameters: `GEOIP_ENABLED`, `GEOIP_CACHE_SIZE`, `GEOIP_CUSTOM_ATTRIBUTE`, `GEOIP_DOWNLOAD_ENDPOINT`
 
 ### Changed
 - OpenTraffic logs read from the last 12 hours only [#188](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/issues/188)
 - Elastic-Helm charts dependencies for the Elasticstack updated from 7.16.3 to 7.17.1
+- Updated default Elastic-Stack version from 7.17.0 to 7.17.1
 - Set pipeline.ecs_compatibility to false for all Logstash pipelines
 
 ### Fixed

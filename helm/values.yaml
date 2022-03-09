@@ -256,6 +256,10 @@ logstash:
     cacheSize: "1000"
     # The name of the custom attribute that contains the IP address which should translated
     customAttribute: "xForwardedFor"
+    # If Logstash cannot access the GEOIP-Database you may point it here to another location
+    # Learn more: 
+    # https://www.elastic.co/guide/en/logstash/current/plugins-filters-geoip.html#plugins-filters-geoip-manage_update
+    # downloadEndpoint: "http://some-custom-endpoint"
 
   # Injects the environment variables from the ConfigMaps and Secrets into the 
   # Logstash container. Specify your own ConfigMaps or Secrets if you don't
