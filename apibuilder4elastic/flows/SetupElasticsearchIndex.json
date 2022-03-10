@@ -104,8 +104,8 @@
 		},
 		"axway-api-management.2": {
 			"type": "nodehandler://api-builder-plugin-axway-api-management/axway-api-management",
-			"name": "Merge custom properties",
-			"method": "mergeCustomProperties",
+			"name": "Merge Index-Template Custom-Props",
+			"method": "mergeCustomPropertiesIntoIndexTemplate",
 			"parameters": [
 				{
 					"name": "customProperties",
@@ -166,7 +166,7 @@
 					"metaName": "Error"
 				}
 			},
-			"metaMethod": "Merge custom properties"
+			"metaMethod": "Merge custom properties into Index-Template"
 		},
 		"elasticsearch.2": {
 			"type": "nodehandler://@axway-api-builder-ext/api-builder-plugin-fn-elasticsearch/elasticsearch",

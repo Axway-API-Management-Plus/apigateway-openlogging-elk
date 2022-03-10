@@ -278,15 +278,14 @@ flow-nodes:
             schema:
               type: object
 
-      mergeCustomProperties:
-        name: Merge custom properties
+      mergeCustomPropertiesIntoIndexTemplate:
+        name: Merge custom properties into Index-Template
         description: Merges the given custom properties into desired index template mapping and compares it with the actual index-template to determine if an update of the index template is required.
         parameters:
           customProperties:
             name: Custom properties
             description: The custom properties as they have been loaded from the API-Manager
             required: true
-            initialType: object
             schema:
               type: object
           eventLogCustomProperties:
@@ -299,14 +298,12 @@ flow-nodes:
             name: Desired Index template
             description: The desired Elasticsearch index template containing the mappings.
             required: true
-            initialType: object
             schema:
               type: object
           actualIndexTemplate:
             name: Actual Index template
             description: The actual Index-Template mapping loaded from Elasticsearch used to compare if new custom properties have been added. If all custom properties are already part of the mapping, the noUpdate exit is used.
             required: false
-            initialType: object
             schema:
               type: object
           customPropertiesSettings:
@@ -326,6 +323,60 @@ flow-nodes:
             name: No update
             description: No update required as all custom properties are already configured in the actual index template mapping. The returned object is the index-template including custom-properties.
             context: $.mappingConfig
+            schema:
+              type: object
+          error:
+            name: Error
+            description: An unexpected error happened
+            context: $.error
+            schema:
+              type: object
+
+      mergeCustomPropertiesIntoTransform:
+        name: Merge custom properties into Transform
+        description: Merges the given custom properties into the transform.
+        parameters:
+          customProperties:
+            name: Custom properties
+            description: The custom properties as they have been loaded from the API-Manager
+            required: true
+            schema:
+              type: object
+          eventLogCustomProperties:
+            name: EventLog Custom properties
+            description: The EventLog custom properties which are configured using the parameter EVENTLOG_CUSTOM_ATTR. If given, they will be additionally merged into the index template.
+            required: false
+            schema:
+              type: string
+          transformBody:
+            name: Transform body
+            description: The transform job as it should be created without custom properties merged.
+            required: true
+            schema:
+              type: object
+          customPropertiesSettings:
+            name: Custom properties settings
+            description: "Controls if and how custom properties should be merged into the transform. See config file: elasticsearch_config/index_config.json"
+            required: false
+            schema:
+              type: object
+          transformId:
+            name: The Transform ID
+            description: "This ID (e.g. V1, V2, etc.) makes the transform name unique in Elasticsearch. If custom properties were used, a hash code is generated from all property names and appended to the primary ID. (e.g. V1-7868768). This allows an existing transform with the same custom properties to be recognized. If the custom properties change, a new transform job is created. If no custom properties are configured, the ID is returned unchanged."
+            required: true
+            schema:
+              type: object
+        outputs:
+          next:
+            name: Next
+            description: Returns the transform body incl. custom properties and a unique transform ID based on the custom-properties hashcode.
+            context: $.transform
+            schema:
+              type: object
+          noUpdate:
+            name: No update
+            description: No update required, because custom properties are not configured or disabled.
+            context: $.transform
             schema:
               type: object
           error:

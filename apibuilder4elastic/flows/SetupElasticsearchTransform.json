@@ -184,7 +184,8 @@
 			"outputs": {
 				"next": {
 					"routes": [
-						"elasticsearch.1"
+						"axway-api-management.2",
+						"axway-api-management.1"
 					],
 					"context": "$.transformBody",
 					"metaName": "Next"
@@ -306,6 +307,103 @@
 				}
 			},
 			"metaMethod": "Shutdown"
+		},
+		"axway-api-management.1": {
+			"type": "nodehandler://api-builder-plugin-axway-api-management/axway-api-management",
+			"name": "Get API-Mgr Custom-Props",
+			"method": "getCustomPropertiesConfig",
+			"parameters": [
+				{
+					"name": "disableCustomProperties",
+					"type": "jsonpath",
+					"value": "$.config.disableCustomProperties",
+					"metaName": "Disable custom properties",
+					"metaDescription": "Convience flag to disable loading of custom properties. This may be set by a configuration toggle."
+				}
+			],
+			"outputs": {
+				"next": {
+					"routes": [
+						"axway-api-management.2"
+					],
+					"context": "$.customProperties",
+					"metaName": "Next"
+				},
+				"error": {
+					"routes": [
+						"power.1"
+					],
+					"context": "$.error",
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Get custom properties"
+		},
+		"axway-api-management.2": {
+			"type": "nodehandler://api-builder-plugin-axway-api-management/axway-api-management",
+			"name": "Merge custom properties into Transform",
+			"method": "mergeCustomPropertiesIntoTransform",
+			"parameters": [
+				{
+					"name": "customProperties",
+					"type": "jsonpath",
+					"value": "$.customProperties",
+					"metaName": "Custom properties",
+					"metaDescription": "The custom properties as they have been loaded from the API-Manager"
+				},
+				{
+					"name": "transformId",
+					"type": "jsonpath",
+					"value": "$.indexConfig.transform.idSuffix",
+					"metaName": "The Transform ID",
+					"metaDescription": "This ID (e.g. V1, V2, etc.) makes the transform name unique in Elasticsearch. If custom properties were used, a hash code is generated from all property names and appended to the primary ID. (e.g. V1-7868768). This allows an existing transform with the same custom properties to be recognized. If the custom properties change, a new transform job is created. If no custom properties are configured, the ID is returned unchanged."
+				},
+				{
+					"name": "transformBody",
+					"type": "jsonpath",
+					"value": "$.transformBody",
+					"metaName": "Transform body",
+					"metaDescription": "The transform job as it should be created without custom properties merged."
+				},
+				{
+					"name": "customPropertiesSettings",
+					"type": "jsonpath",
+					"value": "$.indexConfig.template.customProperties",
+					"metaName": "Custom properties settings",
+					"metaDescription": "Controls if and how custom properties should be merged into the transform. See config file: elasticsearch_config/index_config.json"
+				},
+				{
+					"name": "eventLogCustomProperties",
+					"type": "jsonpath",
+					"value": "$.config.eventLogCustomProps",
+					"metaName": "EventLog Custom properties",
+					"metaDescription": "The EventLog custom properties which are configured using the parameter EVENTLOG_CUSTOM_ATTR. If given, they will be additionally merged into the index template."
+				}
+			],
+			"outputs": {
+				"next": {
+					"routes": [
+						"elasticsearch.1"
+					],
+					"context": "$.transform",
+					"metaName": "Next"
+				},
+				"noUpdate": {
+					"routes": [
+						"elasticsearch.1"
+					],
+					"context": "$.transform",
+					"metaName": "No update"
+				},
+				"error": {
+					"routes": [
+						"power.1"
+					],
+					"context": "$.error",
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Merge custom properties into Transform"
 		}
 	}
 }
