@@ -130,6 +130,11 @@ async function mergeCustomPropertiesIntoTransform(params, options) {
 	var allCustomPropertyNames = "";
 	// Handle custom properties retrieved from API-Manager
 	for (var prop in customProperties) {
+		var customPropertyConfig = customProperties[prop];
+		if(customPropertyConfig.type == "custom") {
+			logger.info(`Custom property: ${prop} inored for transform, as it's not a keyword field.`);
+			continue;
+		}
 		transformBody.pivot.group_by[`customProperties.${prop}`] = {"terms": {"field": `customProperties.${prop}`, "missing_bucket": true}};
 		allCustomPropertyNames += `#${prop}`;
 	}
@@ -139,11 +144,9 @@ async function mergeCustomPropertiesIntoTransform(params, options) {
 		const props = eventLogCustomProperties.split(",");
 		for (var i = 0; i < props.length; ++i) {
 			var prop = props[i].trim();
-			// Check, if the type is declared otherwise it will be registered as a keyword
-			var type = "keyword";
 			if(prop.includes(":")) { // For now, we don't even check the type, it is just custom
-				type = "custom";
-				prop = prop.split(":")[0];
+				logger.info(`Custom property: ${prop} inored for transform, as it's not a keyword field.`);
+				continue;
 			}
 			transformBody.pivot.group_by[`customMsgAtts.${prop}`] = {"terms": {"field": `customMsgAtts.${prop}`, "missing_bucket": true}};
 			allCustomPropertyNames += `#${prop}`;
