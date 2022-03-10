@@ -180,7 +180,7 @@ describe('Merge custom properties tests', () => {
 			expect(output).to.equal('error');
 		});
 
-		it('should error when transformId is missing', async () => {
+		it('should error when transformIdSuffix is missing', async () => {
 			var transformBody = JSON.parse(fs.readFileSync('./test/testInput/transform_hourly.json'), null);
 			const { value, output } = await flowNode.mergeCustomPropertiesIntoTransform({ 
 				customProperties: { },
@@ -188,7 +188,7 @@ describe('Merge custom properties tests', () => {
 			});
 
 			expect(value).to.be.instanceOf(Error)
-				.and.to.have.property('message', 'Missing required parameter: transformId');
+				.and.to.have.property('message', 'Missing required parameter: transformIdSuffix');
 			expect(output).to.equal('error');
 		});
 
@@ -197,13 +197,13 @@ describe('Merge custom properties tests', () => {
 			const { value, output } = await flowNode.mergeCustomPropertiesIntoTransform({ 
 				customProperties: JSON.parse(fs.readFileSync('./test/testInput/customPropertiesConfig.json'), null), 
 				transformBody: transformBody, 
-				transformId: 'V1', 
+				transformIdSuffix: 'V1', 
 				customPropertiesSettings: { merge: false }
 			});
 
 			expect(output).to.equal('noUpdate');
 			expect(value.transformBody).to.deep.equal(transformBody);
-			expect(value.transformId).to.equal('V1');
+			expect(value.transformIdSuffix).to.equal('V1');
 		});
 
 		it('should return noUpdate if API-Manager and EventLog custom properties are empty', async () => {
@@ -211,13 +211,13 @@ describe('Merge custom properties tests', () => {
 			const { value, output } = await flowNode.mergeCustomPropertiesIntoTransform({ 
 				customProperties: {}, 
 				transformBody: transformBody, 
-				transformId: 'V1', 
+				transformIdSuffix: 'V1', 
 				customPropertiesSettings: { merge: true }
 			});
 
 			expect(output).to.equal('noUpdate');
 			expect(value.transformBody).to.deep.equal(transformBody);
-			expect(value.transformId).to.equal('V1');
+			expect(value.transformIdSuffix).to.equal('V1');
 		});
 
 		it('should return custom properties from API-Manager merged into transform job', async () => {
@@ -226,11 +226,11 @@ describe('Merge custom properties tests', () => {
 				customProperties: JSON.parse(fs.readFileSync('./test/testInput/customPropertiesConfig.json'), null), 
 				transformBody: transformBody, 
 				customPropertiesSettings: { merge: true },
-				transformId: 'V2'
+				transformIdSuffix: 'V2'
 			});
 
 			expect(output).to.equal('next');
-			expect(value.transformId).to.equal('V2-803794971');
+			expect(value.transformIdSuffix).to.equal('V2-803794971');
 			expect(value.transformBody.pivot.group_by['customProperties.customProperty1']).to.be.an('Object');
 			expect(value.transformBody.pivot.group_by['customProperties.customProperty1']).to.deep.equal({"terms": {"field": "finalStatus", "missing_bucket": true}});
 			expect(value.transformBody.pivot.group_by['customProperties.customProperty2']).to.be.an('Object');
@@ -246,11 +246,11 @@ describe('Merge custom properties tests', () => {
 				eventLogCustomProperties: 'myProperty1, myProperty2, myCustomProperty3:custom', 
 				transformBody: transformBody, 
 				customPropertiesSettings: { merge: true },
-				transformId: 'V1'
+				transformIdSuffix: 'V1'
 			});
 
 			expect(output).to.equal('next');
-			expect(value.transformId).to.equal('V1-922805401');
+			expect(value.transformIdSuffix).to.equal('V1-922805401');
 			expect(value.transformBody.pivot.group_by['customMsgAtts.myProperty1']).to.be.an('Object');
 			expect(value.transformBody.pivot.group_by['customMsgAtts.myProperty1']).to.deep.equal({"terms": {"field": "finalStatus", "missing_bucket": true}});
 			expect(value.transformBody.pivot.group_by['customMsgAtts.myProperty2']).to.be.an('Object');

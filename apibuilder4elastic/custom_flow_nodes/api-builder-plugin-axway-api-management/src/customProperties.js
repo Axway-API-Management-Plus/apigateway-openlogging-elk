@@ -106,7 +106,7 @@ async function mergeCustomPropertiesIntoTransform(params, options) {
 		return hash;
 	}
 
-	let { customProperties, eventLogCustomProperties, transformBody, transformId, customPropertiesSettings } = params;
+	let { customProperties, eventLogCustomProperties, transformBody, transformIdSuffix, customPropertiesSettings } = params;
 	const { logger } = options;
 	if (!customProperties) {
 		throw new Error('Missing required parameter: customProperties to merge them into the transformation job.');
@@ -114,15 +114,15 @@ async function mergeCustomPropertiesIntoTransform(params, options) {
 	if (!transformBody) {
 		throw new Error('Missing required parameter: transformBody');
 	}
-	if (!transformId) {
-		throw new Error('Missing required parameter: transformId');
+	if (!transformIdSuffix) {
+		throw new Error('Missing required parameter: transformIdSuffix');
 	}
 	if (customPropertiesSettings == undefined) {
 		customPropertiesSettings = { merge: false };
 	}
 	if (!customPropertiesSettings.merge) {
 		logger.info(`Custom properties are ignored for this transform job.`);
-		return options.setOutput('noUpdate', {transformId: transformId, transformBody: transformBody});
+		return options.setOutput('noUpdate', {transformIdSuffix: transformIdSuffix, transformBody: transformBody});
 	}
 	if (!customPropertiesSettings.parent) {
 		customPropertiesSettings.parent = ""; // Use no parent as default
@@ -151,18 +151,18 @@ async function mergeCustomPropertiesIntoTransform(params, options) {
 	}
 	// No props found at all
 	if(allCustomPropertyNames=="") {
-		return options.setOutput('noUpdate', {transformId: transformId, transformBody: transformBody});
+		return options.setOutput('noUpdate', {transformIdSuffix: transformIdSuffix, transformBody: transformBody});
 	}
-	return { transformId: createUniqueTransformID(transformId, allCustomPropertyNames), transformBody: transformBody };
+	return { transformIdSuffix: createUniqueTransformIDSuffix(transformIdSuffix, allCustomPropertyNames), transformBody: transformBody };
 
-	function createUniqueTransformID(transformId, allCustomPropertyNames) {
+	function createUniqueTransformIDSuffix(transformIdSuffix, allCustomPropertyNames) {
 		var hash = 0;
 		for (var i = 0; i < allCustomPropertyNames.length; i++) {
 			var character = allCustomPropertyNames.charCodeAt(i);
 			hash = ((hash<<5)-hash)+character;
 			hash = hash & hash; // Convert to 32bit integer
 		}
-		return `${transformId}-${hash}`;
+		return `${transformIdSuffix}-${hash}`;
 	}
 }
 

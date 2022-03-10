@@ -360,9 +360,9 @@ flow-nodes:
             required: false
             schema:
               type: object
-          transformId:
-            name: The Transform ID
-            description: "This ID (e.g. V1, V2, etc.) makes the transform name unique in Elasticsearch. If custom properties were used, a hash code is generated from all property names and appended to the primary ID. (e.g. V1-7868768). This allows an existing transform with the same custom properties to be recognized. If the custom properties change, a new transform job is created. If no custom properties are configured, the ID is returned unchanged."
+          transformIdSuffix:
+            name: The Transform ID-Suffix
+            description: "This ID-Suffix (e.g. V1, V2, etc.) makes the transform name unique in Elasticsearch. If custom properties were used, a hash code is generated from all property names and appended to the primary ID. (e.g. V1-7868768). This allows an existing transform with the same custom properties to be recognized. If the custom properties change, a new transform job is created. If no custom properties are configured, the ID is returned unchanged."
             required: true
             schema:
               type: object
