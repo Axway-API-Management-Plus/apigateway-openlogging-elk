@@ -28,4 +28,5 @@ data:
 {{- end }}  
   APM_VALIDATE_SERVER_CERT: {{ default true .Values.apibuilder4elastic.apmserver.verifyServerCert | quote }}
   APM_SERVER_CA: {{ default "" .Values.apibuilder4elastic.apmserver.serverCaCertFile | quote }}
+  EVENTLOG_CUSTOM_ATTR: {{ default "" .Values.apibuilder4elastic.eventlogCustomAttributes | quote }}
 {{- end }}

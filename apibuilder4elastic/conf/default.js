@@ -37,6 +37,9 @@ module.exports = {
 	// This path is optional and if given used to adjust the ILM-Configuration.
 	retentionPeriodConfigFile: process.env.RETENTION_PERIOD_CONFIG || 'NotSet',
 
+	// Custom Properties that may be configured for the Transaction-Event-Log
+	eventLogCustomProps: process.env.EVENTLOG_CUSTOM_ATTR,
+
 	// These version are used, that Filebeat and Logstash are configured as required 
 	// by the API-Builder release
 	versions: {

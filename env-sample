@@ -595,6 +595,16 @@ ELASTIC_VERSION=7.17.1
 # Defaults to none
 #GEOIP_DOWNLOAD_ENDPOINT=
 
+# ----------------------------------------------------------------------------------------------
+# If you are using transaction event log custom properties and want them indexed in Elasticsearch, 
+# then you need to configure here accordingly. Only then, they will be available in queries.
+# If you enable this parameter and have configured custom properties, then each document in 
+# Elasticsearch will be updated with the event log based on the correlation ID. 
+# Please observe the ingestion rate, as it results in an additional update of the ES-Document.
+# Used-By: Logstash, APIBuilder4Elastic
+# Defaults to none
+#EVENTLOG_CUSTOM_ATTR=myProperty1, myProperty2, myCustomProperty:custom
+
 ################################################################################################
 #                         Certificates and Certificate authorities
 ################################################################################################

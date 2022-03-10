@@ -134,6 +134,13 @@
 					"value": "$.indexConfig.template.customProperties",
 					"metaName": "Custom properties settings",
 					"metaDescription": "Controls if and how custom properties should be merged into the index template. See config file: elasticsearch_config/index_config.json"
+				},
+				{
+					"name": "eventLogCustomProperties",
+					"type": "jsonpath",
+					"value": "$.config.eventLogCustomProps",
+					"metaName": "EventLog Custom properties",
+					"metaDescription": "The EventLog custom properties which are configured using the parameter EVENTLOG_CUSTOM_ATTR. If given, they will be additionally merged into the index template."
 				}
 			],
 			"outputs": {
@@ -917,12 +924,16 @@
 				{
 					"name": "source",
 					"type": "jsonpath",
-					"value": "$.indexConfig.ilm.config"
+					"value": "$.indexConfig.ilm.config",
+					"metaName": "Source",
+					"metaDescription": "The input to test."
 				},
 				{
 					"name": "value",
 					"type": "string",
-					"value": "\"NotSet\""
+					"value": "\"NotSet\"",
+					"metaName": "Value",
+					"metaDescription": "The value to test input against."
 				}
 			],
 			"outputs": {
@@ -930,16 +941,19 @@
 					"routes": [
 						"logger.1"
 					],
-					"context": "$.equals"
+					"context": "$.equals",
+					"metaName": "True"
 				},
 				"false": {
 					"routes": [
 						"file.3",
 						"file.2"
 					],
-					"context": "$.equals"
+					"context": "$.equals",
+					"metaName": "False"
 				}
-			}
+			},
+			"metaMethod": "Equals"
 		},
 		"logger.1": {
 			"type": "nodehandler://@axway/api-builder-plugin-fn-logger/logger",
@@ -949,24 +963,31 @@
 				{
 					"name": "level",
 					"type": "string",
-					"value": "\"debug\""
+					"value": "\"debug\"",
+					"metaName": "Level",
+					"metaDescription": "The desired log level of the output logs."
 				},
 				{
 					"name": "message",
 					"type": "string",
-					"value": "\"Index has no ILM-Config defined.\""
+					"value": "\"Index has no ILM-Config defined.\"",
+					"metaName": "Message",
+					"metaDescription": "The log message."
 				}
 			],
 			"outputs": {
 				"next": {
 					"context": null,
-					"routes": []
+					"routes": [],
+					"metaName": "Next"
 				},
 				"error": {
 					"context": "$.error",
-					"routes": []
+					"routes": [],
+					"metaName": "Error"
 				}
-			}
+			},
+			"metaMethod": "Log Message"
 		}
 	}
 }
