@@ -29,6 +29,7 @@ services:
       - GEOIP_CACHE_SIZE=${GEOIP_CACHE_SIZE:-1000}
       - GEOIP_CUSTOM_ATTRIBUTE=${GEOIP_CUSTOM_ATTRIBUTE:-xForwardedFor}
       - xpack.geoip.download.endpoint=${GEOIP_DOWNLOAD_ENDPOINT}
+      - EVENTLOG_CUSTOM_ATTR=${EVENTLOG_CUSTOM_ATTR}
     ports:
       - 5044:5044
     volumes:
@@ -95,6 +96,7 @@ services:
       - APM_ENABLED=${APM_ENABLED}
       - APM_SERVER=${APM_SERVER}
       - APM_SERVER_CA=${APM_SERVER_CA}
+      - EVENTLOG_CUSTOM_ATTR=${EVENTLOG_CUSTOM_ATTR}
     ports:
       - 8443:8443
     networks:
