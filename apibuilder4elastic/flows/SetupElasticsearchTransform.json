@@ -184,7 +184,8 @@
 			"outputs": {
 				"next": {
 					"routes": [
-						"elasticsearch.1"
+						"axway-api-management.2",
+						"axway-api-management.1"
 					],
 					"context": "$.transformBody",
 					"metaName": "Next"
@@ -210,25 +211,11 @@
 			"method": "putTransform",
 			"parameters": [
 				{
-					"name": "body",
-					"type": "jsonpath",
-					"value": "$.transformBody",
-					"metaName": "Transform configuration",
-					"metaDescription": "The transform job configuration"
-				},
-				{
 					"name": "deletePreviousTransform",
 					"type": "boolean",
 					"value": "false",
 					"metaName": "Delete previous transform",
 					"metaDescription": "If an existing transform with the same primary ID has been found which should be replaced, this switch decides whether the old transform should be deleted. If the previous transform is running, it will be stopped automatically."
-				},
-				{
-					"name": "idSuffix",
-					"type": "jsonpath",
-					"value": "$.indexConfig.transform.idSuffix",
-					"metaName": "Transform-ID Suffix",
-					"metaDescription": "Mandatory if an existing transform is to be replaced. The Transform-ID suffix is used to generate the final Transform-ID, which is used to create the transform. Existing transforms with the primary transforms ID are searched for, stopped/deleted and a new transform with transform ID + suffix is created."
 				},
 				{
 					"name": "startTransform",
@@ -243,6 +230,16 @@
 					"value": "$.indexConfig.transform.id",
 					"metaName": "Transform-ID",
 					"metaDescription": "The id of the new transform."
+				},
+				{
+					"name": "body",
+					"type": "jsonpath",
+					"value": "$.transform.transformBody"
+				},
+				{
+					"name": "idSuffix",
+					"type": "jsonpath",
+					"value": "$.transform.transformIdSuffix"
 				}
 			],
 			"outputs": {
@@ -306,6 +303,101 @@
 				}
 			},
 			"metaMethod": "Shutdown"
+		},
+		"axway-api-management.1": {
+			"type": "nodehandler://api-builder-plugin-axway-api-management/axway-api-management",
+			"name": "Get API-Mgr Custom-Props",
+			"method": "getCustomPropertiesConfig",
+			"parameters": [
+				{
+					"name": "disableCustomProperties",
+					"type": "jsonpath",
+					"value": "$.config.disableCustomProperties",
+					"metaName": "Disable custom properties",
+					"metaDescription": "Convience flag to disable loading of custom properties. This may be set by a configuration toggle."
+				}
+			],
+			"outputs": {
+				"next": {
+					"routes": [
+						"axway-api-management.2"
+					],
+					"context": "$.customProperties",
+					"metaName": "Next"
+				},
+				"error": {
+					"routes": [
+						"power.1"
+					],
+					"context": "$.error",
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Get custom properties"
+		},
+		"axway-api-management.2": {
+			"type": "nodehandler://api-builder-plugin-axway-api-management/axway-api-management",
+			"name": "Merge custom properties into Transform",
+			"method": "mergeCustomPropertiesIntoTransform",
+			"parameters": [
+				{
+					"name": "customProperties",
+					"type": "jsonpath",
+					"value": "$.customProperties",
+					"metaName": "Custom properties",
+					"metaDescription": "The custom properties as they have been loaded from the API-Manager"
+				},
+				{
+					"name": "transformBody",
+					"type": "jsonpath",
+					"value": "$.transformBody",
+					"metaName": "Transform body",
+					"metaDescription": "The transform job as it should be created without custom properties merged."
+				},
+				{
+					"name": "customPropertiesSettings",
+					"type": "jsonpath",
+					"value": "$.indexConfig.template.customProperties",
+					"metaName": "Custom properties settings",
+					"metaDescription": "Controls if and how custom properties should be merged into the transform. See config file: elasticsearch_config/index_config.json"
+				},
+				{
+					"name": "eventLogCustomProperties",
+					"type": "jsonpath",
+					"value": "$.config.eventLogCustomProps",
+					"metaName": "EventLog Custom properties",
+					"metaDescription": "The EventLog custom properties which are configured using the parameter EVENTLOG_CUSTOM_ATTR. If given, they will be additionally merged into the index template."
+				},
+				{
+					"name": "transformIdSuffix",
+					"type": "jsonpath",
+					"value": "$.indexConfig.transform.idSuffix"
+				}
+			],
+			"outputs": {
+				"next": {
+					"routes": [
+						"elasticsearch.1"
+					],
+					"context": "$.transform",
+					"metaName": "Next"
+				},
+				"noUpdate": {
+					"routes": [
+						"elasticsearch.1"
+					],
+					"context": "$.transform",
+					"metaName": "No update"
+				},
+				"error": {
+					"routes": [
+						"power.1"
+					],
+					"context": "$.error",
+					"metaName": "Error"
+				}
+			},
+			"metaMethod": "Merge custom properties into Transform"
 		}
 	}
 }

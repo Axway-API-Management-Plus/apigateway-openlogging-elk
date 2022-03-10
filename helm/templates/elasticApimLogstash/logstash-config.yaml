@@ -41,4 +41,5 @@ data:
   GEOIP_CACHE_SIZE: {{ default "1000" .Values.logstash.geoip.cacheSize | quote }}
   GEOIP_CUSTOM_ATTRIBUTE: {{ default "true" .Values.logstash.geoip.customAttribute | quote }}
   xpack.geoip.download.endpoint: {{ default "" .Values.logstash.geoip.downloadEndpoint | quote }}
+  EVENTLOG_CUSTOM_ATTR: {{ default "" .Values.apibuilder4elastic.eventlogCustomAttributes | quote }}
 {{- end }}

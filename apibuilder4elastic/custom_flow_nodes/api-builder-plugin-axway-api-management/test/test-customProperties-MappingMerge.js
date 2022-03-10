@@ -26,9 +26,9 @@ describe('Merge custom properties tests', () => {
 		flowNode = plugin.getFlowNode('axway-api-management');
 	});
 
-	describe('#Index mapping merge tests', () => {
+	describe('#Index template mapping custom properties merge tests', () => {
 		it('should error custom properties are missing', async () => {
-			const { value, output } = await flowNode.mergeCustomProperties({ });
+			const { value, output } = await flowNode.mergeCustomPropertiesIntoIndexTemplate({ });
 
 			expect(value).to.be.instanceOf(Error)
 				.and.to.have.property('message', 'Missing required parameter: customProperties');
@@ -36,7 +36,7 @@ describe('Merge custom properties tests', () => {
 		});
 
 		it('should error when desiredIndexTemplate is missing', async () => {
-			const { value, output } = await flowNode.mergeCustomProperties({ customProperties: { } });
+			const { value, output } = await flowNode.mergeCustomPropertiesIntoIndexTemplate({ customProperties: { } });
 
 			expect(value).to.be.instanceOf(Error)
 				.and.to.have.property('message', 'Missing required parameter: desiredIndexTemplate');
@@ -45,7 +45,7 @@ describe('Merge custom properties tests', () => {
 
 		it('should return noUpdate if mergeCustomProperties is false', async () => {
 			var desiredIndexTemplate = JSON.parse(fs.readFileSync('./test/testInput/desiredIndexTemplate.json'), null);
-			const { value, output } = await flowNode.mergeCustomProperties({ 
+			const { value, output } = await flowNode.mergeCustomPropertiesIntoIndexTemplate({ 
 				customProperties: JSON.parse(fs.readFileSync('./test/testInput/customPropertiesConfig.json'), null), 
 				desiredIndexTemplate: desiredIndexTemplate, 
 				customPropertiesSettings: { merge: false }
@@ -56,7 +56,7 @@ describe('Merge custom properties tests', () => {
 		});
 
 		it('should NOT error when actualIndexTemplate is missing', async () => {
-			const { value, output } = await flowNode.mergeCustomProperties({ 
+			const { value, output } = await flowNode.mergeCustomPropertiesIntoIndexTemplate({ 
 				customProperties: JSON.parse(fs.readFileSync('./test/testInput/customPropertiesConfig.json'), null), 
 				desiredIndexTemplate: JSON.parse(fs.readFileSync('./test/testInput/desiredIndexTemplate.json'), null), 
 				customPropertiesSettings: { merge: true, parent: "" }
@@ -72,7 +72,7 @@ describe('Merge custom properties tests', () => {
 		});
 
 		it('should merge into indexMappingTemplate as custom properties are missing and parent is not set', async () => {
-			const { value, output } = await flowNode.mergeCustomProperties({ 
+			const { value, output } = await flowNode.mergeCustomPropertiesIntoIndexTemplate({ 
 				customProperties: JSON.parse(fs.readFileSync('./test/testInput/customPropertiesConfig.json'), null), 
 				desiredIndexTemplate: JSON.parse(fs.readFileSync('./test/testInput/desiredIndexTemplate.json'), null),
 				actualIndexTemplate: JSON.parse(fs.readFileSync('./test/testInput/actualIndexTemplate.json'), null), 
@@ -88,7 +88,7 @@ describe('Merge custom properties tests', () => {
 		});
 
 		it('should result in no update required as custom properties already part of the mapping', async () => {
-			const { value, output } = await flowNode.mergeCustomProperties({ 
+			const { value, output } = await flowNode.mergeCustomPropertiesIntoIndexTemplate({ 
 				customProperties: JSON.parse(fs.readFileSync('./test/testInput/customPropertiesConfig.json'), null), 
 				desiredIndexTemplate: JSON.parse(fs.readFileSync('./test/testInput/desiredIndexTemplateWithCustomProps.json'), null),
 				actualIndexTemplate: JSON.parse(fs.readFileSync('./test/testInput/actualIndexTemplateWithCustomProps.json'), null), 
@@ -104,7 +104,7 @@ describe('Merge custom properties tests', () => {
 		});
 
 		it('should result in an update as some of the required custom properties are missing', async () => {
-			const { value, output } = await flowNode.mergeCustomProperties({ 
+			const { value, output } = await flowNode.mergeCustomPropertiesIntoIndexTemplate({ 
 				customProperties: JSON.parse(fs.readFileSync('./test/testInput/customPropertiesConfig.json'), null), 
 				desiredIndexTemplate: JSON.parse(fs.readFileSync('./test/testInput/desiredIndexTemplate.json'), null),
 				actualIndexTemplate: JSON.parse(fs.readFileSync('./test/testInput/actualIndexTemplateWithLessCustomProps.json'), null), 
@@ -120,7 +120,7 @@ describe('Merge custom properties tests', () => {
 		});
 
 		it('should merge into indexMappingTemplate withd a defined parent as custom properties are missing', async () => {
-			const { value, output } = await flowNode.mergeCustomProperties({ 
+			const { value, output } = await flowNode.mergeCustomPropertiesIntoIndexTemplate({ 
 				customProperties: JSON.parse(fs.readFileSync('./test/testInput/customPropertiesConfig.json'), null), 
 				desiredIndexTemplate: JSON.parse(fs.readFileSync('./test/testInput/desiredIndexTemplate.json'), null),
 				actualIndexTemplate: JSON.parse(fs.readFileSync('./test/testInput/actualIndexTemplate.json'), null), 
@@ -137,7 +137,7 @@ describe('Merge custom properties tests', () => {
 		});
 
 		it('should result into a noUpdate as customProperties with the the given parent already exists', async () => {
-			const { value, output } = await flowNode.mergeCustomProperties({ 
+			const { value, output } = await flowNode.mergeCustomPropertiesIntoIndexTemplate({ 
 				customProperties: JSON.parse(fs.readFileSync('./test/testInput/customPropertiesConfig.json'), null), 
 				desiredIndexTemplate: JSON.parse(fs.readFileSync('./test/testInput/desiredIndexTemplate.json'), null),
 				actualIndexTemplate: JSON.parse(fs.readFileSync('./test/testInput/actualIndexTemplateWithParentCustomProps.json'), null), 
@@ -148,7 +148,7 @@ describe('Merge custom properties tests', () => {
 		});
 
 		it('should merge the given eventlog custom properties into the template', async () => {
-			const { value, output } = await flowNode.mergeCustomProperties({ 
+			const { value, output } = await flowNode.mergeCustomPropertiesIntoIndexTemplate({ 
 				customProperties: JSON.parse(fs.readFileSync('./test/testInput/customPropertiesConfig.json'), null), 
 				eventLogCustomProperties: 'myProperty1, myProperty2, myCustomProperty3:custom', 
 				desiredIndexTemplate: JSON.parse(fs.readFileSync('./test/testInput/desiredIndexTemplate.json'), null),
@@ -161,6 +161,100 @@ describe('Merge custom properties tests', () => {
 			expect(value.mappings.properties['customMsgAtts.myProperty1']).to.be.an('Object');
 			expect(value.mappings.properties['customMsgAtts.myProperty2']).to.be.an('Object');
 			expect(value.mappings.properties['customMsgAtts.myCustomProperty3']).to.be.an('Object');
+		});
+	});
+	describe('#Transformation job custom properties merge tests', () => {
+		it('should error when custom properties are missing', async () => {
+			const { value, output } = await flowNode.mergeCustomPropertiesIntoTransform({ });
+
+			expect(value).to.be.instanceOf(Error)
+				.and.to.have.property('message', 'Missing required parameter: customProperties to merge them into the transformation job.');
+			expect(output).to.equal('error');
+		});
+
+		it('should error when transformBody is missing', async () => {
+			const { value, output } = await flowNode.mergeCustomPropertiesIntoTransform({ customProperties: { } });
+
+			expect(value).to.be.instanceOf(Error)
+				.and.to.have.property('message', 'Missing required parameter: transformBody');
+			expect(output).to.equal('error');
+		});
+
+		it('should error when transformIdSuffix is missing', async () => {
+			var transformBody = JSON.parse(fs.readFileSync('./test/testInput/transform_hourly.json'), null);
+			const { value, output } = await flowNode.mergeCustomPropertiesIntoTransform({ 
+				customProperties: { },
+				transformBody: transformBody
+			});
+
+			expect(value).to.be.instanceOf(Error)
+				.and.to.have.property('message', 'Missing required parameter: transformIdSuffix');
+			expect(output).to.equal('error');
+		});
+
+		it('should return noUpdate if mergeCustomProperties is false', async () => {
+			var transformBody = JSON.parse(fs.readFileSync('./test/testInput/transform_hourly.json'), null);
+			const { value, output } = await flowNode.mergeCustomPropertiesIntoTransform({ 
+				customProperties: JSON.parse(fs.readFileSync('./test/testInput/customPropertiesConfig.json'), null), 
+				transformBody: transformBody, 
+				transformIdSuffix: 'V1', 
+				customPropertiesSettings: { merge: false }
+			});
+
+			expect(output).to.equal('noUpdate');
+			expect(value.transformBody).to.deep.equal(transformBody);
+			expect(value.transformIdSuffix).to.equal('V1');
+		});
+
+		it('should return noUpdate if API-Manager and EventLog custom properties are empty', async () => {
+			var transformBody = JSON.parse(fs.readFileSync('./test/testInput/transform_hourly.json'), null);
+			const { value, output } = await flowNode.mergeCustomPropertiesIntoTransform({ 
+				customProperties: {}, 
+				transformBody: transformBody, 
+				transformIdSuffix: 'V1', 
+				customPropertiesSettings: { merge: true }
+			});
+
+			expect(output).to.equal('noUpdate');
+			expect(value.transformBody).to.deep.equal(transformBody);
+			expect(value.transformIdSuffix).to.equal('V1');
+		});
+
+		it('should return custom properties from API-Manager merged into transform job', async () => {
+			var transformBody = JSON.parse(fs.readFileSync('./test/testInput/transform_hourly.json'), null);
+			const { value, output } = await flowNode.mergeCustomPropertiesIntoTransform({ 
+				customProperties: JSON.parse(fs.readFileSync('./test/testInput/customPropertiesConfig.json'), null), 
+				transformBody: transformBody, 
+				customPropertiesSettings: { merge: true },
+				transformIdSuffix: 'V2'
+			});
+
+			expect(output).to.equal('next');
+			expect(value.transformIdSuffix).to.equal('V2-766573075');
+			expect(value.transformBody.pivot.group_by['customProperties.customProperty1']).to.equal(undefined); // Must be undefined, as custom fields cannot be aggregated
+			expect(value.transformBody.pivot.group_by['customProperties.customProperty2']).to.be.an('Object');
+			expect(value.transformBody.pivot.group_by['customProperties.customProperty2']).to.deep.equal({"terms": {"field": "customProperties.customProperty2", "missing_bucket": true}});
+			expect(value.transformBody.pivot.group_by['customProperties.customProperty3']).to.be.an('Object');
+			expect(value.transformBody.pivot.group_by['customProperties.customProperty3']).to.deep.equal({"terms": {"field": "customProperties.customProperty3", "missing_bucket": true}});
+		});
+
+		it('should return custom properties from Event-Log merged into transform job', async () => {
+			var transformBody = JSON.parse(fs.readFileSync('./test/testInput/transform_hourly.json'), null);
+			const { value, output } = await flowNode.mergeCustomPropertiesIntoTransform({ 
+				customProperties: {}, 
+				eventLogCustomProperties: 'myProperty1, myProperty2, myCustomProperty3:custom', 
+				transformBody: transformBody, 
+				customPropertiesSettings: { merge: true },
+				transformIdSuffix: 'V1'
+			});
+
+			expect(output).to.equal('next');
+			expect(value.transformIdSuffix).to.equal('V1-2133442011');
+			expect(value.transformBody.pivot.group_by['customMsgAtts.myProperty1']).to.be.an('Object'); 
+			expect(value.transformBody.pivot.group_by['customMsgAtts.myProperty1']).to.deep.equal({"terms": {"field": "customMsgAtts.myProperty1", "missing_bucket": true}});
+			expect(value.transformBody.pivot.group_by['customMsgAtts.myProperty2']).to.be.an('Object');
+			expect(value.transformBody.pivot.group_by['customMsgAtts.myProperty2']).to.deep.equal({"terms": {"field": "customMsgAtts.myProperty2", "missing_bucket": true}});
+			expect(value.transformBody.pivot.group_by['customMsgAtts.myCustomProperty3']).to.equal(undefined); // Must be undefined, as custom fields cannot be aggregated
 		});
 	});
 });

@@ -18,7 +18,7 @@
  * @return {*} The response value (resolves to "next" output, or if the method
  *	 does not define "next", the first defined output).
  */
-async function mergeCustomProperties(params, options) {
+async function mergeCustomPropertiesIntoIndexTemplate(params, options) {
 	let { customProperties, eventLogCustomProperties, desiredIndexTemplate, actualIndexTemplate, customPropertiesSettings } = params;
 	const { logger } = options;
 	if (!customProperties) {
@@ -94,6 +94,82 @@ async function mergeCustomProperties(params, options) {
 	}
 }
 
+async function mergeCustomPropertiesIntoTransform(params, options) {
+
+	String.prototype.hashCode = function(){
+		var hash = 0;
+		for (var i = 0; i < this.length; i++) {
+			var character = this.charCodeAt(i);
+			hash = ((hash<<5)-hash)+character;
+			hash = hash & hash; // Convert to 32bit integer
+		}
+		return hash;
+	}
+
+	let { customProperties, eventLogCustomProperties, transformBody, transformIdSuffix, customPropertiesSettings } = params;
+	const { logger } = options;
+	if (!customProperties) {
+		throw new Error('Missing required parameter: customProperties to merge them into the transformation job.');
+	}
+	if (!transformBody) {
+		throw new Error('Missing required parameter: transformBody');
+	}
+	if (!transformIdSuffix) {
+		throw new Error('Missing required parameter: transformIdSuffix');
+	}
+	if (customPropertiesSettings == undefined) {
+		customPropertiesSettings = { merge: false };
+	}
+	if (!customPropertiesSettings.merge) {
+		logger.info(`Custom properties are ignored for this transform job.`);
+		return options.setOutput('noUpdate', {transformIdSuffix: transformIdSuffix, transformBody: transformBody});
+	}
+	if (!customPropertiesSettings.parent) {
+		customPropertiesSettings.parent = ""; // Use no parent as default
+	}
+	var allCustomPropertyNames = "";
+	// Handle custom properties retrieved from API-Manager
+	for (var prop in customProperties) {
+		var customPropertyConfig = customProperties[prop];
+		if(customPropertyConfig.type == "custom") {
+			logger.info(`Custom property: ${prop} inored for transform, as it's not a keyword field.`);
+			continue;
+		}
+		transformBody.pivot.group_by[`customProperties.${prop}`] = {"terms": {"field": `customProperties.${prop}`, "missing_bucket": true}};
+		allCustomPropertyNames += `#${prop}`;
+	}
+	// Check, if Event-Log custom properties are configured, which must be merged into the Index-Template
+	if(eventLogCustomProperties) {
+		// They are provided as a simple command separated string
+		const props = eventLogCustomProperties.split(",");
+		for (var i = 0; i < props.length; ++i) {
+			var prop = props[i].trim();
+			if(prop.includes(":")) { // For now, we don't even check the type, it is just custom
+				logger.info(`Custom property: ${prop} inored for transform, as it's not a keyword field.`);
+				continue;
+			}
+			transformBody.pivot.group_by[`customMsgAtts.${prop}`] = {"terms": {"field": `customMsgAtts.${prop}`, "missing_bucket": true}};
+			allCustomPropertyNames += `#${prop}`;
+		}
+	}
+	// No props found at all
+	if(allCustomPropertyNames=="") {
+		return options.setOutput('noUpdate', {transformIdSuffix: transformIdSuffix, transformBody: transformBody});
+	}
+	return { transformIdSuffix: createUniqueTransformIDSuffix(transformIdSuffix, allCustomPropertyNames), transformBody: transformBody };
+
+	function createUniqueTransformIDSuffix(transformIdSuffix, allCustomPropertyNames) {
+		var hash = 0;
+		for (var i = 0; i < allCustomPropertyNames.length; i++) {
+			var character = allCustomPropertyNames.charCodeAt(i);
+			hash = ((hash<<5)-hash)+character;
+			hash = hash & hash; // Convert to 32bit integer
+		}
+		return `${transformIdSuffix}-${hash}`;
+	}
+}
+
 module.exports = {
-	mergeCustomProperties
+	mergeCustomPropertiesIntoIndexTemplate,
+	mergeCustomPropertiesIntoTransform
 };
