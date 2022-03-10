@@ -138,6 +138,15 @@ apibuilder4elastic:
   # To learn more read the description of parameter RETENTION_PERIOD_CONFIG
   # retentionPeriodConfig: "./config/my-retention-period-config.json"
 
+  # If you are using transaction event log custom properties and want them indexed in Elasticsearch, 
+  # then you need to configure here accordingly. Only then, they will be available in queries.
+  # Please note, if you enable this parameter and have configured custom properties, then each document in 
+  # Elasticsearch will be additionally updated with the event log based on the correlation ID. 
+  # Please observe the ingestion rate, as it results in an additional update of the ES-Document.
+  # By default they are indexed as a keyword, making it possible to aggregate. To enable Fulltext-Search
+  # add :custom to it. Obviously, this results in higher disk space requirements.
+  # eventlogCustomAttributes: "myAttribute1, myAttribute2, customAttribute:custom"
+
   # payloadEnabled set to false, API-Builder will not try to read the payload files
   # Use extraVolumes & extraVolumeMounts to mount your payloads into 
   # the API-Builder4Elastic container.

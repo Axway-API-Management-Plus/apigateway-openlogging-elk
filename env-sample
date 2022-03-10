@@ -603,7 +603,7 @@ ELASTIC_VERSION=7.17.1
 # Please observe the ingestion rate, as it results in an additional update of the ES-Document.
 # Used-By: Logstash, APIBuilder4Elastic
 # Defaults to none
-#EVENTLOG_CUSTOM_ATTR=myProperty1, myProperty2, myNextProperty
+#EVENTLOG_CUSTOM_ATTR=myProperty1, myProperty2, myCustomProperty:custom
 
 ################################################################################################
 #                         Certificates and Certificate authorities

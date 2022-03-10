@@ -40,7 +40,7 @@ async function mergeCustomProperties(params, options) {
 	if (!customPropertiesSettings.parent) {
 		customPropertiesSettings.parent = ""; // Use no parent as default
 	}
-	debugger;
+
 	var updateRequired = false;
 	// Iterate over all custom properties loaded from API-Manager
 	for (var prop in customProperties) {
