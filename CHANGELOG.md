@@ -22,6 +22,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 - API-Gateway selector was not working for the Real-Time view, as it was using the Time-Filter
   - updated dashboard: `kibana/dashboards/7/Axway-api-overview.ndjson` to fix this
+- API- and Application-Details once looked up never expired in APIBuilder4Elastic
+  - added missing checkperiod for In-Memory NodeCache
 
 ## [4.2.0] 2022-02-15
 ### Added

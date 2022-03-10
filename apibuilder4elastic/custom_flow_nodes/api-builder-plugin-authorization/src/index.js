@@ -32,7 +32,7 @@ async function getPlugin(pluginConfig, options) {
 			options.logger.debug(`Using configured cache TTL: ${cacheTTL}`);
 		}
 	}
-	const cache = new NodeCache({ stdTTL: cacheTTL, useClones: false });
+	const cache = new NodeCache({ stdTTL: cacheTTL, checkperiod: 120, useClones: false });
 	const sdk = new SDK({ pluginConfig });
 	sdk.load(path.resolve(__dirname, 'flow-nodes.yml'), actions, { pluginContext: { 
 		cache: cache, 
