@@ -130,7 +130,7 @@ async function mergeCustomPropertiesIntoTransform(params, options) {
 	var allCustomPropertyNames = "";
 	// Handle custom properties retrieved from API-Manager
 	for (var prop in customProperties) {
-		transformBody.pivot.group_by[`customProperties.${prop}`] = {"terms": {"field": "finalStatus", "missing_bucket": true}};
+		transformBody.pivot.group_by[`customProperties.${prop}`] = {"terms": {"field": `customProperties.${prop}`, "missing_bucket": true}};
 		allCustomPropertyNames += `#${prop}`;
 	}
 	// Check, if Event-Log custom properties are configured, which must be merged into the Index-Template
@@ -145,7 +145,7 @@ async function mergeCustomPropertiesIntoTransform(params, options) {
 				type = "custom";
 				prop = prop.split(":")[0];
 			}
-			transformBody.pivot.group_by[`customMsgAtts.${prop}`] = {"terms": {"field": "finalStatus", "missing_bucket": true}};
+			transformBody.pivot.group_by[`customMsgAtts.${prop}`] = {"terms": {"field": `customMsgAtts.${prop}`, "missing_bucket": true}};
 			allCustomPropertyNames += `#${prop}`;
 		}
 	}

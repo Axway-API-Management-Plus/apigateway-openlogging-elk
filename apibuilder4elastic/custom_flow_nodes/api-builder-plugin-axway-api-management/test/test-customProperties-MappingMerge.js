@@ -232,11 +232,11 @@ describe('Merge custom properties tests', () => {
 			expect(output).to.equal('next');
 			expect(value.transformIdSuffix).to.equal('V2-803794971');
 			expect(value.transformBody.pivot.group_by['customProperties.customProperty1']).to.be.an('Object');
-			expect(value.transformBody.pivot.group_by['customProperties.customProperty1']).to.deep.equal({"terms": {"field": "finalStatus", "missing_bucket": true}});
+			expect(value.transformBody.pivot.group_by['customProperties.customProperty1']).to.deep.equal({"terms": {"field": "customProperties.customProperty1", "missing_bucket": true}});
 			expect(value.transformBody.pivot.group_by['customProperties.customProperty2']).to.be.an('Object');
-			expect(value.transformBody.pivot.group_by['customProperties.customProperty2']).to.deep.equal({"terms": {"field": "finalStatus", "missing_bucket": true}});
+			expect(value.transformBody.pivot.group_by['customProperties.customProperty2']).to.deep.equal({"terms": {"field": "customProperties.customProperty2", "missing_bucket": true}});
 			expect(value.transformBody.pivot.group_by['customProperties.customProperty3']).to.be.an('Object');
-			expect(value.transformBody.pivot.group_by['customProperties.customProperty3']).to.deep.equal({"terms": {"field": "finalStatus", "missing_bucket": true}});
+			expect(value.transformBody.pivot.group_by['customProperties.customProperty3']).to.deep.equal({"terms": {"field": "customProperties.customProperty3", "missing_bucket": true}});
 		});
 
 		it('should return custom properties from Event-Log merged into transform job', async () => {
@@ -252,11 +252,11 @@ describe('Merge custom properties tests', () => {
 			expect(output).to.equal('next');
 			expect(value.transformIdSuffix).to.equal('V1-922805401');
 			expect(value.transformBody.pivot.group_by['customMsgAtts.myProperty1']).to.be.an('Object');
-			expect(value.transformBody.pivot.group_by['customMsgAtts.myProperty1']).to.deep.equal({"terms": {"field": "finalStatus", "missing_bucket": true}});
+			expect(value.transformBody.pivot.group_by['customMsgAtts.myProperty1']).to.deep.equal({"terms": {"field": "customMsgAtts.myProperty1", "missing_bucket": true}});
 			expect(value.transformBody.pivot.group_by['customMsgAtts.myProperty2']).to.be.an('Object');
-			expect(value.transformBody.pivot.group_by['customMsgAtts.myProperty2']).to.deep.equal({"terms": {"field": "finalStatus", "missing_bucket": true}});
+			expect(value.transformBody.pivot.group_by['customMsgAtts.myProperty2']).to.deep.equal({"terms": {"field": "customMsgAtts.myProperty2", "missing_bucket": true}});
 			expect(value.transformBody.pivot.group_by['customMsgAtts.myCustomProperty3']).to.be.an('Object');
-			expect(value.transformBody.pivot.group_by['customMsgAtts.myCustomProperty3']).to.deep.equal({"terms": {"field": "finalStatus", "missing_bucket": true}});
+			expect(value.transformBody.pivot.group_by['customMsgAtts.myCustomProperty3']).to.deep.equal({"terms": {"field": "customMsgAtts.myCustomProperty3", "missing_bucket": true}});
 		});
 	});
 });
