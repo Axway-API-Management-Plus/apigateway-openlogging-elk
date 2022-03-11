@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [4.3.0] 2022-03-11
 ### Added
 - Added Geo-Location map of API-Requests
   - Logstash pipeline: `EventsPipeline.conf` changed to translate IP to Geo-Location
