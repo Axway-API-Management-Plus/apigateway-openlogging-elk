@@ -694,8 +694,8 @@ Again, it is not possible to specify only the region, but only in combination wi
 
 ### Custom properties
 
-The solution supports custom properties by default which are configured in the API Manager for APIs. This means that the custom properties are indexed in Elasticsearch and can be used for customer-specific evaluations.
-Since version 4.3.0, it is also possible to index runtime properties, i.e. policy attributes, in Elasticsearch and then analyze them in Kibana, for example.
+The solution supports configured API-Manager API custom properties by default. This means that the custom properties are indexed within the field: `customProperties` in Elasticsearch and can be used for customer-specific evaluations.  
+Since version 4.3.0, it is also possible to index runtime attributes, i.e. policy attributes, in Elasticsearch and then analyze them in Kibana, for example.
 
 The following steps are necessary:
 
