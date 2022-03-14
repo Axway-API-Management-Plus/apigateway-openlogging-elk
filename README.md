@@ -691,6 +691,29 @@ Again, it is not possible to specify only the region, but only in combination wi
 
 <p align="right"><a href="#table-of-content">Top</a></p>
 
+### Custom properties
+
+The solution supports custom properties by default which are configured in the API Manager for APIs. This means that the custom properties are indexed in Elasticsearch and can be used for customer-specific evaluations.
+Since version 4.3.0, it is also possible to index runtime properties, i.e. policy attributes, in Elasticsearch and then analyze them in Kibana, for example.
+
+The following steps are necessary:
+
+#### 1. Export the custom attributes 
+
+In Policy Studio, configure which attributes should be exported to the transaction event log. [Learn more](https://docs.axway.com/bundle/axway-open-docs/page/docs/apim_reference/log_global_settings/index.html#transaction-event-log-settings) how to configure messages attributes to be stored in transaction events.   
+All exported attributes will be found in the Elasticsearch indices: `apigw-traffic-summary` & `apigw-hourly-traffic-summary` within the field: customMsgAtts. 
+
+#### 2. Configure custom properties
+
+In order to be able to use your attributes in aggregations for reports later on, you have to configure them for the solution in advance.
+By using the parameter: `EVENTLOG_CUSTOM_ATTR` you define which attributes should be indexed in Elasticsearch.  
+It is important that the fields have as high cardinality as possible to work efficiently in aggregations. The fields are indexed as a keyword in Elasticsearch. It is also possible to index fields as text, but these are not available in the long-term data and not recommended.  
+
+After restarting APIBuilder4Elastic, the solution will configure Elasticsearch (index templates & transform job) according to the parameter: `EVENTLOG_CUSTOM_ATTR`. 
+Please note that it takes 4 hours for the custom properties to be available in the transformed data (`apigw-hourly-traffic-summary`).
+
+<p align="right"><a href="#table-of-content">Top</a></p>
+
 ### Activate user authentication
 
 Watch this video for a demonstration: [Authentication for Elasticsearch](https://youtu.be/4xxqV7PyBRQ)  
