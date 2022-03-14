@@ -52,6 +52,7 @@ This shows a sample dashboard created in Kibana based on the indexed documents:
   - [Setup Elasticsearch Multi-Node](#setup-elasticsearch-multi-node)
   - [Setup API-Manager](#setup-api-manager)
   - [Setup local lookup](#setup-local-lookup)
+  - [Custom properties](#custom-properties)
   - [Activate user authentication](#activate-user-authentication)
   - [Enable Metricbeat](#enable-metricbeat)
   - [Configure cluster UUID](#configure-cluster-uuid)
