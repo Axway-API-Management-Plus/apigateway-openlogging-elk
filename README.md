@@ -22,10 +22,12 @@ With the help of Kibana, the goal of the project is to deliver standard dashboar
 It should still be possible to add your own dashboards as you wish.  
 This shows a sample dashboard created in Kibana based on the indexed documents:  
 <p align="center">
-<img src="https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/raw/develop/imgs/sample-apim-overview-dashboard.png"
+<img src="imgs/gifs/Analytics-Dashboards-1st.gif"
   alt="Sample Kibana dashboard"
-  width="686" height="327">
+  width="800" height="450">
 </p>
+
+
 
 
 ## Table of content
