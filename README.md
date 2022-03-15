@@ -468,7 +468,7 @@ __2. Payload in API-Builder__
 
 Finally, the saved payload must be made available to the API-Builder Docker container as a mount under: `/var/log/payloads`. You can find an example in the docker-compose.yml:  
 `${APIGATEWAY_PAYLOADS_FOLDER}:/var/log/payloads`  
-So if the API gateways are running remotely to the API-Builder, as is very likely in production, you will need to either copy/move the payload or mount the network drive to the API-Builder container.  
+shared volumen into the API-Builder container.  
 
 __3. Regional Payload__  
 
