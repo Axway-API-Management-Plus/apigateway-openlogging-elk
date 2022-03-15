@@ -713,6 +713,8 @@ It is important that the fields have as high cardinality as possible to work eff
 After restarting APIBuilder4Elastic, the solution will configure Elasticsearch (index templates & transform job) according to the parameter: `EVENTLOG_CUSTOM_ATTR`. 
 Please note that it takes 4 hours for the custom properties to be available in the transformed data (`apigw-hourly-traffic-summary`).
 
+Watch this video that demonstrate how to ingest the HTTP user-agent into Elasticsearch: [Axway APIM with Elasticsearch - Use custom attributes](https://youtu.be/F0LCZhnWLkg)  
+
 <p align="right"><a href="#table-of-content">Top</a></p>
 
 ### Activate user authentication
