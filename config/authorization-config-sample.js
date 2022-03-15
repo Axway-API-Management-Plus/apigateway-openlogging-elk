@@ -5,8 +5,9 @@ const fs = require('fs');
 	By default, the solution uses user's API Manager organization to determine which 
 	API-Requests they are allowed to see in the API Gateway Traffic-Monitor. 
 	This behavior can be customized. 
-*/
 
+	General authorizationConfig
+*/
 var authorizationConfig = {
 	// For how long should the information cached by the API-Builder process
 	cacheTTL: parseInt(process.env.EXT_AUTHZ_CACHE_TTL) ? process.env.EXT_AUTHZ_CACHE_TTL : 300,
@@ -17,6 +18,9 @@ var authorizationConfig = {
 		enabled: true
 	},
 	// You may use an external HTTP-Service used for the authorization
+	// The configuration set here is passed to the methods: createRequestUri and handleResponse as a cfg object, 
+	// which can use it as needed to generate the restricted query.
+	// Consider the following purely as an example.
 	externalHTTP : {
 		enabled: false,
 		// URI you want to use for the lookup - Implement the method: createRequestUri to replace for instance the loginName
@@ -61,11 +65,20 @@ var authorizationConfig = {
 	}
 }
 
-/*
-This function is called, when externalHTTP is enabled and before the request is send to the external service. You may customize the URI as you need.
-*/
+/**
+ * Method is called, when externalHTTP is enabled and before the request is send 
+ * to the external service. You may use it to change the Uri if needed.
+ *
+ * @param {object} user - The user actually using the Traffic-Monitor (ANM).
+ * @param {object} cfg - The configuration provided above within authorizationConfig.externalHTTP
+ * @param {object} options.pluginConfig - The service configuration for this
+ *	 plugin from API Builder config.pluginConfig['api-builder-plugin-pluginName']
+ * @param {object} options.logger - The API Builder logger which can be used
+ *	 to log messages to the console.
+ * @return {string} returns the manipulated request URI, which should be send
+ */
 async function createRequestUri(user, cfg, options) {
-	// Replace the loginName which is part of the URI
+	// Replace for instance the loginName which is part of the URI
 	/* Example to use some kind of regex to be performed on the given username
 		var match = /CN=([0-9a-zA-Z]*)/.exec(username);
 		var userId = match[1];
@@ -73,10 +86,21 @@ async function createRequestUri(user, cfg, options) {
 	return cfg.uri.replace("__loginName__", user.loginName);
 }
 
-/*
-This function is called, when externalHTTP is enabled after the response has returned from the external HTTP service. Implement it to create 
-you restricted query.
-*/
+/**
+ * Method is called, when externalHTTP is enabled after the response has returned 
+ * from the external HTTP service. Implement it to create you restricted query.
+ *
+ * @param {object} response - The HTTP-Response returned from the external HTTP-Service.
+ * @param {object} elasticQuery - The Elasticsearch query that should be enhanced with custom restrictions
+ * @param {object} cfg - The configuration provided above within authorizationConfig.externalHTTP
+ * @param {object} options.pluginConfig - The service configuration for this
+ *	 plugin from API Builder config.pluginConfig['api-builder-plugin-pluginName']
+ * @param {object} options.logger - The API Builder logger which can be used
+ *	 to log messages to the console.
+ * @param {object} restrictionField - contains either the value from externalHTTP.restrictionField or 
+ *   externalHTTP.detailedRestrictionField. Depends if the user has requested the traffic overview or traffic details.
+ * @return {string} returns the restricted Elasticsearch query, that will limit the query result according to the user permissions
+ */
 async function handleResponse(response, elasticQuery, cfg, options, restrictionField) {
 	var filters = elasticQuery.bool.must;
 	var regex = /.{3}-.{2}-.{2}-.{3}-.{1}-(.*)-.*/;
