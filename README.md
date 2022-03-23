@@ -1210,8 +1210,8 @@ java.lang.RuntimeException: java.net.URISyntaxException: Illegal character in pa
 In this case, the environment variable: [API_BUILDER_URL](#admin-node-manager) is not set for the ANM process.  
 
 It can also be useful to use the Developer tools (Network monitor) in your browser (e.g. [Chrome](https://developer.chrome.com/docs/devtools/network/reference/) or [Firefox](https://developer.mozilla.org/en-US/docs/Tools/Network_Monitor)) to check the result of API requests in the Traffic Monitor. This way you can directly see the error when the API-Builder could not perform the request.
-Here is an example:  
-![ANM Traffic-Monitor Network](imgs/anm-troubleshoot-network-response.png)  
+This way it works:  
+![ANM Traffic-Monitor Network](imgs/gifs/See-API-Builder-Response.gif)  
 
 ### Check Elasticsearch processing
 It takes a while until Elasticsearch is finally started and reports it with the following line: 
