@@ -115,7 +115,7 @@ The glue between Elasticsearch and the API-Gateway Traffic-Monitor is an [API-Bu
 
 ## Prerequisites
 
-Deploying the solution requires knowledge of the Axway API-Management solution, to some degree how Docker works, a solid understanding of HTTPS and server certificates and how to validate them via trusted CAs.
+Deploying the solution requires knowledge of the Axway API-Management solution, to some degree how Docker works, a solid understanding of [HTTPS and server certificates and how to validate them via trusted CAs](https://www.ssl.com/article/browsers-and-certificate-validation/).
 
 ### Docker
 
