@@ -115,6 +115,8 @@ The glue between Elasticsearch and the API-Gateway Traffic-Monitor is an [API-Bu
 
 ## Prerequisites
 
+Deploying the solution requires knowledge of the Axway API-Management solution, to some degree how Docker works, a solid understanding of HTTPS and server certificates and how to validate them via trusted CAs.
+
 ### Docker
 
 Components such as the API-Builder project are supposed to run as a Docker-Container. The Elasticsearch stack is using standard Docker-Images which are configured with environment variables and some mount points. With that, you are pretty flexible. You can run them with the provided docker-compose or with a Docker Orchestration platform such a Kubernetes or OpenShift to get elastic scaling & self-healing.   
