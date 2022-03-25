@@ -1145,8 +1145,9 @@ However, if you need to change files, it is recommended to make this change auto
 - [ILM Rollover alias error](#ilm-rollover-alias-error)
 - [Check Caching](#check-caching)
 - [Certificate error Admin-Node Manager to API-Builder](#certificate-error-admin-node-manager-to-api-builder)
-- [Filebeat - Failed to publish events](#filebeat-failed-to-publish-events)
-- [Kibana - Missing Long-Term-Statistics](#kibana-missing-long-term-statistics)
+- [Filebeat - Failed to publish events](#filebeat---failed-to-publish-events)
+- [Kibana - Missing Long-Term-Statistics](#kibana---missing-long-term-statistics)
+- [Too many API-Manager lookups](#kibana---missing-long-term-statistics)
 
 ### Check processes/containers are running
 From within the folder where the docker-compose.yml file is located (git project folder) execute: 
@@ -1272,6 +1273,7 @@ It is important to know that traffic information will still appear in this case,
 ```
 tail -f /opt/Axway/APIM/apigateway/trace/nodemanageronapi-env_20200813000000.trc
 ```
+<p align="right"><a href="#troubleshooting">Top</a></p>
 
 ### Check queries send to ElasticSearch
 In oder to see queries that are send to ElasticSearch by API-Builder you need to run the Docker-Container with `LOG_LEVEL=debug`. You can activate debug in the docker-compose.yml. This gives you in the console of the API-Builder the following output:  
@@ -1336,6 +1338,8 @@ END
 
 You can find additional information here: https://techleader.pro/a/90-Accessing-Memcached-from-the-command-line. You may also use [PHPMemcachedAdmin](https://github.com/elijaa/phpmemcachedadmin) to get insights about the Memcache instance.
 
+<p align="right"><a href="#troubleshooting">Top</a></p>
+
 ### Certificate error Admin-Node Manager to API-Builder
 
 If you have errors connecting from the Admin Node Manager to the API Builder, then the following instructions:
@@ -1375,6 +1379,14 @@ If the __API-Status history__ and __API-Gateway status history__ in the Quarterl
 - and either wait for max. 60 minutes until API-Builder has re-created the transform or call the REST-API as shown above
 
 The main cause of this problem is the way the `http.status` field is indexed, which was changed in the update to version 3.4.0. If no documents have been received after the upgrade and initial creation of the transformation job, the transformation does not correctly index the `http.status.keyword` field.  
+
+<p align="right"><a href="#troubleshooting">Top</a></p>
+
+### Too many API-Manager lookups
+
+API- and Application-Details are looked up as part of the Logstash pipeline from the API Manager using a APIBuilder4Elastic REST API. The obtained details are cached by Logstash using Memcache.  
+Now, if lookups are constantly performed nevertheless, then this might be caused by APIs directly exposed by the API-Gateways via policies, which have a path parameter (e.g /api/v1/cusomer/323213).  
+Because the path parameter makes the API path dynamic it prevents Logstash from caching it. In this case, you need to help the solution by setting an API name in the appropriate policies using the [Set Service Context](https://docs.axway.com/bundle/axway-open-docs/page/docs/apim_policydev/apigw_polref/monitoring_logging/index.html#set-service-context-filter) filter. 
 
 <p align="right"><a href="#troubleshooting">Top</a></p>
 
