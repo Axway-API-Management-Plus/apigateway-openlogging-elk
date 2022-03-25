@@ -1147,7 +1147,7 @@ However, if you need to change files, it is recommended to make this change auto
 - [Certificate error Admin-Node Manager to API-Builder](#certificate-error-admin-node-manager-to-api-builder)
 - [Filebeat - Failed to publish events](#filebeat---failed-to-publish-events)
 - [Kibana - Missing Long-Term-Statistics](#kibana---missing-long-term-statistics)
-- [Too many API-Manager lookups](#kibana---missing-long-term-statistics)
+- [Too many API-Manager lookups](#too-many-api-manager-lookups)
 
 ### Check processes/containers are running
 From within the folder where the docker-compose.yml file is located (git project folder) execute: 
