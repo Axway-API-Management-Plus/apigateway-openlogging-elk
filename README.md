@@ -1184,7 +1184,7 @@ ls -l /var/log/work
 -rw-rw-r--. 1 filebeat filebeat 20972005 Jul 17 07:32 group-2_instance-1_traffic_2020-07-17-1.log
 
 ```
-<p align="right"><a href="#table-of-content">Top</a></p>
+<p align="right"><a href="#troubleshooting">Top</a></p>
 
 ### Check Logstash processing
 Logstash writes to Stdout, hence you can view information just with:
@@ -1226,7 +1226,7 @@ When Elasticsearch is finally started:
 ```
 Status YELLOW is expected when running Elasticsearch on a single node, as it cannot achieve the desired replicas. You may use Kibana Development tools or curl to get additional information.
 
-<p align="right"><a href="#table-of-content">Top</a></p>
+<p align="right"><a href="#troubleshooting">Top</a></p>
 
 ### vm.max_map_count is too low
 ```
@@ -1250,7 +1250,7 @@ To check if the index mapping was applied correctly to an index execute the foll
 `http://elasticsearch:9200/apigw-traffic-summary/_mapping`  
 then check if properties mappings defined in the configuration mentioned above have been applied to the index.
 
-<p align="right"><a href="#table-of-content">Top</a></p>
+<p align="right"><a href="#troubleshooting">Top</a></p>
 
 ### Check API-Builder processing
 The API-Builder docker container is running 
@@ -1281,7 +1281,7 @@ Using elastic search query body: {"index":"logstash-openlog","body":{"query":{"b
 This helps you to further analyze if ElasticSearch is returning the correct information for instance using the Kibana development console. Example sending the same request using the Kibana Development console:  
 ![Kibana Dev-Console][img8]
 
-<p align="right"><a href="#table-of-content">Top</a></p>
+<p align="right"><a href="#troubleshooting">Top</a></p>
 
 ### ILM Rollover alias error
 If the solution is configured with different regions, you may see the following error in Kibana or in the Elasticsearch logs:
@@ -1305,7 +1305,7 @@ PUT /apigw-trace-messages-eu-000001/_settings
 }
 ```
 
-<p align="right"><a href="#table-of-content">Top</a></p>
+<p align="right"><a href="#troubleshooting">Top</a></p>
 
 ### Check Caching
 
@@ -1345,7 +1345,7 @@ If you connect to the API Builder using a hostname other than `apibuilder4elasti
 To solve the problem you can create a [remote host](https://docs.axway.com/bundle/axway-open-docs/page/docs/apim_policydev/apigw_gw_instances/general_remote_hosts/index.html) and disable the hostname validation (`Verify server’s certificate matches requested hostname`). Or you can use your own matching keys & [certificates](#custom-certificates).  
 Another reason might be a missing or expired license for the Admin-Node-Manager. Please see: https://support.axway.com/kb/178766/language/en
 
-<p align="right"><a href="#table-of-content">Top</a></p>
+<p align="right"><a href="#troubleshooting">Top</a></p>
 
 ### Filebeat - Failed to publish events
 
@@ -1376,7 +1376,7 @@ If the __API-Status history__ and __API-Gateway status history__ in the Quarterl
 
 The main cause of this problem is the way the `http.status` field is indexed, which was changed in the update to version 3.4.0. If no documents have been received after the upgrade and initial creation of the transformation job, the transformation does not correctly index the `http.status.keyword` field.  
 
-<p align="right"><a href="#table-of-content">Top</a></p>
+<p align="right"><a href="#troubleshooting">Top</a></p>
 
 ## FAQ
 
