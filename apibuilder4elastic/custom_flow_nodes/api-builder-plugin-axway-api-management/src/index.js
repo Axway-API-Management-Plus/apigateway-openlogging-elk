@@ -58,7 +58,7 @@ async function getPlugin(pluginConfig, options) {
  * This avoids to have an API-Manager Up&Running when Logstash pipelines are tested. 
  */
 async function addLookupAPIMocks(cache) {
-	cache.set( "/petstore/v2/user/chris###group-2###us", {
+	cache.set( "Petstore###group-2###us", {
 		organizationName: "Mocked Org A", 
 		version: "X.X.X", 
 		deprecated: false, 
@@ -78,7 +78,7 @@ async function addLookupAPIMocks(cache) {
 		state: "unpublished",
 		customProperties: {}
 	});
-	cache.set( "/api/with/policies/backend/and/oauth###group-2###us", {
+	cache.set( "API with policies, backend and OAuth###group-2###us", {
 		organizationName: "Mocked Org B", 
 		version: "Z.Z.Z", 
 		deprecated: true, 
