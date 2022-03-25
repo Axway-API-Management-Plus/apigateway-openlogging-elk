@@ -633,21 +633,21 @@ Please note that the local configuration file is used before the API-Manager loo
 
 To enable the local lookup, you must perform the following steps:
 
-__1. Add your config file__
+__1. Add your config file__  
 It is best to copy the delivered template: [config/api-lookup-sample.json](config/api-lookup-sample.json) to your config/api-lookup.json. 
 
 ```
 cp config/api-lookup-sample.json config/api-lookup.json
 ```
 
-__2. Activate the config file__
+__2. Activate the config file__  
 In your .env file you must then enable the configuration file to be used by the API-Builder. To do this, configure or enable the following environment variable:  
  
 ```
 API_BUILDER_LOCAL_API_LOOKUP_FILE=./config/api-lookup.json
 ```
 
-__3. Restart API-Builder__
+__3. Restart API-Builder__  
 
 ```
 docker stop apibuilder4elastic
