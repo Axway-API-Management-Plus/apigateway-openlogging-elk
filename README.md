@@ -1386,7 +1386,7 @@ The main cause of this problem is the way the `http.status` field is indexed, wh
 
 API- and Application-Details are looked up as part of the Logstash pipeline from the API Manager using a APIBuilder4Elastic REST API. The obtained details are cached by Logstash using Memcache.  
 Now, if lookups are constantly performed nevertheless, then this might be caused by APIs directly exposed by the API-Gateways via policies, which have a path parameter (e.g /api/v1/cusomer/323213).  
-Because the path parameter makes the API path dynamic it prevents Logstash from caching it. In this case, you need to help the solution by setting an API name in the appropriate policies using the [Set Service Context](https://docs.axway.com/bundle/axway-open-docs/page/docs/apim_policydev/apigw_polref/monitoring_logging/index.html#set-service-context-filter) filter. 
+Because the path parameter makes the API path dynamic it prevents Logstash from caching it. In this case, you need to help the solution by setting an API name in the appropriate policies using the [Set Service Context](https://docs.axway.com/bundle/axway-open-docs/page/docs/apim_policydev/apigw_polref/monitoring_logging/index.html#set-service-context-filter) filter. For more information please see issue #180. 
 
 <p align="right"><a href="#troubleshooting">Top</a></p>
 
