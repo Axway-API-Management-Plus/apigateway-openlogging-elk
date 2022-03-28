@@ -70,7 +70,7 @@ jobs:
         # This is not relevant as we test with HTTP
         # But it's required by Logstash to be a valid certificate
         API_BUILDER_SSL_CERT: "./config/certificates/apibuilder4elastic.crt"
-        CACHE_API_PER_NAME: "/api/v1/banana, /api/v2/banana"
+        CACHE_API_PER_NAME: "/petstore/v2/user/chris, /api/v1/banana, /api/v2/banana"
     - name: API-Builder Logs
       if: ${{ always() }}
       run: |
