@@ -37,6 +37,7 @@ data:
   {{- if .Values.logstash.lookupCacheTTL }}
   LOOKUP_CACHE_TTL: {{ default "" .Values.logstash.lookupCacheTTL | quote }}
   {{- end }}
+  CACHE_API_PATHS: {{ default "" .Values.logstash.cacheAPIPaths | quote }}
   GEOIP_ENABLED: {{ default "true" .Values.logstash.geoip.enabled | quote }}
   GEOIP_CACHE_SIZE: {{ default "1000" .Values.logstash.geoip.cacheSize | quote }}
   GEOIP_CUSTOM_ATTRIBUTE: {{ default "true" .Values.logstash.geoip.customAttribute | quote }}
