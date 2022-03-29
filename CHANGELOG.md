@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unleased]
+## [4.4.0] 2022-03-29
 ### Changed
 - Wait 5 instead of 2 seconds, before trying to attach ILM-Policy to Index-Template
   - It may take a bit longer to obtain Custom-Properties from API-Manager for the Index-Template
