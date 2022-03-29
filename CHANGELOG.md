@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Wait 5 instead of 2 seconds, before trying to attach ILM-Policy to Index-Template
   - It may take a bit longer to obtain Custom-Properties from API-Manager for the Index-Template
 
+### Added
+- Added support to cache APIs with Path-Parameter more efficiently to reduce document ingest latency
+  - See the new parameter: `CACHE_API_PATHS` for more details.
+
 ## [4.3.0] 2022-03-11
 ### Added
 - Added Geo-Location map of API-Requests

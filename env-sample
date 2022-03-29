@@ -303,6 +303,24 @@ MEMCACHED=memcached:11211
 # LOOKUP_CACHE_TTL=1200
 
 # ----------------------------------------------------------------------------------------------
+# In case an API contains path parameters (e.g. /api/v2/pet/123456789), it may be advisable to 
+# configure them here to optimize caching. Especially if the path parameter is very variable 
+# (e.g. customer IDs). Due to the fact that the API request path is then always different 
+# Logstash cannot cache the looked up API-Details efficiently.
+# Therefore, you configure a list of comma separated API paths here. The Logstash pipeline 
+# checks if the received API request path starts with one of the configured paths, if so, the 
+# API details are cached with the configured path (/api/v2/pet) instead of the received 
+# API path (/api/v2/pet/123456789).
+# It is recommended to configure the most frequently called paths first in the list to avoid 
+# unnecessary iterations.
+# You can also configure a shorter path. It is important to understand that based on this 
+# configured API path the API details are cached and of course there should not be any overlap 
+# between two actually different APIs.
+# Defaults to null
+# Used-By: Logstash
+# CACHE_API_PATHS=/api/v2/petstore, /api/v1/user, ...
+
+# ----------------------------------------------------------------------------------------------
 # The maximum heap memory for ES. Xmx should be configured to 50% of the available memory, when
 # running ES on a dedicated node. Both values should be same.
 # It should not be bigger than 31GB. Defaults to 1GB by ES default which is in most cases not

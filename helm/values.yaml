@@ -270,6 +270,10 @@ logstash:
     # https://www.elastic.co/guide/en/logstash/current/plugins-filters-geoip.html#plugins-filters-geoip-manage_update
     # downloadEndpoint: "http://some-custom-endpoint"
 
+  # Configures a list of API-Paths that should be used for caching instead of the complete request path.
+  # Check the env-sample parameter: CACHE_API_PATHS for more details.
+  # cacheAPIPaths: "/api/v2/petstore, /api/v1/user, ..."
+
   # Injects the environment variables from the ConfigMaps and Secrets into the 
   # Logstash container. Specify your own ConfigMaps or Secrets if you don't
   # provide Configuration and Secrets as part of this values.yaml.

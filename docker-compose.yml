@@ -30,6 +30,7 @@ services:
       - GEOIP_CUSTOM_ATTRIBUTE=${GEOIP_CUSTOM_ATTRIBUTE:-xForwardedFor}
       - xpack.geoip.download.endpoint=${GEOIP_DOWNLOAD_ENDPOINT}
       - EVENTLOG_CUSTOM_ATTR=${EVENTLOG_CUSTOM_ATTR}
+      - CACHE_API_PATHS=${CACHE_API_PATHS}
     ports:
       - 5044:5044
     volumes:
