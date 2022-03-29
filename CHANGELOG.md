@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 - Wait 5 instead of 2 seconds, before trying to attach ILM-Policy to Index-Template
   - It may take a bit longer to obtain Custom-Properties from API-Manager for the Index-Template
+- Updated API-Builder version and dependencies
 
 ### Added
 - Added support to cache APIs with Path-Parameter more efficiently to reduce document ingest latency
