@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.4.0] 2022-03-31
+### Added
+- Now the parameter: `CACHE_API_PATHS` is also used to cache the API-Ignore lookup more efficient
+
 ## [4.4.0] 2022-03-29
 ### Changed
 - Wait 5 instead of 2 seconds, before trying to attach ILM-Policy to Index-Template
@@ -11,7 +15,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Updated API-Builder version and dependencies
 
 ### Added
-- Added support to cache APIs with Path-Parameter more efficiently to reduce document ingest latency
+- Support to cache APIs with Path-Parameter more efficiently to reduce document ingest latency
   - See the new parameter: `CACHE_API_PATHS` for more details.
 
 ## [4.3.0] 2022-03-11
