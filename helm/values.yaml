@@ -274,6 +274,12 @@ logstash:
   # Check the env-sample parameter: CACHE_API_PATHS for more details.
   # cacheAPIPaths: "/api/v2/petstore, /api/v1/user, ..."
 
+  # Disable application lookup. For more details please check parameter APPLICATION_LOOKUP_ENABLED
+  # applicationLookupEnabled: "false"
+
+  # Disable the lookup if an API should be ignored. Makes sense if you dont ignore any API
+  # ignoreApiLookupEnabled: "false"
+
   # Injects the environment variables from the ConfigMaps and Secrets into the 
   # Logstash container. Specify your own ConfigMaps or Secrets if you don't
   # provide Configuration and Secrets as part of this values.yaml.

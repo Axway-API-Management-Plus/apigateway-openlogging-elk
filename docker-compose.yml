@@ -31,6 +31,8 @@ services:
       - xpack.geoip.download.endpoint=${GEOIP_DOWNLOAD_ENDPOINT}
       - EVENTLOG_CUSTOM_ATTR=${EVENTLOG_CUSTOM_ATTR}
       - CACHE_API_PATHS=${CACHE_API_PATHS}
+      - APPLICATION_LOOKUP_ENABLED=${APPLICATION_LOOKUP_ENABLED:-true}
+      - IGNORE_API_LOOKUP_ENABLED=${IGNORE_API_LOOKUP_ENABLED:-true}
     ports:
       - 5044:5044
     volumes:

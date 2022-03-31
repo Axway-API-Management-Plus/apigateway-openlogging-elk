@@ -431,6 +431,30 @@ ELASTIC_VERSION=7.17.1
 # DROP_TRACE_MESSAGE_LEVELS=DEBUG,DATA
 
 # ----------------------------------------------------------------------------------------------
+# If an API is called by a registered API-Manager application and no user is authenticated, then 
+# this application ID appears in the Subject column in the traffic monitor.
+# Now, by default, the solution tries to convert the unhelpful application IDs passed in the 
+# authentication.subject.id attribute to the actual application name. This is done whenever the 
+# authentication subject ID is a UUID. 
+# However, if other UUIDs are used in your configuration in the authentication subject 
+# (for example, customer IDs), then the lookup is actually always incorrect and an unnecessary 
+# number of API requests are made. In this case, you should disable the function, since you have 
+# no use for it anyway.
+# By the way, this has nothing to do with the application details, which are passed separately.
+# Used-By: Logstash
+# Defaults to true
+# APPLICATION_LOOKUP_ENABLED=false
+
+# ----------------------------------------------------------------------------------------------
+# There is a possibility to exclude APIs from indexing in Elasticsearch, i.e. to ignore them. 
+# If you do not want to make use of this, i.e. do not want to ignore APIs, then you can 
+# completely deactivate the necessary Loookup, which is executed as part of the OpenTraffic 
+# pipeline, in order to further reduce the ingest latency, for example.
+# Used-By: Logstash
+# Defaults to true
+# IGNORE_API_LOOKUP_ENABLED=false
+
+# ----------------------------------------------------------------------------------------------
 # Disables the setup flows in API-Builder that are used to configure Elasticsearch.
 # If you run more than one API builder, you can set this parameter to true, as it is not
 # necessary. However, it is technically not a problem to have multiple API-Builders running

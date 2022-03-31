@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [4.4.0] 2022-03-31
 ### Added
 - Now the parameter: `CACHE_API_PATHS` is also used to cache the API-Ignore lookup more efficient
+- New parameter: `APPLICATION_LOOKUP_ENABLED` to disable application lookup for API-Gateway Traffic Monitoring improvement
+- New parameter: `IGNORE_API_LOOKUP_ENABLED` to disable the API-Ignore lookup, when not used anyway
 
 ## [4.4.0] 2022-03-29
 ### Changed
