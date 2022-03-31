@@ -67,7 +67,7 @@ services:
 
   # This is the API-Builder project exposing the API-Gateway Manager REST-API
   apibuilder4elastic:
-    image: cwiechmann/apibuilder4elastic:v4.4.0
+    image: cwiechmann/apibuilder4elastic:v4.5.0
     restart: on-failure:10
     container_name: apibuilder4elastic
     # Enable this, if you want to debug a crashing container

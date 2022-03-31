@@ -159,7 +159,7 @@ Please select the Axway- or Community-Supported release. The community release a
 
 #### Community-Version
 ```
-wget --no-check-certificate https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v4.4.0/axway-apim-elk-v4.4.0.tar.gz -O - | tar -xvz
+wget --no-check-certificate https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v4.5.0/axway-apim-elk-v4.5.0.tar.gz -O - | tar -xvz
 ```
 
 #### Axway Supported-Version
