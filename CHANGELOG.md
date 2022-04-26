@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased] 
 ### Changed
 - Updated API-Builder to version London (4.87.2)
+- Elastic-Helm charts dependencies for the Elasticstack updated from 7.17.1 to 7.17.3
+- Updated default Elastic-Stack version from 7.17.1 to 7.17.3
 
 ## [4.5.0] 2022-03-31
 ### Added
