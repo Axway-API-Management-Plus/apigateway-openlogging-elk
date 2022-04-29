@@ -776,9 +776,20 @@ apm-server:
   # Required for the internal stack monitoring to work with the APM-Server
   elasticsearchClusterUUID: ""
 
+  # Username and Password for APM-Server to send monitoring events to Elasticsearch
+  # When enabled, the provided username and password are used to create the secret 
+  # <releaseName>-apim4elastic-apmserver-secret which is referenced below. 
+  # You may use your own secret and reference it here. 
+  apmserverSecrets: 
+    enabled: true
+    username: ""
+    password: ""
+
   envFrom:
     - configMapRef:
         name: axway-elk-apim4elastic-apmserver-env-config
+    - secretRef:
+        name: axway-elk-apim4elastic-apmserver-secret
 
   secretMounts:
     - name: certificates
@@ -797,6 +808,9 @@ apm-server:
   # Here you can configure the Elasticsearch server certificate validation for the APM-Server
   # Possible values: (full|strict|certificate|none) - Defaults to: full
   validateElasticsearchCertificate: full
+
+  # additional labels
+  labels: {}
 
   livenessProbe:
     httpGet:

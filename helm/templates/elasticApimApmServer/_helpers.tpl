@@ -25,7 +25,7 @@ Selector labels
 app.kubernetes.io/component: apm-server
 app.kubernetes.io/name: {{ include "apim4elastic.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
-{{- range $key, $value := .Values.apmserver.labels }}
+{{- range $key, $value := index .Values "apm-server" "labels" }}
 {{ $key }}: {{ $value | quote }}
 {{- end }}
 {{- end }}

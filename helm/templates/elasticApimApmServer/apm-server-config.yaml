@@ -4,10 +4,7 @@ kind: ConfigMap
 metadata:
   name: {{ template "apmserver.fullname" . }}-env-config
   labels:
-    app: "{{ template "apmserver.fullname" . }}"
-    chart: "{{ .Chart.Name }}"
-    heritage: {{ .Release.Service | quote }}
-    release: {{ .Release.Name | quote }}
+    {{- include "apmserver.labels" . | nindent 4 }}
 data: 
   ELASTICSEARCH_HOSTS: {{ required "The value global.elasticsearchHosts is missing." .Values.global.elasticsearchHosts | quote }}
   ELASTICSEARCH_CLUSTER_UUID: {{ index .Values "apm-server" "elasticsearchClusterUUID" | quote }}

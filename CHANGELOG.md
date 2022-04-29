@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Elastic-Helm charts dependencies for the Elasticstack updated from 7.17.1 to 7.17.3
 - Updated default Elastic-Stack version from 7.17.1 to 7.17.3
 
+### Fixed
+- Missing support in Helm-Chart for APM-Server Elasticsearch authentication
+
 ## [4.5.0] 2022-03-31
 ### Added
 - Now the parameter: `CACHE_API_PATHS` is also used to cache the API-Ignore lookup more efficient
