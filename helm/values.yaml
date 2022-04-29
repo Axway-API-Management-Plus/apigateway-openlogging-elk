@@ -378,6 +378,7 @@ elasticsearch:
     enabled: true
     elasticUsername: "elastic"
     elasticPassword: ""
+  # Disable anonymous access to Elasticsearch. When set to false, Kibana security will be enabled.
   anonymous: 
     enabled: true
   #  roles: "kibana_admin,superuser,beats_system,logstash_system"
@@ -521,9 +522,10 @@ kibana:
   kibanaConfig:
     kibana.yml: |
       # Disable security by default to fallback to anonymous user
-      # Enable this parameter to activate security for Kibana
+      # This is controlled by the parameter elasticsearch.anonymous
       xpack.security.enabled: ${KIBANA_SECURITY_ENABLED}
 
+      # Set kibana.kibanaSecrets.username and password to populate the envionment variables
       elasticsearch.username: "${KIBANA_SYSTEM_USERNAME}"
       elasticsearch.password: "${KIBANA_SYSTEM_PASSWORD}"
 
