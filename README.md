@@ -1133,6 +1133,7 @@ However, if you need to change files, it is recommended to make this change auto
 
 ## Troubleshooting
 
+- [Solution does not show data in real time](#solution-does-not-show-data-in-real-time)
 - [Check processes/containers are running](#check-processescontainers-are-running)
 - [Check Filebeat is picking up data](#check-filebeat-is-picking-up-data)
 - [Check Logstash processing](#check-logstash-processing)
@@ -1148,6 +1149,16 @@ However, if you need to change files, it is recommended to make this change auto
 - [Filebeat - Failed to publish events](#filebeat---failed-to-publish-events)
 - [Kibana - Missing Long-Term-Statistics](#kibana---missing-long-term-statistics)
 - [Too many API-Manager lookups](#too-many-api-manager-lookups)
+
+### Solution does not show data in real time
+
+An important aspect of the solution is to store the API requests as fast as possible in Elasticsearch, so that they are available in real-time in the API gateway traffic monitor or in the Kibana dashboard.  
+If your setup cannot process the log information fast enough, then the solution may never be real-time and eventually even log information may be lost. 
+The following video provides information on why the document ingest rate may be too low, what information is available for analysis in Kibana, and how to correct this if necessary.
+
+[Axway API-Management Elasticsearch Integration - Performance Troubleshooting](https://youtu.be/rLT84dkgGAE)
+
+<p align="right"><a href="#troubleshooting">Top</a></p>
 
 ### Check processes/containers are running
 From within the folder where the docker-compose.yml file is located (git project folder) execute: 
@@ -1385,8 +1396,9 @@ The main cause of this problem is the way the `http.status` field is indexed, wh
 ### Too many API-Manager lookups
 
 API- and Application-Details are looked up as part of the Logstash pipeline from the API Manager using a APIBuilder4Elastic REST API. The obtained details are cached by Logstash using Memcache.  
-Now, if lookups are constantly performed nevertheless, then this might be caused by APIs directly exposed by the API-Gateways via policies, which have a path parameter (e.g /api/v1/cusomer/323213).  
-Because the path parameter makes the API path dynamic it prevents Logstash from caching it. In this case, you need to help the solution by setting an API name in the appropriate policies using the [Set Service Context](https://docs.axway.com/bundle/axway-open-docs/page/docs/apim_policydev/apigw_polref/monitoring_logging/index.html#set-service-context-filter) filter. For more information please see issue #180. 
+Now, if lookups are constantly performed nevertheless, then this might be caused by APIs which have a path parameter (e.g /api/v1/cusomer/323213).  
+Because the path parameter makes the API path dynamic it prevents Logstash from caching it. In this case, you need to help the solution by setting up the parameter: `CACHE_API_PATHS`.  
+You may also watch the following video to learn more about this topic: https://youtu.be/rLT84dkgGAE
 
 <p align="right"><a href="#troubleshooting">Top</a></p>
 
