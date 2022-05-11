@@ -89,15 +89,19 @@ output.logstash:
   # pipelining: 0
 
 monitoring:
+  # When running Filebeat natively, please set this to true to see Beats in Kibana Stack-Monitoring
   enabled: ${SELF_MONITORING_ENABLED}
   # Get the Cluster-ID (cluster_uuid) with this simple query: https://elasticsearch1:9200/
   # This links this filebeat instance to the Cluster with the given ID to enable monitoring
   # It's also required to setup the beats_system user
   cluster_uuid: ${ELASTICSEARCH_CLUSTER_UUID:ELASTICSEARCH_CLUSTER_UUID-NOT-SET}
   elasticsearch:
+    # When running Filebeat natively configure all Elasticsearch-Hosts as configured in your .env file
+    # For example: https://elasticsearch1:9200,https://elasticsearch2:9200
     hosts: ${ELASTICSEARCH_HOSTS}
     ssl.enabled: true
     ssl.certificate_authorities: ["${ELASTICSEARCH_CRT:ELASTICSEARCH_CRT-NOT-SET}"]
+    # When running Filebeat natively you may set this to none to disable certificate validation
     ssl.verification_mode: ${ELASTICSEARCH_SSL_VERIFICATIONMODE}
     username: "${BEATS_SYSTEM_USERNAME:''}"
     password: "${BEATS_SYSTEM_PASSWORD:''}"
