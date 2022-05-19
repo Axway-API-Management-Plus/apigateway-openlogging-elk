@@ -2,7 +2,7 @@
 
 This Axway API-Builder project is exposing the API-Gateway Traffic-Monitor API based on an Elasticsearch cluster to improve query performance on large datasets.
 
-For more information on using API Builder please see the [API Builder Getting Started Guide](https://docs.axway.com/bundle/API_Builder_4x_allOS_en/page/api_builder_getting_started_guide.html).
+For more information on using API Builder please see the [API Builder Getting Started Guide](https://docs.axway.com/bundle/api-builder/page/docs/getting_started/index.html).
 
 ## How it works?
 The Axway API-Gateway Traffic-Monitor is normally communicating with the REST-API exposed the Admin-Node-Manager, which is using as a ultimate backbone the integrated OPSDB running on each API-Gateway instance. This API-Builder project is exposing a few methods (for instance the search request) of the same API, but implements it using the Elasticsearch cluster. It becomes basically a middleware or mediation layer between the requesting client and Elasticsearch.  
