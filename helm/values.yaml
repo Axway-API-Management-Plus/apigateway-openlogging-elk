@@ -186,7 +186,7 @@ apibuilder4elastic:
   # Makes the apibuilder4elastic externally available for the Admin-Node-Manager
   # This example is using an Nginx Ingress-Controller
   ingress:
-    enabled: true
+    enabled: false
     annotations: 
       nginx.ingress.kubernetes.io/backend-protocol: HTTPS
     hosts:
