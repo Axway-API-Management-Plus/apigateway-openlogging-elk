@@ -2,7 +2,7 @@
 
 The solution is completely deployed in this architecture. This means that Kibana, Elasticsearch and Filebeat are all deployed based on the project. 
 Some notes on the architecture:
-- The solution is highly available with two Elasticsearch nodes.
+- The solution is highly available with three Elasticsearch nodes.
   - The indicies are stored by Elasticsearch on both nodes (Replica Shards)
   - a shared volume is not necessary
 - All clients (Logstash, API-Builder, Filebeat, Kibana) are configured on both available Elasticsearch nodes
