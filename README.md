@@ -438,7 +438,7 @@ These are broken down on the basis of real-time data in a map to the correspondi
 
 ![API-Requests map](imgs/geo-map-mixed.png)  
 
-The IP address of the client is determined from the Transaction event log, converted to a corresponding location by the Logstash plugin geoip and stored in Elasticsearch. The process is enabled by default, but can be disabled via the `GEOIP_CUSTOM_ATTRIBUTE` parameter.  
+The IP address of the client is determined from the Transaction event log, converted to a corresponding location by the Logstash plugin geoip and stored in Elasticsearch. The process is enabled by default, but can be disabled via the `GEOIP_ENABLED` parameter.  
 
 Most likely, your API management solution is running behind a firewall or load balancer, so the actual IP address of the client is not included in the event log. To pass the correct IP address to the solution, please configure a custom attribute (by default `xForwardedFor`) for the transaction event log, which contains the correct IP address. You can obtain this from the X-Forwarded-For header, for example. 
 
