@@ -199,7 +199,7 @@ module.exports = {
 
 	// If you want signed cookies, you can set this value. if you don't want
 	// signed cookies, remove or make null
-	cookieSecret: '9GGH5fVoGbl45JnHHV0YSn032D+/g5oR',
+	cookieSecret: '',
 
 	// Your connector configuration goes here
 	connectors: {
