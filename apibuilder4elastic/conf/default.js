@@ -65,7 +65,7 @@ module.exports = {
 	// default configuration.
 
 	// API key
-	apikey: 'MH8gIje1mN0lAw5I3O52PmJ6JTC0sIOT',
+	apikey: '',
 
 	// This is the base url the service will be reachable at not including the
 	// port
