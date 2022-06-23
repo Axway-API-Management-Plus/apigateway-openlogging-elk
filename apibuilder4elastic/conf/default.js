@@ -65,7 +65,7 @@ module.exports = {
 	// default configuration.
 
 	// API key
-	apikey: 'MH8gIje1mN0lAw5I3O52PmJ6JTC0sIOT',
+	apikey: '',
 
 	// This is the base url the service will be reachable at not including the
 	// port
@@ -195,23 +195,11 @@ module.exports = {
 
 	// You can generally leave this as-is since it is generated for each new
 	// service you created.
-	session: {
-		encryptionAlgorithm: 'aes256',
-		encryptionKey: 'fJuOadXFZcAh8G4MJ8ZairnpHIyNy4RSeeXm0Vksr20=',
-		signatureAlgorithm: 'sha512-drop256',
-		signatureKey: 'ETYlfmj6UYDok4HkzsApDqsjpvaavoZvs3UX2E1uMQ527pE9BQfRJ5C09n3IuQANg31ruSUp5q71EDjn01N7Jw==',
-		// should be a large unguessable string
-		secret: 'cYg2YZ8gGL3WnHDo01MrE+0QezqEhXZT',
-		// how long the session will stay valid in ms
-		duration: 86400000,
-		// if expiresIn < activeDuration, the session will be extended by
-		// activeDuration milliseconds
-		activeDuration: 300000
-	},
+	session: { },
 
 	// If you want signed cookies, you can set this value. if you don't want
 	// signed cookies, remove or make null
-	cookieSecret: '9GGH5fVoGbl45JnHHV0YSn032D+/g5oR',
+	cookieSecret: '',
 
 	// Your connector configuration goes here
 	connectors: {
