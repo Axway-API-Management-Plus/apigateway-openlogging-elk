@@ -54,7 +54,7 @@ services:
 
   # Memcached is used by the Logstash pipeline to cache API-Lookup information that are used to get the API-Organization
   memcached:
-    image: memcached:1.6.6-alpine
+    image: memcached:1.6.15-alpine
     container_name: memcached
     ports:
       - 11211:11211

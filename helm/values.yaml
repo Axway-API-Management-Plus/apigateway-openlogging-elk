@@ -345,7 +345,7 @@ logstash:
 
   extraContainers: |
     - name: memcached
-      image: memcached:1.6.6-alpine
+      image: memcached:1.6.15-alpine
 
 ##################################################################################################################################
 #          E L A S T I C S E A R C H
