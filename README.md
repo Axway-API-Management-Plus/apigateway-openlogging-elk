@@ -264,7 +264,7 @@ ELASTICSEARCH_HOSTS=https://my-existing-elasticsearch-host1.com:9200, https://my
 
 To start all three components the main Docker-Compose file is used:
 ```
-docker-compose up -d
+docker-compose --env-file .env up -d
 ```
 
 Check that the docker containers for Logstash, API Builder and Memached are running.  
