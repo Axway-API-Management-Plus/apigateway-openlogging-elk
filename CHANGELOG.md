@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Fixed
+- Block APIBuilder Ingress deployment if apibuilder isn't deployed
+
+
 ## [4.5.0] 2022-03-31
 ### Added
 - Now the parameter: `CACHE_API_PATHS` is also used to cache the API-Ignore lookup more efficient

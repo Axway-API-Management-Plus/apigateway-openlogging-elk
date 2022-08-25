@@ -1,4 +1,4 @@
-{{- if .Values.apibuilder4elastic.ingress.enabled -}}
+{{- if and .Values.apibuilder4elastic.enabled .Values.apibuilder4elastic.ingress.enabled -}}
 {{- $fullName := include "apibuilder4elastic.fullname" . -}}
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
