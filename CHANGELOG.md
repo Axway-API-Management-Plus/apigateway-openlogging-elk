@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 - Missing support in Helm-Chart for APM-Server Elasticsearch authentication
+- Add alt name with namespace for deployment in different namespaces
 
 ## [4.5.0] 2022-03-31
 ### Added

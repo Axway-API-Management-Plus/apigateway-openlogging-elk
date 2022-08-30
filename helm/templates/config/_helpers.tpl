@@ -34,7 +34,7 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 Generate required certificates 
 */}}
 {{- define "elastic-apim.gen-certs" -}}
-{{- $altNames := list "localhost" ( printf "%s-elasticsearch" (include "apim4elastic.fullname" .) ) ( printf "%s-apibuilder4elastic" (include "apim4elastic.fullname" .) )  ( printf "%s-kibana" (include "apim4elastic.fullname" .) ) ( printf "%s-apmserver" (include "apim4elastic.fullname" .) ) -}}
+{{- $altNames := list "localhost" ( printf "%s-elasticsearch" (include "apim4elastic.fullname" .) ) ( printf "%s-elasticsearch.%s" (include "apim4elastic.fullname" .) .Release.Namespace ) ( printf "%s-elasticsearch.%s.svc.cluster.local" (include "apim4elastic.fullname" .) .Release.Namespace ) ( printf "%s-apibuilder4elastic" (include "apim4elastic.fullname" .) )  ( printf "%s-kibana" (include "apim4elastic.fullname" .) ) ( printf "%s-apmserver" (include "apim4elastic.fullname" .) ) ( printf "%s-apmserver.%s" (include "apim4elastic.fullname" .) .Release.Namespace ) ( printf "%s-apmserver.%s.svc.cluster.local" (include "apim4elastic.fullname" .) .Release.Namespace ) -}}
 {{- $ca := genCA "elastic-apim-ca" 365 -}}
 {{- $cert := genSignedCert ( include "apim4elastic.name" . ) nil $altNames 365 $ca -}}
 ca.crt: {{ $ca.Cert | b64enc }}
