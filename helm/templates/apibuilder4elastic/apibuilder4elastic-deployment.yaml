@@ -33,10 +33,6 @@ spec:
 {{- end }}
         image: {{ .Values.apibuilder4elastic.image }}:{{ .Values.apibuilder4elastic.imageTag }}
         imagePullPolicy: {{ .Values.apibuilder4elastic.imagePullPolicy | quote }}
-        {{- if .Values.global.imagePullSecrets }}
-        imagePullSecrets:
-{{ toYaml .Values.global.imagePullSecrets | indent 10 }}
-        {{- end }}
         volumeMounts:
         {{- range .Values.apibuilder4elastic.secretMounts }}
         - name: {{ .name }}

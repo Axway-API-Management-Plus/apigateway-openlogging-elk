@@ -1,3 +1,10 @@
+# Archived
+
+This project is going to be archived since Axway provide an official version.
+All information is accessible from the [documentation](https://docs.axway.com/bundle/axway-open-docs/page/docs/operational_insights/index.html) to the [Docker assets](https://support.axway.com/en/downloads/download-details/id/1460206) and the [Helm chart v5.1.0](https://support.axway.com/en/downloads/download-details/id/1460202).
+
+For any questions or issues, please use the official channel (Axway community and Support).
+
 # Axway API-Management using the Elastic-Stack
 
 This project has 3 main objectives in relation to the Axway API management solution.
